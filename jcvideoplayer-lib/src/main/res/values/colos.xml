@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="biz_audio_progress_bg">#00b2ff</color>
+    <color name="biz_audio_progress_bg">#ff0000</color>
     <color name="biz_audio_progress_first">#ffffff</color>
     <color name="biz_audio_progress_second">#6b6666</color>
 

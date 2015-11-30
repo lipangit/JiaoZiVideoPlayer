@@ -8,22 +8,23 @@ public class VideoEvents {
     public static final int VE_START = 0x366001;
     public static final int VE_STOP = 0x366002;
     public static final int VE_PROGRESS = 0x366003;
+    public static final int VE_PREPARED = 0x366003;
 
     public int type;
     public Object obj;
     public Object obj1;
 
-    public VideoEvents getType(int type) {
+    public VideoEvents setType(int type) {
         this.type = type;
         return this;
     }
 
-    public VideoEvents getObj(Object obj) {
+    public VideoEvents setObj(Object obj) {
         this.obj = obj;
         return this;
     }
 
-    public VideoEvents getObj1(Object obj1) {
+    public VideoEvents setObj1(Object obj1) {
         this.obj1 = obj1;
         return this;
     }
