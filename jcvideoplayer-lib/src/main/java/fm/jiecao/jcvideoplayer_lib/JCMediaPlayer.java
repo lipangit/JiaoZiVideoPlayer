@@ -32,7 +32,6 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener {
 
     public void setUrl(String url, Context context) {
         try {
-//            mediaPlayer.release();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setDataSource(context, Uri.parse(url));
             mediaPlayer.setOnPreparedListener(this);

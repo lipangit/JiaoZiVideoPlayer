@@ -7,7 +7,7 @@ package fm.jiecao.jcvideoplayer_lib;
 public class VideoEvents {
     public static final int VE_START = 0x366001;
     public static final int VE_STOP = 0x366002;
-    public static final int VE_PROGRESS = 0x366003;
+    public static final int VE_PROGRESSING = 0x366003;
     public static final int VE_PREPARED = 0x366003;
 
     public int type;

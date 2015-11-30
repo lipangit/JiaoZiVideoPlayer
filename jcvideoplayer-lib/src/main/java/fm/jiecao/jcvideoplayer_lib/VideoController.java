@@ -68,7 +68,7 @@ public class VideoController extends FrameLayout implements View.OnClickListener
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
-        if (videoEvents.type == VideoEvents.VE_PROGRESS) {
+        if (videoEvents.type == VideoEvents.VE_PROGRESSING) {
             //TODO 正在播放中修改时间显示和进度条
 
         } else if (videoEvents.type == VideoEvents.VE_PREPARED) {
