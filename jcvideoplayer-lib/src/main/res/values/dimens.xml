@@ -1,0 +1,15 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- MEDIA CONTROLLER -->
+    <dimen name="media_controller_text_size">14sp</dimen>
+    <dimen name="media_controller_seekbar_width">32dip</dimen>
+    <dimen name="media_controller_seekbar_height">32dip</dimen>
+    <dimen name="media_controller_top_margin">80dip</dimen>
+    <dimen name="media_controller_bottom_margin">12dip</dimen>
+    <dimen name="media_controller_view_height">42dip</dimen>
+    <dimen name="media_controller_button_height">52dip</dimen>
+    <dimen name="media_controller_button_width">71dip</dimen>
+</resources>

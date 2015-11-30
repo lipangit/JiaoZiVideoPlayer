@@ -1,0 +1,30 @@
+package fm.jiecao.jcvideoplayer_lib;
+
+/**
+ * Created by Nathen
+ * On 2015/11/30 12:19
+ */
+public class VideoEvents {
+    public static final int VE_START = 0x366001;
+    public static final int VE_STOP = 0x366002;
+    public static final int VE_PROGRESS = 0x366003;
+
+    public int type;
+    public Object obj;
+    public Object obj1;
+
+    public VideoEvents getType(int type) {
+        this.type = type;
+        return this;
+    }
+
+    public VideoEvents getObj(Object obj) {
+        this.obj = obj;
+        return this;
+    }
+
+    public VideoEvents getObj1(Object obj1) {
+        this.obj1 = obj1;
+        return this;
+    }
+}

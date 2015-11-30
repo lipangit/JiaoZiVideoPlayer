@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="biz_audio_progress_bg">#00b2ff</color>
+    <color name="biz_audio_progress_first">#ffffff</color>
+    <color name="biz_audio_progress_second">#6b6666</color>
+
+    <color name="default_bg">#aa000000</color>
+    <color name="select_color">#00b2ff</color>
+    <color name="normal_color">#ffffffff</color>
+    <color name="divider_color">#55504a</color>
+    <!--special color-->
+    <color name="black_a10_color">#1a000000</color>
+    <color name="green">#00ff00</color>
+    <color name="red">#ff0000</color>
+    <color name="lala">#ff00ff</color>
+</resources>
