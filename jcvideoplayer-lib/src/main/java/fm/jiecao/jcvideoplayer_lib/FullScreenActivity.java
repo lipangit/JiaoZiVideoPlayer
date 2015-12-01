@@ -3,6 +3,7 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,6 +33,7 @@ public class FullScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         setContentView(R.layout.activity_fullscreen);
         jcVideoView = (JCVideoView) findViewById(R.id.jcvideoview);
