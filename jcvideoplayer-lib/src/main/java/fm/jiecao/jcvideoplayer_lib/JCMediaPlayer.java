@@ -1,6 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
-import android.content.Context;
+import android.app.Application;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -18,11 +18,17 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener {
 
     public MediaPlayer mediaPlayer;
     private static JCMediaPlayer jcMediaPlayer;
+    private static Application context;
+
+    public static JCMediaPlayer init(Application cont) {
+        if (jcMediaPlayer == null || context == null) {
+            jcMediaPlayer = new JCMediaPlayer();
+            context = cont;
+        }
+        return jcMediaPlayer;
+    }
 
     public static JCMediaPlayer intance() {
-        if (jcMediaPlayer == null) {
-            jcMediaPlayer = new JCMediaPlayer();
-        }
         return jcMediaPlayer;
     }
 
@@ -30,11 +36,14 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener {
         mediaPlayer = new MediaPlayer();
     }
 
-    public void setUrl(String url, Context context) {
+    public void prepareToPlay(String url) {
         try {
+            mediaPlayer.release();
+            mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setDataSource(context, Uri.parse(url));
             mediaPlayer.setOnPreparedListener(this);
+            mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }

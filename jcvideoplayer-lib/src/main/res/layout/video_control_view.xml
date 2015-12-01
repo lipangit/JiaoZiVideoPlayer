@@ -13,13 +13,21 @@
 
     <ImageView
         android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:background="#000000"
         android:src="@drawable/biz_video_play" />
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="invisible" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/linearLayout"
@@ -57,9 +65,10 @@
 
         <ImageView
             android:id="@+id/fullscreen"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginRight="15dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="6dp"
+            android:padding="12dp"
             android:src="@drawable/biz_video_expand" />
     </LinearLayout>
 

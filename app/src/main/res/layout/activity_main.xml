@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:text="Hello World!" />
 
-    <fm.jiecao.jcvideoplayer_lib.VideoController
+    <fm.jiecao.jcvideoplayer_lib.JCVideoView
         android:id="@+id/videocontroller"
         android:layout_width="match_parent"
         android:layout_height="300dp"/>
