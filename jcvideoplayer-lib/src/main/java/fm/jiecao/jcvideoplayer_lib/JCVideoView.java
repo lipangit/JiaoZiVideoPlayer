@@ -8,6 +8,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     TextView tvTimeCurrent, tvTimeTotal;
     SurfaceView surfaceView;
     SurfaceHolder surfaceHolder;
+    LinearLayout llBottomControl;
+    TextView tvTitle;
 
     String url;
 //    Context context;
@@ -58,11 +61,14 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+        llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
+        tvTitle = (TextView) findViewById(R.id.title);
         surfaceHolder = surfaceView.getHolder();
         ivStart.setOnClickListener(this);
         ivFullScreen.setOnClickListener(this);
         sbProgress.setOnSeekBarChangeListener(this);
         surfaceHolder.addCallback(this);
+        surfaceView.setOnClickListener(this);
     }
 
     /**
@@ -92,7 +98,28 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             JCMediaPlayer.intance().prepareToPlay(url);
             CURRENT_TYPE = CURRENT_TYPE_PREPAREING;
         } else if (i == R.id.fullscreen) {
-            getContext().startActivity(new Intent(getContext(), FullScreenActivity.class));
+            if (ifFullScreen) {
+                EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN));
+            } else {
+                getContext().startActivity(new Intent(getContext(), FullScreenActivity.class));
+            }
+        } else if (i == R.id.surfaceView) {
+            if (llBottomControl.getVisibility() == View.VISIBLE) {
+                //显示
+                llBottomControl.setVisibility(View.INVISIBLE);
+                ivStart.setVisibility(View.INVISIBLE);
+                tvTitle.setVisibility(View.INVISIBLE);
+            } else {
+
+            }
+        }
+    }
+
+    private void setStartImage() {
+        if (JCMediaPlayer.intance().mediaPlayer.isPlaying()) {
+
+        } else {
+
         }
     }
 

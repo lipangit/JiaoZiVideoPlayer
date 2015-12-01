@@ -22,7 +22,6 @@ public class FullScreenActivity extends Activity {
     }
 
     JCVideoView jcVideoView;
-    public static String URL = "";
     /**
      * 刚启动全屏时的播放状态
      */
@@ -39,29 +38,15 @@ public class FullScreenActivity extends Activity {
         jcVideoView = (JCVideoView) findViewById(R.id.jcvideoview);
         jcVideoView.setFullScreen(true);
         //TODO 来到全屏之后继续之前的播放
-        //TODO 取得之前的播放状态，和地址
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try {
-//                    Thread.sleep(300);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        jcVideoView.goOn();
-//                    }
-//                });
-//            }
-//        }).start();
+        //TODO 取得之前的播放状态
 
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
         if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_CREATED) {
             jcVideoView.goOn();
+        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
+            finish();
         }
     }
 

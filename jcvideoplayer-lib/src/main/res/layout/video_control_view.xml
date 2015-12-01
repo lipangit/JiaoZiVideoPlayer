@@ -30,7 +30,7 @@
         android:visibility="invisible" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/linearLayout"
+        android:id="@+id/bottom_control"
         android:layout_width="match_parent"
         android:layout_height="@dimen/media_controller_view_height"
         android:layout_alignParentBottom="true"
