@@ -1,7 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -31,23 +30,25 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     LinearLayout llBottomControl;
     TextView tvTitle;
 
-    String url;
-//    Context context;
+    //这个组件的三个属性
+    public String url;
+    public String thumb;
+    public String title;
+    public boolean ifFullScreen = false;
 
     /**
      * 为了保证全屏和退出全屏之后的状态和之前一样
      */
-    public int CURRENT_TYPE = -1;
-    public static final int CURRENT_TYPE_PREPAREING = 0;
-    public static final int CURRENT_TYPE_STOP = 1;
-    public static final int CURRENT_TYPE_PLAYING = 2;
-    public static final int CURRENT_TYPE_OVER = 3;
+    public int CURRENT_STATE = -1;//-1相当于null
+    public static final int CURRENT_STSTE_PREPAREING = 0;
+    public static final int CURRENT_STATE_STOP = 1;
+    public static final int CURRENT_STATE_PLAYING = 2;
+    public static final int CURRENT_STATE_OVER = 3;
+    public static final int CURRENT_STATE_NORMAL = 4;//刚初始化之后
 
-    public boolean ifFullScreen = false;
 
     public JCVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
-//        this.context = context;
         init(context);
     }
 
@@ -72,20 +73,19 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     }
 
     /**
-     * 给播放器设置一个url，设置自己的标签
+     * 设置属性
      */
-    public void setUp(String url) {
+    public void setUp(String url, String thumb, String title, boolean ifFullScreen) {
         this.url = url;
-        setFullScreen(false);
-    }
-
-    public void setFullScreen(boolean ifFullScreen) {
+        this.thumb = thumb;
+        this.title = title;
         this.ifFullScreen = ifFullScreen;
         if (ifFullScreen) {
             ivFullScreen.setImageResource(R.drawable.biz_video_shrink);
         } else {
             ivFullScreen.setImageResource(R.drawable.biz_video_expand);
         }
+        tvTitle.setText(title);
     }
 
     @Override
@@ -96,12 +96,11 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             ivStart.setVisibility(View.INVISIBLE);
             pbLoading.setVisibility(View.VISIBLE);
             JCMediaPlayer.intance().prepareToPlay(url);
-            CURRENT_TYPE = CURRENT_TYPE_PREPAREING;
         } else if (i == R.id.fullscreen) {
             if (ifFullScreen) {
                 EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN));
             } else {
-                getContext().startActivity(new Intent(getContext(), FullScreenActivity.class));
+                FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, title);
             }
         } else if (i == R.id.surfaceView) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
@@ -110,16 +109,19 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 ivStart.setVisibility(View.INVISIBLE);
                 tvTitle.setVisibility(View.INVISIBLE);
             } else {
-
+                setStartImage();
+                llBottomControl.setVisibility(View.VISIBLE);
+                ivStart.setVisibility(View.VISIBLE);
+                tvTitle.setVisibility(View.VISIBLE);
             }
         }
     }
 
     private void setStartImage() {
-        if (JCMediaPlayer.intance().mediaPlayer.isPlaying()) {
-
+        if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+            ivStart.setImageResource(R.drawable.click_video_pause_selector);
         } else {
-
+            ivStart.setImageResource(R.drawable.click_video_play_selector);
         }
     }
 
@@ -128,7 +130,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
             JCMediaPlayer.intance().mediaPlayer.start();
             pbLoading.setVisibility(View.INVISIBLE);
-            CURRENT_TYPE = CURRENT_TYPE_PLAYING;
         } else if (videoEvents.type == VideoEvents.VE_PROGRESSING) {
             //TODO 正在播放中修改时间显示和进度条
 

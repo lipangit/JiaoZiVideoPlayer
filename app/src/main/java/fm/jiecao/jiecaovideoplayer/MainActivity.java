@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         //TODO 给播放器设置url
-        videoController.setUp("http://7xkbzx.com1.z0.glb.clouddn.com/SampleVideo_1080x720_20mb.mp4");
+        videoController.setUp("http://7xkbzx.com1.z0.glb.clouddn.com/SampleVideo_1080x720_20mb.mp4",
+                "嫂子别摸我", false);
         //TODO 当播放器的播放按钮点击时，给引擎设置地址，开始缓冲视频
 
         //TODO 缓冲成功，设置holder播放视频

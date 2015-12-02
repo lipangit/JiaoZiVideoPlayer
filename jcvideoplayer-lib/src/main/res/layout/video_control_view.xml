@@ -11,15 +11,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true" />
 
-    <ImageView
-        android:id="@+id/start"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
-        android:background="#000000"
-        android:src="@drawable/biz_video_play" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -84,6 +75,26 @@
         android:text="视频名字：嫂子别摸我"
         android:textColor="#ffffff"
         android:textSize="18sp" />
+
+    <ImageView
+        android:id="@+id/thumb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <ImageView
+        android:id="@+id/start"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/click_video_play_selector" />
 
 
 </RelativeLayout>

@@ -15,8 +15,13 @@ import de.greenrobot.event.EventBus;
  * On 2015/12/01 11:17
  */
 public class FullScreenActivity extends Activity {
-    public static void toActivity(Context context, int type) {
-        TYPE = type;
+    /**
+     * state是当前的播放状态，全屏之后要继续原来的状态
+     */
+    public static void toActivity(Context context, int state, String url, String title) {
+        STATE = state;
+        URL = url;
+        TITLE = title;
         Intent intent = new Intent(context, FullScreenActivity.class);
         context.startActivity(intent);
     }
@@ -25,7 +30,9 @@ public class FullScreenActivity extends Activity {
     /**
      * 刚启动全屏时的播放状态
      */
-    public static int TYPE = -1;
+    public static int STATE = -1;
+    public static String URL;
+    public static String TITLE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +43,7 @@ public class FullScreenActivity extends Activity {
 
         setContentView(R.layout.activity_fullscreen);
         jcVideoView = (JCVideoView) findViewById(R.id.jcvideoview);
-        jcVideoView.setFullScreen(true);
+        jcVideoView.setUp(URL, TITLE, true);
         //TODO 来到全屏之后继续之前的播放
         //TODO 取得之前的播放状态
 
