@@ -63,18 +63,6 @@
             android:src="@drawable/biz_video_expand" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:text="视频名字：嫂子别摸我"
-        android:textColor="#ffffff"
-        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/thumb"
@@ -87,10 +75,23 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true" />
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="12dp"
+        android:text="视频名字：嫂子别摸我"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+
     <ImageView
         android:id="@+id/start"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"

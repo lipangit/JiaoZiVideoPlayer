@@ -20,7 +20,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         //TODO 给播放器设置url
-        videoController.setUp("http://7xkbzx.com1.z0.glb.clouddn.com/SampleVideo_1080x720_20mb.mp4",
+        videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
+                "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
                 "嫂子别摸我", false);
         //TODO 当播放器的播放按钮点击时，给引擎设置地址，开始缓冲视频
 
