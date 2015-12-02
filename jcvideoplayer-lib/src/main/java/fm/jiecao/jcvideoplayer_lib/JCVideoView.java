@@ -108,6 +108,9 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 
     }
 
+    /**
+     * 个人认为详细的判断和重复的设置是有必要的
+     */
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -158,7 +161,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                     llBottomControl.setVisibility(View.VISIBLE);
                     tvTitle.setVisibility(View.VISIBLE);
                 }
-                sbProgress.setVisibility(View.INVISIBLE);
+                pbLoading.setVisibility(View.INVISIBLE);
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 if (llBottomControl.getVisibility() == View.VISIBLE) {
                     llBottomControl.setVisibility(View.INVISIBLE);
@@ -188,6 +191,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
             JCMediaPlayer.intance().mediaPlayer.start();
             pbLoading.setVisibility(View.INVISIBLE);
+            sbProgress.setProgress(0);
             CURRENT_STATE = CURRENT_STATE_PLAYING;
         } else if (videoEvents.type == VideoEvents.VE_PROGRESSING) {
             //TODO 正在播放中修改时间显示和进度条
@@ -211,7 +215,10 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+        if (fromUser) {
+            int time = progress * JCMediaPlayer.intance().mediaPlayer.getDuration() / 100;
+            JCMediaPlayer.intance().mediaPlayer.seekTo(time);
+        }
     }
 
     @Override
