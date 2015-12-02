@@ -73,6 +73,8 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
         tvTitle = (TextView) findViewById(R.id.title);
         ivThumb = (ImageView) findViewById(R.id.thumb);
+//        surfaceView.setZOrderOnTop(true);
+//        surfaceView.setBackgroundColor(R.color.black_a10_color);
         surfaceHolder = surfaceView.getHolder();
         ivStart.setOnClickListener(this);
         ivThumb.setOnClickListener(this);
@@ -158,6 +160,17 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 }
                 sbProgress.setVisibility(View.INVISIBLE);
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
+                if (llBottomControl.getVisibility() == View.VISIBLE) {
+                    llBottomControl.setVisibility(View.INVISIBLE);
+                    tvTitle.setVisibility(View.INVISIBLE);
+                    ivStart.setVisibility(View.INVISIBLE);
+                } else {
+                    updateStartImage();
+                    ivStart.setVisibility(View.VISIBLE);
+                    llBottomControl.setVisibility(View.VISIBLE);
+                    tvTitle.setVisibility(View.VISIBLE);
+                }
+                sbProgress.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -179,6 +192,14 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         } else if (videoEvents.type == VideoEvents.VE_PROGRESSING) {
             //TODO 正在播放中修改时间显示和进度条
 
+        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_COMPLETE) {
+            ivStart.setImageResource(R.drawable.click_video_play_selector);
+            ivThumb.setVisibility(View.VISIBLE);
+            ivStart.setVisibility(View.VISIBLE);
+            JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
+            //TODO 这里要将背景置黑，
+//            surfaceView.setBackgroundColor(R.color.black_a10_color);
+            CURRENT_STATE = CURRENT_STATE_NORMAL;
         }
     }
 

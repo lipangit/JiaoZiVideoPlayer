@@ -14,7 +14,7 @@ import de.greenrobot.event.EventBus;
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-public class JCMediaPlayer implements MediaPlayer.OnPreparedListener {
+public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
 
     public MediaPlayer mediaPlayer;
     private static JCMediaPlayer jcMediaPlayer;
@@ -43,6 +43,7 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener {
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setDataSource(context, Uri.parse(url));
             mediaPlayer.setOnPreparedListener(this);
+            mediaPlayer.setOnCompletionListener(this);
             mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
@@ -54,4 +55,8 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener {
         EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_PREPARED));
     }
 
+    @Override
+    public void onCompletion(MediaPlayer mp) {
+        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_COMPLETE));
+    }
 }
