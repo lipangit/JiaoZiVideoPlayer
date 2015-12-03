@@ -104,20 +104,38 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     }
 
     public void setState(int state) {
+        JCMediaPlayer.uuid = uuid;
         this.CURRENT_STATE = state;
         //全屏或取消全屏时继续原来的状态
         if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
-
+            ivStart.setVisibility(View.INVISIBLE);
+            ivThumb.setVisibility(View.INVISIBLE);
+            pbLoading.setVisibility(View.VISIBLE);
+            setProgressAndTime(0, 0, 0, 0);
         } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
-
+            updateStartImage();
+            ivStart.setVisibility(View.VISIBLE);
+            llBottomControl.setVisibility(View.VISIBLE);
+            tvTitle.setVisibility(View.VISIBLE);
+            ivThumb.setVisibility(View.INVISIBLE);
+            if (!ifFullScreen) {
+                JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+            }
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
-
+            updateStartImage();
+            ivStart.setVisibility(View.VISIBLE);
+            llBottomControl.setVisibility(View.VISIBLE);
+            tvTitle.setVisibility(View.VISIBLE);
+            ivThumb.setVisibility(View.INVISIBLE);
+            if (!ifFullScreen) {
+                JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+            }
         }
 
     }
 
     /**
-     * 个人认为详细的判断和重复的设置是有相当必要的
+     * 目前认为详细的判断和重复的设置是有相当必要的,也可以包装成方法
      */
     @Override
     public void onClick(View v) {
@@ -132,6 +150,8 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 pbLoading.setVisibility(View.VISIBLE);
                 setProgressAndTime(0, 0, 0, 0);
                 JCMediaPlayer.intance().prepareToPlay(url);
+                JCMediaPlayer.prev_uuid = JCMediaPlayer.uuid;
+                JCMediaPlayer.uuid = uuid;
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
                 ivThumb.setVisibility(View.INVISIBLE);
@@ -145,8 +165,13 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             }
 
         } else if (i == R.id.fullscreen) {
+            //此时如果是loading，正在播放，暂停
             if (ifFullScreen) {
-                EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN));
+                //把uuid指回到
+                JCMediaPlayer.uuid = JCMediaPlayer.prev_uuid;
+                VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN);
+                videoEvents.obj = CURRENT_STATE;
+                EventBus.getDefault().post(videoEvents);
             } else {
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
@@ -214,6 +239,9 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
+        if (!JCMediaPlayer.uuid.equals(uuid)){
+            return;
+        }
         if (videoEvents.type == VideoEvents.VE_PREPARED) {
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
             JCMediaPlayer.intance().mediaPlayer.start();
@@ -237,13 +265,14 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 int percent = Integer.valueOf(videoEvents.obj.toString());
                 setProgressAndTimeFromMediaPlayer(percent);
             }
+        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
+            setState(Integer.valueOf(videoEvents.obj.toString()));
         }
     }
 
     public void goOn() {
         //继续播放，把引擎的内容直接显示在这里
         JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
-        ivStart.setVisibility(View.INVISIBLE);
     }
 
     @Override

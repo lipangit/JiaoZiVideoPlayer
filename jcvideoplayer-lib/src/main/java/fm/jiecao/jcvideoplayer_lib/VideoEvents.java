@@ -5,15 +5,15 @@ package fm.jiecao.jcvideoplayer_lib;
  * On 2015/11/30 12:19
  */
 public class VideoEvents {
-    public static final int VE_START = 0x366001;
-    public static final int VE_STOP = 0x366002;
-    public static final int VE_PROGRESSING = 0x366003;
-    public static final int VE_PREPARED = 0x366004;
-    public static final int VE_SURFACEHOLDER_CREATED = 0x366005;
-    public static final int VE_SURFACEHOLDER_FINISH_FULLSCREEN = 0x366006;
-    public static final int VE_MEDIAPLAYER_FINISH_COMPLETE = 0x366007;
-    public static final int VE_MEDIAPLAYER_BUFFERUPDATE = 0x366008;
-    public static final int VE_MEDIAPLAYER_SEEKCOMPLETE = 0x366009;
+    public static final int VE_START = 366001;
+    public static final int VE_STOP = 366002;
+    public static final int VE_PROGRESSING = 366003;
+    public static final int VE_PREPARED = 366004;
+    public static final int VE_SURFACEHOLDER_CREATED = 366005;
+    public static final int VE_SURFACEHOLDER_FINISH_FULLSCREEN = 366006;
+    public static final int VE_MEDIAPLAYER_FINISH_COMPLETE = 366007;
+    public static final int VE_MEDIAPLAYER_BUFFERUPDATE = 366008;
+    public static final int VE_MEDIAPLAYER_SEEKCOMPLETE = 366009;
 
     public int type;
     public Object obj;

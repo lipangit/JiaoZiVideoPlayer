@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
 
@@ -19,6 +20,8 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
     public MediaPlayer mediaPlayer;
     private static JCMediaPlayer jcMediaPlayer;
     private static Application context;
+    public static UUID uuid;//这个是正在播放中的视频控件的uuid，
+    public static UUID prev_uuid;
 
     public static JCMediaPlayer init(Application cont) {
         if (jcMediaPlayer == null || context == null) {

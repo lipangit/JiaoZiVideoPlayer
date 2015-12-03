@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
         JCMediaPlayer.init(DemoApplication.instance());
         videoController = (JCVideoView) findViewById(R.id.videocontroller);
 
-
         //TODO 给播放器设置url
         videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
                 "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
