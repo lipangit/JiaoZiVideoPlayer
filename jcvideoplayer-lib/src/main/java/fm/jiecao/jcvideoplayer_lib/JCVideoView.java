@@ -1,9 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -15,13 +12,11 @@ import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.Formatter;
 import java.util.Locale;
-import java.util.Timer;
+import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
 
@@ -42,12 +37,12 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     TextView tvTitle;
     ImageView ivThumb;
 
-    //这个组件的三个属性
+    //这个组件的四个属性
     public String url;
     public String thumb;
     public String title;
     public boolean ifFullScreen = false;
-
+    public UUID uuid;//区别相同地址,包括全屏和不全屏，和都不全屏时的相同地址
     /**
      * 为了保证全屏和退出全屏之后的状态和之前一样
      */
@@ -55,12 +50,13 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     public static final int CURRENT_STATE_PREPAREING = 0;
     public static final int CURRENT_STATE_PAUSE = 1;
     public static final int CURRENT_STATE_PLAYING = 2;
-    public static final int CURRENT_STATE_OVER = 3;
+    public static final int CURRENT_STATE_OVER = 3;//这个状态可能不需要，播放完毕就进入normal状态
     public static final int CURRENT_STATE_NORMAL = 4;//刚初始化之后
 
 
     public JCVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        uuid = UUID.randomUUID();
         init(context);
     }
 
@@ -103,17 +99,22 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             ivFullScreen.setImageResource(R.drawable.biz_video_expand);
         }
         tvTitle.setText(title);
-        ImageLoader.getInstance().displayImage(thumb, ivThumb, getDefaultDisplayImageOption());
+        ImageLoader.getInstance().displayImage(thumb, ivThumb);
         CURRENT_STATE = CURRENT_STATE_NORMAL;
     }
 
     public void setState(int state) {
         this.CURRENT_STATE = state;
         //全屏或取消全屏时继续原来的状态
+        if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
+
+        } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+
+        } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
+
+        }
 
     }
-
-    Timer timer = new Timer();
 
     /**
      * 个人认为详细的判断和重复的设置是有相当必要的
@@ -289,21 +290,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
 
-    }
-
-    public static DisplayImageOptions getDefaultDisplayImageOption() {
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(new ColorDrawable(Color.parseColor("#f0f0f0")))
-                .resetViewBeforeLoading(true)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-//                .displayer(new FadeInBitmapDisplayer(1000)) // 设置图片渐显的时间
-//                .delayBeforeLoading(300)  // 下载前的延迟时间
-                .build();
-        return options;
     }
 
     private String stringForTime(int timeMs) {

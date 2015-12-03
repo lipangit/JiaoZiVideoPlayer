@@ -4,6 +4,8 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Environment;
 
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
@@ -14,7 +16,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 import java.io.File;
@@ -40,16 +41,15 @@ public class DemoApplication extends Application {
         // method.
 
         DisplayImageOptions options = new DisplayImageOptions.Builder()
-//                .showImageOnLoading(R.drawable.ic_stub) // resource or drawable
-//                .showImageForEmptyUri(R.drawable.ic_empty) // resource or drawable
-//                .showImageOnFail(R.drawable.ic_error) // resource or drawable
-                .resetViewBeforeLoading(false)  // default
-                .delayBeforeLoading(1000)
-                .cacheInMemory(true) // default
-                .cacheOnDisk(true) // default
-                .imageScaleType(ImageScaleType.IN_SAMPLE_POWER_OF_2) // default
-                .bitmapConfig(Bitmap.Config.RGB_565) // default
-                .displayer(new SimpleBitmapDisplayer()) // default
+                .showImageOnLoading(new ColorDrawable(Color.parseColor("#f0f0f0")))
+                .resetViewBeforeLoading(true)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+//                .displayer(new FadeInBitmapDisplayer(1000)) // 设置图片渐显的时间
+//                .delayBeforeLoading(300)  // 下载前的延迟时间
                 .build();
 
         int memClass = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE))

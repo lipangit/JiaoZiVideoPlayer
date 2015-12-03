@@ -48,8 +48,7 @@ public class FullScreenActivity extends Activity {
         jcVideoView.setUp(URL, THUMB, TITLE, true);
         jcVideoView.setState(STATE);
 
-        //TODO 来到全屏之后继续之前的播放
-        //TODO 取得之前的播放状态
+        //TODO 来到全屏之后继续之前的状态，准备，播放，暂停
 
     }
 
