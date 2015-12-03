@@ -42,7 +42,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     public String thumb;
     public String title;
     public boolean ifFullScreen = false;
-    public UUID uuid;//区别相同地址,包括全屏和不全屏，和都不全屏时的相同地址
+    public String uuid;//区别相同地址,包括全屏和不全屏，和都不全屏时的相同地址
     /**
      * 为了保证全屏和退出全屏之后的状态和之前一样
      */
@@ -56,7 +56,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 
     public JCVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        uuid = UUID.randomUUID();
+        uuid = UUID.randomUUID().toString();
         init(context);
     }
 
@@ -82,7 +82,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         sbProgress.setOnSeekBarChangeListener(this);
         surfaceHolder.addCallback(this);
         surfaceView.setOnClickListener(this);
-
+        llBottomControl.setOnClickListener(this);
     }
 
     /**
@@ -118,7 +118,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             llBottomControl.setVisibility(View.VISIBLE);
             tvTitle.setVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
-            if (!ifFullScreen) {
+            if (!ifFullScreen && JCMediaPlayer.intance().mediaPlayer.isPlaying()) {
                 JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
             }
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
@@ -150,8 +150,8 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 pbLoading.setVisibility(View.VISIBLE);
                 setProgressAndTime(0, 0, 0, 0);
                 JCMediaPlayer.intance().prepareToPlay(url);
-                JCMediaPlayer.prev_uuid = JCMediaPlayer.uuid;
                 JCMediaPlayer.uuid = uuid;
+                JCMediaPlayer.prev_uuid = JCMediaPlayer.uuid;
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
                 ivThumb.setVisibility(View.INVISIBLE);
@@ -173,6 +173,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 videoEvents.obj = CURRENT_STATE;
                 EventBus.getDefault().post(videoEvents);
             } else {
+                isFromFullScreenBackHere = true;
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
         } else if (i == R.id.surfaceView) {
@@ -239,7 +240,8 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
-        if (!JCMediaPlayer.uuid.equals(uuid)){
+        if (!JCMediaPlayer.uuid.equals(uuid)) {
+            System.out.println("不是给我发的");
             return;
         }
         if (videoEvents.type == VideoEvents.VE_PREPARED) {
@@ -255,7 +257,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 ivStart.setImageResource(R.drawable.click_video_play_selector);
                 ivThumb.setVisibility(View.VISIBLE);
                 ivStart.setVisibility(View.VISIBLE);
-                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
+//                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
                 //TODO 这里要将背景置黑，
 //            surfaceView.setBackgroundColor(R.color.black_a10_color);
                 CURRENT_STATE = CURRENT_STATE_NORMAL;
@@ -266,9 +268,19 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 setProgressAndTimeFromMediaPlayer(percent);
             }
         } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
-            setState(Integer.valueOf(videoEvents.obj.toString()));
+            if (isFromFullScreenBackHere) {
+                from_fullscreen_state = Integer.valueOf(videoEvents.obj.toString());
+            }
+        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_CREATED) {
+            if (isFromFullScreenBackHere) {
+                setState(from_fullscreen_state);
+                isFromFullScreenBackHere = false;
+            }
         }
     }
+
+    int from_fullscreen_state;
+    boolean isFromFullScreenBackHere = false;
 
     public void goOn() {
         //继续播放，把引擎的内容直接显示在这里

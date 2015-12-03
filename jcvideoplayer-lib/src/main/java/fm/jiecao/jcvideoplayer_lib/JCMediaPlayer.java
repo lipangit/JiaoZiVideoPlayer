@@ -6,22 +6,22 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
+
 
 /**
  * 统一管理MediaPlayer,管理视频的暂停播放进度全屏的功能
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener {
+public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener {
 
     public MediaPlayer mediaPlayer;
     private static JCMediaPlayer jcMediaPlayer;
     private static Application context;
-    public static UUID uuid;//这个是正在播放中的视频控件的uuid，
-    public static UUID prev_uuid;
+    public static String uuid;//这个是正在播放中的视频控件的uuid，
+    public static String prev_uuid;
 
     public static JCMediaPlayer init(Application cont) {
         if (jcMediaPlayer == null || context == null) {
@@ -49,6 +49,7 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
             mediaPlayer.setOnCompletionListener(this);
             mediaPlayer.setOnBufferingUpdateListener(this);
             mediaPlayer.setOnSeekCompleteListener(this);
+            mediaPlayer.setOnErrorListener(this);
             mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,5 +76,10 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
     @Override
     public void onSeekComplete(MediaPlayer mp) {
         EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE));
+    }
+
+    @Override
+    public boolean onError(MediaPlayer mp, int what, int extra) {
+        return true;
     }
 }
