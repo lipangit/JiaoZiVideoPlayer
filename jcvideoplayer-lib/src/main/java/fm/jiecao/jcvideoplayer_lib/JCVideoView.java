@@ -222,13 +222,15 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             //TODO 正在播放中修改时间显示和进度条
 
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
-            ivStart.setImageResource(R.drawable.click_video_play_selector);
-            ivThumb.setVisibility(View.VISIBLE);
-            ivStart.setVisibility(View.VISIBLE);
-            JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
-            //TODO 这里要将背景置黑，
+            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+                ivStart.setImageResource(R.drawable.click_video_play_selector);
+                ivThumb.setVisibility(View.VISIBLE);
+                ivStart.setVisibility(View.VISIBLE);
+                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
+                //TODO 这里要将背景置黑，
 //            surfaceView.setBackgroundColor(R.color.black_a10_color);
-            CURRENT_STATE = CURRENT_STATE_NORMAL;
+                CURRENT_STATE = CURRENT_STATE_NORMAL;
+            }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE) {
             if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
                 int percent = Integer.valueOf(videoEvents.obj.toString());
