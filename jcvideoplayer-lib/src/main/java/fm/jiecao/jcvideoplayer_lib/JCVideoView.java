@@ -19,6 +19,10 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+import java.util.Formatter;
+import java.util.Locale;
+import java.util.Timer;
+
 import de.greenrobot.event.EventBus;
 
 /**
@@ -82,6 +86,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         sbProgress.setOnSeekBarChangeListener(this);
         surfaceHolder.addCallback(this);
         surfaceView.setOnClickListener(this);
+
     }
 
     /**
@@ -108,8 +113,10 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 
     }
 
+    Timer timer = new Timer();
+
     /**
-     * 个人认为详细的判断和重复的设置是有必要的
+     * 个人认为详细的判断和重复的设置是有相当必要的
      */
     @Override
     public void onClick(View v) {
@@ -122,13 +129,16 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 ivStart.setVisibility(View.INVISIBLE);
                 ivThumb.setVisibility(View.INVISIBLE);
                 pbLoading.setVisibility(View.VISIBLE);
+                setProgressAndTime(0, 0, 0, 0);
                 JCMediaPlayer.intance().prepareToPlay(url);
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
+                ivThumb.setVisibility(View.INVISIBLE);
                 JCMediaPlayer.intance().mediaPlayer.pause();
                 updateStartImage();
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 CURRENT_STATE = CURRENT_STATE_PLAYING;
+                ivThumb.setVisibility(View.INVISIBLE);
                 JCMediaPlayer.intance().mediaPlayer.start();
                 updateStartImage();
             }
@@ -149,7 +159,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                     tvTitle.setVisibility(View.VISIBLE);
                 }
                 ivStart.setVisibility(View.INVISIBLE);
-                sbProgress.setVisibility(View.VISIBLE);
+                pbLoading.setVisibility(View.VISIBLE);
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 if (llBottomControl.getVisibility() == View.VISIBLE) {
                     llBottomControl.setVisibility(View.INVISIBLE);
@@ -173,7 +183,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                     llBottomControl.setVisibility(View.VISIBLE);
                     tvTitle.setVisibility(View.VISIBLE);
                 }
-                sbProgress.setVisibility(View.INVISIBLE);
+                pbLoading.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -186,17 +196,32 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         }
     }
 
+    //设置进度条和进度时间
+    private void setProgressAndTimeFromMediaPlayer(int secProgress) {
+        final int position = JCMediaPlayer.intance().mediaPlayer.getCurrentPosition();
+        final int duration = JCMediaPlayer.intance().mediaPlayer.getDuration();
+        System.out.println("onBufferingUpdate " + secProgress + " " + position + " " + duration);
+        int progress = position * 100 / duration;
+        setProgressAndTime(progress, secProgress, position, duration);
+    }
+
+    private void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
+        sbProgress.setProgress(progress);
+        sbProgress.setSecondaryProgress(secProgress);
+        tvTimeCurrent.setText(stringForTime(currentTime));
+        tvTimeTotal.setText(stringForTime(totalTime));
+    }
+
     public void onEventMainThread(VideoEvents videoEvents) {
         if (videoEvents.type == VideoEvents.VE_PREPARED) {
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
             JCMediaPlayer.intance().mediaPlayer.start();
             pbLoading.setVisibility(View.INVISIBLE);
-            sbProgress.setProgress(0);
             CURRENT_STATE = CURRENT_STATE_PLAYING;
         } else if (videoEvents.type == VideoEvents.VE_PROGRESSING) {
             //TODO 正在播放中修改时间显示和进度条
 
-        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_COMPLETE) {
+        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
             ivStart.setImageResource(R.drawable.click_video_play_selector);
             ivThumb.setVisibility(View.VISIBLE);
             ivStart.setVisibility(View.VISIBLE);
@@ -204,6 +229,11 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             //TODO 这里要将背景置黑，
 //            surfaceView.setBackgroundColor(R.color.black_a10_color);
             CURRENT_STATE = CURRENT_STATE_NORMAL;
+        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE) {
+            if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
+                int percent = Integer.valueOf(videoEvents.obj.toString());
+                setProgressAndTimeFromMediaPlayer(percent);
+            }
         }
     }
 
@@ -272,5 +302,19 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 //                .delayBeforeLoading(300)  // 下载前的延迟时间
                 .build();
         return options;
+    }
+
+    private String stringForTime(int timeMs) {
+        int totalSeconds = timeMs / 1000;
+        int seconds = totalSeconds % 60;
+        int minutes = (totalSeconds / 60) % 60;
+        int hours = totalSeconds / 3600;
+        StringBuilder mFormatBuilder = new StringBuilder();
+        Formatter mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
+        if (hours > 0) {
+            return mFormatter.format("%d:%02d:%02d", hours, minutes, seconds).toString();
+        } else {
+            return mFormatter.format("%02d:%02d", minutes, seconds).toString();
+        }
     }
 }

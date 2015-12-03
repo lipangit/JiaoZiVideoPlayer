@@ -11,7 +11,9 @@ public class VideoEvents {
     public static final int VE_PREPARED = 0x366004;
     public static final int VE_SURFACEHOLDER_CREATED = 0x366005;
     public static final int VE_SURFACEHOLDER_FINISH_FULLSCREEN = 0x366006;
-    public static final int VE_SURFACEHOLDER_FINISH_COMPLETE = 0x366007;
+    public static final int VE_MEDIAPLAYER_FINISH_COMPLETE = 0x366007;
+    public static final int VE_MEDIAPLAYER_BUFFERUPDATE = 0x366008;
+    public static final int VE_MEDIAPLAYER_SEEKCOMPLETE = 0x366009;
 
     public int type;
     public Object obj;

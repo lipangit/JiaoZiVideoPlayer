@@ -14,7 +14,7 @@ import de.greenrobot.event.EventBus;
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener {
+public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener {
 
     public MediaPlayer mediaPlayer;
     private static JCMediaPlayer jcMediaPlayer;
@@ -44,6 +44,8 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
             mediaPlayer.setDataSource(context, Uri.parse(url));
             mediaPlayer.setOnPreparedListener(this);
             mediaPlayer.setOnCompletionListener(this);
+            mediaPlayer.setOnBufferingUpdateListener(this);
+            mediaPlayer.setOnSeekCompleteListener(this);
             mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,6 +59,18 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_COMPLETE));
+        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
+    }
+
+    @Override
+    public void onBufferingUpdate(MediaPlayer mp, int percent) {
+        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE);
+        videoEvents.obj = percent;
+        EventBus.getDefault().post(videoEvents);
+    }
+
+    @Override
+    public void onSeekComplete(MediaPlayer mp) {
+        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE));
     }
 }
