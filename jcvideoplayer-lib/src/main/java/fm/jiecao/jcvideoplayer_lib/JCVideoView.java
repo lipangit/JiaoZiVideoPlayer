@@ -104,7 +104,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     }
 
     public void setState(int state) {
-        JCMediaPlayer.uuid = uuid;
         this.CURRENT_STATE = state;
         //全屏或取消全屏时继续原来的状态
         if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
@@ -150,8 +149,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 pbLoading.setVisibility(View.VISIBLE);
                 setProgressAndTime(0, 0, 0, 0);
                 JCMediaPlayer.intance().prepareToPlay(url);
-                JCMediaPlayer.uuid = uuid;
-                JCMediaPlayer.prev_uuid = JCMediaPlayer.uuid;
+                JCMediaPlayer.intance().setUuid(uuid);
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
                 ivThumb.setVisibility(View.INVISIBLE);
@@ -168,12 +166,13 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             //此时如果是loading，正在播放，暂停
             if (ifFullScreen) {
                 //把uuid指回到
-                JCMediaPlayer.uuid = JCMediaPlayer.prev_uuid;
+                JCMediaPlayer.intance().backUpUuid();
                 VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN);
                 videoEvents.obj = CURRENT_STATE;
                 EventBus.getDefault().post(videoEvents);
             } else {
                 isFromFullScreenBackHere = true;
+                JCMediaPlayer.intance().setUuid(uuid);
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
         } else if (i == R.id.surfaceView) {
@@ -240,7 +239,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
-        if (!JCMediaPlayer.uuid.equals(uuid)) {
+        if (!JCMediaPlayer.intance().uuid.equals(uuid)) {
             System.out.println("不是给我发的");
             return;
         }

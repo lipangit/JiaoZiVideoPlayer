@@ -20,8 +20,8 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
     public MediaPlayer mediaPlayer;
     private static JCMediaPlayer jcMediaPlayer;
     private static Application context;
-    public static String uuid;//这个是正在播放中的视频控件的uuid，
-    public static String prev_uuid;
+    public String uuid;//这个是正在播放中的视频控件的uuid，
+    private String prev_uuid;
 
     public static JCMediaPlayer init(Application cont) {
         if (jcMediaPlayer == null || context == null) {
@@ -81,5 +81,14 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
         return true;
+    }
+
+    public void setUuid(String uuid) {
+        backUpUuid();
+        this.uuid = uuid;
+    }
+
+    public void backUpUuid() {
+        this.prev_uuid = this.uuid;
     }
 }
