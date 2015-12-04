@@ -160,6 +160,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 
         } else if (i == R.id.fullscreen) {
             //此时如果是loading，正在播放，暂停
+            JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
             if (ifFullScreen) {
                 //把uuid指回到
                 JCMediaPlayer.intance().backUpUuid();
@@ -171,7 +172,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 JCMediaPlayer.intance().setUuid(uuid);
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
-            JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
         } else if (i == R.id.surfaceView) {
             if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
                 if (llBottomControl.getVisibility() == View.VISIBLE) {
@@ -208,6 +208,8 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 }
                 pbLoading.setVisibility(View.INVISIBLE);
             }
+        } else if (i == R.id.bottom_control) {
+            JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
         }
     }
 
@@ -259,7 +261,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 CURRENT_STATE = CURRENT_STATE_NORMAL;
             }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE) {
-            if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
+            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
                 int percent = Integer.valueOf(videoEvents.obj.toString());
                 setProgressAndTimeFromMediaPlayer(percent);
             }
@@ -272,29 +274,28 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             }
         } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_CREATED) {
             if (isFromFullScreenBackHere) {
-                //200ms播放视频
-                delaySetdisplay();
+                //200ms播放视频,,这里奇怪了一阵子。
+//                delaySetdisplay();
+                JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
                 isFromFullScreenBackHere = false;
-            }
-            if (ifFullScreen) {
-                Toast.makeText(getContext(), "进入全屏，显示图像", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void delaySetdisplay() {
+    public void delaySetdisplay() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    Thread.sleep(50);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
                 ((Activity) getContext()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(), "退出全屏显示图像 " + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "显示图像 " + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
+                        JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
                     }
                 });
             }
@@ -338,6 +339,12 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     public void surfaceCreated(SurfaceHolder holder) {
         //TODO MediaPlayer set holder,MediaPlayer prepareToPlay
         EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_CREATED));
+
+        if (ifFullScreen) {
+            Toast.makeText(getContext(), "进入全屏，显示图像" + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
+            JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+        }
+
     }
 
     @Override
