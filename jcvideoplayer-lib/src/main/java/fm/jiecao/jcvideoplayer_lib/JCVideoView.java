@@ -1,5 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -117,18 +119,12 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             llBottomControl.setVisibility(View.VISIBLE);
             tvTitle.setVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
-            if (!ifFullScreen && JCMediaPlayer.intance().mediaPlayer.isPlaying()) {
-                JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
-            }
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             updateStartImage();
             ivStart.setVisibility(View.VISIBLE);
             llBottomControl.setVisibility(View.VISIBLE);
             tvTitle.setVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
-            if (!ifFullScreen) {
-                JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
-            }
         }
 
     }
@@ -171,10 +167,11 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 videoEvents.obj = CURRENT_STATE;
                 EventBus.getDefault().post(videoEvents);
             } else {
-                isFromFullScreenBackHere = true;
+                isClickFullscreen = true;
                 JCMediaPlayer.intance().setUuid(uuid);
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
+            JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
         } else if (i == R.id.surfaceView) {
             if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
                 if (llBottomControl.getVisibility() == View.VISIBLE) {
@@ -267,24 +264,45 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 setProgressAndTimeFromMediaPlayer(percent);
             }
         } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
-            if (isFromFullScreenBackHere) {
-                from_fullscreen_state = Integer.valueOf(videoEvents.obj.toString());
+            if (isClickFullscreen) {
+                isFromFullScreenBackHere = true;
+                isClickFullscreen = false;
+                int prev_state = Integer.valueOf(videoEvents.obj.toString());
+                setState(prev_state);
             }
         } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_CREATED) {
             if (isFromFullScreenBackHere) {
-                setState(from_fullscreen_state);
+                //200ms播放视频
+                delaySetdisplay();
                 isFromFullScreenBackHere = false;
+            }
+            if (ifFullScreen) {
+                Toast.makeText(getContext(), "进入全屏，显示图像", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    int from_fullscreen_state;
-    boolean isFromFullScreenBackHere = false;
-
-    public void goOn() {
-        //继续播放，把引擎的内容直接显示在这里
-        JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+    private void delaySetdisplay() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                ((Activity) getContext()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContext(), "退出全屏显示图像 " + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }).start();
     }
+
+    boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
+    boolean isClickFullscreen = false;
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

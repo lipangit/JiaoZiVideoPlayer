@@ -42,7 +42,6 @@ public class FullScreenActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
         setContentView(R.layout.activity_fullscreen);
         jcVideoView = (JCVideoView) findViewById(R.id.jcvideoview);
         jcVideoView.setUp(URL, THUMB, TITLE, true);
@@ -53,9 +52,7 @@ public class FullScreenActivity extends Activity {
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
-        if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_CREATED) {
-            jcVideoView.goOn();
-        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
+        if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
             finish();
         }
     }
