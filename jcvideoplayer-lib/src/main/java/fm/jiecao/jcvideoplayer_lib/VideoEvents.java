@@ -14,6 +14,7 @@ public class VideoEvents {
     public static final int VE_MEDIAPLAYER_FINISH_COMPLETE = 366007;
     public static final int VE_MEDIAPLAYER_BUFFERUPDATE = 366008;
     public static final int VE_MEDIAPLAYER_SEEKCOMPLETE = 366009;
+    public static final int VE_MEDIAPLAYER_RESIZE = 366010;
 
     public int type;
     public Object obj;

@@ -46,13 +46,14 @@ public class FullScreenActivity extends Activity {
         jcVideoView = (JCVideoView) findViewById(R.id.jcvideoview);
         jcVideoView.setUp(URL, THUMB, TITLE, true);
         jcVideoView.setState(STATE);
+        JCMediaPlayer.intance().setUuid(jcVideoView.uuid);
 //        jcVideoView.delaySetdisplay();
         //TODO 来到全屏之后继续之前的状态，准备，播放，暂停
 
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
-        if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
+        if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN || videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
             finish();
         }
     }

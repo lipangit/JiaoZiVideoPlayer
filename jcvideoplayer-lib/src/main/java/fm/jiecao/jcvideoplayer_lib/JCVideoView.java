@@ -169,7 +169,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 EventBus.getDefault().post(videoEvents);
             } else {
                 isClickFullscreen = true;
-                JCMediaPlayer.intance().setUuid(uuid);
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
         } else if (i == R.id.surfaceView) {
@@ -225,7 +224,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     private void setProgressAndTimeFromMediaPlayer(int secProgress) {
         final int position = JCMediaPlayer.intance().mediaPlayer.getCurrentPosition();
         final int duration = JCMediaPlayer.intance().mediaPlayer.getDuration();
-        System.out.println("onBufferingUpdate " + secProgress + " " + position + " " + duration);
+        System.out.println("onBufferingUpdate " + secProgress + " " + position + " " + duration + " " + uuid + " " + JCMediaPlayer.intance().uuid);
         int progress = position * 100 / duration;
         setProgressAndTime(progress, secProgress, position, duration);
     }
@@ -238,6 +237,17 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
+        if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
+            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+                ivStart.setImageResource(R.drawable.click_video_play_selector);
+                ivThumb.setVisibility(View.VISIBLE);
+                ivStart.setVisibility(View.VISIBLE);
+//                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
+                //TODO 这里要将背景置黑，
+//            surfaceView.setBackgroundColor(R.color.black_a10_color);
+                CURRENT_STATE = CURRENT_STATE_NORMAL;
+            }
+        }
         if (!JCMediaPlayer.intance().uuid.equals(uuid)) {
             System.out.println("不是给我发的");
             return;
@@ -250,16 +260,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         } else if (videoEvents.type == VideoEvents.VE_PROGRESSING) {
             //TODO 正在播放中修改时间显示和进度条
 
-        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
-            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) {
-                ivStart.setImageResource(R.drawable.click_video_play_selector);
-                ivThumb.setVisibility(View.VISIBLE);
-                ivStart.setVisibility(View.VISIBLE);
-//                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
-                //TODO 这里要将背景置黑，
-//            surfaceView.setBackgroundColor(R.color.black_a10_color);
-                CURRENT_STATE = CURRENT_STATE_NORMAL;
-            }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE) {
             if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
                 int percent = Integer.valueOf(videoEvents.obj.toString());
@@ -279,6 +279,8 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
                 isFromFullScreenBackHere = false;
             }
+        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_RESIZE) {
+
         }
     }
 

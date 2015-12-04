@@ -15,7 +15,7 @@ import de.greenrobot.event.EventBus;
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener {
+public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnVideoSizeChangedListener {
 
     public MediaPlayer mediaPlayer;
     private static JCMediaPlayer jcMediaPlayer;
@@ -23,6 +23,9 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
     private String prev_uuid;
 
     public static JCMediaPlayer intance() {
+        if (jcMediaPlayer == null) {
+            jcMediaPlayer = new JCMediaPlayer();
+        }
         return jcMediaPlayer;
     }
 
@@ -41,6 +44,7 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
             mediaPlayer.setOnBufferingUpdateListener(this);
             mediaPlayer.setOnSeekCompleteListener(this);
             mediaPlayer.setOnErrorListener(this);
+            mediaPlayer.setOnVideoSizeChangedListener(this);
             mediaPlayer.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,5 +85,10 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
 
     public void backUpUuid() {
         this.prev_uuid = this.uuid;
+    }
+
+    @Override
+    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE));
     }
 }
