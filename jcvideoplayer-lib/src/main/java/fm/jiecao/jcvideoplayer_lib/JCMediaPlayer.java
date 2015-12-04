@@ -1,6 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
-import android.app.Application;
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -19,17 +19,8 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
 
     public MediaPlayer mediaPlayer;
     private static JCMediaPlayer jcMediaPlayer;
-    private static Application context;
     public String uuid;//这个是正在播放中的视频控件的uuid，
     private String prev_uuid;
-
-    public static JCMediaPlayer init(Application cont) {
-        if (jcMediaPlayer == null || context == null) {
-            jcMediaPlayer = new JCMediaPlayer();
-            context = cont;
-        }
-        return jcMediaPlayer;
-    }
 
     public static JCMediaPlayer intance() {
         return jcMediaPlayer;
@@ -39,7 +30,7 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
         mediaPlayer = new MediaPlayer();
     }
 
-    public void prepareToPlay(String url) {
+    public void prepareToPlay(Context context, String url) {
         try {
             mediaPlayer.release();
             mediaPlayer = new MediaPlayer();

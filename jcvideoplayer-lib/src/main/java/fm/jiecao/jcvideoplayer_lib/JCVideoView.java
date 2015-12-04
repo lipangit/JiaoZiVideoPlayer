@@ -144,7 +144,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 ivThumb.setVisibility(View.INVISIBLE);
                 pbLoading.setVisibility(View.VISIBLE);
                 setProgressAndTime(0, 0, 0, 0);
-                JCMediaPlayer.intance().prepareToPlay(url);
+                JCMediaPlayer.intance().prepareToPlay(getContext(), url);
                 JCMediaPlayer.intance().setUuid(uuid);
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
