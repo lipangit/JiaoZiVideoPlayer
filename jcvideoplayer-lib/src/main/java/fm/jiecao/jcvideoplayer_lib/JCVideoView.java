@@ -125,6 +125,10 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             llBottomControl.setVisibility(View.VISIBLE);
             tvTitle.setVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
+        } else if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
+            ivStart.setVisibility(View.VISIBLE);
+            ivThumb.setVisibility(View.VISIBLE);
+            updateStartImage();
         }
 
     }
@@ -146,6 +150,10 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 setProgressAndTime(0, 0, 0, 0);
                 JCMediaPlayer.intance().prepareToPlay(getContext(), url);
                 JCMediaPlayer.intance().setUuid(uuid);
+
+                VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_START);
+                videoEvents.obj = uuid;
+                EventBus.getDefault().post(videoEvents);
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
                 ivThumb.setVisibility(View.INVISIBLE);
@@ -249,7 +257,11 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             }
         }
         if (!JCMediaPlayer.intance().uuid.equals(uuid)) {
-            System.out.println("不是给我发的");
+            if (videoEvents.type == VideoEvents.VE_START) {
+                if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
+                    setState(CURRENT_STATE_NORMAL);
+                }
+            }
             return;
         }
         if (videoEvents.type == VideoEvents.VE_PREPARED) {
@@ -257,9 +269,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             JCMediaPlayer.intance().mediaPlayer.start();
             pbLoading.setVisibility(View.INVISIBLE);
             CURRENT_STATE = CURRENT_STATE_PLAYING;
-        } else if (videoEvents.type == VideoEvents.VE_PROGRESSING) {
-            //TODO 正在播放中修改时间显示和进度条
-
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE) {
             if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
                 int percent = Integer.valueOf(videoEvents.obj.toString());
@@ -280,7 +289,25 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 isFromFullScreenBackHere = false;
             }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_RESIZE) {
-
+//            int width = Integer.valueOf(videoEvents.obj.toString());
+//            int height = Integer.valueOf(videoEvents.obj1.toString());
+//
+//            int viewWidth = surfaceView.getWidth();
+//            int viewHeight = surfaceView.getHeight();
+//
+//            double ll = viewWidth / viewHeight;
+//            double hh = width / height;
+//            if (ll > hh) {
+//                //宽不变
+//                int wid = viewHeight * width / viewWidth;
+//            } else {
+//                //高不变
+//                int hei = viewWidth * height / viewHeight;
+//            }
+//            VideoView vv;
+//            ViewGroup.LayoutParams lp = surfaceView.getLayoutParams();
+//            lp.height;
+            System.out.println("haha");
         }
     }
 

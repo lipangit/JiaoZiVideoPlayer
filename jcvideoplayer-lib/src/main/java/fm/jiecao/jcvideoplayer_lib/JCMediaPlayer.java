@@ -96,6 +96,9 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
 
     @Override
     public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE));
+        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_RESIZE);
+        videoEvents.obj = width;
+        videoEvents.obj1 = height;
+        EventBus.getDefault().post(videoEvents);
     }
 }
