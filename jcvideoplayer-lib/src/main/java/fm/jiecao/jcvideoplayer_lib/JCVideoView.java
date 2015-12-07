@@ -162,8 +162,8 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             //此时如果是loading，正在播放，暂停
             JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
             if (ifFullScreen) {
-                //把uuid指回到
-                JCMediaPlayer.intance().backUpUuid();
+                //退出全屏
+                JCMediaPlayer.intance().revertUuid();
                 VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN);
                 videoEvents.obj = CURRENT_STATE;
                 EventBus.getDefault().post(videoEvents);

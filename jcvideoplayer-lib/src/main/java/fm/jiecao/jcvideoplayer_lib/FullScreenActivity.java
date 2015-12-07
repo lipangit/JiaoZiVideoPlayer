@@ -47,9 +47,6 @@ public class FullScreenActivity extends Activity {
         jcVideoView.setUp(URL, THUMB, TITLE, true);
         jcVideoView.setState(STATE);
         JCMediaPlayer.intance().setUuid(jcVideoView.uuid);
-//        jcVideoView.delaySetdisplay();
-        //TODO 来到全屏之后继续之前的状态，准备，播放，暂停
-
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
