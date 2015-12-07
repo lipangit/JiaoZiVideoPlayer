@@ -96,9 +96,9 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         this.title = title;
         this.ifFullScreen = ifFullScreen;
         if (ifFullScreen) {
-            ivFullScreen.setImageResource(R.drawable.biz_video_shrink);
+            ivFullScreen.setImageResource(R.drawable.shrink_video);
         } else {
-            ivFullScreen.setImageResource(R.drawable.biz_video_expand);
+            ivFullScreen.setImageResource(R.drawable.enlarge_video);
         }
         tvTitle.setText(title);
         ImageLoader.getInstance().displayImage(thumb, ivThumb);
