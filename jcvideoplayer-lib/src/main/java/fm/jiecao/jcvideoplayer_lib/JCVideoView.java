@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -289,24 +290,28 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 isFromFullScreenBackHere = false;
             }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_RESIZE) {
-//            int width = Integer.valueOf(videoEvents.obj.toString());
-//            int height = Integer.valueOf(videoEvents.obj1.toString());
-//
-//            int viewWidth = surfaceView.getWidth();
-//            int viewHeight = surfaceView.getHeight();
-//
-//            double ll = viewWidth / viewHeight;
-//            double hh = width / height;
-//            if (ll > hh) {
-//                //宽不变
-//                int wid = viewHeight * width / viewWidth;
-//            } else {
-//                //高不变
-//                int hei = viewWidth * height / viewHeight;
-//            }
-//            VideoView vv;
-//            ViewGroup.LayoutParams lp = surfaceView.getLayoutParams();
-//            lp.height;
+            double width = 720;//Integer.valueOf(videoEvents.obj.toString());
+            double height = 80;// Integer.valueOf(videoEvents.obj1.toString());
+
+            double viewWidth = surfaceView.getWidth();
+            double viewHeight = surfaceView.getHeight();
+
+            double ll = viewWidth / viewHeight;
+            double hh = width / height;
+            if (ll < hh) {
+                //宽不变
+                viewHeight = viewHeight * width / viewWidth;
+            } else {
+                //高不变
+                viewWidth = viewWidth * height / viewHeight;
+            }
+
+            ViewGroup.LayoutParams lp = surfaceView.getLayoutParams();
+            lp.height = (int) viewHeight;
+            lp.width = (int) viewWidth;
+            surfaceView.setLayoutParams(lp);
+            surfaceView.invalidate();
+
             System.out.println("haha");
         }
     }
