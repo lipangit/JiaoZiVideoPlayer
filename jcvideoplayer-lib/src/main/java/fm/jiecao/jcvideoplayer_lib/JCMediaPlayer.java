@@ -21,6 +21,8 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
     private static JCMediaPlayer jcMediaPlayer;
     public String uuid;//这个是正在播放中的视频控件的uuid，
     private String prev_uuid;
+    public int currentVideoWidth = 0;
+    public int currentVideoHeight = 0;
 
     public static JCMediaPlayer intance() {
         if (jcMediaPlayer == null) {
@@ -96,9 +98,16 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
 
     @Override
     public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_RESIZE);
-        videoEvents.obj = width;
-        videoEvents.obj1 = height;
-        EventBus.getDefault().post(videoEvents);
+        currentVideoWidth = mp.getVideoWidth();
+        currentVideoHeight = mp.getVideoHeight();
+//        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_RESIZE);
+//        videoEvents.obj = width;
+//        videoEvents.obj1 = height;
+//        EventBus.getDefault().post(videoEvents);
+    }
+
+    public void clearWidthAndHeight() {
+        currentVideoWidth = 0;
+        currentVideoHeight = 0;
     }
 }

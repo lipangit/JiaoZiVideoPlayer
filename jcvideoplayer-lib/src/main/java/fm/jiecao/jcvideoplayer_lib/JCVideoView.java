@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,11 +33,12 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     ImageView ivFullScreen;
     SeekBar sbProgress;
     TextView tvTimeCurrent, tvTimeTotal;
-    SurfaceView surfaceView;
+    ResizeSurfaceView surfaceView;
     SurfaceHolder surfaceHolder;
     LinearLayout llBottomControl;
     TextView tvTitle;
     ImageView ivThumb;
+    RelativeLayout rlParent;
 
     //这个组件的四个属性
     public String url;
@@ -72,10 +72,12 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
-        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
+        surfaceView = (ResizeSurfaceView) findViewById(R.id.surfaceView);
         llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
         tvTitle = (TextView) findViewById(R.id.title);
         ivThumb = (ImageView) findViewById(R.id.thumb);
+        rlParent = (RelativeLayout) findViewById(R.id.parentview);
+
 //        surfaceView.setZOrderOnTop(true);
 //        surfaceView.setBackgroundColor(R.color.black_a10_color);
         surfaceHolder = surfaceView.getHolder();
@@ -86,6 +88,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         surfaceHolder.addCallback(this);
         surfaceView.setOnClickListener(this);
         llBottomControl.setOnClickListener(this);
+        rlParent.setOnClickListener(this);
     }
 
     /**
@@ -143,6 +146,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         if (i == R.id.start || i == R.id.thumb) {
             //点击缩略图或播放按钮。1.如果在normal模式准备视频，如果在播放模式就暂停，如果在暂停就播放，如果在prepare下不可能有这情况。
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
+                JCMediaPlayer.intance().clearWidthAndHeight();
                 //进入准备状态，开始缓冲视频
                 CURRENT_STATE = CURRENT_STATE_PREPAREING;
                 ivStart.setVisibility(View.INVISIBLE);
@@ -155,6 +159,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_START);
                 videoEvents.obj = uuid;
                 EventBus.getDefault().post(videoEvents);
+                surfaceView.requestLayout();
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
                 ivThumb.setVisibility(View.INVISIBLE);
@@ -178,43 +183,49 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
         } else if (i == R.id.surfaceView) {
-            if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
-                if (llBottomControl.getVisibility() == View.VISIBLE) {
-                    llBottomControl.setVisibility(View.INVISIBLE);
-                    tvTitle.setVisibility(View.INVISIBLE);
-                } else {
-                    llBottomControl.setVisibility(View.VISIBLE);
-                    tvTitle.setVisibility(View.VISIBLE);
-                }
-                ivStart.setVisibility(View.INVISIBLE);
-                pbLoading.setVisibility(View.VISIBLE);
-            } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
-                if (llBottomControl.getVisibility() == View.VISIBLE) {
-                    llBottomControl.setVisibility(View.INVISIBLE);
-                    tvTitle.setVisibility(View.INVISIBLE);
-                    ivStart.setVisibility(View.INVISIBLE);
-                } else {
-                    updateStartImage();
-                    ivStart.setVisibility(View.VISIBLE);
-                    llBottomControl.setVisibility(View.VISIBLE);
-                    tvTitle.setVisibility(View.VISIBLE);
-                }
-                pbLoading.setVisibility(View.INVISIBLE);
-            } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
-                if (llBottomControl.getVisibility() == View.VISIBLE) {
-                    llBottomControl.setVisibility(View.INVISIBLE);
-                    tvTitle.setVisibility(View.INVISIBLE);
-                    ivStart.setVisibility(View.INVISIBLE);
-                } else {
-                    updateStartImage();
-                    ivStart.setVisibility(View.VISIBLE);
-                    llBottomControl.setVisibility(View.VISIBLE);
-                    tvTitle.setVisibility(View.VISIBLE);
-                }
-                pbLoading.setVisibility(View.INVISIBLE);
-            }
+            taggleClear();
         } else if (i == R.id.bottom_control) {
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+        } else if (i == R.id.parentview) {
+            taggleClear();
+        }
+    }
+
+    private void taggleClear() {
+        if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
+            if (llBottomControl.getVisibility() == View.VISIBLE) {
+                llBottomControl.setVisibility(View.INVISIBLE);
+                tvTitle.setVisibility(View.INVISIBLE);
+            } else {
+                llBottomControl.setVisibility(View.VISIBLE);
+                tvTitle.setVisibility(View.VISIBLE);
+            }
+            ivStart.setVisibility(View.INVISIBLE);
+            pbLoading.setVisibility(View.VISIBLE);
+        } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+            if (llBottomControl.getVisibility() == View.VISIBLE) {
+                llBottomControl.setVisibility(View.INVISIBLE);
+                tvTitle.setVisibility(View.INVISIBLE);
+                ivStart.setVisibility(View.INVISIBLE);
+            } else {
+                updateStartImage();
+                ivStart.setVisibility(View.VISIBLE);
+                llBottomControl.setVisibility(View.VISIBLE);
+                tvTitle.setVisibility(View.VISIBLE);
+            }
+            pbLoading.setVisibility(View.INVISIBLE);
+        } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
+            if (llBottomControl.getVisibility() == View.VISIBLE) {
+                llBottomControl.setVisibility(View.INVISIBLE);
+                tvTitle.setVisibility(View.INVISIBLE);
+                ivStart.setVisibility(View.INVISIBLE);
+            } else {
+                updateStartImage();
+                ivStart.setVisibility(View.VISIBLE);
+                llBottomControl.setVisibility(View.VISIBLE);
+                tvTitle.setVisibility(View.VISIBLE);
+            }
+            pbLoading.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -295,26 +306,31 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 isFromFullScreenBackHere = false;
             }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_RESIZE) {
-            double width = 720;//Integer.valueOf(videoEvents.obj.toString());
-            double height = 80;// Integer.valueOf(videoEvents.obj1.toString());
-
-            double viewWidth = surfaceView.getWidth();
-            double viewHeight = surfaceView.getHeight();
-
-            double ll = viewWidth / viewHeight;
-            double hh = width / height;
-            if (ll < hh) {
-                //宽不变
-                viewHeight = viewHeight * width / viewWidth;
-            } else {
-                //高不变
-                viewWidth = viewWidth * height / viewHeight;
+//            double width = Integer.valueOf(videoEvents.obj.toString());
+//            double height = Integer.valueOf(videoEvents.obj1.toString());
+//            System.out.println("resize :: 1 " + width + " " + height);
+//            double viewWidth = rlParent.getWidth();
+//            double viewHeight = rlParent.getHeight();
+//            System.out.println("resize :: 2 " + viewWidth + " " + viewHeight);
+//            double ll = viewWidth / viewHeight;
+//            double hh = width / height;
+//            if (ll < hh) {
+//                //宽不变
+//                viewHeight = viewWidth * height / width;
+//            } else {
+//                //高不变
+//                viewWidth = viewHeight * width / height;
+//            }
+//            System.out.println("resize :: 3 " + viewWidth + " " + viewHeight);
+//            ViewGroup.LayoutParams lp = surfaceView.getLayoutParams();
+//            lp.height = 400;//(int) viewHeight;
+//            lp.width = 80;//(int) viewWidth;
+            int mVideoWidth = JCMediaPlayer.intance().currentVideoWidth;
+            int mVideoHeight = JCMediaPlayer.intance().currentVideoHeight;
+            if (mVideoWidth != 0 && mVideoHeight != 0) {
+//                surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
+                surfaceView.requestLayout();
             }
-
-            ViewGroup.LayoutParams lp = surfaceView.getLayoutParams();
-            lp.height = (int) viewHeight;
-            lp.width = (int) viewWidth;
-
             System.out.println("haha");
         }
     }
@@ -380,6 +396,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         if (ifFullScreen) {
             Toast.makeText(getContext(), "进入全屏，显示图像" + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+            surfaceView.requestLayout();
         }
 
     }
