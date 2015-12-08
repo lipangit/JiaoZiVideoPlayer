@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,7 +37,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     LinearLayout llBottomControl;
     TextView tvTitle;
     ImageView ivThumb;
-    RelativeLayout rlParent;
+    LinearLayout rlParent;
 
     //这个组件的四个属性
     public String url;
@@ -76,7 +75,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
         tvTitle = (TextView) findViewById(R.id.title);
         ivThumb = (ImageView) findViewById(R.id.thumb);
-        rlParent = (RelativeLayout) findViewById(R.id.parentview);
+        rlParent = (LinearLayout) findViewById(R.id.parentview);
 
 //        surfaceView.setZOrderOnTop(true);
 //        surfaceView.setBackgroundColor(R.color.black_a10_color);
