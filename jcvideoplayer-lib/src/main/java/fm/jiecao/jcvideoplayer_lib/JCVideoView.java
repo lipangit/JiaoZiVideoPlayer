@@ -357,6 +357,12 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
     boolean isClickFullscreen = false;
 
+    public void release() {
+        //将状态设为普通
+        setState(CURRENT_STATE_NORMAL);
+        //回收surfaceview，或画黑板
+    }
+
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
