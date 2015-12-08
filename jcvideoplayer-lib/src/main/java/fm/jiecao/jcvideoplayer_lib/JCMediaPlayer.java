@@ -100,10 +100,7 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
     public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
         currentVideoWidth = mp.getVideoWidth();
         currentVideoHeight = mp.getVideoHeight();
-//        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_RESIZE);
-//        videoEvents.obj = width;
-//        videoEvents.obj1 = height;
-//        EventBus.getDefault().post(videoEvents);
+        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_RESIZE));
     }
 
     public void clearWidthAndHeight() {
