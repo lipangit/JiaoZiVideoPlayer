@@ -56,6 +56,11 @@ public class FullScreenActivity extends Activity {
     }
 
     @Override
+    public void onBackPressed() {
+        jcVideoView.quitFullScreen();
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);

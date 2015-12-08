@@ -169,14 +169,11 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 
         } else if (i == R.id.fullscreen) {
             //此时如果是loading，正在播放，暂停
-            JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
             if (ifFullScreen) {
                 //退出全屏
-                JCMediaPlayer.intance().revertUuid();
-                VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN);
-                videoEvents.obj = CURRENT_STATE;
-                EventBus.getDefault().post(videoEvents);
+                quitFullScreen();
             } else {
+                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
                 isClickFullscreen = true;
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
@@ -219,6 +216,14 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         } else if (i == R.id.bottom_control) {
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
         }
+    }
+
+    public void quitFullScreen() {
+        JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
+        JCMediaPlayer.intance().revertUuid();
+        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN);
+        videoEvents.obj = CURRENT_STATE;
+        EventBus.getDefault().post(videoEvents);
     }
 
     private void updateStartImage() {
@@ -309,8 +314,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             ViewGroup.LayoutParams lp = surfaceView.getLayoutParams();
             lp.height = (int) viewHeight;
             lp.width = (int) viewWidth;
-            surfaceView.setLayoutParams(lp);
-            surfaceView.invalidate();
 
             System.out.println("haha");
         }
