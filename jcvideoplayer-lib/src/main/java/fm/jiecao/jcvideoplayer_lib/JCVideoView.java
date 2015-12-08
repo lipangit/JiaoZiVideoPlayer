@@ -2,6 +2,7 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -88,6 +89,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         surfaceView.setOnClickListener(this);
         llBottomControl.setOnClickListener(this);
         rlParent.setOnClickListener(this);
+
     }
 
     /**
@@ -363,6 +365,12 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         //回收surfaceview，或画黑板
     }
 
+    public void drawBlack() {//给surfaceview填充背景或图片
+        Canvas canvas = surfaceHolder.lockCanvas();
+        canvas.drawColor(R.color.biz_audio_progress_second);
+        surfaceHolder.unlockCanvasAndPost(canvas);
+    }
+
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
@@ -397,10 +405,32 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     public void surfaceCreated(SurfaceHolder holder) {
         //TODO MediaPlayer set holder,MediaPlayer prepareToPlay
         EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_CREATED));
+//        drawBlack();
 
         if (ifFullScreen) {
             Toast.makeText(getContext(), "进入全屏，显示图像" + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+
+            JCMediaPlayer.intance().mediaPlayer.start();
+//            JCMediaPlayer.intance().mediaPlayer.stop();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+//                try {
+//                    Thread.sleep(50);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+                    ((Activity) getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "显示图像 " + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
+                            JCMediaPlayer.intance().mediaPlayer.pause();
+
+                        }
+                    });
+                }
+            }).start();
             surfaceView.requestLayout();
         }
 
