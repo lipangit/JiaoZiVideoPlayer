@@ -209,16 +209,19 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 videoEvents.obj = uuid;
                 EventBus.getDefault().post(videoEvents);
                 surfaceView.requestLayout();
+                setKeepScreenOn(true);
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
                 ivThumb.setVisibility(View.INVISIBLE);
                 JCMediaPlayer.intance().mediaPlayer.pause();
                 updateStartImage();
+                setKeepScreenOn(false);
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 CURRENT_STATE = CURRENT_STATE_PLAYING;
                 ivThumb.setVisibility(View.INVISIBLE);
                 JCMediaPlayer.intance().mediaPlayer.start();
                 updateStartImage();
+                setKeepScreenOn(true);
             }
 
         } else if (i == R.id.fullscreen) {
@@ -232,15 +235,15 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
         } else if (i == R.id.surfaceView) {
-            taggleClear();
+            toggleClear();
         } else if (i == R.id.bottom_control) {
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
         } else if (i == R.id.parentview) {
-            taggleClear();
+            toggleClear();
         }
     }
 
-    private void taggleClear() {
+    private void toggleClear() {
         if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
                 llBottomControl.setVisibility(View.INVISIBLE);
@@ -320,6 +323,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 //            surfaceView.setBackgroundColor(R.color.black_a10_color);
                 CURRENT_STATE = CURRENT_STATE_NORMAL;
             }
+            setKeepScreenOn(false);
         }
         if (!JCMediaPlayer.intance().uuid.equals(uuid)) {
             if (videoEvents.type == VideoEvents.VE_START) {
