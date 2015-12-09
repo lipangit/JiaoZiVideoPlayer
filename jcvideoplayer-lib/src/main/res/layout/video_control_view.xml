@@ -40,7 +40,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="01:11"
+            android:text="00:00"
             android:textColor="#ffffff" />
 
 
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:gravity="center"
-            android:text="10:11"
+            android:text="00:00"
             android:textColor="#ffffff" />
 
         <ImageView

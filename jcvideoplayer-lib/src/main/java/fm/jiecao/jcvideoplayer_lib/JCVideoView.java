@@ -2,7 +2,6 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -75,7 +74,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         pbLoading = (ProgressBar) findViewById(R.id.loading);
         ivFullScreen = (ImageView) findViewById(R.id.fullscreen);
         sbProgress = (SeekBar) findViewById(R.id.progress);
-        tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
         surfaceView = (ResizeSurfaceView) findViewById(R.id.surfaceView);
@@ -288,7 +286,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     private void setProgressAndTimeFromMediaPlayer(int secProgress) {
         final int position = JCMediaPlayer.intance().mediaPlayer.getCurrentPosition();
         final int duration = JCMediaPlayer.intance().mediaPlayer.getDuration();
-        System.out.println("onBufferingUpdate " + secProgress + " " + position + " " + duration + " " + uuid + " " + JCMediaPlayer.intance().uuid);
         int progress = position * 100 / duration;
         setProgressAndTime(progress, secProgress, position, duration);
     }
@@ -385,11 +382,11 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         //回收surfaceview，或画黑板
     }
 
-    public void drawBlack() {//给surfaceview填充背景或图片
-        Canvas canvas = surfaceHolder.lockCanvas();
-        canvas.drawColor(R.color.biz_audio_progress_second);
-        surfaceHolder.unlockCanvasAndPost(canvas);
-    }
+//    public void drawBlack() {//给surfaceview填充背景或图片
+//        Canvas canvas = surfaceHolder.lockCanvas();
+//        canvas.drawColor(R.color.biz_audio_progress_second);
+//        surfaceHolder.unlockCanvasAndPost(canvas);
+//    }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -472,6 +469,9 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     }
 
     private String stringForTime(int timeMs) {
+        if (timeMs <= 0) {
+            return "00:00";
+        }
         int totalSeconds = timeMs / 1000;
         int seconds = totalSeconds % 60;
         int minutes = (totalSeconds / 60) % 60;
