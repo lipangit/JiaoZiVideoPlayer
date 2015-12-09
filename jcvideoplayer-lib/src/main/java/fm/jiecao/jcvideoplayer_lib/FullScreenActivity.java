@@ -16,6 +16,7 @@ import de.greenrobot.event.EventBus;
  */
 public class FullScreenActivity extends Activity {
     /**
+     * TODO 可能有需求直接进入全屏，退出就退出播放，没有非全屏的需求
      * state是当前的播放状态，全屏之后要继续原来的状态
      */
     public static void toActivity(Context context, int state, String url, String thumb, String title) {

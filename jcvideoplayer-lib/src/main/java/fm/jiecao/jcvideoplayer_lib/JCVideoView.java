@@ -99,6 +99,9 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 
     }
 
+    /**
+     * @param ifShowTitle 在非全屏模式下是否显示标题
+     */
     public void setUp(String url, String thumb, String title, boolean ifFullScreen, boolean ifShowTitle) {
         setIfShowTitle(ifShowTitle);
         setUp(url, thumb, title, ifFullScreen);
