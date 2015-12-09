@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         videoController2 = (JCVideoView) findViewById(R.id.videocontroller2);
         videoController2.setUp("http://2449.vod.myqcloud.com/2449_a80a72289b1211e5a28d6dc08193c3c9.f20.mp4",
                 "http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1449294460.jpg",
-                "嫂子还摸我", false);
+                "嫂子还摸我", false, false);
 
     }
 }

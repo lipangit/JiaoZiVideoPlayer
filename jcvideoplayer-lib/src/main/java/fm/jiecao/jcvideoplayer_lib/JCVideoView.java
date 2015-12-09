@@ -39,6 +39,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     TextView tvTitle;
     ImageView ivThumb;
     LinearLayout rlParent;
+    LinearLayout llTitlebg;
 
     //这个组件的四个属性
     public String url;
@@ -46,6 +47,11 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     public String title;
     public boolean ifFullScreen = false;
     public String uuid;//区别相同地址,包括全屏和不全屏，和都不全屏时的相同地址
+
+    /**
+     * 是否显示标题
+     */
+    public boolean ifShowTitle = true;
     /**
      * 为了保证全屏和退出全屏之后的状态和之前一样
      */
@@ -77,6 +83,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         tvTitle = (TextView) findViewById(R.id.title);
         ivThumb = (ImageView) findViewById(R.id.thumb);
         rlParent = (LinearLayout) findViewById(R.id.parentview);
+        llTitlebg = (LinearLayout) findViewById(R.id.titlebg);
 
 //        surfaceView.setZOrderOnTop(true);
 //        surfaceView.setBackgroundColor(R.color.black_a10_color);
@@ -90,6 +97,11 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         llBottomControl.setOnClickListener(this);
         rlParent.setOnClickListener(this);
 
+    }
+
+    public void setUp(String url, String thumb, String title, boolean ifFullScreen, boolean ifShowTitle) {
+        setIfShowTitle(ifShowTitle);
+        setUp(url, thumb, title, ifFullScreen);
     }
 
     /**
@@ -108,6 +120,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         tvTitle.setText(title);
         ImageLoader.getInstance().displayImage(thumb, ivThumb);
         CURRENT_STATE = CURRENT_STATE_NORMAL;
+        setTitleVisibility(View.VISIBLE);
     }
 
     public void setState(int state) {
@@ -122,13 +135,13 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             updateStartImage();
             ivStart.setVisibility(View.VISIBLE);
             llBottomControl.setVisibility(View.VISIBLE);
-            tvTitle.setVisibility(View.VISIBLE);
+            setTitleVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             updateStartImage();
             ivStart.setVisibility(View.VISIBLE);
             llBottomControl.setVisibility(View.VISIBLE);
-            tvTitle.setVisibility(View.VISIBLE);
+            setTitleVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
             ivStart.setVisibility(View.VISIBLE);
@@ -141,6 +154,22 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     public void setSeekbarOnTouchListener(OnTouchListener listener) {
         if (sbProgress != null) {
             sbProgress.setOnTouchListener(listener);
+        }
+    }
+
+    public void setIfShowTitle(boolean ifShowTitle) {
+        this.ifShowTitle = ifShowTitle;
+    }
+
+    private void setTitleVisibility(int visable) {
+        if (ifShowTitle) {//全屏的时候要一直标题的
+            llTitlebg.setVisibility(visable);
+        } else {
+            if (ifFullScreen) {
+                llTitlebg.setVisibility(visable);
+            } else {
+                llTitlebg.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -202,35 +231,35 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
                 llBottomControl.setVisibility(View.INVISIBLE);
-                tvTitle.setVisibility(View.INVISIBLE);
+                setTitleVisibility(View.INVISIBLE);
             } else {
                 llBottomControl.setVisibility(View.VISIBLE);
-                tvTitle.setVisibility(View.VISIBLE);
+                setTitleVisibility(View.VISIBLE);
             }
             ivStart.setVisibility(View.INVISIBLE);
             pbLoading.setVisibility(View.VISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
                 llBottomControl.setVisibility(View.INVISIBLE);
-                tvTitle.setVisibility(View.INVISIBLE);
+                setTitleVisibility(View.INVISIBLE);
                 ivStart.setVisibility(View.INVISIBLE);
             } else {
                 updateStartImage();
                 ivStart.setVisibility(View.VISIBLE);
                 llBottomControl.setVisibility(View.VISIBLE);
-                tvTitle.setVisibility(View.VISIBLE);
+                setTitleVisibility(View.VISIBLE);
             }
             pbLoading.setVisibility(View.INVISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
                 llBottomControl.setVisibility(View.INVISIBLE);
-                tvTitle.setVisibility(View.INVISIBLE);
+                setTitleVisibility(View.INVISIBLE);
                 ivStart.setVisibility(View.INVISIBLE);
             } else {
                 updateStartImage();
                 ivStart.setVisibility(View.VISIBLE);
                 llBottomControl.setVisibility(View.VISIBLE);
-                tvTitle.setVisibility(View.VISIBLE);
+                setTitleVisibility(View.VISIBLE);
             }
             pbLoading.setVisibility(View.INVISIBLE);
         }
