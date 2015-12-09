@@ -482,7 +482,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     }
 
     private String stringForTime(int timeMs) {
-        if (timeMs <= 0) {
+        if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
             return "00:00";
         }
         int totalSeconds = timeMs / 1000;
