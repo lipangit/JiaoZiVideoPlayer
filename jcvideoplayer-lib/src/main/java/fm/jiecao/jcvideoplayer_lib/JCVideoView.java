@@ -150,6 +150,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         } else if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
             ivStart.setVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.VISIBLE);
+            llBottomControl.setVisibility(View.INVISIBLE);
             updateStartImage();
         }
 
