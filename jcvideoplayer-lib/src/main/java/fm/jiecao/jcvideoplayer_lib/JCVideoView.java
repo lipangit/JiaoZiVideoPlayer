@@ -3,6 +3,7 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -17,6 +18,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.Formatter;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import de.greenrobot.event.EventBus;
@@ -61,6 +64,8 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     public static final int CURRENT_STATE_PLAYING = 2;
     public static final int CURRENT_STATE_OVER = 3;//这个状态可能不需要，播放完毕就进入normal状态
     public static final int CURRENT_STATE_NORMAL = 4;//刚初始化之后
+    private OnTouchListener mSeekbarOnTouchListener;
+    private Timer mDismissControlViewTimer;
 
 
     public JCVideoView(Context context, AttributeSet attrs) {
@@ -100,6 +105,26 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             @Override
             public void onClick(View v) {
                 quitFullScreen();
+            }
+        });
+
+        sbProgress.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        cancelDismissControlViewTimer();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        startDismissControlViewTimer();
+                        break;
+                }
+
+                if (mSeekbarOnTouchListener != null) {
+                    mSeekbarOnTouchListener.onTouch(v, event);
+                }
+                return false;
             }
         });
 
@@ -160,14 +185,46 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             ivThumb.setVisibility(View.VISIBLE);
             llBottomControl.setVisibility(View.INVISIBLE);
             updateStartImage();
+            cancelDismissControlViewTimer();
         }
 
     }
 
     public void setSeekbarOnTouchListener(OnTouchListener listener) {
-        if (sbProgress != null) {
-            sbProgress.setOnTouchListener(listener);
+        mSeekbarOnTouchListener = listener;
+    }
+
+    private void startDismissControlViewTimer() {
+        if (mDismissControlViewTimer != null) {
+            mDismissControlViewTimer.cancel();
         }
+        mDismissControlViewTimer = new Timer();
+        mDismissControlViewTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (getContext() != null && getContext() instanceof Activity) {
+                    ((Activity) getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            dismissControlView();
+                        }
+                    });
+                }
+            }
+        }, 3000);
+    }
+
+    private void cancelDismissControlViewTimer() {
+        if (mDismissControlViewTimer != null) {
+            mDismissControlViewTimer.cancel();
+        }
+    }
+
+    private void dismissControlView() {
+        llBottomControl.setVisibility(View.INVISIBLE);
+        setTitleVisibility(View.INVISIBLE);
+        ivStart.setVisibility(View.INVISIBLE);
+        pbLoading.setVisibility(View.INVISIBLE);
     }
 
     public void setIfShowTitle(boolean ifShowTitle) {
@@ -216,12 +273,14 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 JCMediaPlayer.intance().mediaPlayer.pause();
                 updateStartImage();
                 setKeepScreenOn(false);
+                cancelDismissControlViewTimer();
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 CURRENT_STATE = CURRENT_STATE_PLAYING;
                 ivThumb.setVisibility(View.INVISIBLE);
                 JCMediaPlayer.intance().mediaPlayer.start();
                 updateStartImage();
                 setKeepScreenOn(true);
+                startDismissControlViewTimer();
             }
 
         } else if (i == R.id.fullscreen) {
@@ -234,12 +293,11 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 isClickFullscreen = true;
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
-        } else if (i == R.id.surfaceView) {
+        } else if (i == R.id.surfaceView || i == R.id.parentview) {
             toggleClear();
+            startDismissControlViewTimer();
         } else if (i == R.id.bottom_control) {
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
-        } else if (i == R.id.parentview) {
-            toggleClear();
         }
     }
 
@@ -339,6 +397,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             pbLoading.setVisibility(View.INVISIBLE);
             llBottomControl.setVisibility(View.VISIBLE);
             CURRENT_STATE = CURRENT_STATE_PLAYING;
+            startDismissControlViewTimer();
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE) {
             if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
                 int percent = Integer.valueOf(videoEvents.obj.toString());
@@ -366,7 +425,6 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
                 surfaceView.requestLayout();
             }
-            System.out.println("haha");
         }
     }
 
@@ -427,6 +485,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         EventBus.getDefault().unregister(this);
+        cancelDismissControlViewTimer();
     }
 
     @Override
@@ -442,9 +501,11 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 //        drawBlack();
 
         if (ifFullScreen) {
-            Toast.makeText(getContext(), "进入全屏，显示图像" + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
             stopToFullscreenOrQuitFullscreenShowDisplay();
+        }
+        if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
+            startDismissControlViewTimer();
         }
 
     }
