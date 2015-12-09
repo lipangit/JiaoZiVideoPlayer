@@ -138,6 +138,12 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 
     }
 
+    public void setSeekbarOnTouchListener(OnTouchListener listener) {
+        if (sbProgress != null) {
+            sbProgress.setOnTouchListener(listener);
+        }
+    }
+
     /**
      * 目前认为详细的判断和重复的设置是有相当必要的,也可以包装成方法
      */
