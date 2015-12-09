@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 import android.view.SurfaceView;
 
 /**
+ * 自适应视频大小的surfaceview
  * Created by Nathen
  * On 2015/12/08 10:58
  */
@@ -19,7 +20,7 @@ public class ResizeSurfaceView extends SurfaceView {
         //        + MeasureSpec.toString(heightMeasureSpec) + ")");
         int mVideoWidth = JCMediaPlayer.intance().currentVideoWidth;
         int mVideoHeight = JCMediaPlayer.intance().currentVideoHeight;
-        
+
         int width = getDefaultSize(mVideoWidth, widthMeasureSpec);
         int height = getDefaultSize(mVideoHeight, heightMeasureSpec);
         if (mVideoWidth > 0 && mVideoHeight > 0) {

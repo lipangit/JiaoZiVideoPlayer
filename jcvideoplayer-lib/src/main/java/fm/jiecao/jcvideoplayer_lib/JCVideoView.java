@@ -304,32 +304,14 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                 //200ms播放视频,,这里奇怪了一阵子。
 //                delaySetdisplay();
                 JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+                stopToFullscreenOrQuitFullscreenShowDisplay();
                 isFromFullScreenBackHere = false;
             }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_RESIZE) {
-//            double width = Integer.valueOf(videoEvents.obj.toString());
-//            double height = Integer.valueOf(videoEvents.obj1.toString());
-//            System.out.println("resize :: 1 " + width + " " + height);
-//            double viewWidth = rlParent.getWidth();
-//            double viewHeight = rlParent.getHeight();
-//            System.out.println("resize :: 2 " + viewWidth + " " + viewHeight);
-//            double ll = viewWidth / viewHeight;
-//            double hh = width / height;
-//            if (ll < hh) {
-//                //宽不变
-//                viewHeight = viewWidth * height / width;
-//            } else {
-//                //高不变
-//                viewWidth = viewHeight * width / height;
-//            }
-//            System.out.println("resize :: 3 " + viewWidth + " " + viewHeight);
-//            ViewGroup.LayoutParams lp = surfaceView.getLayoutParams();
-//            lp.height = 400;//(int) viewHeight;
-//            lp.width = 80;//(int) viewWidth;
             int mVideoWidth = JCMediaPlayer.intance().currentVideoWidth;
             int mVideoHeight = JCMediaPlayer.intance().currentVideoHeight;
             if (mVideoWidth != 0 && mVideoHeight != 0) {
-//                surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
+                surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
                 surfaceView.requestLayout();
             }
             System.out.println("haha");
@@ -410,9 +392,15 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         if (ifFullScreen) {
             Toast.makeText(getContext(), "进入全屏，显示图像" + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+            stopToFullscreenOrQuitFullscreenShowDisplay();
+        }
 
+    }
+
+    private void stopToFullscreenOrQuitFullscreenShowDisplay() {
+        if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             JCMediaPlayer.intance().mediaPlayer.start();
-//            JCMediaPlayer.intance().mediaPlayer.stop();
+            CURRENT_STATE = CURRENT_STATE_PLAYING;
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -426,14 +414,13 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
                         public void run() {
                             Toast.makeText(getContext(), "显示图像 " + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
                             JCMediaPlayer.intance().mediaPlayer.pause();
-
+                            CURRENT_STATE = CURRENT_STATE_PAUSE;
                         }
                     });
                 }
             }).start();
             surfaceView.requestLayout();
         }
-
     }
 
     @Override
