@@ -38,7 +38,8 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     TextView tvTitle;
     ImageView ivThumb;
     LinearLayout rlParent;
-    LinearLayout llTitlebg;
+    LinearLayout llTitleContainer;
+
 
     //这个组件的四个属性
     public String url;
@@ -50,7 +51,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     /**
      * 是否显示标题
      */
-    public boolean ifShowTitle = true;
+    public boolean ifShowTitle = false;
     /**
      * 为了保证全屏和退出全屏之后的状态和之前一样
      */
@@ -81,7 +82,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         tvTitle = (TextView) findViewById(R.id.title);
         ivThumb = (ImageView) findViewById(R.id.thumb);
         rlParent = (LinearLayout) findViewById(R.id.parentview);
-        llTitlebg = (LinearLayout) findViewById(R.id.titlebg);
+        llTitleContainer = (LinearLayout) findViewById(R.id.title_container);
 
 //        surfaceView.setZOrderOnTop(true);
 //        surfaceView.setBackgroundColor(R.color.black_a10_color);
@@ -94,6 +95,13 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
         surfaceView.setOnClickListener(this);
         llBottomControl.setOnClickListener(this);
         rlParent.setOnClickListener(this);
+
+        findViewById(R.id.back).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                quitFullScreen();
+            }
+        });
 
     }
 
@@ -168,12 +176,12 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
 
     private void setTitleVisibility(int visable) {
         if (ifShowTitle) {//全屏的时候要一直标题的
-            llTitlebg.setVisibility(visable);
+            llTitleContainer.setVisibility(visable);
         } else {
             if (ifFullScreen) {
-                llTitlebg.setVisibility(visable);
+                llTitleContainer.setVisibility(visable);
             } else {
-                llTitlebg.setVisibility(View.INVISIBLE);
+                llTitleContainer.setVisibility(View.INVISIBLE);
             }
         }
     }

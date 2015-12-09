@@ -94,20 +94,27 @@
         android:layout_alignParentTop="true" />
 
     <LinearLayout
-        android:id="@+id/titlebg"
+        android:id="@+id/title_container"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@drawable/biz_video_bar_bg"
+        android:layout_height="48dp"
+        android:background="@drawable/title_gradient_bg"
         android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_back_white"
+            android:scaleType="centerInside"
+            android:paddingLeft="10dp"
+            />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="18dp"
-            android:text="视频名字：嫂子别摸我"
-            android:textColor="#ffffff"
-            android:textSize="17sp" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp" />
     </LinearLayout>
 
 
