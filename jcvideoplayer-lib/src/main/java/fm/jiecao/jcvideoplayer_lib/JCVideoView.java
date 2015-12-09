@@ -333,6 +333,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
             JCMediaPlayer.intance().mediaPlayer.start();
             pbLoading.setVisibility(View.INVISIBLE);
+            llBottomControl.setVisibility(View.VISIBLE);
             CURRENT_STATE = CURRENT_STATE_PLAYING;
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE) {
             if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
