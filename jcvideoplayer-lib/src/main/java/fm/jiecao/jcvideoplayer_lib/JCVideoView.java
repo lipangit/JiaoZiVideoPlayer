@@ -119,6 +119,9 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
             ivFullScreen.setImageResource(R.drawable.enlarge_video);
         }
         tvTitle.setText(title);
+        ivThumb.setVisibility(View.VISIBLE);
+        ivStart.setVisibility(View.VISIBLE);
+        llBottomControl.setVisibility(View.GONE);
         ImageLoader.getInstance().displayImage(thumb, ivThumb);
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
