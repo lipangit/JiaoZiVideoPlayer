@@ -20,8 +20,8 @@ class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCom
 
     public MediaPlayer mediaPlayer;
     private static JCMediaPlayer jcMediaPlayer;
-    public String uuid;//这个是正在播放中的视频控件的uuid，
-    private String prev_uuid;
+    public String uuid = "";//这个是正在播放中的视频控件的uuid，
+    private String prev_uuid = "";
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
 

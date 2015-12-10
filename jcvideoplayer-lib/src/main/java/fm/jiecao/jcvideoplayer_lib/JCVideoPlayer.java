@@ -374,15 +374,15 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     public void onEventMainThread(VideoEvents videoEvents) {
         if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
-            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) {
-                ivStart.setImageResource(R.drawable.click_video_play_selector);
-                ivThumb.setVisibility(View.VISIBLE);
-                ivStart.setVisibility(View.VISIBLE);
+//            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+            ivStart.setImageResource(R.drawable.click_video_play_selector);
+            ivThumb.setVisibility(View.VISIBLE);
+            ivStart.setVisibility(View.VISIBLE);
 //                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
-                //TODO 这里要将背景置黑，
+            //TODO 这里要将背景置黑，
 //            surfaceView.setBackgroundColor(R.color.black_a10_color);
-                CURRENT_STATE = CURRENT_STATE_NORMAL;
-            }
+            CURRENT_STATE = CURRENT_STATE_NORMAL;
+//            }
             setKeepScreenOn(false);
         }
         if (!JCMediaPlayer.intance().uuid.equals(uuid)) {
@@ -562,6 +562,18 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             return mFormatter.format("%d:%02d:%02d", hours, minutes, seconds).toString();
         } else {
             return mFormatter.format("%02d:%02d", minutes, seconds).toString();
+        }
+    }
+
+    /**
+     * 停止所有音频的播放
+     */
+    public static void releaseAllVideo() {
+        if (JCMediaPlayer.intance().mediaPlayer.isPlaying()) {
+            JCMediaPlayer.intance().mediaPlayer.stop();
+            JCMediaPlayer.intance().setUuid("");
+            JCMediaPlayer.intance().setUuid("");
+            EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
         }
     }
 }
