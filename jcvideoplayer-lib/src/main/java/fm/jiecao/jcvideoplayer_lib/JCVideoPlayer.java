@@ -28,7 +28,7 @@ import de.greenrobot.event.EventBus;
  * Created by Nathen
  * On 2015/11/30 11:59
  */
-public class JCVideoView extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback {
+public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback {
 
     ImageView ivStart;
     ProgressBar pbLoading;
@@ -68,7 +68,7 @@ public class JCVideoView extends FrameLayout implements View.OnClickListener, Se
     private Timer mDismissControlViewTimer;
 
 
-    public JCVideoView(Context context, AttributeSet attrs) {
+    public JCVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
         uuid = UUID.randomUUID().toString();
         init(context);

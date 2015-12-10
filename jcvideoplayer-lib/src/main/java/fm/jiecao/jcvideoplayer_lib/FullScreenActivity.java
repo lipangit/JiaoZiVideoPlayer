@@ -28,7 +28,7 @@ public class FullScreenActivity extends Activity {
         context.startActivity(intent);
     }
 
-    JCVideoView jcVideoView;
+    JCVideoPlayer jcVideoView;
     /**
      * 刚启动全屏时的播放状态
      */
@@ -44,7 +44,7 @@ public class FullScreenActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_fullscreen);
-        jcVideoView = (JCVideoView) findViewById(R.id.jcvideoview);
+        jcVideoView = (JCVideoPlayer) findViewById(R.id.jcvideoview);
         jcVideoView.setUp(URL, THUMB, TITLE, true);
         jcVideoView.setState(STATE);
         JCMediaPlayer.intance().setUuid(jcVideoView.uuid);

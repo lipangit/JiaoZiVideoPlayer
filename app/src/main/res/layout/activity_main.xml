@@ -8,12 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="fm.jiecao.jiecaovideoplayer.MainActivity">
 
-    <fm.jiecao.jcvideoplayer_lib.JCVideoView
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
         android:id="@+id/videocontroller1"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 
-    <fm.jiecao.jcvideoplayer_lib.JCVideoView
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
         android:id="@+id/videocontroller2"
         android:layout_width="match_parent"
         android:layout_height="200dp"
