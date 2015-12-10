@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -81,10 +82,10 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
     }
 
     public void setUuid(String uuid) {
-        System.out.println("uuid::0 " + uuid + " prevuuid " + prev_uuid);
+        Log.i("uuid::", "0 " + uuid + " prevuuid " + prev_uuid);
         backUpUuid();
         this.uuid = uuid;
-        System.out.println("uuid::1 " + uuid + " prevuuid " + prev_uuid);
+        Log.i("uuid::", "1 " + uuid + " prevuuid " + prev_uuid);
     }
 
     public void backUpUuid() {
@@ -93,7 +94,7 @@ public class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlaye
 
     public void revertUuid() {
         this.uuid = this.prev_uuid;
-        System.out.println("uuid::2 " + uuid + " prevuuid " + prev_uuid);
+        Log.i("uuid::", "2 " + uuid + " prevuuid " + prev_uuid);
     }
 
     @Override
