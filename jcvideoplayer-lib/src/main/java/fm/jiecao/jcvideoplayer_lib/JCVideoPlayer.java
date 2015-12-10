@@ -488,6 +488,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         super.onDetachedFromWindow();
         EventBus.getDefault().unregister(this);
         cancelDismissControlViewTimer();
+        if (uuid.equals(JCMediaPlayer.intance().uuid)) {
+            JCMediaPlayer.intance().mediaPlayer.stop();
+        }
     }
 
     @Override
