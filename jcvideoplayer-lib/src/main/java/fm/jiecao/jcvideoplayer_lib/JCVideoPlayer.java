@@ -155,6 +155,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ivThumb.setVisibility(View.VISIBLE);
         ivStart.setVisibility(View.VISIBLE);
         llBottomControl.setVisibility(View.GONE);
+
+        ivThumb.setImageResource(R.drawable.ic_logo_small);
         ImageLoader.getInstance().displayImage(thumb, ivThumb);
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
