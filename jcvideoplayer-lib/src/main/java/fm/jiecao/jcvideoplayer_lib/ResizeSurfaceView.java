@@ -1,6 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
+import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
@@ -12,6 +13,7 @@ import android.view.SurfaceView;
 public class ResizeSurfaceView extends SurfaceView {
     public ResizeSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        getHolder().setFormat(PixelFormat.TRANSPARENT);
     }
 
     @Override
