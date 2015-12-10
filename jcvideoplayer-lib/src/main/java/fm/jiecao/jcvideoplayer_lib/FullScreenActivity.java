@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import de.greenrobot.event.EventBus;
 
 /**
+ * 可能会有直接全屏显示的需求
  * Created by Nathen
  * On 2015/12/01 11:17
  */
@@ -28,7 +29,7 @@ public class FullScreenActivity extends Activity {
         context.startActivity(intent);
     }
 
-    JCVideoPlayer jcVideoView;
+    JCVideoPlayer jcVideoPlayer;
     /**
      * 刚启动全屏时的播放状态
      */
@@ -44,10 +45,10 @@ public class FullScreenActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_fullscreen);
-        jcVideoView = (JCVideoPlayer) findViewById(R.id.jcvideoview);
-        jcVideoView.setUp(URL, THUMB, TITLE, true);
-        jcVideoView.setState(STATE);
-        JCMediaPlayer.intance().setUuid(jcVideoView.uuid);
+        jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.jcvideoplayer);
+        jcVideoPlayer.setUp(URL, THUMB, TITLE, true);
+        jcVideoPlayer.setState(STATE);
+        JCMediaPlayer.intance().setUuid(jcVideoPlayer.uuid);
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
@@ -58,7 +59,7 @@ public class FullScreenActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        jcVideoView.quitFullScreen();
+        jcVideoPlayer.quitFullScreen();
     }
 
     @Override

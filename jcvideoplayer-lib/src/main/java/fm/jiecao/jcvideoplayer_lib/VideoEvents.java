@@ -4,7 +4,7 @@ package fm.jiecao.jcvideoplayer_lib;
  * Created by Nathen
  * On 2015/11/30 12:19
  */
-public class VideoEvents {
+class VideoEvents {
     public static final int VE_START = 366001;
     public static final int VE_STOP = 366002;
 //    public static final int VE_PROGRESSING = 366003;

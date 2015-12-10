@@ -6,11 +6,12 @@ import android.util.AttributeSet;
 import android.view.SurfaceView;
 
 /**
- * 自适应视频大小的surfaceview
+ * 自适应视频大小的surfaceview,在这个view上播放的视频都是尺寸适配的
+ * 在布局的时候有坑，比如relativelayout中无法全屏，要嵌套一个linearlayout
  * Created by Nathen
  * On 2015/12/08 10:58
  */
-public class ResizeSurfaceView extends SurfaceView {
+class ResizeSurfaceView extends SurfaceView {
     public ResizeSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         getHolder().setFormat(PixelFormat.TRANSPARENT);
