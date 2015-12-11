@@ -184,15 +184,15 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             setTitleVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
+            if (uuid.equals(JCMediaPlayer.intance().uuid)) {
+                JCMediaPlayer.intance().mediaPlayer.stop();
+            }
             ivStart.setVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.VISIBLE);
             llBottomControl.setVisibility(View.INVISIBLE);
             updateStartImage();
             cancelDismissControlViewTimer();
             cancelBufferTimer();
-            if (uuid.equals(JCMediaPlayer.intance().uuid)) {
-                JCMediaPlayer.intance().mediaPlayer.stop();
-            }
         }
 
     }
