@@ -190,6 +190,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             updateStartImage();
             cancelDismissControlViewTimer();
             cancelBufferTimer();
+            if (uuid.equals(JCMediaPlayer.intance().uuid)) {
+                JCMediaPlayer.intance().mediaPlayer.stop();
+            }
         }
 
     }
