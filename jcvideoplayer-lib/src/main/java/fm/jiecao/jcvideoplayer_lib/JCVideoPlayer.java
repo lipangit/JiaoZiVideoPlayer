@@ -3,6 +3,7 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -66,7 +67,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public static final int CURRENT_STATE_NORMAL = 4;//刚初始化之后
     private OnTouchListener mSeekbarOnTouchListener;
     private Timer mDismissControlViewTimer;
-
+    private static Timer mUpdateBufferTimer;
 
     public JCVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -188,6 +189,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             llBottomControl.setVisibility(View.INVISIBLE);
             updateStartImage();
             cancelDismissControlViewTimer();
+            cancelBufferTimer();
         }
 
     }
@@ -197,9 +199,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     private void startDismissControlViewTimer() {
-        if (mDismissControlViewTimer != null) {
-            mDismissControlViewTimer.cancel();
-        }
+        cancelDismissControlViewTimer();
         mDismissControlViewTimer = new Timer();
         mDismissControlViewTimer.schedule(new TimerTask() {
             @Override
@@ -213,12 +213,44 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     });
                 }
             }
-        }, 3000);
+        }, 2500);
     }
 
     private void cancelDismissControlViewTimer() {
         if (mDismissControlViewTimer != null) {
             mDismissControlViewTimer.cancel();
+        }
+    }
+
+    //定时发送更新
+    private void startUpdateBufferTimer() {
+        cancelBufferTimer();
+        mUpdateBufferTimer = new Timer();
+        mUpdateBufferTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (getContext() != null && getContext() instanceof Activity) {
+                    ((Activity) getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE);
+                            videoEvents.obj = -1;
+                            EventBus.getDefault().post(videoEvents);
+                            Log.i("update buffer", "updatebuffer:: ");
+                        }
+                    });
+                }
+            }
+        }, 0, 300);
+        Log.i("update buffer", "updatebuffer:: start");
+    }
+
+    private void cancelBufferTimer() {
+        if (uuid.equals(JCMediaPlayer.intance().uuid)) {
+            if (mUpdateBufferTimer != null) {
+                mUpdateBufferTimer.cancel();
+                Log.i("update buffer", "updatebuffer:: cancel");
+            }
         }
     }
 
@@ -367,7 +399,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
         sbProgress.setProgress(progress);
-        sbProgress.setSecondaryProgress(secProgress);
+        if (secProgress >= 0) {
+            sbProgress.setSecondaryProgress(secProgress);
+        }
         tvTimeCurrent.setText(stringForTime(currentTime));
         tvTimeTotal.setText(stringForTime(totalTime));
     }
@@ -375,6 +409,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public void onEventMainThread(VideoEvents videoEvents) {
         if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
 //            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+            cancelBufferTimer();
             ivStart.setImageResource(R.drawable.click_video_play_selector);
             ivThumb.setVisibility(View.VISIBLE);
             ivStart.setVisibility(View.VISIBLE);
@@ -400,6 +435,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             llBottomControl.setVisibility(View.VISIBLE);
             CURRENT_STATE = CURRENT_STATE_PLAYING;
             startDismissControlViewTimer();
+            startUpdateBufferTimer();
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE) {
             if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
                 int percent = Integer.valueOf(videoEvents.obj.toString());
@@ -579,4 +615,5 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
         }
     }
+
 }
