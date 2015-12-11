@@ -66,7 +66,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public static final int CURRENT_STATE_OVER = 3;//这个状态可能不需要，播放完毕就进入normal状态
     public static final int CURRENT_STATE_NORMAL = 4;//刚初始化之后
     private OnTouchListener mSeekbarOnTouchListener;
-    private Timer mDismissControlViewTimer;
+    private static Timer mDismissControlViewTimer;
     private static Timer mUpdateBufferTimer;
 
     public JCVideoPlayer(Context context, AttributeSet attrs) {
@@ -204,13 +204,15 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         mDismissControlViewTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (getContext() != null && getContext() instanceof Activity) {
-                    ((Activity) getContext()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            dismissControlView();
-                        }
-                    });
+                if (uuid.equals(JCMediaPlayer.intance().uuid)) {
+                    if (getContext() != null && getContext() instanceof Activity) {
+                        ((Activity) getContext()).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                dismissControlView();
+                            }
+                        });
+                    }
                 }
             }
         }, 2500);
