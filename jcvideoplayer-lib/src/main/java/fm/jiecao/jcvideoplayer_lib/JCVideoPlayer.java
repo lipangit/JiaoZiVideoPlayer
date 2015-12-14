@@ -2,6 +2,9 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,7 +18,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -157,8 +162,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ivStart.setVisibility(View.VISIBLE);
         llBottomControl.setVisibility(View.GONE);
 
-        ivThumb.setImageResource(R.drawable.ic_logo_small);
-        ImageLoader.getInstance().displayImage(thumb, ivThumb);
+//        ivThumb.setImageResource(R.drawable.default_thum);
+//        ivThumb.setBackgroundColor(getResources().getColor(R.color.white_fafaf8));
+//        ivThumb.setScaleType(ImageView.ScaleType.FIT_XY);
+        ImageLoader.getInstance().displayImage(thumb, ivThumb, getDefaultDisplayImageOption());
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
     }
@@ -621,4 +628,18 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    public static DisplayImageOptions getDefaultDisplayImageOption() {
+        DisplayImageOptions options = new DisplayImageOptions.Builder()
+                .showImageOnLoading(new ColorDrawable(Color.parseColor("#f0f0f0")))
+                .resetViewBeforeLoading(true)
+                .cacheInMemory(true)
+                .cacheOnDisk(true)
+                .considerExifParams(true)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
+                .bitmapConfig(Bitmap.Config.RGB_565)
+//                .displayer(new FadeInBitmapDisplayer(1000)) // 设置图片渐显的时间
+//                .delayBeforeLoading(300)  // 下载前的延迟时间
+                .build();
+        return options;
+    }
 }

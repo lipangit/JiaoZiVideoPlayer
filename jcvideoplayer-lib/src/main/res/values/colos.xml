@@ -7,4 +7,5 @@
     <color name="default_bg">#aa000000</color>
     <!--special color-->
     <color name="black_a10_color">#1a000000</color>
+    <color name="white_fafaf8">#fafaf8</color>
 </resources>
