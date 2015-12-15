@@ -651,4 +651,15 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 .build();
         return options;
     }
+
+    /**
+     * 有特殊需要的客户端
+     */
+    @Deprecated
+    public void setStartListener(OnClickListener onClickListener) {
+        if (onClickListener != null) {
+            ivStart.setOnClickListener(onClickListener);
+            ivThumb.setOnClickListener(onClickListener);
+        } else b
+    }
 }
