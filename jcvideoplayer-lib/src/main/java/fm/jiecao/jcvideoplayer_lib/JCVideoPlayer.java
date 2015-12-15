@@ -48,7 +48,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     ImageView ivThumb;
     LinearLayout rlParent;
     LinearLayout llTitleContainer;
-
+    ImageView ivCover;
 
     //这个组件的四个属性
     public String url;
@@ -94,6 +94,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ivThumb = (ImageView) findViewById(R.id.thumb);
         rlParent = (LinearLayout) findViewById(R.id.parentview);
         llTitleContainer = (LinearLayout) findViewById(R.id.title_container);
+        ivCover = (ImageView) findViewById(R.id.cover);
 
 //        surfaceView.setZOrderOnTop(true);
 //        surfaceView.setBackgroundColor(R.color.black_a10_color);
@@ -177,6 +178,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ivStart.setVisibility(View.INVISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
             pbLoading.setVisibility(View.VISIBLE);
+            ivCover.setVisibility(View.VISIBLE);
             setProgressAndTime(0, 0, 0, 0);
         } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
             updateStartImage();
@@ -184,12 +186,14 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             llBottomControl.setVisibility(View.VISIBLE);
             setTitleVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
+            ivCover.setVisibility(View.INVISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             updateStartImage();
             ivStart.setVisibility(View.VISIBLE);
             llBottomControl.setVisibility(View.VISIBLE);
             setTitleVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
+            ivCover.setVisibility(View.INVISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
             if (uuid.equals(JCMediaPlayer.intance().uuid)) {
                 JCMediaPlayer.intance().mediaPlayer.stop();
@@ -197,6 +201,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ivStart.setVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.VISIBLE);
             llBottomControl.setVisibility(View.INVISIBLE);
+            ivCover.setVisibility(View.VISIBLE);
             updateStartImage();
             cancelDismissControlViewTimer();
             cancelBufferTimer();
@@ -304,6 +309,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 ivStart.setVisibility(View.INVISIBLE);
                 ivThumb.setVisibility(View.INVISIBLE);
                 pbLoading.setVisibility(View.VISIBLE);
+                ivCover.setVisibility(View.VISIBLE);
                 setProgressAndTime(0, 0, 0, 0);
                 JCMediaPlayer.intance().prepareToPlay(getContext(), url);
                 JCMediaPlayer.intance().setUuid(uuid);
@@ -316,6 +322,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
                 ivThumb.setVisibility(View.INVISIBLE);
+                ivCover.setVisibility(View.INVISIBLE);
                 JCMediaPlayer.intance().mediaPlayer.pause();
                 updateStartImage();
                 setKeepScreenOn(false);
@@ -323,6 +330,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 CURRENT_STATE = CURRENT_STATE_PLAYING;
                 ivThumb.setVisibility(View.INVISIBLE);
+                ivCover.setVisibility(View.INVISIBLE);
                 JCMediaPlayer.intance().mediaPlayer.start();
                 updateStartImage();
                 setKeepScreenOn(true);
@@ -343,7 +351,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             toggleClear();
             startDismissControlViewTimer();
         } else if (i == R.id.bottom_control) {
-            JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+//            JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
         }
     }
 
@@ -444,6 +452,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
             JCMediaPlayer.intance().mediaPlayer.start();
             pbLoading.setVisibility(View.INVISIBLE);
+            ivCover.setVisibility(View.INVISIBLE);
             llBottomControl.setVisibility(View.VISIBLE);
             CURRENT_STATE = CURRENT_STATE_PLAYING;
             startDismissControlViewTimer();
