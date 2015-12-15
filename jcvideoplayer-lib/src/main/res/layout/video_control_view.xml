@@ -93,7 +93,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#f0f0f0" />
+        android:background="#000000" />
 
     <LinearLayout
         android:id="@+id/title_container"
