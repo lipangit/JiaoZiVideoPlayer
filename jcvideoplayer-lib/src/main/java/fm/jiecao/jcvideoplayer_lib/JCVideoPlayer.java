@@ -660,6 +660,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (onClickListener != null) {
             ivStart.setOnClickListener(onClickListener);
             ivThumb.setOnClickListener(onClickListener);
-        } else b
+        } else {
+            ivStart.setOnClickListener(this);
+            ivThumb.setOnClickListener(this);
+        }
     }
 }
