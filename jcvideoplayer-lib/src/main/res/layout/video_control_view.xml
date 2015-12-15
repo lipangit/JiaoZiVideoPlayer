@@ -78,8 +78,8 @@
             android:layout_height="40dp"
             android:layout_marginRight="6dp"
             android:padding="12dp"
-            android:visibility="gone"
-            android:src="@drawable/enlarge_video" />
+            android:src="@drawable/enlarge_video"
+            android:visibility="gone" />
     </LinearLayout>
 
 
@@ -92,7 +92,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:background="#f0f0f0" />
 
     <LinearLayout
         android:id="@+id/title_container"
@@ -105,10 +106,9 @@
             android:id="@+id/back"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_back_white"
-            android:scaleType="centerInside"
             android:paddingLeft="10dp"
-            />
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_back_white" />
 
         <TextView
             android:id="@+id/title"
