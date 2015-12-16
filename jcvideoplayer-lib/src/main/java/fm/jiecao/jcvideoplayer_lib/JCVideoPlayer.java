@@ -610,7 +610,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Toast.makeText(getContext(), "显示图像 " + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
                             JCMediaPlayer.intance().mediaPlayer.pause();
                             CURRENT_STATE = CURRENT_STATE_PAUSE;
                         }
