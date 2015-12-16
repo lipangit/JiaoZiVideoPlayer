@@ -477,6 +477,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             return;
         }
         if (videoEvents.type == VideoEvents.VE_PREPARED) {
+            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
             JCMediaPlayer.intance().mediaPlayer.start();
             pbLoading.setVisibility(View.INVISIBLE);
