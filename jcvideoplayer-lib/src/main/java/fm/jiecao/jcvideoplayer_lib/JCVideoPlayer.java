@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -668,7 +669,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 .considerExifParams(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)
-//                .displayer(new FadeInBitmapDisplayer(1000)) // 设置图片渐显的时间
+                .displayer(new FadeInBitmapDisplayer(500)) // 设置图片渐显的时间
 //                .delayBeforeLoading(300)  // 下载前的延迟时间
                 .build();
         return options;
