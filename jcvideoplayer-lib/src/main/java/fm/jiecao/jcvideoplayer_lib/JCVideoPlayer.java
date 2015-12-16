@@ -504,6 +504,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
                 stopToFullscreenOrQuitFullscreenShowDisplay();
                 isFromFullScreenBackHere = false;
+                startDismissControlViewTimer();
             }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_RESIZE) {
             int mVideoWidth = JCMediaPlayer.intance().currentVideoWidth;
@@ -566,7 +567,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         EventBus.getDefault().unregister(this);
-        cancelDismissControlViewTimer();
+//        cancelDismissControlViewTimer();
         if (uuid.equals(JCMediaPlayer.intance().uuid)) {
             JCMediaPlayer.intance().mediaPlayer.stop();
         }
