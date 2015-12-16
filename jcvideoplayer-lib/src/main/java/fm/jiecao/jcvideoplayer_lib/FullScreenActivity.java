@@ -37,6 +37,7 @@ public class FullScreenActivity extends Activity {
     public static String URL;
     public static String TITLE;
     public static String THUMB;
+    public static boolean manualQuit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class FullScreenActivity extends Activity {
         jcVideoPlayer.setUpForFullscreen(URL, THUMB, TITLE, true);
         jcVideoPlayer.setState(STATE);
         JCMediaPlayer.intance().setUuid(jcVideoPlayer.uuid);
+        manualQuit = false;
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
@@ -63,6 +65,15 @@ public class FullScreenActivity extends Activity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if (!manualQuit) {
+            JCVideoPlayer.releaseAllVideo();
+            finish();
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
@@ -74,10 +85,4 @@ public class FullScreenActivity extends Activity {
         EventBus.getDefault().unregister(this);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JCVideoPlayer.releaseAllVideo();
-        finish();
-    }
 }

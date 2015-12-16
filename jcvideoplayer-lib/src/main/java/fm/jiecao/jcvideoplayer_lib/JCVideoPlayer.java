@@ -421,6 +421,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     public void quitFullScreen() {
+        FullScreenActivity.manualQuit = true;
         clickfullscreentime = System.currentTimeMillis();
         JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
         JCMediaPlayer.intance().revertUuid();
