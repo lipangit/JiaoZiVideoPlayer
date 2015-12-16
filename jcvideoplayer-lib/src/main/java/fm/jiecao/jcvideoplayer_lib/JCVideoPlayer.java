@@ -465,8 +465,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             //TODO 这里要将背景置黑，
 //            surfaceView.setBackgroundColor(R.color.black_a10_color);
                 CURRENT_STATE = CURRENT_STATE_NORMAL;
-            }
-//            }
             setKeepScreenOn(false);
         }
         if (!JCMediaPlayer.intance().uuid.equals(uuid)) {
