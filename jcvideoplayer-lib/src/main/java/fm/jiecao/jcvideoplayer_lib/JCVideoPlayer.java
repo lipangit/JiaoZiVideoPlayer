@@ -73,6 +73,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private OnTouchListener mSeekbarOnTouchListener;
     private static Timer mDismissControlViewTimer;
     private static Timer mUpdateBufferTimer;
+    private static long clickfullscreentime;
 
     public JCVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -149,6 +150,30 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * 设置属性
      */
     public void setUp(String url, String thumb, String title, boolean ifFullScreen) {
+        if ((System.currentTimeMillis() - clickfullscreentime) < 5000) return;
+        this.url = url;
+        this.thumb = thumb;
+        this.title = title;
+        this.ifFullScreen = ifFullScreen;
+        if (ifFullScreen) {
+            ivFullScreen.setImageResource(R.drawable.shrink_video);
+        } else {
+            ivFullScreen.setImageResource(R.drawable.enlarge_video);
+        }
+        tvTitle.setText(title);
+        ivThumb.setVisibility(View.VISIBLE);
+        ivStart.setVisibility(View.VISIBLE);
+        llBottomControl.setVisibility(View.GONE);
+
+//        ivThumb.setImageResource(R.drawable.default_thum);
+//        ivThumb.setBackgroundColor(getResources().getColor(R.color.white_fafaf8));
+//        ivThumb.setScaleType(ImageView.ScaleType.FIT_XY);
+        ImageLoader.getInstance().displayImage(thumb, ivThumb, getDefaultDisplayImageOption());
+        CURRENT_STATE = CURRENT_STATE_NORMAL;
+        setTitleVisibility(View.VISIBLE);
+    }
+
+    public void setUpForFullscreen(String url, String thumb, String title, boolean ifFullScreen) {
         this.url = url;
         this.thumb = thumb;
         this.title = title;
@@ -344,9 +369,11 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 quitFullScreen();
             } else {
                 JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
+                JCMediaPlayer.intance().backUpUuid();
                 isClickFullscreen = true;
                 FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
             }
+            clickfullscreentime = System.currentTimeMillis();
         } else if (i == R.id.surfaceView || i == R.id.parentview) {
             toggleClear();
             startDismissControlViewTimer();
@@ -394,6 +421,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     public void quitFullScreen() {
+        clickfullscreentime = System.currentTimeMillis();
         JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
         JCMediaPlayer.intance().revertUuid();
         VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN);
@@ -436,7 +464,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 //                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
             //TODO 这里要将背景置黑，
 //            surfaceView.setBackgroundColor(R.color.black_a10_color);
-            CURRENT_STATE = CURRENT_STATE_NORMAL;
+                CURRENT_STATE = CURRENT_STATE_NORMAL;
+            }
 //            }
             setKeepScreenOn(false);
         }

@@ -46,7 +46,7 @@ public class FullScreenActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_fullscreen);
         jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.jcvideoplayer);
-        jcVideoPlayer.setUp(URL, THUMB, TITLE, true);
+        jcVideoPlayer.setUpForFullscreen(URL, THUMB, TITLE, true);
         jcVideoPlayer.setState(STATE);
         JCMediaPlayer.intance().setUuid(jcVideoPlayer.uuid);
     }

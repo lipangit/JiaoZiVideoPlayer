@@ -83,7 +83,7 @@ class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCom
 
     public void setUuid(String uuid) {
         Log.i("uuid::", "0 " + uuid + " prevuuid " + prev_uuid);
-        backUpUuid();
+//        backUpUuid();
         this.uuid = uuid;
         Log.i("uuid::", "1 " + uuid + " prevuuid " + prev_uuid);
     }
@@ -94,6 +94,7 @@ class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCom
 
     public void revertUuid() {
         this.uuid = this.prev_uuid;
+        this.prev_uuid = "";
         Log.i("uuid::", "2 " + uuid + " prevuuid " + prev_uuid);
     }
 
