@@ -73,4 +73,11 @@ public class FullScreenActivity extends Activity {
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideo();
+        finish();
+    }
 }

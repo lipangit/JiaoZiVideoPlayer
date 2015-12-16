@@ -74,6 +74,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private static Timer mDismissControlViewTimer;
     private static Timer mUpdateBufferTimer;
     private static long clickfullscreentime;
+    private static final int FULL_SCREEN_NORMAL_DELAY = 5000;
 
     public JCVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -150,7 +151,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * 设置属性
      */
     public void setUp(String url, String thumb, String title, boolean ifFullScreen) {
-        if ((System.currentTimeMillis() - clickfullscreentime) < 5000) return;
+        if ((System.currentTimeMillis() - clickfullscreentime) < FULL_SCREEN_NORMAL_DELAY) return;
         this.url = url;
         this.thumb = thumb;
         this.title = title;
@@ -278,7 +279,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                             VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE);
                             videoEvents.obj = -1;
                             EventBus.getDefault().post(videoEvents);
-                            Log.i("update buffer", "updatebuffer:: ");
                         }
                     });
                 }
@@ -464,7 +464,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 //                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
             //TODO 这里要将背景置黑，
 //            surfaceView.setBackgroundColor(R.color.black_a10_color);
-                CURRENT_STATE = CURRENT_STATE_NORMAL;
+            CURRENT_STATE = CURRENT_STATE_NORMAL;
             setKeepScreenOn(false);
         }
         if (!JCMediaPlayer.intance().uuid.equals(uuid)) {
@@ -526,7 +526,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 ((Activity) getContext()).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getContext(), "显示图像 " + CURRENT_STATE + " " + ifFullScreen, Toast.LENGTH_SHORT).show();
                         JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
                     }
                 });
@@ -538,16 +537,11 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     boolean isClickFullscreen = false;
 
     public void release() {
+        if ((System.currentTimeMillis() - clickfullscreentime) < FULL_SCREEN_NORMAL_DELAY) return;
         //将状态设为普通
         setState(CURRENT_STATE_NORMAL);
         //回收surfaceview，或画黑板
     }
-
-//    public void drawBlack() {//给surfaceview填充背景或图片
-//        Canvas canvas = surfaceHolder.lockCanvas();
-//        canvas.drawColor(R.color.biz_audio_progress_second);
-//        surfaceHolder.unlockCanvasAndPost(canvas);
-//    }
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -587,8 +581,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public void surfaceCreated(SurfaceHolder holder) {
         //TODO MediaPlayer set holder,MediaPlayer prepareToPlay
         EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_CREATED));
-//        drawBlack();
-
         if (ifFullScreen) {
             JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
             stopToFullscreenOrQuitFullscreenShowDisplay();
