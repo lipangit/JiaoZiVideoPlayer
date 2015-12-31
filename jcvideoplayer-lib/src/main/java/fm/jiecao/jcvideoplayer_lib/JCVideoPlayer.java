@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -130,6 +131,11 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     case MotionEvent.ACTION_UP:
                         startDismissControlViewTimer();
                         sendPointEvent(ifFullScreen ? VideoEvents.POINT_CLICK_SEEKBAR_FULLSCREEN : VideoEvents.POINT_CLICK_SEEKBAR);
+
+                        int time = sbProgress.getProgress() * JCMediaPlayer.intance().mediaPlayer.getDuration() / 100;
+                        JCMediaPlayer.intance().mediaPlayer.seekTo(time);
+                        pbLoading.setVisibility(View.VISIBLE);
+                        ivStart.setVisibility(View.INVISIBLE);
                         break;
                 }
 
@@ -231,7 +237,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             cancelDismissControlViewTimer();
             cancelBufferTimer();
         }
-
     }
 
     public void setSeekbarOnTouchListener(OnTouchListener listener) {
@@ -519,8 +524,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             }
         } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_CREATED) {
             if (isFromFullScreenBackHere) {
-                //200ms播放视频,,这里奇怪了一阵子。
-//                delaySetdisplay();
                 JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
                 stopToFullscreenOrQuitFullscreenShowDisplay();
                 isFromFullScreenBackHere = false;
@@ -533,26 +536,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
                 surfaceView.requestLayout();
             }
+        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE) {
+            pbLoading.setVisibility(View.INVISIBLE);
+            Toast.makeText(surfaceView.getContext(), "seek compile", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void delaySetdisplay() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-//                try {
-//                    Thread.sleep(50);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-                ((Activity) getContext()).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
-                    }
-                });
-            }
-        }).start();
     }
 
     boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
@@ -568,8 +555,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
-            int time = progress * JCMediaPlayer.intance().mediaPlayer.getDuration() / 100;
-            JCMediaPlayer.intance().mediaPlayer.seekTo(time);
+
         }
     }
 
