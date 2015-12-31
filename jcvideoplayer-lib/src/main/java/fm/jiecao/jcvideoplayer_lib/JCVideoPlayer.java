@@ -189,7 +189,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ivStart.setVisibility(View.VISIBLE);
         llBottomControl.setVisibility(View.INVISIBLE);
         pbBottom.setVisibility(View.VISIBLE);
-        ImageLoader.getInstance().displayImage(thumb, ivThumb, getDefaultDisplayImageOption());
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
     }
