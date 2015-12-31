@@ -372,6 +372,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 //退出全屏
                 quitFullScreen();
             } else {
+                JCMediaPlayer.intance().mediaPlayer.pause();
                 JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
                 JCMediaPlayer.intance().backUpUuid();
                 isClickFullscreen = true;
@@ -435,6 +436,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public void quitFullScreen() {
         FullScreenActivity.manualQuit = true;
         clickfullscreentime = System.currentTimeMillis();
+        JCMediaPlayer.intance().mediaPlayer.pause();
         JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
         JCMediaPlayer.intance().revertUuid();
         VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN);
@@ -618,11 +620,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-//                try {
-//                    Thread.sleep(50);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -633,6 +630,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 }
             }).start();
             surfaceView.requestLayout();
+        } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+            JCMediaPlayer.intance().mediaPlayer.start();
         }
     }
 
