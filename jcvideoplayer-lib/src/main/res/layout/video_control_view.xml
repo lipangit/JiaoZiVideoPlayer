@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/parentview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,8 +15,30 @@
             android:id="@+id/surfaceView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/bottom_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dip"
+            android:layout_alignParentBottom="true"
+            android:background="@null"
+            android:indeterminateDrawable="@null"
+            android:max="100"
+            android:progressDrawable="@drawable/video_progress" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/cover"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#000000" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -26,6 +48,7 @@
         android:layout_centerVertical="true"
         android:visibility="invisible" />
 
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/bottom_control"
         android:layout_width="match_parent"
@@ -33,7 +56,8 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/biz_video_bar_bg"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/current"
@@ -78,7 +102,6 @@
             android:layout_height="40dp"
             android:layout_marginRight="6dp"
             android:padding="12dp"
-            android:visibility="gone"
             android:src="@drawable/enlarge_video" />
     </LinearLayout>
 
@@ -92,7 +115,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:background="#000000" />
 
     <LinearLayout
         android:id="@+id/title_container"
@@ -105,10 +129,9 @@
             android:id="@+id/back"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_back_white"
-            android:scaleType="centerInside"
             android:paddingLeft="10dp"
-            />
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_back_white" />
 
         <TextView
             android:id="@+id/title"
