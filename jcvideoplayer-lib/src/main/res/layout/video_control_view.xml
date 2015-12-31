@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/parentview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +15,18 @@
             android:id="@+id/surfaceView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/bottom_progressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="1.5dip"
+            android:layout_alignParentBottom="true"
+            android:background="@null"
+            android:indeterminateDrawable="@null"
+            android:max="100"
+            android:progressDrawable="@drawable/video_progress" />
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/cover"
@@ -45,7 +56,8 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/biz_video_bar_bg"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/current"

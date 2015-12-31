@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -37,7 +38,7 @@ import de.greenrobot.event.EventBus;
 public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback {
 
     ImageView ivStart;
-    ProgressBar pbLoading;
+    ProgressBar pbLoading, pbBottom;
     ImageView ivFullScreen;
     SeekBar sbProgress;
     TextView tvTimeCurrent, tvTimeTotal;
@@ -46,7 +47,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     LinearLayout llBottomControl;
     TextView tvTitle;
     ImageView ivThumb;
-    LinearLayout rlParent;
+    RelativeLayout rlParent;
     LinearLayout llTitleContainer;
     ImageView ivCover;
 
@@ -86,6 +87,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         View.inflate(context, R.layout.video_control_view, this);
         ivStart = (ImageView) findViewById(R.id.start);
         pbLoading = (ProgressBar) findViewById(R.id.loading);
+        pbBottom = (ProgressBar) findViewById(R.id.bottom_progressbar);
         ivFullScreen = (ImageView) findViewById(R.id.fullscreen);
         sbProgress = (SeekBar) findViewById(R.id.progress);
         tvTimeCurrent = (TextView) findViewById(R.id.current);
@@ -94,7 +96,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
         tvTitle = (TextView) findViewById(R.id.title);
         ivThumb = (ImageView) findViewById(R.id.thumb);
-        rlParent = (LinearLayout) findViewById(R.id.parentview);
+        rlParent = (RelativeLayout) findViewById(R.id.parentview);
         llTitleContainer = (LinearLayout) findViewById(R.id.title_container);
         ivCover = (ImageView) findViewById(R.id.cover);
 
@@ -165,11 +167,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         tvTitle.setText(title);
         ivThumb.setVisibility(View.VISIBLE);
         ivStart.setVisibility(View.VISIBLE);
-        llBottomControl.setVisibility(View.GONE);
-
-//        ivThumb.setImageResource(R.drawable.default_thum);
-//        ivThumb.setBackgroundColor(getResources().getColor(R.color.white_fafaf8));
-//        ivThumb.setScaleType(ImageView.ScaleType.FIT_XY);
+        llBottomControl.setVisibility(View.INVISIBLE);
+        pbBottom.setVisibility(View.VISIBLE);
         ImageLoader.getInstance().displayImage(thumb, ivThumb, getDefaultDisplayImageOption());
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
@@ -188,11 +187,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         tvTitle.setText(title);
         ivThumb.setVisibility(View.VISIBLE);
         ivStart.setVisibility(View.VISIBLE);
-        llBottomControl.setVisibility(View.GONE);
-
-//        ivThumb.setImageResource(R.drawable.default_thum);
-//        ivThumb.setBackgroundColor(getResources().getColor(R.color.white_fafaf8));
-//        ivThumb.setScaleType(ImageView.ScaleType.FIT_XY);
+        llBottomControl.setVisibility(View.INVISIBLE);
+        pbBottom.setVisibility(View.VISIBLE);
         ImageLoader.getInstance().displayImage(thumb, ivThumb, getDefaultDisplayImageOption());
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
@@ -211,6 +207,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             updateStartImage();
             ivStart.setVisibility(View.VISIBLE);
             llBottomControl.setVisibility(View.VISIBLE);
+            pbBottom.setVisibility(View.INVISIBLE);
             setTitleVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
             ivCover.setVisibility(View.INVISIBLE);
@@ -218,6 +215,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             updateStartImage();
             ivStart.setVisibility(View.VISIBLE);
             llBottomControl.setVisibility(View.VISIBLE);
+            pbBottom.setVisibility(View.INVISIBLE);
             setTitleVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.INVISIBLE);
             ivCover.setVisibility(View.INVISIBLE);
@@ -228,6 +226,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ivStart.setVisibility(View.VISIBLE);
             ivThumb.setVisibility(View.VISIBLE);
             llBottomControl.setVisibility(View.INVISIBLE);
+            pbBottom.setVisibility(View.VISIBLE);
             ivCover.setVisibility(View.VISIBLE);
             updateStartImage();
             cancelDismissControlViewTimer();
@@ -299,6 +298,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private void dismissControlView() {
         llBottomControl.setVisibility(View.INVISIBLE);
+        pbBottom.setVisibility(View.VISIBLE);
         setTitleVisibility(View.INVISIBLE);
         ivStart.setVisibility(View.INVISIBLE);
         pbLoading.setVisibility(View.INVISIBLE);
@@ -393,9 +393,11 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
                 llBottomControl.setVisibility(View.INVISIBLE);
+                pbBottom.setVisibility(View.VISIBLE);
                 setTitleVisibility(View.INVISIBLE);
             } else {
                 llBottomControl.setVisibility(View.VISIBLE);
+                pbBottom.setVisibility(View.INVISIBLE);
                 setTitleVisibility(View.VISIBLE);
             }
             ivStart.setVisibility(View.INVISIBLE);
@@ -403,24 +405,28 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
                 llBottomControl.setVisibility(View.INVISIBLE);
+                pbBottom.setVisibility(View.VISIBLE);
                 setTitleVisibility(View.INVISIBLE);
                 ivStart.setVisibility(View.INVISIBLE);
             } else {
                 updateStartImage();
                 ivStart.setVisibility(View.VISIBLE);
                 llBottomControl.setVisibility(View.VISIBLE);
+                pbBottom.setVisibility(View.INVISIBLE);
                 setTitleVisibility(View.VISIBLE);
             }
             pbLoading.setVisibility(View.INVISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
                 llBottomControl.setVisibility(View.INVISIBLE);
+                pbBottom.setVisibility(View.VISIBLE);
                 setTitleVisibility(View.INVISIBLE);
                 ivStart.setVisibility(View.INVISIBLE);
             } else {
                 updateStartImage();
                 ivStart.setVisibility(View.VISIBLE);
                 llBottomControl.setVisibility(View.VISIBLE);
+                pbBottom.setVisibility(View.INVISIBLE);
                 setTitleVisibility(View.VISIBLE);
             }
             pbLoading.setVisibility(View.INVISIBLE);
@@ -456,8 +462,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
         sbProgress.setProgress(progress);
+        pbBottom.setProgress(progress);
         if (secProgress >= 0) {
             sbProgress.setSecondaryProgress(secProgress);
+            pbBottom.setSecondaryProgress(secProgress);
         }
         tvTimeCurrent.setText(stringForTime(currentTime));
         tvTimeTotal.setText(stringForTime(totalTime));
@@ -492,6 +500,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             pbLoading.setVisibility(View.INVISIBLE);
             ivCover.setVisibility(View.INVISIBLE);
             llBottomControl.setVisibility(View.VISIBLE);
+            pbBottom.setVisibility(View.INVISIBLE);
             CURRENT_STATE = CURRENT_STATE_PLAYING;
             startDismissControlViewTimer();
             startUpdateBufferTimer();
