@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -47,6 +48,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     SurfaceHolder surfaceHolder;
     LinearLayout llBottomControl;
     TextView tvTitle;
+    ImageView ivBack;
     ImageView ivThumb;
     RelativeLayout rlParent;
     LinearLayout llTitleContainer;
@@ -96,6 +98,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         surfaceView = (ResizeSurfaceView) findViewById(R.id.surfaceView);
         llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
         tvTitle = (TextView) findViewById(R.id.title);
+        ivBack = (ImageView) findViewById(R.id.back);
         ivThumb = (ImageView) findViewById(R.id.thumb);
         rlParent = (RelativeLayout) findViewById(R.id.parentview);
         llTitleContainer = (LinearLayout) findViewById(R.id.title_container);
@@ -112,13 +115,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         surfaceView.setOnClickListener(this);
         llBottomControl.setOnClickListener(this);
         rlParent.setOnClickListener(this);
-
-        findViewById(R.id.back).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                quitFullScreen();
-            }
-        });
+        ivBack.setOnClickListener(this);
 
         sbProgress.setOnTouchListener(new OnTouchListener() {
             @Override
@@ -149,26 +146,27 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * @param ifShowTitle 在非全屏模式下是否显示标题
+     * 设置
      */
-    public void setUp(String url, String thumb, String title, boolean ifFullScreen, boolean ifShowTitle) {
-        setIfShowTitle(ifShowTitle);
-        setUp(url, thumb, title, ifFullScreen);
+    public void setUp(String url, String thumb, String title) {
+        setUp(url, thumb, title, true);
     }
 
     /**
-     * 设置属性
+     * @param ifShowTitle 是否显示标题
      */
-    public void setUp(String url, String thumb, String title, boolean ifFullScreen) {
+    public void setUp(String url, String thumb, String title, boolean ifShowTitle) {
+        setIfShowTitle(ifShowTitle);
         if ((System.currentTimeMillis() - clickfullscreentime) < FULL_SCREEN_NORMAL_DELAY) return;
         this.url = url;
         this.thumb = thumb;
         this.title = title;
-        this.ifFullScreen = ifFullScreen;
+        this.ifFullScreen = false;
         if (ifFullScreen) {
             ivFullScreen.setImageResource(R.drawable.shrink_video);
         } else {
             ivFullScreen.setImageResource(R.drawable.enlarge_video);
+            ivBack.setVisibility(View.GONE);
         }
         tvTitle.setText(title);
         ivThumb.setVisibility(View.VISIBLE);
@@ -331,6 +329,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.start || i == R.id.thumb) {
+            if (TextUtils.isEmpty(url)) {
+                Toast.makeText(getContext(), "视频地址为空", Toast.LENGTH_SHORT).show();
+                return;
+            }
             //点击缩略图或播放按钮。1.如果在normal模式准备视频，如果在播放模式就暂停，如果在暂停就播放，如果在prepare下不可能有这情况。
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
                 JCMediaPlayer.intance().clearWidthAndHeight();
@@ -391,6 +393,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             sendPointEvent(ifFullScreen ? VideoEvents.POINT_CLICK_BLANK_FULLSCREEN : VideoEvents.POINT_CLICK_BLANK);
         } else if (i == R.id.bottom_control) {
 //            JCMediaPlayer.intance().mediaPlayer.setDisplay(surfaceHolder);
+        } else if (i == R.id.back) {
+            quitFullScreen();
         }
     }
 
@@ -538,7 +542,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE) {
             pbLoading.setVisibility(View.INVISIBLE);
-            Toast.makeText(surfaceView.getContext(), "seek compile", Toast.LENGTH_SHORT).show();
+            Log.i("JCVideoPlayer", "seek compile");
         }
     }
 
