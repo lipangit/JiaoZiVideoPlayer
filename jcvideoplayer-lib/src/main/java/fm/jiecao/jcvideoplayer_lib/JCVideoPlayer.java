@@ -231,6 +231,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             llBottomControl.setVisibility(View.INVISIBLE);
             pbBottom.setVisibility(View.VISIBLE);
             ivCover.setVisibility(View.VISIBLE);
+            setTitleVisibility(View.VISIBLE);
             updateStartImage();
             cancelDismissControlViewTimer();
             cancelBufferTimer();

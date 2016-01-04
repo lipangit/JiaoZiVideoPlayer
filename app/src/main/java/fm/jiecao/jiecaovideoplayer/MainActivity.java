@@ -65,6 +65,5 @@ public class MainActivity extends AppCompatActivity {
         } else if (event.type == VideoEvents.POINT_QUIT_FULLSCREEN) {
             Log.i("Video Event", "POINT_QUIT_FULLSCREEN");
         }
-//        Log.i("Video Event", "type : " + event.type);
     }
 }
