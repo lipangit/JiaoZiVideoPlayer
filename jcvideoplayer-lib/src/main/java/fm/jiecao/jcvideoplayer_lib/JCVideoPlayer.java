@@ -37,7 +37,7 @@ import de.greenrobot.event.EventBus;
  * Created by Nathen
  * On 2015/11/30 11:59
  */
-public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback {
+public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener {
 
     ImageView ivStart;
     ProgressBar pbLoading, pbBottom;
@@ -116,32 +116,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         llBottomControl.setOnClickListener(this);
         rlParent.setOnClickListener(this);
         ivBack.setOnClickListener(this);
-
-        sbProgress.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        cancelDismissControlViewTimer();
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        startDismissControlViewTimer();
-                        sendPointEvent(ifFullScreen ? VideoEvents.POINT_CLICK_SEEKBAR_FULLSCREEN : VideoEvents.POINT_CLICK_SEEKBAR);
-
-                        int time = sbProgress.getProgress() * JCMediaPlayer.intance().mediaPlayer.getDuration() / 100;
-                        JCMediaPlayer.intance().mediaPlayer.seekTo(time);
-                        pbLoading.setVisibility(View.VISIBLE);
-                        ivStart.setVisibility(View.INVISIBLE);
-                        break;
-                }
-
-                if (mSeekbarOnTouchListener != null) {
-                    mSeekbarOnTouchListener.onTouch(v, event);
-                }
-                return false;
-            }
-        });
+        sbProgress.setOnTouchListener(this);
 
     }
 
@@ -700,5 +675,28 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         videoEvents.setType(type);
         videoEvents.obj = title;
         EventBus.getDefault().post(videoEvents);
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                cancelDismissControlViewTimer();
+                break;
+            case MotionEvent.ACTION_UP:
+                startDismissControlViewTimer();
+                sendPointEvent(ifFullScreen ? VideoEvents.POINT_CLICK_SEEKBAR_FULLSCREEN : VideoEvents.POINT_CLICK_SEEKBAR);
+
+                int time = sbProgress.getProgress() * JCMediaPlayer.intance().mediaPlayer.getDuration() / 100;
+                JCMediaPlayer.intance().mediaPlayer.seekTo(time);
+                pbLoading.setVisibility(View.VISIBLE);
+                ivStart.setVisibility(View.INVISIBLE);
+                break;
+        }
+
+        if (mSeekbarOnTouchListener != null) {
+            mSeekbarOnTouchListener.onTouch(v, event);
+        }
+        return false;
     }
 }
