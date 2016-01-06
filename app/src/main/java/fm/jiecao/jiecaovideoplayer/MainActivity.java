@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
                 "嫂子别摸我");
 
         videoController2 = (JCVideoPlayer) findViewById(R.id.videocontroller2);
-        videoController2.setUp("http://2449.vod.myqcloud.com/2449_a80a72289b1211e5a28d6dc08193c3c9.f20.mp4",//
-                "http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1449294460.jpg",
+        videoController2.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4",//
+                "http://p.qpic.cn/videoyun/0/2449_ded7b566b37911e5942f0b208e48548d_2/640",
                 "嫂子还摸我", false);
         EventBus.getDefault().register(this);
     }
