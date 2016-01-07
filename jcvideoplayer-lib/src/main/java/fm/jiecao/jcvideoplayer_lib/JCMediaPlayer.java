@@ -68,7 +68,7 @@ class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCom
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE);
+        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_UPDATE_BUFFER);
         videoEvents.obj = percent;
         EventBus.getDefault().post(videoEvents);
     }

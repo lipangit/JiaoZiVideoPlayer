@@ -76,7 +76,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public static final int CURRENT_STATE_NORMAL = 4;//刚初始化之后
     private OnTouchListener mSeekbarOnTouchListener;
     private static Timer mDismissControlViewTimer;
-    private static Timer mUpdateBufferTimer;
+    private static Timer mUpdateProgressTimer;
     private static long clickfullscreentime;
     private static final int FULL_SCREEN_NORMAL_DELAY = 5000;
 
@@ -180,7 +180,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ivThumb.setVisibility(View.INVISIBLE);
             pbLoading.setVisibility(View.VISIBLE);
             ivCover.setVisibility(View.VISIBLE);
-            setProgressAndTime(0, 0, 0, 0);
+            setProgressAndTime(0, 0, 0);
+            setProgressBuffered(0);
         } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
             updateStartImage();
             ivStart.setVisibility(View.VISIBLE);
@@ -210,7 +211,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             setTitleVisibility(View.VISIBLE);
             updateStartImage();
             cancelDismissControlViewTimer();
-            cancelBufferTimer();
+            cancelProgressTimer();
         }
     }
 
@@ -245,18 +246,17 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     //定时发送更新
-    private void startUpdateBufferTimer() {
-        cancelBufferTimer();
-        mUpdateBufferTimer = new Timer();
-        mUpdateBufferTimer.schedule(new TimerTask() {
+    private void startProgressTimer() {
+        cancelProgressTimer();
+        mUpdateProgressTimer = new Timer();
+        mUpdateProgressTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 if (getContext() != null && getContext() instanceof Activity) {
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE);
-                            videoEvents.obj = -1;
+                            VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_UPDATE_PROGRESS);
                             EventBus.getDefault().post(videoEvents);
                         }
                     });
@@ -266,10 +266,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         Log.i("update buffer", "updatebuffer:: start");
     }
 
-    private void cancelBufferTimer() {
+    private void cancelProgressTimer() {
         if (uuid.equals(JCMediaPlayer.intance().uuid)) {
-            if (mUpdateBufferTimer != null) {
-                mUpdateBufferTimer.cancel();
+            if (mUpdateProgressTimer != null) {
+                mUpdateProgressTimer.cancel();
                 Log.i("update buffer", "updatebuffer:: cancel");
             }
         }
@@ -319,7 +319,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 ivThumb.setVisibility(View.INVISIBLE);
                 pbLoading.setVisibility(View.VISIBLE);
                 ivCover.setVisibility(View.VISIBLE);
-                setProgressAndTime(0, 0, 0, 0);
+                setProgressAndTime(0, 0, 0);
+                setProgressBuffered(0);
                 JCMediaPlayer.intance().prepareToPlay(getContext(), url);
                 JCMediaPlayer.intance().setUuid(uuid);
 
@@ -439,20 +440,25 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    //设置进度条和进度时间
-    private void setProgressAndTimeFromMediaPlayer(int secProgress) {
-        final int position = JCMediaPlayer.intance().mediaPlayer.getCurrentPosition();
-        final int duration = JCMediaPlayer.intance().mediaPlayer.getDuration();
-        int progress = position * 100 / duration;
-        setProgressAndTime(progress, secProgress, position, duration);
-    }
-
-    private void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
-        sbProgress.setProgress(progress);
-        pbBottom.setProgress(progress);
+    private void setProgressBuffered(int secProgress) {
         if (secProgress >= 0) {
             sbProgress.setSecondaryProgress(secProgress);
             pbBottom.setSecondaryProgress(secProgress);
+        }
+    }
+
+    //设置进度条和进度时间
+    private void setProgressAndTimeFromTimer() {
+        int position = JCMediaPlayer.intance().mediaPlayer.getCurrentPosition();
+        int duration = JCMediaPlayer.intance().mediaPlayer.getDuration();
+        int progress = position * 100 / duration;
+        setProgressAndTime(progress, position, duration);
+    }
+
+    private void setProgressAndTime(int progress, int currentTime, int totalTime) {
+        if (!touchingProgressBar) {
+            sbProgress.setProgress(progress);
+            pbBottom.setProgress(progress);
         }
         tvTimeCurrent.setText(stringForTime(currentTime));
         tvTimeTotal.setText(stringForTime(totalTime));
@@ -461,7 +467,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public void onEventMainThread(VideoEvents videoEvents) {
         if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
 //            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) {
-            cancelBufferTimer();
+            cancelProgressTimer();
             ivStart.setImageResource(R.drawable.click_video_play_selector);
             ivThumb.setVisibility(View.VISIBLE);
             ivStart.setVisibility(View.VISIBLE);
@@ -490,11 +496,15 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             pbBottom.setVisibility(View.INVISIBLE);
             CURRENT_STATE = CURRENT_STATE_PLAYING;
             startDismissControlViewTimer();
-            startUpdateBufferTimer();
-        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE) {
+            startProgressTimer();
+        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_UPDATE_BUFFER) {
             if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
                 int percent = Integer.valueOf(videoEvents.obj.toString());
-                setProgressAndTimeFromMediaPlayer(percent);
+                setProgressBuffered(percent);
+            }
+        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_UPDATE_PROGRESS) {
+            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+                setProgressAndTimeFromTimer();
             }
         } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
             if (isClickFullscreen) {
@@ -536,7 +546,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
-
+            int time = progress * JCMediaPlayer.intance().mediaPlayer.getDuration() / 100;
+            JCMediaPlayer.intance().mediaPlayer.seekTo(time);
+            pbLoading.setVisibility(View.VISIBLE);
+            ivStart.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -677,20 +690,23 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         EventBus.getDefault().post(videoEvents);
     }
 
+    private boolean touchingProgressBar = false;
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
+                touchingProgressBar = true;
                 cancelDismissControlViewTimer();
+                cancelProgressTimer();
                 break;
             case MotionEvent.ACTION_UP:
+                touchingProgressBar = false;
                 startDismissControlViewTimer();
+                startProgressTimer();
                 sendPointEvent(ifFullScreen ? VideoEvents.POINT_CLICK_SEEKBAR_FULLSCREEN : VideoEvents.POINT_CLICK_SEEKBAR);
 
-                int time = sbProgress.getProgress() * JCMediaPlayer.intance().mediaPlayer.getDuration() / 100;
-                JCMediaPlayer.intance().mediaPlayer.seekTo(time);
-                pbLoading.setVisibility(View.VISIBLE);
-                ivStart.setVisibility(View.INVISIBLE);
+
                 break;
         }
 
