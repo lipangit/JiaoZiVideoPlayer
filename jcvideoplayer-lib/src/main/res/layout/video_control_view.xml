@@ -74,7 +74,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1.0"
-            android:background="@null"
             android:max="100"
             android:maxHeight="4.0dip"
             android:minHeight="4.0dip"
