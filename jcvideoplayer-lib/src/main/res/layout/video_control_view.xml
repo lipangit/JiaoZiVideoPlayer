@@ -22,8 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="1.5dip"
             android:layout_alignParentBottom="true"
-            android:background="@null"
-            android:indeterminateDrawable="@null"
             android:max="100"
             android:progressDrawable="@drawable/video_progress" />
     </RelativeLayout>
