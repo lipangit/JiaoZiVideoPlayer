@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.IOException;
@@ -37,6 +38,7 @@ class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCom
     }
 
     public void prepareToPlay(Context context, String url) {
+        if (TextUtils.isEmpty(url)) return;
         try {
             mediaPlayer.release();
             mediaPlayer = new MediaPlayer();
@@ -66,7 +68,7 @@ class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCom
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_BUFFERUPDATE);
+        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_UPDATE_BUFFER);
         videoEvents.obj = percent;
         EventBus.getDefault().post(videoEvents);
     }

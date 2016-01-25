@@ -7,14 +7,14 @@
     <RelativeLayout
         android:id="@+id/parentview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true"
-        android:gravity="center">
+        android:layout_height="match_parent">
 
         <fm.jiecao.jcvideoplayer_lib.ResizeSurfaceView
             android:id="@+id/surfaceView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            />
 
         <ProgressBar
             android:id="@+id/bottom_progressbar"
@@ -22,8 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="1.5dip"
             android:layout_alignParentBottom="true"
-            android:background="@null"
-            android:indeterminateDrawable="@null"
             android:max="100"
             android:progressDrawable="@drawable/video_progress" />
     </RelativeLayout>
@@ -74,7 +72,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1.0"
-            android:background="@null"
             android:max="100"
             android:maxHeight="4.0dip"
             android:minHeight="4.0dip"
@@ -137,6 +134,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
     </LinearLayout>
