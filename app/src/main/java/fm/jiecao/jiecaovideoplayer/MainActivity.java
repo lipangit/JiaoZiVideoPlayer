@@ -3,19 +3,23 @@ package fm.jiecao.jiecaovideoplayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import de.greenrobot.event.EventBus;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.VideoEvents;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     JCVideoPlayer videoController1, videoController2;
+    Button btnToList, btnToListViewpager, btnToFullscreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
 
         videoController1 = (JCVideoPlayer) findViewById(R.id.videocontroller1);
         videoController1.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
@@ -26,7 +30,15 @@ public class MainActivity extends AppCompatActivity {
         videoController2.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4",//
                 "http://p.qpic.cn/videoyun/0/2449_ded7b566b37911e5942f0b208e48548d_2/640",
                 "嫂子还摸我", false);
-        EventBus.getDefault().register(this);
+
+        btnToList = (Button) findViewById(R.id.to_list_activity);
+        btnToListViewpager = (Button) findViewById(R.id.to_list_viewpager_activity);
+        btnToFullscreen = (Button) findViewById(R.id.to_fullscreen);
+
+        btnToList.setOnClickListener(this);
+        btnToListViewpager.setOnClickListener(this);
+        btnToFullscreen.setOnClickListener(this);
+
     }
 
     @Override
@@ -64,6 +76,21 @@ public class MainActivity extends AppCompatActivity {
             Log.i("Video Event", "POINT_ENTER_FULLSCREEN");
         } else if (event.type == VideoEvents.POINT_QUIT_FULLSCREEN) {
             Log.i("Video Event", "POINT_QUIT_FULLSCREEN");
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.to_list_activity:
+
+                break;
+            case R.id.to_list_viewpager_activity:
+
+                break;
+            case R.id.to_fullscreen:
+
+                break;
         }
     }
 }
