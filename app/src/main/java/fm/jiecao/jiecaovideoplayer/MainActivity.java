@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import de.greenrobot.event.EventBus;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -13,7 +14,7 @@ import fm.jiecao.jcvideoplayer_lib.VideoEvents;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     JCVideoPlayer videoController1, videoController2;
-    Button btnToList, btnToListViewpager, btnToFullscreen;
+    Button btnToList, btnToListViewpager, btnToFullscreen, btnToChangecolor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +35,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnToList = (Button) findViewById(R.id.to_list_activity);
         btnToListViewpager = (Button) findViewById(R.id.to_list_viewpager_activity);
         btnToFullscreen = (Button) findViewById(R.id.to_fullscreen);
+        btnToChangecolor = (Button) findViewById(R.id.to_changecolor_activity);
 
         btnToList.setOnClickListener(this);
         btnToListViewpager.setOnClickListener(this);
         btnToFullscreen.setOnClickListener(this);
+        btnToChangecolor.setOnClickListener(this);
 
     }
 
@@ -89,7 +92,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 break;
             case R.id.to_fullscreen:
-
+                Toast.makeText(MainActivity.this, "coming soon", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.to_changecolor_activity:
+                Toast.makeText(MainActivity.this, "coming soon", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
