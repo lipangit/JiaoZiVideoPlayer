@@ -576,7 +576,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
