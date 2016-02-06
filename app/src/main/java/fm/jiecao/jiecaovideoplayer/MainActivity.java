@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, ListActivity.class));
                 break;
             case R.id.to_list_viewpager_activity:
-
+                startActivity(new Intent(MainActivity.this, ListViewpagerActivity.class));
                 break;
             case R.id.to_fullscreen:
                 Toast.makeText(MainActivity.this, "coming soon", Toast.LENGTH_SHORT).show();
