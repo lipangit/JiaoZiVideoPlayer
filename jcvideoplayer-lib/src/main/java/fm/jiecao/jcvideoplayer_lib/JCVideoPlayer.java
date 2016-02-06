@@ -151,6 +151,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ImageLoader.getInstance().displayImage(thumb, ivThumb, getDefaultDisplayImageOption());
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
+        if (uuid.equals(JCMediaPlayer.intance().uuid)) {
+            JCMediaPlayer.intance().mediaPlayer.stop();
+        }
     }
 
     public void setUpForFullscreen(String url, String thumb, String title, boolean ifFullScreen) {
