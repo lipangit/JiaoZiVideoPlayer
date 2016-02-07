@@ -25,4 +25,8 @@ JCVideoPlayer.releaseAllVideo();
 ```
     
 ##效果
-  
+
+![Demo Screenshot][1]
+
+
+[1]: .effect.gif

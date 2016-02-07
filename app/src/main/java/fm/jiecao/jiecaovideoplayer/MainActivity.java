@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        JCVideoPlayer.releaseAllVideo();
         switch (v.getId()) {
             case R.id.to_list_activity:
                 startActivity(new Intent(MainActivity.this, ListActivity.class));
