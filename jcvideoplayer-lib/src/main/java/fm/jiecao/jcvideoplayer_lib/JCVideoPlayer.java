@@ -659,7 +659,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    public static DisplayImageOptions getDefaultDisplayImageOption() {
+    public DisplayImageOptions getDefaultDisplayImageOption() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(new ColorDrawable(Color.parseColor("#f0f0f0")))
                 .resetViewBeforeLoading(true)
