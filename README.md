@@ -28,5 +28,6 @@ JCVideoPlayer.releaseAllVideo();
 
 ![Demo Screenshot][1]
 
+效果视频 : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
 
 [1]: ./effect.gif
