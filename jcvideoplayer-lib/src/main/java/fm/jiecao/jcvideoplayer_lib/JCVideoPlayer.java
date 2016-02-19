@@ -651,12 +651,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * 停止所有音频的播放
      */
     public static void releaseAllVideo() {
-        if (JCMediaPlayer.intance().mediaPlayer.isPlaying()) {
-            JCMediaPlayer.intance().mediaPlayer.stop();
-            JCMediaPlayer.intance().setUuid("");
-            JCMediaPlayer.intance().setUuid("");
-            EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
-        }
+        JCMediaPlayer.intance().mediaPlayer.stop();
+        JCMediaPlayer.intance().setUuid("");
+        JCMediaPlayer.intance().setUuid("");
+        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
     }
 
     public DisplayImageOptions getDefaultDisplayImageOption() {
