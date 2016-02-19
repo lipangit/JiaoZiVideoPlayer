@@ -151,6 +151,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ImageLoader.getInstance().displayImage(thumb, ivThumb, getDefaultDisplayImageOption());
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
+        if (uuid.equals(JCMediaPlayer.intance().uuid)) {
+            JCMediaPlayer.intance().mediaPlayer.stop();
+        }
     }
 
     public void setUpForFullscreen(String url, String thumb, String title, boolean ifFullScreen) {
@@ -576,7 +579,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
@@ -646,15 +651,13 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * 停止所有音频的播放
      */
     public static void releaseAllVideo() {
-        if (JCMediaPlayer.intance().mediaPlayer.isPlaying()) {
-            JCMediaPlayer.intance().mediaPlayer.stop();
-            JCMediaPlayer.intance().setUuid("");
-            JCMediaPlayer.intance().setUuid("");
-            EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
-        }
+        JCMediaPlayer.intance().mediaPlayer.stop();
+        JCMediaPlayer.intance().setUuid("");
+        JCMediaPlayer.intance().setUuid("");
+        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
     }
 
-    public static DisplayImageOptions getDefaultDisplayImageOption() {
+    public DisplayImageOptions getDefaultDisplayImageOption() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(new ColorDrawable(Color.parseColor("#f0f0f0")))
                 .resetViewBeforeLoading(true)
