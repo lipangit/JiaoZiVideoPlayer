@@ -1,11 +1,18 @@
 #节操视频播放器
 
-真正实现Android的全屏功能，励志成为Android平台使用最广泛的视频播放控件
+真正实现Android的全屏功能，励志成为Android平台使用最广泛的视频播放控件，GitFlow流程开发develop分支是最新版本
+
+##主要特点
+1. 全屏时启动新Activity实现播放器真正的全屏功能
+2. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
+3. 播放MP3时现实缩略图片
+4. 能在ListView、ViewPager和ListView、ViewPager和Fragment的多重嵌套模式下全屏工作
+5. ListView的拖拽和ViewPager的滑动时如果划出屏幕会自动重置视频
 
 ##使用
 引入类库
 ```java
-compile 'fm.jiecao:jiecaovideoplayer:1.2'
+compile 'fm.jiecao:jiecaovideoplayer:1.3'
 ```
 
 添加布局
