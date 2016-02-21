@@ -3,6 +3,11 @@
 真正实现Android的全屏功能，励志成为Android平台使用最广泛的视频播放控件
 
 ##使用
+引入类库
+```java
+compile 'fm.jiecao:jiecaovideoplayer:1.2_preview'
+```
+
 添加布局
 ```html
 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
@@ -23,11 +28,18 @@ videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f
 ```
 JCVideoPlayer.releaseAllVideo();
 ```
+
+在ListView和ViewPager中将视频移除屏幕外，会在onDetachedFromWindow时重置视频。
+
+目标是在库外只需要添加布局，添加配置，其他的问题都在库内判断和操作。
     
+    如果JCVideoPlayer这个View能检测到自己的Activity或者Fragment的生命周期JCVideoPlayer.releaseAllVideo();这个接口暴露出来都略显多余
+
 ##效果
 
 ![Demo Screenshot][1]
 
-效果视频 : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
+http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
+
 
 [1]: ./effect.gif
