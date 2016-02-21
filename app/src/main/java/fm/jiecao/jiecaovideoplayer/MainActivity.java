@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideo();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     @Override
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        JCVideoPlayer.releaseAllVideo();
+        JCVideoPlayer.releaseAllVideos();
         switch (v.getId()) {
             case R.id.to_list_activity:
                 startActivity(new Intent(MainActivity.this, ListActivity.class));

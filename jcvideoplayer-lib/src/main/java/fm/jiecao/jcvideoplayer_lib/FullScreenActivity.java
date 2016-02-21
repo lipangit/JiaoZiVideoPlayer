@@ -46,7 +46,7 @@ public class FullScreenActivity extends Activity {
         jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.jcvideoplayer);
         jcVideoPlayer.setUpForFullscreen(URL, THUMB, TITLE);
         jcVideoPlayer.setState(STATE);
-        JCMediaPlayer.intance().setUuid(jcVideoPlayer.uuid);
+        JCMediaManager.intance().setUuid(jcVideoPlayer.uuid);
         manualQuit = false;
     }
 
@@ -65,7 +65,8 @@ public class FullScreenActivity extends Activity {
     protected void onPause() {
         super.onPause();
         if (!manualQuit) {
-            JCVideoPlayer.releaseAllVideo();
+            jcVideoPlayer.isClickFullscreen = false;
+            JCVideoPlayer.releaseAllVideos();
             finish();
         }
     }

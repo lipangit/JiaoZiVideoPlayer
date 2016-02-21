@@ -17,23 +17,23 @@ import de.greenrobot.event.EventBus;
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-class JCMediaPlayer implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnVideoSizeChangedListener {
+class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnVideoSizeChangedListener {
 
     public MediaPlayer mediaPlayer;
-    private static JCMediaPlayer jcMediaPlayer;
+    private static JCMediaManager jcMediaManager;
     public String uuid = "";//这个是正在播放中的视频控件的uuid，
     private String prev_uuid = "";
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
 
-    public static JCMediaPlayer intance() {
-        if (jcMediaPlayer == null) {
-            jcMediaPlayer = new JCMediaPlayer();
+    public static JCMediaManager intance() {
+        if (jcMediaManager == null) {
+            jcMediaManager = new JCMediaManager();
         }
-        return jcMediaPlayer;
+        return jcMediaManager;
     }
 
-    public JCMediaPlayer() {
+    public JCMediaManager() {
         mediaPlayer = new MediaPlayer();
     }
 
