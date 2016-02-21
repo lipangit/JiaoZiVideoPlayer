@@ -14,7 +14,7 @@ import fm.jiecao.jcvideoplayer_lib.VideoEvents;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    JCVideoPlayer videoController1, videoController2;
+    JCVideoPlayer videoController1, videoController2, videoController3;
     Button btnToList, btnToListViewpager, btnToFullscreen, btnToChangecolor;
 
     @Override
@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         videoController2.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4",//
                 "http://p.qpic.cn/videoyun/0/2449_ded7b566b37911e5942f0b208e48548d_2/640",
                 "嫂子还摸我", false);
+
+        videoController3 = (JCVideoPlayer) findViewById(R.id.videocontroller3);
+        videoController3.setUp("http://121.40.64.47/resource/mp3/music_yangguang3.mp3",//
+                "http://p.qpic.cn/videoyun/0/2449_ded7b566b37911e5942f0b208e48548d_2/640",
+                "嫂子别闹");
 
         btnToList = (Button) findViewById(R.id.to_list_activity);
         btnToListViewpager = (Button) findViewById(R.id.to_list_viewpager_activity);
