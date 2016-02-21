@@ -1,16 +1,9 @@
 package fm.jiecao.jiecaovideoplayer;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
-
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 /**
  * Created by Nathen
@@ -32,7 +25,6 @@ public class ListActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(new VideoListAdapter(this));
     }
-
 
 
     @Override
