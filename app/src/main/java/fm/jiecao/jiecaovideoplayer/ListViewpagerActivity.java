@@ -53,7 +53,7 @@ public class ListViewpagerActivity extends AppCompatActivity implements ViewPage
 
     @Override
     public void onPageSelected(int position) {
-        JCVideoPlayer.releaseAllVideo();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     @Override
