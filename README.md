@@ -5,7 +5,7 @@
 ##使用
 引入类库
 ```java
-compile 'fm.jiecao:jiecaovideoplayer:1.2_preview'
+compile 'fm.jiecao:jiecaovideoplayer:1.2'
 ```
 
 添加布局

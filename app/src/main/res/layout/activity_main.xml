@@ -34,6 +34,18 @@
                 android:layout_height="200dp"
                 android:layout_marginTop="2dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="播放mp3" />
+
+            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
+                android:id="@+id/videocontroller3"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="2dp" />
+
             <Button
                 android:id="@+id/to_fullscreen"
                 android:layout_width="match_parent"
