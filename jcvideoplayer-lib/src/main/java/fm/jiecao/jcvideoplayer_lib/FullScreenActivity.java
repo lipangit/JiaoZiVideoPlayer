@@ -16,10 +16,7 @@ import de.greenrobot.event.EventBus;
  * On 2015/12/01 11:17
  */
 public class FullScreenActivity extends Activity {
-    /**
-     * TODO 可能有需求直接进入全屏，退出就退出播放，没有非全屏的需求
-     * state是当前的播放状态，全屏之后要继续原来的状态
-     */
+
     public static void toActivity(Context context, int state, String url, String thumb, String title) {
         STATE = state;
         URL = url;
@@ -47,7 +44,7 @@ public class FullScreenActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_fullscreen);
         jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.jcvideoplayer);
-        jcVideoPlayer.setUpForFullscreen(URL, THUMB, TITLE, true);
+        jcVideoPlayer.setUpForFullscreen(URL, THUMB, TITLE);
         jcVideoPlayer.setState(STATE);
         JCMediaPlayer.intance().setUuid(jcVideoPlayer.uuid);
         manualQuit = false;
