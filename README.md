@@ -43,12 +43,11 @@ JCVideoPlayer.releaseAllVideo();
     如果JCVideoPlayer这个View能检测到自己的Activity或者Fragment的生命周期JCVideoPlayer.releaseAllVideo();这个接口暴露出来都略显多余
 
 ##下载
+ * **[jiecaovideoplayer-1.3-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3-demo.apk)**
+ * **[jiecaovideoplayer-1.3.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3.aar)**
+ * **[jiecaovideoplayer-1.3-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3-javadoc.jar)**
+ * **[jiecaovideoplayer-1.3-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3-sources.jar)**
 
-    * **[jiecaovideoplayer-1.3-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3-demo.apk)**
-    * **[jiecaovideoplayer-1.3.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3.aar)**
-    * **[jiecaovideoplayer-1.3-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3-javadoc.jar)**
-    * **[jiecaovideoplayer-1.3-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3-sources.jar)**
-    
 ##效果
 
 ![Demo Screenshot][1]
