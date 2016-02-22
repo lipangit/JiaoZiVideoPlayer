@@ -44,6 +44,11 @@ JCVideoPlayer.releaseAllVideo();
 
 ##下载
 
+    * **[jiecaovideoplayer-1.3-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3-demo.apk)**
+    * **[jiecaovideoplayer-1.3.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3.aar)**
+    * **[jiecaovideoplayer-1.3-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3-javadoc.jar)**
+    * **[jiecaovideoplayer-1.3-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.3-sources.jar)**
+    
 ##效果
 
 ![Demo Screenshot][1]
