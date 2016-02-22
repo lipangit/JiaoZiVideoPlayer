@@ -42,6 +42,8 @@ JCVideoPlayer.releaseAllVideo();
     
     如果JCVideoPlayer这个View能检测到自己的Activity或者Fragment的生命周期JCVideoPlayer.releaseAllVideo();这个接口暴露出来都略显多余
 
+##下载
+
 ##效果
 
 ![Demo Screenshot][1]
