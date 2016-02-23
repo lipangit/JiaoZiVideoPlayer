@@ -2,6 +2,8 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -36,16 +38,15 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     ImageView ivStart;
     ProgressBar pbLoading, pbBottom;
     ImageView ivFullScreen;
-    SeekBar sbProgress;
+    SeekBar skProgress;
     TextView tvTimeCurrent, tvTimeTotal;
     ResizeSurfaceView surfaceView;
     SurfaceHolder surfaceHolder;
-    LinearLayout llBottomControl;
     TextView tvTitle;
     ImageView ivBack;
     ImageView ivThumb;
     RelativeLayout rlParent;
-    LinearLayout llTitleContainer;
+    LinearLayout llTitleContainer, llBottomControl;
     ImageView ivCover;
 
     //属性
@@ -87,7 +88,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         pbLoading = (ProgressBar) findViewById(R.id.loading);
         pbBottom = (ProgressBar) findViewById(R.id.bottom_progressbar);
         ivFullScreen = (ImageView) findViewById(R.id.fullscreen);
-        sbProgress = (SeekBar) findViewById(R.id.progress);
+        skProgress = (SeekBar) findViewById(R.id.progress);
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
         surfaceView = (ResizeSurfaceView) findViewById(R.id.surfaceView);
@@ -105,13 +106,13 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ivStart.setOnClickListener(this);
         ivThumb.setOnClickListener(this);
         ivFullScreen.setOnClickListener(this);
-        sbProgress.setOnSeekBarChangeListener(this);
+        skProgress.setOnSeekBarChangeListener(this);
         surfaceHolder.addCallback(this);
         surfaceView.setOnClickListener(this);
         llBottomControl.setOnClickListener(this);
         rlParent.setOnClickListener(this);
         ivBack.setOnClickListener(this);
-        sbProgress.setOnTouchListener(this);
+        skProgress.setOnTouchListener(this);
 
     }
 
@@ -545,7 +546,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     //************************进度条的控制*******************************
     private void setProgressBuffered(int secProgress) {
         if (secProgress >= 0) {
-            sbProgress.setSecondaryProgress(secProgress);
+            skProgress.setSecondaryProgress(secProgress);
             pbBottom.setSecondaryProgress(secProgress);
         }
     }
@@ -559,7 +560,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private void setProgressAndTime(int progress, int currentTime, int totalTime) {
         if (!touchingProgressBar) {
-            sbProgress.setProgress(progress);
+            skProgress.setProgress(progress);
             pbBottom.setProgress(progress);
         }
         tvTimeCurrent.setText(Utils.stringForTime(currentTime));
@@ -736,4 +737,23 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private void loadMp3Thum() {
         ImageLoader.getInstance().displayImage(thumb, ivCover, Utils.getDefaultDisplayImageOption());
     }
+
+    //标题颜色，时间颜色，全屏图标，seekbardrawable，seekbarthumb，back图标
+
+    public void setSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground) {
+        Resources resource = getContext().getResources();
+        ColorStateList titleCsl = resource.getColorStateList(titleColor);
+        if (titleCsl != null) {
+            tvTitle.setTextColor(titleCsl);
+        }
+        ColorStateList timeCsl = resource.getColorStateList(timeColor);
+        if (timeCsl != null) {
+            tvTimeCurrent.setTextColor(timeCsl);
+            tvTimeTotal.setTextColor(timeCsl);
+        }
+        skProgress.setProgressDrawable(resource.getDrawable(seekDrawable));
+        pbBottom.setProgressDrawable(resource.getDrawable(seekDrawable));
+        llBottomControl.setBackgroundColor(resource.getColor(bottomControlBackground));
+    }
+
 }

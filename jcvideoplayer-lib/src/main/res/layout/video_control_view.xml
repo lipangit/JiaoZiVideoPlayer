@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/media_controller_view_height"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/biz_video_bar_bg"
+        android:background="#99000000"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="invisible">
