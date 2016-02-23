@@ -166,7 +166,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (uuid.equals(JCMediaManager.intance().uuid)) {
             JCMediaManager.intance().mediaPlayer.stop();
         }
-        if (url.contains(".mp3")) {
+        if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
             loadMp3Thum();
         }
@@ -198,7 +198,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
 
-        if (url.contains(".mp3")) {
+        if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
             loadMp3Thum();
         }
@@ -772,19 +772,26 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private void setSkin(Skin skin) {
         Resources resource = getContext().getResources();
-        ColorStateList titleCsl = resource.getColorStateList(skin.titleColor);
-        if (titleCsl != null) {
-            tvTitle.setTextColor(titleCsl);
+        if (skin.titleColor != 0) {
+            ColorStateList titleCsl = resource.getColorStateList(skin.titleColor);
+            if (titleCsl != null) {
+                tvTitle.setTextColor(titleCsl);
+            }
         }
-        ColorStateList timeCsl = resource.getColorStateList(skin.timeColor);
-        if (timeCsl != null) {
-            tvTimeCurrent.setTextColor(timeCsl);
-            tvTimeTotal.setTextColor(timeCsl);
+        if (skin.timeColor != 0) {
+            ColorStateList timeCsl = resource.getColorStateList(skin.timeColor);
+            if (timeCsl != null) {
+                tvTimeCurrent.setTextColor(timeCsl);
+                tvTimeTotal.setTextColor(timeCsl);
+            }
         }
-        skProgress.setProgressDrawable(resource.getDrawable(skin.seekDrawable));
-        pbBottom.setProgressDrawable(resource.getDrawable(skin.seekDrawable));
-        llBottomControl.setBackgroundColor(resource.getColor(skin.bottomControlBackground));
-
+        if (skin.seekDrawable != 0) {
+            skProgress.setProgressDrawable(resource.getDrawable(skin.seekDrawable));
+            pbBottom.setProgressDrawable(resource.getDrawable(skin.seekDrawable));
+        }
+        if (skin.bottomControlBackground != 0) {
+            llBottomControl.setBackgroundColor(resource.getColor(skin.bottomControlBackground));
+        }
         this.enlargRecId = skin.enlargRecId;
         this.shrinkRecId = skin.shrinkRecId;
     }
