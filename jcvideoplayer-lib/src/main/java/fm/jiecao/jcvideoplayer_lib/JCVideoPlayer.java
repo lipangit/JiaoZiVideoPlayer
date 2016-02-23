@@ -726,17 +726,16 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ImageLoader.getInstance().displayImage(thumb, ivCover, Utils.getDefaultDisplayImageOption());
     }
 
-    //标题颜色，时间颜色，全屏图标，seekbardrawable，seekbarthumb，back图标
-
     /**
      * 只设置这一个播放器的皮肤
+     * 这个需要在setUp播放器的属性之前调用，因为enlarge图标的原因
      *
-     * @param titleColor
-     * @param timeColor
-     * @param seekDrawable
-     * @param bottomControlBackground
-     * @param enlargRecId
-     * @param shrinkRecId
+     * @param titleColor              标题颜色
+     * @param timeColor               时间颜色
+     * @param seekDrawable            滑动条颜色
+     * @param bottomControlBackground 低栏背景
+     * @param enlargRecId             全屏背景
+     * @param shrinkRecId             退出全屏背景
      */
     public void setSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
                         int enlargRecId, int shrinkRecId) {
@@ -746,13 +745,14 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * 设置所有播放器的皮肤
+     * 这个只要在初始化想要换肤的播放器之前运行即可，可以在application中也可以在activity中
      *
-     * @param titleColor
-     * @param timeColor
-     * @param seekDrawable
-     * @param bottomControlBackground
-     * @param enlargRecId
-     * @param shrinkRecId
+     * @param titleColor              标题颜色
+     * @param timeColor               时间颜色
+     * @param seekDrawable            滑动条颜色
+     * @param bottomControlBackground 低栏背景
+     * @param enlargRecId             全屏背景
+     * @param shrinkRecId             退出全屏背景
      */
     public static void setGlobleSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
                                      int enlargRecId, int shrinkRecId) {
