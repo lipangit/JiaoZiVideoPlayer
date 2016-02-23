@@ -13,6 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="颜色搭配很难看，只是为了标明哪些地方能修改" />
+        android:text="颜色搭配很难看，为了标明哪些地方能修改" />
 
 </LinearLayout>

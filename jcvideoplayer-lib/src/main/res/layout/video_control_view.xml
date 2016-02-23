@@ -64,7 +64,6 @@
             android:text="00:00"
             android:textColor="#ffffff" />
 
-
         <SeekBar
             android:id="@+id/progress"
             android:layout_width="0.0dip"
@@ -81,7 +80,6 @@
             android:progressDrawable="@drawable/seek_progress"
             android:thumb="@drawable/seek_thumb"
             android:thumbOffset="0.0dip" />
-
 
         <TextView
             android:id="@+id/total"
@@ -137,7 +135,6 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
     </LinearLayout>
-
 
     <ImageView
         android:id="@+id/start"
