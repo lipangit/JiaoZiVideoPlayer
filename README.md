@@ -8,6 +8,7 @@
 3. 播放MP3时现实缩略图片
 4. 能在ListView、ViewPager和ListView、ViewPager和Fragment的多重嵌套模式下全屏工作
 5. ListView的拖拽和ViewPager的滑动时如果划出屏幕会自动重置视频
+6. 根据自己应用的颜色风格换肤
 
 ##使用
 引入类库
@@ -32,8 +33,14 @@ videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f
 ```
 
 其他接口，停止所有视频
-```
+```java
 JCVideoPlayer.releaseAllVideo();
+```
+
+设置皮肤，可以指定某个播放器的皮肤，也可以设置全局皮肤，优先级:某个播放器皮肤>全局皮肤>默认皮肤
+```java
+JCVideoPlayer.setGlobleSkin();//设置全局皮肤
+videoController.setSkin();//设置这一个播放器的皮肤
 ```
 
 在ListView和ViewPager中将视频移除屏幕外，会在onDetachedFromWindow时重置视频。

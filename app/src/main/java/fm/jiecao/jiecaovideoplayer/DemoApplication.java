@@ -33,6 +33,7 @@ public class DemoApplication extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
+
         JCVideoPlayer.setGlobleSkin(R.color.colorPrimary, R.color.colorAccent, R.drawable.skin_seek_progress,
                 R.color.bottom_bg, R.drawable.skin_enlarge_video, R.drawable.skin_shrink_video);
         initUniversalImageLoader();
