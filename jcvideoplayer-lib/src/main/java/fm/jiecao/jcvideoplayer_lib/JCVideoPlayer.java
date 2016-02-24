@@ -731,6 +731,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     /**
      * 只设置这一个播放器的皮肤
      * 这个需要在setUp播放器的属性之前调用，因为enlarge图标的原因
+     * 所有参数如果不需要修改的设为0
      *
      * @param titleColor              标题颜色
      * @param timeColor               时间颜色
@@ -748,6 +749,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     /**
      * 设置所有播放器的皮肤
      * 这个只要在初始化想要换肤的播放器之前运行即可，可以在application中也可以在activity中
+     * 所有参数如果不需要修改的设为0
      *
      * @param titleColor              标题颜色
      * @param timeColor               时间颜色
