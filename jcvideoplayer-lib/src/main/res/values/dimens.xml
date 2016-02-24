@@ -3,5 +3,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- MEDIA CONTROLLER -->
-    <dimen name="media_controller_view_height">38dip</dimen>
+    <dimen name="media_controller_view_height">40.0dip</dimen>
 </resources>
