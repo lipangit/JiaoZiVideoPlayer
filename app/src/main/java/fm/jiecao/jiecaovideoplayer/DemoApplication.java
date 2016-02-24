@@ -20,8 +20,6 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 
 import java.io.File;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-
 /**
  * Created by Nathen
  * On 2015/12/01 11:29
@@ -34,8 +32,8 @@ public class DemoApplication extends Application {
         super.onCreate();
         application = this;
 
-        JCVideoPlayer.setGlobleSkin(R.color.colorPrimary, R.color.colorAccent, R.drawable.skin_seek_progress,
-                R.color.bottom_bg, R.drawable.skin_enlarge_video, R.drawable.skin_shrink_video);
+//        JCVideoPlayer.setGlobleSkin(R.color.colorPrimary, R.color.colorAccent, R.drawable.skin_seek_progress,
+//                R.color.bottom_bg, R.drawable.skin_enlarge_video, R.drawable.skin_shrink_video);
         initUniversalImageLoader();
     }
 
