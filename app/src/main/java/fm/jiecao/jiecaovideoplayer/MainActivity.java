@@ -62,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EventBus.getDefault().unregister(this);
     }
 
+    /**
+     * 如果没有埋点需求，可以不用注册eventbus
+     */
     public void onEventMainThread(VideoEvents event) {
         if (event.type == VideoEvents.POINT_START_ICON) {
             Log.i("Video Event", "POINT_START_ICON");
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(MainActivity.this, "coming soon", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.to_changecolor_activity:
-                Toast.makeText(MainActivity.this, "coming soon", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, SetSkinActivity.class));
                 break;
         }
     }
