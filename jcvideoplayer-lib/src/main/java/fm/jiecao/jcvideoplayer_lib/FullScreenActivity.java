@@ -35,6 +35,7 @@ public class FullScreenActivity extends Activity {
     public static String TITLE;
     public static String THUMB;
     public static boolean manualQuit = false;
+    protected static Skin skin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,10 @@ public class FullScreenActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_fullscreen);
         jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.jcvideoplayer);
+        if (skin != null) {
+            jcVideoPlayer.setSkin(skin.titleColor, skin.timeColor, skin.seekDrawable, skin.bottomControlBackground,
+                    skin.enlargRecId, skin.shrinkRecId);
+        }
         jcVideoPlayer.setUpForFullscreen(URL, THUMB, TITLE);
         jcVideoPlayer.setState(STATE);
         JCMediaManager.intance().setUuid(jcVideoPlayer.uuid);

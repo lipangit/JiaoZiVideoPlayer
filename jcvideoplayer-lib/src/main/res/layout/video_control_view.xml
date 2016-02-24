@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/media_controller_view_height"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/biz_video_bar_bg"
+        android:background="#99000000"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="invisible">
@@ -63,7 +63,6 @@
             android:gravity="center"
             android:text="00:00"
             android:textColor="#ffffff" />
-
 
         <SeekBar
             android:id="@+id/progress"
@@ -81,7 +80,6 @@
             android:progressDrawable="@drawable/seek_progress"
             android:thumb="@drawable/seek_thumb"
             android:thumbOffset="0.0dip" />
-
 
         <TextView
             android:id="@+id/total"
@@ -137,7 +135,6 @@
             android:textColor="@android:color/white"
             android:textSize="18sp" />
     </LinearLayout>
-
 
     <ImageView
         android:id="@+id/start"

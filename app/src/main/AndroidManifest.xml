@@ -26,6 +26,10 @@
         <activity
             android:name=".ListViewpagerActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".SetSkinActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
