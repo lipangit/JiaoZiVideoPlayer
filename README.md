@@ -20,24 +20,24 @@
 
 ##使用
 引入类库
-```java
+```gradle
 compile 'fm.jiecao:jiecaovideoplayer:1.5'
 ```
 
 添加布局
-```html
+```java
 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
-                android:id="@+id/videocontroller1"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
+    android:id="@+id/videocontroller1"
+    android:layout_width="match_parent"
+    android:layout_height="200dp" />
 ```
 
 设置视频地址、缩略图地址、标题
 ```java
 JCVideoPlayer videoController = (JCVideoPlayer) findViewById(R.id.videocontroller);
 videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
-                "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
-                "嫂子别摸我");
+    "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
+    "嫂子别摸我");
 ```
 
 其他接口，停止所有视频
@@ -66,8 +66,6 @@ videoController.setSkin();//设置这一个播放器的皮肤
 ## License
 
     The MIT License (MIT)
-    
-    Copyright (c) [year] [fullname]
     
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
