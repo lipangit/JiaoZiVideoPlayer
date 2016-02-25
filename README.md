@@ -25,7 +25,7 @@ compile 'fm.jiecao:jiecaovideoplayer:1.5'
 ```
 
 添加布局
-```java
+```xml
 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
     android:id="@+id/videocontroller1"
     android:layout_width="match_parent"
