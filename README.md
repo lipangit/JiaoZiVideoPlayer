@@ -1,4 +1,4 @@
-#节操视频播放器
+#节操视频播放器 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/fm.jiecao/jiecaovideoplayer/badge.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C1.5%7Caar)
 
 真正实现Android的全屏功能，励志成为Android平台使用最广泛的视频播放控件，GitFlow流程开发develop分支是最新版本
 
@@ -9,6 +9,14 @@
 4. 能在ListView、ViewPager和ListView、ViewPager和Fragment的多重嵌套模式下全屏工作
 5. ListView的拖拽和ViewPager的滑动时如果划出屏幕会自动重置视频
 6. 根据自己应用的颜色风格换肤
+7. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
+
+##效果
+
+![Demo Screenshot][1]
+
+视频演示 : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
+
 
 ##使用
 引入类库
@@ -55,11 +63,6 @@ videoController.setSkin();//设置这一个播放器的皮肤
  * **[jiecaovideoplayer-1.5-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.5-javadoc.jar)**
  * **[jiecaovideoplayer-1.5-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.5-sources.jar)**
 
-##效果
-
-![Demo Screenshot][1]
-
-http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
 
 
-[1]: ./effect.gif
+[1]: ./screenshots/j1.png
