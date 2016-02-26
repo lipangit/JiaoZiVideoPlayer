@@ -47,6 +47,12 @@ public class ListViewpagerActivity extends AppCompatActivity implements ViewPage
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
