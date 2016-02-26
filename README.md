@@ -55,12 +55,27 @@ JCVideoPlayer.releaseAllVideo();
 
     在ListView和ViewPager中将视频移除屏幕外，会在onDetachedFromWindow时重置视频。
     目标是在库外只需要添加布局，添加配置，其他的问题都在库内判断和操作。
-    
+
+混淆
+```
+##Eventbus混淆
+-keepclassmembers class ** {
+    public void onEvent*(***);
+}
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
+    public <init>(java.lang.Throwable);
+}
+# Don't warn for missing support classes
+-dontwarn de.greenrobot.event.util.*$Support
+-dontwarn de.greenrobot.event.util.*$SupportManagerFragment
+```
+
 ##下载
- * **[jiecaovideoplayer-1.5-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.5-demo.apk)**
- * **[jiecaovideoplayer-1.5.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.5.aar)**
- * **[jiecaovideoplayer-1.5-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.5-javadoc.jar)**
- * **[jiecaovideoplayer-1.5-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.5-sources.jar)**
+ * **[jiecaovideoplayer-1.6-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.6-demo.apk)**
+ * **[jiecaovideoplayer-1.6.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.6.aar)**
+ * **[jiecaovideoplayer-1.6-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.6-javadoc.jar)**
+ * **[jiecaovideoplayer-1.6-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.6-sources.jar)**
 
 ## License
 
