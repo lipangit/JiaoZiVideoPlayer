@@ -32,6 +32,11 @@ public class SetSkinActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
