@@ -30,7 +30,8 @@ import java.util.UUID;
 import de.greenrobot.event.EventBus;
 
 /**
- * @see <a href="https://github.com/lipangit/jiecaovideoplayer">节操视频播放器 Github</a>
+ *
+ * @see <a href="https://github.com/lipangit/jiecaovideoplayer">JiecaoVideoplayer Github</a>
  * <br>
  * On 2015/11/30 11:59
  */

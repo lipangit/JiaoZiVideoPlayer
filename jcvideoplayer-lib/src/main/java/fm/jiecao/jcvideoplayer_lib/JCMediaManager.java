@@ -13,8 +13,12 @@ import de.greenrobot.event.EventBus;
 
 
 /**
- * 统一管理MediaPlayer,管理视频的暂停播放进度全屏的功能
+ * 统一管理MediaPlayer的地方,只有一个mediaPlayer实例，那么不会有多个视频同时播放，也节省资源。
+ * <p>
+ * Unified management MediaPlayer place, there is only one MediaPlayer instance, then there will be no more video broadcast at the same time, also save resources.
+ * <p>
  * Created by Nathen
+ * <br/>
  * On 2015/11/30 15:39
  */
 class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnVideoSizeChangedListener {
@@ -25,6 +29,7 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     private String prev_uuid = "";
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
+    private static final String TAG = "JiecaoVideoplayer";
 
     public static JCMediaManager intance() {
         if (jcMediaManager == null) {
@@ -84,10 +89,10 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     }
 
     public void setUuid(String uuid) {
-        Log.i("uuid::", "0 " + uuid + " prevuuid " + prev_uuid);
+        Log.i(TAG, "0 " + uuid + " prevuuid " + prev_uuid);
 //        backUpUuid();
         this.uuid = uuid;
-        Log.i("uuid::", "1 " + uuid + " prevuuid " + prev_uuid);
+        Log.i(TAG, "1 " + uuid + " prevuuid " + prev_uuid);
     }
 
     public void backUpUuid() {
@@ -97,7 +102,7 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     public void revertUuid() {
         this.uuid = this.prev_uuid;
         this.prev_uuid = "";
-        Log.i("uuid::", "2 " + uuid + " prevuuid " + prev_uuid);
+        Log.i(TAG, "2 " + uuid + " prevuuid " + prev_uuid);
     }
 
     @Override
