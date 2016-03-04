@@ -30,9 +30,13 @@ import java.util.UUID;
 import de.greenrobot.event.EventBus;
 
 /**
+ * <p>节操视频播放器，库的外面所有使用的接口也在这里</p>
+ * <p>Jiecao video player，all outside the library interface is here</p>
  *
  * @see <a href="https://github.com/lipangit/jiecaovideoplayer">JiecaoVideoplayer Github</a>
- * <br>
+ * <br/>
+ * Created by Nathen
+ * <br/>
  * On 2015/11/30 11:59
  */
 public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener {
@@ -126,23 +130,25 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 配置要播放的内容
+     * <p>配置要播放的内容</p>
+     * <p>Configuring the Content to Play</p>
      *
-     * @param url   视频地址
-     * @param thumb 缩略图地址
-     * @param title 标题
+     * @param url   视频地址  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Video address
+     * @param thumb 缩略图地址  &nbsp  Thumbnail address
+     * @param title 标题        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   title
      */
     public void setUp(String url, String thumb, String title) {
         setUp(url, thumb, title, true);
     }
 
     /**
-     * 配置要播放的内容
+     * <p>配置要播放的内容</p>
+     * <p>Configuring the Content to Play</p>
      *
-     * @param url         视频地址
-     * @param thumb       缩略图地址
-     * @param title       标题
-     * @param ifShowTitle 是否在非全屏下显示标题
+     * @param url         视频地址  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Video address
+     * @param thumb       缩略图地址 &nbsp  Thumbnail address
+     * @param title       标题   &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   title
+     * @param ifShowTitle 是否在非全屏下显示标题 &nbsp&nbsp&nbsp The title is displayed in full-screen under
      */
     public void setUp(String url, String thumb, String title, boolean ifShowTitle) {
         setSkin();
@@ -176,11 +182,12 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 只在全全屏中调用的方法
+     * <p>只在全全屏中调用的方法</p>
+     * <p>Only in fullscreen can call this</p>
      *
-     * @param url   视频地址
-     * @param thumb 缩略图地址
-     * @param title 标题
+     * @param url   视频地址  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Video address
+     * @param thumb 缩略图地址 &nbsp  Thumbnail address
+     * @param title 标题   &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   title
      */
     public void setUpForFullscreen(String url, String thumb, String title) {
         setSkin();
@@ -208,7 +215,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 设置视频的状态
+     * <p>只在全全屏中调用的方法</p>
+     * <p>Only in fullscreen can call this</p>
      *
      * @param state int型
      */
@@ -665,7 +673,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 停止所有音频的播放
+     * <p>停止所有音频的播放<p/>
+     * <p>release all videos<p/>
      */
     public static void releaseAllVideos() {
         if (!isClickFullscreen) {
@@ -730,16 +739,19 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 只设置这一个播放器的皮肤
-     * 这个需要在setUp播放器的属性之前调用，因为enlarge图标的原因
-     * 所有参数如果不需要修改的设为0
+     * <p>只设置这一个播放器的皮肤<br>
+     * 这个需要在setUp播放器的属性之前调用，因为enlarge图标的原因<br>
+     * 所有参数如果不需要修改的设为0</p>
+     * <p>This setting only one player skin<br>
+     * This requires the player before setUp property called, because of the enlarge icon<br>
+     * If you do not modify all parameters can be set to 0</p>
      *
-     * @param titleColor              标题颜色
-     * @param timeColor               时间颜色
-     * @param seekDrawable            滑动条颜色
-     * @param bottomControlBackground 低栏背景
-     * @param enlargRecId             全屏背景
-     * @param shrinkRecId             退出全屏背景
+     * @param titleColor              标题颜色    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp title color
+     * @param timeColor               时间颜色    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  time color
+     * @param seekDrawable            滑动条颜色   &nbsp seekbar color
+     * @param bottomControlBackground 低栏背景     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   background color
+     * @param enlargRecId             全屏背景     fullscreen background
+     * @param shrinkRecId             退出全屏背景  quit fullscreen background quit fullscreen
      */
     public void setSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
                         int enlargRecId, int shrinkRecId) {
@@ -748,16 +760,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 设置所有播放器的皮肤
-     * 这个只要在初始化想要换肤的播放器之前运行即可，可以在application中也可以在activity中
-     * 所有参数如果不需要修改的设为0
-     *
-     * @param titleColor              标题颜色
-     * @param timeColor               时间颜色
-     * @param seekDrawable            滑动条颜色
-     * @param bottomControlBackground 低栏背景
-     * @param enlargRecId             全屏背景
-     * @param shrinkRecId             退出全屏背景
+     * <p>设置应用内所有播放器的皮肤<p/>
+     * <p>Apply all settings within the player skin</p>
      */
     public static void setGlobleSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
                                      int enlargRecId, int shrinkRecId) {
