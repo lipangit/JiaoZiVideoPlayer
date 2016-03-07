@@ -36,7 +36,6 @@ import de.greenrobot.event.EventBus;
  * @see <a href="https://github.com/lipangit/jiecaovideoplayer">JiecaoVideoplayer Github</a>
  * <br/>
  * Created by Nathen
- * <br/>
  * On 2015/11/30 11:59
  */
 public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener {

@@ -6,8 +6,11 @@ import android.util.AttributeSet;
 import android.view.SurfaceView;
 
 /**
- * 自适应视频大小的surfaceview,在这个view上播放的视频都是尺寸适配的
- * 在布局的时候有坑，比如relativelayout中无法全屏，要嵌套一个linearlayout
+ * <p>参照Android系统的VideoView的onMeasure方法
+ * <br>注意!relativelayout中无法全屏，要嵌套一个linearlayout</p>
+ * <p>Referring Android system Video View of onMeasure method
+ * <br>NOTE! Can not fullscreen relativelayout, to nest a linearlayout</p>
+ * <p>
  * Created by Nathen
  * On 2015/12/08 10:58
  */
