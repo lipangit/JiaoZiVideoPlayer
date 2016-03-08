@@ -85,8 +85,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     // 一些临时表示状态的变量
     private boolean touchingProgressBar = false;
-    static boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
-    static boolean isClickFullscreen = false;
+    private static boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
+    private static boolean isClickFullscreen = false;
+
+    private static ImageView.ScaleType speScalType = null;
 
     public JCVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -125,7 +127,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         rlParent.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         skProgress.setOnTouchListener(this);
-
+        if (speScalType != null) {
+            ivThumb.setScaleType(speScalType);
+        }
     }
 
     /**
@@ -736,6 +740,16 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private void loadMp3Thum() {
         ImageLoader.getInstance().displayImage(thumb, ivCover, Utils.getDefaultDisplayImageOption());
+    }
+
+    /**
+     * <p>默认的缩略图的scaleType是fitCenter，这时候图片如果和屏幕尺寸不同的话左右或上下会有黑边，可以根据客户端需要改成fitXY或这其他模式</p>
+     * <p>The default thumbnail scaleType is fitCenter, and this time the picture if different screen sizes up and down or left and right, then there will be black bars, or it may need to change fitXY other modes based on the client</p>
+     *
+     * @param thumbScaleType 缩略图的scalType | Thumbnail scaleType
+     */
+    public static void setThumbImageViewScalType(ImageView.ScaleType thumbScaleType) {
+        speScalType = thumbScaleType;
     }
 
     /**
