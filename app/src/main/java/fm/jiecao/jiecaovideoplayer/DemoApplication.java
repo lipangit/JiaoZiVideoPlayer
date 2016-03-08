@@ -32,17 +32,14 @@ public class DemoApplication extends Application {
         super.onCreate();
         application = this;
         initUniversalImageLoader();
+        //这里将会设置所有播放器的皮肤 | Here the player will set all the skin
 //        JCVideoPlayer.setGlobleSkin(R.color.colorPrimary, R.color.colorAccent, R.drawable.skin_seek_progress,
 //                R.color.bottom_bg, R.drawable.skin_enlarge_video, R.drawable.skin_shrink_video);
+        //这里将会改变所有缩略图的ScaleType | Here will change all thumbnails ScaleType
 //        JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
     }
 
     private void initUniversalImageLoader() {
-        // This configuration tuning is custom. You can tune every option, you may tune some of them,
-        // or you can create default configuration by
-        //  ImageLoaderConfiguration.createDefault(this);
-        // method.
-
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(new ColorDrawable(Color.parseColor("#f0f0f0")))
                 .resetViewBeforeLoading(true)
@@ -51,13 +48,10 @@ public class DemoApplication extends Application {
                 .considerExifParams(true)
                 .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .bitmapConfig(Bitmap.Config.RGB_565)
-//                .displayer(new FadeInBitmapDisplayer(1000)) // 设置图片渐显的时间
-//                .delayBeforeLoading(300)  // 下载前的延迟时间
                 .build();
 
         int memClass = ((ActivityManager) getSystemService(Context.ACTIVITY_SERVICE))
                 .getMemoryClass();
-        // Use 1/8th of the available memory for this memory cache.
         int memCacheSize = 1024 * 1024 * memClass / 8;
 
         File cacheDir = new File(Environment.getExternalStorageDirectory().getPath() + "/jiecao/cache");
@@ -73,9 +67,7 @@ public class DemoApplication extends Application {
                 .diskCache(new UnlimitedDiskCache(cacheDir))//自定义缓存路径
                 .imageDownloader(new BaseImageDownloader(this, 5 * 1000, 30 * 1000)) // connectTimeout (5 s), readTimeout (30 s)超时时间
                 .defaultDisplayImageOptions(options)
-//                .writeDebugLogs() // Remove for release app
                 .build();
-        // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config);
     }
 

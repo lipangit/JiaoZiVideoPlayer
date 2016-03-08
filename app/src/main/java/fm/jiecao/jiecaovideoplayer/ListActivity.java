@@ -14,7 +14,6 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 public class ListActivity extends AppCompatActivity {
     ListView listView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
