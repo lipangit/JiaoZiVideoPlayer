@@ -19,12 +19,12 @@
 
 
 ##使用
-1. 引入类库
+1.引入类库
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:1.6'
 ```
 
-2. 添加布局
+2.添加布局
 ```xml
 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
     android:id="@+id/videocontroller1"
@@ -32,14 +32,14 @@ compile 'fm.jiecao:jiecaovideoplayer:1.6'
     android:layout_height="200dp" />
 ```
 
-3. 设置视频地址、缩略图地址、标题
+3.设置视频地址、缩略图地址、标题
 ```java
 JCVideoPlayer videoController = (JCVideoPlayer) findViewById(R.id.videocontroller);
 videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
     "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
     "嫂子别摸我");
 ```
-4. 在包含播放器的`Fragment`或`Activity`的`onPause()`方法中调用`JCVideoPlayer.releaseAllVideos();`
+4.在包含播放器的`Fragment`或`Activity`的`onPause()`方法中调用`JCVideoPlayer.releaseAllVideos();`
 
 其他接口
 
