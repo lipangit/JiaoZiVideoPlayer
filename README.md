@@ -49,7 +49,7 @@ JCVideoPlayer.setGlobleSkin();//设置全局皮肤
 videoController.setSkin();//设置这一个播放器的皮肤
 ```
 
-修改缩略图的scalType，默认的缩略图的scaleType是fitCenter，这时候图片如果和屏幕尺寸不同的话左右或上下会有黑边，可以根据客户端需要改成fitXY或这其他模式
+修改缩略图的scalType，默认的缩略图的scaleType是fitCenter，这时候图片如果和屏幕尺寸不同的话左右或上下会有黑边，可以根据客户端需要改成fitXY或者其他模式
 ```java
 JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
 ```
