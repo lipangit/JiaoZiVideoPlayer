@@ -132,9 +132,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * <p>配置要播放的内容</p>
      * <p>Configuring the Content to Play</p>
      *
-     * @param url   视频地址  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Video address
-     * @param thumb 缩略图地址  &nbsp  Thumbnail address
-     * @param title 标题        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   title
+     * @param url   视频地址 | Video address
+     * @param thumb 缩略图地址 | Thumbnail address
+     * @param title 标题 | title
      */
     public void setUp(String url, String thumb, String title) {
         setUp(url, thumb, title, true);
@@ -144,10 +144,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * <p>配置要播放的内容</p>
      * <p>Configuring the Content to Play</p>
      *
-     * @param url         视频地址  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Video address
-     * @param thumb       缩略图地址 &nbsp  Thumbnail address
-     * @param title       标题   &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   title
-     * @param ifShowTitle 是否在非全屏下显示标题 &nbsp&nbsp&nbsp The title is displayed in full-screen under
+     * @param url         视频地址 | Video address
+     * @param thumb       缩略图地址 | Thumbnail address
+     * @param title       标题 | title
+     * @param ifShowTitle 是否在非全屏下显示标题 | The title is displayed in full-screen under
      */
     public void setUp(String url, String thumb, String title, boolean ifShowTitle) {
         setSkin();
@@ -184,9 +184,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * <p>只在全全屏中调用的方法</p>
      * <p>Only in fullscreen can call this</p>
      *
-     * @param url   视频地址  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp Video address
-     * @param thumb 缩略图地址 &nbsp  Thumbnail address
-     * @param title 标题   &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   title
+     * @param url   视频地址 | Video address
+     * @param thumb 缩略图地址 | Thumbnail address
+     * @param title 标题 | title
      */
     public void setUpForFullscreen(String url, String thumb, String title) {
         setSkin();
@@ -217,7 +217,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * <p>只在全全屏中调用的方法</p>
      * <p>Only in fullscreen can call this</p>
      *
-     * @param state int型
+     * @param state int state
      */
     public void setState(int state) {
         this.CURRENT_STATE = state;
@@ -685,9 +685,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 有特殊需要的客户端
+     * <p>有特殊需要的客户端</p>
+     * <p>Clients with special needs</p>
      *
-     * @param onClickListener 开始按钮点击的回调函数
+     * @param onClickListener 开始按钮点击的回调函数 | Click the Start button callback function
      */
     @Deprecated
     public void setStartListener(OnClickListener onClickListener) {
@@ -745,12 +746,12 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * This requires the player before setUp property called, because of the enlarge icon<br>
      * If you do not modify all parameters can be set to 0</p>
      *
-     * @param titleColor              标题颜色    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp title color
-     * @param timeColor               时间颜色    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp  time color
-     * @param seekDrawable            滑动条颜色   &nbsp seekbar color
-     * @param bottomControlBackground 低栏背景     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp   background color
-     * @param enlargRecId             全屏背景     fullscreen background
-     * @param shrinkRecId             退出全屏背景  quit fullscreen background quit fullscreen
+     * @param titleColor              标题颜色 | title color
+     * @param timeColor               时间颜色 | time color
+     * @param seekDrawable            滑动条颜色 | seekbar color
+     * @param bottomControlBackground 低栏背景 | background color
+     * @param enlargRecId             全屏背景 | fullscreen background
+     * @param shrinkRecId             退出全屏背景 | quit fullscreen background quit fullscreen
      */
     public void setSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
                         int enlargRecId, int shrinkRecId) {
