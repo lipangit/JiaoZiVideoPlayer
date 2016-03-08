@@ -34,7 +34,6 @@ import de.greenrobot.event.EventBus;
  * <p>Jiecao video player，all outside the library interface is here</p>
  *
  * @see <a href="https://github.com/lipangit/jiecaovideoplayer">JiecaoVideoplayer Github</a>
- * <br/>
  * Created by Nathen
  * On 2015/11/30 11:59
  */
@@ -676,8 +675,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * <p>停止所有音频的播放<p/>
-     * <p>release all videos<p/>
+     * <p>停止所有音频的播放</p>
+     * <p>release all videos</p>
      */
     public static void releaseAllVideos() {
         if (!isClickFullscreen) {
@@ -774,7 +773,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * <p>设置应用内所有播放器的皮肤<p/>
+     * <p>设置应用内所有播放器的皮肤</p>
      * <p>Apply all settings within the player skin</p>
      */
     public static void setGlobleSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
