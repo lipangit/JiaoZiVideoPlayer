@@ -86,7 +86,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     // 一些临时表示状态的变量
     private boolean touchingProgressBar = false;
     private static boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
-    private static boolean isClickFullscreen = false;
+    static boolean isClickFullscreen = false;
 
     private static ImageView.ScaleType speScalType = null;
 
