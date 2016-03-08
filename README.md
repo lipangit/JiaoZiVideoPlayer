@@ -41,7 +41,7 @@ videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f
 ```
 4.在包含播放器的`Fragment`或`Activity`的`onPause()`方法中调用`JCVideoPlayer.releaseAllVideos();`
 
-其他接口
+####其他接口
 
 设置皮肤，可以指定某个播放器的皮肤，也可以设置全局皮肤，优先级:某个播放器皮肤>全局皮肤>默认皮肤
 ```java
