@@ -1,15 +1,15 @@
-#节操视频播放器 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![Maven Central](https://img.shields.io/badge/Maven%20Central-1.6-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C1.6%7Caar) [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
+#节操视频播放器 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![Maven Central](https://img.shields.io/badge/Maven%20Central-1.7-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C1.7%7Caar) [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
 
 真正实现Android的全屏功能，励志成为Android平台使用最广泛的视频播放控件，GitFlow流程开发develop分支是最新版本
 
 ##主要特点
 1. 全屏时启动新`Activity`实现播放器真正的全屏功能
-2. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
-3. 播放MP3时现实缩略图片
-4. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`的多重嵌套模式下全屏工作
-5. `ListView`的拖拽和`ViewPager`的滑动时如果划出屏幕会自动重置视频
+2. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
+3. `ListView`的拖拽和`ViewPager`的滑动时如果划出屏幕会自动重置视频
+4. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
+5. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
 6. 根据自己应用的颜色风格换肤
-7. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
+7. 播放MP3时显示缩略图片
 
 ##效果
 
@@ -21,7 +21,7 @@
 ##使用
 1.引入类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:1.6'
+compile 'fm.jiecao:jiecaovideoplayer:1.7'
 ```
 
 2.添加布局
