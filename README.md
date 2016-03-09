@@ -73,10 +73,10 @@ JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
 ```
 
 ##下载
- * **[jiecaovideoplayer-1.6-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.6-demo.apk)**
- * **[jiecaovideoplayer-1.6.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.6.aar)**
- * **[jiecaovideoplayer-1.6-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.6-javadoc.jar)**
- * **[jiecaovideoplayer-1.6-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.6-sources.jar)**
+ * **[jiecaovideoplayer-1.7-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.7-demo.apk)**
+ * **[jiecaovideoplayer-1.7.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.7.aar)**
+ * **[jiecaovideoplayer-1.7-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.7-javadoc.jar)**
+ * **[jiecaovideoplayer-1.7-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.7-sources.jar)**
 
 ## License
 
