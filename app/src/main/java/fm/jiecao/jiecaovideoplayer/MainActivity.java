@@ -6,9 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import de.greenrobot.event.EventBus;
+import fm.jiecao.jcvideoplayer_lib.FullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.VideoEvents;
 
@@ -108,7 +108,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, ListViewpagerActivity.class));
                 break;
             case R.id.to_fullscreen:
-                Toast.makeText(MainActivity.this, "coming soon", Toast.LENGTH_SHORT).show();
+                FullScreenActivity.toActivity(this,
+                        "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
+                        "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
+                        "嫂子别摸我");
                 break;
             case R.id.to_changecolor_activity:
                 startActivity(new Intent(this, SetSkinActivity.class));

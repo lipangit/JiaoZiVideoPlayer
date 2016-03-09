@@ -18,11 +18,22 @@ import de.greenrobot.event.EventBus;
  */
 public class FullScreenActivity extends Activity {
 
-    public static void toActivity(Context context, int state, String url, String thumb, String title) {
+    static void toActivityFromNormal(Context context, int state, String url, String thumb, String title) {
         STATE = state;
         URL = url;
         THUMB = thumb;
         TITLE = title;
+        start = false;
+        Intent intent = new Intent(context, FullScreenActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void toActivity(Context context, String url, String thumb, String title) {
+        STATE = JCVideoPlayer.CURRENT_STATE_NORMAL;
+        URL = url;
+        THUMB = thumb;
+        TITLE = title;
+        start = true;
         Intent intent = new Intent(context, FullScreenActivity.class);
         context.startActivity(intent);
     }
@@ -37,6 +48,7 @@ public class FullScreenActivity extends Activity {
     public static String THUMB;
     public static boolean manualQuit = false;
     protected static Skin skin;
+    static boolean start = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +61,7 @@ public class FullScreenActivity extends Activity {
         params.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
         window.setAttributes(params);
         setContentView(R.layout.activity_fullscreen);
+
         jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.jcvideoplayer);
         if (skin != null) {
             jcVideoPlayer.setSkin(skin.titleColor, skin.timeColor, skin.seekDrawable, skin.bottomControlBackground,
@@ -58,6 +71,9 @@ public class FullScreenActivity extends Activity {
         jcVideoPlayer.setState(STATE);
         JCMediaManager.intance().setUuid(jcVideoPlayer.uuid);
         manualQuit = false;
+        if (start) {
+            jcVideoPlayer.ivStart.performClick();
+        }
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
