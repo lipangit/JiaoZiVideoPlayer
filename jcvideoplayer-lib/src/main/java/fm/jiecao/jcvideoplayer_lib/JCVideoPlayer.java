@@ -40,7 +40,7 @@ import de.greenrobot.event.EventBus;
 public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener {
 
     //控件
-    ImageView ivStart;
+    public ImageView ivStart;
     ProgressBar pbLoading, pbBottom;
     ImageView ivFullScreen;
     SeekBar skProgress;
@@ -403,7 +403,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().backUpUuid();
                 isClickFullscreen = true;
-                FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
+                FullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, thumb, title);
                 sendPointEvent(VideoEvents.POINT_ENTER_FULLSCREEN);
             }
             clickfullscreentime = System.currentTimeMillis();
