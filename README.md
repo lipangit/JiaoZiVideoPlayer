@@ -8,10 +8,9 @@ This is the real android video player view with fullscreen function, we are dedi
 1. Launching new Fullscreen Activity when playing video in fullscreen mode
 2. Even in `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
 3. Video will be reset(pause) when it's scrolled out of the screen in `ListView` and `ViewPager`
-4. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中 (...)
-5. It will not disturb or change the playing state when entering or exiting fullscreen
-6. Support to custom view controller's skin
-7. Support to display the thumb when playing mp3 audio
+4. It will not disturb or change the playing state when entering or exiting fullscreen
+5. Support to custom view controller's skin
+6. Support to display the thumb when playing mp3 audio
 
 ## Demo Screenshot
 
@@ -21,12 +20,12 @@ Demo video : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&fro
 
 
 ## Usage
-1. Add the library in build.gradle
+1.Add the library in build.gradle
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:1.7'
 ```
 
-2. Add JCVideoPlayer in your layout
+2.Add JCVideoPlayer in your layout
 ```xml
 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
     android:id="@+id/videocontroller1"
@@ -34,14 +33,14 @@ compile 'fm.jiecao:jiecaovideoplayer:1.7'
     android:layout_height="200dp" />
 ```
 
-3. Set the video uri, video thumb url and video title
+3.Set the video uri, video thumb url and video title
 ```java
 JCVideoPlayer videoController = (JCVideoPlayer) findViewById(R.id.videocontroller);
 videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
     "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
     "嫂子别摸我");
 ```
-4. Remember to invoke `JCVideoPlayer.releaseAllVideos();` in `onPause()` of `Fragment` or `Activity`
+4.Remember to invoke `JCVideoPlayer.releaseAllVideos();` in `onPause()` of `Fragment` or `Activity`
 
 #### Other APIs
 
