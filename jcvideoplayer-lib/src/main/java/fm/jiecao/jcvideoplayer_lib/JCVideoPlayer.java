@@ -30,14 +30,17 @@ import java.util.UUID;
 import de.greenrobot.event.EventBus;
 
 /**
- * @see <a href="https://github.com/lipangit/jiecaovideoplayer">节操视频播放器 Github</a>
- * <br>
+ * <p>节操视频播放器，库的外面所有使用的接口也在这里</p>
+ * <p>Jiecao video player，all outside the library interface is here</p>
+ *
+ * @see <a href="https://github.com/lipangit/jiecaovideoplayer">JiecaoVideoplayer Github</a>
+ * Created by Nathen
  * On 2015/11/30 11:59
  */
 public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener {
 
     //控件
-    ImageView ivStart;
+    public ImageView ivStart;
     ProgressBar pbLoading, pbBottom;
     ImageView ivFullScreen;
     SeekBar skProgress;
@@ -81,8 +84,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     // 一些临时表示状态的变量
     private boolean touchingProgressBar = false;
-    static boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
+    private static boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
     static boolean isClickFullscreen = false;
+
+    private static ImageView.ScaleType speScalType = null;
 
     public JCVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -121,27 +126,31 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         rlParent.setOnClickListener(this);
         ivBack.setOnClickListener(this);
         skProgress.setOnTouchListener(this);
-
+        if (speScalType != null) {
+            ivThumb.setScaleType(speScalType);
+        }
     }
 
     /**
-     * 配置要播放的内容
+     * <p>配置要播放的内容</p>
+     * <p>Configuring the Content to Play</p>
      *
-     * @param url   视频地址
-     * @param thumb 缩略图地址
-     * @param title 标题
+     * @param url   视频地址 | Video address
+     * @param thumb 缩略图地址 | Thumbnail address
+     * @param title 标题 | title
      */
     public void setUp(String url, String thumb, String title) {
         setUp(url, thumb, title, true);
     }
 
     /**
-     * 配置要播放的内容
+     * <p>配置要播放的内容</p>
+     * <p>Configuring the Content to Play</p>
      *
-     * @param url         视频地址
-     * @param thumb       缩略图地址
-     * @param title       标题
-     * @param ifShowTitle 是否在非全屏下显示标题
+     * @param url         视频地址 | Video address
+     * @param thumb       缩略图地址 | Thumbnail address
+     * @param title       标题 | title
+     * @param ifShowTitle 是否在非全屏下显示标题 | The title is displayed in full-screen under
      */
     public void setUp(String url, String thumb, String title, boolean ifShowTitle) {
         setSkin();
@@ -175,11 +184,12 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 只在全全屏中调用的方法
+     * <p>只在全全屏中调用的方法</p>
+     * <p>Only in fullscreen can call this</p>
      *
-     * @param url   视频地址
-     * @param thumb 缩略图地址
-     * @param title 标题
+     * @param url   视频地址 | Video address
+     * @param thumb 缩略图地址 | Thumbnail address
+     * @param title 标题 | title
      */
     public void setUpForFullscreen(String url, String thumb, String title) {
         setSkin();
@@ -207,9 +217,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 设置视频的状态
+     * <p>只在全全屏中调用的方法</p>
+     * <p>Only in fullscreen can call this</p>
      *
-     * @param state int型
+     * @param state int state
      */
     public void setState(int state) {
         this.CURRENT_STATE = state;
@@ -392,7 +403,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().backUpUuid();
                 isClickFullscreen = true;
-                FullScreenActivity.toActivity(getContext(), CURRENT_STATE, url, thumb, title);
+                FullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, thumb, title);
                 sendPointEvent(VideoEvents.POINT_ENTER_FULLSCREEN);
             }
             clickfullscreentime = System.currentTimeMillis();
@@ -664,7 +675,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 停止所有音频的播放
+     * <p>停止所有音频的播放</p>
+     * <p>release all videos</p>
      */
     public static void releaseAllVideos() {
         if (!isClickFullscreen) {
@@ -676,9 +688,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 有特殊需要的客户端
+     * <p>有特殊需要的客户端</p>
+     * <p>Clients with special needs</p>
      *
-     * @param onClickListener 开始按钮点击的回调函数
+     * @param onClickListener 开始按钮点击的回调函数 | Click the Start button callback function
      */
     @Deprecated
     public void setStartListener(OnClickListener onClickListener) {
@@ -729,16 +742,29 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 只设置这一个播放器的皮肤
-     * 这个需要在setUp播放器的属性之前调用，因为enlarge图标的原因
-     * 所有参数如果不需要修改的设为0
+     * <p>默认的缩略图的scaleType是fitCenter，这时候图片如果和屏幕尺寸不同的话左右或上下会有黑边，可以根据客户端需要改成fitXY或这其他模式</p>
+     * <p>The default thumbnail scaleType is fitCenter, and this time the picture if different screen sizes up and down or left and right, then there will be black bars, or it may need to change fitXY other modes based on the client</p>
      *
-     * @param titleColor              标题颜色
-     * @param timeColor               时间颜色
-     * @param seekDrawable            滑动条颜色
-     * @param bottomControlBackground 低栏背景
-     * @param enlargRecId             全屏背景
-     * @param shrinkRecId             退出全屏背景
+     * @param thumbScaleType 缩略图的scalType | Thumbnail scaleType
+     */
+    public static void setThumbImageViewScalType(ImageView.ScaleType thumbScaleType) {
+        speScalType = thumbScaleType;
+    }
+
+    /**
+     * <p>只设置这一个播放器的皮肤<br>
+     * 这个需要在setUp播放器的属性之前调用，因为enlarge图标的原因<br>
+     * 所有参数如果不需要修改的设为0</p>
+     * <p>This setting only one player skin<br>
+     * This requires the player before setUp property called, because of the enlarge icon<br>
+     * If you do not modify all parameters can be set to 0</p>
+     *
+     * @param titleColor              标题颜色 | title color
+     * @param timeColor               时间颜色 | time color
+     * @param seekDrawable            滑动条颜色 | seekbar color
+     * @param bottomControlBackground 低栏背景 | background color
+     * @param enlargRecId             全屏背景 | fullscreen background
+     * @param shrinkRecId             退出全屏背景 | quit fullscreen background quit fullscreen
      */
     public void setSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
                         int enlargRecId, int shrinkRecId) {
@@ -747,16 +773,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * 设置所有播放器的皮肤
-     * 这个只要在初始化想要换肤的播放器之前运行即可，可以在application中也可以在activity中
-     * 所有参数如果不需要修改的设为0
-     *
-     * @param titleColor              标题颜色
-     * @param timeColor               时间颜色
-     * @param seekDrawable            滑动条颜色
-     * @param bottomControlBackground 低栏背景
-     * @param enlargRecId             全屏背景
-     * @param shrinkRecId             退出全屏背景
+     * <p>设置应用内所有播放器的皮肤</p>
+     * <p>Apply all settings within the player skin</p>
      */
     public static void setGlobleSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
                                      int enlargRecId, int shrinkRecId) {

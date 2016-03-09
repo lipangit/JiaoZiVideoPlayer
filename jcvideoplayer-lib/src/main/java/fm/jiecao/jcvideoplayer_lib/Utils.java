@@ -12,11 +12,10 @@ import java.util.Formatter;
 import java.util.Locale;
 
 /**
- * 最俗的类名
  * Created by Nathen
  * On 2016/02/21 12:25
  */
-public class Utils {
+class Utils {
     public static DisplayImageOptions getDefaultDisplayImageOption() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .showImageOnLoading(new ColorDrawable(Color.parseColor("#f0f0f0")))
