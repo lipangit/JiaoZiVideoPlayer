@@ -1,3 +1,95 @@
+#Jiecao Video Player  
+
+ [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![Maven Central](https://img.shields.io/badge/Maven%20Central-1.7-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C1.7%7Caar) [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
+
+This is the real android video player view with fullscreen function, we are dedicated to make it to be the most popular video play widget on android.  Branch develop is the latest version, although it is not stable for now.
+
+## Features
+1. Launching new Fullscreen Activity when playing video in fullscreen mode
+2. Even in `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
+3. Video will be reset(pause) when it's scrolled out of the screen in `ListView` and `ViewPager`
+4. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中 (...)
+5. It will not disturb or change the playing state when entering or exiting fullscreen
+6. Support to custom view controller's skin
+7. Support to display the thumb when playing mp3 audio
+
+## Demo Screenshot
+
+![Demo Screenshot][1]
+
+Demo video : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
+
+
+## Usage
+1. Add the library in build.gradle
+```gradle
+compile 'fm.jiecao:jiecaovideoplayer:1.7'
+```
+
+2. Add JCVideoPlayer in your layout
+```xml
+<fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
+    android:id="@+id/videocontroller1"
+    android:layout_width="match_parent"
+    android:layout_height="200dp" />
+```
+
+3. Set the video uri, video thumb url and video title
+```java
+JCVideoPlayer videoController = (JCVideoPlayer) findViewById(R.id.videocontroller);
+videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
+    "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
+    "嫂子别摸我");
+```
+4. Remember to invoke `JCVideoPlayer.releaseAllVideos();` in `onPause()` of `Fragment` or `Activity`
+
+#### Other APIs
+
+Set up the video player appearance, you can set the current video player's skin or set the global skin. Priority: some video player instance skin > global skin > default skin
+```java
+JCVideoPlayer.setGlobleSkin();//set up global skin
+videoController.setSkin();//set up some video player instance skin
+```
+
+Modify the thumb image view's scaleType property, default value is fitCenter. There will be  black padding if the size of thumb is not compatible with screen size, try to use fitXY or other scaleType.
+```java
+JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
+```
+
+Invoke `FullScreenActivity.toActivity(...)` to enter fullscreen directly.
+```java
+FullScreenActivity.toActivity(this,
+    "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
+    "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",//此时的缩略图地址可以为空
+    "嫂子别摸我");
+```
+
+ProGuard
+```
+##Eventbus
+-keepclassmembers class ** {
+    public void onEvent*(***);
+}
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
+    public <init>(java.lang.Throwable);
+}
+# Don't warn for missing support classes
+-dontwarn de.greenrobot.event.util.*$Support
+-dontwarn de.greenrobot.event.util.*$SupportManagerFragment
+```
+
+## Downloads
+ * **[jiecaovideoplayer-1.7-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.7-demo.apk)**
+ * **[jiecaovideoplayer-1.7.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.7.aar)**
+ * **[jiecaovideoplayer-1.7-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.7-javadoc.jar)**
+ * **[jiecaovideoplayer-1.7-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.7-sources.jar)**
+
+
+
+[1]: ./screenshots/j1.png
+
+
 #节操视频播放器 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![Maven Central](https://img.shields.io/badge/Maven%20Central-1.7-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C1.7%7Caar) [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
 
 真正实现Android的全屏功能，励志成为Android平台使用最广泛的视频播放控件，GitFlow流程开发develop分支是最新版本
@@ -89,19 +181,19 @@ FullScreenActivity.toActivity(this,
 ## License
 
     The MIT License (MIT)
-    
+
     Copyright (c) 2015-2016 jiecao.fm:Nathen
-    
+
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
     in the Software without restriction, including without limitation the rights
     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
     copies of the Software, and to permit persons to whom the Software is
     furnished to do so, subject to the following conditions:
-    
+
     The above copyright notice and this permission notice shall be included in all
     copies or substantial portions of the Software.
-    
+
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
