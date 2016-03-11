@@ -1,5 +1,6 @@
+#节操视频播放器 
 
-#节操视频播放器 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![Maven Central](https://img.shields.io/badge/Maven%20Central-1.7-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C1.7%7Caar) [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
+[![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![Maven Central](https://img.shields.io/badge/Maven%20Central-1.7-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C1.7%7Caar) [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
 
 真正实现Android的全屏功能，立志成为Android平台使用最广泛的视频播放控件，GitFlow流程开发develop分支是最新版本
 
