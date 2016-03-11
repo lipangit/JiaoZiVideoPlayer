@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black">
@@ -47,22 +49,26 @@
         android:visibility="invisible" />
 
 
-    <LinearLayout
+    <com.zhy.android.percent.support.PercentLinearLayout
         android:id="@+id/bottom_control"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/media_controller_view_height"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_widthPercent="100%w"
+        app:layout_heightPercent="10%w"
         android:layout_alignParentBottom="true"
         android:background="#99000000"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:visibility="invisible">
+        >
+
 
         <TextView
             android:id="@+id/current"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="12dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_widthPercent="10%w"
+            app:layout_heightPercent="5%w"
+            app:layout_marginLeftPercent="2.5%w"
             android:gravity="center"
             android:text="00:00"
             android:textColor="#ffffff" />
@@ -70,15 +76,13 @@
         <SeekBar
             android:id="@+id/progress"
             android:layout_width="0dp"
+            app:layout_widthPercent="67.5%w"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_weight="1.0"
             android:max="100"
             android:maxHeight="4dp"
             android:minHeight="4dp"
             android:paddingBottom="8dp"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
             android:paddingTop="8dp"
             android:progressDrawable="@drawable/seek_progress"
             android:thumb="@drawable/seek_thumb"
@@ -86,22 +90,25 @@
 
         <TextView
             android:id="@+id/total"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12.0dip"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_widthPercent="10%w"
+            app:layout_heightPercent="5%w"
             android:gravity="center"
             android:text="00:00"
             android:textColor="#ffffff" />
 
         <ImageView
             android:id="@+id/fullscreen"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:paddingLeft="16.0dip"
-            android:paddingRight="16.0dip"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_widthPercent="10%w"
+            app:layout_heightPercent = "10%w"
             android:scaleType="center"
-            android:src="@drawable/enlarge_video" />
-    </LinearLayout>
+            android:src="@drawable/enlarge_video"
+            />
+
+    </com.zhy.android.percent.support.PercentLinearLayout>
 
 
     <ImageView
@@ -151,4 +158,4 @@
         android:src="@drawable/click_video_play_selector" />
 
 
-</RelativeLayout>
+</com.zhy.android.percent.support.PercentRelativeLayout>
