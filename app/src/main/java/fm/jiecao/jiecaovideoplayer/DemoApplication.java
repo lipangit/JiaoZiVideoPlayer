@@ -25,12 +25,10 @@ import java.io.File;
  * On 2015/12/01 11:29
  */
 public class DemoApplication extends Application {
-    private static DemoApplication application;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        application = this;
         initUniversalImageLoader();
         //这里将会设置所有播放器的皮肤 | Here the player will set all the skin
 //        JCVideoPlayer.setGlobleSkin(R.color.colorPrimary, R.color.colorAccent, R.drawable.skin_seek_progress,
@@ -56,22 +54,19 @@ public class DemoApplication extends Application {
 
         File cacheDir = new File(Environment.getExternalStorageDirectory().getPath() + "/jiecao/cache");
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-                .threadPoolSize(3) // default  线程池内加载的数量
-                .threadPriority(Thread.NORM_PRIORITY - 2) // default 设置当前线程的优先级
+                .threadPoolSize(3)
+                .threadPriority(Thread.NORM_PRIORITY - 2)
                 .denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator())
-                .memoryCache(new UsingFreqLimitedMemoryCache(memCacheSize)) // You can pass your own memory cache implementation/
-                .memoryCacheSize(memCacheSize) // 内存缓存的最大值
-                .diskCacheSize(50 * 1024 * 1024) // 50 Mb
+                .memoryCache(new UsingFreqLimitedMemoryCache(memCacheSize))
+                .memoryCacheSize(memCacheSize)
+                .diskCacheSize(50 * 1024 * 1024)
                 .tasksProcessingOrder(QueueProcessingType.LIFO)
-                .diskCache(new UnlimitedDiskCache(cacheDir))//自定义缓存路径
-                .imageDownloader(new BaseImageDownloader(this, 5 * 1000, 30 * 1000)) // connectTimeout (5 s), readTimeout (30 s)超时时间
+                .diskCache(new UnlimitedDiskCache(cacheDir))
+                .imageDownloader(new BaseImageDownloader(this, 5 * 1000, 30 * 1000))
                 .defaultDisplayImageOptions(options)
                 .build();
         ImageLoader.getInstance().init(config);
     }
 
-    public static DemoApplication instance() {
-        return application;
-    }
 }
