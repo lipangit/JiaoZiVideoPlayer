@@ -19,7 +19,7 @@
             android:id="@+id/bottom_progressbar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="1.5dip"
+            android:layout_height="1.5dp"
             android:layout_alignParentBottom="true"
             android:max="100"
             android:progressDrawable="@drawable/video_progress" />
@@ -35,7 +35,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#000000" />
+        android:background="#222222" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -50,7 +50,7 @@
     <LinearLayout
         android:id="@+id/bottom_control"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/media_controller_view_height"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:background="#99000000"
         android:gravity="center_vertical"
@@ -59,11 +59,9 @@
 
         <TextView
             android:id="@+id/current"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="12dp"
-            android:gravity="center"
             android:text="00:00"
             android:textColor="#ffffff" />
 
@@ -73,23 +71,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1.0"
+            android:background="@null"
             android:max="100"
             android:maxHeight="4dp"
             android:minHeight="4dp"
             android:paddingBottom="8dp"
-            android:paddingLeft="0dp"
-            android:paddingRight="0dp"
             android:paddingTop="8dp"
             android:progressDrawable="@drawable/seek_progress"
             android:thumb="@drawable/seek_thumb"
-            android:thumbOffset="0dp" />
+            />
 
         <TextView
             android:id="@+id/total"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12.0dip"
-            android:gravity="center"
             android:text="00:00"
             android:textColor="#ffffff" />
 
@@ -97,25 +92,11 @@
             android:id="@+id/fullscreen"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:paddingLeft="16.0dip"
-            android:paddingRight="16.0dip"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:scaleType="center"
             android:src="@drawable/enlarge_video" />
     </LinearLayout>
-
-
-    <ImageView
-        android:id="@+id/thumb"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:scaleType="fitCenter"
-        android:background="#000000" />
 
     <LinearLayout
         android:id="@+id/title_container"
@@ -142,6 +123,19 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/thumb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#000000"
+        android:scaleType="fitCenter" />
+
+    <ImageView
         android:id="@+id/start"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -149,6 +143,5 @@
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
         android:src="@drawable/click_video_play_selector" />
-
 
 </RelativeLayout>

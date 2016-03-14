@@ -12,11 +12,12 @@ import android.view.WindowManager;
 import de.greenrobot.event.EventBus;
 
 /**
- * 可能会有直接全屏显示的需求
+ * <p>全屏的activity</p>
+ * <p>fullscreen activity</p>
  * Created by Nathen
  * On 2015/12/01 11:17
  */
-public class FullScreenActivity extends Activity {
+class FullScreenActivity extends Activity {
 
     static void toActivityFromNormal(Context context, int state, String url, String thumb, String title) {
         STATE = state;

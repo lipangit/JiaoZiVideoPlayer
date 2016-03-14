@@ -8,8 +8,8 @@ android {
         applicationId "fm.jiecao.jiecaovideoplayer"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 18
-        versionName "1.7"
+        versionCode 19
+        versionName "1.8"
     }
     buildTypes {
         release {
@@ -28,4 +28,5 @@ dependencies {
     compile project(':jcvideoplayer-lib')
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    compile 'com.zhy:percent-support-extends:1.1.1'
 }

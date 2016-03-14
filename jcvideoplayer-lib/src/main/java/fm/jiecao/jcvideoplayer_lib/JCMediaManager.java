@@ -5,7 +5,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.IOException;
 
@@ -26,7 +25,6 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     private String prev_uuid = "";
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
-    private static final String TAG = "JiecaoVideoplayer";
 
     public static JCMediaManager intance() {
         if (jcMediaManager == null) {
@@ -86,10 +84,7 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     }
 
     public void setUuid(String uuid) {
-        Log.i(TAG, "0 " + uuid + " prevuuid " + prev_uuid);
-//        backUpUuid();
         this.uuid = uuid;
-        Log.i(TAG, "1 " + uuid + " prevuuid " + prev_uuid);
     }
 
     public void backUpUuid() {
@@ -99,7 +94,6 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     public void revertUuid() {
         this.uuid = this.prev_uuid;
         this.prev_uuid = "";
-        Log.i(TAG, "2 " + uuid + " prevuuid " + prev_uuid);
     }
 
     @Override
