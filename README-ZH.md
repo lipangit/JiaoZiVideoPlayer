@@ -68,6 +68,13 @@ JCVideoPlayer.toFullscreenActivity(this,
     "嫂子别摸我");
 ```
 
+不显示标题
+```java
+videoController.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4",//
+    "http://p.qpic.cn/videoyun/0/2449_ded7b566b37911e5942f0b208e48548d_2/640",
+    "嫂子还摸我", false);
+```
+
     在ListView和ViewPager中将视频移除屏幕外，会在onDetachedFromWindow时重置视频。
     目标是在库外只需要添加布局，添加配置，其他的问题都在库内判断和操作。
 
