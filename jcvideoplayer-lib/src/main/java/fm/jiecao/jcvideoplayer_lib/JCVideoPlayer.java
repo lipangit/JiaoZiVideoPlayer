@@ -336,7 +336,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             }
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE) {
             pbLoading.setVisibility(View.INVISIBLE);
-            Log.i("JCVideoPlayer", "seek compile");
         }
     }
 
@@ -362,6 +361,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 setProgressBuffered(0);
                 JCMediaManager.intance().prepareToPlay(getContext(), url);
                 JCMediaManager.intance().setUuid(uuid);
+                Log.i("JCVideoPlayer", "play video");
 
                 VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_START);
                 videoEvents.obj = uuid;
@@ -377,6 +377,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     ivCover.setVisibility(View.INVISIBLE);
                 }
                 JCMediaManager.intance().mediaPlayer.pause();
+                Log.i("JCVideoPlayer", "pause video");
+
                 updateStartImage();
                 setKeepScreenOn(false);
                 cancelDismissControlViewTimer();
@@ -388,6 +390,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     ivCover.setVisibility(View.INVISIBLE);
                 }
                 JCMediaManager.intance().mediaPlayer.start();
+                Log.i("JCVideoPlayer", "go on video");
+
                 updateStartImage();
                 setKeepScreenOn(true);
                 startDismissControlViewTimer();
@@ -513,14 +517,12 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 }
             }
         }, 0, 300);
-        Log.i("update buffer", "updatebuffer:: start");
     }
 
     private void cancelProgressTimer() {
         if (uuid.equals(JCMediaManager.intance().uuid)) {
             if (mUpdateProgressTimer != null) {
                 mUpdateProgressTimer.cancel();
-                Log.i("update buffer", "updatebuffer:: cancel");
             }
         }
     }
@@ -708,6 +710,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         VideoEvents videoEvents = new VideoEvents();
         videoEvents.setType(type);
         videoEvents.obj = title;
+        videoEvents.obj1 = url;
         EventBus.getDefault().post(videoEvents);
     }
 
@@ -780,6 +783,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                                      int enlargRecId, int shrinkRecId) {
         globleSkin = new Skin(titleColor, timeColor, seekDrawable, bottomControlBackground,
                 enlargRecId, shrinkRecId);
+    }
+
+    public static void toFullscreenActivity(Context context, String url, String thumb, String title) {
+        FullScreenActivity.toActivity(context, url, thumb, title);
     }
 
     private void setSkin() {
