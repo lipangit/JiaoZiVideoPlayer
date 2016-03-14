@@ -782,6 +782,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 enlargRecId, shrinkRecId);
     }
 
+    public static void toFullscreenActivity(Context context, String url, String thumb, String title) {
+        FullScreenActivity.toActivity(context, url, thumb, title);
+    }
+
     private void setSkin() {
         if (skin != null) {
             setSkin(skin);
