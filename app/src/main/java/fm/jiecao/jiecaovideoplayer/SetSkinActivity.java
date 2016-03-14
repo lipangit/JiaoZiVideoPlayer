@@ -21,7 +21,7 @@ public class SetSkinActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("设置颜色");
+        getSupportActionBar().setTitle("SetSkin");
 
         videoController1 = (JCVideoPlayer) findViewById(R.id.videocontroller1);
         videoController1.setSkin(R.color.colorAccent, R.color.colorPrimary, R.drawable.skin_seek_progress,
