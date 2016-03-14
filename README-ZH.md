@@ -62,9 +62,9 @@ JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
 
 直接进入全屏，比如在webview中视频播放的适配很难做，调用此接口直接全屏播放
 ```java
-FullScreenActivity.toActivity(this,
+JCVideoPlayer.toFullscreenActivity(this,
     "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
-    "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",//此时的缩略图地址可以为空
+    "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
     "嫂子别摸我");
 ```
 
