@@ -61,9 +61,9 @@ Modify the thumb image view's scaleType property, default value is fitCenter. Th
 JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
 ```
 
-Invoke `FullScreenActivity.toActivity(...)` to enter fullscreen directly.
+Invoke `JCFullScreenActivity.toActivity(...)` to enter fullscreen directly.
 ```java
-JCVideoPlayer.toFullscreenActivity(this,
+JCFullScreenActivity.toActivity(this,
     "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
     "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
     "嫂子别摸我");
