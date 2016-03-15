@@ -1,10 +1,10 @@
 # Jiecao Video Player  
 
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) 
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-1.8-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C1.8%7Caar) 
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-1.9-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C1.9%7Caar) 
 [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) 
-[![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true)](https://android-arsenal.com/details/1/3269)
+[![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
 
 This is the real android video player view with fullscreen function, we are dedicated to make it to be the most popular video play widget on android.  Branch develop is the latest version, although it is not stable for now.
 
@@ -28,7 +28,7 @@ Demo video : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&fro
 ## Usage
 1.Add the library in build.gradle
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:1.8'
+compile 'fm.jiecao:jiecaovideoplayer:1.9'
 ```
 
 2.Add JCVideoPlayer in your layout
@@ -61,11 +61,11 @@ Modify the thumb image view's scaleType property, default value is fitCenter. Th
 JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
 ```
 
-Invoke `FullScreenActivity.toActivity(...)` to enter fullscreen directly.
+Invoke `JCFullScreenActivity.toActivity(...)` to enter fullscreen directly.
 ```java
-FullScreenActivity.toActivity(this,
+JCFullScreenActivity.toActivity(this,
     "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
-    "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",//此时的缩略图地址可以为空
+    "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
     "嫂子别摸我");
 ```
 
@@ -85,10 +85,10 @@ ProGuard
 ```
 
 ## Downloads
- * **[jiecaovideoplayer-1.8-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.8-demo.apk)**
- * **[jiecaovideoplayer-1.8.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.8.aar)**
- * **[jiecaovideoplayer-1.8-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.8-javadoc.jar)**
- * **[jiecaovideoplayer-1.8-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.8-sources.jar)**
+ * **[jiecaovideoplayer-1.9-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-demo.apk)**
+ * **[jiecaovideoplayer-1.9.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9.aar)**
+ * **[jiecaovideoplayer-1.9-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-javadoc.jar)**
+ * **[jiecaovideoplayer-1.9-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-sources.jar)**
 
 
 

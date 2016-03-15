@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="无标题模式，进入全屏后有标题" />
+                android:text="Show title after fullscreen" />
 
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
                 android:id="@+id/videocontroller2"
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="播放mp3" />
+                android:text="Play mp3" />
 
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
                 android:id="@+id/videocontroller3"
@@ -50,29 +50,27 @@
                 android:id="@+id/to_fullscreen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="直接全屏" />
+                android:text="To fullscreen derictly" />
 
             <Button
                 android:id="@+id/to_changecolor_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="颜色设置" />
+                android:text="Set skin" />
 
             <Button
                 android:id="@+id/to_list_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="在listview中的视频播放器" />
+                android:text="List demo" />
 
             <Button
                 android:id="@+id/to_list_viewpager_activity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="在listview和viewpager中的视频播放器" />
-
+                android:text="List and Viewpager demo" />
 
         </LinearLayout>
     </ScrollView>
-
 
 </LinearLayout>

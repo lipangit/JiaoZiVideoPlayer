@@ -6,7 +6,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <activity
-            android:name=".FullScreenActivity"
+            android:name=".JCFullScreenActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape" />
     </application>

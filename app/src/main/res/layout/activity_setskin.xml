@@ -1,25 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentLinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-
-    >
+    android:orientation="vertical">
 
     <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
         android:id="@+id/videocontroller1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_heightPercent="60%h"
-
-        />
+        android:layout_height="200dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="颜色搭配很难看，为了标明哪些地方能修改" />
+        android:text="Bad color collocation，but for show where can change" />
 
-</com.zhy.android.percent.support.PercentLinearLayout>
+</LinearLayout>

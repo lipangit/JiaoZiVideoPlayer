@@ -402,12 +402,12 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             if (ifFullScreen) {
                 quitFullScreen();
             } else {
-                FullScreenActivity.skin = skin;
+                JCFullScreenActivity.skin = skin;
                 JCMediaManager.intance().mediaPlayer.pause();
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().backUpUuid();
                 isClickFullscreen = true;
-                FullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, thumb, title);
+                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, thumb, title);
                 sendPointEvent(VideoEvents.POINT_ENTER_FULLSCREEN);
             }
             clickfullscreentime = System.currentTimeMillis();
@@ -619,7 +619,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     public void quitFullScreen() {
-        FullScreenActivity.manualQuit = true;
+        JCFullScreenActivity.manualQuit = true;
         clickfullscreentime = System.currentTimeMillis();
         JCMediaManager.intance().mediaPlayer.pause();
         JCMediaManager.intance().mediaPlayer.setDisplay(null);
@@ -785,8 +785,12 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 enlargRecId, shrinkRecId);
     }
 
+    /**
+     * In demo is ok, but in other project This will class not access exception,How to solve the problem
+     */
+    @Deprecated
     public static void toFullscreenActivity(Context context, String url, String thumb, String title) {
-        FullScreenActivity.toActivity(context, url, thumb, title);
+        JCFullScreenActivity.toActivity(context, url, thumb, title);
     }
 
     private void setSkin() {

@@ -17,7 +17,7 @@ import de.greenrobot.event.EventBus;
  * Created by Nathen
  * On 2015/12/01 11:17
  */
-class FullScreenActivity extends Activity {
+public class JCFullScreenActivity extends Activity {
 
     static void toActivityFromNormal(Context context, int state, String url, String thumb, String title) {
         STATE = state;
@@ -25,17 +25,26 @@ class FullScreenActivity extends Activity {
         THUMB = thumb;
         TITLE = title;
         start = false;
-        Intent intent = new Intent(context, FullScreenActivity.class);
+        Intent intent = new Intent(context, JCFullScreenActivity.class);
         context.startActivity(intent);
     }
 
+    /**
+     * <p>直接进入全屏播放</p>
+     * <p>Full screen play video derictly</p>
+     *
+     * @param context context
+     * @param url     video url
+     * @param thumb   thumb picture url
+     * @param title   video title
+     */
     public static void toActivity(Context context, String url, String thumb, String title) {
         STATE = JCVideoPlayer.CURRENT_STATE_NORMAL;
         URL = url;
         THUMB = thumb;
         TITLE = title;
         start = true;
-        Intent intent = new Intent(context, FullScreenActivity.class);
+        Intent intent = new Intent(context, JCFullScreenActivity.class);
         context.startActivity(intent);
     }
 

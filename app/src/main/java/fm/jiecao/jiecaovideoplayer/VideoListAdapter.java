@@ -17,7 +17,7 @@ public class VideoListAdapter extends BaseAdapter {
             "http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4"};
     String[] videoThumbs = {"http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
             "http://p.qpic.cn/videoyun/0/2449_ded7b566b37911e5942f0b208e48548d_2/640"};
-    String[] videoTitles = {"嫂子别摸我", "嫂子还摸我"};
+    String[] videoTitles = {"嫂子真紧", "嫂子抬腿"};
 
     int[] videoIndexs = {0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1};
     Context context;
