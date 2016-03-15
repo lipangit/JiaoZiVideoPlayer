@@ -17,7 +17,7 @@ import de.greenrobot.event.EventBus;
  * Created by Nathen
  * On 2015/12/01 11:17
  */
-class FullScreenActivity extends Activity {
+public class FullScreenActivity extends Activity {
 
     static void toActivityFromNormal(Context context, int state, String url, String thumb, String title) {
         STATE = state;
@@ -29,7 +29,7 @@ class FullScreenActivity extends Activity {
         context.startActivity(intent);
     }
 
-    static void toActivity(Context context, String url, String thumb, String title) {
+    public static void toActivity(Context context, String url, String thumb, String title) {
         STATE = JCVideoPlayer.CURRENT_STATE_NORMAL;
         URL = url;
         THUMB = thumb;
