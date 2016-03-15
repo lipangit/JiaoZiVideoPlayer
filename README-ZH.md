@@ -61,9 +61,9 @@ jCVideoPlayer.setSkin();//设置这一个播放器的皮肤
 JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
 ```
 
-直接进入全屏，比如在webview中视频播放的适配很难做，调用此接口直接全屏播放
+直接进入全屏，比如在webview中视频播放的适配很麻烦很无头绪，调用此接口直接全屏播放
 ```java
-JCVideoPlayer.toFullscreenActivity(this,
+JCFullScreenActivity.toActivity(this,
     "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
     "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
     "嫂子别摸我");
