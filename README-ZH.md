@@ -78,6 +78,11 @@ videoController.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b2
     在ListView和ViewPager中将视频移除屏幕外，会在onDetachedFromWindow时重置视频。
     目标是在库外只需要添加布局，添加配置，其他的问题都在库内判断和操作。
 
+用代码控制播放按钮的点击,如果是普通状态会播放视频，如果是播放中会暂停视频
+```java
+jCVideoPlayer.ivStart.performClick();
+```
+
 混淆
 ```
 ##Eventbus混淆
