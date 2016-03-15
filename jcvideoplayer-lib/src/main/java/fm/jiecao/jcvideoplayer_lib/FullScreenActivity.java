@@ -29,7 +29,7 @@ class FullScreenActivity extends Activity {
         context.startActivity(intent);
     }
 
-    public static void toActivity(Context context, String url, String thumb, String title) {
+    static void toActivity(Context context, String url, String thumb, String title) {
         STATE = JCVideoPlayer.CURRENT_STATE_NORMAL;
         URL = url;
         THUMB = thumb;
