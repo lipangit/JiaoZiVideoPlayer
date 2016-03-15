@@ -40,7 +40,7 @@ compile 'fm.jiecao:jiecaovideoplayer:1.8'
 
 3.设置视频地址、缩略图地址、标题
 ```java
-JCVideoPlayer videoController = (JCVideoPlayer) findViewById(R.id.videocontroller);
+JCVideoPlayer jCVideoPlayer = (JCVideoPlayer) findViewById(R.id.videocontroller);
 videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
     "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
     "嫂子别摸我");
@@ -52,7 +52,7 @@ videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f
 设置皮肤，可以指定某个播放器的皮肤，也可以设置全局皮肤，优先级:某个播放器皮肤>全局皮肤>默认皮肤
 ```java
 JCVideoPlayer.setGlobleSkin();//设置全局皮肤
-videoController.setSkin();//设置这一个播放器的皮肤
+jCVideoPlayer.setSkin();//设置这一个播放器的皮肤
 ```
 
 修改缩略图的scalType，默认的缩略图的scaleType是fitCenter，这时候图片如果和屏幕尺寸不同的话左右或上下会有黑边，可以根据客户端需要改成fitXY或者其他模式
@@ -70,7 +70,7 @@ JCVideoPlayer.toFullscreenActivity(this,
 
 不显示标题
 ```java
-videoController.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4",//
+jCVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4",//
     "http://p.qpic.cn/videoyun/0/2449_ded7b566b37911e5942f0b208e48548d_2/640",
     "嫂子还摸我", false);
 ```
