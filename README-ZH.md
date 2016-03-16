@@ -20,6 +20,8 @@
 
 ##效果
 
+ * **[jiecaovideoplayer-1.9-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-demo.apk)**
+
 ![Demo Screenshot][1]
 
 视频演示 : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
@@ -30,6 +32,11 @@
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:1.9'
 ```
+
+ * **[jiecaovideoplayer-1.9.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9.aar)**
+ * **[jiecaovideoplayer-1.9-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-javadoc.jar)**
+ * **[jiecaovideoplayer-1.9-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-sources.jar)**
+
 
 2.添加布局
 ```xml
@@ -98,12 +105,6 @@ jCVideoPlayer.ivStart.performClick();
 -dontwarn de.greenrobot.event.util.*$Support
 -dontwarn de.greenrobot.event.util.*$SupportManagerFragment
 ```
-
-##下载
- * **[jiecaovideoplayer-1.9-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-demo.apk)**
- * **[jiecaovideoplayer-1.9.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9.aar)**
- * **[jiecaovideoplayer-1.9-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-javadoc.jar)**
- * **[jiecaovideoplayer-1.9-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-sources.jar)**
 
 ## License
 
