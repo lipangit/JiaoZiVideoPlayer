@@ -683,9 +683,13 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public static void releaseAllVideos() {
         if (!isClickFullscreen) {
             JCMediaManager.intance().mediaPlayer.stop();
+            JCMediaManager.intance().mediaPlayer = null;
             JCMediaManager.intance().setUuid("");
             JCMediaManager.intance().setUuid("");
             EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
+            if (mUpdateProgressTimer != null) {
+                mUpdateProgressTimer.cancel();
+            }
         }
     }
 
