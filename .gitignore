@@ -1,3 +1,4 @@
+/infer-out
 gradle.properties
 *.iml
 .gradle
