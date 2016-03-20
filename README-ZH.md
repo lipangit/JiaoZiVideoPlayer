@@ -108,4 +108,4 @@ jCVideoPlayer.ivStart.performClick();
 
 ## License [MIT](LICENSE)
 
-[1]: ./screenshots/j2.png
+[1]: ./screenshots/j2.jpg
