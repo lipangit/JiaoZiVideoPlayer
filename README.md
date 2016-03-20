@@ -18,24 +18,26 @@ This is the real android video player view with fullscreen function, we are dedi
 5. Support to custom view controller's skin
 6. Support to display the thumb when playing mp3 audio
 
-## Demo Screenshot
+## Effect
 
 **[jiecaovideoplayer-1.9-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-demo.apk)**
 
 ![Demo Screenshot][1]
 
-Demo video : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
+Demo video : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html
 
 
 ## Usage
-1.Add the library in build.gradle
+1.Import library
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:1.9'
 ```
+
 Or download lib
-**[jiecaovideoplayer-1.9.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9.aar)**
-**[jiecaovideoplayer-1.9-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-javadoc.jar)**
-**[jiecaovideoplayer-1.9-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-sources.jar)**
+
+* [jiecaovideoplayer-1.9.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9.aar)
+* [jiecaovideoplayer-1.9-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-javadoc.jar)
+* [jiecaovideoplayer-1.9-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.9-sources.jar)
 
 2.Add JCVideoPlayer in your layout
 ```xml
@@ -101,5 +103,5 @@ ProGuard
 
 ## License [MIT](LICENSE)
 
-[1]: ./screenshots/j1.png
+[1]: ./screenshots/j2.png
 
