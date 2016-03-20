@@ -14,9 +14,11 @@ This is the real android video player view with fullscreen function, we are dedi
 1. Launching new Fullscreen Activity when playing video in fullscreen mode
 2. Even in `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
 3. Video will be reset(pause) when it's scrolled out of the screen in `ListView` and `ViewPager`
-4. It will not disturb or change the playing state when entering or exiting fullscreen
-5. Support to custom view controller's skin
-6. Support to display the thumb when playing mp3 audio
+4. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
+5. It will not disturb or change the playing state when entering or exiting fullscreen
+6. Support to customize view controller’s skin
+7. Support to display thumbnails when playing mp3
+8. With limited storage, less than 50 kb
 
 ## Effect
 
