@@ -561,7 +561,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private void setProgressAndTimeFromTimer() {
         int position = JCMediaManager.intance().mediaPlayer.getCurrentPosition();
         int duration = JCMediaManager.intance().mediaPlayer.getDuration();
-        int progress = position * 100 / duration;
+        // if duration == 0 (e.g. in HLS streams) avoids ArithmeticException
+        int progress = position * 100 / (duration==0?1:duration);
         setProgressAndTime(progress, position, duration);
     }
 
