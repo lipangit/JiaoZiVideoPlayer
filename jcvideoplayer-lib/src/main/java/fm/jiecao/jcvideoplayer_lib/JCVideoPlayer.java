@@ -281,7 +281,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 //            surfaceView.setBackgroundColor(R.color.black_a10_color);
             CURRENT_STATE = CURRENT_STATE_NORMAL;
             setKeepScreenOn(false);
-            sendPointEvent(ifFullScreen ? VideoEvents.POINT_AUTO_COMPLETE_FULLSCREEN : VideoEvents.POINT_AUTO_COMPLETE);
+            if (JCMediaManager.intance().uuid.equals(uuid)) {
+                sendPointEvent(ifFullScreen ? VideoEvents.POINT_AUTO_COMPLETE_FULLSCREEN : VideoEvents.POINT_AUTO_COMPLETE);
+            }
         }
         if (!JCMediaManager.intance().uuid.equals(uuid)) {
             if (videoEvents.type == VideoEvents.VE_START) {
@@ -562,7 +564,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         int position = JCMediaManager.intance().mediaPlayer.getCurrentPosition();
         int duration = JCMediaManager.intance().mediaPlayer.getDuration();
         // if duration == 0 (e.g. in HLS streams) avoids ArithmeticException
-        int progress = position * 100 / (duration==0?1:duration);
+        int progress = position * 100 / (duration == 0 ? 1 : duration);
         setProgressAndTime(progress, position, duration);
     }
 

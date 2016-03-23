@@ -22,8 +22,6 @@ class ResizeSurfaceView extends SurfaceView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //Log.i("@@@@", "onMeasure(" + MeasureSpec.toString(widthMeasureSpec) + ", "
-        //        + MeasureSpec.toString(heightMeasureSpec) + ")");
         int mVideoWidth = JCMediaManager.intance().currentVideoWidth;
         int mVideoHeight = JCMediaManager.intance().currentVideoHeight;
 
@@ -43,10 +41,8 @@ class ResizeSurfaceView extends SurfaceView {
 
                 // for compatibility, we adjust size based on aspect ratio
                 if (mVideoWidth * height < width * mVideoHeight) {
-                    //Log.i("@@@", "image too wide, correcting");
                     width = height * mVideoWidth / mVideoHeight;
                 } else if (mVideoWidth * height > width * mVideoHeight) {
-                    //Log.i("@@@", "image too tall, correcting");
                     height = width * mVideoHeight / mVideoWidth;
                 }
             } else if (widthSpecMode == MeasureSpec.EXACTLY) {
