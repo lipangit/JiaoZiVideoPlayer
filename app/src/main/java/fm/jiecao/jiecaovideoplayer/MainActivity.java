@@ -40,13 +40,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         videoController2.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4",//
                 "嫂子还摸我", false);
         ImageLoader.getInstance().displayImage("http://p.qpic.cn/videoyun/0/2449_bfbbfa3cea8f11e5aac3db03cda99974_1/640",
-                videoController1.ivThumb);
+                videoController2.ivThumb);
 
         videoController3 = (JCVideoPlayer) findViewById(R.id.videocontroller3);
         videoController3.setUp("http://121.40.64.47/resource/mp3/music_yangguang3.mp3",
                 "嫂子别闹");
         ImageLoader.getInstance().displayImage("http://p.qpic.cn/videoyun/0/2449_38e65894d9e211e5b0e0a3699ca1d490_1/640",
-                videoController1.ivThumb);
+                videoController3.ivThumb);
 
         btnToList = (Button) findViewById(R.id.to_list_activity);
         btnToListViewpager = (Button) findViewById(R.id.to_list_viewpager_activity);
