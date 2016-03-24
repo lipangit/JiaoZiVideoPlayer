@@ -1,13 +1,5 @@
 package fm.jiecao.jcvideoplayer_lib;
 
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -16,20 +8,6 @@ import java.util.Locale;
  * On 2016/02/21 12:25
  */
 class Utils {
-    public static DisplayImageOptions getDefaultDisplayImageOption() {
-        DisplayImageOptions options = new DisplayImageOptions.Builder()
-                .showImageOnLoading(new ColorDrawable(Color.parseColor("#f0f0f0")))
-                .resetViewBeforeLoading(true)
-                .cacheInMemory(true)
-                .cacheOnDisk(true)
-                .considerExifParams(true)
-                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .displayer(new FadeInBitmapDisplayer(500)) // 设置图片渐显的时间
-//                .delayBeforeLoading(300)  // 下载前的延迟时间
-                .build();
-        return options;
-    }
 
     public static String stringForTime(int timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {

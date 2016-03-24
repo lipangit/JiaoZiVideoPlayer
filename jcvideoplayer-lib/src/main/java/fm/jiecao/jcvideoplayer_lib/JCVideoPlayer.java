@@ -21,8 +21,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -49,14 +47,13 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     SurfaceHolder surfaceHolder;
     TextView tvTitle;
     ImageView ivBack;
-    ImageView ivThumb;
+    public ImageView ivThumb;
     RelativeLayout rlParent;
     LinearLayout llTitleContainer, llBottomControl;
     ImageView ivCover;
 
     //属性
     private String url;
-    private String thumb;
     private String title;
     private boolean ifFullScreen = false;
     public String uuid;//区别相同地址,包括全屏和不全屏，和都不全屏时的相同地址
@@ -136,11 +133,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * <p>Configuring the Content to Play</p>
      *
      * @param url   视频地址 | Video address
-     * @param thumb 缩略图地址 | Thumbnail address
      * @param title 标题 | title
      */
-    public void setUp(String url, String thumb, String title) {
-        setUp(url, thumb, title, true);
+    public void setUp(String url, String title) {
+        setUp(url, title, true);
     }
 
     /**
@@ -148,16 +144,14 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * <p>Configuring the Content to Play</p>
      *
      * @param url         视频地址 | Video address
-     * @param thumb       缩略图地址 | Thumbnail address
      * @param title       标题 | title
      * @param ifShowTitle 是否在非全屏下显示标题 | The title is displayed in full-screen under
      */
-    public void setUp(String url, String thumb, String title, boolean ifShowTitle) {
+    public void setUp(String url, String title, boolean ifShowTitle) {
         setSkin();
         setIfShowTitle(ifShowTitle);
         if ((System.currentTimeMillis() - clickfullscreentime) < FULL_SCREEN_NORMAL_DELAY) return;
         this.url = url;
-        this.thumb = thumb;
         this.title = title;
         this.ifFullScreen = false;
         if (ifFullScreen) {
@@ -171,7 +165,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ivStart.setVisibility(View.VISIBLE);
         llBottomControl.setVisibility(View.INVISIBLE);
         pbBottom.setVisibility(View.VISIBLE);
-        ImageLoader.getInstance().displayImage(thumb, ivThumb, Utils.getDefaultDisplayImageOption());
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
         if (uuid.equals(JCMediaManager.intance().uuid)) {
@@ -179,7 +172,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
-            loadMp3Thum();
         }
     }
 
@@ -188,13 +180,11 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * <p>Only in fullscreen can call this</p>
      *
      * @param url   视频地址 | Video address
-     * @param thumb 缩略图地址 | Thumbnail address
      * @param title 标题 | title
      */
-    public void setUpForFullscreen(String url, String thumb, String title) {
+    public void setUpForFullscreen(String url, String title) {
         setSkin();
         this.url = url;
-        this.thumb = thumb;
         this.title = title;
         this.ifFullScreen = true;
         if (ifFullScreen) {
@@ -212,7 +202,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
-            loadMp3Thum();
         }
     }
 
@@ -409,7 +398,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().backUpUuid();
                 isClickFullscreen = true;
-                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, thumb, title);
+                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, title);
                 sendPointEvent(VideoEvents.POINT_ENTER_FULLSCREEN);
             }
             clickfullscreentime = System.currentTimeMillis();
@@ -746,10 +735,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         return false;
     }
 
-    private void loadMp3Thum() {
-        ImageLoader.getInstance().displayImage(thumb, ivCover, Utils.getDefaultDisplayImageOption());
-    }
-
     /**
      * <p>默认的缩略图的scaleType是fitCenter，这时候图片如果和屏幕尺寸不同的话左右或上下会有黑边，可以根据客户端需要改成fitXY或这其他模式</p>
      * <p>The default thumbnail scaleType is fitCenter, and this time the picture if different screen sizes up and down or left and right, then there will be black bars, or it may need to change fitXY other modes based on the client</p>
@@ -795,8 +780,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * In demo is ok, but in other project This will class not access exception,How to solve the problem
      */
     @Deprecated
-    public static void toFullscreenActivity(Context context, String url, String thumb, String title) {
-        JCFullScreenActivity.toActivity(context, url, thumb, title);
+    public static void toFullscreenActivity(Context context, String url, String title) {
+        JCFullScreenActivity.toActivity(context, url, title);
     }
 
     private void setSkin() {

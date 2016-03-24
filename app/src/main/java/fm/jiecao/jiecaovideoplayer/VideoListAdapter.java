@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 /**
@@ -55,8 +57,9 @@ public class VideoListAdapter extends BaseAdapter {
         }
         viewHolder.jcVideoPlayer.setUp(
                 videoUrls[videoIndexs[position]],
-                videoThumbs[videoIndexs[position]],
                 videoTitles[videoIndexs[position]]);
+        ImageLoader.getInstance().displayImage(videoThumbs[videoIndexs[position]],
+                viewHolder.jcVideoPlayer.ivThumb);
         return convertView;
     }
 
