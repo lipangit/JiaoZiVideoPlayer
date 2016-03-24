@@ -103,6 +103,10 @@ ProGuard
 -dontwarn de.greenrobot.event.util.*$SupportManagerFragment
 ```
 
+####Contributors
+
+节操精选Android小组([Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio)) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota)
+
 ## License [MIT](LICENSE)
 
 [1]: ./screenshots/j2.jpg
