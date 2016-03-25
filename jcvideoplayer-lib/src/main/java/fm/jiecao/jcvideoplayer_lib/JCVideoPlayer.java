@@ -314,6 +314,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 JCMediaManager.intance().clearWidthAndHeight();
                 CURRENT_STATE = CURRENT_STATE_PREPAREING;
                 changeUiToShowUiPrepareing();
+                llBottomControl.setVisibility(View.INVISIBLE);
+                llTitleContainer.setVisibility(View.INVISIBLE);
                 setProgressAndTime(0, 0, 0);
                 setProgressBuffered(0);
                 JCMediaManager.intance().prepareToPlay(getContext(), url);
@@ -439,7 +441,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private void changeUiToShowUiPrepareing() {
         setTitleVisibility(View.VISIBLE);
-        llBottomControl.setVisibility(View.INVISIBLE);
+        llBottomControl.setVisibility(View.VISIBLE);
         ivStart.setVisibility(View.INVISIBLE);
         pbLoading.setVisibility(View.VISIBLE);
         setThumbVisibility(View.INVISIBLE);
