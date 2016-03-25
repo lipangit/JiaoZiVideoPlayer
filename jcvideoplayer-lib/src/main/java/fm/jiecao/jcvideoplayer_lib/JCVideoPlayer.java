@@ -161,12 +161,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ivBack.setVisibility(View.GONE);
         }
         tvTitle.setText(title);
-        ivThumb.setVisibility(View.VISIBLE);
-        ivStart.setVisibility(View.VISIBLE);
-        llBottomControl.setVisibility(View.INVISIBLE);
-        pbBottom.setVisibility(View.VISIBLE);
+
+        changeUiToNormal();
+
         CURRENT_STATE = CURRENT_STATE_NORMAL;
-        setTitleVisibility(View.VISIBLE);
         if (uuid.equals(JCMediaManager.intance().uuid)) {
             JCMediaManager.intance().mediaPlayer.stop();
         }
@@ -186,17 +184,16 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         setSkin();
         this.url = url;
         this.title = title;
-        this.ifFullScreen = true;
+        setIfShowTitle(true);
         if (ifFullScreen) {
             ivFullScreen.setImageResource(shrinkRecId == 0 ? R.drawable.shrink_video : shrinkRecId);
         } else {
             ivFullScreen.setImageResource(enlargRecId == 0 ? R.drawable.enlarge_video : enlargRecId);
         }
         tvTitle.setText(title);
-        ivThumb.setVisibility(View.VISIBLE);
-        ivStart.setVisibility(View.VISIBLE);
-        llBottomControl.setVisibility(View.INVISIBLE);
-        pbBottom.setVisibility(View.VISIBLE);
+
+        changeUiToNormal();
+
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         setTitleVisibility(View.VISIBLE);
 
@@ -215,44 +212,18 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         this.CURRENT_STATE = state;
         //全屏或取消全屏时继续原来的状态
         if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
-            ivStart.setVisibility(View.INVISIBLE);
-            ivThumb.setVisibility(View.INVISIBLE);
-            pbLoading.setVisibility(View.VISIBLE);
-            ivCover.setVisibility(View.VISIBLE);
+            changeUiToShowUiPrepareing();
             setProgressAndTime(0, 0, 0);
             setProgressBuffered(0);
         } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
-            updateStartImage();
-            ivStart.setVisibility(View.VISIBLE);
-            llBottomControl.setVisibility(View.VISIBLE);
-            pbBottom.setVisibility(View.INVISIBLE);
-            setTitleVisibility(View.VISIBLE);
-            ivThumb.setVisibility(View.INVISIBLE);
-            if (!ifMp3) {
-                ivCover.setVisibility(View.INVISIBLE);
-            }
-            pbLoading.setVisibility(View.INVISIBLE);
+            changeUiToShowUiPlaying();
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
-            updateStartImage();
-            ivStart.setVisibility(View.VISIBLE);
-            llBottomControl.setVisibility(View.VISIBLE);
-            pbBottom.setVisibility(View.INVISIBLE);
-            setTitleVisibility(View.VISIBLE);
-            ivThumb.setVisibility(View.INVISIBLE);
-            if (!ifMp3) {
-                ivCover.setVisibility(View.INVISIBLE);
-            }
+            changeUiToShowUiPause();
         } else if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
             if (uuid.equals(JCMediaManager.intance().uuid)) {
                 JCMediaManager.intance().mediaPlayer.stop();
             }
-            ivStart.setVisibility(View.VISIBLE);
-            ivThumb.setVisibility(View.VISIBLE);
-            llBottomControl.setVisibility(View.INVISIBLE);
-            pbBottom.setVisibility(View.VISIBLE);
-            ivCover.setVisibility(View.VISIBLE);
-            setTitleVisibility(View.VISIBLE);
-            updateStartImage();
+            changeUiToNormal();
             cancelDismissControlViewTimer();
             cancelProgressTimer();
         }
@@ -260,16 +231,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     public void onEventMainThread(VideoEvents videoEvents) {
         if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
-//            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) {
-            cancelProgressTimer();
-            ivStart.setImageResource(R.drawable.click_video_play_selector);
-            ivThumb.setVisibility(View.VISIBLE);
-            ivStart.setVisibility(View.VISIBLE);
-//                JCMediaPlayer.intance().mediaPlayer.setDisplay(null);
-            //TODO 这里要将背景置黑，
-//            surfaceView.setBackgroundColor(R.color.black_a10_color);
             CURRENT_STATE = CURRENT_STATE_NORMAL;
+            cancelProgressTimer();
             setKeepScreenOn(false);
+            changeUiToNormal();
             if (JCMediaManager.intance().uuid.equals(uuid)) {
                 sendPointEvent(ifFullScreen ? VideoEvents.POINT_AUTO_COMPLETE_FULLSCREEN : VideoEvents.POINT_AUTO_COMPLETE);
             }
@@ -286,13 +251,11 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
             JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
             JCMediaManager.intance().mediaPlayer.start();
-            pbLoading.setVisibility(View.INVISIBLE);
-            if (!ifMp3) {
-                ivCover.setVisibility(View.INVISIBLE);
-            }
-            llBottomControl.setVisibility(View.VISIBLE);
-            pbBottom.setVisibility(View.INVISIBLE);
             CURRENT_STATE = CURRENT_STATE_PLAYING;
+
+            changeUiToShowUiPlaying();
+            ivStart.setVisibility(View.INVISIBLE);
+
             startDismissControlViewTimer();
             startProgressTimer();
         } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_UPDATE_BUFFER) {
@@ -341,13 +304,16 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 Toast.makeText(getContext(), "视频地址为空", Toast.LENGTH_SHORT).show();
                 return;
             }
+            if (i == R.id.thumb) {
+                if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
+                    onClickUiToggle();
+                    return;
+                }
+            }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
                 JCMediaManager.intance().clearWidthAndHeight();
                 CURRENT_STATE = CURRENT_STATE_PREPAREING;
-                ivStart.setVisibility(View.INVISIBLE);
-                ivThumb.setVisibility(View.INVISIBLE);
-                pbLoading.setVisibility(View.VISIBLE);
-                ivCover.setVisibility(View.VISIBLE);
+                changeUiToShowUiPrepareing();
                 setProgressAndTime(0, 0, 0);
                 setProgressBuffered(0);
                 JCMediaManager.intance().prepareToPlay(getContext(), url);
@@ -363,27 +329,22 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 sendPointEvent(i == R.id.start ? VideoEvents.POINT_START_ICON : VideoEvents.POINT_START_THUMB);
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 CURRENT_STATE = CURRENT_STATE_PAUSE;
-                ivThumb.setVisibility(View.INVISIBLE);
-                if (!ifMp3) {
-                    ivCover.setVisibility(View.INVISIBLE);
-                }
+
+                changeUiToShowUiPause();
+
                 JCMediaManager.intance().mediaPlayer.pause();
                 Log.i("JCVideoPlayer", "pause video");
 
-                updateStartImage();
                 setKeepScreenOn(false);
                 cancelDismissControlViewTimer();
                 sendPointEvent(ifFullScreen ? VideoEvents.POINT_STOP_FULLSCREEN : VideoEvents.POINT_STOP);
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 CURRENT_STATE = CURRENT_STATE_PLAYING;
-                ivThumb.setVisibility(View.INVISIBLE);
-                if (!ifMp3) {
-                    ivCover.setVisibility(View.INVISIBLE);
-                }
+
+                changeUiToShowUiPlaying();
                 JCMediaManager.intance().mediaPlayer.start();
                 Log.i("JCVideoPlayer", "go on video");
 
-                updateStartImage();
                 setKeepScreenOn(true);
                 startDismissControlViewTimer();
                 sendPointEvent(ifFullScreen ? VideoEvents.POINT_RESUME_FULLSCREEN : VideoEvents.POINT_RESUME);
@@ -403,7 +364,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             }
             clickfullscreentime = System.currentTimeMillis();
         } else if (i == R.id.surfaceView || i == R.id.parentview) {
-            onClickToggleClear();
+            onClickUiToggle();
             startDismissControlViewTimer();
             sendPointEvent(ifFullScreen ? VideoEvents.POINT_CLICK_BLANK_FULLSCREEN : VideoEvents.POINT_CLICK_BLANK);
         } else if (i == R.id.bottom_control) {
@@ -424,7 +385,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                         ((Activity) getContext()).runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                dismissControlView();
+                                llBottomControl.setVisibility(View.INVISIBLE);
+                                pbBottom.setVisibility(View.VISIBLE);
+                                setTitleVisibility(View.INVISIBLE);
+                                ivStart.setVisibility(View.INVISIBLE);//TODO check this for ui
                             }
                         });
                     }
@@ -433,62 +397,99 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }, 2500);
     }
 
-    //只是onClickToggleClear这个方法中逻辑的一部分
-    private void dismissControlView() {
-        llBottomControl.setVisibility(View.INVISIBLE);
-        pbBottom.setVisibility(View.VISIBLE);
-        setTitleVisibility(View.INVISIBLE);
-        ivStart.setVisibility(View.INVISIBLE);
-    }
-
     private void cancelDismissControlViewTimer() {
         if (mDismissControlViewTimer != null) {
             mDismissControlViewTimer.cancel();
         }
     }
 
-    private void onClickToggleClear() {
+    private void onClickUiToggle() {
         if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
-                llBottomControl.setVisibility(View.INVISIBLE);
-                pbBottom.setVisibility(View.VISIBLE);
-                setTitleVisibility(View.INVISIBLE);
+                changeUiToClearUiPrepareing();
             } else {
-                llBottomControl.setVisibility(View.VISIBLE);
-                pbBottom.setVisibility(View.INVISIBLE);
-                setTitleVisibility(View.VISIBLE);
+                changeUiToShowUiPrepareing();
             }
-            ivStart.setVisibility(View.INVISIBLE);
-            pbLoading.setVisibility(View.VISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
-                llBottomControl.setVisibility(View.INVISIBLE);
-                pbBottom.setVisibility(View.VISIBLE);
-                setTitleVisibility(View.INVISIBLE);
-                ivStart.setVisibility(View.INVISIBLE);
+                changeUiToClearUiPlaying();
             } else {
-                updateStartImage();
-                ivStart.setVisibility(View.VISIBLE);
-                llBottomControl.setVisibility(View.VISIBLE);
-                pbBottom.setVisibility(View.INVISIBLE);
-                setTitleVisibility(View.VISIBLE);
+                changeUiToShowUiPlaying();
             }
-            pbLoading.setVisibility(View.INVISIBLE);
         } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
             if (llBottomControl.getVisibility() == View.VISIBLE) {
-                llBottomControl.setVisibility(View.INVISIBLE);
-                pbBottom.setVisibility(View.VISIBLE);
-                setTitleVisibility(View.INVISIBLE);
-                ivStart.setVisibility(View.INVISIBLE);
+                changeUiToClearUiPause();
             } else {
-                updateStartImage();
-                ivStart.setVisibility(View.VISIBLE);
-                llBottomControl.setVisibility(View.VISIBLE);
-                pbBottom.setVisibility(View.INVISIBLE);
-                setTitleVisibility(View.VISIBLE);
+                changeUiToShowUiPause();
             }
-            pbLoading.setVisibility(View.INVISIBLE);
         }
+    }
+
+    //Unified management Ui
+    private void changeUiToNormal() {
+        setTitleVisibility(View.VISIBLE);
+        llBottomControl.setVisibility(View.INVISIBLE);
+        ivStart.setVisibility(View.VISIBLE);
+        pbLoading.setVisibility(View.INVISIBLE);
+        setThumbVisibility(View.VISIBLE);
+        ivCover.setVisibility(View.VISIBLE);
+        pbBottom.setVisibility(View.INVISIBLE);
+        updateStartImage();
+    }
+
+    private void changeUiToShowUiPrepareing() {
+        setTitleVisibility(View.VISIBLE);
+        llBottomControl.setVisibility(View.INVISIBLE);
+        ivStart.setVisibility(View.INVISIBLE);
+        pbLoading.setVisibility(View.VISIBLE);
+        setThumbVisibility(View.INVISIBLE);
+        ivCover.setVisibility(View.VISIBLE);
+        pbBottom.setVisibility(View.INVISIBLE);
+    }
+
+    private void changeUiToClearUiPrepareing() {
+        changeUiToClearUi();
+        pbLoading.setVisibility(View.VISIBLE);
+    }
+
+    private void changeUiToShowUiPlaying() {
+        setTitleVisibility(View.VISIBLE);
+        llBottomControl.setVisibility(View.VISIBLE);
+        ivStart.setVisibility(View.VISIBLE);
+        pbLoading.setVisibility(View.INVISIBLE);
+        setThumbVisibility(View.INVISIBLE);
+        ivCover.setVisibility(View.INVISIBLE);
+        pbBottom.setVisibility(View.VISIBLE);
+        updateStartImage();
+    }
+
+    private void changeUiToClearUiPlaying() {
+        changeUiToClearUi();
+    }
+
+    private void changeUiToShowUiPause() {
+        setTitleVisibility(View.VISIBLE);
+        llBottomControl.setVisibility(View.VISIBLE);
+        ivStart.setVisibility(View.VISIBLE);
+        pbLoading.setVisibility(View.INVISIBLE);
+        setThumbVisibility(View.INVISIBLE);
+        ivCover.setVisibility(View.INVISIBLE);
+        pbBottom.setVisibility(View.VISIBLE);
+        updateStartImage();
+    }
+
+    private void changeUiToClearUiPause() {
+        changeUiToClearUi();
+    }
+
+    private void changeUiToClearUi() {
+        setTitleVisibility(View.INVISIBLE);
+        llBottomControl.setVisibility(View.INVISIBLE);
+        ivStart.setVisibility(View.INVISIBLE);
+        pbLoading.setVisibility(View.INVISIBLE);
+        setThumbVisibility(View.INVISIBLE);
+        ivCover.setVisibility(View.INVISIBLE);
+        pbBottom.setVisibility(View.INVISIBLE);
     }
 
     private void startProgressTimer() {
@@ -522,6 +523,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         this.ifShowTitle = ifShowTitle;
     }
 
+    //if show title in top level logic
     private void setTitleVisibility(int visable) {
         if (ifShowTitle) {
             llTitleContainer.setVisibility(visable);
@@ -531,6 +533,15 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             } else {
                 llTitleContainer.setVisibility(View.INVISIBLE);
             }
+        }
+    }
+
+    //if show thumb in top level logic
+    private void setThumbVisibility(int visable) {
+        if (ifMp3) {
+            ivThumb.setVisibility(View.VISIBLE);
+        } else {
+            ivThumb.setVisibility(visable);
         }
     }
 

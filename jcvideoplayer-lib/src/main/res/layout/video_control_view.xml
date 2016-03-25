@@ -23,29 +23,33 @@
             android:layout_alignParentBottom="true"
             android:max="100"
             android:progressDrawable="@drawable/video_progress" />
+
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="#222222" />
     </RelativeLayout>
 
+
     <ImageView
-        android:id="@+id/cover"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/thumb"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#222222" />
-
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:indeterminateDrawable="@drawable/video_loading"
-        android:visibility="invisible" />
-
+        android:background="#000000"
+        android:scaleType="fitCenter" />
 
     <LinearLayout
         android:id="@+id/bottom_control"
@@ -97,19 +101,6 @@
             android:src="@drawable/enlarge_video" />
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/thumb"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="#000000"
-        android:scaleType="fitCenter" />
-
     <LinearLayout
         android:id="@+id/title_container"
         android:layout_width="match_parent"
@@ -134,6 +125,14 @@
             android:textSize="18sp" />
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:indeterminateDrawable="@drawable/video_loading"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/start"
