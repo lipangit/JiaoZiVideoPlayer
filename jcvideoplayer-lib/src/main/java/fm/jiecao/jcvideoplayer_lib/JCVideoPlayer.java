@@ -185,6 +185,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         this.url = url;
         this.title = title;
         setIfShowTitle(true);
+        ifFullScreen = true;
         if (ifFullScreen) {
             ivFullScreen.setImageResource(shrinkRecId == 0 ? R.drawable.shrink_video : shrinkRecId);
         } else {
