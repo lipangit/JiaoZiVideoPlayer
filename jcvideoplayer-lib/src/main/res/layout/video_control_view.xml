@@ -15,14 +15,6 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true" />
 
-        <ProgressBar
-            android:id="@+id/bottom_progressbar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="1.5dp"
-            android:layout_alignParentBottom="true"
-            android:max="100"
-            android:progressDrawable="@drawable/video_progress" />
 
         <ImageView
             android:id="@+id/cover"
@@ -100,6 +92,15 @@
             android:scaleType="center"
             android:src="@drawable/enlarge_video" />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/bottom_progressbar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_alignParentBottom="true"
+        android:max="100"
+        android:progressDrawable="@drawable/video_progress" />
 
     <LinearLayout
         android:id="@+id/title_container"
