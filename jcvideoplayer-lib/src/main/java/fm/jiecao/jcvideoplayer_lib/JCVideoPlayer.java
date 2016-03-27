@@ -57,7 +57,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private String title;
     private boolean ifFullScreen = false;
     public String uuid;//区别相同地址,包括全屏和不全屏，和都不全屏时的相同地址
-    public boolean ifShowTitle = false;
+    private boolean ifShowTitle = false;
     private boolean ifMp3 = false;
 
     private int enlargRecId = 0;
@@ -149,28 +149,29 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      */
     public void setUp(String url, String title, boolean ifShowTitle) {
         setSkin();
-        setIfShowTitle(ifShowTitle);
+        this.ifShowTitle = ifShowTitle;
         if ((System.currentTimeMillis() - clickfullscreentime) < FULL_SCREEN_NORMAL_DELAY) return;
         this.url = url;
         this.title = title;
         this.ifFullScreen = false;
+        CURRENT_STATE = CURRENT_STATE_NORMAL;
         if (ifFullScreen) {
             ivFullScreen.setImageResource(enlargRecId == 0 ? R.drawable.shrink_video : enlargRecId);
         } else {
             ivFullScreen.setImageResource(shrinkRecId == 0 ? R.drawable.enlarge_video : shrinkRecId);
             ivBack.setVisibility(View.GONE);
         }
+        if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
+            ifMp3 = true;
+        }
         tvTitle.setText(title);
 
         changeUiToNormal();
 
-        CURRENT_STATE = CURRENT_STATE_NORMAL;
         if (uuid.equals(JCMediaManager.intance().uuid)) {
             JCMediaManager.intance().mediaPlayer.stop();
         }
-        if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
-            ifMp3 = true;
-        }
+
     }
 
     /**
@@ -184,23 +185,20 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         setSkin();
         this.url = url;
         this.title = title;
-        setIfShowTitle(true);
+        ifShowTitle = true;
         ifFullScreen = true;
+        CURRENT_STATE = CURRENT_STATE_NORMAL;
         if (ifFullScreen) {
             ivFullScreen.setImageResource(shrinkRecId == 0 ? R.drawable.shrink_video : shrinkRecId);
         } else {
             ivFullScreen.setImageResource(enlargRecId == 0 ? R.drawable.enlarge_video : enlargRecId);
         }
         tvTitle.setText(title);
-
-        changeUiToNormal();
-
-        CURRENT_STATE = CURRENT_STATE_NORMAL;
-        setTitleVisibility(View.VISIBLE);
-
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
         }
+
+        changeUiToNormal();
     }
 
     /**
@@ -524,10 +522,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    public void setIfShowTitle(boolean ifShowTitle) {
-        this.ifShowTitle = ifShowTitle;
-    }
-
     //if show title in top level logic
     private void setTitleVisibility(int visable) {
         if (ifShowTitle) {
@@ -545,8 +539,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private void setThumbVisibility(int visable) {
         if (ifMp3) {
             ivThumb.setVisibility(View.VISIBLE);
+            System.out.println("fdsfds VISBLE " + visable + " " + ifMp3);
         } else {
             ivThumb.setVisibility(visable);
+            System.out.println("fdsfds " + visable + " " + ifMp3);
         }
     }
 
