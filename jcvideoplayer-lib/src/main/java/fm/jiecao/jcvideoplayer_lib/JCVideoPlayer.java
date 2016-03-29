@@ -539,10 +539,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private void setThumbVisibility(int visable) {
         if (ifMp3) {
             ivThumb.setVisibility(View.VISIBLE);
-            System.out.println("fdsfds VISBLE " + visable + " " + ifMp3);
         } else {
             ivThumb.setVisibility(visable);
-            System.out.println("fdsfds " + visable + " " + ifMp3);
         }
     }
 
