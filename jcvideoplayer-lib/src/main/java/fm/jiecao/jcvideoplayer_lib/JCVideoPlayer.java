@@ -2,10 +2,6 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -62,9 +58,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private int enlargRecId = 0;
     private int shrinkRecId = 0;
-
-    public static Skin globleSkin;
-    private Skin skin;
 
     // 为了保证全屏和退出全屏之后的状态和之前一样,需要记录状态
     public int CURRENT_STATE = -1;//-1相当于null
@@ -148,7 +141,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * @param ifShowTitle 是否在非全屏下显示标题 | The title is displayed in full-screen under
      */
     public void setUp(String url, String title, boolean ifShowTitle) {
-        setSkin();
         this.ifShowTitle = ifShowTitle;
         if ((System.currentTimeMillis() - clickfullscreentime) < FULL_SCREEN_NORMAL_DELAY) return;
         this.url = url;
@@ -182,7 +174,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      * @param title 标题 | title
      */
     public void setUpForFullscreen(String url, String title) {
-        setSkin();
         this.url = url;
         this.title = title;
         ifShowTitle = true;
@@ -355,7 +346,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             if (ifFullScreen) {
                 quitFullScreen();
             } else {
-                JCFullScreenActivity.skin = skin;
                 JCMediaManager.intance().mediaPlayer.pause();
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().backUpUuid();
@@ -756,37 +746,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     /**
-     * <p>只设置这一个播放器的皮肤<br>
-     * 这个需要在setUp播放器的属性之前调用，因为enlarge图标的原因<br>
-     * 所有参数如果不需要修改的设为0</p>
-     * <p>This setting only one player skin<br>
-     * This requires the player before setUp property called, because of the enlarge icon<br>
-     * If you do not modify all parameters can be set to 0</p>
-     *
-     * @param titleColor              标题颜色 | title color
-     * @param timeColor               时间颜色 | time color
-     * @param seekDrawable            滑动条颜色 | seekbar color
-     * @param bottomControlBackground 低栏背景 | background color
-     * @param enlargRecId             全屏背景 | fullscreen background
-     * @param shrinkRecId             退出全屏背景 | quit fullscreen background quit fullscreen
-     */
-    public void setSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
-                        int enlargRecId, int shrinkRecId) {
-        skin = new Skin(titleColor, timeColor, seekDrawable, bottomControlBackground,
-                enlargRecId, shrinkRecId);
-    }
-
-    /**
-     * <p>设置应用内所有播放器的皮肤</p>
-     * <p>Apply all settings within the player skin</p>
-     */
-    public static void setGlobleSkin(int titleColor, int timeColor, int seekDrawable, int bottomControlBackground,
-                                     int enlargRecId, int shrinkRecId) {
-        globleSkin = new Skin(titleColor, timeColor, seekDrawable, bottomControlBackground,
-                enlargRecId, shrinkRecId);
-    }
-
-    /**
      * In demo is ok, but in other project This will class not access exception,How to solve the problem
      */
     @Deprecated
@@ -794,42 +753,4 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         JCFullScreenActivity.toActivity(context, url, title);
     }
 
-    private void setSkin() {
-        if (skin != null) {
-            setSkin(skin);
-        } else {
-            if (globleSkin != null) {
-                setSkin(globleSkin);
-            }
-        }
-    }
-
-    private void setSkin(Skin skin) {
-        Resources resource = getContext().getResources();
-        if (skin.titleColor != 0) {
-            ColorStateList titleCsl = resource.getColorStateList(skin.titleColor);
-            if (titleCsl != null) {
-                tvTitle.setTextColor(titleCsl);
-            }
-        }
-        if (skin.timeColor != 0) {
-            ColorStateList timeCsl = resource.getColorStateList(skin.timeColor);
-            if (timeCsl != null) {
-                tvTimeCurrent.setTextColor(timeCsl);
-                tvTimeTotal.setTextColor(timeCsl);
-            }
-        }
-        if (skin.seekDrawable != 0) {
-            Drawable bg = resource.getDrawable(skin.seekDrawable);
-            Rect bounds = skProgress.getProgressDrawable().getBounds();
-            skProgress.setProgressDrawable(bg);
-            skProgress.getProgressDrawable().setBounds(bounds);
-            pbBottom.setProgressDrawable(resource.getDrawable(skin.seekDrawable));
-        }
-        if (skin.bottomControlBackground != 0) {
-            llBottomControl.setBackgroundColor(resource.getColor(skin.bottomControlBackground));
-        }
-        this.enlargRecId = skin.enlargRecId;
-        this.shrinkRecId = skin.shrinkRecId;
-    }
 }

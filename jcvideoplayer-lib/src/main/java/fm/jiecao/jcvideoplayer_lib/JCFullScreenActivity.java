@@ -53,7 +53,6 @@ public class JCFullScreenActivity extends Activity {
     public static String URL;
     public static String TITLE;
     public static boolean manualQuit = false;
-    protected static Skin skin;
     static boolean start = false;
 
     @Override
@@ -67,10 +66,6 @@ public class JCFullScreenActivity extends Activity {
         setContentView(R.layout.activity_fullscreen);
 
         jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.jcvideoplayer);
-        if (skin != null) {
-            jcVideoPlayer.setSkin(skin.titleColor, skin.timeColor, skin.seekDrawable, skin.bottomControlBackground,
-                    skin.enlargRecId, skin.shrinkRecId);
-        }
         jcVideoPlayer.setUpForFullscreen(URL, TITLE);
         jcVideoPlayer.setState(STATE);
         JCMediaManager.intance().setUuid(jcVideoPlayer.uuid);

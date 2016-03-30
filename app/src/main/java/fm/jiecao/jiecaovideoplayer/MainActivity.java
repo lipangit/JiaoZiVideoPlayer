@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -119,7 +120,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                        "嫂子躺下");
                 break;
             case R.id.to_changecolor_activity:
-                startActivity(new Intent(this, SetSkinActivity.class));
+                Toast.makeText(MainActivity.this, "coming soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(this, SetSkinActivity.class));
                 break;
         }
     }
