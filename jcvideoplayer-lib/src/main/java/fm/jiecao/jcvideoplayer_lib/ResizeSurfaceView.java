@@ -15,6 +15,11 @@ import android.view.SurfaceView;
  * On 2015/12/08 10:58
  */
 class ResizeSurfaceView extends SurfaceView {
+    public ResizeSurfaceView(Context context) {
+        super(context);
+        getHolder().setFormat(PixelFormat.TRANSPARENT);
+    }
+
     public ResizeSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         getHolder().setFormat(PixelFormat.TRANSPARENT);
