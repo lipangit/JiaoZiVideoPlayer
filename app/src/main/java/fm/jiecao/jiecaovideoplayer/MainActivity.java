@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import de.greenrobot.event.EventBus;
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -29,19 +31,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EventBus.getDefault().register(this);
 
         videoController1 = (JCVideoPlayer) findViewById(R.id.videocontroller1);
-        videoController1.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
-                "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
+        videoController1.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
                 "嫂子别摸我");
+        ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
+                videoController1.ivThumb);
 
         videoController2 = (JCVideoPlayer) findViewById(R.id.videocontroller2);
-        videoController2.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4",//
-                "http://p.qpic.cn/videoyun/0/2449_ded7b566b37911e5942f0b208e48548d_2/640",
+        videoController2.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4",//
                 "嫂子还摸我", false);
+        ImageLoader.getInstance().displayImage("http://p.qpic.cn/videoyun/0/2449_bfbbfa3cea8f11e5aac3db03cda99974_1/640",
+                videoController2.ivThumb);
 
         videoController3 = (JCVideoPlayer) findViewById(R.id.videocontroller3);
-        videoController3.setUp("http://121.40.64.47/resource/mp3/music_yangguang3.mp3",//
-                "http://p.qpic.cn/videoyun/0/2449_38e65894d9e211e5b0e0a3699ca1d490_1/640",
+        videoController3.setUp("http://121.40.64.47/resource/mp3/music_yangguang3.mp3",
                 "嫂子别闹");
+        ImageLoader.getInstance().displayImage("http://p.qpic.cn/videoyun/0/2449_38e65894d9e211e5b0e0a3699ca1d490_1/640",
+                videoController3.ivThumb);
 
         btnToList = (Button) findViewById(R.id.to_list_activity);
         btnToListViewpager = (Button) findViewById(R.id.to_list_viewpager_activity);
@@ -105,13 +110,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.to_fullscreen:
                 JCFullScreenActivity.toActivity(this,
-                        "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
-                        "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
+                        "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4",
                         "嫂子躺下");
 
 //                JCVideoPlayer.toFullscreenActivity(this,
-//                        "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
-//                        "http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
+//                        "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4",
+//                        "http://img4.jiecaojingxuan.com/2016/3/14/2204a578-609b-440e-8af7-a0ee17ff3aee.jpg",
 //                        "嫂子躺下");
                 break;
             case R.id.to_changecolor_activity:

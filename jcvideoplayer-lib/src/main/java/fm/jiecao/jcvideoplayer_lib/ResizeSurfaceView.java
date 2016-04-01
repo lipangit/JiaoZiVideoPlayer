@@ -10,11 +10,16 @@ import android.view.SurfaceView;
  * <br>注意!relativelayout中无法全屏，要嵌套一个linearlayout</p>
  * <p>Referring Android system Video View of onMeasure method
  * <br>NOTE! Can not fullscreen relativelayout, to nest a linearlayout</p>
- * <p>
+ * <p/>
  * Created by Nathen
  * On 2015/12/08 10:58
  */
 class ResizeSurfaceView extends SurfaceView {
+    public ResizeSurfaceView(Context context) {
+        super(context);
+        getHolder().setFormat(PixelFormat.TRANSPARENT);
+    }
+
     public ResizeSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
         getHolder().setFormat(PixelFormat.TRANSPARENT);
@@ -22,8 +27,6 @@ class ResizeSurfaceView extends SurfaceView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //Log.i("@@@@", "onMeasure(" + MeasureSpec.toString(widthMeasureSpec) + ", "
-        //        + MeasureSpec.toString(heightMeasureSpec) + ")");
         int mVideoWidth = JCMediaManager.intance().currentVideoWidth;
         int mVideoHeight = JCMediaManager.intance().currentVideoHeight;
 
@@ -43,10 +46,8 @@ class ResizeSurfaceView extends SurfaceView {
 
                 // for compatibility, we adjust size based on aspect ratio
                 if (mVideoWidth * height < width * mVideoHeight) {
-                    //Log.i("@@@", "image too wide, correcting");
                     width = height * mVideoWidth / mVideoHeight;
                 } else if (mVideoWidth * height > width * mVideoHeight) {
-                    //Log.i("@@@", "image too tall, correcting");
                     height = width * mVideoHeight / mVideoWidth;
                 }
             } else if (widthSpecMode == MeasureSpec.EXACTLY) {

@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 /**
@@ -14,9 +16,9 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  */
 public class VideoListAdapter extends BaseAdapter {
     String[] videoUrls = {"http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
-            "http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4"};
+            "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4"};
     String[] videoThumbs = {"http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
-            "http://p.qpic.cn/videoyun/0/2449_ded7b566b37911e5942f0b208e48548d_2/640"};
+            "http://img4.jiecaojingxuan.com/2016/3/14/2204a578-609b-440e-8af7-a0ee17ff3aee.jpg"};
     String[] videoTitles = {"嫂子真紧", "嫂子抬腿"};
 
     int[] videoIndexs = {0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1};
@@ -55,8 +57,9 @@ public class VideoListAdapter extends BaseAdapter {
         }
         viewHolder.jcVideoPlayer.setUp(
                 videoUrls[videoIndexs[position]],
-                videoThumbs[videoIndexs[position]],
                 videoTitles[videoIndexs[position]]);
+        ImageLoader.getInstance().displayImage(videoThumbs[videoIndexs[position]],
+                viewHolder.jcVideoPlayer.ivThumb);
         return convertView;
     }
 
