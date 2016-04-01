@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -63,6 +64,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private int enlargRecId = 0;
     private int shrinkRecId = 0;
 
+    private int surfaceId;
+
     public static Skin globleSkin;
     private Skin skin;
 
@@ -101,7 +104,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         skProgress = (SeekBar) findViewById(R.id.progress);
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
-        surfaceView = (ResizeSurfaceView) findViewById(R.id.surfaceView);
+//        surfaceView = (ResizeSurfaceView) findViewById(R.id.surfaceView);
         llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
         tvTitle = (TextView) findViewById(R.id.title);
         ivBack = (ImageView) findViewById(R.id.back);
@@ -112,13 +115,13 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
 //        surfaceView.setZOrderOnTop(true);
 //        surfaceView.setBackgroundColor(R.color.black_a10_color);
-        surfaceHolder = surfaceView.getHolder();
+//        surfaceHolder = surfaceView.getHolder();
         ivStart.setOnClickListener(this);
         ivThumb.setOnClickListener(this);
         ivFullScreen.setOnClickListener(this);
         skProgress.setOnSeekBarChangeListener(this);
-        surfaceHolder.addCallback(this);
-        surfaceView.setOnClickListener(this);
+//        surfaceHolder.addCallback(this);
+//        surfaceView.setOnClickListener(this);
         llBottomControl.setOnClickListener(this);
         rlParent.setOnClickListener(this);
         ivBack.setOnClickListener(this);
@@ -197,7 +200,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
         }
-
+        addSurfaceView();
         changeUiToNormal();
     }
 
@@ -310,6 +313,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 }
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
+                addSurfaceView();
+
                 JCMediaManager.intance().clearWidthAndHeight();
                 CURRENT_STATE = CURRENT_STATE_PREPAREING;
                 changeUiToShowUiPrepareing();
@@ -364,7 +369,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 sendPointEvent(VideoEvents.POINT_ENTER_FULLSCREEN);
             }
             clickfullscreentime = System.currentTimeMillis();
-        } else if (i == R.id.surfaceView || i == R.id.parentview) {
+        } else if (i == surfaceId || i == R.id.parentview) {
             onClickUiToggle();
             startDismissControlViewTimer();
             sendPointEvent(ifFullScreen ? VideoEvents.POINT_CLICK_BLANK_FULLSCREEN : VideoEvents.POINT_CLICK_BLANK);
@@ -373,6 +378,20 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         } else if (i == R.id.back) {
             quitFullScreen();
         }
+    }
+
+    private void addSurfaceView() {
+        if (rlParent.getChildAt(0) instanceof ResizeSurfaceView) {
+            rlParent.removeViewAt(0);
+        }
+        surfaceView = new ResizeSurfaceView(getContext());
+        surfaceId = surfaceView.getId();
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(this);
+        surfaceView.setOnClickListener(this);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        rlParent.addView(surfaceView, 0, layoutParams);
     }
 
     private void startDismissControlViewTimer() {
