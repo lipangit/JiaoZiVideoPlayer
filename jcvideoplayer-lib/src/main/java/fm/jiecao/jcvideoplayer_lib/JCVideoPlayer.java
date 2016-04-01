@@ -200,7 +200,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
         }
-
+        addSurfaceView();
         changeUiToNormal();
     }
 
@@ -313,17 +313,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 }
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
-                if (rlParent.getChildAt(0) instanceof ResizeSurfaceView) {
-                    rlParent.removeViewAt(0);
-                }
-                surfaceView = new ResizeSurfaceView(getContext());
-                surfaceId = surfaceView.getId();
-                surfaceHolder = surfaceView.getHolder();
-                surfaceHolder.addCallback(this);
-                surfaceView.setOnClickListener(this);
-                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-                rlParent.addView(surfaceView, 0, layoutParams);
+                addSurfaceView();
 
                 JCMediaManager.intance().clearWidthAndHeight();
                 CURRENT_STATE = CURRENT_STATE_PREPAREING;
@@ -388,6 +378,20 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         } else if (i == R.id.back) {
             quitFullScreen();
         }
+    }
+
+    private void addSurfaceView() {
+        if (rlParent.getChildAt(0) instanceof ResizeSurfaceView) {
+            rlParent.removeViewAt(0);
+        }
+        surfaceView = new ResizeSurfaceView(getContext());
+        surfaceId = surfaceView.getId();
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(this);
+        surfaceView.setOnClickListener(this);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        rlParent.addView(surfaceView, 0, layoutParams);
     }
 
     private void startDismissControlViewTimer() {
@@ -657,6 +661,11 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            try {
+                                Thread.sleep(300);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                             JCMediaManager.intance().mediaPlayer.pause();
                             CURRENT_STATE = CURRENT_STATE_PAUSE;
                         }
