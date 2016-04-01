@@ -10,7 +10,7 @@ import android.view.SurfaceView;
  * <br>注意!relativelayout中无法全屏，要嵌套一个linearlayout</p>
  * <p>Referring Android system Video View of onMeasure method
  * <br>NOTE! Can not fullscreen relativelayout, to nest a linearlayout</p>
- * <p>
+ * <p/>
  * Created by Nathen
  * On 2015/12/08 10:58
  */
