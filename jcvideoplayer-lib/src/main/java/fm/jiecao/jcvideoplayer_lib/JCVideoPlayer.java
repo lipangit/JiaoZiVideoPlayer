@@ -166,6 +166,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
+            ivFullScreen.setVisibility(View.GONE);
         }
         tvTitle.setText(title);
 

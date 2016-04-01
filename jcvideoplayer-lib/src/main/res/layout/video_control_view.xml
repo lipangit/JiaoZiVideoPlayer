@@ -81,6 +81,7 @@
             android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
             android:text="00:00"
             android:textColor="#ffffff" />
 
@@ -88,7 +89,6 @@
             android:id="@+id/fullscreen"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:scaleType="center"
             android:src="@drawable/enlarge_video" />
