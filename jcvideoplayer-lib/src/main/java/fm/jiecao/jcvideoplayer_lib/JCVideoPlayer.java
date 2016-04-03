@@ -843,6 +843,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (JCMediaManager.intance().uuid.equals(uuid)) {
             sendPointEvent(ifFullScreen ? VideoEvents.POINT_AUTO_COMPLETE_FULLSCREEN : VideoEvents.POINT_AUTO_COMPLETE);
         }
+        if (getContext() instanceof JCFullScreenActivity) {
+            ((JCFullScreenActivity) getContext()).finish();
+        }
     }
 
     @Override
