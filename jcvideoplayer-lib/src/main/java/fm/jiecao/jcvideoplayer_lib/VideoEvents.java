@@ -7,17 +7,17 @@ package fm.jiecao.jcvideoplayer_lib;
  * On 2015/11/30 12:19
  */
 public class VideoEvents {
-    public static final int VE_START = 366001;
-    public static final int VE_STOP = 366002;
-    //    public static final int VE_PROGRESSING = 366003;
-    public static final int VE_PREPARED = 366004;
-    public static final int VE_SURFACEHOLDER_CREATED = 366005;
-    public static final int VE_SURFACEHOLDER_FINISH_FULLSCREEN = 366006;
-    public static final int VE_MEDIAPLAYER_FINISH_COMPLETE = 366007;
-    public static final int VE_MEDIAPLAYER_UPDATE_BUFFER = 366008;
-    public static final int VE_MEDIAPLAYER_UPDATE_PROGRESS = 366011;
-    public static final int VE_MEDIAPLAYER_SEEKCOMPLETE = 366009;
-    public static final int VE_MEDIAPLAYER_RESIZE = 366010;
+//    public static final int VE_START = 366001;
+//    public static final int VE_STOP = 366002;
+//    //    public static final int VE_PROGRESSING = 366003;
+//    public static final int VE_PREPARED = 366004;
+//    public static final int VE_SURFACEHOLDER_CREATED = 366005;
+//    public static final int VE_SURFACEHOLDER_FINISH_FULLSCREEN = 366006;
+//    public static final int VE_MEDIAPLAYER_FINISH_COMPLETE = 366007;
+//    public static final int VE_MEDIAPLAYER_UPDATE_BUFFER = 366008;
+//    public static final int VE_MEDIAPLAYER_UPDATE_PROGRESS = 366011;
+//    public static final int VE_MEDIAPLAYER_SEEKCOMPLETE = 366009;
+//    public static final int VE_MEDIAPLAYER_RESIZE = 366010;
 
 
     // 埋点事件

@@ -36,9 +36,8 @@ import de.greenrobot.event.EventBus;
  * Created by Nathen
  * On 2015/11/30 11:59
  */
-public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener {
+public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener, JCMediaManager.JCMediaPlayerListener {
 
-    //控件
     public ImageView ivStart;
     ProgressBar pbLoading, pbBottom;
     ImageView ivFullScreen;
@@ -53,11 +52,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     LinearLayout llTitleContainer, llBottomControl;
     ImageView ivCover;
 
-    //属性
     private String url;
     private String title;
     private boolean ifFullScreen = false;
-    public String uuid;//区别相同地址,包括全屏和不全屏，和都不全屏时的相同地址
+    public String uuid;
     private boolean ifShowTitle = false;
     private boolean ifMp3 = false;
 
@@ -69,22 +67,20 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public static Skin globleSkin;
     private Skin skin;
 
-    // 为了保证全屏和退出全屏之后的状态和之前一样,需要记录状态
     public int CURRENT_STATE = -1;//-1相当于null
     public static final int CURRENT_STATE_PREPAREING = 0;
     public static final int CURRENT_STATE_PAUSE = 1;
     public static final int CURRENT_STATE_PLAYING = 2;
-    public static final int CURRENT_STATE_OVER = 3;//这个状态可能不需要，播放完毕就进入normal状态
-    public static final int CURRENT_STATE_NORMAL = 4;//刚初始化之后
+    public static final int CURRENT_STATE_OVER = 3;
+    public static final int CURRENT_STATE_NORMAL = 4;
     private OnTouchListener mSeekbarOnTouchListener;
     private static Timer mDismissControlViewTimer;
     private static Timer mUpdateProgressTimer;
     private static long clickfullscreentime;
     private static final int FULL_SCREEN_NORMAL_DELAY = 5000;
 
-    // 一些临时表示状态的变量
     private boolean touchingProgressBar = false;
-    private static boolean isFromFullScreenBackHere = false;//如果是true表示这个正在不是全屏，并且全屏刚推出，总之进入过全屏
+    private static boolean isFromFullScreenBackHere = false;
     static boolean isClickFullscreen = false;
 
     private static ImageView.ScaleType speScalType = null;
@@ -104,7 +100,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         skProgress = (SeekBar) findViewById(R.id.progress);
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
-//        surfaceView = (ResizeSurfaceView) findViewById(R.id.surfaceView);
         llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
         tvTitle = (TextView) findViewById(R.id.title);
         ivBack = (ImageView) findViewById(R.id.back);
@@ -113,15 +108,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         llTitleContainer = (LinearLayout) findViewById(R.id.title_container);
         ivCover = (ImageView) findViewById(R.id.cover);
 
-//        surfaceView.setZOrderOnTop(true);
-//        surfaceView.setBackgroundColor(R.color.black_a10_color);
-//        surfaceHolder = surfaceView.getHolder();
         ivStart.setOnClickListener(this);
         ivThumb.setOnClickListener(this);
         ivFullScreen.setOnClickListener(this);
         skProgress.setOnSeekBarChangeListener(this);
-//        surfaceHolder.addCallback(this);
-//        surfaceView.setOnClickListener(this);
         llBottomControl.setOnClickListener(this);
         rlParent.setOnClickListener(this);
         ivBack.setOnClickListener(this);
@@ -233,67 +223,37 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     public void onEventMainThread(VideoEvents videoEvents) {
-        if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
-            CURRENT_STATE = CURRENT_STATE_NORMAL;
-            cancelProgressTimer();
-            setKeepScreenOn(false);
-            changeUiToNormal();
-            if (JCMediaManager.intance().uuid.equals(uuid)) {
-                sendPointEvent(ifFullScreen ? VideoEvents.POINT_AUTO_COMPLETE_FULLSCREEN : VideoEvents.POINT_AUTO_COMPLETE);
-            }
-        }
-        if (!JCMediaManager.intance().uuid.equals(uuid)) {
-            if (videoEvents.type == VideoEvents.VE_START) {
-                if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
-                    setState(CURRENT_STATE_NORMAL);
-                }
-            }
-            return;
-        }
-        if (videoEvents.type == VideoEvents.VE_PREPARED) {
-            if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
-            JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
-            JCMediaManager.intance().mediaPlayer.start();
-            CURRENT_STATE = CURRENT_STATE_PLAYING;
-
-            changeUiToShowUiPlaying();
-            ivStart.setVisibility(View.INVISIBLE);
-
-            startDismissControlViewTimer();
-            startProgressTimer();
-        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_UPDATE_BUFFER) {
-            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
-                int percent = Integer.valueOf(videoEvents.obj.toString());
-                setProgressBuffered(percent);
-            }
-        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_UPDATE_PROGRESS) {
-            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
-                setProgressAndTimeFromTimer();
-            }
-        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
-            if (isClickFullscreen) {
-                isFromFullScreenBackHere = true;
-                isClickFullscreen = false;
-                int prev_state = Integer.valueOf(videoEvents.obj.toString());
-                setState(prev_state);
-            }
-        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_CREATED) {
-            if (isFromFullScreenBackHere) {
-                JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
-                stopToFullscreenOrQuitFullscreenShowDisplay();
-                isFromFullScreenBackHere = false;
-                startDismissControlViewTimer();
-            }
-        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_RESIZE) {
-            int mVideoWidth = JCMediaManager.intance().currentVideoWidth;
-            int mVideoHeight = JCMediaManager.intance().currentVideoHeight;
-            if (mVideoWidth != 0 && mVideoHeight != 0) {
-                surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
-                surfaceView.requestLayout();
-            }
-        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE) {
-            pbLoading.setVisibility(View.INVISIBLE);
-        }
+//        if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
+//
+//        }
+//        if (!JCMediaManager.intance().uuid.equals(uuid)) {
+//            if (videoEvents.type == VideoEvents.VE_START) {
+//                if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
+//                    setState(CURRENT_STATE_NORMAL);
+//                }
+//            }
+//            return;
+//        }
+//        if (videoEvents.type == VideoEvents.VE_PREPARED) {
+//
+//        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_UPDATE_BUFFER) {
+//
+//        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_UPDATE_PROGRESS) {
+//
+//        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN) {
+//            if (isClickFullscreen) {
+//                isFromFullScreenBackHere = true;
+//                isClickFullscreen = false;
+//                int prev_state = Integer.valueOf(videoEvents.obj.toString());
+//                setState(prev_state);
+//            }
+//        } else if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_CREATED) {
+//
+//        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_RESIZE) {
+//
+//        } else if (videoEvents.type == VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE) {
+//
+//        }
     }
 
     /**
@@ -316,6 +276,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
                 addSurfaceView();
 
+                if (JCMediaManager.intance().listener != null) {
+                    JCMediaManager.intance().listener.onCompletion();
+                }
+                JCMediaManager.intance().listener = this;
                 JCMediaManager.intance().clearWidthAndHeight();
                 CURRENT_STATE = CURRENT_STATE_PREPAREING;
                 changeUiToShowUiPrepareing();
@@ -327,9 +291,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 JCMediaManager.intance().setUuid(uuid);
                 Log.i("JCVideoPlayer", "play video");
 
-                VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_START);
-                videoEvents.obj = uuid;
-                EventBus.getDefault().post(videoEvents);
                 surfaceView.requestLayout();
                 setKeepScreenOn(true);
 
@@ -525,8 +486,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_UPDATE_PROGRESS);
-                            EventBus.getDefault().post(videoEvents);
+                            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+                                setProgressAndTimeFromTimer();
+                            }
                         }
                     });
                 }
@@ -646,9 +608,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         JCMediaManager.intance().mediaPlayer.pause();
         JCMediaManager.intance().mediaPlayer.setDisplay(null);
         JCMediaManager.intance().revertUuid();
-        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN);
-        videoEvents.obj = CURRENT_STATE;
-        EventBus.getDefault().post(videoEvents);
+//        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN);
+//        videoEvents.obj = CURRENT_STATE;
+//        EventBus.getDefault().post(videoEvents);
         sendPointEvent(VideoEvents.POINT_QUIT_FULLSCREEN);
     }
 
@@ -677,7 +639,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         //TODO MediaPlayer set holder,MediaPlayer prepareToPlay
-        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_CREATED));
+//        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_SURFACEHOLDER_CREATED));
         if (ifFullScreen) {
             JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
             stopToFullscreenOrQuitFullscreenShowDisplay();
@@ -685,7 +647,12 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
             startDismissControlViewTimer();
         }
-
+        if (isFromFullScreenBackHere) {
+            JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+            stopToFullscreenOrQuitFullscreenShowDisplay();
+            isFromFullScreenBackHere = false;
+            startDismissControlViewTimer();
+        }
     }
 
     @Override
@@ -705,9 +672,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public static void releaseAllVideos() {
         if (!isClickFullscreen) {
             JCMediaManager.intance().mediaPlayer.stop();
+            JCMediaManager.intance().listener.onCompletion();
             JCMediaManager.intance().setUuid("");
             JCMediaManager.intance().setUuid("");
-            EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
             if (mUpdateProgressTimer != null) {
                 mUpdateProgressTimer.cancel();
             }
@@ -851,5 +818,57 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
         this.enlargRecId = skin.enlargRecId;
         this.shrinkRecId = skin.shrinkRecId;
+    }
+
+    @Override
+    public void onPrepared() {
+        if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
+        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        JCMediaManager.intance().mediaPlayer.start();
+        CURRENT_STATE = CURRENT_STATE_PLAYING;
+
+        changeUiToShowUiPlaying();
+        ivStart.setVisibility(View.INVISIBLE);
+
+        startDismissControlViewTimer();
+        startProgressTimer();
+    }
+
+    @Override
+    public void onCompletion() {
+        CURRENT_STATE = CURRENT_STATE_NORMAL;
+        cancelProgressTimer();
+        setKeepScreenOn(false);
+        changeUiToNormal();
+        if (JCMediaManager.intance().uuid.equals(uuid)) {
+            sendPointEvent(ifFullScreen ? VideoEvents.POINT_AUTO_COMPLETE_FULLSCREEN : VideoEvents.POINT_AUTO_COMPLETE);
+        }
+    }
+
+    @Override
+    public void onBufferingUpdate(int percent) {
+        if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+            setProgressBuffered(percent);
+        }
+    }
+
+    @Override
+    public void onSeekComplete() {
+        pbLoading.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onError() {
+        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onVideoSizeChanged() {
+        int mVideoWidth = JCMediaManager.intance().currentVideoWidth;
+        int mVideoHeight = JCMediaManager.intance().currentVideoHeight;
+        if (mVideoWidth != 0 && mVideoHeight != 0) {
+            surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
+            surfaceView.requestLayout();
+        }
     }
 }
