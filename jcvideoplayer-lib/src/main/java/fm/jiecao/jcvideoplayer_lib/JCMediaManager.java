@@ -8,8 +8,6 @@ import android.text.TextUtils;
 
 import java.io.IOException;
 
-import de.greenrobot.event.EventBus;
-
 
 /**
  * <p>统一管理MediaPlayer的地方,只有一个mediaPlayer实例，那么不会有多个视频同时播放，也节省资源。</p>
@@ -25,6 +23,7 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     private String prev_uuid = "";
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
+    public JCMediaPlayerListener listener;
 
     public static JCMediaManager intance() {
         if (jcMediaManager == null) {
@@ -58,28 +57,37 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_PREPARED));
+        if (listener != null) {
+            listener.onPrepared();
+        }
     }
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE));
+        if (listener != null) {
+            listener.onCompletion();
+        }
     }
 
     @Override
     public void onBufferingUpdate(MediaPlayer mp, int percent) {
-        VideoEvents videoEvents = new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_UPDATE_BUFFER);
-        videoEvents.obj = percent;
-        EventBus.getDefault().post(videoEvents);
+        if (listener != null) {
+            listener.onBufferingUpdate(percent);
+        }
     }
 
     @Override
     public void onSeekComplete(MediaPlayer mp) {
-        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_SEEKCOMPLETE));
+        if (listener != null) {
+            listener.onSeekComplete();
+        }
     }
 
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
+        if (listener != null) {
+            listener.onError();
+        }
         return true;
     }
 
@@ -100,11 +108,27 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
         currentVideoWidth = mp.getVideoWidth();
         currentVideoHeight = mp.getVideoHeight();
-        EventBus.getDefault().post(new VideoEvents().setType(VideoEvents.VE_MEDIAPLAYER_RESIZE));
+        if (listener != null) {
+            listener.onVideoSizeChanged();
+        }
     }
 
     public void clearWidthAndHeight() {
         currentVideoWidth = 0;
         currentVideoHeight = 0;
+    }
+
+    interface JCMediaPlayerListener {
+        void onPrepared();
+
+        void onCompletion();
+
+        void onBufferingUpdate(int percent);
+
+        void onSeekComplete();
+
+        void onError();
+
+        void onVideoSizeChanged();
     }
 }
