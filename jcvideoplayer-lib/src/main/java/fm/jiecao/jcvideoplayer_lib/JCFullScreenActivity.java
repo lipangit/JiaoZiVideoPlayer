@@ -81,15 +81,15 @@ public class JCFullScreenActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        JCVideoPlayer.isClickFullscreen = false;
         jcVideoPlayer.quitFullScreen();
-        super.onBackPressed();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         if (!manualQuit) {
-            jcVideoPlayer.isClickFullscreen = false;
+            JCVideoPlayer.isClickFullscreen = false;
             JCVideoPlayer.releaseAllVideos();
             finish();
         }

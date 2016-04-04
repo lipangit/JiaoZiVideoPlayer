@@ -76,7 +76,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private static final int FULL_SCREEN_NORMAL_DELAY = 5000;
 
     private boolean touchingProgressBar = false;
-    static boolean isClickFullscreen = false;//一会调试一下，看是不是需要这个
+    public static boolean isClickFullscreen = false;//一会调试一下，看是不是需要这个
     public boolean isFullscreenFromNormal = false;
 
     private static ImageView.ScaleType speScalType = null;
@@ -306,6 +306,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
         } else if (i == R.id.fullscreen) {
             if (ifFullScreen) {
+                isClickFullscreen = false;
                 quitFullScreen();
             } else {
                 JCFullScreenActivity.skin = skin;
@@ -606,6 +607,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         JCMediaManager.intance().lastState = CURRENT_STATE;
         JCMediaManager.intance().listener.onBackFullscreen();
 
+        if (getContext() instanceof JCFullScreenActivity) {
+            ((JCFullScreenActivity) getContext()).finish();
+        }
+
         if (jcBuriedPoint != null && JCMediaManager.intance().listener == this) {
             jcBuriedPoint.POINT_QUIT_FULLSCREEN(title, url);
         }
@@ -853,7 +858,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ((JCFullScreenActivity) getContext()).finish();
         }
         if (isFullscreenFromNormal) {//如果在进入全屏后播放完就初始化自己非全屏的控件
-            isClickFullscreen = false;
+            isFullscreenFromNormal = false;
             JCMediaManager.intance().lastListener.onCompletion();
         }
     }
@@ -872,7 +877,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     @Override
     public void onError() {
-        Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
     }
 
     @Override
