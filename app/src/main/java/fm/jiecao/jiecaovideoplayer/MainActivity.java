@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnToFullscreen.setOnClickListener(this);
         btnToChangecolor.setOnClickListener(this);
 
-        JCVideoPlayer.jcBuriedPoint = jcBuriedPoint;
+        JCVideoPlayer.setJcBuriedPoint(jcBuriedPoint);
     }
 
     @Override
