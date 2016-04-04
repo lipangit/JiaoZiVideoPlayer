@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * <p>全屏的activity</p>
  * <p>fullscreen activity</p>
@@ -73,22 +71,18 @@ public class JCFullScreenActivity extends Activity {
         }
         jcVideoPlayer.setUpForFullscreen(URL, TITLE);
         jcVideoPlayer.setState(STATE);
-        JCMediaManager.intance().setUuid(jcVideoPlayer.uuid);
         manualQuit = false;
         if (start) {
             jcVideoPlayer.ivStart.performClick();
+        } else {
+            jcVideoPlayer.isFullscreenFromNormal = true;
         }
-    }
-
-    public void onEventMainThread(VideoEvents videoEvents) {
-//        if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN || videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
-//            finish();
-//        }
     }
 
     @Override
     public void onBackPressed() {
         jcVideoPlayer.quitFullScreen();
+        super.onBackPressed();
     }
 
     @Override
@@ -100,17 +94,4 @@ public class JCFullScreenActivity extends Activity {
             finish();
         }
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
 }

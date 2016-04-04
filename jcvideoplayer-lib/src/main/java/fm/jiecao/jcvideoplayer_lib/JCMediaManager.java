@@ -19,11 +19,11 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
 
     public MediaPlayer mediaPlayer;
     private static JCMediaManager jcMediaManager;
-    public String uuid = "";//这个是正在播放中的视频控件的uuid，
-    private String prev_uuid = "";
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
     public JCMediaPlayerListener listener;
+    public JCMediaPlayerListener lastListener;
+    public int lastState;
 
     public static JCMediaManager intance() {
         if (jcMediaManager == null) {
@@ -91,19 +91,6 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
         return true;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public void backUpUuid() {
-        this.prev_uuid = this.uuid;
-    }
-
-    public void revertUuid() {
-        this.uuid = this.prev_uuid;
-        this.prev_uuid = "";
-    }
-
     @Override
     public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
         currentVideoWidth = mp.getVideoWidth();
@@ -130,5 +117,7 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
         void onError();
 
         void onVideoSizeChanged();
+
+        void onBackFullscreen();
     }
 }
