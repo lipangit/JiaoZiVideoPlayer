@@ -24,9 +24,6 @@ public class DemoApplication extends Application {
         super.onCreate();
         initUniversalImageLoader();
 
-        //这里将会设置所有播放器的皮肤 | Here the player will set all the skin
-//        JCVideoPlayer.setGlobleSkin(R.color.colorPrimary, R.color.colorAccent, R.drawable.skin_seek_progress,
-//                R.color.bottom_bg, R.drawable.skin_enlarge_video, R.drawable.skin_shrink_video);
         //这里将会改变所有缩略图的ScaleType | Here will change all thumbnails ScaleType
 //        JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
     }
