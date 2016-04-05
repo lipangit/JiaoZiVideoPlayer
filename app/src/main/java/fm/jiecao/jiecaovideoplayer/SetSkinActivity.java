@@ -26,8 +26,6 @@ public class SetSkinActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("SetSkin");
 
         videoController = (JCVideoPlayer) findViewById(R.id.videocontroller1);
-        videoController.setSkin(R.color.colorAccent, R.color.colorPrimary, R.drawable.skin_seek_progress,
-                R.color.bottom_bg, R.drawable.skin_enlarge_video, R.drawable.skin_shrink_video);
         videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
                 "嫂子矜持点");
         ImageLoader.getInstance().displayImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",

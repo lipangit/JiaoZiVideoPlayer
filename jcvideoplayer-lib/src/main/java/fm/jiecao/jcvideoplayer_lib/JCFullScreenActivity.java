@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * <p>全屏的activity</p>
  * <p>fullscreen activity</p>
@@ -53,7 +51,6 @@ public class JCFullScreenActivity extends Activity {
     public static String URL;
     public static String TITLE;
     public static boolean manualQuit = false;
-    protected static Skin skin;
     static boolean start = false;
 
     @Override
@@ -67,27 +64,19 @@ public class JCFullScreenActivity extends Activity {
         setContentView(R.layout.activity_fullscreen);
 
         jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.jcvideoplayer);
-        if (skin != null) {
-            jcVideoPlayer.setSkin(skin.titleColor, skin.timeColor, skin.seekDrawable, skin.bottomControlBackground,
-                    skin.enlargRecId, skin.shrinkRecId);
-        }
         jcVideoPlayer.setUpForFullscreen(URL, TITLE);
         jcVideoPlayer.setState(STATE);
-        JCMediaManager.intance().setUuid(jcVideoPlayer.uuid);
         manualQuit = false;
         if (start) {
             jcVideoPlayer.ivStart.performClick();
-        }
-    }
-
-    public void onEventMainThread(VideoEvents videoEvents) {
-        if (videoEvents.type == VideoEvents.VE_SURFACEHOLDER_FINISH_FULLSCREEN || videoEvents.type == VideoEvents.VE_MEDIAPLAYER_FINISH_COMPLETE) {
-            finish();
+        } else {
+            jcVideoPlayer.isFullscreenFromNormal = true;
         }
     }
 
     @Override
     public void onBackPressed() {
+        JCVideoPlayer.isClickFullscreen = false;
         jcVideoPlayer.quitFullScreen();
     }
 
@@ -95,22 +84,9 @@ public class JCFullScreenActivity extends Activity {
     protected void onPause() {
         super.onPause();
         if (!manualQuit) {
-            jcVideoPlayer.isClickFullscreen = false;
+            JCVideoPlayer.isClickFullscreen = false;
             JCVideoPlayer.releaseAllVideos();
             finish();
         }
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        EventBus.getDefault().unregister(this);
-    }
-
 }

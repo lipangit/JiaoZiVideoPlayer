@@ -6,13 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import de.greenrobot.event.EventBus;
+import fm.jiecao.jcvideoplayer_lib.JCBuriedPoint;
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.VideoEvents;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -23,12 +23,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /**
-         * 如果没有埋点需求，可以不用注册eventbus
-         * <br>
-         * if you do not want to get Buried Point , you do not need regist eventbus here
-         */
-        EventBus.getDefault().register(this);
 
         videoController1 = (JCVideoPlayer) findViewById(R.id.videocontroller1);
         videoController1.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
@@ -58,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnToFullscreen.setOnClickListener(this);
         btnToChangecolor.setOnClickListener(this);
 
+        JCVideoPlayer.setJcBuriedPoint(jcBuriedPoint);
     }
 
     @Override
@@ -66,38 +61,78 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         JCVideoPlayer.releaseAllVideos();
     }
 
-
-    public void onEventMainThread(VideoEvents event) {
-        if (event.type == VideoEvents.POINT_START_ICON) {
-            Log.i("Video Event", "POINT_START_ICON" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_START_THUMB) {
-            Log.i("Video Event", "POINT_START_THUMB" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_STOP) {
-            Log.i("Video Event", "POINT_STOP" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_STOP_FULLSCREEN) {
-            Log.i("Video Event", "POINT_STOP_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_RESUME) {
-            Log.i("Video Event", "POINT_RESUME" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_RESUME_FULLSCREEN) {
-            Log.i("Video Event", "POINT_RESUME_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_CLICK_BLANK) {
-            Log.i("Video Event", "POINT_CLICK_BLANK" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_CLICK_BLANK_FULLSCREEN) {
-            Log.i("Video Event", "POINT_CLICK_BLANK_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_CLICK_SEEKBAR) {
-            Log.i("Video Event", "POINT_CLICK_SEEKBAR" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_CLICK_SEEKBAR_FULLSCREEN) {
-            Log.i("Video Event", "POINT_CLICK_SEEKBAR_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_AUTO_COMPLETE) {
-            Log.i("Video Event", "POINT_AUTO_COMPLETE" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_AUTO_COMPLETE_FULLSCREEN) {
-            Log.i("Video Event", "POINT_AUTO_COMPLETE_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_ENTER_FULLSCREEN) {
-            Log.i("Video Event", "POINT_ENTER_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
-        } else if (event.type == VideoEvents.POINT_QUIT_FULLSCREEN) {
-            Log.i("Video Event", "POINT_QUIT_FULLSCREEN" + " title is : " + event.obj + " url is : " + event.obj1);
+    //init buried point listener whenever you want. in application is also ok
+    JCBuriedPoint jcBuriedPoint = new JCBuriedPoint() {
+        @Override
+        public void POINT_START_ICON(String title, String url) {
+            Log.i("Buried_Point", "POINT_START_ICON" + " title is : " + title + " url is : " + url);
         }
-    }
+
+        @Override
+        public void POINT_START_THUMB(String title, String url) {
+            Log.i("Buried_Point", "POINT_START_THUMB" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_STOP(String title, String url) {
+            Log.i("Buried_Point", "POINT_STOP" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_STOP_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_STOP_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_RESUME(String title, String url) {
+            Log.i("Buried_Point", "POINT_RESUME" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_RESUME_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_RESUME_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_CLICK_BLANK(String title, String url) {
+            Log.i("Buried_Point", "POINT_CLICK_BLANK" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_CLICK_BLANK_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_CLICK_BLANK_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_CLICK_SEEKBAR(String title, String url) {
+            Log.i("Buried_Point", "POINT_CLICK_SEEKBAR" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_CLICK_SEEKBAR_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_CLICK_SEEKBAR_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_AUTO_COMPLETE(String title, String url) {
+            Log.i("Buried_Point", "POINT_AUTO_COMPLETE" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_AUTO_COMPLETE_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_AUTO_COMPLETE_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_ENTER_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_ENTER_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_QUIT_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_QUIT_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        }
+    };
 
     @Override
     public void onClick(View v) {
@@ -119,15 +154,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                        "嫂子躺下");
                 break;
             case R.id.to_changecolor_activity:
-                startActivity(new Intent(this, SetSkinActivity.class));
+                Toast.makeText(MainActivity.this, "coming soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(this, SetSkinActivity.class));
                 break;
         }
     }
 
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
 }
