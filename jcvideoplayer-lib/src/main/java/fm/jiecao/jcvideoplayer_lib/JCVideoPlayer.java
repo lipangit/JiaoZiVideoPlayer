@@ -420,6 +420,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private void changeUiToClearUiPrepareing() {
         changeUiToClearUi();
         pbLoading.setVisibility(View.VISIBLE);
+        ivCover.setVisibility(View.VISIBLE);
     }
 
     private void changeUiToShowUiPlaying() {
