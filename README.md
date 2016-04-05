@@ -81,7 +81,7 @@ jCVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208
     
 ProGuard
 ```
-need nothing
+Need nothing
 ```
 
 ####Contributors
