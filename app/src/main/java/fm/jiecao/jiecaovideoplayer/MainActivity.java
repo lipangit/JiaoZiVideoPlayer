@@ -74,18 +74,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         @Override
-        public void POINT_STOP_FULLSCREEN(String title, String url) {
-            Log.i("Buried_Point", "POINT_STOP_FULLSCREEN" + " title is : " + title + " url is : " + url);
-        }
-
-        @Override
         public void POINT_STOP(String title, String url) {
             Log.i("Buried_Point", "POINT_STOP" + " title is : " + title + " url is : " + url);
         }
 
         @Override
-        public void POINT_RESUME_FULLSCREEN(String title, String url) {
-            Log.i("Buried_Point", "POINT_RESUME_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        public void POINT_STOP_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_STOP_FULLSCREEN" + " title is : " + title + " url is : " + url);
         }
 
         @Override
@@ -94,13 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         @Override
-        public void POINT_ENTER_FULLSCREEN(String title, String url) {
-            Log.i("Buried_Point", "POINT_ENTER_FULLSCREEN" + " title is : " + title + " url is : " + url);
-        }
-
-        @Override
-        public void POINT_CLICK_BLANK_FULLSCREEN(String title, String url) {
-            Log.i("Buried_Point", "POINT_CLICK_BLANK_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        public void POINT_RESUME_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_RESUME_FULLSCREEN" + " title is : " + title + " url is : " + url);
         }
 
         @Override
@@ -109,13 +99,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         @Override
-        public void POINT_QUIT_FULLSCREEN(String title, String url) {
-            Log.i("Buried_Point", "POINT_QUIT_FULLSCREEN" + " title is : " + title + " url is : " + url);
-        }
-
-        @Override
-        public void POINT_CLICK_SEEKBAR_FULLSCREEN(String title, String url) {
-            Log.i("Buried_Point", "POINT_CLICK_SEEKBAR_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        public void POINT_CLICK_BLANK_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_CLICK_BLANK_FULLSCREEN" + " title is : " + title + " url is : " + url);
         }
 
         @Override
@@ -124,13 +109,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         @Override
-        public void POINT_AUTO_COMPLETE_FULLSCREEN(String title, String url) {
-            Log.i("Buried_Point", "POINT_AUTO_COMPLETE_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        public void POINT_CLICK_SEEKBAR_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_CLICK_SEEKBAR_FULLSCREEN" + " title is : " + title + " url is : " + url);
         }
 
         @Override
         public void POINT_AUTO_COMPLETE(String title, String url) {
             Log.i("Buried_Point", "POINT_AUTO_COMPLETE" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_AUTO_COMPLETE_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_AUTO_COMPLETE_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_ENTER_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_ENTER_FULLSCREEN" + " title is : " + title + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_QUIT_FULLSCREEN(String title, String url) {
+            Log.i("Buried_Point", "POINT_QUIT_FULLSCREEN" + " title is : " + title + " url is : " + url);
         }
     };
 
