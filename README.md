@@ -1,7 +1,7 @@
 # Jiecao Video Player  
 
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) 
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-1.10-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C1.10%7Caar) 
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-2.0_preview-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C2.0_preview%7Caar) 
 [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true)](https://android-arsenal.com/details/1/3269)
 [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
@@ -22,24 +22,23 @@ This is the real android video player view with fullscreen function, we are dedi
 
 ## Effect
 
-**[jiecaovideoplayer-1.10-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.10-demo.apk)**
+**[jiecaovideoplayer-2.0_preview-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_preview-demo.apk)**
 
 ![Demo Screenshot][1]
 
 Demo video : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html
 
-
 ## Usage
 1.Import library
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:1.10'
+compile 'fm.jiecao:jiecaovideoplayer:2.0_preview'
 ```
 
 Or download lib
 
-* [jiecaovideoplayer-1.10.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.10.aar)
-* [jiecaovideoplayer-1.10-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.10-javadoc.jar)
-* [jiecaovideoplayer-1.10-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-1.10-sources.jar)
+* [jiecaovideoplayer-2.0_preview.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_preview.aar)
+* [jiecaovideoplayer-2.0_preview-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_preview-javadoc.jar)
+* [jiecaovideoplayer-2.0_preview-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_preview-sources.jar)
 
 2.Add JCVideoPlayer in your layout
 ```xml
@@ -55,15 +54,10 @@ JCVideoPlayer jCVideoPlayer = (JCVideoPlayer) findViewById(R.id.videocontroller)
 videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4","嫂子别摸我");
 videoController.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
+
 4.Remember to invoke `JCVideoPlayer.releaseAllVideos();` in `onPause()` of `Fragment` or `Activity`
 
 #### Other APIs
-
-Set up the video player appearance, you can set the current video player's skin or set the global skin. Priority: some video player instance skin > global skin > default skin
-```java
-JCVideoPlayer.setGlobleSkin();      //set up global skin
-JCVideoPlayer.setGlobleSkin();      //set up some video player instance skin
-```
 
 Modify the thumb image view's scaleType property, default value is fitCenter. There will be  black padding if the size of thumb is not compatible with screen size, try to use fitXY or other scaleType.
 ```java
@@ -87,17 +81,7 @@ jCVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208
     
 ProGuard
 ```
-##Eventbus
--keepclassmembers class ** {
-    public void onEvent*(***);
-}
-# Only required if you use AsyncExecutor
--keepclassmembers class * extends de.greenrobot.event.util.ThrowableFailureEvent {
-    public <init>(java.lang.Throwable);
-}
-# Don't warn for missing support classes
--dontwarn de.greenrobot.event.util.*$Support
--dontwarn de.greenrobot.event.util.*$SupportManagerFragment
+need nothing
 ```
 
 ####Contributors
