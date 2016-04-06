@@ -71,6 +71,12 @@ public class JCFullScreenActivity extends Activity {
             jcVideoPlayer.ivStart.performClick();
         } else {
             jcVideoPlayer.isFullscreenFromNormal = true;
+            jcVideoPlayer.addSurfaceView();
+            if (JCMediaManager.intance().listener != null) {
+                JCMediaManager.intance().listener.onCompletion();
+            }
+            JCMediaManager.intance().listener = jcVideoPlayer;
+
         }
     }
 

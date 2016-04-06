@@ -323,7 +323,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    private void addSurfaceView() {
+    void addSurfaceView() {
         if (rlParent.getChildAt(0) instanceof ResizeSurfaceView) {
             rlParent.removeViewAt(0);
         }
