@@ -179,13 +179,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
         }
-        addSurfaceView();
-
-        if (JCMediaManager.intance().listener != null) {
-            JCMediaManager.intance().listener.onCompletion();
-        }
-        JCMediaManager.intance().listener = this;
-
         changeUiToNormal();
     }
 
