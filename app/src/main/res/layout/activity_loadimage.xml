@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="3dp"
     tools:context="fm.jiecao.jiecaovideoplayer.MainActivity">
 
     <ScrollView
@@ -17,6 +17,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="ImageLoader" />
+
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
                 android:id="@+id/videocontroller1"
                 android:layout_width="match_parent"
@@ -26,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="Show title after fullscreen" />
+                android:text="Glide" />
 
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
                 android:id="@+id/videocontroller2"
@@ -38,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="Play mp3" />
+                android:text="Picasso" />
 
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
                 android:id="@+id/videocontroller3"
@@ -46,35 +52,23 @@
                 android:layout_height="200dp"
                 android:layout_marginTop="2dp" />
 
-            <Button
-                android:id="@+id/to_fullscreen"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="To fullscreen derictly" />
+                android:layout_marginTop="18dp"
+                android:text="Volley" />
 
-            <Button
-                android:id="@+id/to_changecolor_activity"
+            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
+                android:id="@+id/videocontroller4"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Set skin" />
+                android:layout_height="200dp"
+                android:layout_marginTop="2dp" />
 
-            <Button
-                android:id="@+id/to_list_activity"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="List demo" />
-
-            <Button
-                android:id="@+id/to_list_viewpager_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="List and Viewpager demo" />
-
-            <Button
-                android:id="@+id/to_list_loadimage_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Other load image library" />
+                android:layout_marginTop="18dp"
+                android:text="Fresco not yet" />
 
         </LinearLayout>
     </ScrollView>

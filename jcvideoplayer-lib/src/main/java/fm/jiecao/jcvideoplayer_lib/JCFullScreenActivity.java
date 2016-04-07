@@ -76,7 +76,6 @@ public class JCFullScreenActivity extends Activity {
                 JCMediaManager.intance().listener.onCompletion();
             }
             JCMediaManager.intance().listener = jcVideoPlayer;
-
         }
     }
 
