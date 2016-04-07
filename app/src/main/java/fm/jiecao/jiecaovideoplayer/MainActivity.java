@@ -17,7 +17,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     JCVideoPlayer videoController1, videoController2, videoController3;
-    Button btnToList, btnToListViewpager, btnToFullscreen, btnToChangecolor;
+    Button btnToList, btnToListViewpager, btnToFullscreen, btnToChangecolor, btnToLoadImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +46,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnToListViewpager = (Button) findViewById(R.id.to_list_viewpager_activity);
         btnToFullscreen = (Button) findViewById(R.id.to_fullscreen);
         btnToChangecolor = (Button) findViewById(R.id.to_changecolor_activity);
+        btnToLoadImage = (Button) findViewById(R.id.to_list_loadimage_activity);
 
         btnToList.setOnClickListener(this);
         btnToListViewpager.setOnClickListener(this);
         btnToFullscreen.setOnClickListener(this);
         btnToChangecolor.setOnClickListener(this);
+        btnToLoadImage.setOnClickListener(this);
 
         JCVideoPlayer.setJcBuriedPoint(jcBuriedPoint);
     }
@@ -156,6 +158,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.to_changecolor_activity:
                 Toast.makeText(MainActivity.this, "coming soon", Toast.LENGTH_SHORT).show();
 //                startActivity(new Intent(this, SetSkinActivity.class));
+                break;
+            case R.id.to_list_loadimage_activity:
+                startActivity(new Intent(MainActivity.this, LoadImageActivity.class));
                 break;
         }
     }
