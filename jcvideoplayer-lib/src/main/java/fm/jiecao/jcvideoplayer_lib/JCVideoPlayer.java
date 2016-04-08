@@ -62,6 +62,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public static final int CURRENT_STATE_PLAYING = 2;
     public static final int CURRENT_STATE_OVER = 3;
     public static final int CURRENT_STATE_NORMAL = 4;
+    public static final int CURRENT_STATE_ERROR = 5;
+
     private OnTouchListener mSeekbarOnTouchListener;
     private static Timer mDismissControlViewTimer;
     private static Timer mUpdateProgressTimer;
@@ -460,6 +462,16 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         pbLoading.setVisibility(View.INVISIBLE);
         setThumbVisibility(View.INVISIBLE);
         ivCover.setVisibility(View.INVISIBLE);
+        pbBottom.setVisibility(View.INVISIBLE);
+    }
+
+    private void changeUiToError() {
+        setTitleVisibility(View.INVISIBLE);
+        llBottomControl.setVisibility(View.INVISIBLE);
+        ivStart.setVisibility(View.VISIBLE);
+        pbLoading.setVisibility(View.INVISIBLE);
+        setThumbVisibility(View.INVISIBLE);
+        ivCover.setVisibility(View.VISIBLE);
         pbBottom.setVisibility(View.INVISIBLE);
     }
 
