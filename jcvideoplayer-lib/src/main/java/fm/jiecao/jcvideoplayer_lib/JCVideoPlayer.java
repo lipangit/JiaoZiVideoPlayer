@@ -205,6 +205,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             changeUiToNormal();
             cancelDismissControlViewTimer();
             cancelProgressTimer();
+        } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
+            JCMediaManager.intance().mediaPlayer.release();
+            changeUiToError();
         }
     }
 
@@ -225,7 +228,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     return;
                 }
             }
-            if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
+            if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
                 addSurfaceView();
 
                 if (JCMediaManager.intance().listener != null) {
@@ -308,14 +311,18 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             }
             clickfullscreentime = System.currentTimeMillis();
         } else if (i == surfaceId || i == R.id.parentview) {
-            onClickUiToggle();
-            startDismissControlViewTimer();
+            if (CURRENT_STATE == CURRENT_STATE_ERROR) {
+                ivStart.performClick();
+            } else {
+                onClickUiToggle();
+                startDismissControlViewTimer();
 
-            if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
-                if (ifFullScreen) {
-                    JC_BURIED_POINT.POINT_CLICK_BLANK_FULLSCREEN(title, url);
-                } else {
-                    JC_BURIED_POINT.POINT_CLICK_BLANK(title, url);
+                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                    if (ifFullScreen) {
+                        JC_BURIED_POINT.POINT_CLICK_BLANK_FULLSCREEN(title, url);
+                    } else {
+                        JC_BURIED_POINT.POINT_CLICK_BLANK(title, url);
+                    }
                 }
             }
         } else if (i == R.id.bottom_control) {
@@ -471,8 +478,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ivStart.setVisibility(View.VISIBLE);
         pbLoading.setVisibility(View.INVISIBLE);
         setThumbVisibility(View.INVISIBLE);
-        ivCover.setVisibility(View.VISIBLE);
+        ivCover.setVisibility(View .VISIBLE);
         pbBottom.setVisibility(View.INVISIBLE);
+        updateStartImage();
     }
 
     private void startProgressTimer() {
@@ -485,7 +493,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+                            if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                                 setProgressAndTimeFromTimer();
                             }
                         }
@@ -526,6 +534,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private void updateStartImage() {
         if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
             ivStart.setImageResource(R.drawable.click_video_pause_selector);
+        } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
+            ivStart.setImageResource(R.drawable.click_video_error_selector);
         } else {
             ivStart.setImageResource(R.drawable.click_video_play_selector);
         }
@@ -807,7 +817,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     @Override
-    public void onError() {
+    public void onError(int what, int extra) {
+        if (what != -38) {
+            setState(CURRENT_STATE_ERROR);
+        }
     }
 
     @Override

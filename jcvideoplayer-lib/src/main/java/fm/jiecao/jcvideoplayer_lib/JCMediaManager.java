@@ -86,7 +86,7 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     @Override
     public boolean onError(MediaPlayer mp, int what, int extra) {
         if (listener != null) {
-            listener.onError();
+            listener.onError(what, extra);
         }
         return true;
     }
@@ -114,7 +114,7 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
 
         void onSeekComplete();
 
-        void onError();
+        void onError(int what, int extra);
 
         void onVideoSizeChanged();
 
