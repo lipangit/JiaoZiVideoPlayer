@@ -1,7 +1,7 @@
 #节操视频播放器 
 
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) 
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-2.0_preview-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C2.0_preview%7Caar) 
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-2.0-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C2.0%7Caar) 
 [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true)](https://android-arsenal.com/details/1/3269)
 [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
@@ -20,7 +20,7 @@
 
 ##效果
 
-**[jiecaovideoplayer-2.0_preview-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_preview-demo.apk)**
+**[jiecaovideoplayer-2.0-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0-demo.apk)**
 
 ![Demo Screenshot][1]
 
@@ -29,14 +29,14 @@
 ##使用
 1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:2.0_preview'
+compile 'fm.jiecao:jiecaovideoplayer:2.0'
 ```
 
 或直接下载
 
-* [jiecaovideoplayer-2.0_preview.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_preview.aar)
-* [jiecaovideoplayer-2.0_preview-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_preview-javadoc.jar)
-* [jiecaovideoplayer-2.0_preview-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_preview-sources.jar)
+* [jiecaovideoplayer-2.0.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0.aar)
+* [jiecaovideoplayer-2.0-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0-javadoc.jar)
+* [jiecaovideoplayer-2.0-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0-sources.jar)
 
 2.添加布局
 ```xml

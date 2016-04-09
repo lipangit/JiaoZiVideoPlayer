@@ -62,6 +62,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     public static final int CURRENT_STATE_PLAYING = 2;
     public static final int CURRENT_STATE_OVER = 3;
     public static final int CURRENT_STATE_NORMAL = 4;
+    public static final int CURRENT_STATE_ERROR = 5;
+
     private OnTouchListener mSeekbarOnTouchListener;
     private static Timer mDismissControlViewTimer;
     private static Timer mUpdateProgressTimer;
@@ -179,13 +181,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
             ifMp3 = true;
         }
-        addSurfaceView();
-
-        if (JCMediaManager.intance().listener != null) {
-            JCMediaManager.intance().listener.onCompletion();
-        }
-        JCMediaManager.intance().listener = this;
-
         changeUiToNormal();
     }
 
@@ -210,6 +205,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             changeUiToNormal();
             cancelDismissControlViewTimer();
             cancelProgressTimer();
+        } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
+            JCMediaManager.intance().mediaPlayer.release();
+            changeUiToError();
         }
     }
 
@@ -230,7 +228,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     return;
                 }
             }
-            if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
+            if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
                 addSurfaceView();
 
                 if (JCMediaManager.intance().listener != null) {
@@ -313,14 +311,18 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             }
             clickfullscreentime = System.currentTimeMillis();
         } else if (i == surfaceId || i == R.id.parentview) {
-            onClickUiToggle();
-            startDismissControlViewTimer();
+            if (CURRENT_STATE == CURRENT_STATE_ERROR) {
+                ivStart.performClick();
+            } else {
+                onClickUiToggle();
+                startDismissControlViewTimer();
 
-            if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
-                if (ifFullScreen) {
-                    JC_BURIED_POINT.POINT_CLICK_BLANK_FULLSCREEN(title, url);
-                } else {
-                    JC_BURIED_POINT.POINT_CLICK_BLANK(title, url);
+                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                    if (ifFullScreen) {
+                        JC_BURIED_POINT.POINT_CLICK_BLANK_FULLSCREEN(title, url);
+                    } else {
+                        JC_BURIED_POINT.POINT_CLICK_BLANK(title, url);
+                    }
                 }
             }
         } else if (i == R.id.bottom_control) {
@@ -330,7 +332,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    private void addSurfaceView() {
+    void addSurfaceView() {
         if (rlParent.getChildAt(0) instanceof ResizeSurfaceView) {
             rlParent.removeViewAt(0);
         }
@@ -418,8 +420,13 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     private void changeUiToClearUiPrepareing() {
-        changeUiToClearUi();
-        pbLoading.setVisibility(View.VISIBLE);
+//        changeUiToClearUi();
+        setTitleVisibility(View.INVISIBLE);
+        llBottomControl.setVisibility(View.INVISIBLE);
+        ivStart.setVisibility(View.INVISIBLE);
+        setThumbVisibility(View.INVISIBLE);
+        pbBottom.setVisibility(View.INVISIBLE);
+//        pbLoading.setVisibility(View.VISIBLE);
         ivCover.setVisibility(View.VISIBLE);
     }
 
@@ -465,6 +472,17 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         pbBottom.setVisibility(View.INVISIBLE);
     }
 
+    private void changeUiToError() {
+        setTitleVisibility(View.INVISIBLE);
+        llBottomControl.setVisibility(View.INVISIBLE);
+        ivStart.setVisibility(View.VISIBLE);
+        pbLoading.setVisibility(View.INVISIBLE);
+        setThumbVisibility(View.INVISIBLE);
+        ivCover.setVisibility(View.VISIBLE);
+        pbBottom.setVisibility(View.INVISIBLE);
+        updateStartImage();
+    }
+
     private void startProgressTimer() {
         cancelProgressTimer();
         mUpdateProgressTimer = new Timer();
@@ -475,7 +493,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (CURRENT_STATE != CURRENT_STATE_NORMAL || CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+                            if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                                 setProgressAndTimeFromTimer();
                             }
                         }
@@ -516,6 +534,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     private void updateStartImage() {
         if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
             ivStart.setImageResource(R.drawable.click_video_pause_selector);
+        } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
+            ivStart.setImageResource(R.drawable.click_video_error_selector);
         } else {
             ivStart.setImageResource(R.drawable.click_video_play_selector);
         }
@@ -739,6 +759,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * In demo is ok, but in other project This will class not access exception,How to solve the problem
+     *
+     * @param context Context
+     * @param url     video url
+     * @param title   video title
      */
     @Deprecated
     public static void toFullscreenActivity(Context context, String url, String title) {
@@ -797,7 +821,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     @Override
-    public void onError() {
+    public void onError(int what, int extra) {
+        if (what != -38) {
+            setState(CURRENT_STATE_ERROR);
+        }
     }
 
     @Override

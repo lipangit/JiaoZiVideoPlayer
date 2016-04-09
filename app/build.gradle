@@ -9,7 +9,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 22
-        versionName "2.0_preview"
+        versionName "2.0"
     }
     buildTypes {
         release {
@@ -27,5 +27,10 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':jcvideoplayer-lib')
     compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.1'
+    compile 'com.facebook.fresco:fresco:0.9.0+'
+    compile 'com.mcxiaoke.volley:library:1.0.7'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
 }

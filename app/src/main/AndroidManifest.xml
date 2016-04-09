@@ -23,12 +23,17 @@
         <activity
             android:name=".ListActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ListViewpagerActivity"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".SetSkinActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".LoadImageActivity"
             android:screenOrientation="portrait" />
     </application>
 
