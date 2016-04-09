@@ -478,7 +478,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ivStart.setVisibility(View.VISIBLE);
         pbLoading.setVisibility(View.INVISIBLE);
         setThumbVisibility(View.INVISIBLE);
-        ivCover.setVisibility(View .VISIBLE);
+        ivCover.setVisibility(View.VISIBLE);
         pbBottom.setVisibility(View.INVISIBLE);
         updateStartImage();
     }
@@ -759,6 +759,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * In demo is ok, but in other project This will class not access exception,How to solve the problem
+     *
+     * @param context Context
+     * @param url     video url
+     * @param title   video title
      */
     @Deprecated
     public static void toFullscreenActivity(Context context, String url, String title) {
