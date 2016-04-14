@@ -1,6 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -12,29 +13,37 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Nathen
  * On 2016/04/10 15:45
  */
-public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener {
+public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, JCMediaManager.JCMediaPlayerListener {
+
+    public int CURRENT_STATE = -1;//-1相当于null
+    public static final int CURRENT_STATE_PREPAREING = 0;
+    public static final int CURRENT_STATE_PAUSE = 1;
+    public static final int CURRENT_STATE_PLAYING = 2;
+    public static final int CURRENT_STATE_OVER = 3;
+    public static final int CURRENT_STATE_NORMAL = 4;
+    public static final int CURRENT_STATE_ERROR = 5;
 
     TextView tvTitle;
     ImageView ivStart;
     SeekBar skProgress;
-    View pbLoading;
     ImageView ivFullScreen;
     TextView tvTimeCurrent, tvTimeTotal;
     ImageView ivBack;
-    ImageView ivThumb;
     ViewGroup rlParent;
-
 
     ViewGroup llTopContainer, llBottomControl;
 
     ResizeSurfaceView surfaceView;
     SurfaceHolder surfaceHolder;
+    int surfaceId;// for onClick()
 
+    String url;
 
     public AbstractJCVideoPlayer(Context context) {
         super(context);
@@ -49,7 +58,6 @@ public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.
     protected void init(Context context) {
         View.inflate(context, getLayoutId(), this);
         ivStart = (ImageView) findViewById(R.id.start);
-        pbLoading = (View) findViewById(R.id.loading);
         ivFullScreen = (ImageView) findViewById(R.id.fullscreen);
         skProgress = (SeekBar) findViewById(R.id.progress);
         tvTimeCurrent = (TextView) findViewById(R.id.current);
@@ -57,12 +65,10 @@ public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.
         llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
         tvTitle = (TextView) findViewById(R.id.title);
         ivBack = (ImageView) findViewById(R.id.back);
-        ivThumb = (ImageView) findViewById(R.id.thumb);
         rlParent = (RelativeLayout) findViewById(R.id.parentview);
         llTopContainer = (LinearLayout) findViewById(R.id.title_container);
 
         ivStart.setOnClickListener(this);
-        ivThumb.setOnClickListener(this);
         ivFullScreen.setOnClickListener(this);
         skProgress.setOnSeekBarChangeListener(this);
         llBottomControl.setOnClickListener(this);
@@ -75,9 +81,40 @@ public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        int i = v.getId();
+        if (i == R.id.start) {
+            if (TextUtils.isEmpty("")) {
+                Toast.makeText(getContext(), "No url", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
+                if (JCMediaManager.intance().listener != null) {
+                    JCMediaManager.intance().listener.onCompletion();
+                }
+                JCMediaManager.intance().listener = this;
+                addSurfaceView();
+                JCMediaManager.intance().prepareToPlay(getContext(), url);
+                CURRENT_STATE = CURRENT_STATE_PREPAREING;
+
+            }
+
+        } else {
 
         }
+    }
+
+    private void addSurfaceView() {
+        if (rlParent.getChildAt(0) instanceof ResizeSurfaceView) {
+            rlParent.removeViewAt(0);
+        }
+        surfaceView = new ResizeSurfaceView(getContext());
+        surfaceId = surfaceView.getId();
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(this);
+        surfaceView.setOnClickListener(this);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        rlParent.addView(surfaceView, 0, layoutParams);
     }
 
     @Override
@@ -97,6 +134,60 @@ public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
+
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+
+    }
+
+    @Override
+    public void onPrepared() {
+        if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
+        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        JCMediaManager.intance().mediaPlayer.start();
+        CURRENT_STATE = CURRENT_STATE_PLAYING;
+
+    }
+
+    @Override
+    public void onCompletion() {
+
+    }
+
+    @Override
+    public void onBufferingUpdate(int percent) {
+
+    }
+
+    @Override
+    public void onSeekComplete() {
+
+    }
+
+    @Override
+    public void onError(int what, int extra) {
+
+    }
+
+    @Override
+    public void onVideoSizeChanged() {
+
+    }
+
+    @Override
+    public void onBackFullscreen() {
 
     }
 }

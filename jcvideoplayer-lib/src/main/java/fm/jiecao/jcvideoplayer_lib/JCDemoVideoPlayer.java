@@ -2,6 +2,7 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * Created by Nathen
@@ -21,6 +22,15 @@ public class JCDemoVideoPlayer extends AbstractJCVideoPlayer {
         super.init(context);
         //init my video
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        //this should before super.onClick
+
+
+
+        super.onClick(v);
     }
 
     @Override

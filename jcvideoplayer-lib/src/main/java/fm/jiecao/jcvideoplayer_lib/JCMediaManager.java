@@ -39,6 +39,8 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     public void prepareToPlay(Context context, String url) {
         if (TextUtils.isEmpty(url)) return;
         try {
+            currentVideoWidth = 0;
+            currentVideoHeight = 0;
             mediaPlayer.release();
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -46,6 +48,7 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
             mediaPlayer.setOnPreparedListener(this);
             mediaPlayer.setOnCompletionListener(this);
             mediaPlayer.setOnBufferingUpdateListener(this);
+            mediaPlayer.setScreenOnWhilePlaying(true);
             mediaPlayer.setOnSeekCompleteListener(this);
             mediaPlayer.setOnErrorListener(this);
             mediaPlayer.setOnVideoSizeChangedListener(this);
@@ -98,11 +101,6 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
         if (listener != null) {
             listener.onVideoSizeChanged();
         }
-    }
-
-    public void clearWidthAndHeight() {
-        currentVideoWidth = 0;
-        currentVideoHeight = 0;
     }
 
     interface JCMediaPlayerListener {

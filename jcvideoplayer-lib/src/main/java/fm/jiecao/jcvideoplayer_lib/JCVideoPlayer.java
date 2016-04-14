@@ -236,7 +236,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 }
                 JCMediaManager.intance().listener = this;
 
-                JCMediaManager.intance().clearWidthAndHeight();
                 CURRENT_STATE = CURRENT_STATE_PREPAREING;
                 changeUiToShowUiPrepareing();
                 llBottomControl.setVisibility(View.INVISIBLE);
