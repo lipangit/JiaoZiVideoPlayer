@@ -16,4 +16,16 @@ public class JCDemoVideoPlayer extends AbstractJCVideoPlayer {
         super(context, attrs);
     }
 
+    @Override
+    protected void init(Context context) {
+        super.init(context);
+        //init my video
+
+    }
+
+    @Override
+    public int getLayoutId() {
+        return 0;
+    }
+
 }
