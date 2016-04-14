@@ -614,9 +614,12 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         JCMediaManager.intance().mediaPlayer.pause();
         JCMediaManager.intance().mediaPlayer.setDisplay(null);
         //这个view释放了，
-        JCMediaManager.intance().listener = JCMediaManager.intance().lastListener;
         JCMediaManager.intance().lastState = CURRENT_STATE;
-        JCMediaManager.intance().listener.onBackFullscreen();
+
+        if (JCMediaManager.intance().lastListener != null) {
+            JCMediaManager.intance().listener = JCMediaManager.intance().lastListener;
+            JCMediaManager.intance().listener.onBackFullscreen();
+        }
 
         if (getContext() instanceof JCFullScreenActivity) {
             ((JCFullScreenActivity) getContext()).finish();
