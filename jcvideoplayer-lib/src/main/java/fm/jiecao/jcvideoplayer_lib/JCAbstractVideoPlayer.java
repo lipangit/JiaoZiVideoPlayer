@@ -95,19 +95,31 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 return;
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
-                if (JCMediaManager.intance().listener != null) {
-                    JCMediaManager.intance().listener.onCompletion();
-                }
-                JCMediaManager.intance().listener = this;
-                addSurfaceView();
-                JCMediaManager.intance().prepareToPlay(getContext(), url);
-                CURRENT_STATE = CURRENT_STATE_PREPAREING;
+                onStart();
 
             }
 
         } else {
 
         }
+    }
+
+    protected void onStart() {
+        if (JCMediaManager.intance().listener != null) {
+            JCMediaManager.intance().listener.onCompletion();
+        }
+        JCMediaManager.intance().listener = this;
+        addSurfaceView();
+        JCMediaManager.intance().prepareToPlay(getContext(), url);
+        CURRENT_STATE = CURRENT_STATE_PREPAREING;
+    }
+
+    protected void onPlay() {
+
+    }
+
+    protected void onPause() {
+
     }
 
     private void addSurfaceView() {

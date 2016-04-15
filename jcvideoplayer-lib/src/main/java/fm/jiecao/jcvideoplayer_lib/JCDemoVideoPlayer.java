@@ -37,4 +37,10 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
         return R.layout.jc_base_demo_layout;
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+
+    }
 }
