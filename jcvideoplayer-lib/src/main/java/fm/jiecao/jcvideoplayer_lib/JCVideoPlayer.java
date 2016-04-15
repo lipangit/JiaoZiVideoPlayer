@@ -229,6 +229,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 }
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
+                touchingProgressBar = false;//This should not be here , but this can improve accident bug .
+
                 addSurfaceView();
 
                 if (JCMediaManager.intance().listener != null) {
