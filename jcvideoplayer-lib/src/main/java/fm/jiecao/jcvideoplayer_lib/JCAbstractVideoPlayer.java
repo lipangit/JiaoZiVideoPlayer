@@ -19,7 +19,7 @@ import android.widget.Toast;
  * Created by Nathen
  * On 2016/04/10 15:45
  */
-public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, JCMediaManager.JCMediaPlayerListener {
+public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, JCMediaManager.JCMediaPlayerListener {
 
     public int CURRENT_STATE = -1;//-1相当于null
     public static final int CURRENT_STATE_PREPAREING = 0;
@@ -44,13 +44,14 @@ public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.
     int surfaceId;// for onClick()
 
     String url;
+    String title;
 
-    public AbstractJCVideoPlayer(Context context) {
+    public JCAbstractVideoPlayer(Context context) {
         super(context);
         init(context);
     }
 
-    public AbstractJCVideoPlayer(Context context, AttributeSet attrs) {
+    public JCAbstractVideoPlayer(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
@@ -79,11 +80,17 @@ public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.
 
     public abstract int getLayoutId();
 
+    public void setUp(String title, String url) {
+        this.title = title;
+        this.url = url;
+        CURRENT_STATE = CURRENT_STATE_NORMAL;
+    }
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.start) {
-            if (TextUtils.isEmpty("")) {
+            if (TextUtils.isEmpty(url)) {
                 Toast.makeText(getContext(), "No url", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -155,9 +162,9 @@ public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.
     @Override
     public void onPrepared() {
         if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
+        CURRENT_STATE = CURRENT_STATE_PLAYING;
         JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         JCMediaManager.intance().mediaPlayer.start();
-        CURRENT_STATE = CURRENT_STATE_PLAYING;
 
     }
 
@@ -183,7 +190,12 @@ public abstract class AbstractJCVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onVideoSizeChanged() {
-
+        int mVideoWidth = JCMediaManager.intance().currentVideoWidth;
+        int mVideoHeight = JCMediaManager.intance().currentVideoHeight;
+        if (mVideoWidth != 0 && mVideoHeight != 0) {
+            surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
+            surfaceView.requestLayout();
+        }
     }
 
     @Override

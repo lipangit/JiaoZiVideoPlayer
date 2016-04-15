@@ -8,7 +8,7 @@ import android.view.View;
  * Created by Nathen
  * On 2016/04/10 15:45
  */
-public class JCDemoVideoPlayer extends AbstractJCVideoPlayer {
+public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
     public JCDemoVideoPlayer(Context context) {
         super(context);
     }
@@ -26,8 +26,7 @@ public class JCDemoVideoPlayer extends AbstractJCVideoPlayer {
 
     @Override
     public void onClick(View v) {
-        //this should before super.onClick
-
+        //this should before super.onClick()
 
 
         super.onClick(v);
@@ -35,7 +34,7 @@ public class JCDemoVideoPlayer extends AbstractJCVideoPlayer {
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.jc_base_demo_layout;
     }
 
 }
