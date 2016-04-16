@@ -3,6 +3,7 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
+ * Manage MediaPlayer
  * Created by Nathen
  * On 2016/04/10 15:45
  */
@@ -29,7 +31,6 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     public static final int CURRENT_STATE_NORMAL = 4;
     public static final int CURRENT_STATE_ERROR = 5;
 
-    TextView tvTitle;
     ImageView ivStart;
     SeekBar skProgress;
     ImageView ivFullScreen;
@@ -64,7 +65,6 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
         llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
-        tvTitle = (TextView) findViewById(R.id.title);
         ivBack = (ImageView) findViewById(R.id.back);
         rlParent = (RelativeLayout) findViewById(R.id.parentview);
         llTopContainer = (LinearLayout) findViewById(R.id.title_container);
@@ -81,9 +81,9 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     public abstract int getLayoutId();
 
     public void setUp(String title, String url) {
+        CURRENT_STATE = CURRENT_STATE_NORMAL;
         this.title = title;
         this.url = url;
-        CURRENT_STATE = CURRENT_STATE_NORMAL;
     }
 
     @Override
@@ -96,30 +96,41 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
                 onStart();
-
+            } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+                onPause();
+            } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
+                onResume();
             }
-
-        } else {
 
         }
     }
 
     protected void onStart() {
+        CURRENT_STATE = CURRENT_STATE_PREPAREING;
         if (JCMediaManager.intance().listener != null) {
             JCMediaManager.intance().listener.onCompletion();
         }
         JCMediaManager.intance().listener = this;
         addSurfaceView();
         JCMediaManager.intance().prepareToPlay(getContext(), url);
-        CURRENT_STATE = CURRENT_STATE_PREPAREING;
     }
 
     protected void onPlay() {
-
+        if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
+        CURRENT_STATE = CURRENT_STATE_PLAYING;
+        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        JCMediaManager.intance().mediaPlayer.start();
     }
 
     protected void onPause() {
+        CURRENT_STATE = CURRENT_STATE_PAUSE;
+        JCMediaManager.intance().mediaPlayer.pause();
+    }
 
+    protected void onResume() {
+        CURRENT_STATE = CURRENT_STATE_PLAYING;
+        JCMediaManager.intance().mediaPlayer.start();
+        Log.i("JCVideoPlayer", "go on video");
     }
 
     private void addSurfaceView() {
@@ -173,10 +184,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onPrepared() {
-        if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
-        CURRENT_STATE = CURRENT_STATE_PLAYING;
-        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
-        JCMediaManager.intance().mediaPlayer.start();
+        onPlay();
 
     }
 
