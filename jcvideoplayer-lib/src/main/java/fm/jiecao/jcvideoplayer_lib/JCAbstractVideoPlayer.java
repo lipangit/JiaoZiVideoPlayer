@@ -107,11 +107,11 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     }
 
     protected void onStart() {
-        CURRENT_STATE = CURRENT_STATE_PREPAREING;
         if (JCMediaManager.intance().listener != null) {
             JCMediaManager.intance().listener.onCompletion();
         }
         JCMediaManager.intance().listener = this;
+        CURRENT_STATE = CURRENT_STATE_PREPAREING;
         addSurfaceView();
         JCMediaManager.intance().prepareToPlay(getContext(), url);
     }
@@ -205,6 +205,10 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onCompletion() {
+        CURRENT_STATE = CURRENT_STATE_NORMAL;
+        JCMediaManager.intance().mediaPlayer.release();
+        cancelProgressTimer();
+        resetProgressAndTime();
 
     }
 
@@ -282,4 +286,12 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         tvTimeCurrent.setText(Utils.stringForTime(currentTime));
         tvTimeTotal.setText(Utils.stringForTime(totalTime));
     }
+
+    private void resetProgressAndTime() {
+        skProgress.setProgress(0);
+        skProgress.setSecondaryProgress(0);
+        tvTimeCurrent.setText(Utils.stringForTime(0));
+        tvTimeTotal.setText(Utils.stringForTime(0));
+    }
+
 }
