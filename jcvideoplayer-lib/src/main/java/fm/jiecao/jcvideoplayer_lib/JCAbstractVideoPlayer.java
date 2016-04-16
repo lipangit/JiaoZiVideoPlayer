@@ -35,7 +35,6 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     SeekBar skProgress;
     ImageView ivFullScreen;
     TextView tvTimeCurrent, tvTimeTotal;
-    ImageView ivBack;
     ViewGroup rlParent;
 
     ViewGroup llTopContainer, llBottomControl;
@@ -65,7 +64,6 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
         llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
-        ivBack = (ImageView) findViewById(R.id.back);
         rlParent = (RelativeLayout) findViewById(R.id.parentview);
         llTopContainer = (LinearLayout) findViewById(R.id.title_container);
 
@@ -74,7 +72,6 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         skProgress.setOnSeekBarChangeListener(this);
         llBottomControl.setOnClickListener(this);
         rlParent.setOnClickListener(this);
-        ivBack.setOnClickListener(this);
         skProgress.setOnTouchListener(this);
     }
 
@@ -154,7 +151,11 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+        if (fromUser) {
+            int time = progress * JCMediaManager.intance().mediaPlayer.getDuration() / 100;
+            JCMediaManager.intance().mediaPlayer.seekTo(time);
+            ivStart.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
