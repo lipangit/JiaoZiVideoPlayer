@@ -29,16 +29,16 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
     @Override
     public void onClick(View v) {
         //this should before super.onClick()
-        int i = v.getId();
-        if (i == surfaceId || i == R.id.parentview) {
-            if (CURRENT_STATE == CURRENT_STATE_ERROR) {
-                ivStart.performClick();
-            } else {
-                onClickBlank();
-            }
-        } else {
-
-        }
+//        int i = v.getId();
+//        if (i == surfaceId || i == R.id.parentview) {
+//            if (CURRENT_STATE == CURRENT_STATE_ERROR) {
+//                ivStart.performClick();
+//            } else {
+//                onClickBlank();
+//            }
+//        } else {
+//
+//        }
 
         super.onClick(v);
     }
@@ -52,16 +52,16 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
     protected void onStart() {
         super.onStart();
         //to prepareing state
-        llTopContainer.setVisibility(View.INVISIBLE);
-        llBottomControl.setVisibility(View.INVISIBLE);
-        ivStart.setVisibility(View.INVISIBLE);
+//        llTopContainer.setVisibility(View.INVISIBLE);
+//        llBottomControl.setVisibility(View.INVISIBLE);
+//        ivStart.setVisibility(View.INVISIBLE);
 
     }
 
     @Override
     protected void onPlay() {
         super.onPlay();
-
+        updateStartImage();
     }
 
     @Override
@@ -76,18 +76,18 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
         updateStartImage();
     }
 
-    protected void onClickBlank() {
-        if (llBottomControl.getVisibility() == View.VISIBLE) {
-            llTopContainer.setVisibility(View.INVISIBLE);
-            llBottomControl.setVisibility(View.INVISIBLE);
-            ivStart.setVisibility(View.INVISIBLE);
-        } else {
-            llTopContainer.setVisibility(View.VISIBLE);
-            llBottomControl.setVisibility(View.VISIBLE);
-            ivStart.setVisibility(View.VISIBLE);
-            updateStartImage();
-        }
-    }
+//    protected void onClickBlank() {
+//        if (llBottomControl.getVisibility() == View.VISIBLE) {
+//            llTopContainer.setVisibility(View.INVISIBLE);
+//            llBottomControl.setVisibility(View.INVISIBLE);
+//            ivStart.setVisibility(View.INVISIBLE);
+//        } else {
+//            llTopContainer.setVisibility(View.VISIBLE);
+//            llBottomControl.setVisibility(View.VISIBLE);
+//            ivStart.setVisibility(View.VISIBLE);
+//            updateStartImage();
+//        }
+//    }
 
     private void updateStartImage() {
         if (CURRENT_STATE == CURRENT_STATE_PLAYING) {

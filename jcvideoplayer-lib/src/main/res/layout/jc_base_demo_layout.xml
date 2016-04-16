@@ -25,8 +25,7 @@
         android:layout_alignParentBottom="true"
         android:background="#99000000"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:visibility="invisible">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/current"
@@ -34,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:text="00:00"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"/>
 
         <SeekBar
             android:id="@+id/progress"
@@ -49,7 +48,7 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:progressDrawable="@drawable/seek_progress"
-            android:thumb="@drawable/seek_thumb" />
+            android:thumb="@drawable/seek_thumb"/>
 
         <TextView
             android:id="@+id/total"
@@ -57,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:text="00:00"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"/>
 
         <ImageView
             android:id="@+id/fullscreen"
@@ -65,7 +64,7 @@
             android:layout_height="fill_parent"
             android:paddingRight="16dp"
             android:scaleType="center"
-            android:src="@drawable/enlarge_video" />
+            android:src="@drawable/enlarge_video"/>
     </LinearLayout>
 
     <LinearLayout
@@ -73,23 +72,9 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/title_gradient_bg"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:paddingLeft="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_back_white" />
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
     </LinearLayout>
 
     <ProgressBar
@@ -99,7 +84,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:indeterminateDrawable="@drawable/video_loading"
-        android:visibility="invisible" />
+        android:visibility="invisible"/>
 
     <ImageView
         android:id="@+id/start"
@@ -108,9 +93,9 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/click_video_play_selector" />
+        android:src="@drawable/click_video_play_selector"/>
 
     <SurfaceView
         android:layout_width="0dp"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"/>
 </RelativeLayout>

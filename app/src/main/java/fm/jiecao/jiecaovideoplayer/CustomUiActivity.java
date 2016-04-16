@@ -17,8 +17,7 @@ public class CustomUiActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_ui);
         jcDemoVideoPlayer = (JCDemoVideoPlayer) findViewById(R.id.custom_videoplayer);
-        jcDemoVideoPlayer.setUp(
-                "嫂子别摸我", "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4");
+        jcDemoVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4");
 
     }
 }

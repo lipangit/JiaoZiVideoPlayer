@@ -1,5 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -16,6 +17,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Manage MediaPlayer
  * Created by Nathen
@@ -30,6 +34,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     public static final int CURRENT_STATE_OVER = 3;
     public static final int CURRENT_STATE_NORMAL = 4;
     public static final int CURRENT_STATE_ERROR = 5;
+    private boolean touchingProgressBar = false;
 
     ImageView ivStart;
     SeekBar skProgress;
@@ -44,7 +49,8 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     int surfaceId;// for onClick()
 
     String url;
-    String title;
+
+    private static Timer mUpdateProgressTimer;
 
     public JCAbstractVideoPlayer(Context context) {
         super(context);
@@ -77,9 +83,8 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     public abstract int getLayoutId();
 
-    public void setUp(String title, String url) {
+    public void setUp(String url) {
         CURRENT_STATE = CURRENT_STATE_NORMAL;
-        this.title = title;
         this.url = url;
     }
 
@@ -98,7 +103,6 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 onResume();
             }
-
         }
     }
 
@@ -117,6 +121,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         CURRENT_STATE = CURRENT_STATE_PLAYING;
         JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         JCMediaManager.intance().mediaPlayer.start();
+        startProgressTimer();
     }
 
     protected void onPause() {
@@ -146,6 +151,16 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                touchingProgressBar = true;
+                cancelProgressTimer();
+                break;
+            case MotionEvent.ACTION_UP:
+                touchingProgressBar = false;
+                startProgressTimer();
+                break;
+        }
         return false;
     }
 
@@ -154,7 +169,6 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         if (fromUser) {
             int time = progress * JCMediaManager.intance().mediaPlayer.getDuration() / 100;
             JCMediaManager.intance().mediaPlayer.seekTo(time);
-            ivStart.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -196,7 +210,9 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onBufferingUpdate(int percent) {
-
+        if (CURRENT_STATE != CURRENT_STATE_NORMAL && CURRENT_STATE != CURRENT_STATE_PREPAREING) {
+            setTextAndProgress(percent);
+        }
     }
 
     @Override
@@ -222,5 +238,48 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     @Override
     public void onBackFullscreen() {
 
+    }
+
+    protected void startProgressTimer() {
+        cancelProgressTimer();
+        mUpdateProgressTimer = new Timer();
+        mUpdateProgressTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (getContext() != null && getContext() instanceof Activity) {
+                    ((Activity) getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+                                setTextAndProgress(0);
+                            }
+                        }
+                    });
+                }
+            }
+        }, 0, 300);
+    }
+
+    protected void cancelProgressTimer() {
+        if (mUpdateProgressTimer != null) {
+            mUpdateProgressTimer.cancel();
+        }
+    }
+
+    protected void setTextAndProgress(int secProgress) {
+        int position = JCMediaManager.intance().mediaPlayer.getCurrentPosition();
+        int duration = JCMediaManager.intance().mediaPlayer.getDuration();
+        // if duration == 0 (e.g. in HLS streams) avoids ArithmeticException
+        int progress = position * 100 / (duration == 0 ? 1 : duration);
+        setProgressAndTime(progress, secProgress, position, duration);
+    }
+
+    private void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
+        if (!touchingProgressBar) {
+            if (progress != 0) skProgress.setProgress(progress);
+        }
+        if (secProgress != 0) skProgress.setSecondaryProgress(secProgress);
+        tvTimeCurrent.setText(Utils.stringForTime(currentTime));
+        tvTimeTotal.setText(Utils.stringForTime(totalTime));
     }
 }
