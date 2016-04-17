@@ -30,7 +30,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     public int CURRENT_STATE = -1;//-1相当于null
     public static final int CURRENT_STATE_PREPAREING = 0;
     public static final int CURRENT_STATE_PAUSE = 1;
-    public static final int CURRENT_STATE_PLAYING = 2;
+    public static final int CURRENT_STATE_PLAY = 2;
     public static final int CURRENT_STATE_OVER = 3;
     public static final int CURRENT_STATE_NORMAL = 4;
     public static final int CURRENT_STATE_ERROR = 5;
@@ -95,6 +95,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     }
 
+    //set ui
     public void setState(int state) {
         CURRENT_STATE = state;
         switch (CURRENT_STATE) {
@@ -102,7 +103,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 break;
             case CURRENT_STATE_PREPAREING:
                 break;
-            case CURRENT_STATE_PLAYING:
+            case CURRENT_STATE_PLAY:
                 break;
             case CURRENT_STATE_PAUSE:
                 break;
@@ -118,8 +119,8 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 return;
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
-                onStart();
-            } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+                onPrepareing();
+            } else if (CURRENT_STATE == CURRENT_STATE_PLAY) {
                 onPause();
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 onResume();
@@ -132,12 +133,12 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().lastListener = this;
                 JCMediaManager.intance().listener = null;
-                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE);
+                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url);
             }
         }
     }
 
-    protected void onStart() {
+    protected void onPrepareing() {
         if (JCMediaManager.intance().listener != null) {
             JCMediaManager.intance().listener.onCompletion();
         }
@@ -149,7 +150,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     protected void onPlay() {
         if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
-        CURRENT_STATE = CURRENT_STATE_PLAYING;
+        CURRENT_STATE = CURRENT_STATE_PLAY;
         JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         JCMediaManager.intance().mediaPlayer.start();
         startProgressTimer();
@@ -161,7 +162,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     }
 
     protected void onResume() {
-        CURRENT_STATE = CURRENT_STATE_PLAYING;
+        CURRENT_STATE = CURRENT_STATE_PLAY;
         JCMediaManager.intance().mediaPlayer.start();
         Log.i("JCVideoPlayer", "go on video");
     }
@@ -286,7 +287,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+                            if (CURRENT_STATE == CURRENT_STATE_PLAY) {
                                 setTextAndProgress(0);
                             }
                         }

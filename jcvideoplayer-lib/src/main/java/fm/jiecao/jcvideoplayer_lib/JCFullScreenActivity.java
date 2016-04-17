@@ -17,9 +17,10 @@ import android.view.WindowManager;
  */
 public class JCFullScreenActivity extends Activity {
 
-    static void toActivityFromNormal(Context context, int state) {
+    static void toActivityFromNormal(Context context, int state, String url) {
         CURRENT_STATE = state;
         DIRECT_FULLSCREEN = false;
+        URL = url;
         Intent intent = new Intent(context, JCFullScreenActivity.class);
         context.startActivity(intent);
     }
@@ -60,6 +61,7 @@ public class JCFullScreenActivity extends Activity {
 
         jcVideoPlayer = (JCDemoVideoPlayer) findViewById(R.id.jcvideoplayer);
         jcVideoPlayer.addSurfaceView();
+        jcVideoPlayer.setUp(URL);
         jcVideoPlayer.setState(CURRENT_STATE);
         jcVideoPlayer.IF_CURRENT_IS_FULLSCREEN = true;
 
@@ -68,7 +70,7 @@ public class JCFullScreenActivity extends Activity {
         } else {
             manualQuit = false;
             JCMediaManager.intance().listener = jcVideoPlayer;
-
+            jcVideoPlayer.setUpUI();
         }
     }
 

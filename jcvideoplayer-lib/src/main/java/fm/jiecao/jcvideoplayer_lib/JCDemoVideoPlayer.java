@@ -37,8 +37,8 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onPrepareing() {
+        super.onPrepareing();
         ivStart.setVisibility(View.INVISIBLE);
 
     }
@@ -68,8 +68,24 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
         updateStartImage();
     }
 
+    public void setUpUI() {
+        switch (CURRENT_STATE) {
+            case CURRENT_STATE_NORMAL:
+                break;
+            case CURRENT_STATE_PREPAREING:
+                ivStart.setVisibility(View.INVISIBLE);
+                break;
+            case CURRENT_STATE_PLAY:
+                ivStart.setVisibility(View.VISIBLE);
+                break;
+            case CURRENT_STATE_PAUSE:
+                break;
+        }
+        updateStartImage();
+    }
+
     private void updateStartImage() {
-        if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+        if (CURRENT_STATE == CURRENT_STATE_PLAY) {
             ivStart.setImageResource(R.drawable.click_video_pause_selector);
         } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
             ivStart.setImageResource(R.drawable.click_video_error_selector);
