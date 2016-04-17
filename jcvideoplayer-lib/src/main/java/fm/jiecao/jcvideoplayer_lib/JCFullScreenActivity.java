@@ -86,13 +86,13 @@ public class JCFullScreenActivity extends Activity {
         super.onBackPressed();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (!manualQuit) {
-            JCVideoPlayer.isClickFullscreen = false;
-            JCVideoPlayer.releaseAllVideos();
-            finish();
-        }
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if (!manualQuit) {
+//            JCVideoPlayer.isClickFullscreen = false;
+//            JCVideoPlayer.releaseAllVideos();
+//            finish();
+//        }
+//    }
 }

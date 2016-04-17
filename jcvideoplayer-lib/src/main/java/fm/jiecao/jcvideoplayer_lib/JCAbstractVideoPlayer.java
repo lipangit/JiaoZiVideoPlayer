@@ -27,6 +27,7 @@ import java.util.TimerTask;
  */
 public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, JCMediaManager.JCMediaPlayerListener {
 
+    public static final String TAG = "JCAbstractVideoPlayer";
     public int CURRENT_STATE = -1;//-1相当于null
     public static final int CURRENT_STATE_PREPAREING = 0;
     public static final int CURRENT_STATE_PAUSE = 1;
@@ -223,18 +224,20 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     public void surfaceCreated(SurfaceHolder holder) {
 //        if (!IF_FULLSCREEN_IS_DIRECTLY) {//fullscreen from normal
         JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        ifNeedCreateSurfaceView = false;
 //        }
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        ifNeedCreateSurfaceView = true;
     }
+
+    private boolean ifNeedCreateSurfaceView = false;
 
     @Override
     public void onPrepared() {
@@ -279,9 +282,12 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onBackFullscreen() {
-//        CURRENT_STATE = JCMediaManager.intance().lastState;
-//        addSurfaceView();
-//        setState(CURRENT_STATE);
+        CURRENT_STATE = JCMediaManager.intance().lastState;
+//        if (ifNeedCreateSurfaceView) {
+//            addSurfaceView();
+//            Log.i(TAG, "onBackFullscreen: addview");
+//        }
+        setState(CURRENT_STATE);
 //        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         //set ui , but ui function is on child class
     }
@@ -348,8 +354,8 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         JCMediaManager.intance().lastState = CURRENT_STATE;//save state
         JCMediaManager.intance().listener.onBackFullscreen();
 //        }
-        if (getContext() instanceof JCFullScreenActivity) {
-            ((JCFullScreenActivity) getContext()).finish();
-        }
+//        if (getContext() instanceof JCFullScreenActivity) {
+//            ((JCFullScreenActivity) getContext()).finish();
+//        }
     }
 }
