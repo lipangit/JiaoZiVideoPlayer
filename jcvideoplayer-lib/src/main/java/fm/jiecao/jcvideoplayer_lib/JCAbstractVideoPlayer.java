@@ -35,6 +35,8 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     public static final int CURRENT_STATE_NORMAL = 4;
     public static final int CURRENT_STATE_ERROR = 5;
     private boolean touchingProgressBar = false;
+    protected boolean IF_CURRENT_IS_FULLSCREEN = false;
+    protected boolean IF_FULLSCREEN_IS_DIRECTLY = false;//IF_CURRENT_IS_FULLSCREEN should be true first
 
     ImageView ivStart;
     SeekBar skProgress;
@@ -88,6 +90,25 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         this.url = url;
     }
 
+    public void setUpForFullscreen(String url) {
+        this.url = url;
+
+    }
+
+    public void setState(int state) {
+        CURRENT_STATE = state;
+        switch (CURRENT_STATE) {
+            case CURRENT_STATE_NORMAL:
+                break;
+            case CURRENT_STATE_PREPAREING:
+                break;
+            case CURRENT_STATE_PLAYING:
+                break;
+            case CURRENT_STATE_PAUSE:
+                break;
+        }
+    }
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -102,6 +123,16 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 onPause();
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 onResume();
+            }
+        } else if (i == R.id.fullscreen) {
+            if (IF_CURRENT_IS_FULLSCREEN) {
+                //quit fullscreen
+            } else {
+                //to fullscreen
+                JCMediaManager.intance().mediaPlayer.setDisplay(null);
+                JCMediaManager.intance().lastListener = this;
+                JCMediaManager.intance().listener = null;
+                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE);
             }
         }
     }
@@ -135,7 +166,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         Log.i("JCVideoPlayer", "go on video");
     }
 
-    private void addSurfaceView() {
+    public void addSurfaceView() {
         if (rlParent.getChildAt(0) instanceof ResizeSurfaceView) {
             rlParent.removeViewAt(0);
         }
@@ -184,7 +215,9 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-
+        if (!IF_FULLSCREEN_IS_DIRECTLY) {//fullscreen from normal
+            JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        }
     }
 
     @Override
@@ -206,7 +239,6 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     @Override
     public void onCompletion() {
         CURRENT_STATE = CURRENT_STATE_NORMAL;
-        JCMediaManager.intance().mediaPlayer.release();
         cancelProgressTimer();
         resetProgressAndTime();
 

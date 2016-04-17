@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPoint;
-import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 
@@ -146,9 +145,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, ListViewpagerActivity.class));
                 break;
             case R.id.to_fullscreen:
-                JCFullScreenActivity.toActivity(this,
-                        "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4",
-                        "嫂子躺下");
+//                JCFullScreenActivity.toActivity(this,
+//                        "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4",
+//                        "嫂子躺下");
 
 //                JCVideoPlayer.toFullscreenActivity(this,
 //                        "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4",

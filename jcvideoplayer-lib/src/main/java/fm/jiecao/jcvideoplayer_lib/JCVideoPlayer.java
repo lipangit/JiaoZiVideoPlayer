@@ -29,6 +29,7 @@ import java.util.TimerTask;
  * Created by Nathen
  * On 2015/11/30 11:59
  */
+@Deprecated
 public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, View.OnTouchListener, JCMediaManager.JCMediaPlayerListener {
 
     public ImageView ivStart;
@@ -302,7 +303,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 JCMediaManager.intance().lastListener = this;
                 JCMediaManager.intance().listener = null;
                 isClickFullscreen = true;
-                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, title);
+                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE);
 
                 if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
                     JC_BURIED_POINT.POINT_ENTER_FULLSCREEN(title, url);
@@ -765,7 +766,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      */
     @Deprecated
     public static void toFullscreenActivity(Context context, String url, String title) {
-        JCFullScreenActivity.toActivity(context, url, title);
+        JCFullScreenActivity.toActivity(context, url);
     }
 
     @Override

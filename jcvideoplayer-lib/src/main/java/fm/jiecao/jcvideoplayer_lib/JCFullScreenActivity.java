@@ -17,11 +17,9 @@ import android.view.WindowManager;
  */
 public class JCFullScreenActivity extends Activity {
 
-    static void toActivityFromNormal(Context context, int state, String url, String title) {
-        STATE = state;
-        URL = url;
-        TITLE = title;
-        start = false;
+    static void toActivityFromNormal(Context context, int state) {
+        CURRENT_STATE = state;
+        DIRECT_FULLSCREEN = false;
         Intent intent = new Intent(context, JCFullScreenActivity.class);
         context.startActivity(intent);
     }
@@ -32,26 +30,23 @@ public class JCFullScreenActivity extends Activity {
      *
      * @param context context
      * @param url     video url
-     * @param title   video title
      */
-    public static void toActivity(Context context, String url, String title) {
-        STATE = JCVideoPlayer.CURRENT_STATE_NORMAL;
+    public static void toActivity(Context context, String url) {
+        CURRENT_STATE = JCAbstractVideoPlayer.CURRENT_STATE_NORMAL;
         URL = url;
-        TITLE = title;
-        start = true;
+        DIRECT_FULLSCREEN = true;
         Intent intent = new Intent(context, JCFullScreenActivity.class);
         context.startActivity(intent);
     }
 
-    JCVideoPlayer jcVideoPlayer;
+    JCDemoVideoPlayer jcVideoPlayer;
     /**
      * 刚启动全屏时的播放状态
      */
-    public static int STATE = -1;
+    static int CURRENT_STATE = -1;
     public static String URL;
-    public static String TITLE;
     public static boolean manualQuit = false;
-    static boolean start = false;
+    static boolean DIRECT_FULLSCREEN = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,26 +58,24 @@ public class JCFullScreenActivity extends Activity {
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_fullscreen);
 
-        jcVideoPlayer = (JCVideoPlayer) findViewById(R.id.jcvideoplayer);
-        jcVideoPlayer.setUpForFullscreen(URL, TITLE);
-        jcVideoPlayer.setState(STATE);
-        manualQuit = false;
-        if (start) {
+        jcVideoPlayer = (JCDemoVideoPlayer) findViewById(R.id.jcvideoplayer);
+        jcVideoPlayer.addSurfaceView();
+        jcVideoPlayer.setState(CURRENT_STATE);
+        jcVideoPlayer.IF_CURRENT_IS_FULLSCREEN = true;
+
+        if (DIRECT_FULLSCREEN) {
             jcVideoPlayer.ivStart.performClick();
         } else {
-            jcVideoPlayer.isFullscreenFromNormal = true;
-            jcVideoPlayer.addSurfaceView();
-            if (JCMediaManager.intance().listener != null) {
-                JCMediaManager.intance().listener.onCompletion();
-            }
+            manualQuit = false;
             JCMediaManager.intance().listener = jcVideoPlayer;
+
         }
     }
 
     @Override
     public void onBackPressed() {
         JCVideoPlayer.isClickFullscreen = false;
-        jcVideoPlayer.quitFullScreen();
+//        jcVideoPlayer.quitFullScreen();
     }
 
     @Override
