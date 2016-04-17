@@ -221,9 +221,9 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        if (!IF_FULLSCREEN_IS_DIRECTLY) {//fullscreen from normal
-            JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
-        }
+//        if (!IF_FULLSCREEN_IS_DIRECTLY) {//fullscreen from normal
+        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+//        }
     }
 
     @Override
@@ -279,10 +279,10 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onBackFullscreen() {
-        CURRENT_STATE = JCMediaManager.intance().lastState;
-        addSurfaceView();
-        setState(CURRENT_STATE);
-        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+//        CURRENT_STATE = JCMediaManager.intance().lastState;
+//        addSurfaceView();
+//        setState(CURRENT_STATE);
+//        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         //set ui , but ui function is on child class
     }
 
@@ -348,5 +348,8 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         JCMediaManager.intance().lastState = CURRENT_STATE;//save state
         JCMediaManager.intance().listener.onBackFullscreen();
 //        }
+        if (getContext() instanceof JCFullScreenActivity) {
+            ((JCFullScreenActivity) getContext()).finish();
+        }
     }
 }
