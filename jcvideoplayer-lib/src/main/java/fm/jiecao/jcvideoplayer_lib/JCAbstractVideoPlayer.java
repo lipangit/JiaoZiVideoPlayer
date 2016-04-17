@@ -90,10 +90,15 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         this.url = url;
     }
 
-    public void setUpForFullscreen(String url) {
-        this.url = url;
-
-    }
+//    public void setUpForFullscreen() {
+//        if (IF_FULLSCREEN_IS_DIRECTLY) {
+//            ivStart.performClick();
+//        } else {
+//            JCMediaManager.intance().listener = this;
+//            jcVideoPlayer.setUpUI();//can not set ui
+//        }
+//
+//    }
 
     //set ui
     public void setState(int state) {
@@ -274,7 +279,11 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onBackFullscreen() {
-
+        CURRENT_STATE = JCMediaManager.intance().lastState;
+        addSurfaceView();
+        setState(CURRENT_STATE);
+        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        //set ui , but ui function is on child class
     }
 
     protected void startProgressTimer() {
@@ -327,4 +336,17 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         tvTimeTotal.setText(Utils.stringForTime(0));
     }
 
+    // only dispose IF_FULLSCREEN_IS_DIRECTLY=false ,
+    // bacause IF_FULLSCREEN_IS_DIRECTLY=true
+    //     will stop directly and finish fullscreenActivity directly
+    protected void quitFullcreenGoToNormal() {
+        JCMediaManager.intance().mediaPlayer.setDisplay(null);
+//        if (IF_FULLSCREEN_IS_DIRECTLY) {// it is all over
+//
+//        } else {// go back and go on play or pause
+        JCMediaManager.intance().listener = JCMediaManager.intance().lastListener;
+        JCMediaManager.intance().lastState = CURRENT_STATE;//save state
+        JCMediaManager.intance().listener.onBackFullscreen();
+//        }
+    }
 }

@@ -47,7 +47,7 @@ public class JCFullScreenActivity extends Activity {
     static int CURRENT_STATE = -1;
     public static String URL;
     public static boolean manualQuit = false;
-    static boolean DIRECT_FULLSCREEN = false;
+    static boolean DIRECT_FULLSCREEN = false;//this is should be in videoplayer
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,26 +57,34 @@ public class JCFullScreenActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         View decor = this.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        setContentView(R.layout.activity_fullscreen);
+        setContentView(R.layout.activity_fullscreen);//or here setJcVideoPlayer derictly
 
         jcVideoPlayer = (JCDemoVideoPlayer) findViewById(R.id.jcvideoplayer);
+        jcVideoPlayer.IF_CURRENT_IS_FULLSCREEN = true;
+        jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY = DIRECT_FULLSCREEN;
         jcVideoPlayer.addSurfaceView();
         jcVideoPlayer.setUp(URL);
         jcVideoPlayer.setState(CURRENT_STATE);
-        jcVideoPlayer.IF_CURRENT_IS_FULLSCREEN = true;
 
-        if (DIRECT_FULLSCREEN) {
+
+        if (jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY) {
             jcVideoPlayer.ivStart.performClick();
         } else {
             manualQuit = false;
             JCMediaManager.intance().listener = jcVideoPlayer;
-            jcVideoPlayer.setUpUI();
+            jcVideoPlayer.setUpUI();//在全屏的时候如何管理ui，这是个问题，因为这里应该只涉及abstraceVideoPlayer
         }
     }
 
     @Override
     public void onBackPressed() {
-        JCVideoPlayer.isClickFullscreen = false;
+        if (jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY) {
+            JCMediaManager.intance().mediaPlayer.release();
+        } else {
+            jcVideoPlayer.quitFullcreenGoToNormal();
+        }
+        super.onBackPressed();
+//        JCVideoPlayer.isClickFullscreen = false;
 //        jcVideoPlayer.quitFullScreen();
     }
 
