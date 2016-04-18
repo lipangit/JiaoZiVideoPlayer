@@ -162,7 +162,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         surfaceId = surfaceView.getId();
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
-        surfaceView.setOnClickListener(this);
+//        surfaceView.setOnClickListener(this);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         rlParent.addView(surfaceView, 0, layoutParams);

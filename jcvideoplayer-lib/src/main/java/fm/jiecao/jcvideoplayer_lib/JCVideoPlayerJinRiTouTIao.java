@@ -90,12 +90,11 @@ public class JCVideoPlayerJinRiTouTIao extends JCAbstractVideoPlayer {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.thumb) {
-            if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
-                onClickUiToggle();
-                return;
-            } else if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
+            if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
                 ivStart.performClick();
             }
+        } else if (i == R.id.parentview) {
+            onClickUiToggle();
         }
 
     }
