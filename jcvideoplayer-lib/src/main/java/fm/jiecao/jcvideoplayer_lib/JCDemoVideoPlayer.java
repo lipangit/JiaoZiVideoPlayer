@@ -47,40 +47,8 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
     }
 
     @Override
-    protected void onPrepareing() {
-        super.onPrepareing();
-        ivStart.setVisibility(View.INVISIBLE);
-
-    }
-
-    @Override
-    protected void onPlay() {
-        super.onPlay();
-        ivStart.setVisibility(View.VISIBLE);
-        updateStartImage();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        updateStartImage();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateStartImage();
-    }
-
-    @Override
-    public void onCompletion() {
-        super.onCompletion();
-        updateStartImage();
-    }
-
-    @Override
-    public void setState(int state) {
-        super.setState(state);
+    public void setStateAndUi(int state) {
+        super.setStateAndUi(state);
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
                 break;

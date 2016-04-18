@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -103,7 +102,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 //    }
 
     //set ui
-    public void setState(int state) {
+    public void setStateAndUi(int state) {
         CURRENT_STATE = state;
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
@@ -128,11 +127,19 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 return;
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
-                onPrepareing();
+                if (JCMediaManager.intance().listener != null) {
+                    JCMediaManager.intance().listener.onCompletion();
+                }
+                JCMediaManager.intance().listener = this;
+                addSurfaceView();
+                JCMediaManager.intance().prepareToPlay(getContext(), url);
+                setStateAndUi(CURRENT_STATE_PREPAREING);
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
-                onPause();
+                JCMediaManager.intance().mediaPlayer.pause();
+                setStateAndUi(CURRENT_STATE_PAUSE);
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
-                onResume();
+                JCMediaManager.intance().mediaPlayer.start();
+                setStateAndUi(CURRENT_STATE_PLAYING);
             }
         } else if (i == R.id.fullscreen) {
             if (IF_CURRENT_IS_FULLSCREEN) {
@@ -145,35 +152,6 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url);
             }
         }
-    }
-
-    protected void onPrepareing() {
-        if (JCMediaManager.intance().listener != null) {
-            JCMediaManager.intance().listener.onCompletion();
-        }
-        JCMediaManager.intance().listener = this;
-        CURRENT_STATE = CURRENT_STATE_PREPAREING;
-        addSurfaceView();
-        JCMediaManager.intance().prepareToPlay(getContext(), url);
-    }
-
-    protected void onPlay() {
-        if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
-        CURRENT_STATE = CURRENT_STATE_PLAYING;
-//        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
-        JCMediaManager.intance().mediaPlayer.start();
-        startProgressTimer();
-    }
-
-    protected void onPause() {
-        CURRENT_STATE = CURRENT_STATE_PAUSE;
-        JCMediaManager.intance().mediaPlayer.pause();
-    }
-
-    protected void onResume() {
-        CURRENT_STATE = CURRENT_STATE_PLAYING;
-        JCMediaManager.intance().mediaPlayer.start();
-        Log.i("JCVideoPlayer", "go on video");
     }
 
     public void addSurfaceView() {
@@ -244,16 +222,17 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onPrepared() {
-        onPlay();
-
+        if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
+        JCMediaManager.intance().mediaPlayer.start();
+        startProgressTimer();
+        setStateAndUi(CURRENT_STATE_PLAYING);
     }
 
     @Override
     public void onCompletion() {
-        CURRENT_STATE = CURRENT_STATE_NORMAL;
         cancelProgressTimer();
         resetProgressAndTime();
-
+        setStateAndUi(CURRENT_STATE_NORMAL);
     }
 
     @Override
@@ -290,7 +269,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 //            addSurfaceView();
 //            Log.i(TAG, "onBackFullscreen: addview");
 //        }
-        setState(CURRENT_STATE);
+        setStateAndUi(CURRENT_STATE);
 //        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         //set ui , but ui function is on child class
     }

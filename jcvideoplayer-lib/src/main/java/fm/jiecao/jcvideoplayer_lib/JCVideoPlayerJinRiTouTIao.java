@@ -66,8 +66,8 @@ public class JCVideoPlayerJinRiTouTIao extends JCAbstractVideoPlayer {
     }
 
     @Override
-    public void setState(int state) {
-        super.setState(state);
+    public void setStateAndUi(int state) {
+        super.setStateAndUi(state);
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
                 changeUiToNormal();
