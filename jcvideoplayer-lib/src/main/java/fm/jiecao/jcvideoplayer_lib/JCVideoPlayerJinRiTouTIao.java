@@ -18,6 +18,6 @@ public class JCVideoPlayerJinRiTouTIao extends JCAbstractVideoPlayer {
 
     @Override
     public int getLayoutId() {
-        return 0;
+        return R.layout.jc_demo_layout_jinritoutiao;
     }
 }

@@ -85,7 +85,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     private void init(Context context) {
-        View.inflate(context, R.layout.video_control_view, this);
+        View.inflate(context, R.layout.jc_demo_layout_jinritoutiao, this);
         ivStart = (ImageView) findViewById(R.id.start);
         pbLoading = (ProgressBar) findViewById(R.id.loading);
         pbBottom = (ProgressBar) findViewById(R.id.bottom_progressbar);

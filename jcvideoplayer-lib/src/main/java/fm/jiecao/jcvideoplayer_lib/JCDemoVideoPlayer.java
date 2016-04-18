@@ -33,7 +33,17 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
 
     @Override
     public int getLayoutId() {
-        return R.layout.jc_base_demo_layout;
+        return R.layout.jc_demo_layout_base;
+    }
+
+    @Override
+    public void setUp(String url) {
+        super.setUp(url);
+        if (IF_CURRENT_IS_FULLSCREEN) {
+            ivFullScreen.setImageResource(R.drawable.shrink_video);
+        } else {
+            ivFullScreen.setImageResource(R.drawable.enlarge_video);
+        }
     }
 
     @Override
