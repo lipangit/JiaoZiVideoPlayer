@@ -146,7 +146,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             ivFullScreen.setImageResource(shrinkRecId == 0 ? R.drawable.enlarge_video : shrinkRecId);
             ivBack.setVisibility(View.GONE);
         }
-        if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
+        if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {//this should check in custom videoplayer by you
             ifMp3 = true;
             ivFullScreen.setVisibility(View.GONE);
         }

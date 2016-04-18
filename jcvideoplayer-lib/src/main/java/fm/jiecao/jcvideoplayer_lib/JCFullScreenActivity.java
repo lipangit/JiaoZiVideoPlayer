@@ -72,7 +72,6 @@ public class JCFullScreenActivity extends Activity {
         } else {
             manualQuit = false;
             JCMediaManager.intance().listener = jcVideoPlayer;
-            jcVideoPlayer.setUpUI();//在全屏的时候如何管理ui，这是个问题，因为这里应该只涉及abstraceVideoPlayer
         }
     }
 

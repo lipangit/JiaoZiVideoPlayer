@@ -79,14 +79,15 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
     }
 
     @Override
-    public void setUpUI() {
+    public void setState(int state) {
+        super.setState(state);
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
                 break;
             case CURRENT_STATE_PREPAREING:
                 ivStart.setVisibility(View.INVISIBLE);
                 break;
-            case CURRENT_STATE_PLAY:
+            case CURRENT_STATE_PLAYING:
                 ivStart.setVisibility(View.VISIBLE);
                 break;
             case CURRENT_STATE_PAUSE:
@@ -96,7 +97,7 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
     }
 
     private void updateStartImage() {
-        if (CURRENT_STATE == CURRENT_STATE_PLAY) {
+        if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
             ivStart.setImageResource(R.drawable.click_video_pause_selector);
         } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
             ivStart.setImageResource(R.drawable.click_video_error_selector);
