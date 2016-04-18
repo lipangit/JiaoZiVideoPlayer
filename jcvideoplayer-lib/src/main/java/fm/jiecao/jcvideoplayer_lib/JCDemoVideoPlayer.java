@@ -68,6 +68,7 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
         updateStartImage();
     }
 
+    @Override
     public void setUpUI() {
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:

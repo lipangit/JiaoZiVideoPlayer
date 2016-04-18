@@ -116,6 +116,10 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         }
     }
 
+    protected void setUpUI() {
+
+    }
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -157,7 +161,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     protected void onPlay() {
         if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
         CURRENT_STATE = CURRENT_STATE_PLAY;
-        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+//        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         JCMediaManager.intance().mediaPlayer.start();
         startProgressTimer();
     }
@@ -290,6 +294,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         setState(CURRENT_STATE);
 //        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         //set ui , but ui function is on child class
+        setUpUI();
     }
 
     protected void startProgressTimer() {
