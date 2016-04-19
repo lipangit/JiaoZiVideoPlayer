@@ -776,6 +776,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     @Override
     public void onPrepared() {
+        if (surfaceHolder.getSurface() == null || !surfaceHolder.getSurface().isValid()) return;
         if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
         JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         JCMediaManager.intance().mediaPlayer.start();
