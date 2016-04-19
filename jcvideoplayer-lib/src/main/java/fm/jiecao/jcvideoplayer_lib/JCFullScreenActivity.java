@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import java.lang.reflect.Constructor;
+
 /**
  * <p>全屏的activity</p>
  * <p>fullscreen activity</p>
@@ -40,7 +42,7 @@ public class JCFullScreenActivity extends Activity {
         context.startActivity(intent);
     }
 
-    JCDemoVideoPlayer jcVideoPlayer;
+    JCAbstractVideoPlayer jcVideoPlayer;
     /**
      * 刚启动全屏时的播放状态
      */
@@ -59,7 +61,17 @@ public class JCFullScreenActivity extends Activity {
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         setContentView(R.layout.activity_fullscreen);//or here setJcVideoPlayer derictly
 
-        jcVideoPlayer = (JCDemoVideoPlayer) findViewById(R.id.jcvideoplayer);
+        try {
+            Class jcAbstractVideoPlayerClass = JCVideoPlayerJinRiTouTIao.class;
+            Constructor<JCVideoPlayerJinRiTouTIao> constructor = jcAbstractVideoPlayerClass.getConstructor(Context.class);
+            jcVideoPlayer = constructor.newInstance(this);
+            setContentView(jcVideoPlayer);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         jcVideoPlayer.IF_CURRENT_IS_FULLSCREEN = true;
         jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY = DIRECT_FULLSCREEN;
         jcVideoPlayer.addSurfaceView();
