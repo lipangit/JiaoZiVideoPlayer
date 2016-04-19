@@ -766,7 +766,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
      */
     @Deprecated
     public static void toFullscreenActivity(Context context, String url, String title) {
-        JCFullScreenActivity.toActivity(context, url);
+//        JCFullScreenActivity.toActivity(context, url);
     }
 
     @Override

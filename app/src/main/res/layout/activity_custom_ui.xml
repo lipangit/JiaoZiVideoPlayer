@@ -27,4 +27,16 @@
         android:id="@+id/custom_videoplayer_jinritoutiao"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
+
+    <Button
+        android:id="@+id/to_fullscreen_simple_demo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To fullscreen derictly simple demo"/>
+
+    <Button
+        android:id="@+id/to_fullscreen_jinritoutiao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To fullscreen derictly jinritoutiao"/>
 </LinearLayout>

@@ -37,8 +37,8 @@ public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
     }
 
     @Override
-    public void setUp(String url) {
-        super.setUp(url);
+    public void setUp(String url, Object... objects) {
+        super.setUp(url, objects);
         if (IF_CURRENT_IS_FULLSCREEN) {
             ivFullScreen.setImageResource(R.drawable.shrink_video);
         } else {

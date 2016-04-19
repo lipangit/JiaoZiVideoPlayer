@@ -51,6 +51,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     int surfaceId;// for onClick()
 
     String url;
+    Object[] obj;
 
     private static Timer mUpdateProgressTimer;
 
@@ -85,10 +86,11 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     public abstract int getLayoutId();
 
-    public void setUp(String url) {
+    public void setUp(String url, Object... obj) {
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         this.url = url;
         resetProgressAndTime();
+        this.obj = obj;
     }
 
 //    public void setUpForFullscreen() {
@@ -149,7 +151,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().lastListener = this;
                 JCMediaManager.intance().listener = null;
-                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, JCAbstractVideoPlayer.this.getClass());
+                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, JCAbstractVideoPlayer.this.getClass(), this.obj);
             }
         }
     }

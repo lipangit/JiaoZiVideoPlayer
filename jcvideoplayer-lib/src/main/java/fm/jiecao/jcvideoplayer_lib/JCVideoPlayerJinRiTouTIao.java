@@ -48,9 +48,10 @@ public class JCVideoPlayerJinRiTouTIao extends JCAbstractVideoPlayer {
 
     }
 
-    public void setUp(String url, String title) {
-        setUp(url);
-        tvTitle.setText(title);
+    @Override
+    public void setUp(String url, Object... objects) {
+        super.setUp(url, objects);
+        tvTitle.setText(objects[0].toString());
         if (IF_CURRENT_IS_FULLSCREEN) {
             ivFullScreen.setImageResource(R.drawable.shrink_video);
         } else {

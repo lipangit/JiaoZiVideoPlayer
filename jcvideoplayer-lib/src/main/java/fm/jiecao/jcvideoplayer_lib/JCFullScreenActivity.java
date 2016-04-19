@@ -19,11 +19,12 @@ import java.lang.reflect.Constructor;
  */
 public class JCFullScreenActivity extends Activity {
 
-    static void toActivityFromNormal(Context context, int state, String url, Class videoPlayClass) {
+    static void toActivityFromNormal(Context context, int state, String url, Class videoPlayClass, Object... obj) {
         CURRENT_STATE = state;
         DIRECT_FULLSCREEN = false;
         URL = url;
         VIDEO_PLAYER_CLASS = videoPlayClass;
+        OBJECTS = obj;
         Intent intent = new Intent(context, JCFullScreenActivity.class);
         context.startActivity(intent);
     }
@@ -35,10 +36,12 @@ public class JCFullScreenActivity extends Activity {
      * @param context context
      * @param url     video url
      */
-    public static void toActivity(Context context, String url) {
+    public static void toActivity(Context context, String url, Class videoPlayClass, Object... obj) {
         CURRENT_STATE = JCAbstractVideoPlayer.CURRENT_STATE_NORMAL;
         URL = url;
         DIRECT_FULLSCREEN = true;
+        VIDEO_PLAYER_CLASS = videoPlayClass;
+        OBJECTS = obj;
         Intent intent = new Intent(context, JCFullScreenActivity.class);
         context.startActivity(intent);
     }
@@ -52,6 +55,7 @@ public class JCFullScreenActivity extends Activity {
     public static boolean manualQuit = false;
     static boolean DIRECT_FULLSCREEN = false;//this is should be in videoplayer
     static Class VIDEO_PLAYER_CLASS;
+    static Object[] OBJECTS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,7 @@ public class JCFullScreenActivity extends Activity {
         jcVideoPlayer.IF_CURRENT_IS_FULLSCREEN = true;
         jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY = DIRECT_FULLSCREEN;
         jcVideoPlayer.addSurfaceView();
-        jcVideoPlayer.setUp(URL);
+        jcVideoPlayer.setUp(URL, OBJECTS);
         jcVideoPlayer.setStateAndUi(CURRENT_STATE);
 
 
