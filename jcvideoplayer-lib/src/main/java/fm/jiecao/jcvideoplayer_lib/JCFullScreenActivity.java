@@ -19,10 +19,11 @@ import java.lang.reflect.Constructor;
  */
 public class JCFullScreenActivity extends Activity {
 
-    static void toActivityFromNormal(Context context, int state, String url) {
+    static void toActivityFromNormal(Context context, int state, String url, Class videoPlayClass) {
         CURRENT_STATE = state;
         DIRECT_FULLSCREEN = false;
         URL = url;
+        VIDEO_PLAYER_CLASS = videoPlayClass;
         Intent intent = new Intent(context, JCFullScreenActivity.class);
         context.startActivity(intent);
     }
@@ -50,6 +51,7 @@ public class JCFullScreenActivity extends Activity {
     public static String URL;
     public static boolean manualQuit = false;
     static boolean DIRECT_FULLSCREEN = false;//this is should be in videoplayer
+    static Class VIDEO_PLAYER_CLASS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +64,8 @@ public class JCFullScreenActivity extends Activity {
         setContentView(R.layout.activity_fullscreen);//or here setJcVideoPlayer derictly
 
         try {
-            Class jcAbstractVideoPlayerClass = JCVideoPlayerJinRiTouTIao.class;
-            Constructor<JCVideoPlayerJinRiTouTIao> constructor = jcAbstractVideoPlayerClass.getConstructor(Context.class);
+//            Class jcAbstractVideoPlayerClass = JCVideoPlayerJinRiTouTIao.class;
+            Constructor<JCVideoPlayerJinRiTouTIao> constructor = VIDEO_PLAYER_CLASS.getConstructor(Context.class);
             jcVideoPlayer = constructor.newInstance(this);
             setContentView(jcVideoPlayer);
         } catch (InstantiationException e) {

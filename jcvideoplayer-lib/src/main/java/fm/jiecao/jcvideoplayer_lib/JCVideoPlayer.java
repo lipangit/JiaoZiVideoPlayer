@@ -303,7 +303,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 JCMediaManager.intance().lastListener = this;
                 JCMediaManager.intance().listener = null;
                 isClickFullscreen = true;
-                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url);
+//                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url);
 
                 if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
                     JC_BURIED_POINT.POINT_ENTER_FULLSCREEN(title, url);

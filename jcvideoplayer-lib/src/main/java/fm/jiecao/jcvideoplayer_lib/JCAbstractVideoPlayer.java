@@ -149,7 +149,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().lastListener = this;
                 JCMediaManager.intance().listener = null;
-                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url);
+                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, JCAbstractVideoPlayer.this.getClass());
             }
         }
     }
