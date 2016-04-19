@@ -229,6 +229,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
                 }
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
+                touchingProgressBar = false;//This should not be here , but this can improve accident bug .
+
                 addSurfaceView();
 
                 if (JCMediaManager.intance().listener != null) {
@@ -614,9 +616,12 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         JCMediaManager.intance().mediaPlayer.pause();
         JCMediaManager.intance().mediaPlayer.setDisplay(null);
         //这个view释放了，
-        JCMediaManager.intance().listener = JCMediaManager.intance().lastListener;
         JCMediaManager.intance().lastState = CURRENT_STATE;
-        JCMediaManager.intance().listener.onBackFullscreen();
+
+        if (JCMediaManager.intance().lastListener != null) {
+            JCMediaManager.intance().listener = JCMediaManager.intance().lastListener;
+            JCMediaManager.intance().listener.onBackFullscreen();
+        }
 
         if (getContext() instanceof JCFullScreenActivity) {
             ((JCFullScreenActivity) getContext()).finish();
@@ -771,6 +776,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     @Override
     public void onPrepared() {
+        if (surfaceHolder.getSurface() == null || !surfaceHolder.getSurface().isValid()) return;
         if (CURRENT_STATE != CURRENT_STATE_PREPAREING) return;
         JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         JCMediaManager.intance().mediaPlayer.start();
