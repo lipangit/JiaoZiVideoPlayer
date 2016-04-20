@@ -98,7 +98,7 @@ public class JCFullScreenActivity extends Activity {
     @Override
     public void onBackPressed() {
         if (jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY) {
-            JCMediaManager.intance().mediaPlayer.release();
+            JCMediaManager.intance().mediaPlayer.stop();
         } else {
             jcVideoPlayer.quitFullcreenGoToNormal();
         }
