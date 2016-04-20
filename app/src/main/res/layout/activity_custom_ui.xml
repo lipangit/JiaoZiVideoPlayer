@@ -11,7 +11,7 @@
         android:layout_marginTop="18dp"
         android:text="Simple base example"/>
 
-    <fm.jiecao.jcvideoplayer_lib.JCDemoVideoPlayer
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerDemo
         android:id="@+id/custom_videoplayer"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
@@ -23,7 +23,7 @@
         android:layout_marginTop="18dp"
         android:text="Recommended example"/>
 
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerJinRiTouTIao
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
         android:id="@+id/custom_videoplayer_jinritoutiao"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>

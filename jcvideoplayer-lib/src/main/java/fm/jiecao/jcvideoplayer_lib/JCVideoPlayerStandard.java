@@ -15,7 +15,7 @@ import java.util.TimerTask;
  * Created by Nathen
  * On 2016/04/18 16:15
  */
-public class JCVideoPlayerJinRiTouTIao extends JCAbstractVideoPlayer {
+public class JCVideoPlayerStandard extends JCAbstractVideoPlayer {
 
     ImageView ivBack;
     ProgressBar pbBottom, pbLoading;
@@ -25,11 +25,11 @@ public class JCVideoPlayerJinRiTouTIao extends JCAbstractVideoPlayer {
 
     private static Timer mDismissControlViewTimer;
 
-    public JCVideoPlayerJinRiTouTIao(Context context) {
+    public JCVideoPlayerStandard(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerJinRiTouTIao(Context context, AttributeSet attrs) {
+    public JCVideoPlayerStandard(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

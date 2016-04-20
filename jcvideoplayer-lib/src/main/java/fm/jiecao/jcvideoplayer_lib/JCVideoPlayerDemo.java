@@ -9,13 +9,13 @@ import android.view.View;
  * Created by Nathen
  * On 2016/04/10 15:45
  */
-public class JCDemoVideoPlayer extends JCAbstractVideoPlayer {
+public class JCVideoPlayerDemo extends JCAbstractVideoPlayer {
 
-    public JCDemoVideoPlayer(Context context) {
+    public JCVideoPlayerDemo(Context context) {
         super(context);
     }
 
-    public JCDemoVideoPlayer(Context context, AttributeSet attrs) {
+    public JCVideoPlayerDemo(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

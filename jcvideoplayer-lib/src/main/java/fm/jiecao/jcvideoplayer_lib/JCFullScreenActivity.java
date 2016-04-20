@@ -71,7 +71,7 @@ public class JCFullScreenActivity extends Activity {
 
         try {
 //            Class jcAbstractVideoPlayerClass = JCVideoPlayerJinRiTouTIao.class;
-            Constructor<JCVideoPlayerJinRiTouTIao> constructor = VIDEO_PLAYER_CLASS.getConstructor(Context.class);
+            Constructor<JCVideoPlayerStandard> constructor = VIDEO_PLAYER_CLASS.getConstructor(Context.class);
             jcVideoPlayer = constructor.newInstance(this);
             setContentView(jcVideoPlayer);
         } catch (InstantiationException e) {
