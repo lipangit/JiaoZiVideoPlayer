@@ -114,8 +114,9 @@ public class JCVideoPlayerStandard extends JCAbstractVideoPlayer {
         } else if (i == R.id.parentview) {
             onClickUiToggle();
             startDismissControlViewTimer();
+        } else if (i == R.id.back) {
+            backFullscreen();
         }
-
     }
 
     private void onClickUiToggle() {

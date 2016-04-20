@@ -37,6 +37,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     private boolean touchingProgressBar = false;
     protected boolean IF_CURRENT_IS_FULLSCREEN = false;
     protected boolean IF_FULLSCREEN_IS_DIRECTLY = false;//IF_CURRENT_IS_FULLSCREEN should be true first
+    private static boolean isFullscreenFromNormal = false;
 
     ImageView ivStart;
     SeekBar skProgress;
@@ -104,7 +105,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 //    }
 
     //set ui
-    public void setStateAndUi(int state) {
+    protected void setStateAndUi(int state) {
         CURRENT_STATE = state;
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
@@ -151,6 +152,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().lastListener = this;
                 JCMediaManager.intance().listener = null;
+                isFullscreenFromNormal = true;
                 JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, JCAbstractVideoPlayer.this.getClass(), this.obj);
             }
         }
@@ -232,9 +234,18 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     @Override
     public void onCompletion() {
+        //make me normal first
         cancelProgressTimer();
         resetProgressAndTime();
         setStateAndUi(CURRENT_STATE_NORMAL);
+
+        //if fullscreen finish activity what ever the activity is directly or click fullscreen
+        finishMyFullscreen();
+
+        if (isFullscreenFromNormal) {//如果在进入全屏后播放完就初始化自己非全屏的控件
+            isFullscreenFromNormal = false;
+            JCMediaManager.intance().lastListener.onCompletion();
+        }
     }
 
     @Override
@@ -338,8 +349,21 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         JCMediaManager.intance().lastState = CURRENT_STATE;//save state
         JCMediaManager.intance().listener.onBackFullscreen();
 //        }
-//        if (getContext() instanceof JCFullScreenActivity) {
-//            ((JCFullScreenActivity) getContext()).finish();
-//        }
+        finishMyFullscreen();
+    }
+
+    protected void finishMyFullscreen() {
+        if (getContext() instanceof JCFullScreenActivity) {
+            ((JCFullScreenActivity) getContext()).finish();
+        }
+    }
+
+    public void backFullscreen() {
+        if (IF_FULLSCREEN_IS_DIRECTLY) {
+            JCMediaManager.intance().mediaPlayer.stop();
+            finishMyFullscreen();
+        } else {
+            quitFullcreenGoToNormal();
+        }
     }
 }
