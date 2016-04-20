@@ -33,8 +33,10 @@ public class JCFullScreenActivity extends Activity {
      * <p>直接进入全屏播放</p>
      * <p>Full screen play video derictly</p>
      *
-     * @param context context
-     * @param url     video url
+     * @param context        context
+     * @param url            video url
+     * @param videoPlayClass your videoplayer extends JCAbstraceVideoPlayer
+     * @param obj            custom param
      */
     public static void toActivity(Context context, String url, Class videoPlayClass, Object... obj) {
         CURRENT_STATE = JCAbstractVideoPlayer.CURRENT_STATE_NORMAL;
