@@ -310,7 +310,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         setProgressAndTime(progress, secProgress, position, duration);
     }
 
-    private void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
+    protected void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
         if (!touchingProgressBar) {
             if (progress != 0) skProgress.setProgress(progress);
         }
@@ -319,7 +319,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         tvTimeTotal.setText(Utils.stringForTime(totalTime));
     }
 
-    private void resetProgressAndTime() {
+    protected void resetProgressAndTime() {
         skProgress.setProgress(0);
         skProgress.setSecondaryProgress(0);
         tvTimeCurrent.setText(Utils.stringForTime(0));

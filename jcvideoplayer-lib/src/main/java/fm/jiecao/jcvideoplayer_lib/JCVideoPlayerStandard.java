@@ -3,6 +3,7 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -76,14 +77,30 @@ public class JCVideoPlayerStandard extends JCAbstractVideoPlayer {
                 break;
             case CURRENT_STATE_PREPAREING:
                 changeUiToShowUiPrepareing();
+                startDismissControlViewTimer();
                 break;
             case CURRENT_STATE_PLAYING:
                 changeUiToShowUiPlaying();
+                startDismissControlViewTimer();
                 break;
             case CURRENT_STATE_PAUSE:
                 changeUiToShowUiPause();
+                cancelDismissControlViewTimer();
                 break;
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                cancelDismissControlViewTimer();
+                break;
+            case MotionEvent.ACTION_UP:
+                startDismissControlViewTimer();
+                break;
+        }
+        return super.onTouch(v, event);
     }
 
     @Override
@@ -96,6 +113,7 @@ public class JCVideoPlayerStandard extends JCAbstractVideoPlayer {
             }
         } else if (i == R.id.parentview) {
             onClickUiToggle();
+            startDismissControlViewTimer();
         }
 
     }
@@ -120,6 +138,20 @@ public class JCVideoPlayerStandard extends JCAbstractVideoPlayer {
                 changeUiToShowUiPause();
             }
         }
+    }
+
+    @Override
+    protected void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
+        super.setProgressAndTime(progress, secProgress, currentTime, totalTime);
+        if (progress != 0) pbBottom.setProgress(progress);
+        if (secProgress != 0) pbBottom.setSecondaryProgress(secProgress);
+    }
+
+    @Override
+    protected void resetProgressAndTime() {
+        super.resetProgressAndTime();
+        pbBottom.setProgress(0);
+        pbBottom.setSecondaryProgress(0);
     }
 
     //Unified management Ui
@@ -219,8 +251,8 @@ public class JCVideoPlayerStandard extends JCAbstractVideoPlayer {
                         public void run() {
                             if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
                                 llBottomControl.setVisibility(View.INVISIBLE);
+                                llTopContainer.setVisibility(View.INVISIBLE);
                                 pbBottom.setVisibility(View.VISIBLE);
-                                tvTitle.setVisibility(View.INVISIBLE);
                                 ivStart.setVisibility(View.INVISIBLE);
                             }
                         }
