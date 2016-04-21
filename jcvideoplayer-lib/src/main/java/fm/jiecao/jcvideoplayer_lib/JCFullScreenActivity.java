@@ -102,6 +102,6 @@ public class JCFullScreenActivity extends Activity {
     protected void onPause() {
         super.onPause();
         JCAbstractVideoPlayer.releaseAllVideos();
-        finish();
+//        finish();
     }
 }
