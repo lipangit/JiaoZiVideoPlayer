@@ -24,8 +24,6 @@ public class DemoApplication extends Application {
         super.onCreate();
         initUniversalImageLoader();
 
-        //这里将会改变所有缩略图的ScaleType | Here will change all thumbnails ScaleType
-//        JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
     }
 
     private void initUniversalImageLoader() {

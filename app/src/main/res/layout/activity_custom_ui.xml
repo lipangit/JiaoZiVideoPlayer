@@ -32,11 +32,11 @@
         android:id="@+id/to_fullscreen_simple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To fullscreen derictly simple demo"/>
+        android:text="To fullscreen derictly - simple ui"/>
 
     <Button
         android:id="@+id/to_fullscreen_standard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To fullscreen derictly standard"/>
+        android:text="To fullscreen derictly - standard ui"/>
 </LinearLayout>
