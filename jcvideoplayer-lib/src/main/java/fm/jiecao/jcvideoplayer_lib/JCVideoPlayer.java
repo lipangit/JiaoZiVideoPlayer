@@ -37,7 +37,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     ImageView ivFullScreen;
     SeekBar skProgress;
     TextView tvTimeCurrent, tvTimeTotal;
-    ResizeSurfaceView surfaceView;
+    JCResizeSurfaceView surfaceView;
     SurfaceHolder surfaceHolder;
     TextView tvTitle;
     ImageView ivBack;
@@ -85,7 +85,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     private void init(Context context) {
-        View.inflate(context, R.layout.jc_demo_layout_jinritoutiao, this);
+        View.inflate(context, R.layout.jc_layout_standard, this);
         ivStart = (ImageView) findViewById(R.id.start);
         pbLoading = (ProgressBar) findViewById(R.id.loading);
         pbBottom = (ProgressBar) findViewById(R.id.bottom_progressbar);
@@ -141,9 +141,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         this.ifFullScreen = false;
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         if (ifFullScreen) {
-            ivFullScreen.setImageResource(enlargRecId == 0 ? R.drawable.shrink_video : enlargRecId);
+            ivFullScreen.setImageResource(enlargRecId == 0 ? R.drawable.jc_shrink : enlargRecId);
         } else {
-            ivFullScreen.setImageResource(shrinkRecId == 0 ? R.drawable.enlarge_video : shrinkRecId);
+            ivFullScreen.setImageResource(shrinkRecId == 0 ? R.drawable.jc_enlarge : shrinkRecId);
             ivBack.setVisibility(View.GONE);
         }
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {//this should check in custom videoplayer by you
@@ -174,9 +174,9 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
         ifFullScreen = true;
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         if (ifFullScreen) {
-            ivFullScreen.setImageResource(shrinkRecId == 0 ? R.drawable.shrink_video : shrinkRecId);
+            ivFullScreen.setImageResource(shrinkRecId == 0 ? R.drawable.jc_shrink : shrinkRecId);
         } else {
-            ivFullScreen.setImageResource(enlargRecId == 0 ? R.drawable.enlarge_video : enlargRecId);
+            ivFullScreen.setImageResource(enlargRecId == 0 ? R.drawable.jc_enlarge : enlargRecId);
         }
         tvTitle.setText(title);
         if (!TextUtils.isEmpty(url) && url.contains(".mp3")) {
@@ -333,10 +333,10 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
     }
 
     void addSurfaceView() {
-        if (rlParent.getChildAt(0) instanceof ResizeSurfaceView) {
+        if (rlParent.getChildAt(0) instanceof JCResizeSurfaceView) {
             rlParent.removeViewAt(0);
         }
-        surfaceView = new ResizeSurfaceView(getContext());
+        surfaceView = new JCResizeSurfaceView(getContext());
         surfaceId = surfaceView.getId();
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
@@ -533,11 +533,11 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     private void updateStartImage() {
         if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
-            ivStart.setImageResource(R.drawable.click_video_pause_selector);
+            ivStart.setImageResource(R.drawable.jc_click_pause_selector);
         } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
-            ivStart.setImageResource(R.drawable.click_video_error_selector);
+            ivStart.setImageResource(R.drawable.jc_click_error_selector);
         } else {
-            ivStart.setImageResource(R.drawable.click_video_play_selector);
+            ivStart.setImageResource(R.drawable.jc_click_play_selector);
         }
     }
 
@@ -561,8 +561,8 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
             skProgress.setProgress(progress);
             pbBottom.setProgress(progress);
         }
-        tvTimeCurrent.setText(Utils.stringForTime(currentTime));
-        tvTimeTotal.setText(Utils.stringForTime(totalTime));
+        tvTimeCurrent.setText(JCUtils.stringForTime(currentTime));
+        tvTimeTotal.setText(JCUtils.stringForTime(totalTime));
     }
 
     public void release() {

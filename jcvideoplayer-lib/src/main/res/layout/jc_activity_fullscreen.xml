@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerDemo
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
         android:id="@+id/jcvideoplayer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

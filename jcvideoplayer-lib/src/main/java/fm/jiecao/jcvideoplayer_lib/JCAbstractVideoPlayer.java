@@ -48,7 +48,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 
     ViewGroup llTopContainer, llBottomControl;
 
-    ResizeSurfaceView surfaceView;
+    JCResizeSurfaceView surfaceView;
     SurfaceHolder surfaceHolder;
     int surfaceId;// for onClick()
 
@@ -161,10 +161,10 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     }
 
     public void addSurfaceView() {
-        if (rlParent.getChildAt(0) instanceof ResizeSurfaceView) {
+        if (rlParent.getChildAt(0) instanceof JCResizeSurfaceView) {
             rlParent.removeViewAt(0);
         }
-        surfaceView = new ResizeSurfaceView(getContext());
+        surfaceView = new JCResizeSurfaceView(getContext());
         surfaceId = surfaceView.getId();
         surfaceHolder = surfaceView.getHolder();
         surfaceHolder.addCallback(this);
@@ -328,15 +328,15 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
             if (progress != 0) skProgress.setProgress(progress);
         }
         if (secProgress != 0) skProgress.setSecondaryProgress(secProgress);
-        tvTimeCurrent.setText(Utils.stringForTime(currentTime));
-        tvTimeTotal.setText(Utils.stringForTime(totalTime));
+        tvTimeCurrent.setText(JCUtils.stringForTime(currentTime));
+        tvTimeTotal.setText(JCUtils.stringForTime(totalTime));
     }
 
     protected void resetProgressAndTime() {
         skProgress.setProgress(0);
         skProgress.setSecondaryProgress(0);
-        tvTimeCurrent.setText(Utils.stringForTime(0));
-        tvTimeTotal.setText(Utils.stringForTime(0));
+        tvTimeCurrent.setText(JCUtils.stringForTime(0));
+        tvTimeTotal.setText(JCUtils.stringForTime(0));
     }
 
     // only dispose IF_FULLSCREEN_IS_DIRECTLY=false ,

@@ -8,7 +8,7 @@ import android.widget.Button;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import fm.jiecao.jcvideoplayer_lib.JCAbstractVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerDemo;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
@@ -17,39 +17,39 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * On 2016/04/15 11:25
  */
 public class CustomUiActivity extends AppCompatActivity implements View.OnClickListener {
-    JCVideoPlayerDemo jcDemoVideoPlayer;
-    JCVideoPlayerStandard jcVideoPlayerJinRiTouTIao;
-    Button btnToFullscreen_demo, btnToFullscreen_jinritoutiao;
+    JCVideoPlayerSimple jcVideoPlayerSimple;
+    JCVideoPlayerStandard jcVideoPlayerStandard;
+    Button btnToFullscreen_simple, btnToFullscreen_standard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_ui);
 
-        jcDemoVideoPlayer = (JCVideoPlayerDemo) findViewById(R.id.custom_videoplayer);
-        jcDemoVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4");
+        jcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.custom_videoplayer);
+        jcVideoPlayerSimple.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4");
 
-        jcVideoPlayerJinRiTouTIao = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_jinritoutiao);
-        jcVideoPlayerJinRiTouTIao.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
+        jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
+        jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
                 , "嫂子干啥呢");
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
-                jcVideoPlayerJinRiTouTIao.ivThumb);
+                jcVideoPlayerStandard.ivThumb);
 
-        btnToFullscreen_demo = (Button) findViewById(R.id.to_fullscreen_simple_demo);
-        btnToFullscreen_jinritoutiao = (Button) findViewById(R.id.to_fullscreen_jinritoutiao);
-        btnToFullscreen_demo.setOnClickListener(this);
-        btnToFullscreen_jinritoutiao.setOnClickListener(this);
+        btnToFullscreen_simple = (Button) findViewById(R.id.to_fullscreen_simple);
+        btnToFullscreen_standard = (Button) findViewById(R.id.to_fullscreen_standard);
+        btnToFullscreen_simple.setOnClickListener(this);
+        btnToFullscreen_standard.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.to_fullscreen_simple_demo:
+            case R.id.to_fullscreen_simple:
                 JCFullScreenActivity.toActivity(this,
                         "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
-                        JCVideoPlayerDemo.class, "嫂子真浪");
+                        JCVideoPlayerSimple.class, "嫂子真浪");
                 break;
-            case R.id.to_fullscreen_jinritoutiao:
+            case R.id.to_fullscreen_standard:
                 JCFullScreenActivity.toActivity(this,
                         "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
                         JCVideoPlayerStandard.class, "嫂子真牛逼");

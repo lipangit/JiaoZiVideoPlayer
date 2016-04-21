@@ -9,13 +9,13 @@ import android.view.View;
  * Created by Nathen
  * On 2016/04/10 15:45
  */
-public class JCVideoPlayerDemo extends JCAbstractVideoPlayer {
+public class JCVideoPlayerSimple extends JCAbstractVideoPlayer {
 
-    public JCVideoPlayerDemo(Context context) {
+    public JCVideoPlayerSimple(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerDemo(Context context, AttributeSet attrs) {
+    public JCVideoPlayerSimple(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -33,16 +33,16 @@ public class JCVideoPlayerDemo extends JCAbstractVideoPlayer {
 
     @Override
     public int getLayoutId() {
-        return R.layout.jc_demo_layout_base;
+        return R.layout.jc_layout_base;
     }
 
     @Override
     public void setUp(String url, Object... objects) {
         super.setUp(url, objects);
         if (IF_CURRENT_IS_FULLSCREEN) {
-            ivFullScreen.setImageResource(R.drawable.shrink_video);
+            ivFullScreen.setImageResource(R.drawable.jc_shrink);
         } else {
-            ivFullScreen.setImageResource(R.drawable.enlarge_video);
+            ivFullScreen.setImageResource(R.drawable.jc_enlarge);
         }
     }
 
@@ -66,11 +66,11 @@ public class JCVideoPlayerDemo extends JCAbstractVideoPlayer {
 
     private void updateStartImage() {
         if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
-            ivStart.setImageResource(R.drawable.click_video_pause_selector);
+            ivStart.setImageResource(R.drawable.jc_click_pause_selector);
         } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
-            ivStart.setImageResource(R.drawable.click_video_error_selector);
+            ivStart.setImageResource(R.drawable.jc_click_error_selector);
         } else {
-            ivStart.setImageResource(R.drawable.click_video_play_selector);
+            ivStart.setImageResource(R.drawable.jc_click_play_selector);
         }
     }
 }

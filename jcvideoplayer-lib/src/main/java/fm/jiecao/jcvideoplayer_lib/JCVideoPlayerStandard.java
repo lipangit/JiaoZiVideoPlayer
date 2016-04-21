@@ -54,9 +54,9 @@ public class JCVideoPlayerStandard extends JCAbstractVideoPlayer {
         super.setUp(url, objects);
         tvTitle.setText(objects[0].toString());
         if (IF_CURRENT_IS_FULLSCREEN) {
-            ivFullScreen.setImageResource(R.drawable.shrink_video);
+            ivFullScreen.setImageResource(R.drawable.jc_shrink);
         } else {
-            ivFullScreen.setImageResource(R.drawable.enlarge_video);
+            ivFullScreen.setImageResource(R.drawable.jc_enlarge);
             ivBack.setVisibility(View.GONE);
         }
         changeUiToNormal();
@@ -64,7 +64,7 @@ public class JCVideoPlayerStandard extends JCAbstractVideoPlayer {
 
     @Override
     public int getLayoutId() {
-        return R.layout.jc_demo_layout_jinritoutiao;
+        return R.layout.jc_layout_standard;
     }
 
     @Override
@@ -232,11 +232,11 @@ public class JCVideoPlayerStandard extends JCAbstractVideoPlayer {
 
     private void updateStartImage() {
         if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
-            ivStart.setImageResource(R.drawable.click_video_pause_selector);
+            ivStart.setImageResource(R.drawable.jc_click_pause_selector);
         } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
-            ivStart.setImageResource(R.drawable.click_video_error_selector);
+            ivStart.setImageResource(R.drawable.jc_click_error_selector);
         } else {
-            ivStart.setImageResource(R.drawable.click_video_play_selector);
+            ivStart.setImageResource(R.drawable.jc_click_play_selector);
         }
     }
 

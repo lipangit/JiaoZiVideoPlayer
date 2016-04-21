@@ -11,7 +11,7 @@
         android:layout_marginTop="18dp"
         android:text="Simple base example"/>
 
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerDemo
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
         android:id="@+id/custom_videoplayer"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
@@ -24,19 +24,19 @@
         android:text="Recommended example"/>
 
     <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-        android:id="@+id/custom_videoplayer_jinritoutiao"
+        android:id="@+id/custom_videoplayer_standard"
         android:layout_width="match_parent"
         android:layout_height="200dp"/>
 
     <Button
-        android:id="@+id/to_fullscreen_simple_demo"
+        android:id="@+id/to_fullscreen_simple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="To fullscreen derictly simple demo"/>
 
     <Button
-        android:id="@+id/to_fullscreen_jinritoutiao"
+        android:id="@+id/to_fullscreen_standard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="To fullscreen derictly jinritoutiao"/>
+        android:text="To fullscreen derictly standard"/>
 </LinearLayout>

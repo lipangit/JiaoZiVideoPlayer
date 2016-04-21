@@ -66,10 +66,9 @@ public class JCFullScreenActivity extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         View decor = this.getWindow().getDecorView();
         decor.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        setContentView(R.layout.activity_fullscreen);//or here setJcVideoPlayer derictly
+        setContentView(R.layout.jc_activity_fullscreen);//or here setJcVideoPlayer derictly
 
         try {
-//            Class jcAbstractVideoPlayerClass = JCVideoPlayerJinRiTouTIao.class;
             Constructor<JCVideoPlayerStandard> constructor = VIDEO_PLAYER_CLASS.getConstructor(Context.class);
             jcVideoPlayer = constructor.newInstance(this);
             setContentView(jcVideoPlayer);
