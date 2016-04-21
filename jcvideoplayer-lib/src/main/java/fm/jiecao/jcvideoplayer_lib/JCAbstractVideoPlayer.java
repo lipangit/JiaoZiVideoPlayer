@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -74,9 +73,9 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         skProgress = (SeekBar) findViewById(R.id.progress);
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
-        llBottomControl = (LinearLayout) findViewById(R.id.bottom_control);
+        llBottomControl = (ViewGroup) findViewById(R.id.bottom_control);
         rlParent = (RelativeLayout) findViewById(R.id.parentview);
-        llTopContainer = (LinearLayout) findViewById(R.id.title_container);
+        llTopContainer = (ViewGroup) findViewById(R.id.title_container);
 
         ivStart.setOnClickListener(this);
         ivFullScreen.setOnClickListener(this);

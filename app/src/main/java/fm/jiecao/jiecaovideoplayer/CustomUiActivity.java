@@ -11,6 +11,7 @@ import fm.jiecao.jcvideoplayer_lib.JCAbstractVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardWithShareButton;
 
 /**
  * Created by Nathen
@@ -19,6 +20,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 public class CustomUiActivity extends AppCompatActivity implements View.OnClickListener {
     JCVideoPlayerSimple jcVideoPlayerSimple;
     JCVideoPlayerStandard jcVideoPlayerStandard;
+    JCVideoPlayerStandardWithShareButton jcVideoPlayerStandardWithShareButton;
     Button btnToFullscreen_simple, btnToFullscreen_standard;
 
     @Override
@@ -34,6 +36,12 @@ public class CustomUiActivity extends AppCompatActivity implements View.OnClickL
                 , "嫂子干啥呢");
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
                 jcVideoPlayerStandard.ivThumb);
+
+        jcVideoPlayerStandardWithShareButton = (JCVideoPlayerStandardWithShareButton) findViewById(R.id.custom_videoplayer_standard_with_share_button);
+        jcVideoPlayerStandardWithShareButton.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
+                , "嫂子闭眼睛");
+        ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
+                jcVideoPlayerStandardWithShareButton.ivThumb);
 
         btnToFullscreen_simple = (Button) findViewById(R.id.to_fullscreen_simple);
         btnToFullscreen_standard = (Button) findViewById(R.id.to_fullscreen_standard);
