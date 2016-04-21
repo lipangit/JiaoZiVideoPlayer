@@ -54,7 +54,6 @@ public class JCFullScreenActivity extends Activity {
      */
     static int CURRENT_STATE = -1;
     public static String URL;
-    public static boolean manualQuit = false;
     static boolean DIRECT_FULLSCREEN = false;//this is should be in videoplayer
     static Class VIDEO_PLAYER_CLASS;
     static Object[] OBJECTS;
@@ -90,7 +89,7 @@ public class JCFullScreenActivity extends Activity {
         if (jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY) {
             jcVideoPlayer.ivStart.performClick();
         } else {
-            manualQuit = false;
+            JCAbstractVideoPlayer.IF_RELEASE_WHEN_ON_PAUSE = true;
             JCMediaManager.intance().listener = jcVideoPlayer;
         }
     }
@@ -100,13 +99,10 @@ public class JCFullScreenActivity extends Activity {
         jcVideoPlayer.backFullscreen();
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        if (!manualQuit) {
-//            JCVideoPlayer.isClickFullscreen = false;
-//            JCVideoPlayer.releaseAllVideos();
-//            finish();
-//        }
-//    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCAbstractVideoPlayer.releaseAllVideos();
+        finish();
+    }
 }

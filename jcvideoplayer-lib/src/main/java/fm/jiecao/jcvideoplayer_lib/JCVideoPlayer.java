@@ -609,7 +609,6 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 //    }
 
     public void quitFullScreen() {
-        JCFullScreenActivity.manualQuit = true;
         clickfullscreentime = System.currentTimeMillis();
         JCMediaManager.intance().mediaPlayer.pause();
         JCMediaManager.intance().mediaPlayer.setDisplay(null);
@@ -680,7 +679,7 @@ public class JCVideoPlayer extends FrameLayout implements View.OnClickListener, 
 
     /**
      * <p>停止所有音频的播放</p>
-     * <p>release all videos</p>
+     * <p>releaseAllVideos all videos</p>
      */
     public static void releaseAllVideos() {
         if (!isClickFullscreen) {

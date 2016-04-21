@@ -37,7 +37,8 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     private boolean touchingProgressBar = false;
     protected boolean IF_CURRENT_IS_FULLSCREEN = false;
     protected boolean IF_FULLSCREEN_IS_DIRECTLY = false;//IF_CURRENT_IS_FULLSCREEN should be true first
-    private static boolean isFullscreenFromNormal = false;
+    private static boolean IF_FULLSCREEN_FROM_NORMAL = false;
+    public static boolean IF_RELEASE_WHEN_ON_PAUSE = true;
 
     ImageView ivStart;
     SeekBar skProgress;
@@ -152,7 +153,8 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().lastListener = this;
                 JCMediaManager.intance().listener = null;
-                isFullscreenFromNormal = true;
+                IF_FULLSCREEN_FROM_NORMAL = true;
+                IF_RELEASE_WHEN_ON_PAUSE = false;
                 JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, JCAbstractVideoPlayer.this.getClass(), this.obj);
             }
         }
@@ -242,8 +244,8 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         //if fullscreen finish activity what ever the activity is directly or click fullscreen
         finishMyFullscreen();
 
-        if (isFullscreenFromNormal) {//如果在进入全屏后播放完就初始化自己非全屏的控件
-            isFullscreenFromNormal = false;
+        if (IF_FULLSCREEN_FROM_NORMAL) {//如果在进入全屏后播放完就初始化自己非全屏的控件
+            IF_FULLSCREEN_FROM_NORMAL = false;
             JCMediaManager.intance().lastListener.onCompletion();
         }
     }
@@ -363,7 +365,19 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
             JCMediaManager.intance().mediaPlayer.stop();
             finishMyFullscreen();
         } else {
+            IF_RELEASE_WHEN_ON_PAUSE = false;
             quitFullcreenGoToNormal();
+        }
+    }
+
+    public static void releaseAllVideos() {
+        if (IF_RELEASE_WHEN_ON_PAUSE) {
+            JCMediaManager.intance().mediaPlayer.stop();
+            if (JCMediaManager.intance().listener != null) {
+                JCMediaManager.intance().listener.onCompletion();
+            }
+        } else {
+            IF_RELEASE_WHEN_ON_PAUSE = true;
         }
     }
 }
