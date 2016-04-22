@@ -44,6 +44,7 @@ public class JCVideoPlayerSimple extends JCAbstractVideoPlayer {
         } else {
             ivFullScreen.setImageResource(R.drawable.jc_enlarge);
         }
+        setStateAndUi(CURRENT_STATE_NORMAL);
     }
 
     @Override

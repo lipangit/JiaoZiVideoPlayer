@@ -110,6 +110,9 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
                 cancelProgressTimer();
+                if (rlParent.getChildCount() > 0) {
+                    rlParent.removeAllViews();
+                }
                 break;
             case CURRENT_STATE_PREPAREING:
 
@@ -160,8 +163,8 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
     }
 
     public void addSurfaceView() {
-        if (rlParent.getChildAt(0) instanceof JCResizeSurfaceView) {
-            rlParent.removeViewAt(0);
+        if (rlParent.getChildCount() > 0) {
+            rlParent.removeAllViews();
         }
         surfaceView = new JCResizeSurfaceView(getContext());
         surfaceId = surfaceView.getId();
@@ -170,7 +173,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
 //        surfaceView.setOnClickListener(this);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-        rlParent.addView(surfaceView, 0, layoutParams);
+        rlParent.addView(surfaceView, layoutParams);
     }
 
     @Override
