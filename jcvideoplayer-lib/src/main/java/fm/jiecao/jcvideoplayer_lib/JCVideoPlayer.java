@@ -73,9 +73,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         skProgress = (SeekBar) findViewById(R.id.progress);
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
-        llBottomControl = (ViewGroup) findViewById(R.id.bottom_control);
+        llBottomControl = (ViewGroup) findViewById(R.id.layout_bottom);
         rlParent = (RelativeLayout) findViewById(R.id.parentview);
-        llTopContainer = (ViewGroup) findViewById(R.id.title_container);
+        llTopContainer = (ViewGroup) findViewById(R.id.layout_top);
 
         ivStart.setOnClickListener(this);
         ivFullScreen.setOnClickListener(this);

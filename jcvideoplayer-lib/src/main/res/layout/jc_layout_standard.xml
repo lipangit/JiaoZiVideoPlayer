@@ -43,7 +43,7 @@
         android:scaleType="fitCenter"/>
 
     <LinearLayout
-        android:id="@+id/bottom_control"
+        android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
@@ -102,7 +102,7 @@
         android:progressDrawable="@drawable/jc_progress"/>
 
     <LinearLayout
-        android:id="@+id/title_container"
+        android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/jc_title_bg"
