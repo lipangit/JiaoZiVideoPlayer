@@ -27,7 +27,7 @@
 视频演示 : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
 
 ##使用
-1.添加类库
+1.添加类库,稳定版是 fm.jiecao:jiecaovideoplayer:2.0_final
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:3.0_preview'
 ```

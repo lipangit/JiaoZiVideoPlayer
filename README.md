@@ -29,7 +29,7 @@ Android truly full-screen capabilities, the Android platform to become the most 
 Demo video : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html
 
 ## Usage
-1.Import library
+1.Import library,stable version is fm.jiecao:jiecaovideoplayer:2.0_final
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:3.0_preview'
 ```
