@@ -43,7 +43,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     SeekBar skProgress;
     ImageView ivFullScreen;
     TextView tvTimeCurrent, tvTimeTotal;
-    ViewGroup rlParent;
+    ViewGroup rlSurfaceContainer;
 
     ViewGroup llTopContainer, llBottomControl;
 
@@ -74,14 +74,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         tvTimeCurrent = (TextView) findViewById(R.id.current);
         tvTimeTotal = (TextView) findViewById(R.id.total);
         llBottomControl = (ViewGroup) findViewById(R.id.layout_bottom);
-        rlParent = (RelativeLayout) findViewById(R.id.parentview);
+        rlSurfaceContainer = (RelativeLayout) findViewById(R.id.surface_container);
         llTopContainer = (ViewGroup) findViewById(R.id.layout_top);
 
         ivStart.setOnClickListener(this);
         ivFullScreen.setOnClickListener(this);
         skProgress.setOnSeekBarChangeListener(this);
         llBottomControl.setOnClickListener(this);
-        rlParent.setOnClickListener(this);
+        rlSurfaceContainer.setOnClickListener(this);
         skProgress.setOnTouchListener(this);
     }
 
@@ -111,8 +111,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
                 cancelProgressTimer();
-                if (rlParent.getChildCount() > 0) {
-                    rlParent.removeAllViews();
+                if (rlSurfaceContainer.getChildCount() > 0) {
+                    rlSurfaceContainer.removeAllViews();
                 }
                 if (JCMediaManager.intance().listener == this) {
                     JCMediaManager.intance().mediaPlayer.stop();
@@ -167,8 +167,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void addSurfaceView() {
-        if (rlParent.getChildCount() > 0) {
-            rlParent.removeAllViews();
+        if (rlSurfaceContainer.getChildCount() > 0) {
+            rlSurfaceContainer.removeAllViews();
         }
         surfaceView = new JCResizeSurfaceView(getContext());
         surfaceId = surfaceView.getId();
@@ -177,7 +177,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 //        surfaceView.setOnClickListener(this);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-        rlParent.addView(surfaceView, layoutParams);
+        rlSurfaceContainer.addView(surfaceView, layoutParams);
     }
 
     @Override

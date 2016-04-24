@@ -110,7 +110,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
                 ivStart.performClick();
             }
-        } else if (i == R.id.parentview) {
+        } else if (i == R.id.surface_container) {
             onClickUiToggle();
             startDismissControlViewTimer();
         } else if (i == R.id.back) {

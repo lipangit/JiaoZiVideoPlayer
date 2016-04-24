@@ -7,7 +7,7 @@
 3. Override init(Context context);这里初始化自定义控件
 4. Override setStateAndUi(int state);是重点，自定义各个状态的UI,如果在其他地方修改UI应该保持谨慎
 5. Override onTouch(),onClick();如果有需要
-6. 在自定义UI之后，应该依然按照([README.md](./README.md)中的4步骤来调用播放器
+6. 在自定义UI之后，应该依然按照[README.md](./README-ZH.md)中的4步骤来调用播放器
 
 关于控件id的问题，在Base simple ui example中的所有最基础的id是写死在JCVideoPlayer中的，下面的控件id已经findViewById过了不需要再findViewById
 
@@ -19,7 +19,7 @@
 | 总共时间       | total         |
 | 下方layout    | layout_bottom  |
 | 上方layout    |    layout_top  |
-| SurfaceView的容器 | parentview  |
+| SurfaceView的容器 | surface_container  |
 
 如果想快速的集成视频播放功能，建议参照JCVideoPlayerStandardWithShareButton来做，它继承JCVideoPlayerStandard，JCVideoPlayerStandard的目标是和今日头条的细节保持一致
 
