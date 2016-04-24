@@ -16,7 +16,7 @@ This is the real android video player view with fullscreen function, we are dedi
 3. Video will be reset(pause) when it's scrolled out of the screen in `ListView` and `ViewPager`
 4. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
 5. It will not disturb or change the playing state when entering or exiting fullscreen
-6. Support to customize view controller’s skin
+6. Completely custom ui
 7. Support to display thumbnails when playing mp3
 8. With limited storage, less than 50 kb
 
