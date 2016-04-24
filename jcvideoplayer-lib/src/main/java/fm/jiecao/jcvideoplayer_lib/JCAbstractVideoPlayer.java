@@ -92,6 +92,7 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
         this.url = url;
         resetProgressAndTime();
         this.obj = obj;
+        setStateAndUi(CURRENT_STATE_NORMAL);
     }
 
 //    public void setUpForFullscreen() {
@@ -112,6 +113,9 @@ public abstract class JCAbstractVideoPlayer extends FrameLayout implements View.
                 cancelProgressTimer();
                 if (rlParent.getChildCount() > 0) {
                     rlParent.removeAllViews();
+                }
+                if (JCMediaManager.intance().listener == this) {
+                    JCMediaManager.intance().mediaPlayer.stop();
                 }
                 break;
             case CURRENT_STATE_PREPAREING:
