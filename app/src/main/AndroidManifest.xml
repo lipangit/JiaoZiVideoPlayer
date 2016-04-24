@@ -29,16 +29,9 @@
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".SetSkinActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
             android:name=".LoadImageActivity"
             android:screenOrientation="portrait"/>
 
-        <!--<activity-->
-            <!--android:name=".CustomUiActivity"-->
-            <!--android:screenOrientation="portrait"/>-->
     </application>
 
 </manifest>
