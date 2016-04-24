@@ -24,8 +24,6 @@ public class DemoApplication extends Application {
         super.onCreate();
         initUniversalImageLoader();
 
-        //这里将会改变所有缩略图的ScaleType | Here will change all thumbnails ScaleType
-//        JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
     }
 
     private void initUniversalImageLoader() {
@@ -35,7 +33,7 @@ public class DemoApplication extends Application {
         config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
         config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
         config.tasksProcessingOrder(QueueProcessingType.LIFO);
-        config.writeDebugLogs(); // Remove for release app
+        config.writeDebugLogs(); // Remove for releaseAllVideos app
         config.defaultDisplayImageOptions(getDefaultDisplayImageOption());
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config.build());
