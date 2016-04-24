@@ -9,7 +9,7 @@ import android.view.View;
  * Created by Nathen
  * On 2016/04/10 15:45
  */
-public class JCVideoPlayerSimple extends JCAbstractVideoPlayer {
+public class JCVideoPlayerSimple extends JCVideoPlayer {
 
     public JCVideoPlayerSimple(Context context) {
         super(context);

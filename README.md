@@ -59,26 +59,20 @@ videoController.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/244
 
 #### Other APIs
 
-Modify the thumb image view's scaleType property, default value is fitCenter. There will be  black padding if the size of thumb is not compatible with screen size, try to use fitXY or other scaleType.
-```java
-JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
-```
-
 Invoke `JCFullScreenActivity.toActivity(...)` to enter fullscreen directly.
 ```java
 JCFullScreenActivity.toActivity(this,
     "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
     "嫂子别摸我");
 ```
-Show title after fullscreen
+
+Control play button,if state is normal it will play, if state is playing it will pause
 ```java
-jCVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4",
-    "嫂子还摸我", false);
+jcVideoPlayerStandard.ivStart.performClick();
 ```
 
-    If videoview move out from screen in ListView or ViewPager,there will onDetachedFromWindow() reset the videoplayer.
-    The goal is to add just outside the library layout, adding configuration, other problems in judgment and library operations.
-    
+####[Custom UI](./README_CUSTOM_UI.md)
+
 ProGuard
 ```
 Need nothing

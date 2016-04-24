@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import fm.jiecao.jcvideoplayer_lib.JCAbstractVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 /**
  * Created by Nathen
@@ -30,7 +30,7 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JCAbstractVideoPlayer.releaseAllVideos();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     @Override

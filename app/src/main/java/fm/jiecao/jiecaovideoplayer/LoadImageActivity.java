@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
-import fm.jiecao.jcvideoplayer_lib.JCAbstractVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
@@ -93,7 +93,7 @@ public class LoadImageActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JCAbstractVideoPlayer.releaseAllVideos();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     @Override

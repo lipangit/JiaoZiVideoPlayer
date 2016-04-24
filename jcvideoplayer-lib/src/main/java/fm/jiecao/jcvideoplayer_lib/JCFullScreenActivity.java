@@ -39,7 +39,7 @@ public class JCFullScreenActivity extends Activity {
      * @param obj            custom param
      */
     public static void toActivity(Context context, String url, Class videoPlayClass, Object... obj) {
-        CURRENT_STATE = JCAbstractVideoPlayer.CURRENT_STATE_NORMAL;
+        CURRENT_STATE = JCVideoPlayer.CURRENT_STATE_NORMAL;
         URL = url;
         DIRECT_FULLSCREEN = true;
         VIDEO_PLAYER_CLASS = videoPlayClass;
@@ -48,7 +48,7 @@ public class JCFullScreenActivity extends Activity {
         context.startActivity(intent);
     }
 
-    JCAbstractVideoPlayer jcVideoPlayer;
+    JCVideoPlayer jcVideoPlayer;
     /**
      * 刚启动全屏时的播放状态
      */
@@ -88,7 +88,7 @@ public class JCFullScreenActivity extends Activity {
         if (jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY) {
             jcVideoPlayer.ivStart.performClick();
         } else {
-            JCAbstractVideoPlayer.IF_RELEASE_WHEN_ON_PAUSE = true;
+            JCVideoPlayer.IF_RELEASE_WHEN_ON_PAUSE = true;
             JCMediaManager.intance().listener = jcVideoPlayer;
         }
     }
@@ -101,7 +101,7 @@ public class JCFullScreenActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        JCAbstractVideoPlayer.releaseAllVideos();
+        JCVideoPlayer.releaseAllVideos();
 //        finish();
     }
 }

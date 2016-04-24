@@ -8,7 +8,7 @@ import android.widget.Button;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import fm.jiecao.jcvideoplayer_lib.JCAbstractVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
@@ -86,6 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        JCAbstractVideoPlayer.releaseAllVideos();
+        JCVideoPlayer.releaseAllVideos();
     }
 }

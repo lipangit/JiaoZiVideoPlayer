@@ -40,27 +40,23 @@ compile 'fm.jiecao:jiecaovideoplayer:2.0_final'
 
 2.添加布局
 ```xml
-<fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
-    android:id="@+id/videocontroller1"
+<fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+    android:id="@+id/custom_videoplayer_standard"
     android:layout_width="match_parent"
-    android:layout_height="200dp" />
+    android:layout_height="200dp"/>
 ```
 
 3.设置视频地址、缩略图地址、标题
 ```java
-JCVideoPlayer jCVideoPlayer = (JCVideoPlayer) findViewById(R.id.videocontroller);
-videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4","嫂子别摸我");
-videoController.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
+jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4"
+                , "嫂子想我没");
+jcVideoPlayerStandard.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.在包含播放器的`Fragment`或`Activity`的`onPause()`方法中调用`JCVideoPlayer.releaseAllVideos();`
 
 ####其他接口
-
-修改缩略图的scalType，默认的缩略图的scaleType是fitCenter，这时候图片如果和屏幕尺寸不同的话左右或上下会有黑边，可以根据客户端需要改成fitXY或者其他模式
-```java
-JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
-```
 
 直接进入全屏，比如在webview中视频播放的适配很麻烦很无头绪，调用此接口直接全屏播放
 ```java
@@ -69,21 +65,14 @@ JCFullScreenActivity.toActivity(this,
     "嫂子别摸我");
 ```
 
-不显示标题
-```java
-jCVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4",
-    "嫂子还摸我", false);
-```
-
-    在ListView和ViewPager中将视频移除屏幕外，会在onDetachedFromWindow时重置视频。
-    目标是在库外只需要添加布局，添加配置，其他的问题都在库内判断和操作。
-
 用代码控制播放按钮的点击,如果是普通状态会播放视频，如果是播放中会暂停视频
 ```java
-jCVideoPlayer.ivStart.performClick();
+jcVideoPlayerStandard.ivStart.performClick();
 ```
 
-混淆
+####[自定义UI](./README_CUSTOM_UI-ZH.md)
+
+####混淆
 ```
 无需添加
 ```
