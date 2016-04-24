@@ -42,17 +42,18 @@ Or download lib
 
 2.Add JCVideoPlayer in your layout
 ```xml
-<fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
-    android:id="@+id/videocontroller1"
+<fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+    android:id="@+id/custom_videoplayer_standard"
     android:layout_width="match_parent"
-    android:layout_height="200dp" />
+    android:layout_height="200dp"/>
 ```
 
 3.Set the video uri, video thumb url and video title
 ```java
-JCVideoPlayer jCVideoPlayer = (JCVideoPlayer) findViewById(R.id.videocontroller);
-videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4","嫂子别摸我");
-videoController.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
+jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4"
+                , "嫂子想我没");
+jcVideoPlayerStandard.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.Remember to invoke `JCVideoPlayer.releaseAllVideos();` in `onPause()` of `Fragment` or `Activity`
