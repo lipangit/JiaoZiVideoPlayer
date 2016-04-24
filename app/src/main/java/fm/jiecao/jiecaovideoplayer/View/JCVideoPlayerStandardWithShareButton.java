@@ -15,7 +15,6 @@ import fm.jiecao.jiecaovideoplayer.R;
  */
 public class JCVideoPlayerStandardWithShareButton extends JCVideoPlayerStandard {
 
-
     ImageView btnShare;
 
     public JCVideoPlayerStandardWithShareButton(Context context) {

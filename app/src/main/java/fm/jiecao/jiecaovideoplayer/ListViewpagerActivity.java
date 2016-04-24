@@ -11,7 +11,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCAbstractVideoPlayer;
 
 /**
  * Created by Nathen
@@ -49,7 +49,7 @@ public class ListViewpagerActivity extends AppCompatActivity implements ViewPage
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JCAbstractVideoPlayer.releaseAllVideos();
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ListViewpagerActivity extends AppCompatActivity implements ViewPage
 
     @Override
     public void onPageSelected(int position) {
-        JCVideoPlayer.releaseAllVideos();
+        JCAbstractVideoPlayer.releaseAllVideos();
     }
 
     @Override

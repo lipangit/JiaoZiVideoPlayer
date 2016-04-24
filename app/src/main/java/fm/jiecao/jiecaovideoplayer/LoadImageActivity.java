@@ -12,7 +12,8 @@ import com.bumptech.glide.Glide;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCAbstractVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * Created by Nathen
@@ -20,7 +21,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  */
 public class LoadImageActivity extends AppCompatActivity {
 
-    JCVideoPlayer videoController1, videoController2, videoController3, videoController4;
+    JCVideoPlayerStandard videoController1, videoController2, videoController3, videoController4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,27 +32,27 @@ public class LoadImageActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
 
-        videoController1 = (JCVideoPlayer) findViewById(R.id.videocontroller1);
+        videoController1 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller1);
         videoController1.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
                 "嫂子张嘴");
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
                 videoController1.ivThumb);
 
-        videoController2 = (JCVideoPlayer) findViewById(R.id.videocontroller2);
+        videoController2 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller2);
         videoController2.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
                 "嫂子抬头");
         Glide.with(this)
                 .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
                 .into(videoController2.ivThumb);
 
-        videoController3 = (JCVideoPlayer) findViewById(R.id.videocontroller3);
+        videoController3 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller3);
         videoController3.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
                 "嫂子不困");
         Picasso.with(this)
                 .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
                 .into(videoController3.ivThumb);
 
-        videoController4 = (JCVideoPlayer) findViewById(R.id.videocontroller4);
+        videoController4 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller4);
         videoController4.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
                 "嫂子你个死猪");
 //        Picasso.with(this)
@@ -92,7 +93,7 @@ public class LoadImageActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JCAbstractVideoPlayer.releaseAllVideos();
     }
 
     @Override
