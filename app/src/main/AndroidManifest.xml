@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fm.jiecao.jiecaovideoplayer">
+          package="fm.jiecao.jiecaovideoplayer">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".DemoApplication"
         android:allowBackup="true"
@@ -14,27 +14,24 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <activity
             android:name=".ListActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".ListViewpagerActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".SetSkinActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name=".LoadImageActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

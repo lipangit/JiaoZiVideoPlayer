@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * Created by Nathen
@@ -50,7 +50,7 @@ public class VideoListAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             LayoutInflater mInflater = LayoutInflater.from(context);
             convertView = mInflater.inflate(R.layout.item_list, null);
-            viewHolder.jcVideoPlayer = (JCVideoPlayer) convertView.findViewById(R.id.videoplayer);
+            viewHolder.jcVideoPlayer = (JCVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -64,6 +64,6 @@ public class VideoListAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        JCVideoPlayer jcVideoPlayer;
+        JCVideoPlayerStandard jcVideoPlayer;
     }
 }

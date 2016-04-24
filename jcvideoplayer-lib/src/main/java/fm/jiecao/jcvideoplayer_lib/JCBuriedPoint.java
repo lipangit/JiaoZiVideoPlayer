@@ -5,7 +5,7 @@ package fm.jiecao.jcvideoplayer_lib;
  * On 2016/04/04 22:13
  */
 public interface JCBuriedPoint {
-    
+
     void POINT_START_ICON(String title, String url);
 
     void POINT_START_THUMB(String title, String url);

@@ -1,12 +1,12 @@
 # Jiecao Video Player  
 
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) 
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-2.0_final-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C2.0_final%7Caar) 
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-3.0_preview-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.0_preview%7Caar) 
 [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true)](https://android-arsenal.com/details/1/3269)
 [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
 
-This is the real android video player view with fullscreen function, we are dedicated to make it to be the most popular video play widget on android.  Branch develop is the latest version, although it is not stable for now.
+Android truly full-screen capabilities, the Android platform to become the most widely used video playback controls
 
 [中文文档](README-ZH.md)
 
@@ -16,53 +16,49 @@ This is the real android video player view with fullscreen function, we are dedi
 3. Video will be reset(pause) when it's scrolled out of the screen in `ListView` and `ViewPager`
 4. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
 5. It will not disturb or change the playing state when entering or exiting fullscreen
-6. Support to customize view controller’s skin
+6. Completely custom ui
 7. Support to display thumbnails when playing mp3
 8. With limited storage, less than 50 kb
 
 ## Effect
 
-**[jiecaovideoplayer-2.0_final-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_final-demo.apk)**
+**[jiecaovideoplayer-3.0_preview-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0_preview-demo.apk)**
 
 ![Demo Screenshot][1]
 
 Demo video : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html
 
 ## Usage
-1.Import library
+1.Import library,stable version is fm.jiecao:jiecaovideoplayer:2.0_final
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:2.0_final'
+compile 'fm.jiecao:jiecaovideoplayer:3.0_preview'
 ```
 
 Or download lib
 
-* [jiecaovideoplayer-2.0_final.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_final.aar)
-* [jiecaovideoplayer-2.0_final-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_final-javadoc.jar)
-* [jiecaovideoplayer-2.0_final-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-2.0_final-sources.jar)
+* [jiecaovideoplayer-3.0_preview.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0_preview.aar)
+* [jiecaovideoplayer-3.0_preview-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0_preview-javadoc.jar)
+* [jiecaovideoplayer-3.0_preview-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0_preview-sources.jar)
 
 2.Add JCVideoPlayer in your layout
 ```xml
-<fm.jiecao.jcvideoplayer_lib.JCVideoPlayer
-    android:id="@+id/videocontroller1"
+<fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+    android:id="@+id/custom_videoplayer_standard"
     android:layout_width="match_parent"
-    android:layout_height="200dp" />
+    android:layout_height="200dp"/>
 ```
 
 3.Set the video uri, video thumb url and video title
 ```java
-JCVideoPlayer jCVideoPlayer = (JCVideoPlayer) findViewById(R.id.videocontroller);
-videoController.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4","嫂子别摸我");
-videoController.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
+jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4"
+                , "嫂子想我没");
+jcVideoPlayerStandard.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.Remember to invoke `JCVideoPlayer.releaseAllVideos();` in `onPause()` of `Fragment` or `Activity`
 
 #### Other APIs
-
-Modify the thumb image view's scaleType property, default value is fitCenter. There will be  black padding if the size of thumb is not compatible with screen size, try to use fitXY or other scaleType.
-```java
-JCVideoPlayer.setThumbImageViewScalType(ImageView.ScaleType.FIT_XY);
-```
 
 Invoke `JCFullScreenActivity.toActivity(...)` to enter fullscreen directly.
 ```java
@@ -70,21 +66,20 @@ JCFullScreenActivity.toActivity(this,
     "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
     "嫂子别摸我");
 ```
-Show title after fullscreen
+
+Control play button,if state is normal it will play, if state is playing it will pause
 ```java
-jCVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_ded7b566b37911e5942f0b208e48548d.f20.mp4",
-    "嫂子还摸我", false);
+jcVideoPlayerStandard.ivStart.performClick();
 ```
 
-    If videoview move out from screen in ListView or ViewPager,there will onDetachedFromWindow() reset the videoplayer.
-    The goal is to add just outside the library layout, adding configuration, other problems in judgment and library operations.
-    
 ProGuard
 ```
 Need nothing
 ```
 
-####Contributors
+##[Custom UI](./README_CUSTOM_UI.md)
+
+##Contributors
 
 节操精选Android小组([Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio)) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota)
 
@@ -98,5 +93,5 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: ./screenshots/j2.jpg
+[1]: ./screenshots/j3.jpg
 
