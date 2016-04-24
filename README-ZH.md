@@ -70,12 +70,12 @@ JCFullScreenActivity.toActivity(this,
 jcVideoPlayerStandard.ivStart.performClick();
 ```
 
-####[自定义UI](./README_CUSTOM_UI-ZH.md)
-
 ####混淆
 ```
 无需添加
 ```
+
+####[自定义UI](./README_CUSTOM_UI-ZH.md)
 
 ####贡献者
 

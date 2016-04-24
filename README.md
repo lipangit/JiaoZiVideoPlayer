@@ -71,12 +71,12 @@ Control play button,if state is normal it will play, if state is playing it will
 jcVideoPlayerStandard.ivStart.performClick();
 ```
 
-####[Custom UI](./README_CUSTOM_UI.md)
-
 ProGuard
 ```
 Need nothing
 ```
+
+####[Custom UI](./README_CUSTOM_UI.md)
 
 ####Contributors
 
