@@ -115,15 +115,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     rlSurfaceContainer.removeAllViews();
                 }
                 if (JCMediaManager.intance().listener == this) {
-                    JCMediaManager.intance().mediaPlayer.stop();
+                    JCMediaManager.intance().mediaPlayer.release();
                 }
                 break;
             case CURRENT_STATE_PREPAREING:
-
                 break;
             case CURRENT_STATE_PLAYING:
                 break;
             case CURRENT_STATE_PAUSE:
+                break;
+            case CURRENT_STATE_ERROR:
+                JCMediaManager.intance().mediaPlayer.release();
                 break;
         }
     }
@@ -270,7 +272,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public void onError(int what, int extra) {
-
+        if (what != 38) {
+            setStateAndUi(CURRENT_STATE_ERROR);
+        }
     }
 
     @Override

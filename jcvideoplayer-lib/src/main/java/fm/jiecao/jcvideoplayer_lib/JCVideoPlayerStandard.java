@@ -86,6 +86,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 changeUiToShowUiPause();
                 cancelDismissControlViewTimer();
                 break;
+            case CURRENT_STATE_ERROR:
+                changeUiToError();
+                break;
         }
     }
 
@@ -227,6 +230,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         ivThumb.setVisibility(View.INVISIBLE);
         ivCover.setVisibility(View.INVISIBLE);
         pbBottom.setVisibility(View.INVISIBLE);
+    }
+
+    private void changeUiToError() {
+        llTopContainer.setVisibility(View.INVISIBLE);
+        llBottomControl.setVisibility(View.INVISIBLE);
+        ivStart.setVisibility(View.VISIBLE);
+        pbLoading.setVisibility(View.INVISIBLE);
+        ivThumb.setVisibility(View.INVISIBLE);
+        ivCover.setVisibility(View.VISIBLE);
+        pbBottom.setVisibility(View.INVISIBLE);
+        updateStartImage();
     }
 
     private void updateStartImage() {
