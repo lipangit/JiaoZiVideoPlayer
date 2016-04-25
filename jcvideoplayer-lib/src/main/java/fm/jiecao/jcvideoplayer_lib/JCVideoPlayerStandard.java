@@ -263,7 +263,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
+                            if (CURRENT_STATE != CURRENT_STATE_NORMAL
+                                    && CURRENT_STATE != CURRENT_STATE_ERROR) {
                                 llBottomControl.setVisibility(View.INVISIBLE);
                                 llTopContainer.setVisibility(View.INVISIBLE);
                                 pbBottom.setVisibility(View.VISIBLE);

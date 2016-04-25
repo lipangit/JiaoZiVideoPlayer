@@ -139,13 +139,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 return;
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
-                if (JCMediaManager.intance().listener != null) {
-                    JCMediaManager.intance().listener.onCompletion();
-                }
-                JCMediaManager.intance().listener = this;
-                addSurfaceView();
-                JCMediaManager.intance().prepareToPlay(getContext(), url);
-                setStateAndUi(CURRENT_STATE_PREPAREING);
+                prepareVideo();
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 JCMediaManager.intance().mediaPlayer.pause();
                 setStateAndUi(CURRENT_STATE_PAUSE);
@@ -165,7 +159,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 IF_RELEASE_WHEN_ON_PAUSE = false;
                 JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, JCVideoPlayer.this.getClass(), this.obj);
             }
+        } else if (i == R.id.surface_container && CURRENT_STATE == CURRENT_STATE_ERROR) {
+            prepareVideo();
         }
+    }
+
+    private void prepareVideo() {
+        if (JCMediaManager.intance().listener != null) {
+            JCMediaManager.intance().listener.onCompletion();
+        }
+        JCMediaManager.intance().listener = this;
+        addSurfaceView();
+        JCMediaManager.intance().prepareToPlay(getContext(), url);
+        setStateAndUi(CURRENT_STATE_PREPAREING);
     }
 
     public void addSurfaceView() {
