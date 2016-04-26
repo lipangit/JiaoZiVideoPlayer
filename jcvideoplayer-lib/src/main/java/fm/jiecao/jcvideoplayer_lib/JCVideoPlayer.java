@@ -52,9 +52,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     int surfaceId;// for onClick()
 
     String url;
-    Object[] obj;
+    Object[] objects;
 
     private static Timer mUpdateProgressTimer;
+    private static JCBuriedPoint JC_BURIED_POINT;
 
     public JCVideoPlayer(Context context) {
         super(context);
@@ -87,23 +88,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public abstract int getLayoutId();
 
+    protected static void setJcBuriedPoint(JCBuriedPoint jcBuriedPoint) {
+        JC_BURIED_POINT = jcBuriedPoint;
+    }
+
     public void setUp(String url, Object... obj) {
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         this.url = url;
         resetProgressAndTime();
-        this.obj = obj;
+        this.objects = obj;
         setStateAndUi(CURRENT_STATE_NORMAL);
     }
-
-//    public void setUpForFullscreen() {
-//        if (IF_FULLSCREEN_IS_DIRECTLY) {
-//            ivStart.performClick();
-//        } else {
-//            JCMediaManager.intance().listener = this;
-//            jcVideoPlayer.setUpUI();//can not set ui
-//        }
-//
-//    }
 
     //set ui
     protected void setStateAndUi(int state) {
@@ -157,7 +152,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 JCMediaManager.intance().listener = null;
                 IF_FULLSCREEN_FROM_NORMAL = true;
                 IF_RELEASE_WHEN_ON_PAUSE = false;
-                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, JCVideoPlayer.this.getClass(), this.obj);
+                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, JCVideoPlayer.this.getClass(), this.objects);
             }
         } else if (i == R.id.surface_container && CURRENT_STATE == CURRENT_STATE_ERROR) {
             prepareVideo();
@@ -169,6 +164,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             JCMediaManager.intance().listener.onCompletion();
         }
         JCMediaManager.intance().listener = this;
+        if (JC_BURIED_POINT != null && CURRENT_STATE == CURRENT_STATE_NORMAL) {
+            JC_BURIED_POINT.POINT_START_ICON(url, objects);
+        } else if (JC_BURIED_POINT != null && CURRENT_STATE == CURRENT_STATE_ERROR) {
+            JC_BURIED_POINT.POINT_START_ICON_FROM_ERROR(url, objects);
+        }
         addSurfaceView();
         JCMediaManager.intance().prepareToPlay(getContext(), url);
         setStateAndUi(CURRENT_STATE_PREPAREING);

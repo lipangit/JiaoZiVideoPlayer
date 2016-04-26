@@ -3,13 +3,15 @@ package fm.jiecao.jiecaovideoplayer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardWithShareButton;
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/3/14/2204a578-609b-440e-8af7-a0ee17ff3aee.jpg",
                 jcVideoPlayerStandardWithShareButton.ivThumb);
 
+        JCVideoPlayerStandard.setJcBuriedPointStandard(jcBuriedPointStandard);
     }
 
     @Override
@@ -88,4 +91,82 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
     }
+
+    JCBuriedPointStandard jcBuriedPointStandard = new JCBuriedPointStandard() {
+        @Override
+        public void POINT_START_THUMB(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_START_THUMB" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_CLICK_BLANK(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_CLICK_BLANK" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_CLICK_BLANK_FULLSCREEN(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_CLICK_BLANK_FULLSCREEN" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_START_ICON(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_START_ICON" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_START_ICON_FROM_ERROR(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_START_ICON_FROM_ERROR" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_STOP(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_STOP" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_STOP_FULLSCREEN(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_STOP_FULLSCREEN" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_RESUME(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_RESUME" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_RESUME_FULLSCREEN(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_RESUME_FULLSCREEN" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_CLICK_SEEKBAR(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_CLICK_SEEKBAR" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_CLICK_SEEKBAR_FULLSCREEN(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_CLICK_SEEKBAR_FULLSCREEN" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_AUTO_COMPLETE(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_AUTO_COMPLETE" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_AUTO_COMPLETE_FULLSCREEN(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_AUTO_COMPLETE_FULLSCREEN" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_ENTER_FULLSCREEN(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_ENTER_FULLSCREEN" + " title is : " + objects[0] + " url is : " + url);
+        }
+
+        @Override
+        public void POINT_QUIT_FULLSCREEN(String url, Object... objects) {
+            Log.i("Buried_Point", "POINT_QUIT_FULLSCREEN" + " title is : " + objects[0] + " url is : " + url);
+        }
+    };
+
 }

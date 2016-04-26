@@ -25,6 +25,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     ImageView ivCover;
 
     private static Timer mDismissControlViewTimer;
+    private static JCBuriedPointStandard jc_BuriedPointStandard;
 
     public JCVideoPlayerStandard(Context context) {
         super(context);
@@ -282,4 +283,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mDismissControlViewTimer.cancel();
         }
     }
+
+    public static void setJcBuriedPointStandard(JCBuriedPointStandard jcBuriedPointStandard) {
+        jc_BuriedPointStandard = jcBuriedPointStandard;
+        JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
+    }
+
 }
