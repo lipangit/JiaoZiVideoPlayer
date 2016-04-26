@@ -112,9 +112,19 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         int i = v.getId();
         if (i == R.id.thumb) {
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
-                ivStart.performClick();
+                if (jc_BuriedPointStandard != null) {
+                    jc_BuriedPointStandard.POINT_START_THUMB(url, objects);
+                }
+                prepareVideo();
             }
         } else if (i == R.id.surface_container) {
+            if (jc_BuriedPointStandard != null && JCMediaManager.intance().listener == this) {
+                if (IF_CURRENT_IS_FULLSCREEN) {
+                    jc_BuriedPointStandard.POINT_CLICK_BLANK_FULLSCREEN(url, objects);
+                } else {
+                    jc_BuriedPointStandard.POINT_CLICK_BLANK(url, objects);
+                }
+            }
             onClickUiToggle();
             startDismissControlViewTimer();
         } else if (i == R.id.back) {

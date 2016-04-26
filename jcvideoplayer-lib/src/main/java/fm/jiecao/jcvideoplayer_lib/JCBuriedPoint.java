@@ -8,7 +8,7 @@ public interface JCBuriedPoint {
 
     void POINT_START_ICON(String url, Object... objects);
 
-    void POINT_START_ICON_FROM_ERROR(String url, Object... objects);
+    void POINT_START_ERROR(String url, Object... objects);
 
     void POINT_STOP(String url, Object... objects);
 
