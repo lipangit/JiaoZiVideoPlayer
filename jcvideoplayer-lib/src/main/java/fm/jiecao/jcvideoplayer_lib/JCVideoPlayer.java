@@ -138,14 +138,32 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 JCMediaManager.intance().mediaPlayer.pause();
                 setStateAndUi(CURRENT_STATE_PAUSE);
+                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                    if (IF_CURRENT_IS_FULLSCREEN) {
+                        JC_BURIED_POINT.POINT_STOP_FULLSCREEN(url, objects);
+                    } else {
+                        JC_BURIED_POINT.POINT_STOP(url, objects);
+                    }
+                }
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
+                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                    if (IF_CURRENT_IS_FULLSCREEN) {
+                        JC_BURIED_POINT.POINT_RESUME_FULLSCREEN(url, objects);
+                    } else {
+                        JC_BURIED_POINT.POINT_RESUME(url, objects);
+                    }
+                }
                 JCMediaManager.intance().mediaPlayer.start();
                 setStateAndUi(CURRENT_STATE_PLAYING);
             }
         } else if (i == R.id.fullscreen) {
             if (IF_CURRENT_IS_FULLSCREEN) {
                 //quit fullscreen
+                backFullscreen();
             } else {
+                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                    JC_BURIED_POINT.POINT_ENTER_FULLSCREEN(url, objects);
+                }
                 //to fullscreen
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().lastListener = this;
@@ -198,6 +216,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             case MotionEvent.ACTION_UP:
                 touchingProgressBar = false;
                 startProgressTimer();
+                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                    if (IF_CURRENT_IS_FULLSCREEN) {
+                        JC_BURIED_POINT.POINT_CLICK_SEEKBAR_FULLSCREEN(url, objects);
+                    } else {
+                        JC_BURIED_POINT.POINT_CLICK_SEEKBAR(url, objects);
+                    }
+                }
                 break;
         }
         return false;
@@ -246,6 +271,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCMediaManager.intance().mediaPlayer.start();
         startProgressTimer();
         setStateAndUi(CURRENT_STATE_PLAYING);
+    }
+
+    @Override
+    public void onAutoCompletion() {
+        //make me normal first
+        if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+            if (IF_CURRENT_IS_FULLSCREEN) {
+                JC_BURIED_POINT.POINT_AUTO_COMPLETE_FULLSCREEN(url, objects);
+            } else {
+                JC_BURIED_POINT.POINT_AUTO_COMPLETE(url, objects);
+            }
+        }
+        onCompletion();
     }
 
     @Override
@@ -355,18 +393,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         tvTimeTotal.setText(JCUtils.stringForTime(0));
     }
 
-    // only dispose IF_FULLSCREEN_IS_DIRECTLY=false ,
-    // bacause IF_FULLSCREEN_IS_DIRECTLY=true
-    //     will stop directly and finish fullscreenActivity directly
-    protected void quitFullcreenGoToNormal() {
+    protected void quitFullScreenGoToNormal() {
+        if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+            JC_BURIED_POINT.POINT_QUIT_FULLSCREEN(url, objects);
+        }
         JCMediaManager.intance().mediaPlayer.setDisplay(null);
-//        if (IF_FULLSCREEN_IS_DIRECTLY) {// it is all over
-//
-//        } else {// go back and go on play or pause
         JCMediaManager.intance().listener = JCMediaManager.intance().lastListener;
         JCMediaManager.intance().lastState = CURRENT_STATE;//save state
         JCMediaManager.intance().listener.onBackFullscreen();
-//        }
         finishMyFullscreen();
     }
 
@@ -382,13 +416,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             finishMyFullscreen();
         } else {
             IF_RELEASE_WHEN_ON_PAUSE = false;
-            quitFullcreenGoToNormal();
+            quitFullScreenGoToNormal();
         }
     }
 
     public static void releaseAllVideos() {
         if (IF_RELEASE_WHEN_ON_PAUSE) {
-            JCMediaManager.intance().mediaPlayer.stop();
+            JCMediaManager.intance().mediaPlayer.release();
             if (JCMediaManager.intance().listener != null) {
                 JCMediaManager.intance().listener.onCompletion();
             }

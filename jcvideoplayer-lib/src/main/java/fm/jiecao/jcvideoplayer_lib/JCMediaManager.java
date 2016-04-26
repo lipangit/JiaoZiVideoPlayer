@@ -68,7 +68,7 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
     @Override
     public void onCompletion(MediaPlayer mp) {
         if (listener != null) {
-            listener.onCompletion();
+            listener.onAutoCompletion();
         }
     }
 
@@ -105,6 +105,8 @@ class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCo
 
     interface JCMediaPlayerListener {
         void onPrepared();
+
+        void onAutoCompletion();
 
         void onCompletion();
 
