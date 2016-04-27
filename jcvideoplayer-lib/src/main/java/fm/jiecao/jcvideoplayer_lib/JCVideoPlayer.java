@@ -39,20 +39,20 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     private static boolean IF_FULLSCREEN_FROM_NORMAL = false;
     public static boolean IF_RELEASE_WHEN_ON_PAUSE = true;
 
-    ImageView ivStart;
-    SeekBar skProgress;
-    ImageView ivFullScreen;
-    TextView tvTimeCurrent, tvTimeTotal;
-    ViewGroup rlSurfaceContainer;
+    protected ImageView ivStart;
+    protected SeekBar skProgress;
+    protected ImageView ivFullScreen;
+    protected TextView tvTimeCurrent, tvTimeTotal;
+    protected ViewGroup rlSurfaceContainer;
 
-    ViewGroup llTopContainer, llBottomControl;
+    protected ViewGroup llTopContainer, llBottomControl;
 
-    JCResizeSurfaceView surfaceView;
-    SurfaceHolder surfaceHolder;
+    protected JCResizeSurfaceView surfaceView;
+    protected SurfaceHolder surfaceHolder;
     int surfaceId;// for onClick()
 
-    String url;
-    Object[] objects;
+    protected String url;
+    protected Object[] objects;
 
     private static Timer mUpdateProgressTimer;
     private static JCBuriedPoint JC_BURIED_POINT;
