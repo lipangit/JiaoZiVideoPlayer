@@ -116,8 +116,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             case CURRENT_STATE_PREPAREING:
                 break;
             case CURRENT_STATE_PLAYING:
+                startProgressTimer();
                 break;
             case CURRENT_STATE_PAUSE:
+                startProgressTimer();
                 break;
             case CURRENT_STATE_ERROR:
                 JCMediaManager.intance().mediaPlayer.release();
