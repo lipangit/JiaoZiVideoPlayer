@@ -116,6 +116,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     jc_BuriedPointStandard.POINT_START_THUMB(url, objects);
                 }
                 prepareVideo();
+                startDismissControlViewTimer();
             }
         } else if (i == R.id.surface_container) {
             if (jc_BuriedPointStandard != null && JCMediaManager.intance().listener == this) {
