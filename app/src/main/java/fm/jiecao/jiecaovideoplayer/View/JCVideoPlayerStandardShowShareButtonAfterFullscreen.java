@@ -13,15 +13,15 @@ import fm.jiecao.jiecaovideoplayer.R;
  * Created by Nathen
  * On 2016/04/22 00:54
  */
-public class JCVideoPlayerStandardWithShareButton extends JCVideoPlayerStandard {
+public class JCVideoPlayerStandardShowShareButtonAfterFullscreen extends JCVideoPlayerStandard {
 
     ImageView btnShare;
 
-    public JCVideoPlayerStandardWithShareButton(Context context) {
+    public JCVideoPlayerStandardShowShareButtonAfterFullscreen(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerStandardWithShareButton(Context context, AttributeSet attrs) {
+    public JCVideoPlayerStandardShowShareButtonAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

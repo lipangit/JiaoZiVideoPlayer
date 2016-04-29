@@ -14,7 +14,8 @@ import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
-import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardWithShareButton;
+import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowShareButtonAfterFullscreen;
+import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowTitleAfterFullscreen;
 
 /**
  * Created by Nathen
@@ -23,7 +24,9 @@ import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardWithShareButton;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     JCVideoPlayerSimple jcVideoPlayerSimple;
     JCVideoPlayerStandard jcVideoPlayerStandard;
-    JCVideoPlayerStandardWithShareButton jcVideoPlayerStandardWithShareButton;
+    JCVideoPlayerStandardShowShareButtonAfterFullscreen jcVideoPlayerStandardWithShareButton;
+    JCVideoPlayerStandardShowTitleAfterFullscreen jcVideoPlayerStandardShowTitleAfterFullscreen;
+
     Button btnToFullscreen_simple, btnToFullscreen_standard,
             btnToListActivity, btnToListViewPagerActivity, btnToImageLoadActivity;
 
@@ -52,11 +55,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageLoader.getInstance().displayImage("http://p.qpic.cn/videoyun/0/2449_bfbbfa3cea8f11e5aac3db03cda99974_1/640",
                 jcVideoPlayerStandard.ivThumb);
 
-        jcVideoPlayerStandardWithShareButton = (JCVideoPlayerStandardWithShareButton) findViewById(R.id.custom_videoplayer_standard_with_share_button);
+        jcVideoPlayerStandardWithShareButton = (JCVideoPlayerStandardShowShareButtonAfterFullscreen) findViewById(R.id.custom_videoplayer_standard_with_share_button);
         jcVideoPlayerStandardWithShareButton.setUp("http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4"
                 , "嫂子闭眼睛");
         ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/3/14/2204a578-609b-440e-8af7-a0ee17ff3aee.jpg",
                 jcVideoPlayerStandardWithShareButton.ivThumb);
+
+        jcVideoPlayerStandardShowTitleAfterFullscreen = (JCVideoPlayerStandardShowTitleAfterFullscreen) findViewById(R.id.custom_videoplayer_standard_show_title_after_fullscreen);
+        jcVideoPlayerStandardShowTitleAfterFullscreen.setUp("http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4"
+                , "嫂子摸完没");
+        ImageLoader.getInstance().displayImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640",
+                jcVideoPlayerStandardShowTitleAfterFullscreen.ivThumb);
 
         JCVideoPlayerStandard.setJcBuriedPointStandard(jcBuriedPointStandard);
     }
