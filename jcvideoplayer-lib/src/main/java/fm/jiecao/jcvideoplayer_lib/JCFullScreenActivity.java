@@ -81,7 +81,7 @@ public class JCFullScreenActivity extends Activity {
         jcVideoPlayer.IF_CURRENT_IS_FULLSCREEN = true;
         jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY = DIRECT_FULLSCREEN;
         jcVideoPlayer.setUp(URL, OBJECTS);
-        jcVideoPlayer.addSurfaceView();
+//        jcVideoPlayer.addSurfaceView();
         jcVideoPlayer.setStateAndUi(CURRENT_STATE);
 
 

@@ -10,11 +10,11 @@
         android:layout_height="match_parent"
         android:gravity="center">
 
-        <!--<fm.jiecao.jcvideoplayer_lib.ResizeSurfaceView-->
-        <!--android:id="@+id/surfaceView"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_centerInParent="true" />-->
+        <fm.jiecao.jcvideoplayer_lib.JCResizeSurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 
     <ImageView
