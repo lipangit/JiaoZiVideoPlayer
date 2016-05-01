@@ -96,7 +96,4 @@
         android:layout_gravity="center_vertical"
         android:src="@drawable/jc_click_play_selector"/>
 
-    <SurfaceView
-        android:layout_width="0dp"
-        android:layout_height="0dp"/>
 </RelativeLayout>

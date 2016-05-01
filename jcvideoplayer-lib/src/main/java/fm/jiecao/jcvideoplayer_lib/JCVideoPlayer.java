@@ -36,8 +36,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     private boolean touchingProgressBar = false;
     protected boolean IF_CURRENT_IS_FULLSCREEN = false;
     protected boolean IF_FULLSCREEN_IS_DIRECTLY = false;//IF_CURRENT_IS_FULLSCREEN should be true first
-    private static boolean IF_FULLSCREEN_FROM_NORMAL = false;
+    private static boolean IF_FULLSCREEN_FROM_NORMAL = false;//to prevent infinite loop
     public static boolean IF_RELEASE_WHEN_ON_PAUSE = true;
+    private boolean BACK_FROM_FULLSCREEN = false;
 
     protected ImageView ivStart;
     protected SeekBar skProgress;
@@ -79,6 +80,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         llTopContainer = (ViewGroup) findViewById(R.id.layout_top);
         surfaceView = (JCResizeSurfaceView) this.findViewById(R.id.surfaceView);
         surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(this);
 
         ivStart.setOnClickListener(this);
         ivFullScreen.setOnClickListener(this);
@@ -193,7 +195,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCMediaManager.intance().listener = this;
 //        addSurfaceView();
         JCMediaManager.intance().prepareToPlay(getContext(), url);
-        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        if (!IF_CURRENT_IS_FULLSCREEN) {
+            JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        }
         setStateAndUi(CURRENT_STATE_PREPAREING);
     }
 
@@ -253,10 +257,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-//        if (!IF_FULLSCREEN_IS_DIRECTLY) {//fullscreen from normal
-//        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        if (IF_CURRENT_IS_FULLSCREEN) {//fullscreen from normal
+            JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        }
+        if (BACK_FROM_FULLSCREEN) {
+            BACK_FROM_FULLSCREEN = false;
+            JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        }
         ifNeedCreateSurfaceView = false;
-//        }
     }
 
     @Override
@@ -339,6 +347,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     @Override
     public void onBackFullscreen() {
         CURRENT_STATE = JCMediaManager.intance().lastState;
+        BACK_FROM_FULLSCREEN = true;
         setStateAndUi(CURRENT_STATE);
     }
 
