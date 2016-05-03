@@ -103,18 +103,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     JCBuriedPointStandard jcBuriedPointStandard = new JCBuriedPointStandard() {
         @Override
-        public void POINT_START_THUMB(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_START_THUMB" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickStartThumb(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickStartThumb" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_CLICK_BLANK(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_CLICK_BLANK" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickBlank(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickBlank" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_CLICK_BLANK_FULLSCREEN(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_CLICK_BLANK_FULLSCREEN" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickBlankFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickBlankFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override

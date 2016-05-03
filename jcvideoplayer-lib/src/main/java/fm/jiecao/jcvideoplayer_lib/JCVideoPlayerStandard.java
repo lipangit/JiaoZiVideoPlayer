@@ -113,7 +113,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         if (i == R.id.thumb) {
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
                 if (jc_BuriedPointStandard != null) {
-                    jc_BuriedPointStandard.POINT_START_THUMB(url, objects);
+                    jc_BuriedPointStandard.onClickStartThumb(url, objects);
                 }
                 prepareVideo();
                 startDismissControlViewTimer();
@@ -121,9 +121,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.surface_container) {
             if (jc_BuriedPointStandard != null && JCMediaManager.intance().listener == this) {
                 if (IF_CURRENT_IS_FULLSCREEN) {
-                    jc_BuriedPointStandard.POINT_CLICK_BLANK_FULLSCREEN(url, objects);
+                    jc_BuriedPointStandard.onClickBlankFullscreen(url, objects);
                 } else {
-                    jc_BuriedPointStandard.POINT_CLICK_BLANK(url, objects);
+                    jc_BuriedPointStandard.onClickBlank(url, objects);
                 }
             }
             onClickUiToggle();
