@@ -118,63 +118,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         @Override
-        public void POINT_START_ICON(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_START_ICON" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickStartIcon(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickStartIcon" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_START_ERROR(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_START_ERROR" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickStartError(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickStartError" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_STOP(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_STOP" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickStop(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickStop" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_STOP_FULLSCREEN(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_STOP_FULLSCREEN" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickStopFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickStopFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_RESUME(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_RESUME" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickResume(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickResume" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_RESUME_FULLSCREEN(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_RESUME_FULLSCREEN" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickResumeFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickResumeFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_CLICK_SEEKBAR(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_CLICK_SEEKBAR" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickSeekbar(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickSeekbar" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_CLICK_SEEKBAR_FULLSCREEN(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_CLICK_SEEKBAR_FULLSCREEN" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onClickSeekbarFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickSeekbarFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_AUTO_COMPLETE(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_AUTO_COMPLETE" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onAutoComplete(String url, Object... objects) {
+            Log.i("Buried_Point", "onAutoComplete" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_AUTO_COMPLETE_FULLSCREEN(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_AUTO_COMPLETE_FULLSCREEN" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onAutoCompleteFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onAutoCompleteFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_ENTER_FULLSCREEN(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_ENTER_FULLSCREEN" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onEnterFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onEnterFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
-        public void POINT_QUIT_FULLSCREEN(String url, Object... objects) {
-            Log.i("Buried_Point", "POINT_QUIT_FULLSCREEN" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+        public void onQuitFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onQuitFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
         }
     };
 

@@ -142,9 +142,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
                 if (JC_BURIED_POINT != null && CURRENT_STATE == CURRENT_STATE_NORMAL) {
-                    JC_BURIED_POINT.POINT_START_ICON(url, objects);
+                    JC_BURIED_POINT.onClickStartIcon(url, objects);
                 } else if (JC_BURIED_POINT != null) {
-                    JC_BURIED_POINT.POINT_START_ERROR(url, objects);
+                    JC_BURIED_POINT.onClickStartError(url, objects);
                 }
                 prepareVideo();
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
@@ -152,17 +152,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 setStateAndUi(CURRENT_STATE_PAUSE);
                 if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
                     if (IF_CURRENT_IS_FULLSCREEN) {
-                        JC_BURIED_POINT.POINT_STOP_FULLSCREEN(url, objects);
+                        JC_BURIED_POINT.onClickStopFullscreen(url, objects);
                     } else {
-                        JC_BURIED_POINT.POINT_STOP(url, objects);
+                        JC_BURIED_POINT.onClickStop(url, objects);
                     }
                 }
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
                     if (IF_CURRENT_IS_FULLSCREEN) {
-                        JC_BURIED_POINT.POINT_RESUME_FULLSCREEN(url, objects);
+                        JC_BURIED_POINT.onClickResumeFullscreen(url, objects);
                     } else {
-                        JC_BURIED_POINT.POINT_RESUME(url, objects);
+                        JC_BURIED_POINT.onClickResume(url, objects);
                     }
                 }
                 JCMediaManager.intance().mediaPlayer.start();
@@ -174,7 +174,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 backFullscreen();
             } else {
                 if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
-                    JC_BURIED_POINT.POINT_ENTER_FULLSCREEN(url, objects);
+                    JC_BURIED_POINT.onEnterFullscreen(url, objects);
                 }
                 //to fullscreen
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
@@ -186,7 +186,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             }
         } else if (i == R.id.surface_container && CURRENT_STATE == CURRENT_STATE_ERROR) {
             if (JC_BURIED_POINT != null) {
-                JC_BURIED_POINT.POINT_START_ERROR(url, objects);
+                JC_BURIED_POINT.onClickStartError(url, objects);
             }
             prepareVideo();
         }
@@ -231,9 +231,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 startProgressTimer();
                 if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
                     if (IF_CURRENT_IS_FULLSCREEN) {
-                        JC_BURIED_POINT.POINT_CLICK_SEEKBAR_FULLSCREEN(url, objects);
+                        JC_BURIED_POINT.onClickSeekbarFullscreen(url, objects);
                     } else {
-                        JC_BURIED_POINT.POINT_CLICK_SEEKBAR(url, objects);
+                        JC_BURIED_POINT.onClickSeekbar(url, objects);
                     }
                 }
                 break;
@@ -310,9 +310,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         //make me normal first
         if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
             if (IF_CURRENT_IS_FULLSCREEN) {
-                JC_BURIED_POINT.POINT_AUTO_COMPLETE_FULLSCREEN(url, objects);
+                JC_BURIED_POINT.onAutoCompleteFullscreen(url, objects);
             } else {
-                JC_BURIED_POINT.POINT_AUTO_COMPLETE(url, objects);
+                JC_BURIED_POINT.onAutoComplete(url, objects);
             }
         }
         onCompletion();
@@ -422,7 +422,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     protected void quitFullScreenGoToNormal() {
         if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
-            JC_BURIED_POINT.POINT_QUIT_FULLSCREEN(url, objects);
+            JC_BURIED_POINT.onQuitFullscreen(url, objects);
         }
         JCMediaManager.intance().mediaPlayer.setDisplay(null);
         JCMediaManager.intance().listener = JCMediaManager.intance().lastListener;
