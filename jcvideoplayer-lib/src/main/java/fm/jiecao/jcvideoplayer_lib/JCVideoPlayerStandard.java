@@ -2,12 +2,14 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -111,6 +113,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.thumb) {
+            if (TextUtils.isEmpty(url)) {
+                Toast.makeText(getContext(), "No url", Toast.LENGTH_SHORT).show();
+                return;
+            }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
                 if (jc_BuriedPointStandard != null) {
                     jc_BuriedPointStandard.onClickStartThumb(url, objects);
