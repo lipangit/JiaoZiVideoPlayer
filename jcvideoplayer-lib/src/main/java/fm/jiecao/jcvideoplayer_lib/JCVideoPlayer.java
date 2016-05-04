@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -281,8 +282,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         try {
             JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
         } catch (IllegalArgumentException e) {
+            Log.i(TAG, "recreate surfaceview");
             FalseSetDisPlay = true;
             addSurfaceView();
+            e.printStackTrace();
         }
     }
 
