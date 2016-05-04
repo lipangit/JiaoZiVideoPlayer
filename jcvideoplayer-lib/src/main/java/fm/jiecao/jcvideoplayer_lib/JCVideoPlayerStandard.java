@@ -54,6 +54,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     @Override
     public void setUp(String url, Object... objects) {
+        if (objects.length == 0) return;
         super.setUp(url, objects);
         tvTitle.setText(objects[0].toString());
         if (IF_CURRENT_IS_FULLSCREEN) {

@@ -98,13 +98,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JC_BURIED_POINT = jcBuriedPoint;
     }
 
-    public void setUp(String url, Object... obj) {
+    public void setUp(String url, Object... objects) {
         if (JCMediaManager.intance().listener == this && (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return;
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         this.url = url;
         resetProgressAndTime();
-        this.objects = obj;
+        this.objects = objects;
         setStateAndUi(CURRENT_STATE_NORMAL);
     }
 

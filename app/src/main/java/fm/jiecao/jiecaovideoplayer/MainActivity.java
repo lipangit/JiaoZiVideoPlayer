@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnToImageLoadActivity.setOnClickListener(this);
 
         jcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.custom_videoplayer);
-        jcVideoPlayerSimple.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", null);
+        jcVideoPlayerSimple.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4");
 
         jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
         jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4"
@@ -104,77 +104,77 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     JCBuriedPointStandard jcBuriedPointStandard = new JCBuriedPointStandard() {
         @Override
         public void onClickStartThumb(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickStartThumb" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickStartThumb" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onClickBlank(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickBlank" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickBlank" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onClickBlankFullscreen(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickBlankFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickBlankFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onClickStartIcon(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickStartIcon" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickStartIcon" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onClickStartError(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickStartError" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickStartError" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onClickStop(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickStop" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickStop" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onClickStopFullscreen(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickStopFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickStopFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onClickResume(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickResume" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickResume" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onClickResumeFullscreen(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickResumeFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickResumeFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onClickSeekbar(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickSeekbar" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickSeekbar" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onClickSeekbarFullscreen(String url, Object... objects) {
-            Log.i("Buried_Point", "onClickSeekbarFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onClickSeekbarFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onAutoComplete(String url, Object... objects) {
-            Log.i("Buried_Point", "onAutoComplete" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onAutoComplete" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onAutoCompleteFullscreen(String url, Object... objects) {
-            Log.i("Buried_Point", "onAutoCompleteFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onAutoCompleteFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onEnterFullscreen(String url, Object... objects) {
-            Log.i("Buried_Point", "onEnterFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onEnterFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
 
         @Override
         public void onQuitFullscreen(String url, Object... objects) {
-            Log.i("Buried_Point", "onQuitFullscreen" + " title is : " + (objects == null ? "" : objects[0]) + " url is : " + url);
+            Log.i("Buried_Point", "onQuitFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
     };
 
