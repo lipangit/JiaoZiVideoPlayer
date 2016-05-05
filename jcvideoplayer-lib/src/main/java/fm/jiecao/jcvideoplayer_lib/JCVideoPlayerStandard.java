@@ -76,7 +76,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
                 changeUiToNormal();
-                cancelDismissControlViewTimer();
                 break;
             case CURRENT_STATE_PREPAREING:
                 changeUiToShowUiPrepareing();
@@ -307,4 +306,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
     }
 
+    @Override
+    public void onCompletion() {
+        super.onCompletion();
+        cancelDismissControlViewTimer();
+    }
 }

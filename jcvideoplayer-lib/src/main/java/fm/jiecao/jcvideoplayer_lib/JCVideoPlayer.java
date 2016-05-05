@@ -104,7 +104,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             return;
         CURRENT_STATE = CURRENT_STATE_NORMAL;
         this.url = url;
-        resetProgressAndTime();
         this.objects = objects;
         setStateAndUi(CURRENT_STATE_NORMAL);
     }
@@ -114,7 +113,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         CURRENT_STATE = state;
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
-                cancelProgressTimer();
                 if (JCMediaManager.intance().listener == this) {
                     JCMediaManager.intance().mediaPlayer.release();
                 }
