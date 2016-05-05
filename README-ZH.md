@@ -60,7 +60,7 @@ jcVideoPlayerStandard.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun
 直接进入全屏，比如在webview中视频播放的适配很麻烦很无头绪，调用此接口直接全屏播放
 ```java
 JCFullScreenActivity.toActivity(this,
-    "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
+    "http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4",
     JCVideoPlayerStandard.class,
     "嫂子别摸我");
 ```

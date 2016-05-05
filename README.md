@@ -62,7 +62,7 @@ jcVideoPlayerStandard.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun
 Invoke `JCFullScreenActivity.toActivity(...)` to enter fullscreen directly.
 ```java
 JCFullScreenActivity.toActivity(this,
-    "http://2449.vod.myqcloud.com/2449_43b6f696980311e59ed467f22794e792.f20.mp4",
+    "http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4",
     JCVideoPlayerStandard.class,
     "嫂子别摸我");
 ```
