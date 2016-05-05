@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle(getString(R.string.app_name_full));
 
         btnToFullscreen_simple = (Button) findViewById(R.id.to_fullscreen_simple);
         btnToFullscreen_standard = (Button) findViewById(R.id.to_fullscreen_standard);
