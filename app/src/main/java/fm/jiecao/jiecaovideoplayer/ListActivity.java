@@ -22,6 +22,7 @@ public class ListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
+        getSupportActionBar().setTitle("ListDemo");
 
         listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(new VideoListAdapter(this));

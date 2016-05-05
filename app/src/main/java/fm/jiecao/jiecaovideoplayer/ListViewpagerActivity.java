@@ -26,6 +26,7 @@ public class ListViewpagerActivity extends AppCompatActivity implements ViewPage
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
+        getSupportActionBar().setTitle("ListViewPagerDemo");
 
         List<View> listViews = new ArrayList<>();
         ListView listView1 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);

@@ -36,6 +36,7 @@ public class LoadImageActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
+        getSupportActionBar().setTitle("LoadImageDemo");
 
         videoController1 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller1);
         videoController1.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
