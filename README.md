@@ -1,7 +1,7 @@
 # Jiecao Video Player  
 
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) 
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-3.0_preview-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.0_preview%7Caar) 
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-3.0-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.0%7Caar) 
 [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true)](https://android-arsenal.com/details/1/3269)
 [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
@@ -21,7 +21,7 @@ Android truly full-screen capabilities, the Android platform to become the most 
 
 ## Effect
 
-**[jiecaovideoplayer-3.0_preview-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0_preview-demo.apk)**
+**[jiecaovideoplayer-3.0-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0-demo.apk)**
 
 ![Demo Screenshot][1]
 
@@ -30,14 +30,14 @@ Demo video : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html
 ## Usage
 1.Import library,stable version is fm.jiecao:jiecaovideoplayer:2.0_final
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:3.0_preview'
+compile 'fm.jiecao:jiecaovideoplayer:3.0'
 ```
 
 Or download lib
 
-* [jiecaovideoplayer-3.0_preview.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0_preview.aar)
-* [jiecaovideoplayer-3.0_preview-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0_preview-javadoc.jar)
-* [jiecaovideoplayer-3.0_preview-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0_preview-sources.jar)
+* [jiecaovideoplayer-3.0.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0.aar)
+* [jiecaovideoplayer-3.0-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0-javadoc.jar)
+* [jiecaovideoplayer-3.0-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0-sources.jar)
 
 2.Add JCVideoPlayer in your layout
 ```xml
@@ -93,5 +93,5 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: ./screenshots/j3.jpg
+[1]: ./screenshots/j4.jpg
 
