@@ -1,6 +1,7 @@
 package fm.jiecao.jiecaovideoplayer;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +10,13 @@ import android.view.MenuItem;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardFresco;
 
 /**
  * Created by Nathen
@@ -22,15 +25,18 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 public class LoadImageActivity extends AppCompatActivity {
 
     JCVideoPlayerStandard videoController1, videoController2, videoController3, videoController4;
+    JCVideoPlayerStandardFresco videoController5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fresco.initialize(this);
         setContentView(R.layout.activity_loadimage);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
+        getSupportActionBar().setTitle("LoadImageDemo");
 
         videoController1 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller1);
         videoController1.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
@@ -64,7 +70,11 @@ public class LoadImageActivity extends AppCompatActivity {
                 com.android.volley.toolbox.ImageLoader.getImageListener(videoController4.ivThumb, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
         imageLoader.get("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg", listener);
 
-
+        videoController5 = (JCVideoPlayerStandardFresco) findViewById(R.id.videocontroller5);
+        videoController5.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
+                "嫂子洗澡没");
+        Uri uri = Uri.parse("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg");
+        videoController5.ivThumb.setImageURI(uri);
     }
 
     public class BitmapCache implements com.android.volley.toolbox.ImageLoader.ImageCache {

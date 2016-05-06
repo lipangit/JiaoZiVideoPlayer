@@ -3,16 +3,19 @@ package fm.jiecao.jiecaovideoplayer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
-import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardWithShareButton;
+import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowShareButtonAfterFullscreen;
+import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowTitleAfterFullscreen;
 
 /**
  * Created by Nathen
@@ -21,7 +24,9 @@ import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardWithShareButton;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     JCVideoPlayerSimple jcVideoPlayerSimple;
     JCVideoPlayerStandard jcVideoPlayerStandard;
-    JCVideoPlayerStandardWithShareButton jcVideoPlayerStandardWithShareButton;
+    JCVideoPlayerStandardShowShareButtonAfterFullscreen jcVideoPlayerStandardWithShareButton;
+    JCVideoPlayerStandardShowTitleAfterFullscreen jcVideoPlayerStandardShowTitleAfterFullscreen;
+
     Button btnToFullscreen_simple, btnToFullscreen_standard,
             btnToListActivity, btnToListViewPagerActivity, btnToImageLoadActivity;
 
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle(getString(R.string.app_name_full));
 
         btnToFullscreen_simple = (Button) findViewById(R.id.to_fullscreen_simple);
         btnToFullscreen_standard = (Button) findViewById(R.id.to_fullscreen_standard);
@@ -50,12 +56,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ImageLoader.getInstance().displayImage("http://p.qpic.cn/videoyun/0/2449_bfbbfa3cea8f11e5aac3db03cda99974_1/640",
                 jcVideoPlayerStandard.ivThumb);
 
-        jcVideoPlayerStandardWithShareButton = (JCVideoPlayerStandardWithShareButton) findViewById(R.id.custom_videoplayer_standard_with_share_button);
+        jcVideoPlayerStandardWithShareButton = (JCVideoPlayerStandardShowShareButtonAfterFullscreen) findViewById(R.id.custom_videoplayer_standard_with_share_button);
         jcVideoPlayerStandardWithShareButton.setUp("http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4"
                 , "嫂子闭眼睛");
         ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/3/14/2204a578-609b-440e-8af7-a0ee17ff3aee.jpg",
                 jcVideoPlayerStandardWithShareButton.ivThumb);
 
+        jcVideoPlayerStandardShowTitleAfterFullscreen = (JCVideoPlayerStandardShowTitleAfterFullscreen) findViewById(R.id.custom_videoplayer_standard_show_title_after_fullscreen);
+        jcVideoPlayerStandardShowTitleAfterFullscreen.setUp("http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4"
+                , "嫂子摸完没");
+        ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/5/1/3430ec64-e6a7-4d8e-b044-9d408e075b7c.jpg",
+                jcVideoPlayerStandardShowTitleAfterFullscreen.ivThumb);
+
+        JCVideoPlayerStandard.setJcBuriedPointStandard(jcBuriedPointStandard);
     }
 
     @Override
@@ -88,4 +101,82 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
         JCVideoPlayer.releaseAllVideos();
     }
+
+    JCBuriedPointStandard jcBuriedPointStandard = new JCBuriedPointStandard() {
+        @Override
+        public void onClickStartThumb(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickStartThumb" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onClickBlank(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickBlank" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onClickBlankFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickBlankFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onClickStartIcon(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickStartIcon" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onClickStartError(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickStartError" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onClickStop(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickStop" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onClickStopFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickStopFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onClickResume(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickResume" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onClickResumeFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickResumeFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onClickSeekbar(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickSeekbar" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onClickSeekbarFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onClickSeekbarFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onAutoComplete(String url, Object... objects) {
+            Log.i("Buried_Point", "onAutoComplete" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onAutoCompleteFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onAutoCompleteFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onEnterFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onEnterFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onQuitFullscreen(String url, Object... objects) {
+            Log.i("Buried_Point", "onQuitFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+    };
+
 }

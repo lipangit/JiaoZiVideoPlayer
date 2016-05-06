@@ -51,6 +51,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
         super.setStateAndUi(state);
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
+                ivStart.setVisibility(View.VISIBLE);
                 break;
             case CURRENT_STATE_PREPAREING:
                 ivStart.setVisibility(View.INVISIBLE);
@@ -59,6 +60,8 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
                 ivStart.setVisibility(View.VISIBLE);
                 break;
             case CURRENT_STATE_PAUSE:
+                break;
+            case CURRENT_STATE_ERROR:
                 break;
         }
         updateStartImage();

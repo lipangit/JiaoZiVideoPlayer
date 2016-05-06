@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
@@ -36,25 +37,29 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     private boolean touchingProgressBar = false;
     protected boolean IF_CURRENT_IS_FULLSCREEN = false;
     protected boolean IF_FULLSCREEN_IS_DIRECTLY = false;//IF_CURRENT_IS_FULLSCREEN should be true first
-    private static boolean IF_FULLSCREEN_FROM_NORMAL = false;
+    private static boolean IF_FULLSCREEN_FROM_NORMAL = false;//to prevent infinite loop
     public static boolean IF_RELEASE_WHEN_ON_PAUSE = true;
+    private boolean BACK_FROM_FULLSCREEN = false;
+    private static long CLICK_QUIT_FULLSCREEN_TIME = 0;
+    private static final int FULL_SCREEN_NORMAL_DELAY = 1000;
 
-    ImageView ivStart;
-    SeekBar skProgress;
-    ImageView ivFullScreen;
-    TextView tvTimeCurrent, tvTimeTotal;
-    ViewGroup rlSurfaceContainer;
+    protected ImageView ivStart;
+    protected SeekBar skProgress;
+    protected ImageView ivFullScreen;
+    protected TextView tvTimeCurrent, tvTimeTotal;
+    protected ViewGroup rlSurfaceContainer;
 
-    ViewGroup llTopContainer, llBottomControl;
+    protected ViewGroup llTopContainer, llBottomControl;
 
-    JCResizeSurfaceView surfaceView;
-    SurfaceHolder surfaceHolder;
+    protected JCResizeSurfaceView surfaceView;
+    protected SurfaceHolder surfaceHolder;
     int surfaceId;// for onClick()
 
-    String url;
-    Object[] obj;
+    protected String url;
+    protected Object[] objects;
 
     private static Timer mUpdateProgressTimer;
+    private static JCBuriedPoint JC_BURIED_POINT;
 
     public JCVideoPlayer(Context context) {
         super(context);
@@ -76,6 +81,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         llBottomControl = (ViewGroup) findViewById(R.id.layout_bottom);
         rlSurfaceContainer = (RelativeLayout) findViewById(R.id.surface_container);
         llTopContainer = (ViewGroup) findViewById(R.id.layout_top);
+        surfaceView = (JCResizeSurfaceView) this.findViewById(R.id.surfaceView);
+        surfaceHolder = surfaceView.getHolder();
+        surfaceHolder.addCallback(this);
 
         ivStart.setOnClickListener(this);
         ivFullScreen.setOnClickListener(this);
@@ -87,43 +95,38 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public abstract int getLayoutId();
 
-    public void setUp(String url, Object... obj) {
-        CURRENT_STATE = CURRENT_STATE_NORMAL;
-        this.url = url;
-        resetProgressAndTime();
-        this.obj = obj;
-        setStateAndUi(CURRENT_STATE_NORMAL);
+    protected static void setJcBuriedPoint(JCBuriedPoint jcBuriedPoint) {
+        JC_BURIED_POINT = jcBuriedPoint;
     }
 
-//    public void setUpForFullscreen() {
-//        if (IF_FULLSCREEN_IS_DIRECTLY) {
-//            ivStart.performClick();
-//        } else {
-//            JCMediaManager.intance().listener = this;
-//            jcVideoPlayer.setUpUI();//can not set ui
-//        }
-//
-//    }
+    public void setUp(String url, Object... objects) {
+        if (JCMediaManager.intance().listener == this && (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+            return;
+        CURRENT_STATE = CURRENT_STATE_NORMAL;
+        this.url = url;
+        this.objects = objects;
+        setStateAndUi(CURRENT_STATE_NORMAL);
+    }
 
     //set ui
     protected void setStateAndUi(int state) {
         CURRENT_STATE = state;
         switch (CURRENT_STATE) {
             case CURRENT_STATE_NORMAL:
-                cancelProgressTimer();
-                if (rlSurfaceContainer.getChildCount() > 0) {
-                    rlSurfaceContainer.removeAllViews();
-                }
                 if (JCMediaManager.intance().listener == this) {
-                    JCMediaManager.intance().mediaPlayer.stop();
+                    JCMediaManager.intance().mediaPlayer.release();
                 }
                 break;
             case CURRENT_STATE_PREPAREING:
-
                 break;
             case CURRENT_STATE_PLAYING:
+                startProgressTimer();
                 break;
             case CURRENT_STATE_PAUSE:
+                startProgressTimer();
+                break;
+            case CURRENT_STATE_ERROR:
+                JCMediaManager.intance().mediaPlayer.release();
                 break;
         }
     }
@@ -137,36 +140,71 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 return;
             }
             if (CURRENT_STATE == CURRENT_STATE_NORMAL || CURRENT_STATE == CURRENT_STATE_ERROR) {
-                if (JCMediaManager.intance().listener != null) {
-                    JCMediaManager.intance().listener.onCompletion();
+                if (JC_BURIED_POINT != null && CURRENT_STATE == CURRENT_STATE_NORMAL) {
+                    JC_BURIED_POINT.onClickStartIcon(url, objects);
+                } else if (JC_BURIED_POINT != null) {
+                    JC_BURIED_POINT.onClickStartError(url, objects);
                 }
-                JCMediaManager.intance().listener = this;
-                addSurfaceView();
-                JCMediaManager.intance().prepareToPlay(getContext(), url);
-                setStateAndUi(CURRENT_STATE_PREPAREING);
+                prepareVideo();
             } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
                 JCMediaManager.intance().mediaPlayer.pause();
                 setStateAndUi(CURRENT_STATE_PAUSE);
+                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                    if (IF_CURRENT_IS_FULLSCREEN) {
+                        JC_BURIED_POINT.onClickStopFullscreen(url, objects);
+                    } else {
+                        JC_BURIED_POINT.onClickStop(url, objects);
+                    }
+                }
             } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
+                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                    if (IF_CURRENT_IS_FULLSCREEN) {
+                        JC_BURIED_POINT.onClickResumeFullscreen(url, objects);
+                    } else {
+                        JC_BURIED_POINT.onClickResume(url, objects);
+                    }
+                }
                 JCMediaManager.intance().mediaPlayer.start();
                 setStateAndUi(CURRENT_STATE_PLAYING);
             }
         } else if (i == R.id.fullscreen) {
             if (IF_CURRENT_IS_FULLSCREEN) {
                 //quit fullscreen
+                backFullscreen();
             } else {
+                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                    JC_BURIED_POINT.onEnterFullscreen(url, objects);
+                }
                 //to fullscreen
                 JCMediaManager.intance().mediaPlayer.setDisplay(null);
                 JCMediaManager.intance().lastListener = this;
                 JCMediaManager.intance().listener = null;
                 IF_FULLSCREEN_FROM_NORMAL = true;
                 IF_RELEASE_WHEN_ON_PAUSE = false;
-                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, JCVideoPlayer.this.getClass(), this.obj);
+                JCFullScreenActivity.toActivityFromNormal(getContext(), CURRENT_STATE, url, JCVideoPlayer.this.getClass(), this.objects);
             }
+        } else if (i == R.id.surface_container && CURRENT_STATE == CURRENT_STATE_ERROR) {
+            if (JC_BURIED_POINT != null) {
+                JC_BURIED_POINT.onClickStartError(url, objects);
+            }
+            prepareVideo();
         }
     }
 
-    public void addSurfaceView() {
+    protected void prepareVideo() {
+        if (JCMediaManager.intance().listener != null) {
+            JCMediaManager.intance().listener.onCompletion();
+        }
+        JCMediaManager.intance().listener = this;
+//        addSurfaceView();
+        JCMediaManager.intance().prepareToPlay(getContext(), url);
+        if (!IF_CURRENT_IS_FULLSCREEN) {
+            setDisplayCaseFailse();
+        }
+        setStateAndUi(CURRENT_STATE_PREPAREING);
+    }
+
+    private void addSurfaceView() {
         if (rlSurfaceContainer.getChildCount() > 0) {
             rlSurfaceContainer.removeAllViews();
         }
@@ -190,6 +228,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             case MotionEvent.ACTION_UP:
                 touchingProgressBar = false;
                 startProgressTimer();
+                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                    if (IF_CURRENT_IS_FULLSCREEN) {
+                        JC_BURIED_POINT.onClickSeekbarFullscreen(url, objects);
+                    } else {
+                        JC_BURIED_POINT.onClickSeekbar(url, objects);
+                    }
+                }
                 break;
         }
         return false;
@@ -215,10 +260,31 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-//        if (!IF_FULLSCREEN_IS_DIRECTLY) {//fullscreen from normal
-        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        if (FalseSetDisPlay) {//case setDisplay faild in prepared();
+            FalseSetDisPlay = false;
+            setDisplayCaseFailse();
+        }
+        if (IF_CURRENT_IS_FULLSCREEN) {//fullscreen from normal
+            setDisplayCaseFailse();
+        }
+        if (BACK_FROM_FULLSCREEN) {
+            BACK_FROM_FULLSCREEN = false;
+            setDisplayCaseFailse();
+        }
         ifNeedCreateSurfaceView = false;
-//        }
+    }
+
+    private boolean FalseSetDisPlay = false;
+
+    private void setDisplayCaseFailse() {
+        try {
+            JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
+        } catch (IllegalArgumentException e) {
+            Log.i(TAG, "recreate surfaceview");
+            FalseSetDisPlay = true;
+            addSurfaceView();
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -238,6 +304,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCMediaManager.intance().mediaPlayer.start();
         startProgressTimer();
         setStateAndUi(CURRENT_STATE_PLAYING);
+    }
+
+    @Override
+    public void onAutoCompletion() {
+        //make me normal first
+        if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+            if (IF_CURRENT_IS_FULLSCREEN) {
+                JC_BURIED_POINT.onAutoCompleteFullscreen(url, objects);
+            } else {
+                JC_BURIED_POINT.onAutoComplete(url, objects);
+            }
+        }
+        onCompletion();
     }
 
     @Override
@@ -270,7 +349,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public void onError(int what, int extra) {
-
+        if (what != 38) {
+            setStateAndUi(CURRENT_STATE_ERROR);
+        }
     }
 
     @Override
@@ -286,13 +367,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     @Override
     public void onBackFullscreen() {
         CURRENT_STATE = JCMediaManager.intance().lastState;
-//        if (ifNeedCreateSurfaceView) {
-//            addSurfaceView();
-//            Log.i(TAG, "onBackFullscreen: addview");
-//        }
+        BACK_FROM_FULLSCREEN = true;
         setStateAndUi(CURRENT_STATE);
-//        JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
-        //set ui , but ui function is on child class
     }
 
     protected void startProgressTimer() {
@@ -345,18 +421,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         tvTimeTotal.setText(JCUtils.stringForTime(0));
     }
 
-    // only dispose IF_FULLSCREEN_IS_DIRECTLY=false ,
-    // bacause IF_FULLSCREEN_IS_DIRECTLY=true
-    //     will stop directly and finish fullscreenActivity directly
-    protected void quitFullcreenGoToNormal() {
+    protected void quitFullScreenGoToNormal() {
+        if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+            JC_BURIED_POINT.onQuitFullscreen(url, objects);
+        }
         JCMediaManager.intance().mediaPlayer.setDisplay(null);
-//        if (IF_FULLSCREEN_IS_DIRECTLY) {// it is all over
-//
-//        } else {// go back and go on play or pause
         JCMediaManager.intance().listener = JCMediaManager.intance().lastListener;
         JCMediaManager.intance().lastState = CURRENT_STATE;//save state
         JCMediaManager.intance().listener.onBackFullscreen();
-//        }
         finishMyFullscreen();
     }
 
@@ -371,14 +443,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             JCMediaManager.intance().mediaPlayer.stop();
             finishMyFullscreen();
         } else {
+            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             IF_RELEASE_WHEN_ON_PAUSE = false;
-            quitFullcreenGoToNormal();
+            quitFullScreenGoToNormal();
         }
     }
 
     public static void releaseAllVideos() {
         if (IF_RELEASE_WHEN_ON_PAUSE) {
-            JCMediaManager.intance().mediaPlayer.stop();
+            JCMediaManager.intance().mediaPlayer.release();
             if (JCMediaManager.intance().listener != null) {
                 JCMediaManager.intance().listener.onCompletion();
             }

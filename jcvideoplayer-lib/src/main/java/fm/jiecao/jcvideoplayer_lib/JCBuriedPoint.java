@@ -6,32 +6,28 @@ package fm.jiecao.jcvideoplayer_lib;
  */
 public interface JCBuriedPoint {
 
-    void POINT_START_ICON(String title, String url);
+    void onClickStartIcon(String url, Object... objects);
 
-    void POINT_START_THUMB(String title, String url);
+    void onClickStartError(String url, Object... objects);
 
-    void POINT_STOP(String title, String url);
+    void onClickStop(String url, Object... objects);
 
-    void POINT_STOP_FULLSCREEN(String title, String url);
+    void onClickStopFullscreen(String url, Object... objects);
 
-    void POINT_RESUME(String title, String url);
+    void onClickResume(String url, Object... objects);
 
-    void POINT_RESUME_FULLSCREEN(String title, String url);
+    void onClickResumeFullscreen(String url, Object... objects);
 
-    void POINT_CLICK_BLANK(String title, String url);
+    void onClickSeekbar(String url, Object... objects);
 
-    void POINT_CLICK_BLANK_FULLSCREEN(String title, String url);
+    void onClickSeekbarFullscreen(String url, Object... objects);
 
-    void POINT_CLICK_SEEKBAR(String title, String url);
+    void onAutoComplete(String url, Object... objects);
 
-    void POINT_CLICK_SEEKBAR_FULLSCREEN(String title, String url);
+    void onAutoCompleteFullscreen(String url, Object... objects);
 
-    void POINT_AUTO_COMPLETE(String title, String url);
+    void onEnterFullscreen(String url, Object... objects);
 
-    void POINT_AUTO_COMPLETE_FULLSCREEN(String title, String url);
-
-    void POINT_ENTER_FULLSCREEN(String title, String url);
-
-    void POINT_QUIT_FULLSCREEN(String title, String url);
+    void onQuitFullscreen(String url, Object... objects);
 
 }
