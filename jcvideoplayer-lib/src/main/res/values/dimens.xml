@@ -1,2 +1,3 @@
 <resources>
+    <dimen name="dialog_top">16dp</dimen>
 </resources>

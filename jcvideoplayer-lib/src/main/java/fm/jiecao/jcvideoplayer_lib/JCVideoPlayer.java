@@ -1,16 +1,21 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -26,7 +31,7 @@ import java.util.TimerTask;
  */
 public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, JCMediaManager.JCMediaPlayerListener {
 
-    public static final String TAG = "JCAbstractVideoPlayer";
+    public static final String TAG = "JCVideoPlayer";
     public int CURRENT_STATE = -1;//-1相当于null
     public static final int CURRENT_STATE_PREPAREING = 0;
     public static final int CURRENT_STATE_PAUSE = 1;
@@ -93,6 +98,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         skProgress.setOnTouchListener(this);
 
         rlSurfaceContainer.setOnTouchListener(this);
+
     }
 
     public abstract int getLayoutId();
@@ -220,17 +226,97 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         rlSurfaceContainer.addView(surfaceView, layoutParams);
     }
 
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    private int threshold = 30;
+    float downX;
+    float downY;
+    private boolean changeVolume = false;
+    private boolean changePosition = false;
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        float x = event.getX();
+        float y = event.getY();
         int id = v.getId();
         if (id == R.id.surface_container) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     touchingProgressBar = true;
+
+                    downX = x;
+                    downY = y;
+                    changeVolume = false;
+                    changePosition = false;
+                    /////////////////////
                     cancelProgressTimer();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    float deltaX = x - downX;
+                    float deltaY = y - downY;
+                    float absDeltaX = Math.abs(deltaX);
+                    float absDeltaY = Math.abs(deltaY);
+
+                    if (!changePosition && !changeVolume) {
+                        if (absDeltaX > threshold || absDeltaY > threshold) {
+                            if (absDeltaX >= threshold) {
+                                changePosition = true;
+                            } else {
+                                changeVolume = true;
+                            }
+                        }
+                    }
+
+                    if (changePosition) {
+                        Log.i(TAG, "onTouch: changePosition " + deltaX);
+
+                    }
+                    if (changeVolume) {
+                        Log.i(TAG, "onTouch: changeVolume");
+
+                    }
+
+//                    boolean isAdjustAudio = false;
+//                    if (absDeltaX > threshold && absDeltaY > threshold) {
+//                        if (absDeltaX < absDeltaY) {
+//                            isAdjustAudio = true;
+//                        } else {
+//                            isAdjustAudio = false;
+//                        }
+//                    } else if (absDeltaX < threshold && absDeltaY > threshold) {
+//                        isAdjustAudio = true;
+//                    } else if (absDeltaX > threshold && absDeltaY < threshold) {
+//                        isAdjustAudio = false;
+//                    } else {
+//                        return true;
+//                    }
+//
+//                    if (isAdjustAudio) {
+//                        if (deltaY > 0) {
+//                            Log.i(TAG, "onTouch: volumeDown " + deltaY);
+////                            volumeDown(absDeltaY);
+//                        } else if (deltaY < 0) {
+//                            Log.i(TAG, "onTouch: volumeUp " + deltaY);
+////                            volumeUp(absDeltaY);
+//                        }
+//
+//                    } else {
+//                        if (deltaX > 0) {
+//                            Log.i(TAG, "onTouch: forward " + deltaX);
+////                            forward(absDeltaX);
+//                        } else if (deltaX < 0) {
+//                            Log.i(TAG, "onTouch: backward " + deltaX);
+////                            backward(absDeltaX);
+//                        }
+//                    }
                     break;
                 case MotionEvent.ACTION_UP:
                     touchingProgressBar = false;
+
+                    /////////////////////
                     startProgressTimer();
                     if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
                         if (IF_CURRENT_IS_FULLSCREEN) {
@@ -242,7 +328,26 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     break;
             }
         }
+
         return false;
+    }
+
+    private void showProgressDialog() {
+        View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_progress_dialog, null);
+        ProgressBar D = ((ProgressBar) localView.findViewById(R.id.duration_progressbar));
+        TextView F = ((TextView) localView.findViewById(R.id.tv_current));
+        TextView G = ((TextView) localView.findViewById(R.id.tv_duration));
+        ImageView E = ((ImageView) localView.findViewById(R.id.duration_image_tip));
+        Dialog C = new Dialog(getContext(), R.style.Translucent_NoTitle);
+        C.setContentView(localView);
+        C.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
+        C.getWindow().addFlags(32);
+        C.getWindow().addFlags(16);
+        C.getWindow().setLayout(-2, -2);
+        WindowManager.LayoutParams localLayoutParams = C.getWindow().getAttributes();
+        localLayoutParams.gravity = 49;
+        localLayoutParams.y = getResources().getDimensionPixelOffset(R.dimen.dialog_top);
+        C.getWindow().setAttributes(localLayoutParams);
     }
 
     @Override

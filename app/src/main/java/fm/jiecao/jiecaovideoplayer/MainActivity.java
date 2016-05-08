@@ -1,13 +1,22 @@
 package fm.jiecao.jiecaovideoplayer;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.Random;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
@@ -75,9 +84,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.to_fullscreen_simple:
-                JCFullScreenActivity.toActivity(this,
-                        "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
-                        JCVideoPlayerSimple.class, "嫂子真浪");
+                showProgressDialog(random.nextInt(100), random.nextInt(100));
+//                JCFullScreenActivity.toActivity(this,
+//                        "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
+//                        JCVideoPlayerSimple.class, "嫂子真浪");
                 break;
             case R.id.to_fullscreen_standard:
                 JCFullScreenActivity.toActivity(this,
@@ -94,6 +104,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, LoadImageActivity.class));
                 break;
         }
+    }
+
+    Dialog dialog;
+    ProgressBar progressBar;
+    TextView tvCurrent;
+    TextView tvTotal;
+    ImageView imageView;
+    Random random = new Random(100);
+
+    private void showProgressDialog(int currentTime, int totalTime) {
+        if (dialog == null) {
+            View localView = LayoutInflater.from(this).inflate(fm.jiecao.jcvideoplayer_lib.R.layout.jc_progress_dialog, null);
+            progressBar = ((ProgressBar) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_progressbar));
+            tvCurrent = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_current));
+            tvTotal = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_duration));
+            imageView = ((ImageView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_image_tip));
+            dialog = new Dialog(this, fm.jiecao.jcvideoplayer_lib.R.style.Translucent_NoTitle);
+            dialog.setContentView(localView);
+            dialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
+            dialog.getWindow().addFlags(32);
+            dialog.getWindow().addFlags(16);
+            dialog.getWindow().setLayout(-2, -2);
+            WindowManager.LayoutParams localLayoutParams = dialog.getWindow().getAttributes();
+            localLayoutParams.gravity = 49;
+            localLayoutParams.y = getResources().getDimensionPixelOffset(fm.jiecao.jcvideoplayer_lib.R.dimen.dialog_top);
+            dialog.getWindow().setAttributes(localLayoutParams);
+            dialog.show();
+
+        }
+        tvCurrent.setText(currentTime + "");
+        tvTotal.setText(totalTime + "");
+
     }
 
     @Override
