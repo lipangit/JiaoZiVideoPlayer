@@ -1,4 +1,4 @@
-# Jiecao Video Player  
+# JieCao Video Player  
 
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) 
 [![Maven Central](https://img.shields.io/badge/Maven%20Central-3.0-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.0%7Caar) 
