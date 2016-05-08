@@ -97,13 +97,16 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                cancelDismissControlViewTimer();
-                break;
-            case MotionEvent.ACTION_UP:
-                startDismissControlViewTimer();
-                break;
+        int id = v.getId();
+        if (id == R.id.surface_container) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    cancelDismissControlViewTimer();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    startDismissControlViewTimer();
+                    break;
+            }
         }
         return super.onTouch(v, event);
     }

@@ -91,6 +91,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         llBottomControl.setOnClickListener(this);
         rlSurfaceContainer.setOnClickListener(this);
         skProgress.setOnTouchListener(this);
+
+        rlSurfaceContainer.setOnTouchListener(this);
     }
 
     public abstract int getLayoutId();
@@ -220,22 +222,25 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                touchingProgressBar = true;
-                cancelProgressTimer();
-                break;
-            case MotionEvent.ACTION_UP:
-                touchingProgressBar = false;
-                startProgressTimer();
-                if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
-                    if (IF_CURRENT_IS_FULLSCREEN) {
-                        JC_BURIED_POINT.onClickSeekbarFullscreen(url, objects);
-                    } else {
-                        JC_BURIED_POINT.onClickSeekbar(url, objects);
+        int id = v.getId();
+        if (id == R.id.surface_container) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    touchingProgressBar = true;
+                    cancelProgressTimer();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    touchingProgressBar = false;
+                    startProgressTimer();
+                    if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                        if (IF_CURRENT_IS_FULLSCREEN) {
+                            JC_BURIED_POINT.onClickSeekbarFullscreen(url, objects);
+                        } else {
+                            JC_BURIED_POINT.onClickSeekbar(url, objects);
+                        }
                     }
-                }
-                break;
+                    break;
+            }
         }
         return false;
     }

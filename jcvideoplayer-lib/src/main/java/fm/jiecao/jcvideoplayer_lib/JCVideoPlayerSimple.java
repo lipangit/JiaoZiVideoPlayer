@@ -20,18 +20,6 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     }
 
     @Override
-    protected void init(Context context) {
-        super.init(context);
-        //init my video
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        super.onClick(v);
-    }
-
-    @Override
     public int getLayoutId() {
         return R.layout.jc_layout_base;
     }
