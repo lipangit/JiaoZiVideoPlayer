@@ -322,7 +322,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             tvCurrent = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_current));
             tvTotal = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_duration));
             imageView = ((ImageView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_image_tip));
-            dialog = new Dialog(getContext(), fm.jiecao.jcvideoplayer_lib.R.style.Translucent_NoTitle);
+            dialog = new Dialog(getContext(), fm.jiecao.jcvideoplayer_lib.R.style.jc_style_dialog_progress);
             dialog.setContentView(localView);
             dialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
             dialog.getWindow().addFlags(32);
