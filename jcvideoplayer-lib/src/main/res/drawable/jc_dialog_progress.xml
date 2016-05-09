@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@android:id/background">
         <shape>
-            <solid android:color="#00ff00"/>
+            <solid android:color="#ffffffff"/>
             <corners android:radius="2.0dip"/>
         </shape>
     </item>
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <solid android:color="#ff00ff"/>
+                <solid android:color="#fff85959"/>
                 <corners android:radius="2.0dip"/>
             </shape>
         </clip>
