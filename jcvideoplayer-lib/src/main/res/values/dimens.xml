@@ -1,3 +1,4 @@
 <resources>
     <dimen name="dialog_top">80dp</dimen>
+    <dimen name="volume_dlg_margin_left">24.0dip</dimen>
 </resources>

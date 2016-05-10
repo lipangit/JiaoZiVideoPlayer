@@ -3,6 +3,7 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.media.AudioManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -66,6 +67,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     private static Timer mUpdateProgressTimer;
     private static JCBuriedPoint JC_BURIED_POINT;
     protected int screenWidth;
+    protected int screenHeight;
+    private AudioManager mAudioManager;
 
     public JCVideoPlayer(Context context) {
         super(context);
@@ -100,6 +103,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
         rlSurfaceContainer.setOnTouchListener(this);
         screenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
+        screenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
+        mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
     }
 
     public abstract int getLayoutId();
@@ -227,7 +232,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         rlSurfaceContainer.addView(surfaceView, layoutParams);
     }
 
-    private int threshold = 30;
+    private int threshold = 80;
     private float downX;
     private float downY;
     private boolean changeVolume = false;
@@ -263,24 +268,26 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                                 downPosition = JCMediaManager.intance().mediaPlayer.getCurrentPosition();
                             } else {
                                 changeVolume = true;
+                                downVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                             }
                         }
                     }
 
                     if (changePosition) {
-                        Log.i(TAG, "onTouch: changePosition " + deltaX);
                         showProgressDialog(deltaX);
                     }
                     if (changeVolume) {
-                        Log.i(TAG, "onTouch: changeVolume");
-
+                        showVolumDialog(-deltaY);
                     }
 
                     break;
                 case MotionEvent.ACTION_UP:
                     touchingProgressBar = false;
-                    if (dialog != null) {
-                        dialog.dismiss();
+                    if (dialogProgress != null) {
+                        dialogProgress.dismiss();
+                    }
+                    if (dialogVolum != null) {
+                        dialogVolum.dismiss();
                     }
                     if (changePosition) {
                         JCMediaManager.intance().mediaPlayer.seekTo(resultTimePosition);
@@ -306,34 +313,35 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
 
-    Dialog dialog;
+    Dialog dialogProgress;
     ProgressBar progressBar;
     TextView tvCurrent;
     TextView tvTotal;
     ImageView imageView;
     int downPosition;
+    int downVolume;
     int resultTimePosition;
 
     private void showProgressDialog(float deltaX) {
-        if (dialog == null) {
+        if (dialogProgress == null) {
             View localView = LayoutInflater.from(getContext()).inflate(fm.jiecao.jcvideoplayer_lib.R.layout.jc_progress_dialog, null);
             progressBar = ((ProgressBar) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_progressbar));
             tvCurrent = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_current));
             tvTotal = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_duration));
             imageView = ((ImageView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_image_tip));
-            dialog = new Dialog(getContext(), fm.jiecao.jcvideoplayer_lib.R.style.jc_style_dialog_progress);
-            dialog.setContentView(localView);
-            dialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
-            dialog.getWindow().addFlags(32);
-            dialog.getWindow().addFlags(16);
-            dialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = dialog.getWindow().getAttributes();
+            dialogProgress = new Dialog(getContext(), fm.jiecao.jcvideoplayer_lib.R.style.jc_style_dialog_progress);
+            dialogProgress.setContentView(localView);
+            dialogProgress.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
+            dialogProgress.getWindow().addFlags(32);
+            dialogProgress.getWindow().addFlags(16);
+            dialogProgress.getWindow().setLayout(-2, -2);
+            WindowManager.LayoutParams localLayoutParams = dialogProgress.getWindow().getAttributes();
             localLayoutParams.gravity = 49;
             localLayoutParams.y = getResources().getDimensionPixelOffset(fm.jiecao.jcvideoplayer_lib.R.dimen.dialog_top);
-            dialog.getWindow().setAttributes(localLayoutParams);
+            dialogProgress.getWindow().setAttributes(localLayoutParams);
         }
-        if (!dialog.isShowing()) {
-            dialog.show();
+        if (!dialogProgress.isShowing()) {
+            dialogProgress.show();
         }
         int totalTime = JCMediaManager.intance().mediaPlayer.getDuration();
         resultTimePosition = (int) (downPosition + deltaX * totalTime / screenWidth);
@@ -345,6 +353,34 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         } else {
             imageView.setBackgroundResource(R.drawable.rewindicon_video);
         }
+    }
+
+    Dialog dialogVolum;
+    ProgressBar dialogVolumProgressBar;
+
+    private void showVolumDialog(float deltaY) {
+        if (dialogVolum == null) {
+            View localView = LayoutInflater.from(getContext()).inflate(R.layout.video_volume_dialog, null);
+            dialogVolumProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
+            dialogVolum = new Dialog(getContext(), R.style.jc_style_dialog_progress);
+            dialogVolum.setContentView(localView);
+            dialogVolum.getWindow().addFlags(8);
+            dialogVolum.getWindow().addFlags(32);
+            dialogVolum.getWindow().addFlags(16);
+            dialogVolum.getWindow().setLayout(-2, -2);
+            WindowManager.LayoutParams localLayoutParams = dialogVolum.getWindow().getAttributes();
+            localLayoutParams.gravity = 19;
+            localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.volume_dlg_margin_left);
+            dialogVolum.getWindow().setAttributes(localLayoutParams);
+        }
+        if (!dialogVolum.isShowing()) {
+            dialogVolum.show();
+        }
+        int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int deltaV = (int) (max * deltaY * 3 / screenHeight);
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, downVolume + deltaV, 0);
+        int transformatVolume = (int) (downVolume * 100 / max + deltaY * 3 * 100 / screenHeight);
+        dialogVolumProgressBar.setProgress(transformatVolume);
     }
 
     @Override
