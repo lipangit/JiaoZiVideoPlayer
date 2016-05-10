@@ -103,8 +103,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 case MotionEvent.ACTION_DOWN:
                     cancelDismissControlViewTimer();
                     break;
+                case MotionEvent.ACTION_MOVE:
+                    break;
                 case MotionEvent.ACTION_UP:
                     startDismissControlViewTimer();
+                    if (changePosition) {
+                        int duration = JCMediaManager.intance().mediaPlayer.getDuration();
+                        int progress = resultTimePosition * 100 / (duration == 0 ? 1 : duration);
+                        pbBottom.setProgress(progress);
+                    } else {
+                        onClickUiToggle();
+                    }
                     break;
             }
         }
@@ -135,7 +144,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     jc_BuriedPointStandard.onClickBlank(url, objects);
                 }
             }
-            onClickUiToggle();
             startDismissControlViewTimer();
         } else if (i == R.id.back) {
             backFullscreen();

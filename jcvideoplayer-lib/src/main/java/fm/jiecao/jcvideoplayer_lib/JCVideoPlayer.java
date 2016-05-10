@@ -235,8 +235,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     private int threshold = 80;
     private float downX;
     private float downY;
-    private boolean changeVolume = false;
-    private boolean changePosition = false;
+    public boolean changeVolume = false;
+    public boolean changePosition = false;
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -292,7 +292,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     if (changePosition) {
                         JCMediaManager.intance().mediaPlayer.seekTo(resultTimePosition);
                         int duration = JCMediaManager.intance().mediaPlayer.getDuration();
-                        // if duration == 0 (e.g. in HLS streams) avoids ArithmeticException
                         int progress = resultTimePosition * 100 / (duration == 0 ? 1 : duration);
                         skProgress.setProgress(progress);
                     }
