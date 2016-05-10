@@ -227,11 +227,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         rlSurfaceContainer.addView(surfaceView, layoutParams);
     }
 
-    public static int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
-    }
-
     private int threshold = 30;
     private float downX;
     private float downY;
@@ -289,6 +284,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     }
                     if (changePosition) {
                         JCMediaManager.intance().mediaPlayer.seekTo(resultTimePosition);
+                        int duration = JCMediaManager.intance().mediaPlayer.getDuration();
+                        // if duration == 0 (e.g. in HLS streams) avoids ArithmeticException
+                        int progress = resultTimePosition * 100 / (duration == 0 ? 1 : duration);
+                        skProgress.setProgress(progress);
                     }
                     /////////////////////
                     startProgressTimer();
@@ -340,7 +339,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         resultTimePosition = (int) (downPosition + deltaX * totalTime / screenWidth);
         tvCurrent.setText(JCUtils.stringForTime(resultTimePosition));
         tvTotal.setText(" / " + JCUtils.stringForTime(totalTime) + "");
-        progressBar.setProgress((int) (resultTimePosition * 100 / totalTime));
+        progressBar.setProgress(resultTimePosition * 100 / totalTime);
         if (deltaX > 0) {
             imageView.setBackgroundResource(R.drawable.forardicon_video);
         } else {
