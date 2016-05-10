@@ -260,19 +260,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     float deltaY = y - downY;
                     float absDeltaX = Math.abs(deltaX);
                     float absDeltaY = Math.abs(deltaY);
-
-                    if (!changePosition && !changeVolume) {
-                        if (absDeltaX > threshold || absDeltaY > threshold) {
-                            if (absDeltaX >= threshold) {
-                                changePosition = true;
-                                downPosition = JCMediaManager.intance().mediaPlayer.getCurrentPosition();
-                            } else {
-                                changeVolume = true;
-                                downVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                    if (IF_CURRENT_IS_FULLSCREEN) {
+                        if (!changePosition && !changeVolume) {
+                            if (absDeltaX > threshold || absDeltaY > threshold) {
+                                if (absDeltaX >= threshold) {
+                                    changePosition = true;
+                                    downPosition = JCMediaManager.intance().mediaPlayer.getCurrentPosition();
+                                } else {
+                                    changeVolume = true;
+                                    downVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                                }
                             }
                         }
                     }
-
                     if (changePosition) {
                         showProgressDialog(deltaX);
                     }
