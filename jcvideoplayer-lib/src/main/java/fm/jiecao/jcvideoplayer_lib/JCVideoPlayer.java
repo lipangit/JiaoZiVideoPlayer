@@ -266,9 +266,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                                 if (absDeltaX >= threshold) {
                                     changePosition = true;
                                     downPosition = JCMediaManager.intance().mediaPlayer.getCurrentPosition();
+                                    if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                                        JC_BURIED_POINT.onTouchScreenSeekPosition(url, objects);
+                                    }
                                 } else {
                                     changeVolume = true;
                                     downVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                                    if (JC_BURIED_POINT != null && JCMediaManager.intance().listener == this) {
+                                        JC_BURIED_POINT.onTouchScreenSeekVolume(url, objects);
+                                    }
                                 }
                             }
                         }

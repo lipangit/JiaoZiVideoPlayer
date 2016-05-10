@@ -224,6 +224,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         public void onQuitFullscreen(String url, Object... objects) {
             Log.i("Buried_Point", "onQuitFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
+
+        @Override
+        public void onTouchScreenSeekVolume(String url, Object... objects) {
+            Log.i("Buried_Point", "onTouchScreenSeekVolume" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onTouchScreenSeekPosition(String url, Object... objects) {
+            Log.i("Buried_Point", "onTouchScreenSeekVolume" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
     };
 
 }
