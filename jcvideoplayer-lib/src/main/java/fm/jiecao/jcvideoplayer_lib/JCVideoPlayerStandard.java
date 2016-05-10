@@ -111,7 +111,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                         int duration = JCMediaManager.intance().mediaPlayer.getDuration();
                         int progress = resultTimePosition * 100 / (duration == 0 ? 1 : duration);
                         pbBottom.setProgress(progress);
-                    } else {
+                    }
+                    if (!changePosition && !changeVolume) {
                         onClickUiToggle();
                     }
                     break;
