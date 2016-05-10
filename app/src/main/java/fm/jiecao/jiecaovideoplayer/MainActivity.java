@@ -19,6 +19,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.util.Random;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
+import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
@@ -83,16 +84,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.to_fullscreen_simple:
-                showProgressDialog(random.nextBoolean(), random.nextInt(100), random.nextInt(100));
-//                JCFullScreenActivity.toActivity(this,
-//                        "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
-//                        JCVideoPlayerSimple.class, "嫂子真浪");
+                JCFullScreenActivity.toActivity(this,
+                        "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
+                        JCVideoPlayerSimple.class, "嫂子真浪");
                 break;
             case R.id.to_fullscreen_standard:
-                dialog.dismiss();
-//                JCFullScreenActivity.toActivity(this,
-//                        "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
-//                        JCVideoPlayerStandard.class, "嫂子真牛逼");
+                JCFullScreenActivity.toActivity(this,
+                        "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
+                        JCVideoPlayerStandard.class, "嫂子真牛逼");
                 break;
             case R.id.to_list_activity:
                 startActivity(new Intent(MainActivity.this, ListActivity.class));
@@ -103,43 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.to_loadimage_activity:
                 startActivity(new Intent(MainActivity.this, LoadImageActivity.class));
                 break;
-        }
-    }
-
-    Dialog dialog;
-    ProgressBar progressBar;
-    TextView tvCurrent;
-    TextView tvTotal;
-    ImageView imageView;
-    Random random = new Random(100);
-
-    private void showProgressDialog(boolean backwardOrForward, int currentTime, int totalTime) {
-        if (dialog == null) {
-            View localView = LayoutInflater.from(this).inflate(fm.jiecao.jcvideoplayer_lib.R.layout.jc_progress_dialog, null);
-            progressBar = ((ProgressBar) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_progressbar));
-            tvCurrent = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_current));
-            tvTotal = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_duration));
-            imageView = ((ImageView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_image_tip));
-            dialog = new Dialog(this, fm.jiecao.jcvideoplayer_lib.R.style.jc_style_dialog_progress);
-            dialog.setContentView(localView);
-            dialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
-            dialog.getWindow().addFlags(32);
-            dialog.getWindow().addFlags(16);
-            dialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = dialog.getWindow().getAttributes();
-            localLayoutParams.gravity = 49;
-            localLayoutParams.y = getResources().getDimensionPixelOffset(fm.jiecao.jcvideoplayer_lib.R.dimen.dialog_top);
-            dialog.getWindow().setAttributes(localLayoutParams);
-        }
-        if (!dialog.isShowing()) {
-            dialog.show();
-        }
-        tvCurrent.setText(currentTime + "");
-        tvTotal.setText(" / " + totalTime + "");
-        if (backwardOrForward) {
-            imageView.setBackgroundResource(R.drawable.forardicon_video);
-        } else {
-            imageView.setBackgroundResource(R.drawable.rewindicon_video);
         }
     }
 

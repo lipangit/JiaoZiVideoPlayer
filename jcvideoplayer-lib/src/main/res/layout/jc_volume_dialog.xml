@@ -13,7 +13,7 @@
 
         <ProgressBar
             android:id="@+id/volume_progressbar"
-            style="@style/vertical_progressBar"
+            style="@style/jc_vertical_progressBar"
             android:layout_width="4.0dip"
             android:layout_height="81.0dip"
             android:layout_gravity="center_horizontal"
@@ -26,6 +26,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16.0dip"
             android:layout_marginTop="16.0dip"
-            android:src="@drawable/volume_video"/>
+            android:src="@drawable/jc_volume_icon"/>
     </LinearLayout>
 </LinearLayout>
