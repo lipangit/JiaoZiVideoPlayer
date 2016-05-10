@@ -30,4 +30,8 @@ public interface JCBuriedPoint {
 
     void onQuitFullscreen(String url, Object... objects);
 
+    void onTouchScreenSeekVolume(String url, Object... objects);
+
+    void onTouchScreenSeekPosition(String url, Object... objects);
+
 }

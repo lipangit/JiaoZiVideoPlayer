@@ -1,13 +1,22 @@
 package fm.jiecao.jiecaovideoplayer;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.util.Random;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
 import fm.jiecao.jcvideoplayer_lib.JCFullScreenActivity;
@@ -176,6 +185,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         public void onQuitFullscreen(String url, Object... objects) {
             Log.i("Buried_Point", "onQuitFullscreen" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onTouchScreenSeekVolume(String url, Object... objects) {
+            Log.i("Buried_Point", "onTouchScreenSeekVolume" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
+        }
+
+        @Override
+        public void onTouchScreenSeekPosition(String url, Object... objects) {
+            Log.i("Buried_Point", "onTouchScreenSeekVolume" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url);
         }
     };
 
