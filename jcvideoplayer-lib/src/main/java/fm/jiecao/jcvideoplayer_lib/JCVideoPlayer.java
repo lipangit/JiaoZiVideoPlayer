@@ -374,7 +374,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             dialogVolum.getWindow().setLayout(-2, -2);
             WindowManager.LayoutParams localLayoutParams = dialogVolum.getWindow().getAttributes();
             localLayoutParams.gravity = 19;
-            localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.volume_dlg_margin_left);
+            localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.jc_volume_dialog_margin_left);
             dialogVolum.getWindow().setAttributes(localLayoutParams);
         }
         if (!dialogVolum.isShowing()) {
