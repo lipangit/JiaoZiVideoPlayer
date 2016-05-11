@@ -20,14 +20,14 @@ import java.util.TimerTask;
  */
 public class JCVideoPlayerStandard extends JCVideoPlayer {
 
-  protected ImageView ivBack;
-  protected ProgressBar pbBottom, pbLoading;
-  protected TextView tvTitle;
+  public ImageView ivBack;
+  public ProgressBar pbBottom, pbLoading;
+  public TextView tvTitle;
   public ImageView ivThumb;
-  protected ImageView ivCover;
+  public ImageView ivCover;
 
-  private static Timer mDismissControlViewTimer;
-  private static JCBuriedPointStandard jc_BuriedPointStandard;
+  protected static Timer mDismissControlViewTimer;
+  protected static JCBuriedPointStandard jc_BuriedPointStandard;
 
   public JCVideoPlayerStandard(Context context) {
     super(context);
