@@ -22,6 +22,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -60,6 +62,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   public String url;
   public Object[] objects;
+  public Map<String, String> mapHeadData = new HashMap<>();
 
   public static Timer mUpdateProgressTimer;
   protected static JCBuriedPoint JC_BURIED_POINT;
@@ -135,6 +138,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     this.url = url;
     this.objects = objects;
     setStateAndUi(CURRENT_STATE_NORMAL);
+  }
+
+  public void setUp(String url, Map<String, String> mapHeadData, Object... objects) {
+    if (JCMediaManager.intance().listener == this && (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+      return;
+    setUp(url, objects);
+    this.mapHeadData.clear();
+    this.mapHeadData.putAll(mapHeadData);
   }
 
   //set ui
@@ -226,7 +237,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
     JCMediaManager.intance().listener = this;
 //        addSurfaceView();
-    JCMediaManager.intance().prepareToPlay(getContext(), url);
+    JCMediaManager.intance().prepareToPlay(getContext(), url, mapHeadData);
     if (!IF_CURRENT_IS_FULLSCREEN) {
       setDisplayCaseFailse();
     }
