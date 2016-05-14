@@ -18,6 +18,7 @@ Android truly full-screen capabilities, the Android platform to become the most 
 5. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
 6. It will not disturb or change the playing state when entering or exiting fullscreen
 7. With limited storage, less than 50 kb
+8. Put head data
 
 ## Effect
 
