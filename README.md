@@ -15,10 +15,11 @@ Android truly full-screen capabilities, the Android platform to become the most 
 2. Completely custom ui
 3. In `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
 4. Video will be reset(pause) when it's scrolled out of the screen in `ListView` and `ViewPager`
-5. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
-6. It will not disturb or change the playing state when entering or exiting fullscreen
-7. With limited storage, less than 50 kb
-8. Put head data
+5. Gestrues to modify progress and volume
+6. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
+7. It will not disturb or change the playing state when entering or exiting fullscreen
+8. With limited storage, less than 50 kb
+9. Put head data
 
 ## Effect
 
