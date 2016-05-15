@@ -1,7 +1,7 @@
 #节操视频播放器 
 
 [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) 
-[![Maven Central](https://img.shields.io/badge/Maven%20Central-3.0-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.0%7Caar) 
+[![Maven Central](https://img.shields.io/badge/Maven%20Central-3.1-green.svg)](http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.1%7Caar) 
 [![Licenses](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) 
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true)](https://android-arsenal.com/details/1/3269)
 [![GitHub stars](https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star)]()
@@ -13,29 +13,31 @@
 2. 可以完全自定义UI
 3. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
 4. `ListView`的拖拽和`ViewPager`的滑动时如果划出屏幕会自动重置视频
-5. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
-6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
-7. 占用空间非常小，不到50k
+5. 手势修改进度和音量
+6. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
+7. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
+8. 占用空间非常小，不到50k
+9. 设置http头信息
 
 ##效果
 
-**[jiecaovideoplayer-3.0-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0-demo.apk)**
+**[jiecaovideoplayer-3.1-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.1-demo.apk)**
 
 ![Demo Screenshot][1]
 
 视频演示 : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
 
 ##使用
-1.添加类库,稳定版是 fm.jiecao:jiecaovideoplayer:2.0_final
+1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:3.0'
+compile 'fm.jiecao:jiecaovideoplayer:3.1'
 ```
 
 或直接下载
 
-* [jiecaovideoplayer-3.0.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0.aar)
-* [jiecaovideoplayer-3.0-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0-javadoc.jar)
-* [jiecaovideoplayer-3.0-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.0-sources.jar)
+* [jiecaovideoplayer-3.1.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.1.aar)
+* [jiecaovideoplayer-3.1-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.1-javadoc.jar)
+* [jiecaovideoplayer-3.1-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.1-sources.jar)
 
 2.添加布局
 ```xml
@@ -91,4 +93,4 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: ./screenshots/j4.jpg
+[1]: ./screenshots/j5.jpg
