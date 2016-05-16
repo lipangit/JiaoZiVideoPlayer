@@ -117,6 +117,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
           }
           break;
       }
+    } else if (id == R.id.progress) {
+      switch (event.getAction()) {
+        case MotionEvent.ACTION_DOWN:
+          cancelDismissControlViewTimer();
+          break;
+        case MotionEvent.ACTION_UP:
+          startDismissControlViewTimer();
+          break;
+      }
     }
     return super.onTouch(v, event);
   }
