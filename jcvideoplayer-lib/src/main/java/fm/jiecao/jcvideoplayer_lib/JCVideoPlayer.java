@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -330,6 +331,23 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             } else {
               JC_BURIED_POINT.onClickSeekbar(url, objects);
             }
+          }
+          break;
+      }
+    } else if (id == R.id.progress) {//if I am seeking bar,no mater whoever can not intercept my event
+      switch (event.getAction()) {
+        case MotionEvent.ACTION_DOWN:
+          ViewParent vpdown = getParent();
+          while (vpdown != null) {
+            vpdown.requestDisallowInterceptTouchEvent(true);
+            vpdown = vpdown.getParent();
+          }
+          break;
+        case MotionEvent.ACTION_UP:
+          ViewParent vpup = getParent();
+          while (vpup != null) {
+            vpup.requestDisallowInterceptTouchEvent(false);
+            vpup = vpup.getParent();
           }
           break;
       }
