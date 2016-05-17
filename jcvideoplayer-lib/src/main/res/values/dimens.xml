@@ -1,4 +1,4 @@
 <resources>
-    <dimen name="jc_progress_dialog_margin_top">80dp</dimen>
-    <dimen name="jc_volume_dialog_margin_left">24dp</dimen>
+  <dimen name="jc_progress_dialog_margin_top">80dp</dimen>
+  <dimen name="jc_volume_dialog_margin_left">24dp</dimen>
 </resources>
