@@ -1,98 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical">
 
-    <ScrollView
+  <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical">
+
+      <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="18dp"
+        android:text="Base simple ui example" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+      <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
+        android:id="@+id/custom_videoplayer"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="18dp"
-                android:text="Base simple ui example"/>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="18dp"
+        android:text="Recommended standard ui example" />
 
-            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
-                android:id="@+id/custom_videoplayer"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+      <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+        android:id="@+id/custom_videoplayer_standard"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="18dp"
-                android:text="Recommended standard ui example"/>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="18dp"
+        android:text="Standard ui with share button, visible after fullscreen" />
 
-            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-                android:id="@+id/custom_videoplayer_standard"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+      <fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowShareButtonAfterFullscreen
+        android:id="@+id/custom_videoplayer_standard_with_share_button"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="18dp"
-                android:text="Standard ui with share button, visible after fullscreen"/>
+      <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="18dp"
+        android:text="Standard ui show title after fullscreen" />
 
-            <fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowShareButtonAfterFullscreen
-                android:id="@+id/custom_videoplayer_standard_with_share_button"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+      <fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowTitleAfterFullscreen
+        android:id="@+id/custom_videoplayer_standard_show_title_after_fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="18dp"
-                android:text="Standard ui show title after fullscreen"/>
+      <Button
+        android:id="@+id/to_fullscreen_simple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To fullscreen derictly - simple ui" />
 
-            <fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowTitleAfterFullscreen
-                android:id="@+id/custom_videoplayer_standard_show_title_after_fullscreen"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+      <Button
+        android:id="@+id/to_fullscreen_standard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="To fullscreen derictly - standard ui" />
 
-            <Button
-                android:id="@+id/to_fullscreen_simple"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="To fullscreen derictly - simple ui"/>
+      <Button
+        android:id="@+id/to_list_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="List demo" />
 
-            <Button
-                android:id="@+id/to_fullscreen_standard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="To fullscreen derictly - standard ui"/>
+      <Button
+        android:id="@+id/to_list_viewpager_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="List and Viewpager demo" />
 
-            <Button
-                android:id="@+id/to_list_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="List demo"/>
+      <Button
+        android:id="@+id/to_list_viewpager_fragment_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="List Viewpager Fragment demo" />
 
-            <Button
-                android:id="@+id/to_list_viewpager_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="List and Viewpager demo"/>
-
-            <Button
-                android:id="@+id/to_loadimage_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Other load image library"/>
-        </LinearLayout>
-    </ScrollView>
+      <Button
+        android:id="@+id/to_loadimage_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Other load image library" />
+    </LinearLayout>
+  </ScrollView>
 
 
 </LinearLayout>
