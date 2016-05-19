@@ -87,12 +87,6 @@
         android:text="List and Viewpager demo" />
 
       <Button
-        android:id="@+id/to_list_viewpager_fragment_activity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="List Viewpager Fragment demo" />
-
-      <Button
         android:id="@+id/to_loadimage_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

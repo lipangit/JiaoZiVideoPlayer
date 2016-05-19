@@ -530,7 +530,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public void onError(int what, int extra) {
-    if (what != 38) {
+    if (what != 38 && what != -38) {
       setStateAndUi(CURRENT_STATE_ERROR);
     }
   }
@@ -562,7 +562,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
           ((Activity) getContext()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-              if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+              if (CURRENT_STATE == CURRENT_STATE_PLAYING || CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 setTextAndProgress(0);
               }
             }
