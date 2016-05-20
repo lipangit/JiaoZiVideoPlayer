@@ -1,14 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="fm.jiecao.jcvideoplayer_lib">
+  package="fm.jiecao.jcvideoplayer_lib">
 
-    <application
-        android:allowBackup="true"
-        android:label="@string/app_name"
-        android:supportsRtl="true">
-        <activity
-            android:name=".JCFullScreenActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape" />
-    </application>
+  <application
+    android:allowBackup="true"
+    android:label="@string/app_name"
+    android:supportsRtl="true">
+    <activity
+      android:name=".JCFullScreenActivity"
+      android:configChanges="orientation|keyboardHidden"
+      android:screenOrientation="landscape" />
+  </application>
 
 </manifest>

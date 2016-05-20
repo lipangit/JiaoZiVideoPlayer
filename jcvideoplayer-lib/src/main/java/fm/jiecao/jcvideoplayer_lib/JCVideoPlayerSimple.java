@@ -84,5 +84,6 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
         return;
       }
     }
+    super.onProgressChanged(seekBar, progress, fromUser);
   }
 }

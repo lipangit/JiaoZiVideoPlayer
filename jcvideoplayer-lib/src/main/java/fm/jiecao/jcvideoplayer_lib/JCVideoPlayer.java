@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -318,9 +319,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
           }
           if (changePosition) {
             JCMediaManager.intance().mediaPlayer.seekTo(resultTimePosition);
-            int duration = JCMediaManager.intance().mediaPlayer.getDuration();
-            int progress = resultTimePosition * 100 / (duration == 0 ? 1 : duration);
-            skProgress.setProgress(progress);
+            if (CURRENT_STATE == CURRENT_STATE_PLAYING || CURRENT_STATE == CURRENT_STATE_PAUSE) {
+              int duration = JCMediaManager.intance().mediaPlayer.getDuration();
+              int progress = resultTimePosition * 100 / (duration == 0 ? 1 : duration);
+              skProgress.setProgress(progress);
+            }
           }
           /////////////////////
           startProgressTimer();
@@ -330,6 +333,25 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             } else {
               JC_BURIED_POINT.onClickSeekbar(url, objects);
             }
+          }
+          break;
+      }
+    } else if (id == R.id.progress) {//if I am seeking bar,no mater whoever can not intercept my event
+      switch (event.getAction()) {
+        case MotionEvent.ACTION_DOWN:
+          cancelProgressTimer();
+          ViewParent vpdown = getParent();
+          while (vpdown != null) {
+            vpdown.requestDisallowInterceptTouchEvent(true);
+            vpdown = vpdown.getParent();
+          }
+          break;
+        case MotionEvent.ACTION_UP:
+          startProgressTimer();
+          ViewParent vpup = getParent();
+          while (vpup != null) {
+            vpup.requestDisallowInterceptTouchEvent(false);
+            vpup = vpup.getParent();
           }
           break;
       }
@@ -359,11 +381,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     if (!dlgProgress.isShowing()) {
       dlgProgress.show();
     }
-    int totalTime = JCMediaManager.intance().mediaPlayer.getDuration();
-    resultTimePosition = (int) (downPosition + deltaX * totalTime / screenWidth);
-    dlgProgressCurrent.setText(JCUtils.stringForTime(resultTimePosition));
-    dlgProgressTotal.setText(" / " + JCUtils.stringForTime(totalTime) + "");
-    dlgProgressProgressBar.setProgress(resultTimePosition * 100 / totalTime);
+    if (CURRENT_STATE == CURRENT_STATE_PLAYING || CURRENT_STATE == CURRENT_STATE_PAUSE) {
+      int totalTime = JCMediaManager.intance().mediaPlayer.getDuration();
+      resultTimePosition = (int) (downPosition + deltaX * totalTime / screenWidth);
+      dlgProgressCurrent.setText(JCUtils.stringForTime(resultTimePosition));
+      dlgProgressTotal.setText(" / " + JCUtils.stringForTime(totalTime) + "");
+      dlgProgressProgressBar.setProgress(resultTimePosition * 100 / totalTime);
+    }
     if (deltaX > 0) {
       dlgProgressIcon.setBackgroundResource(R.drawable.jc_forward_icon);
     } else {
@@ -399,8 +423,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   @Override
   public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
     if (fromUser) {
-      int time = progress * JCMediaManager.intance().mediaPlayer.getDuration() / 100;
-      JCMediaManager.intance().mediaPlayer.seekTo(time);
+      if (CURRENT_STATE == CURRENT_STATE_PLAYING || CURRENT_STATE == CURRENT_STATE_PAUSE) {
+        int time = progress * JCMediaManager.intance().mediaPlayer.getDuration() / 100;
+        JCMediaManager.intance().mediaPlayer.seekTo(time);
+      }
     }
   }
 
@@ -510,7 +536,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public void onError(int what, int extra) {
-    if (what != 38) {
+    if (what != 38 && what != -38) {
       setStateAndUi(CURRENT_STATE_ERROR);
     }
   }
@@ -542,7 +568,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
           ((Activity) getContext()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-              if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
+              if (CURRENT_STATE == CURRENT_STATE_PLAYING || CURRENT_STATE == CURRENT_STATE_PAUSE) {
                 setTextAndProgress(0);
               }
             }
@@ -559,11 +585,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   }
 
   protected void setTextAndProgress(int secProgress) {
-    int position = JCMediaManager.intance().mediaPlayer.getCurrentPosition();
-    int duration = JCMediaManager.intance().mediaPlayer.getDuration();
-    // if duration == 0 (e.g. in HLS streams) avoids ArithmeticException
-    int progress = position * 100 / (duration == 0 ? 1 : duration);
-    setProgressAndTime(progress, secProgress, position, duration);
+    if (CURRENT_STATE == CURRENT_STATE_PLAYING || CURRENT_STATE == CURRENT_STATE_PAUSE) {
+      int position = JCMediaManager.intance().mediaPlayer.getCurrentPosition();
+      int duration = JCMediaManager.intance().mediaPlayer.getDuration();
+      // if duration == 0 (e.g. in HLS streams) avoids ArithmeticException
+      int progress = position * 100 / (duration == 0 ? 1 : duration);
+      setProgressAndTime(progress, secProgress, position, duration);
+    }
   }
 
   protected void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
@@ -618,6 +646,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       }
     } else {
       IF_RELEASE_WHEN_ON_PAUSE = true;
+    }
+  }
+
+  /**
+   * if I am playing release me
+   */
+  public void release() {
+    if (CURRENT_STATE != CURRENT_STATE_NORMAL) {
+      releaseAllVideos();
     }
   }
 }
