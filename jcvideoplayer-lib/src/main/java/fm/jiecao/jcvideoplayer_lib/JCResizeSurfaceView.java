@@ -26,8 +26,8 @@ class JCResizeSurfaceView extends SurfaceView {
 
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-    int mVideoWidth = JCMediaManager.intance().currentVideoWidth;
-    int mVideoHeight = JCMediaManager.intance().currentVideoHeight;
+    int mVideoWidth = JCMediaManager.instance().currentVideoWidth;
+    int mVideoHeight = JCMediaManager.instance().currentVideoHeight;
 
     int width = getDefaultSize(mVideoWidth, widthMeasureSpec);
     int height = getDefaultSize(mVideoHeight, heightMeasureSpec);

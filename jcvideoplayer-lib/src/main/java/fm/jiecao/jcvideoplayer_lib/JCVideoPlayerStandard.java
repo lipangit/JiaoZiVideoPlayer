@@ -54,6 +54,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
   @Override
   public void setUp(String url, Object... objects) {
+    if (JCMediaManager.instance().listener == this && (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+      return;
     if (objects.length == 0) return;
     super.setUp(url, objects);
     tvTitle.setText(objects[0].toString());
@@ -108,7 +110,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         case MotionEvent.ACTION_UP:
           startDismissControlViewTimer();
           if (changePosition) {
-            int duration = JCMediaManager.intance().mediaPlayer.getDuration();
+            int duration = JCMediaManager.instance().mediaPlayer.getDuration();
             int progress = resultTimePosition * 100 / (duration == 0 ? 1 : duration);
             pbBottom.setProgress(progress);
           }
@@ -147,7 +149,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         startDismissControlViewTimer();
       }
     } else if (i == R.id.surface_container) {
-      if (jc_BuriedPointStandard != null && JCMediaManager.intance().listener == this) {
+      if (jc_BuriedPointStandard != null && JCMediaManager.instance().listener == this) {
         if (IF_CURRENT_IS_FULLSCREEN) {
           jc_BuriedPointStandard.onClickBlankFullscreen(url, objects);
         } else {
