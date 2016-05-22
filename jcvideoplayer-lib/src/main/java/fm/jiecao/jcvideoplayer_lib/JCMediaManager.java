@@ -26,7 +26,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
   public JCMediaPlayerListener lastListener;
   public int lastState;
 
-  public static JCMediaManager intance() {
+  public static JCMediaManager instance() {
     if (jcMediaManager == null) {
       jcMediaManager = new JCMediaManager();
     }

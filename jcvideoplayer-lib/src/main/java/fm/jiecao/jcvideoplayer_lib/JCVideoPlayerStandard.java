@@ -108,7 +108,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         case MotionEvent.ACTION_UP:
           startDismissControlViewTimer();
           if (changePosition) {
-            int duration = JCMediaManager.intance().mediaPlayer.getDuration();
+            int duration = JCMediaManager.instance().mediaPlayer.getDuration();
             int progress = resultTimePosition * 100 / (duration == 0 ? 1 : duration);
             pbBottom.setProgress(progress);
           }
@@ -147,7 +147,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         startDismissControlViewTimer();
       }
     } else if (i == R.id.surface_container) {
-      if (jc_BuriedPointStandard != null && JCMediaManager.intance().listener == this) {
+      if (jc_BuriedPointStandard != null && JCMediaManager.instance().listener == this) {
         if (IF_CURRENT_IS_FULLSCREEN) {
           jc_BuriedPointStandard.onClickBlankFullscreen(url, objects);
         } else {
