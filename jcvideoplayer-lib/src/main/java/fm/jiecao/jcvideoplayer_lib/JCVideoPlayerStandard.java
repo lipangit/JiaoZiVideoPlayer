@@ -54,6 +54,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
   @Override
   public void setUp(String url, Object... objects) {
+    if (JCMediaManager.instance().listener == this && (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+      return;
     if (objects.length == 0) return;
     super.setUp(url, objects);
     tvTitle.setText(objects[0].toString());
