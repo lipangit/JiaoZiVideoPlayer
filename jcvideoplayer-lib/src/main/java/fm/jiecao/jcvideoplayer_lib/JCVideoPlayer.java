@@ -48,7 +48,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   public boolean IF_FULLSCREEN_IS_DIRECTLY = false;//IF_CURRENT_IS_FULLSCREEN should be true first
   protected static boolean IF_FULLSCREEN_FROM_NORMAL = false;//to prevent infinite loop
   public static boolean IF_RELEASE_WHEN_ON_PAUSE = true;
-  protected boolean BACK_FROM_FULLSCREEN = false;
   protected static long CLICK_QUIT_FULLSCREEN_TIME = 0;
   public static final int FULL_SCREEN_NORMAL_DELAY = 1000;
 
@@ -109,9 +108,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     llBottomControl = (ViewGroup) findViewById(R.id.layout_bottom);
     rlSurfaceContainer = (RelativeLayout) findViewById(R.id.surface_container);
     llTopContainer = (ViewGroup) findViewById(R.id.layout_top);
-    surfaceView = (JCResizeSurfaceView) this.findViewById(R.id.surfaceView);
-    surfaceHolder = surfaceView.getHolder();
-    surfaceHolder.addCallback(this);
 
     ivStart.setOnClickListener(this);
     ivFullScreen.setOnClickListener(this);
@@ -237,22 +233,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       JCMediaManager.intance().listener.onCompletion();
     }
     JCMediaManager.intance().listener = this;
-//        addSurfaceView();
+    addSurfaceView();
     JCMediaManager.intance().prepareToPlay(getContext(), url, mapHeadData);
-    if (!IF_CURRENT_IS_FULLSCREEN) {
-      setDisplayCaseFailse();
-    }
     setStateAndUi(CURRENT_STATE_PREPAREING);
   }
 
-  private void addSurfaceView() {
+  public void addSurfaceView() {
     if (rlSurfaceContainer.getChildCount() > 0) {
       rlSurfaceContainer.removeAllViews();
     }
     surfaceView = new JCResizeSurfaceView(getContext());
     surfaceHolder = surfaceView.getHolder();
     surfaceHolder.addCallback(this);
-//        surfaceView.setOnClickListener(this);
+
     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
     rlSurfaceContainer.addView(surfaceView, layoutParams);
@@ -434,33 +427,25 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public void surfaceCreated(SurfaceHolder holder) {
-    if (FalseSetDisPlay) {//case setDisplay faild in prepared();
-      FalseSetDisPlay = false;
-      setDisplayCaseFailse();
-    }
-    if (IF_CURRENT_IS_FULLSCREEN) {//fullscreen from normal
-      setDisplayCaseFailse();
-    }
-    if (BACK_FROM_FULLSCREEN) {
-      BACK_FROM_FULLSCREEN = false;
-      setDisplayCaseFailse();
-    }
-    ifNeedCreateSurfaceView = false;
+//    if (FalseSetDisPlay) {//case setDisplay faild in prepared();
+//      FalseSetDisPlay = false;
+//      setDisplayCaseFailse();
+//    }
+//    if (IF_CURRENT_IS_FULLSCREEN) {//fullscreen from normal
+    setDisplayCaseFailse();
+//    }
   }
 
-  private boolean FalseSetDisPlay = false;
 
-  private void setDisplayCaseFailse() {
+  private void setDisplayCaseFailse() {//这里如果一直不成功是否有隐患
     try {
       JCMediaManager.intance().mediaPlayer.setDisplay(surfaceHolder);
     } catch (IllegalArgumentException e) {
       Log.i(TAG, "recreate surfaceview from IllegalArgumentException");
-      FalseSetDisPlay = true;
       addSurfaceView();
       e.printStackTrace();
     } catch (IllegalStateException e1) {
       Log.i(TAG, "recreate surfaceview from IllegalStateException");
-      FalseSetDisPlay = true;
       addSurfaceView();
       e1.printStackTrace();
     }
@@ -472,10 +457,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public void surfaceDestroyed(SurfaceHolder holder) {
-    ifNeedCreateSurfaceView = true;
   }
 
-  private boolean ifNeedCreateSurfaceView = false;
 
   @Override
   public void onPrepared() {
@@ -504,7 +487,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     cancelProgressTimer();
     resetProgressAndTime();
     setStateAndUi(CURRENT_STATE_NORMAL);
-
+    if (rlSurfaceContainer.getChildCount() > 0) {
+      rlSurfaceContainer.removeAllViews();
+    }
     //if fullscreen finish activity what ever the activity is directly or click fullscreen
     finishMyFullscreen();
 
@@ -546,7 +531,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   @Override
   public void onBackFullscreen() {
     CURRENT_STATE = JCMediaManager.intance().lastState;
-    BACK_FROM_FULLSCREEN = true;
     setStateAndUi(CURRENT_STATE);
   }
 
