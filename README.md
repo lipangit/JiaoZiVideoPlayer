@@ -1,5 +1,5 @@
-![JieCaoVideoPlayer](https://raw.githubusercontent.com/lipangit/JieCaoVideoPlayer/develop/screenshots/logo.png)
-
+<a href="https://github.com/lipangit/JieCaoVideoPlayer" target="_blank"><img src="https://raw.githubusercontent.com/lipangit/JieCaoVideoPlayer/develop/screenshots/logo2x.png" style="max-width:100%;"></a>
+--
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
 <a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-3.2-green.svg"></a>
