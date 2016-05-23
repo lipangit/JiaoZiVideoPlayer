@@ -49,7 +49,7 @@ public class VideoListAdapter extends BaseAdapter {
     if (null == convertView) {
       viewHolder = new ViewHolder();
       LayoutInflater mInflater = LayoutInflater.from(context);
-      convertView = mInflater.inflate(R.layout.item_list, null);
+      convertView = mInflater.inflate(R.layout.item_videoview, null);
       viewHolder.jcVideoPlayer = (JCVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
       convertView.setTag(viewHolder);
     } else {

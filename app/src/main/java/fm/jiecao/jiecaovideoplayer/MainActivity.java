@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   JCVideoPlayerStandardShowTitleAfterFullscreen jcVideoPlayerStandardShowTitleAfterFullscreen;
 
   Button btnToFullscreen_simple, btnToFullscreen_standard,
-    btnToListActivity, btnToListViewPagerActivity, btnToImageLoadActivity;
+    btnToListActivity, btnToListViewPagerActivity, btnToMultiHolderActivity, btnToImageLoadActivity;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +44,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     btnToListActivity = (Button) findViewById(R.id.to_list_activity);
     btnToListViewPagerActivity = (Button) findViewById(R.id.to_list_viewpager_activity);
     btnToImageLoadActivity = (Button) findViewById(R.id.to_loadimage_activity);
+    btnToMultiHolderActivity = (Button) findViewById(R.id.to_multiholder_activity);
+
     btnToFullscreen_simple.setOnClickListener(this);
     btnToFullscreen_standard.setOnClickListener(this);
     btnToListActivity.setOnClickListener(this);
     btnToListViewPagerActivity.setOnClickListener(this);
     btnToImageLoadActivity.setOnClickListener(this);
+    btnToMultiHolderActivity.setOnClickListener(this);
 
     Map<String, String> headData = new HashMap<>();
     headData.put("key1", "value1");
@@ -97,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         break;
       case R.id.to_list_viewpager_activity:
         startActivity(new Intent(MainActivity.this, ListViewpagerActivity.class));
+        break;
+      case R.id.to_multiholder_activity:
+        startActivity(new Intent(MainActivity.this, MultiHolderActivity.class));
         break;
       case R.id.to_loadimage_activity:
         startActivity(new Intent(MainActivity.this, LoadImageActivity.class));

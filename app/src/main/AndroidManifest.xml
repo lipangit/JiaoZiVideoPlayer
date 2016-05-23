@@ -29,7 +29,7 @@
       android:screenOrientation="portrait" />
 
     <activity
-      android:name=".ListViewPagerFragmentActivity"
+      android:name=".MultiHolderActivity"
       android:screenOrientation="portrait" />
 
     <activity
