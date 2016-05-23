@@ -1,6 +1,4 @@
-![JieCaoVideoPlayer](https://github.com/lipangit/JieCaoVideoPlayer/screenshots/logo.png)
-
-<hr/>
+![JieCaoVideoPlayer](https://raw.githubusercontent.com/lipangit/JieCaoVideoPlayer/develop/screenshots/logo.png)
 
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
