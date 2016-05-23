@@ -58,15 +58,18 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
   }
 
   @Override
-  public void setUp(String url, Object... objects) {
-    super.setUp(url, objects);
-    tvTitle.setText(objects[0].toString());
-    if (IF_CURRENT_IS_FULLSCREEN) {
-      ivFullScreen.setImageResource(R.drawable.jc_shrink);
-    } else {
-      ivFullScreen.setImageResource(R.drawable.jc_enlarge);
-      ivBack.setVisibility(View.GONE);
+  public boolean setUp(String url, Object... objects) {
+    if (super.setUp(url, objects)) {
+      tvTitle.setText(objects[0].toString());
+      if (IF_CURRENT_IS_FULLSCREEN) {
+        ivFullScreen.setImageResource(R.drawable.jc_shrink);
+      } else {
+        ivFullScreen.setImageResource(R.drawable.jc_enlarge);
+        ivBack.setVisibility(View.GONE);
+      }
+      return true;
     }
+    return false;
   }
 
   @Override

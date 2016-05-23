@@ -23,7 +23,6 @@ public class DemoApplication extends Application {
   public void onCreate() {
     super.onCreate();
     initUniversalImageLoader();
-
   }
 
   private void initUniversalImageLoader() {

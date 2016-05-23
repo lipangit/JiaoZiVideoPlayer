@@ -27,13 +27,16 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
   }
 
   @Override
-  public void setUp(String url, Object... objects) {
-    super.setUp(url, objects);
-    if (IF_CURRENT_IS_FULLSCREEN) {
-      ivFullScreen.setImageResource(R.drawable.jc_shrink);
-    } else {
-      ivFullScreen.setImageResource(R.drawable.jc_enlarge);
+  public boolean setUp(String url, Object... objects) {
+    if (super.setUp(url, objects)) {
+      if (IF_CURRENT_IS_FULLSCREEN) {
+        ivFullScreen.setImageResource(R.drawable.jc_shrink);
+      } else {
+        ivFullScreen.setImageResource(R.drawable.jc_enlarge);
+      }
+      return true;
     }
+    return false;
   }
 
   @Override

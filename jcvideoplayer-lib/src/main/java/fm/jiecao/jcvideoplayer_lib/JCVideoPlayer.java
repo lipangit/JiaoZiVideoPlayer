@@ -128,21 +128,23 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     JC_BURIED_POINT = jcBuriedPoint;
   }
 
-  public void setUp(String url, Object... objects) {
+  public boolean setUp(String url, Object... objects) {
     if (JCMediaManager.instance().listener == this && (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-      return;
+      return false;
     CURRENT_STATE = CURRENT_STATE_NORMAL;
     this.url = url;
     this.objects = objects;
     setStateAndUi(CURRENT_STATE_NORMAL);
+    return true;
   }
 
-  public void setUp(String url, Map<String, String> mapHeadData, Object... objects) {
-    if (JCMediaManager.instance().listener == this && (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-      return;
-    setUp(url, objects);
-    this.mapHeadData.clear();
-    this.mapHeadData.putAll(mapHeadData);
+  public boolean setUp(String url, Map<String, String> mapHeadData, Object... objects) {
+    if (setUp(url, objects)) {
+      this.mapHeadData.clear();
+      this.mapHeadData.putAll(mapHeadData);
+      return true;
+    }
+    return false;
   }
 
   //set ui

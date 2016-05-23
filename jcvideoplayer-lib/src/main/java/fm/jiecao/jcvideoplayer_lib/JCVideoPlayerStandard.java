@@ -53,18 +53,19 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   }
 
   @Override
-  public void setUp(String url, Object... objects) {
-    if (JCMediaManager.instance().listener == this && (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-      return;
-    if (objects.length == 0) return;
-    super.setUp(url, objects);
-    tvTitle.setText(objects[0].toString());
-    if (IF_CURRENT_IS_FULLSCREEN) {
-      ivFullScreen.setImageResource(R.drawable.jc_shrink);
-    } else {
-      ivFullScreen.setImageResource(R.drawable.jc_enlarge);
-      ivBack.setVisibility(View.GONE);
+  public boolean setUp(String url, Object... objects) {
+    if (objects.length == 0) return false;
+    if (super.setUp(url, objects)) {
+      tvTitle.setText(objects[0].toString());
+      if (IF_CURRENT_IS_FULLSCREEN) {
+        ivFullScreen.setImageResource(R.drawable.jc_shrink);
+      } else {
+        ivFullScreen.setImageResource(R.drawable.jc_enlarge);
+        ivBack.setVisibility(View.GONE);
+      }
+      return true;
     }
+    return false;
   }
 
   @Override
