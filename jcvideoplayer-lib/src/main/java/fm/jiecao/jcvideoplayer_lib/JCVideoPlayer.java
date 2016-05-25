@@ -166,6 +166,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         break;
       case CURRENT_STATE_ERROR:
         JCMediaManager.instance().mediaPlayer.release();
+        onCompletion();
         break;
     }
   }
