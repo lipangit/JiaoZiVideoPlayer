@@ -111,7 +111,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         case MotionEvent.ACTION_UP:
           startDismissControlViewTimer();
           if (mChangePosition) {
-            int duration = JCMediaManager.instance().mediaPlayer.getDuration();
+            int duration = getDuration();
             int progress = mResultTimePosition * 100 / (duration == 0 ? 1 : duration);
             bottomProgressBar.setProgress(progress);
           }

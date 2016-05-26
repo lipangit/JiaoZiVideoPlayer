@@ -315,7 +315,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
           }
           if (mChangePosition) {
             JCMediaManager.instance().mediaPlayer.seekTo(mResultTimePosition);
-            int duration = JCMediaManager.instance().mediaPlayer.getDuration();
+            int duration = getDuration();
             int progress = mResultTimePosition * 100 / (duration == 0 ? 1 : duration);
             progressBar.setProgress(progress);
           }
@@ -375,7 +375,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     if (!mProgressDialog.isShowing()) {
       mProgressDialog.show();
     }
-    int totalTime = JCMediaManager.instance().mediaPlayer.getDuration();
+    int totalTime = getDuration();
     mResultTimePosition = (int) (mDownPosition + deltaX * totalTime / mScreenWidth);
     mDialogCurrentTime.setText(JCUtils.stringForTime(mResultTimePosition));
     mDialogTotalTime.setText(" / " + JCUtils.stringForTime(totalTime) + "");
@@ -415,7 +415,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   @Override
   public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
     if (fromUser) {
-      int time = progress * JCMediaManager.instance().mediaPlayer.getDuration() / 100;
+      int time = progress * getDuration() / 100;
       JCMediaManager.instance().mediaPlayer.seekTo(time);
     }
   }
@@ -562,14 +562,30 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected int getCurrentPositionWhenPlaying() {
     int position = 0;
     if (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE) {
-      position = JCMediaManager.instance().mediaPlayer.getCurrentPosition();
+      try {
+        position = JCMediaManager.instance().mediaPlayer.getCurrentPosition();
+      } catch (IllegalStateException e) {
+        e.printStackTrace();
+        return position;
+      }
     }
     return position;
   }
 
+  protected int getDuration() {
+    int duration = 0;
+    try {
+      duration = JCMediaManager.instance().mediaPlayer.getDuration();
+    } catch (IllegalStateException e) {
+      e.printStackTrace();
+      return duration;
+    }
+    return duration;
+  }
+
   protected void setTextAndProgress(int secProgress) {
     int position = getCurrentPositionWhenPlaying();
-    int duration = JCMediaManager.instance().mediaPlayer.getDuration();
+    int duration = getDuration();
     // if duration == 0 (e.g. in HLS streams) avoids ArithmeticException
     int progress = position * 100 / (duration == 0 ? 1 : duration);
     setProgressAndTime(progress, secProgress, position, duration);
