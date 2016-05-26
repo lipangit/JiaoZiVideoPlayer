@@ -59,7 +59,7 @@ public class VideoListAdapter extends BaseAdapter {
       videoUrls[videoIndexs[position]],
       videoTitles[videoIndexs[position]]);
     ImageLoader.getInstance().displayImage(videoThumbs[videoIndexs[position]],
-      viewHolder.jcVideoPlayer.ivThumb);
+      viewHolder.jcVideoPlayer.thumbImageView);
     return convertView;
   }
 

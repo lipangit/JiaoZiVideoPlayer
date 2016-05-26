@@ -20,14 +20,14 @@ import java.util.TimerTask;
  */
 public class JCVideoPlayerStandard extends JCVideoPlayer {
 
-  public ImageView ivBack;
-  public ProgressBar pbBottom, pbLoading;
-  public TextView tvTitle;
-  public ImageView ivThumb;
-  public ImageView ivCover;
+  public ImageView backButton;
+  public ProgressBar bottomProgressBar, loadingProgressBar;
+  public TextView titleTextView;
+  public ImageView thumbImageView;
+  public ImageView coverImageView;
 
-  protected static Timer mDismissControlViewTimer;
-  protected static JCBuriedPointStandard jc_BuriedPointStandard;
+  protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
+  protected static JCBuriedPointStandard JC_BURIED_POINT_STANDARD;
 
   public JCVideoPlayerStandard(Context context) {
     super(context);
@@ -40,15 +40,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   @Override
   protected void init(Context context) {
     super.init(context);
-    pbBottom = (ProgressBar) findViewById(R.id.bottom_progressbar);
-    tvTitle = (TextView) findViewById(R.id.title);
-    ivBack = (ImageView) findViewById(R.id.back);
-    ivThumb = (ImageView) findViewById(R.id.thumb);
-    ivCover = (ImageView) findViewById(R.id.cover);
-    pbLoading = (ProgressBar) findViewById(R.id.loading);
+    bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progressbar);
+    titleTextView = (TextView) findViewById(R.id.title);
+    backButton = (ImageView) findViewById(R.id.back);
+    thumbImageView = (ImageView) findViewById(R.id.thumb);
+    coverImageView = (ImageView) findViewById(R.id.cover);
+    loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
 
-    ivThumb.setOnClickListener(this);
-    ivBack.setOnClickListener(this);
+    thumbImageView.setOnClickListener(this);
+    backButton.setOnClickListener(this);
 
   }
 
@@ -56,12 +56,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   public boolean setUp(String url, Object... objects) {
     if (objects.length == 0) return false;
     if (super.setUp(url, objects)) {
-      tvTitle.setText(objects[0].toString());
-      if (IF_CURRENT_IS_FULLSCREEN) {
-        ivFullScreen.setImageResource(R.drawable.jc_shrink);
+      titleTextView.setText(objects[0].toString());
+      if (mIfCurrentIsFullscreen) {
+        fullscreenButton.setImageResource(R.drawable.jc_shrink);
       } else {
-        ivFullScreen.setImageResource(R.drawable.jc_enlarge);
-        ivBack.setVisibility(View.GONE);
+        fullscreenButton.setImageResource(R.drawable.jc_enlarge);
+        backButton.setVisibility(View.GONE);
       }
       return true;
     }
@@ -74,9 +74,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   }
 
   @Override
-  public void setStateAndUi(int state) {
+  protected void setStateAndUi(int state) {
     super.setStateAndUi(state);
-    switch (CURRENT_STATE) {
+    switch (mCurrentState) {
       case CURRENT_STATE_NORMAL:
         changeUiToNormal();
         break;
@@ -110,12 +110,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
           break;
         case MotionEvent.ACTION_UP:
           startDismissControlViewTimer();
-          if (changePosition) {
+          if (mChangePosition) {
             int duration = JCMediaManager.instance().mediaPlayer.getDuration();
-            int progress = resultTimePosition * 100 / (duration == 0 ? 1 : duration);
-            pbBottom.setProgress(progress);
+            int progress = mResultTimePosition * 100 / (duration == 0 ? 1 : duration);
+            bottomProgressBar.setProgress(progress);
           }
-          if (!changePosition && !changeVolume) {
+          if (!mChangePosition && !mChangeVolume) {
             onClickUiToggle();
           }
           break;
@@ -138,23 +138,23 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     super.onClick(v);
     int i = v.getId();
     if (i == R.id.thumb) {
-      if (TextUtils.isEmpty(url)) {
-        Toast.makeText(getContext(), "No url", Toast.LENGTH_SHORT).show();
+      if (TextUtils.isEmpty(mUrl)) {
+        Toast.makeText(getContext(), "No mUrl", Toast.LENGTH_SHORT).show();
         return;
       }
-      if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
-        if (jc_BuriedPointStandard != null) {
-          jc_BuriedPointStandard.onClickStartThumb(url, objects);
+      if (mCurrentState == CURRENT_STATE_NORMAL) {
+        if (JC_BURIED_POINT_STANDARD != null) {
+          JC_BURIED_POINT_STANDARD.onClickStartThumb(mUrl, mObjects);
         }
         prepareVideo();
         startDismissControlViewTimer();
       }
     } else if (i == R.id.surface_container) {
-      if (jc_BuriedPointStandard != null && JCMediaManager.instance().listener == this) {
-        if (IF_CURRENT_IS_FULLSCREEN) {
-          jc_BuriedPointStandard.onClickBlankFullscreen(url, objects);
+      if (JC_BURIED_POINT_STANDARD != null && JCMediaManager.instance().listener == this) {
+        if (mIfCurrentIsFullscreen) {
+          JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(mUrl, mObjects);
         } else {
-          jc_BuriedPointStandard.onClickBlank(url, objects);
+          JC_BURIED_POINT_STANDARD.onClickBlank(mUrl, mObjects);
         }
       }
       startDismissControlViewTimer();
@@ -164,20 +164,20 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   }
 
   private void onClickUiToggle() {
-    if (CURRENT_STATE == CURRENT_STATE_PREPAREING) {
-      if (llBottomControl.getVisibility() == View.VISIBLE) {
+    if (mCurrentState == CURRENT_STATE_PREPAREING) {
+      if (bottomContainer.getVisibility() == View.VISIBLE) {
         changeUiToClearUiPrepareing();
       } else {
         changeUiToShowUiPrepareing();
       }
-    } else if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
-      if (llBottomControl.getVisibility() == View.VISIBLE) {
+    } else if (mCurrentState == CURRENT_STATE_PLAYING) {
+      if (bottomContainer.getVisibility() == View.VISIBLE) {
         changeUiToClearUiPlaying();
       } else {
         changeUiToShowUiPlaying();
       }
-    } else if (CURRENT_STATE == CURRENT_STATE_PAUSE) {
-      if (llBottomControl.getVisibility() == View.VISIBLE) {
+    } else if (mCurrentState == CURRENT_STATE_PAUSE) {
+      if (bottomContainer.getVisibility() == View.VISIBLE) {
         changeUiToClearUiPause();
       } else {
         changeUiToShowUiPause();
@@ -188,129 +188,129 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   @Override
   protected void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
     super.setProgressAndTime(progress, secProgress, currentTime, totalTime);
-    if (progress != 0) pbBottom.setProgress(progress);
-    if (secProgress != 0) pbBottom.setSecondaryProgress(secProgress);
+    if (progress != 0) bottomProgressBar.setProgress(progress);
+    if (secProgress != 0) bottomProgressBar.setSecondaryProgress(secProgress);
   }
 
   @Override
   protected void resetProgressAndTime() {
     super.resetProgressAndTime();
-    pbBottom.setProgress(0);
-    pbBottom.setSecondaryProgress(0);
+    bottomProgressBar.setProgress(0);
+    bottomProgressBar.setSecondaryProgress(0);
   }
 
   //Unified management Ui
   private void changeUiToNormal() {
-    llTopContainer.setVisibility(View.VISIBLE);
-    llBottomControl.setVisibility(View.INVISIBLE);
-    ivStart.setVisibility(View.VISIBLE);
-    pbLoading.setVisibility(View.INVISIBLE);
-    ivThumb.setVisibility(View.VISIBLE);
-    ivCover.setVisibility(View.VISIBLE);
-    pbBottom.setVisibility(View.INVISIBLE);
+    topContainer.setVisibility(View.VISIBLE);
+    bottomContainer.setVisibility(View.INVISIBLE);
+    startButton.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.VISIBLE);
+    coverImageView.setVisibility(View.VISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
     updateStartImage();
   }
 
   private void changeUiToShowUiPrepareing() {
-    llTopContainer.setVisibility(View.VISIBLE);
-    llBottomControl.setVisibility(View.VISIBLE);
-    ivStart.setVisibility(View.INVISIBLE);
-    pbLoading.setVisibility(View.VISIBLE);
-    ivThumb.setVisibility(View.INVISIBLE);
-    ivCover.setVisibility(View.VISIBLE);
-    pbBottom.setVisibility(View.INVISIBLE);
+    topContainer.setVisibility(View.VISIBLE);
+    bottomContainer.setVisibility(View.VISIBLE);
+    startButton.setVisibility(View.INVISIBLE);
+    loadingProgressBar.setVisibility(View.VISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.VISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
   }
 
   private void changeUiToClearUiPrepareing() {
 //        changeUiToClearUi();
-    llTopContainer.setVisibility(View.INVISIBLE);
-    llBottomControl.setVisibility(View.INVISIBLE);
-    ivStart.setVisibility(View.INVISIBLE);
-    ivThumb.setVisibility(View.INVISIBLE);
-    pbBottom.setVisibility(View.INVISIBLE);
-//        pbLoading.setVisibility(View.VISIBLE);
-    ivCover.setVisibility(View.VISIBLE);
+    topContainer.setVisibility(View.INVISIBLE);
+    bottomContainer.setVisibility(View.INVISIBLE);
+    startButton.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
+//        loadingProgressBar.setVisibility(View.VISIBLE);
+    coverImageView.setVisibility(View.VISIBLE);
   }
 
   private void changeUiToShowUiPlaying() {
-    llTopContainer.setVisibility(View.VISIBLE);
-    llBottomControl.setVisibility(View.VISIBLE);
-    ivStart.setVisibility(View.VISIBLE);
-    pbLoading.setVisibility(View.INVISIBLE);
-    ivThumb.setVisibility(View.INVISIBLE);
-    ivCover.setVisibility(View.INVISIBLE);
-    pbBottom.setVisibility(View.INVISIBLE);
+    topContainer.setVisibility(View.VISIBLE);
+    bottomContainer.setVisibility(View.VISIBLE);
+    startButton.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
     updateStartImage();
   }
 
   private void changeUiToClearUiPlaying() {
     changeUiToClearUi();
-    pbBottom.setVisibility(View.VISIBLE);
+    bottomProgressBar.setVisibility(View.VISIBLE);
   }
 
   private void changeUiToShowUiPause() {
-    llTopContainer.setVisibility(View.VISIBLE);
-    llBottomControl.setVisibility(View.VISIBLE);
-    ivStart.setVisibility(View.VISIBLE);
-    pbLoading.setVisibility(View.INVISIBLE);
-    ivThumb.setVisibility(View.INVISIBLE);
-    ivCover.setVisibility(View.INVISIBLE);
-    pbBottom.setVisibility(View.INVISIBLE);
+    topContainer.setVisibility(View.VISIBLE);
+    bottomContainer.setVisibility(View.VISIBLE);
+    startButton.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
     updateStartImage();
   }
 
   private void changeUiToClearUiPause() {
     changeUiToClearUi();
-    pbBottom.setVisibility(View.VISIBLE);
+    bottomProgressBar.setVisibility(View.VISIBLE);
   }
 
   private void changeUiToClearUi() {
-    llTopContainer.setVisibility(View.INVISIBLE);
-    llBottomControl.setVisibility(View.INVISIBLE);
-    ivStart.setVisibility(View.INVISIBLE);
-    pbLoading.setVisibility(View.INVISIBLE);
-    ivThumb.setVisibility(View.INVISIBLE);
-    ivCover.setVisibility(View.INVISIBLE);
-    pbBottom.setVisibility(View.INVISIBLE);
+    topContainer.setVisibility(View.INVISIBLE);
+    bottomContainer.setVisibility(View.INVISIBLE);
+    startButton.setVisibility(View.INVISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
   }
 
   private void changeUiToError() {
-    llTopContainer.setVisibility(View.INVISIBLE);
-    llBottomControl.setVisibility(View.INVISIBLE);
-    ivStart.setVisibility(View.VISIBLE);
-    pbLoading.setVisibility(View.INVISIBLE);
-    ivThumb.setVisibility(View.INVISIBLE);
-    ivCover.setVisibility(View.VISIBLE);
-    pbBottom.setVisibility(View.INVISIBLE);
+    topContainer.setVisibility(View.INVISIBLE);
+    bottomContainer.setVisibility(View.INVISIBLE);
+    startButton.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.VISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
     updateStartImage();
   }
 
   private void updateStartImage() {
-    if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
-      ivStart.setImageResource(R.drawable.jc_click_pause_selector);
-    } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
-      ivStart.setImageResource(R.drawable.jc_click_error_selector);
+    if (mCurrentState == CURRENT_STATE_PLAYING) {
+      startButton.setImageResource(R.drawable.jc_click_pause_selector);
+    } else if (mCurrentState == CURRENT_STATE_ERROR) {
+      startButton.setImageResource(R.drawable.jc_click_error_selector);
     } else {
-      ivStart.setImageResource(R.drawable.jc_click_play_selector);
+      startButton.setImageResource(R.drawable.jc_click_play_selector);
     }
   }
 
   private void startDismissControlViewTimer() {
     cancelDismissControlViewTimer();
-    mDismissControlViewTimer = new Timer();
-    mDismissControlViewTimer.schedule(new TimerTask() {
+    DISSMISS_CONTROL_VIEW_TIMER = new Timer();
+    DISSMISS_CONTROL_VIEW_TIMER.schedule(new TimerTask() {
       @Override
       public void run() {
         if (getContext() != null && getContext() instanceof Activity) {
           ((Activity) getContext()).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-              if (CURRENT_STATE != CURRENT_STATE_NORMAL
-                && CURRENT_STATE != CURRENT_STATE_ERROR) {
-                llBottomControl.setVisibility(View.INVISIBLE);
-                llTopContainer.setVisibility(View.INVISIBLE);
-                pbBottom.setVisibility(View.VISIBLE);
-                ivStart.setVisibility(View.INVISIBLE);
+              if (mCurrentState != CURRENT_STATE_NORMAL
+                && mCurrentState != CURRENT_STATE_ERROR) {
+                bottomContainer.setVisibility(View.INVISIBLE);
+                topContainer.setVisibility(View.INVISIBLE);
+                bottomProgressBar.setVisibility(View.VISIBLE);
+                startButton.setVisibility(View.INVISIBLE);
               }
             }
           });
@@ -320,13 +320,13 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   }
 
   private void cancelDismissControlViewTimer() {
-    if (mDismissControlViewTimer != null) {
-      mDismissControlViewTimer.cancel();
+    if (DISSMISS_CONTROL_VIEW_TIMER != null) {
+      DISSMISS_CONTROL_VIEW_TIMER.cancel();
     }
   }
 
   public static void setJcBuriedPointStandard(JCBuriedPointStandard jcBuriedPointStandard) {
-    jc_BuriedPointStandard = jcBuriedPointStandard;
+    JC_BURIED_POINT_STANDARD = jcBuriedPointStandard;
     JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
   }
 

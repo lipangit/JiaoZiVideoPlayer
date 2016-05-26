@@ -87,7 +87,7 @@ public class MultiHolderActivity extends AppCompatActivity {
           "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4",
           "嫂子上车");
         ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/3/14/2204a578-609b-440e-8af7-a0ee17ff3aee.jpg",
-          viewHolder.jcVideoPlayer.ivThumb);
+          viewHolder.jcVideoPlayer.thumbImageView);
       } else {
 
         TextViewHolder textViewHolder;

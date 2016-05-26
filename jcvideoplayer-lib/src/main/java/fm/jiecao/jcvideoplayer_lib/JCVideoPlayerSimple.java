@@ -29,10 +29,10 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
   @Override
   public boolean setUp(String url, Object... objects) {
     if (super.setUp(url, objects)) {
-      if (IF_CURRENT_IS_FULLSCREEN) {
-        ivFullScreen.setImageResource(R.drawable.jc_shrink);
+      if (mIfCurrentIsFullscreen) {
+        fullscreenButton.setImageResource(R.drawable.jc_shrink);
       } else {
-        ivFullScreen.setImageResource(R.drawable.jc_enlarge);
+        fullscreenButton.setImageResource(R.drawable.jc_enlarge);
       }
       return true;
     }
@@ -40,17 +40,17 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
   }
 
   @Override
-  public void setStateAndUi(int state) {
+  protected void setStateAndUi(int state) {
     super.setStateAndUi(state);
-    switch (CURRENT_STATE) {
+    switch (mCurrentState) {
       case CURRENT_STATE_NORMAL:
-        ivStart.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.VISIBLE);
         break;
       case CURRENT_STATE_PREPAREING:
-        ivStart.setVisibility(View.INVISIBLE);
+        startButton.setVisibility(View.INVISIBLE);
         break;
       case CURRENT_STATE_PLAYING:
-        ivStart.setVisibility(View.VISIBLE);
+        startButton.setVisibility(View.VISIBLE);
         break;
       case CURRENT_STATE_PAUSE:
         break;
@@ -61,18 +61,18 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
   }
 
   private void updateStartImage() {
-    if (CURRENT_STATE == CURRENT_STATE_PLAYING) {
-      ivStart.setImageResource(R.drawable.jc_click_pause_selector);
-    } else if (CURRENT_STATE == CURRENT_STATE_ERROR) {
-      ivStart.setImageResource(R.drawable.jc_click_error_selector);
+    if (mCurrentState == CURRENT_STATE_PLAYING) {
+      startButton.setImageResource(R.drawable.jc_click_pause_selector);
+    } else if (mCurrentState == CURRENT_STATE_ERROR) {
+      startButton.setImageResource(R.drawable.jc_click_error_selector);
     } else {
-      ivStart.setImageResource(R.drawable.jc_click_play_selector);
+      startButton.setImageResource(R.drawable.jc_click_play_selector);
     }
   }
 
   @Override
   public void onClick(View v) {
-    if (v.getId() == R.id.fullscreen && CURRENT_STATE == CURRENT_STATE_NORMAL) {
+    if (v.getId() == R.id.fullscreen && mCurrentState == CURRENT_STATE_NORMAL) {
       Toast.makeText(getContext(), "Play video first", Toast.LENGTH_SHORT).show();
       return;
     }
@@ -82,7 +82,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
   @Override
   public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
     if (fromUser) {
-      if (CURRENT_STATE == CURRENT_STATE_NORMAL) {
+      if (mCurrentState == CURRENT_STATE_NORMAL) {
         Toast.makeText(getContext(), "Play video first", Toast.LENGTH_SHORT).show();
         return;
       }
