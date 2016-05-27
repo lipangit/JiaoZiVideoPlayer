@@ -35,7 +35,8 @@ import java.util.TimerTask;
  */
 public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, JCMediaManager.JCMediaPlayerListener {
 
-  public static final String TAG = "JCVideoPlayer";
+  public static final String TAG = "JieCaoVideoPlayer";
+  public static boolean DEBUG = false;
 
   protected int mCurrentState = -1;//-1相当于null
   protected static final int CURRENT_STATE_PREPAREING = 0;
@@ -189,6 +190,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
         prepareVideo();
       } else if (mCurrentState == CURRENT_STATE_PLAYING) {
+        if (DEBUG) Log.d(TAG, "pauseVideo [" + this + "] " + mUrl);
         JCMediaManager.instance().mediaPlayer.pause();
         setStateAndUi(CURRENT_STATE_PAUSE);
         if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == this) {
@@ -214,6 +216,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         //quit fullscreen
         backFullscreen();
       } else {
+        if (DEBUG) Log.d(TAG, "toFullscreenActivity [" + this + "] " + mUrl);
         if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == this) {
           JC_BURIED_POINT.onEnterFullscreen(mUrl, mObjects);
         }
@@ -234,6 +237,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   }
 
   protected void prepareVideo() {
+    if (DEBUG) Log.d(TAG, "prepareVideo [" + this + "] " + mUrl);
     if (JCMediaManager.instance().listener != null) {
       JCMediaManager.instance().listener.onCompletion();
     }
@@ -244,6 +248,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   }
 
   protected void addSurfaceView() {
+    if (DEBUG) Log.i(TAG, "addSurfaceView [" + this + "] " + mUrl);
     if (surfaceContainer.getChildCount() > 0) {
       surfaceContainer.removeAllViews();
     }
@@ -417,6 +422,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     if (fromUser) {
       int time = progress * getDuration() / 100;
       JCMediaManager.instance().mediaPlayer.seekTo(time);
+      if (DEBUG) Log.d(TAG, "seekTo " + time + " [" + this + "] " + mUrl);
     }
   }
 
@@ -432,6 +438,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public void surfaceCreated(SurfaceHolder holder) {
+    if (DEBUG) Log.i(TAG, "surfaceCreated [" + this + "] " + mUrl);
     setDisplayCaseFailed();
   }
 
@@ -439,12 +446,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected void setDisplayCaseFailed() {//这里如果一直不成功是否有隐患
     try {
       JCMediaManager.instance().mediaPlayer.setDisplay(surfaceHolder);
+      if (DEBUG) Log.i(TAG, "setDisplay(surfaceHolder) [" + this + "] " + mUrl);
     } catch (IllegalArgumentException e) {
-      Log.i(TAG, "recreate surfaceview from IllegalArgumentException");
+      if (DEBUG)
+        Log.w(TAG, "recreate surfaceview from IllegalArgumentException [" + this + "] " + mUrl);
       addSurfaceView();
       e.printStackTrace();
     } catch (IllegalStateException e1) {
-      Log.i(TAG, "recreate surfaceview from IllegalStateException");
+      if (DEBUG)
+        Log.w(TAG, "recreate surfaceview from IllegalStateException [" + this + "] " + mUrl);
       addSurfaceView();
       e1.printStackTrace();
     }
@@ -490,7 +500,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       surfaceContainer.removeAllViews();
     }
     //if fullscreen finish activity what ever the activity is directly or click fullscreen
-    finishMyFullscreen();
+    finishFullscreenActivity();
 
     if (IF_FULLSCREEN_FROM_NORMAL) {//如果在进入全屏后播放完就初始化自己非全屏的控件
       IF_FULLSCREEN_FROM_NORMAL = false;
@@ -512,6 +522,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public void onError(int what, int extra) {
+    if (DEBUG) Log.e(TAG, "onError " + what + " - " + extra + " [" + this + "] " + mUrl);
     if (what != 38 && what != -38) {
       setStateAndUi(CURRENT_STATE_ERROR);
     }
@@ -608,6 +619,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   }
 
   protected void quitFullScreenGoToNormal() {
+    if (DEBUG) Log.i(TAG, "quitFullScreenGoToNormal [" + this + "] " + mUrl);
     if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == this) {
       JC_BURIED_POINT.onQuitFullscreen(mUrl, mObjects);
     }
@@ -615,19 +627,21 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     JCMediaManager.instance().listener = JCMediaManager.instance().lastListener;
     JCMediaManager.instance().lastState = mCurrentState;//save state
     JCMediaManager.instance().listener.onBackFullscreen();
-    finishMyFullscreen();
+    finishFullscreenActivity();
   }
 
-  protected void finishMyFullscreen() {
+  protected void finishFullscreenActivity() {
     if (getContext() instanceof JCFullScreenActivity) {
+      if (DEBUG) Log.i(TAG, "finishFullscreenActivity [" + this + "] " + mUrl);
       ((JCFullScreenActivity) getContext()).finish();
     }
   }
 
   public void backFullscreen() {
+    if (DEBUG) Log.d(TAG, "quitFullscreen [" + this + "] " + mUrl);
     if (mIfFullscreenIsDirectly) {
       JCMediaManager.instance().mediaPlayer.stop();
-      finishMyFullscreen();
+      finishFullscreenActivity();
     } else {
       CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
       IF_RELEASE_WHEN_ON_PAUSE = false;
@@ -637,6 +651,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   public static void releaseAllVideos() {
     if (IF_RELEASE_WHEN_ON_PAUSE) {
+      if (DEBUG) Log.i(TAG, "releaseAllVideos");
       JCMediaManager.instance().mediaPlayer.release();
       if (JCMediaManager.instance().listener != null) {
         JCMediaManager.instance().listener.onCompletion();
@@ -651,7 +666,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
    */
   public void release() {
     if (mCurrentState != CURRENT_STATE_NORMAL) {
+      if (DEBUG) Log.i(TAG, "release [" + this + "]" + mUrl);
       releaseAllVideos();
     }
   }
+
 }
