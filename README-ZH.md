@@ -12,13 +12,12 @@
 1. 全屏时启动新`Activity`实现播放器真正的全屏功能
 2. 可以完全自定义UI
 3. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
-4. `ListView`的拖拽和`ViewPager`的滑动时如果划出屏幕会自动重置视频
-5. 手势修改进度和音量
-6. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
-7. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
-8. [支持hls,rtsp](https://developer.android.com/guide/appendix/media-formats.html)
-9. 占用空间非常小，不到60k
-10. 设置http头信息
+4. 手势修改进度和音量
+5. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
+6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
+7. [支持hls,rtsp](https://developer.android.com/guide/appendix/media-formats.html)
+8. 占用空间非常小，不到60k
+9. 设置http头信息
 
 ##效果
 
