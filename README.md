@@ -63,7 +63,7 @@ jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/v
 
 Invoke `JCFullScreenActivity.startActivity(...)` to enter fullscreen directly.
 ```java
-JCFullScreenActivity.toActivity(this,
+JCFullScreenActivity.startActivity(this,
     "http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4",
     JCVideoPlayerStandard.class,
     "嫂子别摸我");
