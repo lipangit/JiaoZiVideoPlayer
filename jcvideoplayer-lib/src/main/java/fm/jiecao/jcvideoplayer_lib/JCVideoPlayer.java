@@ -226,7 +226,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCMediaManager.instance().listener = null;
         IF_FULLSCREEN_FROM_NORMAL = true;
         IF_RELEASE_WHEN_ON_PAUSE = false;
-        JCFullScreenActivity.toActivityFromNormal(getContext(), mCurrentState, mUrl, JCVideoPlayer.this.getClass(), this.mObjects);
+        JCFullScreenActivity.startActivityFromNormal(getContext(), mCurrentState, mUrl, JCVideoPlayer.this.getClass(), this.mObjects);
       }
     } else if (i == R.id.surface_container && mCurrentState == CURRENT_STATE_ERROR) {
       if (JC_BURIED_POINT != null) {

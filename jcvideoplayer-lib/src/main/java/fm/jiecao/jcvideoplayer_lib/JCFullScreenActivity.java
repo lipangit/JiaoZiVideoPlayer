@@ -19,7 +19,7 @@ import java.lang.reflect.Constructor;
  */
 public class JCFullScreenActivity extends Activity {
 
-  static void toActivityFromNormal(Context context, int state, String url, Class videoPlayClass, Object... obj) {
+  static void startActivityFromNormal(Context context, int state, String url, Class videoPlayClass, Object... obj) {
     CURRENT_STATE = state;
     DIRECT_FULLSCREEN = false;
     URL = url;
@@ -38,7 +38,7 @@ public class JCFullScreenActivity extends Activity {
    * @param videoPlayClass your videoplayer extends JCAbstraceVideoPlayer
    * @param obj            custom param
    */
-  public static void toActivity(Context context, String url, Class videoPlayClass, Object... obj) {
+  public static void startActivity(Context context, String url, Class videoPlayClass, Object... obj) {
     CURRENT_STATE = JCVideoPlayer.CURRENT_STATE_NORMAL;
     URL = url;
     DIRECT_FULLSCREEN = true;

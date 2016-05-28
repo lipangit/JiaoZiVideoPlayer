@@ -86,12 +86,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   public void onClick(View v) {
     switch (v.getId()) {
       case R.id.to_fullscreen_simple:
-        JCFullScreenActivity.toActivity(this,
+        JCFullScreenActivity.startActivity(this,
           "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
           JCVideoPlayerSimple.class, "嫂子真浪");
         break;
       case R.id.to_fullscreen_standard:
-        JCFullScreenActivity.toActivity(this,
+        JCFullScreenActivity.startActivity(this,
           "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
           JCVideoPlayerStandard.class, "嫂子真牛逼");
         break;

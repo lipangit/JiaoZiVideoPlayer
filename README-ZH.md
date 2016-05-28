@@ -25,8 +25,6 @@
 
 ![Demo Screenshot][1]
 
-视频演示 : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html?firsttime=0&from=y1.4-2
-
 ##使用
 1.添加类库
 ```gradle
@@ -52,7 +50,7 @@ compile 'fm.jiecao:jiecaovideoplayer:3.2'
 JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
 jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4"
                 , "嫂子想我没");
-jcVideoPlayerStandard.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.在包含播放器的`Fragment`或`Activity`的`onPause()`方法中调用`JCVideoPlayer.releaseAllVideos();`
@@ -61,7 +59,7 @@ jcVideoPlayerStandard.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun
 
 直接进入全屏，比如在webview中视频播放的适配很麻烦很无头绪，调用此接口直接全屏播放
 ```java
-JCFullScreenActivity.toActivity(this,
+JCFullScreenActivity.startActivity(this,
     "http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4",
     JCVideoPlayerStandard.class,
     "嫂子别摸我");
@@ -69,7 +67,7 @@ JCFullScreenActivity.toActivity(this,
 
 用代码控制播放按钮的点击,如果是普通状态会播放视频，如果是播放中会暂停视频
 ```java
-jcVideoPlayerStandard.ivStart.performClick();
+jcVideoPlayerStandard.startButton.performClick();
 ```
 
 ####混淆
@@ -81,7 +79,7 @@ jcVideoPlayerStandard.ivStart.performClick();
 
 ##贡献者
 
-节操精选Android小组([Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio)) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota)
+[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw)
 
 ## License MIT
 

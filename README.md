@@ -29,8 +29,6 @@ Android truly full-screen capabilities, the Android platform to become the most 
 
 ![Demo Screenshot][1]
 
-Demo video : http://v.youku.com/v_show/id_XMTQ2NzUwOTcyNA==.html
-
 ## Usage
 1.Import library
 ```gradle
@@ -56,14 +54,14 @@ Or download lib
 JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
 jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4"
                 , "嫂子想我没");
-jcVideoPlayerStandard.ivThumb.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.Remember to invoke `JCVideoPlayer.releaseAllVideos();` in `onPause()` of `Fragment` or `Activity`
 
 #### Other APIs
 
-Invoke `JCFullScreenActivity.toActivity(...)` to enter fullscreen directly.
+Invoke `JCFullScreenActivity.startActivity(...)` to enter fullscreen directly.
 ```java
 JCFullScreenActivity.toActivity(this,
     "http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4",
@@ -73,7 +71,7 @@ JCFullScreenActivity.toActivity(this,
 
 Control play button,if state is normal it will play, if state is playing it will pause
 ```java
-jcVideoPlayerStandard.ivStart.performClick();
+jcVideoPlayerStandard.startButton.performClick();
 ```
 
 ProGuard
@@ -85,7 +83,7 @@ Need nothing
 
 ##Contributors
 
-节操精选Android小组([Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio)) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota)
+[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw)
 
 ## License MIT
 
