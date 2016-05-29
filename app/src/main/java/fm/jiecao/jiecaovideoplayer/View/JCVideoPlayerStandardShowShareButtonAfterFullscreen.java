@@ -15,7 +15,7 @@ import fm.jiecao.jiecaovideoplayer.R;
  */
 public class JCVideoPlayerStandardShowShareButtonAfterFullscreen extends JCVideoPlayerStandard {
 
-  ImageView btnShare;
+  public ImageView shareButton;
 
   public JCVideoPlayerStandardShowShareButtonAfterFullscreen(Context context) {
     super(context);
@@ -28,8 +28,8 @@ public class JCVideoPlayerStandardShowShareButtonAfterFullscreen extends JCVideo
   @Override
   protected void init(Context context) {
     super.init(context);
-    btnShare = (ImageView) findViewById(R.id.share);
-    btnShare.setOnClickListener(this);
+    shareButton = (ImageView) findViewById(R.id.share);
+    shareButton.setOnClickListener(this);
   }
 
   @Override
@@ -46,12 +46,12 @@ public class JCVideoPlayerStandardShowShareButtonAfterFullscreen extends JCVideo
   }
 
   @Override
-  public void setStateAndUi(int state) {
+  protected void setStateAndUi(int state) {
     super.setStateAndUi(state);
-    if (IF_CURRENT_IS_FULLSCREEN) {
-      btnShare.setVisibility(View.VISIBLE);
+    if (mIfCurrentIsFullscreen) {
+      shareButton.setVisibility(View.VISIBLE);
     } else {
-      btnShare.setVisibility(View.INVISIBLE);
+      shareButton.setVisibility(View.INVISIBLE);
     }
   }
 }

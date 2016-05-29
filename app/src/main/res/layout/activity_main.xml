@@ -87,6 +87,12 @@
         android:text="List and Viewpager demo" />
 
       <Button
+        android:id="@+id/to_multiholder_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Multi holder demo" />
+
+      <Button
         android:id="@+id/to_loadimage_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

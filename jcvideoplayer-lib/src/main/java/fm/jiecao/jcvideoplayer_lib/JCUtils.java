@@ -17,8 +17,8 @@ class JCUtils {
     int seconds = totalSeconds % 60;
     int minutes = (totalSeconds / 60) % 60;
     int hours = totalSeconds / 3600;
-    StringBuilder mFormatBuilder = new StringBuilder();
-    Formatter mFormatter = new Formatter(mFormatBuilder, Locale.getDefault());
+    StringBuilder stringBuilder = new StringBuilder();
+    Formatter mFormatter = new Formatter(stringBuilder, Locale.getDefault());
     if (hours > 0) {
       return mFormatter.format("%d:%02d:%02d", hours, minutes, seconds).toString();
     } else {

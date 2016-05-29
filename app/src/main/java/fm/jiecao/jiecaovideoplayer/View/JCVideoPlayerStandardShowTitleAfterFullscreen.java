@@ -20,12 +20,15 @@ public class JCVideoPlayerStandardShowTitleAfterFullscreen extends JCVideoPlayer
   }
 
   @Override
-  public void setUp(String url, Object... objects) {
-    super.setUp(url, objects);
-    if (IF_CURRENT_IS_FULLSCREEN) {
-      tvTitle.setVisibility(View.VISIBLE);
-    } else {
-      tvTitle.setVisibility(View.INVISIBLE);
+  public boolean setUp(String url, Object... objects) {
+    if (super.setUp(url, objects)) {
+      if (mIfCurrentIsFullscreen) {
+        titleTextView.setVisibility(View.VISIBLE);
+      } else {
+        titleTextView.setVisibility(View.INVISIBLE);
+      }
+      return true;
     }
+    return false;
   }
 }

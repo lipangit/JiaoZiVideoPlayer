@@ -19,7 +19,7 @@ import java.lang.reflect.Constructor;
  */
 public class JCFullScreenActivity extends Activity {
 
-  static void toActivityFromNormal(Context context, int state, String url, Class videoPlayClass, Object... obj) {
+  static void startActivityFromNormal(Context context, int state, String url, Class videoPlayClass, Object... obj) {
     CURRENT_STATE = state;
     DIRECT_FULLSCREEN = false;
     URL = url;
@@ -34,11 +34,11 @@ public class JCFullScreenActivity extends Activity {
    * <p>Full screen play video derictly</p>
    *
    * @param context        context
-   * @param url            video url
+   * @param url            video mUrl
    * @param videoPlayClass your videoplayer extends JCAbstraceVideoPlayer
    * @param obj            custom param
    */
-  public static void toActivity(Context context, String url, Class videoPlayClass, Object... obj) {
+  public static void startActivity(Context context, String url, Class videoPlayClass, Object... obj) {
     CURRENT_STATE = JCVideoPlayer.CURRENT_STATE_NORMAL;
     URL = url;
     DIRECT_FULLSCREEN = true;
@@ -48,7 +48,7 @@ public class JCFullScreenActivity extends Activity {
     context.startActivity(intent);
   }
 
-  JCVideoPlayer jcVideoPlayer;
+  private JCVideoPlayer mJcVideoPlayer;
   /**
    * 刚启动全屏时的播放状态
    */
@@ -69,30 +69,30 @@ public class JCFullScreenActivity extends Activity {
 
     try {
       Constructor<JCVideoPlayerStandard> constructor = VIDEO_PLAYER_CLASS.getConstructor(Context.class);
-      jcVideoPlayer = constructor.newInstance(this);
-      setContentView(jcVideoPlayer);
+      mJcVideoPlayer = constructor.newInstance(this);
+      setContentView(mJcVideoPlayer);
     } catch (InstantiationException e) {
       e.printStackTrace();
     } catch (Exception e) {
       e.printStackTrace();
     }
 
-    jcVideoPlayer.IF_CURRENT_IS_FULLSCREEN = true;
-    jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY = DIRECT_FULLSCREEN;
-    jcVideoPlayer.setUp(URL, OBJECTS);
-    jcVideoPlayer.setStateAndUi(CURRENT_STATE);
-    jcVideoPlayer.addSurfaceView();
-    if (jcVideoPlayer.IF_FULLSCREEN_IS_DIRECTLY) {
-      jcVideoPlayer.ivStart.performClick();
+    mJcVideoPlayer.mIfCurrentIsFullscreen = true;
+    mJcVideoPlayer.mIfFullscreenIsDirectly = DIRECT_FULLSCREEN;
+    mJcVideoPlayer.setUp(URL, OBJECTS);
+    mJcVideoPlayer.setStateAndUi(CURRENT_STATE);
+    mJcVideoPlayer.addSurfaceView();
+    if (mJcVideoPlayer.mIfFullscreenIsDirectly) {
+      mJcVideoPlayer.startButton.performClick();
     } else {
       JCVideoPlayer.IF_RELEASE_WHEN_ON_PAUSE = true;
-      JCMediaManager.instance().listener = jcVideoPlayer;
+      JCMediaManager.instance().listener = mJcVideoPlayer;
     }
   }
 
   @Override
   public void onBackPressed() {
-    jcVideoPlayer.backFullscreen();
+    mJcVideoPlayer.backFullscreen();
   }
 
   @Override

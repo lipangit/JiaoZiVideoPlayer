@@ -19,7 +19,7 @@ import java.util.Map;
 public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnVideoSizeChangedListener {
 
   public MediaPlayer mediaPlayer;
-  private static JCMediaManager jcMediaManager;
+  private static JCMediaManager JCMediaManager;
   public int currentVideoWidth = 0;
   public int currentVideoHeight = 0;
   public JCMediaPlayerListener listener;
@@ -27,10 +27,10 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
   public int lastState;
 
   public static JCMediaManager instance() {
-    if (jcMediaManager == null) {
-      jcMediaManager = new JCMediaManager();
+    if (JCMediaManager == null) {
+      JCMediaManager = new JCMediaManager();
     }
-    return jcMediaManager;
+    return JCMediaManager;
   }
 
   public JCMediaManager() {
