@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.view.SurfaceHolder;
 
 import java.io.IOException;
 import java.util.Map;
@@ -17,6 +18,7 @@ import java.util.Map;
  * On 2015/11/30 15:39
  */
 public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnVideoSizeChangedListener {
+  public static String TAG = "JCMediaManager";
 
   public MediaPlayer mediaPlayer;
   private static JCMediaManager JCMediaManager;
@@ -25,6 +27,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
   public JCMediaPlayerListener listener;
   public JCMediaPlayerListener lastListener;
   public int lastState;
+  Object mediaAsyncObj = new Object();
 
   public static JCMediaManager instance() {
     if (JCMediaManager == null) {
@@ -37,27 +40,85 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     mediaPlayer = new MediaPlayer();
   }
 
-  public void prepareToPlay(Context context, String url, Map<String, String> mapHeadData) {
+  public void prepareToPlay(final Context context, final String url, final Map<String, String> mapHeadData) {
     if (TextUtils.isEmpty(url)) return;
-    try {
-      currentVideoWidth = 0;
-      currentVideoHeight = 0;
-      mediaPlayer.release();
-      mediaPlayer = new MediaPlayer();
-      mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-      mediaPlayer.setDataSource(context, Uri.parse(url), mapHeadData);
-      mediaPlayer.setOnPreparedListener(this);
-      mediaPlayer.setOnCompletionListener(this);
-      mediaPlayer.setOnBufferingUpdateListener(this);
-      mediaPlayer.setScreenOnWhilePlaying(true);
-      mediaPlayer.setOnSeekCompleteListener(this);
-      mediaPlayer.setOnErrorListener(this);
-      mediaPlayer.setOnVideoSizeChangedListener(this);
-      mediaPlayer.prepareAsync();
-    } catch (IOException e) {
-      e.printStackTrace();
+    PrepareTHread p = new PrepareTHread(context, url, mapHeadData);
+    p.start();
+  }
+
+  class PrepareTHread extends Thread {
+    Context context;
+    String url;
+    Map<String, String> mapHeadData;
+
+    PrepareTHread(final Context context, final String url, final Map<String, String> mapHeadData) {
+      this.context = context;
+      this.url = url;
+      this.mapHeadData = mapHeadData;
+    }
+
+    @Override
+    public void run() {
+      try {
+        synchronized (mediaAsyncObj) {
+          currentVideoWidth = 0;
+          currentVideoHeight = 0;
+          mediaPlayer.release();
+          mediaPlayer = new MediaPlayer();
+          mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+          mediaPlayer.setDataSource(context, Uri.parse(url), mapHeadData);
+          mediaPlayer.setOnPreparedListener(JCMediaManager.this);
+          mediaPlayer.setOnCompletionListener(JCMediaManager.this);
+          mediaPlayer.setOnBufferingUpdateListener(JCMediaManager.this);
+          mediaPlayer.setScreenOnWhilePlaying(true);
+          mediaPlayer.setOnSeekCompleteListener(JCMediaManager.this);
+          mediaPlayer.setOnErrorListener(JCMediaManager.this);
+          mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
+          mediaPlayer.prepareAsync();
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     }
   }
+
+  public static boolean RELEASING_ = false;
+
+  public void releaseMediaPlayer() {
+//    if (RELEASING_) return;
+    ReleaseTHread r = new ReleaseTHread();
+    r.start();
+  }
+
+  class ReleaseTHread extends Thread {
+    @Override
+    public void run() {
+      synchronized (mediaAsyncObj) {
+        mediaPlayer.release();
+      }
+    }
+  }
+
+  public void setDisplay(SurfaceHolder holder) {
+    SetDisplayTHread s = new SetDisplayTHread(holder);
+    s.start();
+  }
+
+  class SetDisplayTHread extends Thread {
+    SurfaceHolder holder;
+
+    SetDisplayTHread(SurfaceHolder holder) {
+      this.holder = holder;
+    }
+
+    @Override
+    public void run() {
+      synchronized (mediaAsyncObj) {
+        JCMediaManager.instance().mediaPlayer.setDisplay(holder);
+      }
+    }
+  }
+
 
   @Override
   public void onPrepared(MediaPlayer mp) {

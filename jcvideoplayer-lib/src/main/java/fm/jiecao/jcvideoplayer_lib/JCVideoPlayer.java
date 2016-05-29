@@ -156,7 +156,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     switch (mCurrentState) {
       case CURRENT_STATE_NORMAL:
         if (JCMediaManager.instance().listener == this) {
-          JCMediaManager.instance().mediaPlayer.release();
+          JCMediaManager.instance().releaseMediaPlayer();
         }
         break;
       case CURRENT_STATE_PREPAREING:
@@ -168,7 +168,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         startProgressTimer();
         break;
       case CURRENT_STATE_ERROR:
-        JCMediaManager.instance().mediaPlayer.release();
+        if (JCMediaManager.instance().listener == this) {
+          JCMediaManager.instance().releaseMediaPlayer();
+        }
         onCompletion();
         break;
     }
@@ -444,20 +446,21 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
 
   protected void setDisplayCaseFailed() {//这里如果一直不成功是否有隐患
-    try {
-      JCMediaManager.instance().mediaPlayer.setDisplay(surfaceHolder);
-      if (DEBUG) Log.i(TAG, "setDisplaySurfaceHolder [" + this + "] " + mUrl);
-    } catch (IllegalArgumentException e) {
-      if (DEBUG)
-        Log.w(TAG, "recreate surfaceview from IllegalArgumentException [" + this + "] " + mUrl);
-      addSurfaceView();
-      e.printStackTrace();
-    } catch (IllegalStateException e1) {
-      if (DEBUG)
-        Log.w(TAG, "recreate surfaceview from IllegalStateException [" + this + "] " + mUrl);
-      addSurfaceView();
-      e1.printStackTrace();
-    }
+    JCMediaManager.instance().setDisplay(surfaceHolder);
+//    try {
+//
+//      if (DEBUG) Log.i(TAG, "setDisplaySurfaceHolder [" + this + "] " + mUrl);
+//    } catch (IllegalArgumentException e) {
+//      if (DEBUG)
+//        Log.w(TAG, "recreate surfaceview from IllegalArgumentException [" + this + "] " + mUrl);
+//      addSurfaceView();
+//      e.printStackTrace();
+//    } catch (IllegalStateException e1) {
+//      if (DEBUG)
+//        Log.w(TAG, "recreate surfaceview from IllegalStateException [" + this + "] " + mUrl);
+//      addSurfaceView();
+//      e1.printStackTrace();
+//    }
   }
 
   @Override
@@ -652,7 +655,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   public static void releaseAllVideos() {
     if (IF_RELEASE_WHEN_ON_PAUSE) {
       if (DEBUG) Log.i(TAG, "releaseAllVideos");
-      JCMediaManager.instance().mediaPlayer.release();
+      JCMediaManager.instance().releaseMediaPlayer();
       if (JCMediaManager.instance().listener != null) {
         JCMediaManager.instance().listener.onCompletion();
       }
