@@ -446,7 +446,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected void setDisplayCaseFailed() {//这里如果一直不成功是否有隐患
     try {
       JCMediaManager.instance().mediaPlayer.setDisplay(surfaceHolder);
-      if (DEBUG) Log.i(TAG, "setDisplay(surfaceHolder) [" + this + "] " + mUrl);
+      if (DEBUG) Log.i(TAG, "setDisplaySurfaceHolder [" + this + "] " + mUrl);
     } catch (IllegalArgumentException e) {
       if (DEBUG)
         Log.w(TAG, "recreate surfaceview from IllegalArgumentException [" + this + "] " + mUrl);
