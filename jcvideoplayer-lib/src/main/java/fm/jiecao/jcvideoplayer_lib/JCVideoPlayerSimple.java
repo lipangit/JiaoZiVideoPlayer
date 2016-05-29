@@ -34,6 +34,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
       } else {
         fullscreenButton.setImageResource(R.drawable.jc_enlarge);
       }
+      fullscreenButton.setVisibility(View.GONE);
       return true;
     }
     return false;
