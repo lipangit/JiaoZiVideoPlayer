@@ -5,6 +5,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.io.IOException;
@@ -44,6 +45,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     if (TextUtils.isEmpty(url)) return;
     PrepareTHread p = new PrepareTHread(context, url, mapHeadData);
     p.start();
+    Log.i(TAG, "prepareToPlay");
   }
 
   class PrepareTHread extends Thread {
@@ -60,9 +62,11 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     @Override
     public void run() {
       try {
+        Log.i(TAG, "prepareToPlay run");
         synchronized (mediaAsyncObj) {
-          currentVideoWidth = 0;
-          currentVideoHeight = 0;
+          Log.i(TAG, "prepareToPlay start");
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                currentVideoWidth = 0;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                currentVideoHeight = 0;
           mediaPlayer.release();
           mediaPlayer = new MediaPlayer();
           mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -75,6 +79,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
           mediaPlayer.setOnErrorListener(JCMediaManager.this);
           mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
           mediaPlayer.prepareAsync();
+          Log.i(TAG, "prepareToPlay done");
         }
       } catch (IOException e) {
         e.printStackTrace();
@@ -88,13 +93,17 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
 //    if (RELEASING_) return;
     ReleaseTHread r = new ReleaseTHread();
     r.start();
+    Log.d(TAG, "releaseMediaPlayer");
   }
 
   class ReleaseTHread extends Thread {
     @Override
     public void run() {
+      Log.d(TAG, "releaseMediaPlayer run");
       synchronized (mediaAsyncObj) {
+        Log.d(TAG, "releaseMediaPlayer start");
         mediaPlayer.release();
+        Log.d(TAG, "releaseMediaPlayer done");
       }
     }
   }
@@ -102,6 +111,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
   public void setDisplay(SurfaceHolder holder) {
     SetDisplayTHread s = new SetDisplayTHread(holder);
     s.start();
+    Log.w(TAG, "setDisplay");
   }
 
   class SetDisplayTHread extends Thread {
@@ -113,8 +123,11 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
 
     @Override
     public void run() {
+      Log.w(TAG, "setDisplay run");
       synchronized (mediaAsyncObj) {
+        Log.w(TAG, "setDisplay start");
         JCMediaManager.instance().mediaPlayer.setDisplay(holder);
+        Log.w(TAG, "setDisplay done");
       }
     }
   }
