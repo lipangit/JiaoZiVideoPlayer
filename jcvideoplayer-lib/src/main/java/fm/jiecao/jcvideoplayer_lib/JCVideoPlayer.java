@@ -244,7 +244,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
     JCMediaManager.instance().listener = this;
     addSurfaceView();
-    JCMediaManager.instance().prepareToPlay(getContext(), mUrl, mMapHeadData);
+    JCMediaManager.instance().prepareToPlay(mUrl, mMapHeadData);
     setStateAndUi(CURRENT_STATE_PREPAREING);
   }
 
