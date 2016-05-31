@@ -169,8 +169,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       case CURRENT_STATE_ERROR:
         if (JCMediaManager.instance().listener == this) {
           JCMediaManager.instance().releaseMediaPlayer();
+          Log.d("JCMediaManager", "1");
+          onCompletion();
         }
-        onCompletion();
         break;
     }
   }
@@ -240,6 +241,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected void prepareVideo() {
     Log.d(TAG, "prepareVideo [" + this.hashCode() + "] ");
     if (JCMediaManager.instance().listener != null) {
+      Log.d("JCMediaManager", "3");
       JCMediaManager.instance().listener.onCompletion();
     }
     JCMediaManager.instance().listener = this;
@@ -468,6 +470,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public void surfaceDestroyed(SurfaceHolder holder) {
+    Log.d("JCMediaManager", "surfaceDestroyed");
   }
 
 
@@ -489,6 +492,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JC_BURIED_POINT.onAutoComplete(mUrl, mObjects);
       }
     }
+    Log.d("JCMediaManager", "2");
     onCompletion();
   }
 
@@ -498,14 +502,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     cancelProgressTimer();
     resetProgressAndTime();
     setStateAndUi(CURRENT_STATE_NORMAL);
+    Log.e("JCMediaManager", "removeAllViews");
     if (surfaceContainer.getChildCount() > 0) {
       surfaceContainer.removeAllViews();
     }
+    Log.e("JCMediaManager", "removeAllViews done");
     //if fullscreen finish activity what ever the activity is directly or click fullscreen
     finishFullscreenActivity();
 
     if (IF_FULLSCREEN_FROM_NORMAL) {//如果在进入全屏后播放完就初始化自己非全屏的控件
       IF_FULLSCREEN_FROM_NORMAL = false;
+      Log.d("JCMediaManager", "4");
       JCMediaManager.instance().lastListener.onCompletion();
     }
   }
@@ -656,6 +663,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       Log.i(TAG, "releaseAllVideos");
       JCMediaManager.instance().releaseMediaPlayer();
       if (JCMediaManager.instance().listener != null) {
+        Log.d("JCMediaManager", "5");
         JCMediaManager.instance().listener.onCompletion();
       }
     } else {

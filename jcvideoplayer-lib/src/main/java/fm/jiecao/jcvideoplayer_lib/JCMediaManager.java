@@ -7,6 +7,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import java.lang.reflect.InvocationTargetException;
@@ -65,6 +66,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
       switch (msg.what) {
         case HANDLER_PREPARE:
           try {
+            Log.w(TAG, "prepare");
             currentVideoWidth = 0;
             currentVideoHeight = 0;
             mediaPlayer.release();
@@ -91,12 +93,20 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
           } catch (Exception e) {
             e.printStackTrace();
           }
+          Log.w(TAG, "prepare done");
           break;
         case HANDLER_SETDISPLAY:
-          JCMediaManager.instance().mediaPlayer.setDisplay((SurfaceHolder) msg.obj);
+          Log.i(TAG, "setdisplay");
+          SurfaceHolder holder = (SurfaceHolder) msg.obj;
+          if (holder.getSurface() != null && holder.getSurface().isValid()) {
+            JCMediaManager.instance().mediaPlayer.setDisplay(holder);
+            Log.i(TAG, "setdisplay done");
+          }
           break;
         case HANDLER_RELEASE:
+          Log.e(TAG, "release");
           mediaPlayer.release();
+          Log.e(TAG, "release done");
           break;
       }
     }
