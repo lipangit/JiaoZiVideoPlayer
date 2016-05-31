@@ -76,6 +76,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
             Class<MediaPlayer> clazz = MediaPlayer.class;
             Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
             method.invoke(mediaPlayer, ((FuckBean) msg.obj).url, ((FuckBean) msg.obj).mapHeadData);
+            mediaPlayer.setLooping(((FuckBean) msg.obj).looping);
             mediaPlayer.setOnPreparedListener(JCMediaManager.this);
             mediaPlayer.setOnCompletionListener(JCMediaManager.this);
             mediaPlayer.setOnBufferingUpdateListener(JCMediaManager.this);
@@ -113,11 +114,11 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
   }
 
 
-  public void prepareToPlay(final String url, final Map<String, String> mapHeadData) {
+  public void prepareToPlay(final String url, final Map<String, String> mapHeadData, boolean loop) {
     if (TextUtils.isEmpty(url)) return;
     Message msg = new Message();
     msg.what = HANDLER_PREPARE;
-    FuckBean fb = new FuckBean(url, mapHeadData);
+    FuckBean fb = new FuckBean(url, mapHeadData, loop);
     msg.obj = fb;
     mMediaHandler.sendMessage(msg);
   }
@@ -231,10 +232,12 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
   private class FuckBean {
     String url;
     Map<String, String> mapHeadData;
+    boolean looping;
 
-    FuckBean(String url, Map<String, String> mapHeadData) {
+    FuckBean(String url, Map<String, String> mapHeadData, boolean loop) {
       this.url = url;
       this.mapHeadData = mapHeadData;
+      this.looping = loop;
     }
   }
 }

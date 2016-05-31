@@ -48,7 +48,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected boolean mTouchingProgressBar = false;
   protected boolean mIfCurrentIsFullscreen = false;
   protected boolean mIfFullscreenIsDirectly = false;//mIfCurrentIsFullscreen should be true first
-  protected static boolean IF_FULLSCREEN_FROM_NORMAL = false;//to prevent infinite loop
+  protected static boolean IF_FULLSCREEN_FROM_NORMAL = false;//to prevent infinite looping
   public static boolean IF_RELEASE_WHEN_ON_PAUSE = true;
   protected static long CLICK_QUIT_FULLSCREEN_TIME = 0;
   public static final int FULL_SCREEN_NORMAL_DELAY = 1000;
@@ -65,6 +65,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected String mUrl;
   protected Object[] mObjects;
   protected Map<String, String> mMapHeadData = new HashMap<>();
+  protected boolean mLooping = false;
 
   protected static Timer UPDATE_PROGRESS_TIMER;
   protected static JCBuriedPoint JC_BURIED_POINT;
@@ -147,6 +148,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       return true;
     }
     return false;
+  }
+
+  public void setLoop(boolean looping) {
+    this.mLooping = looping;
   }
 
   //set ui
@@ -246,7 +251,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
     JCMediaManager.instance().listener = this;
     addSurfaceView();
-    JCMediaManager.instance().prepareToPlay(mUrl, mMapHeadData);
+    JCMediaManager.instance().prepareToPlay(mUrl, mMapHeadData, mLooping);
     setStateAndUi(CURRENT_STATE_PREPAREING);
   }
 
