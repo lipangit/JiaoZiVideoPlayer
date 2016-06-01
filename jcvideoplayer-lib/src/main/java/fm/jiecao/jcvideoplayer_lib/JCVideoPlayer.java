@@ -3,13 +3,16 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.SurfaceHolder;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -33,7 +36,7 @@ import java.util.TimerTask;
  * Created by Nathen
  * On 2016/04/10 15:45
  */
-public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, JCMediaManager.JCMediaPlayerListener {
+public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, JCMediaManager.JCMediaPlayerListener, TextureView.SurfaceTextureListener {
 
   public static final String TAG = "JieCaoVideoPlayer";
 
@@ -59,8 +62,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   public TextView currentTimeTextView, totalTimeTextView;
   public ViewGroup surfaceContainer;
   public ViewGroup topContainer, bottomContainer;
-  public JCResizeSurfaceView surfaceView;
+  public JCResizeTextureView surfaceView;
   public SurfaceHolder surfaceHolder;
+  public Surface asurface;
 
   protected String mUrl;
   protected Object[] mObjects;
@@ -258,13 +262,36 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     if (surfaceContainer.getChildCount() > 0) {
       surfaceContainer.removeAllViews();
     }
-    surfaceView = new JCResizeSurfaceView(getContext());
-    surfaceHolder = surfaceView.getHolder();
-    surfaceHolder.addCallback(this);
+    surfaceView = new JCResizeTextureView(getContext());
+//    surfaceHolder = surfaceView.getHolder();
+//    surfaceHolder.addCallback(this);
+
+    surfaceView.setSurfaceTextureListener(this);
 
     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
     surfaceContainer.addView(surfaceView, layoutParams);
+  }
+
+  @Override
+  public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+    asurface = new Surface(surface);
+    JCMediaManager.instance().setDisplay(asurface);
+  }
+
+  @Override
+  public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
+  }
+
+  @Override
+  public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+    return false;
+  }
+
+  @Override
+  public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
   }
 
   @Override
@@ -450,7 +477,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
 
   protected void setDisplayCaseFailed() {//这里如果一直不成功是否有隐患
-    JCMediaManager.instance().setDisplay(surfaceHolder);
+    JCMediaManager.instance().setDisplay(asurface);
 //    try {
 //
 //       Log.i(TAG, "setDisplaySurfaceHolder [" + this.hashCode() + "] " + mUrl);
@@ -545,7 +572,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     int mVideoWidth = JCMediaManager.instance().currentVideoWidth;
     int mVideoHeight = JCMediaManager.instance().currentVideoHeight;
     if (mVideoWidth != 0 && mVideoHeight != 0) {
-      surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
+//      surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
       surfaceView.requestLayout();
     }
   }
