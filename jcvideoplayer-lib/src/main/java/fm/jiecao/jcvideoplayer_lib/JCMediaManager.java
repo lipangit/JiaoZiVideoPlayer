@@ -65,7 +65,6 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
       switch (msg.what) {
         case HANDLER_PREPARE:
           try {
-            Log.w(TAG, "prepare");
             currentVideoWidth = 0;
             currentVideoHeight = 0;
             mediaPlayer.release();
@@ -93,20 +92,15 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
           } catch (Exception e) {
             e.printStackTrace();
           }
-          Log.w(TAG, "prepare done");
           break;
         case HANDLER_SETDISPLAY:
-          Log.i(TAG, "setdisplay");
           SurfaceHolder holder = (SurfaceHolder) msg.obj;
           if (holder.getSurface() != null && holder.getSurface().isValid()) {
             JCMediaManager.instance().mediaPlayer.setDisplay(holder);
-            Log.i(TAG, "setdisplay done");
           }
           break;
         case HANDLER_RELEASE:
-          Log.e(TAG, "release");
           mediaPlayer.release();
-          Log.e(TAG, "release done");
           break;
       }
     }

@@ -174,7 +174,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       case CURRENT_STATE_ERROR:
         if (JCMediaManager.instance().listener == this) {
           JCMediaManager.instance().releaseMediaPlayer();
-          Log.d("JCMediaManager", "1");
           onCompletion();
         }
         break;
@@ -246,7 +245,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected void prepareVideo() {
     Log.d(TAG, "prepareVideo [" + this.hashCode() + "] ");
     if (JCMediaManager.instance().listener != null) {
-      Log.d("JCMediaManager", "3");
       JCMediaManager.instance().listener.onCompletion();
     }
     JCMediaManager.instance().listener = this;
@@ -497,7 +495,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JC_BURIED_POINT.onAutoComplete(mUrl, mObjects);
       }
     }
-    Log.d("JCMediaManager", "2");
     onCompletion();
   }
 
@@ -517,7 +514,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     if (IF_FULLSCREEN_FROM_NORMAL) {//如果在进入全屏后播放完就初始化自己非全屏的控件
       IF_FULLSCREEN_FROM_NORMAL = false;
-      Log.d("JCMediaManager", "4");
       JCMediaManager.instance().lastListener.onCompletion();
     }
     JCMediaManager.instance().listener = null;
@@ -672,7 +668,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       Log.i(TAG, "releaseAllVideos");
       JCMediaManager.instance().releaseMediaPlayer();
       if (JCMediaManager.instance().listener != null) {
-        Log.d("JCMediaManager", "5");
         JCMediaManager.instance().listener.onCompletion();
       }
     } else {
