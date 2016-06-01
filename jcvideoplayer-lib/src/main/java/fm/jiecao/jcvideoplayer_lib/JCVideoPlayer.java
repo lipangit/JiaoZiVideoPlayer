@@ -520,6 +520,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       Log.d("JCMediaManager", "4");
       JCMediaManager.instance().lastListener.onCompletion();
     }
+    JCMediaManager.instance().listener = null;
+    JCMediaManager.instance().lastListener = null;
   }
 
   @Override
@@ -639,6 +641,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
     JCMediaManager.instance().mediaPlayer.setDisplay(null);
     JCMediaManager.instance().listener = JCMediaManager.instance().lastListener;
+    JCMediaManager.instance().lastListener = null;
     JCMediaManager.instance().lastState = mCurrentState;//save state
     JCMediaManager.instance().listener.onBackFullscreen();
     finishFullscreenActivity();
@@ -653,6 +656,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   public void backFullscreen() {
     Log.d(TAG, "quitFullscreen [" + this.hashCode() + "] ");
+    IF_FULLSCREEN_FROM_NORMAL = false;
     if (mIfFullscreenIsDirectly) {
       JCMediaManager.instance().mediaPlayer.stop();
       finishFullscreenActivity();

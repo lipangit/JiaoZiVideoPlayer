@@ -31,7 +31,6 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
   public JCMediaPlayerListener listener;
   public JCMediaPlayerListener lastListener;
   public int lastState;
-  Object mediaAsyncObj = new Object();
 
   public static final int HANDLER_PREPARE = 0;
   public static final int HANDLER_SETDISPLAY = 1;
