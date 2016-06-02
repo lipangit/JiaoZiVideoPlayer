@@ -3,13 +3,15 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
+import android.view.Surface;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -33,7 +35,7 @@ import java.util.TimerTask;
  * Created by Nathen
  * On 2016/04/10 15:45
  */
-public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, SurfaceHolder.Callback, JCMediaManager.JCMediaPlayerListener {
+public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, JCMediaManager.JCMediaPlayerListener, TextureView.SurfaceTextureListener {
 
   public static final String TAG = "JieCaoVideoPlayer";
 
@@ -57,10 +59,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   public SeekBar progressBar;
   public ImageView fullscreenButton;
   public TextView currentTimeTextView, totalTimeTextView;
-  public ViewGroup surfaceContainer;
+  public ViewGroup textureViewContainer;
   public ViewGroup topContainer, bottomContainer;
-  public JCResizeSurfaceView surfaceView;
-  public SurfaceHolder surfaceHolder;
+  public JCResizeTextureView textureView;
+  public Surface mSurface;
 
   protected String mUrl;
   protected Object[] mObjects;
@@ -109,17 +111,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     currentTimeTextView = (TextView) findViewById(R.id.current);
     totalTimeTextView = (TextView) findViewById(R.id.total);
     bottomContainer = (ViewGroup) findViewById(R.id.layout_bottom);
-    surfaceContainer = (RelativeLayout) findViewById(R.id.surface_container);
+    textureViewContainer = (RelativeLayout) findViewById(R.id.surface_container);
     topContainer = (ViewGroup) findViewById(R.id.layout_top);
 
     startButton.setOnClickListener(this);
     fullscreenButton.setOnClickListener(this);
     progressBar.setOnSeekBarChangeListener(this);
     bottomContainer.setOnClickListener(this);
-    surfaceContainer.setOnClickListener(this);
+    textureViewContainer.setOnClickListener(this);
     progressBar.setOnTouchListener(this);
 
-    surfaceContainer.setOnTouchListener(this);
+    textureViewContainer.setOnTouchListener(this);
     mScreenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
     mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
     mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
@@ -255,16 +257,36 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   protected void addSurfaceView() {
     Log.i(TAG, "addSurfaceView [" + this.hashCode() + "] ");
-    if (surfaceContainer.getChildCount() > 0) {
-      surfaceContainer.removeAllViews();
+    if (textureViewContainer.getChildCount() > 0) {
+      textureViewContainer.removeAllViews();
     }
-    surfaceView = new JCResizeSurfaceView(getContext());
-    surfaceHolder = surfaceView.getHolder();
-    surfaceHolder.addCallback(this);
+    textureView = new JCResizeTextureView(getContext());
+    textureView.setSurfaceTextureListener(this);
 
     RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-    surfaceContainer.addView(surfaceView, layoutParams);
+    textureViewContainer.addView(textureView, layoutParams);
+  }
+
+  @Override
+  public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+    mSurface = new Surface(surface);
+    JCMediaManager.instance().setDisplay(mSurface);
+  }
+
+  @Override
+  public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
+  }
+
+  @Override
+  public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+    return false;
+  }
+
+  @Override
+  public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
   }
 
   @Override
@@ -443,41 +465,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   }
 
   @Override
-  public void surfaceCreated(SurfaceHolder holder) {
-    Log.i(TAG, "surfaceCreated [" + this.hashCode() + "] ");
-    setDisplayCaseFailed();
-  }
-
-
-  protected void setDisplayCaseFailed() {//这里如果一直不成功是否有隐患
-    JCMediaManager.instance().setDisplay(surfaceHolder);
-//    try {
-//
-//       Log.i(TAG, "setDisplaySurfaceHolder [" + this.hashCode() + "] " + mUrl);
-//    } catch (IllegalArgumentException e) {
-//
-//        Log.w(TAG, "recreate surfaceview from IllegalArgumentException [" + this.hashCode() + "] " + mUrl);
-//      addSurfaceView();
-//      e.printStackTrace();
-//    } catch (IllegalStateException e1) {
-//
-//        Log.w(TAG, "recreate surfaceview from IllegalStateException [" + this.hashCode() + "] " + mUrl);
-//      addSurfaceView();
-//      e1.printStackTrace();
-//    }
-  }
-
-  @Override
-  public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-  }
-
-  @Override
-  public void surfaceDestroyed(SurfaceHolder holder) {
-    Log.d("JCMediaManager", "surfaceDestroyed");
-  }
-
-
-  @Override
   public void onPrepared() {
     if (mCurrentState != CURRENT_STATE_PREPAREING) return;
     JCMediaManager.instance().mediaPlayer.start();
@@ -505,8 +492,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     resetProgressAndTime();
     setStateAndUi(CURRENT_STATE_NORMAL);
     Log.e("JCMediaManager", "removeAllViews");
-    if (surfaceContainer.getChildCount() > 0) {
-      surfaceContainer.removeAllViews();
+    if (textureViewContainer.getChildCount() > 0) {
+      textureViewContainer.removeAllViews();
     }
     Log.e("JCMediaManager", "removeAllViews done");
     //if fullscreen finish activity what ever the activity is directly or click fullscreen
@@ -545,8 +532,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     int mVideoWidth = JCMediaManager.instance().currentVideoWidth;
     int mVideoHeight = JCMediaManager.instance().currentVideoHeight;
     if (mVideoWidth != 0 && mVideoHeight != 0) {
-      surfaceHolder.setFixedSize(mVideoWidth, mVideoHeight);
-      surfaceView.requestLayout();
+      textureView.requestLayout();
     }
   }
 

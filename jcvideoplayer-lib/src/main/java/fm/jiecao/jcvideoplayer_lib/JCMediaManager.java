@@ -7,7 +7,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
-import android.view.SurfaceHolder;
+import android.view.Surface;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -94,14 +94,13 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
           break;
         case HANDLER_SETDISPLAY:
           if (msg.obj == null) {
-            JCMediaManager.instance().mediaPlayer.setDisplay(null);
+            instance().mediaPlayer.setSurface(null);
           } else {
-            SurfaceHolder holder = (SurfaceHolder) msg.obj;
-            if (holder.getSurface() != null && holder.getSurface().isValid()) {
-              JCMediaManager.instance().mediaPlayer.setDisplay(holder);
+            Surface holder = (Surface) msg.obj;
+            if (holder.isValid()) {
+              instance().mediaPlayer.setSurface(holder);
             }
           }
-
           break;
         case HANDLER_RELEASE:
           mediaPlayer.release();
@@ -126,7 +125,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     mMediaHandler.sendMessage(msg);
   }
 
-  public void setDisplay(SurfaceHolder holder) {
+  public void setDisplay(Surface holder) {
     Message msg = new Message();
     msg.what = HANDLER_SETDISPLAY;
     msg.obj = holder;
