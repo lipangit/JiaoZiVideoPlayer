@@ -5,7 +5,6 @@
 <a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-3.3-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
-<a href=""><img src="https://img.shields.io/github/stars/lipangit/jiecaovideoplayer.svg?style=social&label=Star"></a>
 </p>
 
 真正实现Android的全屏功能，立志成为Android平台使用最广泛的视频播放控件
