@@ -227,7 +227,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
           JC_BURIED_POINT.onEnterFullscreen(mUrl, mObjects);
         }
         //to fullscreen
-        JCMediaManager.instance().mediaPlayer.setDisplay(null);
+        JCMediaManager.instance().setDisplay(null);
         JCMediaManager.instance().lastListener = this;
         JCMediaManager.instance().listener = null;
         IF_FULLSCREEN_FROM_NORMAL = true;
@@ -635,7 +635,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == this) {
       JC_BURIED_POINT.onQuitFullscreen(mUrl, mObjects);
     }
-    JCMediaManager.instance().mediaPlayer.setDisplay(null);
+    JCMediaManager.instance().setDisplay(null);
     JCMediaManager.instance().listener = JCMediaManager.instance().lastListener;
     JCMediaManager.instance().lastListener = null;
     JCMediaManager.instance().lastState = mCurrentState;//save state

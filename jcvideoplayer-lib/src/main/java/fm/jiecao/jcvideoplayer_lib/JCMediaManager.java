@@ -93,10 +93,15 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
           }
           break;
         case HANDLER_SETDISPLAY:
-          SurfaceHolder holder = (SurfaceHolder) msg.obj;
-          if (holder.getSurface() != null && holder.getSurface().isValid()) {
-            JCMediaManager.instance().mediaPlayer.setDisplay(holder);
+          if (msg.obj == null) {
+            JCMediaManager.instance().mediaPlayer.setDisplay(null);
+          } else {
+            SurfaceHolder holder = (SurfaceHolder) msg.obj;
+            if (holder.getSurface() != null && holder.getSurface().isValid()) {
+              JCMediaManager.instance().mediaPlayer.setDisplay(holder);
+            }
           }
+
           break;
         case HANDLER_RELEASE:
           mediaPlayer.release();
