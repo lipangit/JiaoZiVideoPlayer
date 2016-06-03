@@ -244,14 +244,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   }
 
   private void changeUiToClearUiPlaying() {
-//    changeUiToClearUi();
-    topContainer.setVisibility(View.INVISIBLE);
-    bottomContainer.setVisibility(View.INVISIBLE);
-    startButton.setVisibility(View.INVISIBLE);
-    loadingProgressBar.setVisibility(super.mBuffering ? View.VISIBLE : View.INVISIBLE);
-    thumbImageView.setVisibility(View.INVISIBLE);
-    coverImageView.setVisibility(View.INVISIBLE);
-    bottomProgressBar.setVisibility(View.INVISIBLE);
+    changeUiToClearUi();
     bottomProgressBar.setVisibility(View.VISIBLE);
   }
 
@@ -347,5 +340,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   protected void changeProgressLoading(boolean statues) {
     super.changeProgressLoading(statues);
     loadingProgressBar.setVisibility(statues ? View.VISIBLE : View.INVISIBLE);
+    startButton.setVisibility(!statues ? View.VISIBLE : View.INVISIBLE);
   }
 }

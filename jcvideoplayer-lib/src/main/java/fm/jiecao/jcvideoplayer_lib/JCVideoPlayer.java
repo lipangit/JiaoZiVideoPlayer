@@ -48,7 +48,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected static final int CURRENT_STATE_NORMAL = 4;
   protected static final int CURRENT_STATE_ERROR = 5;
 
-  protected boolean mBuffering = false;
   protected boolean mTouchingProgressBar = false;
   protected boolean mIfCurrentIsFullscreen = false;
   protected boolean mIfFullscreenIsDirectly = false;//mIfCurrentIsFullscreen should be true first
@@ -493,11 +492,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     cancelProgressTimer();
     resetProgressAndTime();
     setStateAndUi(CURRENT_STATE_NORMAL);
-    Log.e("JCMediaManager", "removeAllViews");
     if (textureViewContainer.getChildCount() > 0) {
       textureViewContainer.removeAllViews();
     }
-    Log.e("JCMediaManager", "removeAllViews done");
     //if fullscreen finish activity what ever the activity is directly or click fullscreen
     finishFullscreenActivity();
 
@@ -531,15 +528,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public void onInfo(int what, int extra) {
-    Log.e("onInfo"," what " + what);
+    Log.i(TAG, "onInfo what - " + what + " extra - " + extra);
     if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-      this.mBuffering = true;
       changeProgressLoading(true);
-      Log.e("onInfo","MEDIA_INFO_BUFFERING_START");
+      Log.i(TAG, "MEDIA_INFO_BUFFERING_START");
     } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
-      this.mBuffering = false;
       changeProgressLoading(false);
-      Log.e("onInfo","MEDIA_INFO_BUFFERING_END");
+      Log.i(TAG, "MEDIA_INFO_BUFFERING_END");
     }
   }
 
