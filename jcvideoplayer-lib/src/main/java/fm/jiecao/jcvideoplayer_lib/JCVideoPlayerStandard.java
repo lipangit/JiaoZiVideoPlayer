@@ -337,8 +337,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   }
 
   @Override
-  protected void changeProgressLoading(boolean statues) {
-    super.changeProgressLoading(statues);
+  protected void onMediaInfoBuffering(boolean statues) {
+    super.onMediaInfoBuffering(statues);
     loadingProgressBar.setVisibility(statues ? View.VISIBLE : View.INVISIBLE);
     startButton.setVisibility(!statues ? View.VISIBLE : View.INVISIBLE);
   }

@@ -530,15 +530,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   public void onInfo(int what, int extra) {
     Log.i(TAG, "onInfo what - " + what + " extra - " + extra);
     if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-      changeProgressLoading(true);
+      onMediaInfoBuffering(true);
       Log.i(TAG, "MEDIA_INFO_BUFFERING_START");
     } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
-      changeProgressLoading(false);
+      onMediaInfoBuffering(false);
       Log.i(TAG, "MEDIA_INFO_BUFFERING_END");
     }
   }
 
-  protected void changeProgressLoading(boolean statues) {
+  protected void onMediaInfoBuffering(boolean statues) {
   }
 
 
