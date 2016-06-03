@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -47,6 +48,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected static final int CURRENT_STATE_NORMAL = 4;
   protected static final int CURRENT_STATE_ERROR = 5;
 
+  protected boolean mBuffering = false;
   protected boolean mTouchingProgressBar = false;
   protected boolean mIfCurrentIsFullscreen = false;
   protected boolean mIfFullscreenIsDirectly = false;//mIfCurrentIsFullscreen should be true first
@@ -526,6 +528,24 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       setStateAndUi(CURRENT_STATE_ERROR);
     }
   }
+
+  @Override
+  public void onInfo(int what, int extra) {
+    Log.e("onInfo"," what " + what);
+    if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
+      this.mBuffering = true;
+      changeProgressLoading(true);
+      Log.e("onInfo","MEDIA_INFO_BUFFERING_START");
+    } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
+      this.mBuffering = false;
+      changeProgressLoading(false);
+      Log.e("onInfo","MEDIA_INFO_BUFFERING_END");
+    }
+  }
+
+  protected void changeProgressLoading(boolean statues) {
+  }
+
 
   @Override
   public void onVideoSizeChanged() {

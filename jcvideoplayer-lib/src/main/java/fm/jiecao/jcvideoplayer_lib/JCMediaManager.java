@@ -20,7 +20,9 @@ import java.util.Map;
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnVideoSizeChangedListener {
+public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener,
+        MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener,
+        MediaPlayer.OnVideoSizeChangedListener, MediaPlayer.OnInfoListener{
   public static String TAG = JCVideoPlayer.TAG;
 
   public MediaPlayer mediaPlayer;
@@ -80,6 +82,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
             mediaPlayer.setScreenOnWhilePlaying(true);
             mediaPlayer.setOnSeekCompleteListener(JCMediaManager.this);
             mediaPlayer.setOnErrorListener(JCMediaManager.this);
+            mediaPlayer.setOnInfoListener(JCMediaManager.this);
             mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
             mediaPlayer.prepareAsync();
           } catch (NoSuchMethodException e) {
@@ -194,6 +197,19 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
   }
 
   @Override
+  public boolean onInfo(MediaPlayer mp, final int what, final int extra) {
+    if (listener != null) {
+      mainThreadHandler.post(new Runnable() {
+        @Override
+        public void run() {
+          listener.onInfo(what, extra);
+        }
+      });
+    }
+    return false;
+  }
+
+  @Override
   public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
     currentVideoWidth = mp.getVideoWidth();
     currentVideoHeight = mp.getVideoHeight();
@@ -219,6 +235,8 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     void onSeekComplete();
 
     void onError(int what, int extra);
+
+    void onInfo(int what, int extra);
 
     void onVideoSizeChanged();
 
