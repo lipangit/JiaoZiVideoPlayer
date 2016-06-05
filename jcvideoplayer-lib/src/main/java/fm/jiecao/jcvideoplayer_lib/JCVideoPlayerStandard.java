@@ -335,4 +335,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     super.onCompletion();
     cancelDismissControlViewTimer();
   }
+
+  @Override
+  protected void onMediaInfoBuffering(boolean statues) {
+    super.onMediaInfoBuffering(statues);
+    loadingProgressBar.setVisibility(statues ? View.VISIBLE : View.INVISIBLE);
+    startButton.setVisibility(!statues ? View.VISIBLE : View.INVISIBLE);
+  }
 }

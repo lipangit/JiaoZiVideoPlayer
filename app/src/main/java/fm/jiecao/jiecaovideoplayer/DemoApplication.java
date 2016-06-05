@@ -12,8 +12,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by Nathen
@@ -24,7 +23,7 @@ public class DemoApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
-    JCVideoPlayer.DEBUG = true;
+    LeakCanary.install(this);
     initUniversalImageLoader();
   }
 

@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       , "嫂子摸完没");
     ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/5/1/3430ec64-e6a7-4d8e-b044-9d408e075b7c.jpg",
       jcVideoPlayerStandardShowTitleAfterFullscreen.thumbImageView);
+    jcVideoPlayerStandardShowTitleAfterFullscreen.setLoop(true);
 
     JCVideoPlayerStandard.setJcBuriedPointStandard(jcBuriedPointStandard);
   }

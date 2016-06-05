@@ -1,6 +1,7 @@
 package fm.jiecao.jiecaovideoplayer.View;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ public class JCVideoPlayerStandardShowShareButtonAfterFullscreen extends JCVideo
     super.init(context);
     shareButton = (ImageView) findViewById(R.id.share);
     shareButton.setOnClickListener(this);
+
   }
 
   @Override
