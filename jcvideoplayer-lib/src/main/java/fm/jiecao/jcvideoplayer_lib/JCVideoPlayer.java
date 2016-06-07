@@ -246,8 +246,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
   }
 
-  PowerManager.WakeLock m_wklk;
-
   protected void prepareVideo() {
     Log.d(TAG, "prepareVideo [" + this.hashCode() + "] ");
     if (JCMediaManager.instance().listener != null) {
@@ -257,10 +255,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     addSurfaceView();
     AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
     mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
-//    PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
-//    m_wklk = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "cn");
-//    m_wklk.acquire();
 
     ((Activity) getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     JCMediaManager.instance().prepare(mUrl, mMapHeadData, mLooping);
