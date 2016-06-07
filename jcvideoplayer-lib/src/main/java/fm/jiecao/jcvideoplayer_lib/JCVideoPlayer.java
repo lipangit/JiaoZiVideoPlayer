@@ -252,9 +252,31 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
     JCMediaManager.instance().listener = this;
     addSurfaceView();
-    JCMediaManager.instance().prepareToPlay(mUrl, mMapHeadData, mLooping);
+    AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+    mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+    JCMediaManager.instance().prepare(mUrl, mMapHeadData, mLooping);
     setStateAndUi(CURRENT_STATE_PREPAREING);
   }
+
+  AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    @Override
+    public void onAudioFocusChange(int focusChange) {
+      switch (focusChange) {
+        case AudioManager.AUDIOFOCUS_GAIN:
+          break;
+        case AudioManager.AUDIOFOCUS_LOSS:
+          releaseAllVideos();
+          break;
+        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+          if (JCMediaManager.instance().mediaPlayer.isPlaying()) {
+            JCMediaManager.instance().mediaPlayer.pause();
+          }
+          break;
+        case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+          break;
+      }
+    }
+  };
 
   protected void addSurfaceView() {
     Log.i(TAG, "addSurfaceView [" + this.hashCode() + "] ");

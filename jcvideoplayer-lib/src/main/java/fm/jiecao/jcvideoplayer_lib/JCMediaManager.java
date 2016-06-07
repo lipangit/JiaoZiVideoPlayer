@@ -113,7 +113,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
   }
 
 
-  public void prepareToPlay(final String url, final Map<String, String> mapHeadData, boolean loop) {
+  public void prepare(final String url, final Map<String, String> mapHeadData, boolean loop) {
     if (TextUtils.isEmpty(url)) return;
     Message msg = new Message();
     msg.what = HANDLER_PREPARE;
