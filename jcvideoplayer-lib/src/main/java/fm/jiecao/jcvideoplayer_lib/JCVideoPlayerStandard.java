@@ -145,7 +145,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         return;
       }
       if (mCurrentState == CURRENT_STATE_NORMAL) {
-        if (!JCUtils.isWifiConnected(getContext())) {
+        if (!JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
           AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
           builder.setMessage("您当前正在使用移动网络，继续播放将消耗流量");
           builder.setPositiveButton("继续播放", new DialogInterface.OnClickListener() {
@@ -153,13 +153,13 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             public void onClick(DialogInterface dialog, int which) {
               dialog.dismiss();
               startPlayLocic();
+              WIFI_TIP_DIALOG_SHOWED = true;
             }
           });
           builder.setNegativeButton("停止播放", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
               dialog.dismiss();
-              Toast.makeText(getContext(), "取消" + which, Toast.LENGTH_SHORT).show();
             }
           });
           builder.create().show();

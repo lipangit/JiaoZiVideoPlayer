@@ -96,6 +96,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected Dialog mVolumeDialog;
   protected ProgressBar mDialogVolumeProgressBar;
 
+  public static boolean WIFI_TIP_DIALOG_SHOWED = false;
+
   public JCVideoPlayer(Context context) {
     super(context);
     init(context);
@@ -194,7 +196,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         return;
       }
       if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR) {
-        if (!JCUtils.isWifiConnected(getContext())) {
+        if (!JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
           AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
           builder.setMessage("您当前正在使用移动网络，继续播放将消耗流量");
           builder.setPositiveButton("继续播放", new DialogInterface.OnClickListener() {
@@ -202,13 +204,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             public void onClick(DialogInterface dialog, int which) {
               dialog.dismiss();
               startButtonLogic();
+              WIFI_TIP_DIALOG_SHOWED = true;
             }
           });
           builder.setNegativeButton("停止播放", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
               dialog.dismiss();
-              Toast.makeText(getContext(), "取消" + which, Toast.LENGTH_SHORT).show();
             }
           });
           builder.create().show();
