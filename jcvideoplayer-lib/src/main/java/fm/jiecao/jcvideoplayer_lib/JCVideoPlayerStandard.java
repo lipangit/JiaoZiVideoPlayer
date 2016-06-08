@@ -1,7 +1,9 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -143,11 +145,27 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         return;
       }
       if (mCurrentState == CURRENT_STATE_NORMAL) {
-        if (JC_BURIED_POINT_STANDARD != null) {
-          JC_BURIED_POINT_STANDARD.onClickStartThumb(mUrl, mObjects);
+        if (!JCUtils.isWifiConnected(getContext())) {
+          AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+          builder.setMessage("您当前正在使用移动网络，继续播放将消耗流量");
+          builder.setPositiveButton("继续播放", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              dialog.dismiss();
+              startPlayLocic();
+            }
+          });
+          builder.setNegativeButton("停止播放", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              dialog.dismiss();
+              Toast.makeText(getContext(), "取消" + which, Toast.LENGTH_SHORT).show();
+            }
+          });
+          builder.create().show();
+          return;
         }
-        prepareVideo();
-        startDismissControlViewTimer();
+        startPlayLocic();
       }
     } else if (i == R.id.surface_container) {
       if (JC_BURIED_POINT_STANDARD != null && JCMediaManager.instance().listener == this) {
@@ -161,6 +179,14 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     } else if (i == R.id.back) {
       backFullscreen();
     }
+  }
+
+  private void startPlayLocic() {
+    if (JC_BURIED_POINT_STANDARD != null) {
+      JC_BURIED_POINT_STANDARD.onClickStartThumb(mUrl, mObjects);
+    }
+    prepareVideo();
+    startDismissControlViewTimer();
   }
 
   private void onClickUiToggle() {

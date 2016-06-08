@@ -1,5 +1,9 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -24,6 +28,15 @@ class JCUtils {
     } else {
       return mFormatter.format("%02d:%02d", minutes, seconds).toString();
     }
+  }
+
+  public static boolean isWifiConnected(Context context) {
+    ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo wifiNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+    if (wifiNetworkInfo.isConnected()) {
+      return true;
+    }
+    return false;
   }
 
 }

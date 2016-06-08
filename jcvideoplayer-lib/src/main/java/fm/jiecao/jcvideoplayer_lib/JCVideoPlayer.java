@@ -1,8 +1,10 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -192,12 +194,27 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         return;
       }
       if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR) {
-        if (JC_BURIED_POINT != null && mCurrentState == CURRENT_STATE_NORMAL) {
-          JC_BURIED_POINT.onClickStartIcon(mUrl, mObjects);
-        } else if (JC_BURIED_POINT != null) {
-          JC_BURIED_POINT.onClickStartError(mUrl, mObjects);
+        if (!JCUtils.isWifiConnected(getContext())) {
+          AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+          builder.setMessage("您当前正在使用移动网络，继续播放将消耗流量");
+          builder.setPositiveButton("继续播放", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              dialog.dismiss();
+              startButtonLogic();
+            }
+          });
+          builder.setNegativeButton("停止播放", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              dialog.dismiss();
+              Toast.makeText(getContext(), "取消" + which, Toast.LENGTH_SHORT).show();
+            }
+          });
+          builder.create().show();
+          return;
         }
-        prepareVideo();
+        startButtonLogic();
       } else if (mCurrentState == CURRENT_STATE_PLAYING) {
         Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
         JCMediaManager.instance().mediaPlayer.pause();
@@ -243,6 +260,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       }
       prepareVideo();
     }
+  }
+
+  private void startButtonLogic() {
+    if (JC_BURIED_POINT != null && mCurrentState == CURRENT_STATE_NORMAL) {
+      JC_BURIED_POINT.onClickStartIcon(mUrl, mObjects);
+    } else if (JC_BURIED_POINT != null) {
+      JC_BURIED_POINT.onClickStartError(mUrl, mObjects);
+    }
+    prepareVideo();
   }
 
   protected void prepareVideo() {
