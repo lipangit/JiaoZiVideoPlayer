@@ -43,11 +43,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   public static final String TAG = "JieCaoVideoPlayer";
 
   protected int mCurrentState = -1;//-1相当于null
-  protected static final int CURRENT_STATE_PREPAREING = 0;
-  protected static final int CURRENT_STATE_PAUSE = 1;
+  protected static final int CURRENT_STATE_NORMAL = 0;
+  protected static final int CURRENT_STATE_PREPAREING = 1;
   protected static final int CURRENT_STATE_PLAYING = 2;
-  protected static final int CURRENT_STATE_OVER = 3;
-  protected static final int CURRENT_STATE_NORMAL = 4;
+  protected static final int CURRENT_STATE_PAUSE = 3;
+  protected static final int CURRENT_STATE_COMPLETE = 4;
   protected static final int CURRENT_STATE_ERROR = 5;
 
   protected boolean mTouchingProgressBar = false;
@@ -168,6 +168,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       case CURRENT_STATE_NORMAL:
         if (JCMediaManager.instance().listener == this) {
           JCMediaManager.instance().releaseMediaPlayer();
+          cancelProgressTimer();
         }
         break;
       case CURRENT_STATE_PREPAREING:
@@ -182,6 +183,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (JCMediaManager.instance().listener == this) {
           JCMediaManager.instance().releaseMediaPlayer();
           onCompletion();
+        }
+        break;
+      case CURRENT_STATE_COMPLETE:
+        if (JCMediaManager.instance().listener == this) {
+          JCMediaManager.instance().releaseMediaPlayer();
+          cancelProgressTimer();
         }
         break;
     }
@@ -535,14 +542,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JC_BURIED_POINT.onAutoComplete(mUrl, mObjects);
       }
     }
-    onCompletion();
+    setStateAndUi(CURRENT_STATE_COMPLETE);
   }
 
   @Override
   public void onCompletion() {
     //make me normal first
-    cancelProgressTimer();
-    resetProgressAndTime();
+//    cancelProgressTimer();
+//    resetProgressAndTime();
     setStateAndUi(CURRENT_STATE_NORMAL);
     if (textureViewContainer.getChildCount() > 0) {
       textureViewContainer.removeAllViews();

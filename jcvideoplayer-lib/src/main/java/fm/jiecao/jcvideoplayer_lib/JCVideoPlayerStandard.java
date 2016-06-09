@@ -97,6 +97,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
       case CURRENT_STATE_ERROR:
         changeUiToError();
         break;
+      case CURRENT_STATE_COMPLETE:
+        changeUiToShowUiComplete();
+        cancelDismissControlViewTimer();
+        break;
     }
   }
 
@@ -208,6 +212,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
       } else {
         changeUiToShowUiPause();
       }
+    } else if (mCurrentState == CURRENT_STATE_COMPLETE) {
+      if (bottomContainer.getVisibility() == View.VISIBLE) {
+        changeUiToShowUiComplete();
+      } else {
+        changeUiToClearUiComplete();
+      }
     }
   }
 
@@ -248,17 +258,26 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   }
 
   private void changeUiToClearUiPrepareing() {
-//        changeUiToClearUi();
     topContainer.setVisibility(View.INVISIBLE);
     bottomContainer.setVisibility(View.INVISIBLE);
     startButton.setVisibility(View.INVISIBLE);
     thumbImageView.setVisibility(View.INVISIBLE);
     bottomProgressBar.setVisibility(View.INVISIBLE);
-//        loadingProgressBar.setVisibility(View.VISIBLE);
     coverImageView.setVisibility(View.VISIBLE);
   }
 
   private void changeUiToShowUiPlaying() {
+    topContainer.setVisibility(View.VISIBLE);
+    bottomContainer.setVisibility(View.VISIBLE);
+    startButton.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
+    updateStartImage();
+  }
+
+  private void changeUiToShowUiComplete() {
     topContainer.setVisibility(View.VISIBLE);
     bottomContainer.setVisibility(View.VISIBLE);
     startButton.setVisibility(View.VISIBLE);
@@ -298,6 +317,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     thumbImageView.setVisibility(View.INVISIBLE);
     coverImageView.setVisibility(View.INVISIBLE);
     bottomProgressBar.setVisibility(View.INVISIBLE);
+  }
+
+  private void changeUiToClearUiComplete() {
+    topContainer.setVisibility(View.INVISIBLE);
+    bottomContainer.setVisibility(View.INVISIBLE);
+    startButton.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.VISIBLE);
+    updateStartImage();
   }
 
   private void changeUiToError() {
