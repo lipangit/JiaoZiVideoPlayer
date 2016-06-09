@@ -223,7 +223,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
   }
 
-  interface JCMediaPlayerListener {
+  public interface JCMediaPlayerListener {
     void onPrepared();
 
     void onAutoCompletion();
