@@ -186,10 +186,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
         break;
       case CURRENT_STATE_COMPLETE:
-        if (JCMediaManager.instance().listener == this) {
-          JCMediaManager.instance().releaseMediaPlayer();
-          cancelProgressTimer();
-        }
+//        if (JCMediaManager.instance().listener == this) {
+//          JCMediaManager.instance().releaseMediaPlayer();
+        cancelProgressTimer();
+//        }
         break;
     }
   }
@@ -245,8 +245,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
         JCMediaManager.instance().mediaPlayer.start();
         setStateAndUi(CURRENT_STATE_PLAYING);
+      } else if (mCurrentState == CURRENT_STATE_COMPLETE) {
+        startButtonLogic();
       }
     } else if (i == R.id.fullscreen) {
+      if (mCurrentState == CURRENT_STATE_COMPLETE) return;
       if (mIfCurrentIsFullscreen) {
         //quit fullscreen
         backFullscreen();
@@ -543,6 +546,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       }
     }
     setStateAndUi(CURRENT_STATE_COMPLETE);
+    if (textureViewContainer.getChildCount() > 0) {
+      textureViewContainer.removeAllViews();
+    }
+    finishFullscreenActivity();
+    if (IF_FULLSCREEN_FROM_NORMAL) {//如果在进入全屏后播放完就初始化自己非全屏的控件
+      IF_FULLSCREEN_FROM_NORMAL = false;
+      JCMediaManager.instance().lastListener.onAutoCompletion();
+    }
+    JCMediaManager.instance().listener = null;
+    JCMediaManager.instance().lastListener = null;
+    AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+    mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
+    ((Activity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
   }
 
   @Override

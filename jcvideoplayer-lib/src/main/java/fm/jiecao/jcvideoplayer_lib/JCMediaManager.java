@@ -21,8 +21,8 @@ import java.util.Map;
  * On 2015/11/30 15:39
  */
 public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener,
-        MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener,
-        MediaPlayer.OnVideoSizeChangedListener, MediaPlayer.OnInfoListener{
+  MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener,
+  MediaPlayer.OnVideoSizeChangedListener, MediaPlayer.OnInfoListener {
   public static String TAG = JCVideoPlayer.TAG;
 
   public MediaPlayer mediaPlayer;

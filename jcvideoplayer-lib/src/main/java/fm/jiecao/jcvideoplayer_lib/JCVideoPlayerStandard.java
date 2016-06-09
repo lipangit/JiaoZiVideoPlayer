@@ -170,6 +170,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
           return;
         }
         startPlayLocic();
+      } else if (mCurrentState == CURRENT_STATE_COMPLETE) {
+        onClickUiToggle();
       }
     } else if (i == R.id.surface_container) {
       if (JC_BURIED_POINT_STANDARD != null && JCMediaManager.instance().listener == this) {
@@ -214,9 +216,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
       }
     } else if (mCurrentState == CURRENT_STATE_COMPLETE) {
       if (bottomContainer.getVisibility() == View.VISIBLE) {
-        changeUiToShowUiComplete();
-      } else {
         changeUiToClearUiComplete();
+      } else {
+        changeUiToShowUiComplete();
       }
     }
   }
@@ -282,7 +284,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     bottomContainer.setVisibility(View.VISIBLE);
     startButton.setVisibility(View.VISIBLE);
     loadingProgressBar.setVisibility(View.INVISIBLE);
-    thumbImageView.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.VISIBLE);
     coverImageView.setVisibility(View.INVISIBLE);
     bottomProgressBar.setVisibility(View.INVISIBLE);
     updateStartImage();
@@ -324,7 +326,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     bottomContainer.setVisibility(View.INVISIBLE);
     startButton.setVisibility(View.VISIBLE);
     loadingProgressBar.setVisibility(View.INVISIBLE);
-    thumbImageView.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.VISIBLE);
     coverImageView.setVisibility(View.INVISIBLE);
     bottomProgressBar.setVisibility(View.VISIBLE);
     updateStartImage();
@@ -362,7 +364,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             @Override
             public void run() {
               if (mCurrentState != CURRENT_STATE_NORMAL
-                && mCurrentState != CURRENT_STATE_ERROR) {
+                && mCurrentState != CURRENT_STATE_ERROR
+                && mCurrentState != CURRENT_STATE_COMPLETE) {
                 bottomContainer.setVisibility(View.INVISIBLE);
                 topContainer.setVisibility(View.INVISIBLE);
                 bottomProgressBar.setVisibility(View.VISIBLE);
