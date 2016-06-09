@@ -199,14 +199,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     int i = v.getId();
     if (i == R.id.start) {
       if (TextUtils.isEmpty(mUrl)) {
-        Toast.makeText(getContext(), "No mUrl", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
         return;
       }
       if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR) {
         if (!JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
           AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-          builder.setMessage("您当前正在使用移动网络，继续播放将消耗流量");
-          builder.setPositiveButton("继续播放", new DialogInterface.OnClickListener() {
+          builder.setMessage(getResources().getString(R.string.tips_not_wifi));
+          builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
               dialog.dismiss();
@@ -214,7 +214,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
               WIFI_TIP_DIALOG_SHOWED = true;
             }
           });
-          builder.setNegativeButton("停止播放", new DialogInterface.OnClickListener() {
+          builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
               dialog.dismiss();
