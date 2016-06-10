@@ -172,6 +172,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
         break;
       case CURRENT_STATE_PREPAREING:
+        resetProgressAndTime();
         break;
       case CURRENT_STATE_PLAYING:
         startProgressTimer();
