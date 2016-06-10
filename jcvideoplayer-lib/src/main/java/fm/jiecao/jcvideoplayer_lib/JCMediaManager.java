@@ -137,75 +137,75 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
 
   @Override
   public void onPrepared(MediaPlayer mp) {
-    if (listener != null) {
-      mainThreadHandler.post(new Runnable() {
-        @Override
-        public void run() {
+    mainThreadHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (listener != null) {
           listener.onPrepared();
         }
-      });
-    }
+      }
+    });
   }
 
   @Override
   public void onCompletion(MediaPlayer mp) {
-    if (listener != null) {
-      mainThreadHandler.post(new Runnable() {
-        @Override
-        public void run() {
+    mainThreadHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (listener != null) {
           listener.onAutoCompletion();
         }
-      });
-    }
+      }
+    });
   }
 
   @Override
   public void onBufferingUpdate(MediaPlayer mp, final int percent) {
-    if (listener != null) {
-      mainThreadHandler.post(new Runnable() {
-        @Override
-        public void run() {
+    mainThreadHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (listener != null) {
           listener.onBufferingUpdate(percent);
         }
-      });
-    }
+      }
+    });
   }
 
   @Override
   public void onSeekComplete(MediaPlayer mp) {
-    if (listener != null) {
-      mainThreadHandler.post(new Runnable() {
-        @Override
-        public void run() {
+    mainThreadHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (listener != null) {
           listener.onSeekComplete();
         }
-      });
-    }
+      }
+    });
   }
 
   @Override
   public boolean onError(MediaPlayer mp, final int what, final int extra) {
-    if (listener != null) {
-      mainThreadHandler.post(new Runnable() {
-        @Override
-        public void run() {
+    mainThreadHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (listener != null) {
           listener.onError(what, extra);
         }
-      });
-    }
+      }
+    });
     return true;
   }
 
   @Override
   public boolean onInfo(MediaPlayer mp, final int what, final int extra) {
-    if (listener != null) {
-      mainThreadHandler.post(new Runnable() {
-        @Override
-        public void run() {
+    mainThreadHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (listener != null) {
           listener.onInfo(what, extra);
         }
-      });
-    }
+      }
+    });
     return false;
   }
 
@@ -213,14 +213,14 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
   public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
     currentVideoWidth = mp.getVideoWidth();
     currentVideoHeight = mp.getVideoHeight();
-    if (listener != null) {
-      mainThreadHandler.post(new Runnable() {
-        @Override
-        public void run() {
+    mainThreadHandler.post(new Runnable() {
+      @Override
+      public void run() {
+        if (listener != null) {
           listener.onVideoSizeChanged();
         }
-      });
-    }
+      }
+    });
   }
 
   public interface JCMediaPlayerListener {

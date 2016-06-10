@@ -139,7 +139,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   }
 
   public boolean setUp(String url, Object... objects) {
-    if (JCMediaManager.instance().listener == this && (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+    if (JCMediaManager.instance().listener == this &&
+      (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
       return false;
     mCurrentState = CURRENT_STATE_NORMAL;
     this.mUrl = url;
@@ -760,7 +761,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
    * if I am playing release me
    */
   public void release() {
-    if (mCurrentState != CURRENT_STATE_NORMAL) {
+    if (JCMediaManager.instance().listener == this &&
+      mCurrentState != CURRENT_STATE_NORMAL &&
+      (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
       Log.i(TAG, "release [" + this.hashCode() + "]");
       releaseAllVideos();
     }
