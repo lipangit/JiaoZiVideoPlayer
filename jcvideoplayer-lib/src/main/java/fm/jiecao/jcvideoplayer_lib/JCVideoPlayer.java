@@ -510,6 +510,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+    if (mCurrentState != CURRENT_STATE_PLAYING &&
+      mCurrentState != CURRENT_STATE_PAUSE) return;
     if (fromUser) {
       int time = progress * getDuration() / 100;
       JCMediaManager.instance().mediaPlayer.seekTo(time);
