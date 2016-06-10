@@ -97,7 +97,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
       case CURRENT_STATE_ERROR:
         changeUiToError();
         break;
-      case CURRENT_STATE_COMPLETE:
+      case CURRENT_STATE_AUTO_COMPLETE:
         changeUiToShowUiComplete();
         cancelDismissControlViewTimer();
         bottomProgressBar.setProgress(100);
@@ -171,7 +171,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
           return;
         }
         startPlayLocic();
-      } else if (mCurrentState == CURRENT_STATE_COMPLETE) {
+      } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
         onClickUiToggle();
       }
     } else if (i == R.id.surface_container) {
@@ -215,7 +215,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
       } else {
         changeUiToShowUiPause();
       }
-    } else if (mCurrentState == CURRENT_STATE_COMPLETE) {
+    } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
       if (bottomContainer.getVisibility() == View.VISIBLE) {
         changeUiToClearUiComplete();
       } else {
@@ -366,7 +366,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             public void run() {
               if (mCurrentState != CURRENT_STATE_NORMAL
                 && mCurrentState != CURRENT_STATE_ERROR
-                && mCurrentState != CURRENT_STATE_COMPLETE) {
+                && mCurrentState != CURRENT_STATE_AUTO_COMPLETE) {
                 bottomContainer.setVisibility(View.INVISIBLE);
                 topContainer.setVisibility(View.INVISIBLE);
                 bottomProgressBar.setVisibility(View.VISIBLE);

@@ -47,7 +47,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected static final int CURRENT_STATE_PREPAREING = 1;
   protected static final int CURRENT_STATE_PLAYING = 2;
   protected static final int CURRENT_STATE_PAUSE = 3;
-  protected static final int CURRENT_STATE_COMPLETE = 4;
+  protected static final int CURRENT_STATE_AUTO_COMPLETE = 4;
   protected static final int CURRENT_STATE_ERROR = 5;
 
   protected boolean mTouchingProgressBar = false;
@@ -185,7 +185,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
           onCompletion();
         }
         break;
-      case CURRENT_STATE_COMPLETE:
+      case CURRENT_STATE_AUTO_COMPLETE:
 //        if (JCMediaManager.instance().listener == this) {
 //          JCMediaManager.instance().releaseMediaPlayer();
         cancelProgressTimer();
@@ -246,11 +246,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
         JCMediaManager.instance().mediaPlayer.start();
         setStateAndUi(CURRENT_STATE_PLAYING);
-      } else if (mCurrentState == CURRENT_STATE_COMPLETE) {
+      } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
         startButtonLogic();
       }
     } else if (i == R.id.fullscreen) {
-      if (mCurrentState == CURRENT_STATE_COMPLETE) return;
+      if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) return;
       if (mIfCurrentIsFullscreen) {
         //quit fullscreen
         backFullscreen();
@@ -548,7 +548,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JC_BURIED_POINT.onAutoComplete(mUrl, mObjects);
       }
     }
-    setStateAndUi(CURRENT_STATE_COMPLETE);
+    setStateAndUi(CURRENT_STATE_AUTO_COMPLETE);
     if (textureViewContainer.getChildCount() > 0) {
       textureViewContainer.removeAllViews();
     }
@@ -566,8 +566,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   @Override
   public void onCompletion() {
     //make me normal first
-//    cancelProgressTimer();
-//    resetProgressAndTime();
     setStateAndUi(CURRENT_STATE_NORMAL);
     if (textureViewContainer.getChildCount() > 0) {
       textureViewContainer.removeAllViews();
