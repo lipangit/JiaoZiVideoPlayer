@@ -100,6 +100,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
       case CURRENT_STATE_COMPLETE:
         changeUiToShowUiComplete();
         cancelDismissControlViewTimer();
+        bottomProgressBar.setProgress(100);
         break;
     }
   }
