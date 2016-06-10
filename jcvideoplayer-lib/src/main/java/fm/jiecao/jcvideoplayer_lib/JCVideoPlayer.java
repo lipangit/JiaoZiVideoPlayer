@@ -370,7 +370,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
           mChangeVolume = false;
           mChangePosition = false;
           /////////////////////
-          cancelProgressTimer();
           break;
         case MotionEvent.ACTION_MOVE:
           float deltaX = x - mDownX;
@@ -380,6 +379,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
           if (mIfCurrentIsFullscreen) {
             if (!mChangePosition && !mChangeVolume) {
               if (absDeltaX > mThreshold || absDeltaY > mThreshold) {
+                cancelProgressTimer();
                 if (absDeltaX >= mThreshold) {
                   mChangePosition = true;
                   mDownPosition = getCurrentPositionWhenPlaying();
@@ -661,6 +661,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected void cancelProgressTimer() {
     if (UPDATE_PROGRESS_TIMER != null) {
       UPDATE_PROGRESS_TIMER.cancel();
+      UPDATE_PROGRESS_TIMER = null;
     }
   }
 

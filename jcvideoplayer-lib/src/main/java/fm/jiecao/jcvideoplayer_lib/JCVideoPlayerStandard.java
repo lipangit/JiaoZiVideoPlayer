@@ -111,7 +111,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     if (id == R.id.surface_container) {
       switch (event.getAction()) {
         case MotionEvent.ACTION_DOWN:
-          cancelDismissControlViewTimer();
           break;
         case MotionEvent.ACTION_MOVE:
           break;
@@ -382,6 +381,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   private void cancelDismissControlViewTimer() {
     if (DISSMISS_CONTROL_VIEW_TIMER != null) {
       DISSMISS_CONTROL_VIEW_TIMER.cancel();
+      DISSMISS_CONTROL_VIEW_TIMER = null;
     }
   }
 
@@ -390,11 +390,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
   }
 
-  @Override
-  public void onCompletion() {
-    super.onCompletion();
-    cancelDismissControlViewTimer();
-  }
+//  @Override
+//  public void onCompletion() {
+//    super.onCompletion();
+//    cancelDismissControlViewTimer();
+//  }
 
   @Override
   protected void onMediaInfoBuffering(boolean statues) {
