@@ -192,6 +192,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 //          JCMediaManager.instance().releaseMediaPlayer();
         cancelProgressTimer();
         progressBar.setProgress(100);
+        currentTimeTextView.setText(totalTimeTextView.getText());
 //        }
         break;
     }
