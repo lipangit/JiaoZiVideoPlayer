@@ -56,7 +56,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected static boolean IF_FULLSCREEN_FROM_NORMAL = false;//to prevent infinite looping
   public static boolean IF_RELEASE_WHEN_ON_PAUSE = true;
   protected static long CLICK_QUIT_FULLSCREEN_TIME = 0;
-  public static final int FULL_SCREEN_NORMAL_DELAY = 1000;
+  public static final int FULL_SCREEN_NORMAL_DELAY = 2000;
 
   public ImageView startButton;
   public SeekBar progressBar;
@@ -560,6 +560,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       IF_FULLSCREEN_FROM_NORMAL = false;
       JCMediaManager.instance().lastListener.onAutoCompletion();
     }
+    JCMediaManager.instance().listener = null;
     JCMediaManager.instance().lastListener = null;
     AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
     mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
@@ -764,7 +765,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
    */
   public void release() {
     if (JCMediaManager.instance().listener == this &&
-      mCurrentState != CURRENT_STATE_NORMAL &&
+//      mCurrentState != CURRENT_STATE_NORMAL &&
       (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
       Log.i(TAG, "release [" + this.hashCode() + "]");
       releaseAllVideos();
