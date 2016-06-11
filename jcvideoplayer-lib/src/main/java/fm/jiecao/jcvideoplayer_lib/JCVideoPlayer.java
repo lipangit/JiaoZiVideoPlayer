@@ -168,8 +168,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     switch (mCurrentState) {
       case CURRENT_STATE_NORMAL:
         if (JCMediaManager.instance().listener == this) {
-          JCMediaManager.instance().releaseMediaPlayer();
           cancelProgressTimer();
+          JCMediaManager.instance().releaseMediaPlayer();
         }
         break;
       case CURRENT_STATE_PREPAREING:
@@ -183,8 +183,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         break;
       case CURRENT_STATE_ERROR:
         if (JCMediaManager.instance().listener == this) {
-          JCMediaManager.instance().releaseMediaPlayer();
           onCompletion();
+          JCMediaManager.instance().releaseMediaPlayer();
         }
         break;
       case CURRENT_STATE_AUTO_COMPLETE:
@@ -750,10 +750,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   public static void releaseAllVideos() {
     if (IF_RELEASE_WHEN_ON_PAUSE) {
       Log.i(TAG, "releaseAllVideos");
-      JCMediaManager.instance().releaseMediaPlayer();
       if (JCMediaManager.instance().listener != null) {
         JCMediaManager.instance().listener.onCompletion();
       }
+      JCMediaManager.instance().releaseMediaPlayer();
     } else {
       IF_RELEASE_WHEN_ON_PAUSE = true;
     }
