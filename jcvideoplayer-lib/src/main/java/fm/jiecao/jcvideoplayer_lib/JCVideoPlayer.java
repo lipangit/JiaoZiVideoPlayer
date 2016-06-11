@@ -560,7 +560,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       IF_FULLSCREEN_FROM_NORMAL = false;
       JCMediaManager.instance().lastListener.onAutoCompletion();
     }
-    JCMediaManager.instance().listener = null;
     JCMediaManager.instance().lastListener = null;
     AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
     mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
