@@ -1,7 +1,9 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -95,6 +97,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
       case CURRENT_STATE_ERROR:
         changeUiToError();
         break;
+      case CURRENT_STATE_AUTO_COMPLETE:
+        changeUiToShowUiComplete();
+        cancelDismissControlViewTimer();
+        bottomProgressBar.setProgress(100);
+        break;
     }
   }
 
@@ -104,7 +111,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     if (id == R.id.surface_container) {
       switch (event.getAction()) {
         case MotionEvent.ACTION_DOWN:
-          cancelDismissControlViewTimer();
           break;
         case MotionEvent.ACTION_MOVE:
           break;
@@ -139,15 +145,33 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     int i = v.getId();
     if (i == R.id.thumb) {
       if (TextUtils.isEmpty(mUrl)) {
-        Toast.makeText(getContext(), "No mUrl", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
         return;
       }
       if (mCurrentState == CURRENT_STATE_NORMAL) {
-        if (JC_BURIED_POINT_STANDARD != null) {
-          JC_BURIED_POINT_STANDARD.onClickStartThumb(mUrl, mObjects);
+        if (!JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+          AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+          builder.setMessage(getResources().getString(R.string.tips_not_wifi));
+          builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              dialog.dismiss();
+              startPlayLocic();
+              WIFI_TIP_DIALOG_SHOWED = true;
+            }
+          });
+          builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+              dialog.dismiss();
+            }
+          });
+          builder.create().show();
+          return;
         }
-        prepareVideo();
-        startDismissControlViewTimer();
+        startPlayLocic();
+      } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
+        onClickUiToggle();
       }
     } else if (i == R.id.surface_container) {
       if (JC_BURIED_POINT_STANDARD != null && JCMediaManager.instance().listener == this) {
@@ -161,6 +185,14 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     } else if (i == R.id.back) {
       backFullscreen();
     }
+  }
+
+  private void startPlayLocic() {
+    if (JC_BURIED_POINT_STANDARD != null) {
+      JC_BURIED_POINT_STANDARD.onClickStartThumb(mUrl, mObjects);
+    }
+    prepareVideo();
+    startDismissControlViewTimer();
   }
 
   private void onClickUiToggle() {
@@ -181,6 +213,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         changeUiToClearUiPause();
       } else {
         changeUiToShowUiPause();
+      }
+    } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
+      if (bottomContainer.getVisibility() == View.VISIBLE) {
+        changeUiToClearUiComplete();
+      } else {
+        changeUiToShowUiComplete();
       }
     }
   }
@@ -222,13 +260,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   }
 
   private void changeUiToClearUiPrepareing() {
-//        changeUiToClearUi();
     topContainer.setVisibility(View.INVISIBLE);
     bottomContainer.setVisibility(View.INVISIBLE);
     startButton.setVisibility(View.INVISIBLE);
     thumbImageView.setVisibility(View.INVISIBLE);
     bottomProgressBar.setVisibility(View.INVISIBLE);
-//        loadingProgressBar.setVisibility(View.VISIBLE);
     coverImageView.setVisibility(View.VISIBLE);
   }
 
@@ -238,6 +274,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     startButton.setVisibility(View.VISIBLE);
     loadingProgressBar.setVisibility(View.INVISIBLE);
     thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
+    updateStartImage();
+  }
+
+  private void changeUiToShowUiComplete() {
+    topContainer.setVisibility(View.VISIBLE);
+    bottomContainer.setVisibility(View.VISIBLE);
+    startButton.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.VISIBLE);
     coverImageView.setVisibility(View.INVISIBLE);
     bottomProgressBar.setVisibility(View.INVISIBLE);
     updateStartImage();
@@ -274,6 +321,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     bottomProgressBar.setVisibility(View.INVISIBLE);
   }
 
+  private void changeUiToClearUiComplete() {
+    topContainer.setVisibility(View.INVISIBLE);
+    bottomContainer.setVisibility(View.INVISIBLE);
+    startButton.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.VISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.VISIBLE);
+    updateStartImage();
+  }
+
   private void changeUiToError() {
     topContainer.setVisibility(View.INVISIBLE);
     bottomContainer.setVisibility(View.INVISIBLE);
@@ -306,7 +364,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             @Override
             public void run() {
               if (mCurrentState != CURRENT_STATE_NORMAL
-                && mCurrentState != CURRENT_STATE_ERROR) {
+                && mCurrentState != CURRENT_STATE_ERROR
+                && mCurrentState != CURRENT_STATE_AUTO_COMPLETE) {
                 bottomContainer.setVisibility(View.INVISIBLE);
                 topContainer.setVisibility(View.INVISIBLE);
                 bottomProgressBar.setVisibility(View.VISIBLE);
@@ -322,6 +381,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   private void cancelDismissControlViewTimer() {
     if (DISSMISS_CONTROL_VIEW_TIMER != null) {
       DISSMISS_CONTROL_VIEW_TIMER.cancel();
+      DISSMISS_CONTROL_VIEW_TIMER = null;
     }
   }
 
@@ -330,11 +390,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
   }
 
-  @Override
-  public void onCompletion() {
-    super.onCompletion();
-    cancelDismissControlViewTimer();
-  }
+//  @Override
+//  public void onCompletion() {
+//    super.onCompletion();
+//    cancelDismissControlViewTimer();
+//  }
 
   @Override
   protected void onMediaInfoBuffering(boolean statues) {
