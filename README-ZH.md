@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.4%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-3.4-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.5%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-3.5-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -22,21 +22,21 @@
 
 ##效果
 
-**[jiecaovideoplayer-3.4-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.4-demo.apk)**
+**[jiecaovideoplayer-3.5-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.5-demo.apk)**
 
 ![Demo Screenshot][1]
 
 ##使用
 1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:3.4'
+compile 'fm.jiecao:jiecaovideoplayer:3.5'
 ```
 
 或直接下载
 
-* [jiecaovideoplayer-3.4.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.4.aar)
-* [jiecaovideoplayer-3.4-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.4-javadoc.jar)
-* [jiecaovideoplayer-3.4-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.4-sources.jar)
+* [jiecaovideoplayer-3.5.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.5.aar)
+* [jiecaovideoplayer-3.5-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.5-javadoc.jar)
+* [jiecaovideoplayer-3.5-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.5-sources.jar)
 
 2.添加布局
 ```xml
