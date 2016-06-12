@@ -479,6 +479,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
     int totalTime = getDuration();
     mResultTimePosition = (int) (mDownPosition + deltaX * totalTime / mScreenWidth);
+    if (mResultTimePosition > totalTime) mResultTimePosition = totalTime;
     mDialogCurrentTime.setText(JCUtils.stringForTime(mResultTimePosition));
     mDialogTotalTime.setText(" / " + JCUtils.stringForTime(totalTime) + "");
     mDialogProgressBar.setProgress(mResultTimePosition * 100 / totalTime);
@@ -584,6 +585,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
     JCMediaManager.instance().listener = null;
     JCMediaManager.instance().lastListener = null;
+    JCMediaManager.instance().currentVideoWidth = 0;
+    JCMediaManager.instance().currentVideoHeight = 0;
 
     AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
     mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
