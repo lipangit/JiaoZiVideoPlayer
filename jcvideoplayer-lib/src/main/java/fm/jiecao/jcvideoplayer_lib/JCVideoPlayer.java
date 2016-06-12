@@ -348,7 +348,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-    return false;
+    surface.release();
+    return true;
   }
 
   @Override
