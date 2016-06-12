@@ -327,6 +327,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     if (textureViewContainer.getChildCount() > 0) {
       textureViewContainer.removeAllViews();
     }
+    textureView = null;
     textureView = new JCResizeTextureView(getContext());
     textureView.setSurfaceTextureListener(this);
 
