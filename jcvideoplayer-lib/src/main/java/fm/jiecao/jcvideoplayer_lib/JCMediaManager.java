@@ -9,6 +9,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.Surface;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -29,8 +30,6 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     private static JCMediaManager JCMediaManager;
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
-    public JCMediaPlayerListener listener;
-    public JCMediaPlayerListener lastListener;
     public int lastState;
 
     public static final int HANDLER_PREPARE = 0;
@@ -39,6 +38,36 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     HandlerThread mMediaHandlerThread;
     MediaHandler mMediaHandler;
     Handler mainThreadHandler;
+
+    private WeakReference<JCMediaPlayerListener> listener;
+    private WeakReference<JCMediaPlayerListener> lastListener;
+
+    public JCMediaPlayerListener listener() {
+        if (listener == null)
+            return null;
+        return listener.get();
+    }
+
+    public JCMediaPlayerListener lastListener() {
+        if (listener == null)
+            return null;
+        return lastListener.get();
+    }
+
+    public void setListener(JCMediaPlayerListener listener) {
+        if (listener == null)
+            this.listener = null;
+        else
+            this.listener = new WeakReference<>(listener);
+    }
+
+    public void setLastListener(JCMediaPlayerListener lastListener) {
+        if (lastListener == null)
+            this.lastListener = null;
+        else
+            this.lastListener = new WeakReference<>(lastListener);
+    }
+
 
     public static JCMediaManager instance() {
         if (JCMediaManager == null) {
@@ -141,7 +170,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onPrepared();
+                    listener().onPrepared();
                 }
             }
         });
@@ -153,7 +182,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onAutoCompletion();
+                    listener().onAutoCompletion();
                 }
             }
         });
@@ -165,7 +194,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onBufferingUpdate(percent);
+                    listener().onBufferingUpdate(percent);
                 }
             }
         });
@@ -177,7 +206,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onSeekComplete();
+                    listener().onSeekComplete();
                 }
             }
         });
@@ -189,7 +218,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onError(what, extra);
+                    listener().onError(what, extra);
                 }
             }
         });
@@ -202,7 +231,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onInfo(what, extra);
+                    listener().onInfo(what, extra);
                 }
             }
         });
@@ -217,7 +246,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onVideoSizeChanged();
+                    listener().onVideoSizeChanged();
                 }
             }
         });
