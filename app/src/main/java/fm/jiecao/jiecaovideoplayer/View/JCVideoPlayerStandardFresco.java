@@ -15,7 +15,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
-import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jiecaovideoplayer.R;
 
@@ -129,7 +128,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         startDismissControlViewTimer();
       }
     } else if (i == R.id.surface_container) {
-      if (jc_BuriedPointStandard != null && JCMediaManager.instance().listener == this) {
+      if (jc_BuriedPointStandard != null && isCurrentMediaListener()) {
         if (mIfCurrentIsFullscreen) {
           jc_BuriedPointStandard.onClickBlankFullscreen(mUrl, mObjects);
         } else {
