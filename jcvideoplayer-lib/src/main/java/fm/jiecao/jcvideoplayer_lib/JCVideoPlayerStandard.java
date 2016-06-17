@@ -83,24 +83,27 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         changeUiToNormal();
         break;
       case CURRENT_STATE_PREPAREING:
-        changeUiToShowUiPrepareing();
+        changeUiToPrepareingShow();
         startDismissControlViewTimer();
         break;
       case CURRENT_STATE_PLAYING:
-        changeUiToShowUiPlaying();
+        changeUiToPlayingShow();
         startDismissControlViewTimer();
         break;
       case CURRENT_STATE_PAUSE:
-        changeUiToShowUiPause();
+        changeUiToPauseShow();
         cancelDismissControlViewTimer();
         break;
       case CURRENT_STATE_ERROR:
         changeUiToError();
         break;
       case CURRENT_STATE_AUTO_COMPLETE:
-        changeUiToShowUiComplete();
+        changeUiToCompleteShow();
         cancelDismissControlViewTimer();
         bottomProgressBar.setProgress(100);
+        break;
+      case CURRENT_STATE_PLAYING_BUFFERING_START:
+        changeUiToPlayingBufferingShow();
         break;
     }
   }
@@ -198,27 +201,33 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
   private void onClickUiToggle() {
     if (mCurrentState == CURRENT_STATE_PREPAREING) {
       if (bottomContainer.getVisibility() == View.VISIBLE) {
-        changeUiToClearUiPrepareing();
+        changeUiToPrepareingClear();
       } else {
-        changeUiToShowUiPrepareing();
+        changeUiToPrepareingShow();
       }
     } else if (mCurrentState == CURRENT_STATE_PLAYING) {
       if (bottomContainer.getVisibility() == View.VISIBLE) {
-        changeUiToClearUiPlaying();
+        changeUiToPlayingClear();
       } else {
-        changeUiToShowUiPlaying();
+        changeUiToPlayingShow();
       }
     } else if (mCurrentState == CURRENT_STATE_PAUSE) {
       if (bottomContainer.getVisibility() == View.VISIBLE) {
-        changeUiToClearUiPause();
+        changeUiToPauseClear();
       } else {
-        changeUiToShowUiPause();
+        changeUiToPauseShow();
       }
     } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
       if (bottomContainer.getVisibility() == View.VISIBLE) {
-        changeUiToClearUiComplete();
+        changeUiToCompleteClear();
       } else {
-        changeUiToShowUiComplete();
+        changeUiToCompleteShow();
+      }
+    } else if (mCurrentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
+      if (bottomContainer.getVisibility() == View.VISIBLE) {
+        changeUiToPlayingBufferingClear();
+      } else {
+        changeUiToPlayingBufferingShow();
       }
     }
   }
@@ -249,7 +258,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     updateStartImage();
   }
 
-  private void changeUiToShowUiPrepareing() {
+  private void changeUiToPrepareingShow() {
     topContainer.setVisibility(View.VISIBLE);
     bottomContainer.setVisibility(View.VISIBLE);
     startButton.setVisibility(View.INVISIBLE);
@@ -259,7 +268,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     bottomProgressBar.setVisibility(View.INVISIBLE);
   }
 
-  private void changeUiToClearUiPrepareing() {
+  private void changeUiToPrepareingClear() {
     topContainer.setVisibility(View.INVISIBLE);
     bottomContainer.setVisibility(View.INVISIBLE);
     startButton.setVisibility(View.INVISIBLE);
@@ -268,7 +277,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     coverImageView.setVisibility(View.VISIBLE);
   }
 
-  private void changeUiToShowUiPlaying() {
+  private void changeUiToPlayingShow() {
     topContainer.setVisibility(View.VISIBLE);
     bottomContainer.setVisibility(View.VISIBLE);
     startButton.setVisibility(View.VISIBLE);
@@ -279,7 +288,59 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     updateStartImage();
   }
 
-  private void changeUiToShowUiComplete() {
+  private void changeUiToPlayingClear() {
+    changeUiToClear();
+    bottomProgressBar.setVisibility(View.VISIBLE);
+  }
+
+  private void changeUiToPauseShow() {
+    topContainer.setVisibility(View.VISIBLE);
+    bottomContainer.setVisibility(View.VISIBLE);
+    startButton.setVisibility(View.VISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
+    updateStartImage();
+  }
+
+  private void changeUiToPauseClear() {
+    changeUiToClear();
+    bottomProgressBar.setVisibility(View.VISIBLE);
+  }
+
+  private void changeUiToPlayingBufferingShow() {
+    topContainer.setVisibility(View.VISIBLE);
+    bottomContainer.setVisibility(View.VISIBLE);
+    startButton.setVisibility(View.INVISIBLE);
+    loadingProgressBar.setVisibility(View.VISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
+  }
+
+  private void changeUiToPlayingBufferingClear() {
+    topContainer.setVisibility(View.INVISIBLE);
+    bottomContainer.setVisibility(View.INVISIBLE);
+    startButton.setVisibility(View.INVISIBLE);
+    loadingProgressBar.setVisibility(View.VISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.VISIBLE);
+    updateStartImage();
+  }
+
+  private void changeUiToClear() {
+    topContainer.setVisibility(View.INVISIBLE);
+    bottomContainer.setVisibility(View.INVISIBLE);
+    startButton.setVisibility(View.INVISIBLE);
+    loadingProgressBar.setVisibility(View.INVISIBLE);
+    thumbImageView.setVisibility(View.INVISIBLE);
+    coverImageView.setVisibility(View.INVISIBLE);
+    bottomProgressBar.setVisibility(View.INVISIBLE);
+  }
+
+  private void changeUiToCompleteShow() {
     topContainer.setVisibility(View.VISIBLE);
     bottomContainer.setVisibility(View.VISIBLE);
     startButton.setVisibility(View.VISIBLE);
@@ -290,38 +351,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     updateStartImage();
   }
 
-  private void changeUiToClearUiPlaying() {
-    changeUiToClearUi();
-    bottomProgressBar.setVisibility(View.VISIBLE);
-  }
-
-  private void changeUiToShowUiPause() {
-    topContainer.setVisibility(View.VISIBLE);
-    bottomContainer.setVisibility(View.VISIBLE);
-    startButton.setVisibility(View.VISIBLE);
-    loadingProgressBar.setVisibility(View.INVISIBLE);
-    thumbImageView.setVisibility(View.INVISIBLE);
-    coverImageView.setVisibility(View.INVISIBLE);
-    bottomProgressBar.setVisibility(View.INVISIBLE);
-    updateStartImage();
-  }
-
-  private void changeUiToClearUiPause() {
-    changeUiToClearUi();
-    bottomProgressBar.setVisibility(View.VISIBLE);
-  }
-
-  private void changeUiToClearUi() {
-    topContainer.setVisibility(View.INVISIBLE);
-    bottomContainer.setVisibility(View.INVISIBLE);
-    startButton.setVisibility(View.INVISIBLE);
-    loadingProgressBar.setVisibility(View.INVISIBLE);
-    thumbImageView.setVisibility(View.INVISIBLE);
-    coverImageView.setVisibility(View.INVISIBLE);
-    bottomProgressBar.setVisibility(View.INVISIBLE);
-  }
-
-  private void changeUiToClearUiComplete() {
+  private void changeUiToCompleteClear() {
     topContainer.setVisibility(View.INVISIBLE);
     bottomContainer.setVisibility(View.INVISIBLE);
     startButton.setVisibility(View.VISIBLE);
@@ -396,10 +426,4 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 //    cancelDismissControlViewTimer();
 //  }
 
-  @Override
-  protected void onMediaInfoBuffering(boolean statues) {
-    super.onMediaInfoBuffering(statues);
-    loadingProgressBar.setVisibility(statues ? View.VISIBLE : View.INVISIBLE);
-    startButton.setVisibility(!statues ? View.VISIBLE : View.INVISIBLE);
-  }
 }
