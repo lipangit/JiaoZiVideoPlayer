@@ -86,7 +86,7 @@ public class JCFullScreenActivity extends Activity {
       mJcVideoPlayer.startButton.performClick();
     } else {
       JCVideoPlayer.IF_RELEASE_WHEN_ON_PAUSE = true;
-      JCMediaManager.instance().setListener(mJcVideoPlayer);
+      JCMediaManager.instance().listener = mJcVideoPlayer;
     }
   }
 
