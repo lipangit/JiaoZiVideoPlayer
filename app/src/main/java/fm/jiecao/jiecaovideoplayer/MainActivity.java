@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     JCVideoPlayer.releaseAllVideos();
   }
 
-  JCBuriedPointStandard jcBuriedPointStandard = new JCBuriedPointStandard() {
+  public static JCBuriedPointStandard jcBuriedPointStandard = new JCBuriedPointStandard() {
     @Override
     public void onClickStartThumb(String url, Object... objects) {
       Log.i("Buried_Point", "onClickStartThumb" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " mUrl is : " + url);
