@@ -46,9 +46,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   protected static final int CURRENT_STATE_NORMAL = 0;
   protected static final int CURRENT_STATE_PREPAREING = 1;
   protected static final int CURRENT_STATE_PLAYING = 2;
-  protected static final int CURRENT_STATE_PAUSE = 3;
-  protected static final int CURRENT_STATE_AUTO_COMPLETE = 4;
-  protected static final int CURRENT_STATE_ERROR = 5;
+  protected static final int CURRENT_STATE_PLAYING_BUFFERING_START = 3;
+  protected static final int CURRENT_STATE_PAUSE = 5;
+  protected static final int CURRENT_STATE_AUTO_COMPLETE = 6;
+  protected static final int CURRENT_STATE_ERROR = 7;
+  protected static int BACKUP_PLAYING_BUFFERING_STATE = 0;
 
   protected boolean mTouchingProgressBar = false;
   protected boolean mIfCurrentIsFullscreen = false;
@@ -327,6 +329,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     if (textureViewContainer.getChildCount() > 0) {
       textureViewContainer.removeAllViews();
     }
+    textureView = null;
     textureView = new JCResizeTextureView(getContext());
     textureView.setSurfaceTextureListener(this);
 
@@ -348,7 +351,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
   @Override
   public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-    return false;
+    surface.release();
+    return true;
   }
 
   @Override
@@ -477,6 +481,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
     int totalTime = getDuration();
     mResultTimePosition = (int) (mDownPosition + deltaX * totalTime / mScreenWidth);
+    if (mResultTimePosition > totalTime) mResultTimePosition = totalTime;
     mDialogCurrentTime.setText(JCUtils.stringForTime(mResultTimePosition));
     mDialogTotalTime.setText(" / " + JCUtils.stringForTime(totalTime) + "");
     mDialogProgressBar.setProgress(mResultTimePosition * 100 / totalTime);
@@ -582,6 +587,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
     JCMediaManager.instance().listener = null;
     JCMediaManager.instance().lastListener = null;
+    JCMediaManager.instance().currentVideoWidth = 0;
+    JCMediaManager.instance().currentVideoHeight = 0;
 
     AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
     mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
@@ -612,17 +619,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
   public void onInfo(int what, int extra) {
     Log.i(TAG, "onInfo what - " + what + " extra - " + extra);
     if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-      onMediaInfoBuffering(true);
+      BACKUP_PLAYING_BUFFERING_STATE = mCurrentState;
+      setStateAndUi(CURRENT_STATE_PLAYING_BUFFERING_START);
       Log.i(TAG, "MEDIA_INFO_BUFFERING_START");
     } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
-      onMediaInfoBuffering(false);
+      setStateAndUi(BACKUP_PLAYING_BUFFERING_STATE);
       Log.i(TAG, "MEDIA_INFO_BUFFERING_END");
     }
   }
-
-  protected void onMediaInfoBuffering(boolean statues) {
-  }
-
 
   @Override
   public void onVideoSizeChanged() {
