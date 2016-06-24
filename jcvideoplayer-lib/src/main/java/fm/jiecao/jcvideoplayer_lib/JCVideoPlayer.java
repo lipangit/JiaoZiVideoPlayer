@@ -728,6 +728,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     JCMediaManager.instance().lastListener = null;
     JCMediaManager.instance().lastState = mCurrentState;//save state
     JCMediaManager.instance().listener.onBackFullscreen();
+    if(mCurrentState == CURRENT_STATE_PAUSE) {
+      JCMediaManager.instance().mediaPlayer.seekTo(JCMediaManager.instance().mediaPlayer.getCurrentPosition());
+    }
     finishFullscreenActivity();
   }
 
