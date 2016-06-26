@@ -16,81 +16,81 @@ apply plugin: 'signing'
 //}
 
 signing {
-  required { false }
-  sign configurations.archives
+    required { false }
+    sign configurations.archives
 }
 
 group = "fm.jiecao"
 archivesBaseName = "jiecaovideoplayer"
-version = "3.6"
+version = "3.6.1"
 
 uploadArchives {
-  repositories {
-    mavenDeployer {
-      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-        authentication(userName: hasProperty('ossrhUsername') ? ossrhUsername : "",
-          password: hasProperty('ossrhPassword') ? ossrhPassword : "")
-      }
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: hasProperty('ossrhUsername') ? ossrhUsername : "",
+                        password: hasProperty('ossrhPassword') ? ossrhPassword : "")
+            }
 
-      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-        authentication(userName: hasProperty('ossrhUsername') ? ossrhUsername : "",
-          password: hasProperty('ossrhPassword') ? ossrhPassword : "")
-      }
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: hasProperty('ossrhUsername') ? ossrhUsername : "",
+                        password: hasProperty('ossrhPassword') ? ossrhPassword : "")
+            }
 
-      pom.project {
-        name 'jiecaovideoplayer'
-        packaging 'jar'
-        // optionally artifactId can be defined here
-        description 'android videoplayer videoview 安卓视频播放器 全屏 播放器列表全屏 仿今日头条UI'
-        url 'https://github.com/lipangit/jiecaovideoplayer'
+            pom.project {
+                name 'jiecaovideoplayer'
+                packaging 'jar'
+                // optionally artifactId can be defined here
+                description 'android videoplayer videoview 安卓视频播放器 全屏 播放器列表全屏 仿今日头条UI'
+                url 'https://github.com/lipangit/jiecaovideoplayer'
 
-        scm {
-          connection 'https://github.com/lipangit/jiecaovideoplayer'
-          developerConnection 'https://github.com/lipangit/jiecaovideoplayer'
-          url 'https://github.com/lipangit/jiecaovideoplayer'
+                scm {
+                    connection 'https://github.com/lipangit/jiecaovideoplayer'
+                    developerConnection 'https://github.com/lipangit/jiecaovideoplayer'
+                    url 'https://github.com/lipangit/jiecaovideoplayer'
+                }
+
+                licenses {
+                    license {
+                        name 'MIT'
+                        url 'http://mit-license.org/'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'Nathen'
+                        name 'Nathen'
+                        email 'lipan@jiecao.fm'
+                    }
+                }
+            }
         }
-
-        licenses {
-          license {
-            name 'MIT'
-            url 'http://mit-license.org/'
-          }
-        }
-
-        developers {
-          developer {
-            id 'Nathen'
-            name 'Nathen'
-            email 'lipan@jiecao.fm'
-          }
-        }
-      }
     }
-  }
 }
 
 task androidJavadocs(type: Javadoc) {
-  source = android.sourceSets.main.java.srcDirs
-  options {
-    encoding = "UTF-8"
-  }
-  classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    source = android.sourceSets.main.java.srcDirs
+    options {
+        encoding = "UTF-8"
+    }
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
 task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
-  classifier = 'javadoc'
-  from androidJavadocs.destinationDir
+    classifier = 'javadoc'
+    from androidJavadocs.destinationDir
 }
 
 task androidSourcesJar(type: Jar) {
-  classifier = 'sources'
-  from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
 }
 
 artifacts {
-  archives androidSourcesJar
-  archives androidJavadocsJar
+    archives androidSourcesJar
+    archives androidJavadocsJar
 }
 

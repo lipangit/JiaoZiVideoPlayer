@@ -1,40 +1,40 @@
 apply plugin: 'com.android.application'
 
 android {
-  compileSdkVersion 23
-  buildToolsVersion '23.0.2'
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
 
-  defaultConfig {
-    applicationId "fm.jiecao.jiecaovideoplayer"
-    minSdkVersion 16
-    targetSdkVersion 23
-    versionCode 28
-    versionName "3.6"
-  }
-  buildTypes {
-    release {
-      minifyEnabled false
-      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    defaultConfig {
+        applicationId "fm.jiecao.jiecaovideoplayer"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 29
+        versionName "3.6.1"
     }
-  }
-  lintOptions {
-    abortOnError false
-  }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
-  compile fileTree(dir: 'libs', include: ['*.jar'])
-  testCompile 'junit:junit:4.12'
-  compile project(':jcvideoplayer-lib')
-  compile 'com.android.support:appcompat-v7:23.3.0'
-  compile 'com.github.bumptech.glide:glide:3.5.2'
-  compile 'com.squareup.picasso:picasso:2.5.1'
-  compile 'com.facebook.fresco:fresco:0.9.0'
-  compile 'com.mcxiaoke.volley:library:1.0.7'
-  compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile project(':jcvideoplayer-lib')
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.github.bumptech.glide:glide:3.5.2'
+    compile 'com.squareup.picasso:picasso:2.5.1'
+    compile 'com.facebook.fresco:fresco:0.9.0'
+    compile 'com.mcxiaoke.volley:library:1.0.7'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
 
-  debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-  releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-  testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
 }

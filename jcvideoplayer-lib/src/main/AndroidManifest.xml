@@ -1,14 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="fm.jiecao.jcvideoplayer_lib">
+    package="fm.jiecao.jcvideoplayer_lib">
 
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  <application
-    android:allowBackup="true"
-    android:supportsRtl="true">
-    <activity
-      android:name=".JCFullScreenActivity"
-      android:configChanges="orientation|keyboardHidden"
-      android:screenOrientation="landscape" />
-  </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <application
+        android:allowBackup="true"
+        android:supportsRtl="true">
+        <activity
+            android:name=".JCFullScreenActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" />
+    </application>
 
 </manifest>
