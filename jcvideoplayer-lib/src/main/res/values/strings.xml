@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="tips_not_wifi">You are currently using the mobile network, the player will continue to consume traffic</string>
     <string name="tips_not_wifi_confirm">Resume</string>
