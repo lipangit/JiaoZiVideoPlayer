@@ -11,24 +11,24 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * On 2016/04/27 10:49
  */
 public class JCVideoPlayerStandardShowTitleAfterFullscreen extends JCVideoPlayerStandard {
-  public JCVideoPlayerStandardShowTitleAfterFullscreen(Context context) {
-    super(context);
-  }
-
-  public JCVideoPlayerStandardShowTitleAfterFullscreen(Context context, AttributeSet attrs) {
-    super(context, attrs);
-  }
-
-  @Override
-  public boolean setUp(String url, Object... objects) {
-    if (super.setUp(url, objects)) {
-      if (mIfCurrentIsFullscreen) {
-        titleTextView.setVisibility(View.VISIBLE);
-      } else {
-        titleTextView.setVisibility(View.INVISIBLE);
-      }
-      return true;
+    public JCVideoPlayerStandardShowTitleAfterFullscreen(Context context) {
+        super(context);
     }
-    return false;
-  }
+
+    public JCVideoPlayerStandardShowTitleAfterFullscreen(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    @Override
+    public boolean setUp(String url, Object... objects) {
+        if (super.setUp(url, objects)) {
+            if (mIfCurrentIsFullscreen) {
+                titleTextView.setVisibility(View.VISIBLE);
+            } else {
+                titleTextView.setVisibility(View.INVISIBLE);
+            }
+            return true;
+        }
+        return false;
+    }
 }
