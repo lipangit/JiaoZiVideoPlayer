@@ -295,7 +295,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
       JCMediaManager.instance().listener.onCompletion();
     }
     JCMediaManager.instance().listener = this;
-    addSurfaceView();
+    addTextureView();
     AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
     mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
@@ -324,8 +324,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
   };
 
-  protected void addSurfaceView() {
-    Log.i(TAG, "addSurfaceView [" + this.hashCode() + "] ");
+  protected void addTextureView() {
+    Log.i(TAG, "addTextureView [" + this.hashCode() + "] ");
     if (textureViewContainer.getChildCount() > 0) {
       textureViewContainer.removeAllViews();
     }

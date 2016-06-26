@@ -82,7 +82,7 @@ public class JCFullScreenActivity extends Activity {
     mJcVideoPlayer.mIfFullscreenIsDirectly = DIRECT_FULLSCREEN;
     mJcVideoPlayer.setUp(URL, OBJECTS);
     mJcVideoPlayer.setStateAndUi(CURRENT_STATE);
-    mJcVideoPlayer.addSurfaceView();
+    mJcVideoPlayer.addTextureView();
     if (mJcVideoPlayer.mIfFullscreenIsDirectly) {
       mJcVideoPlayer.startButton.performClick();
     } else {
