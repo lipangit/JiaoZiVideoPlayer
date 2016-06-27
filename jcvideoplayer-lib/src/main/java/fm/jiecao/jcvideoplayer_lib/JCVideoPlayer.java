@@ -185,17 +185,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 break;
             case CURRENT_STATE_ERROR:
                 if (JCMediaManager.instance().listener == this) {
-                    onCompletion();
                     JCMediaManager.instance().releaseMediaPlayer();
                 }
                 break;
             case CURRENT_STATE_AUTO_COMPLETE:
-//        if (JCMediaManager.instance().listener == this) {
-//          JCMediaManager.instance().releaseMediaPlayer();
                 cancelProgressTimer();
                 progressBar.setProgress(100);
                 currentTimeTextView.setText(totalTimeTextView.getText());
-//        }
                 break;
         }
     }
