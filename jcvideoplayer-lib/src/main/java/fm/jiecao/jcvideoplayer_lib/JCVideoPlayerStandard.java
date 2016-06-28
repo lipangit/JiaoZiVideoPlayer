@@ -436,14 +436,40 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
+
+    protected Dialog mVolumeDialog;
+    protected ProgressBar mDialogVolumeProgressBar;
+
     @Override
-    protected void showVolumDialog(float deltaY) {
-        super.showVolumDialog(deltaY);
+    protected void showVolumDialog(float deltaY, int volumePercent) {
+        super.showVolumDialog(deltaY, volumePercent);
+        if (mVolumeDialog == null) {
+            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_volume_dialog, null);
+            mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
+            mVolumeDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
+            mVolumeDialog.setContentView(localView);
+            mVolumeDialog.getWindow().addFlags(8);
+            mVolumeDialog.getWindow().addFlags(32);
+            mVolumeDialog.getWindow().addFlags(16);
+            mVolumeDialog.getWindow().setLayout(-2, -2);
+            WindowManager.LayoutParams localLayoutParams = mVolumeDialog.getWindow().getAttributes();
+            localLayoutParams.gravity = 19;
+            localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.jc_volume_dialog_margin_left);
+            mVolumeDialog.getWindow().setAttributes(localLayoutParams);
+        }
+        if (!mVolumeDialog.isShowing()) {
+            mVolumeDialog.show();
+        }
+
+        mDialogVolumeProgressBar.setProgress(volumePercent);
     }
 
     @Override
     protected void dismissVolumDialog() {
         super.dismissVolumDialog();
+        if (mVolumeDialog != null) {
+            mVolumeDialog.dismiss();
+        }
     }
 
     private void startDismissControlViewTimer() {

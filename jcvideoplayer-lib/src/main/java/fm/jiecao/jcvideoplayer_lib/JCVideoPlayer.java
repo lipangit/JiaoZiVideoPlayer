@@ -18,7 +18,6 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -86,12 +85,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected boolean mChangeVolume = false;
     protected boolean mChangePosition = false;
     protected int mDownPosition;
-    protected int mDownVolume;
+    protected int mGestureDownVolume;
 
     protected int mSeekTimePosition;//change postion when finger up
-
-    protected Dialog mVolumeDialog;
-    protected ProgressBar mDialogVolumeProgressBar;
 
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
 
@@ -384,7 +380,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                                     }
                                 } else {
                                     mChangeVolume = true;
-                                    mDownVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                                    mGestureDownVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
                                     if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == this) {
                                         JC_BURIED_POINT.onTouchScreenSeekVolume(mUrl, mObjects);
                                     }
@@ -393,7 +389,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         }
                     }
                     if (mChangePosition) {
-
                         int totalTimeDuration = getDuration();
                         mSeekTimePosition = (int) (mDownPosition + deltaX * totalTimeDuration / mScreenWidth);
                         if (mSeekTimePosition > totalTimeDuration)
@@ -404,16 +399,20 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         showProgressDialog(deltaX, seekTime, mSeekTimePosition, totalTime, totalTimeDuration);
                     }
                     if (mChangeVolume) {
-                        showVolumDialog(-deltaY);
+                        deltaY = -deltaY;
+                        int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                        int deltaV = (int) (max * deltaY * 3 / mScreenHeight);
+                        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mGestureDownVolume + deltaV, 0);
+                        int volumePercent = (int) (mGestureDownVolume * 100 / max + deltaY * 3 * 100 / mScreenHeight);
+
+                        showVolumDialog(-deltaY, volumePercent);
                     }
 
                     break;
                 case MotionEvent.ACTION_UP:
                     mTouchingProgressBar = false;
                     dismissProgressDialog();
-                    if (mVolumeDialog != null) {
-                        mVolumeDialog.dismiss();
-                    }
+                    dismissVolumDialog();
                     if (mChangePosition) {
                         JCMediaManager.instance().mediaPlayer.seekTo(mSeekTimePosition);
                         int duration = getDuration();
@@ -465,29 +464,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     }
 
-    protected void showVolumDialog(float deltaY) {
-        if (mVolumeDialog == null) {
-            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_volume_dialog, null);
-            mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
-            mVolumeDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
-            mVolumeDialog.setContentView(localView);
-            mVolumeDialog.getWindow().addFlags(8);
-            mVolumeDialog.getWindow().addFlags(32);
-            mVolumeDialog.getWindow().addFlags(16);
-            mVolumeDialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = mVolumeDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = 19;
-            localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.jc_volume_dialog_margin_left);
-            mVolumeDialog.getWindow().setAttributes(localLayoutParams);
-        }
-        if (!mVolumeDialog.isShowing()) {
-            mVolumeDialog.show();
-        }
-        int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int deltaV = (int) (max * deltaY * 3 / mScreenHeight);
-        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mDownVolume + deltaV, 0);
-        int transformatVolume = (int) (mDownVolume * 100 / max + deltaY * 3 * 100 / mScreenHeight);
-        mDialogVolumeProgressBar.setProgress(transformatVolume);
+    protected void showVolumDialog(float deltaY, int volumePercent) {
+
     }
 
     protected void dismissVolumDialog() {
