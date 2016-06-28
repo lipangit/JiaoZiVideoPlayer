@@ -88,11 +88,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected int mDownPosition;
     protected int mDownVolume;
 
-    protected Dialog mProgressDialog;
-    protected ProgressBar mDialogProgressBar;
-    protected TextView mDialogSeekTime;
-    protected TextView mDialogTotalTime;
-    protected ImageView mDialogIcon;
     protected int mSeekTimePosition;//change postion when finger up
 
     protected Dialog mVolumeDialog;
@@ -415,9 +410,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     break;
                 case MotionEvent.ACTION_UP:
                     mTouchingProgressBar = false;
-                    if (mProgressDialog != null) {
-                        mProgressDialog.dismiss();
-                    }
+                    dismissProgressDialog();
                     if (mVolumeDialog != null) {
                         mVolumeDialog.dismiss();
                     }
@@ -465,36 +458,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected void showProgressDialog(float deltaX,
                                       String seekTime, int seekTimePosition,
                                       String totalTime, int totalTimeDuration) {
-        if (mProgressDialog == null) {
-            View localView = LayoutInflater.from(getContext()).inflate(fm.jiecao.jcvideoplayer_lib.R.layout.jc_progress_dialog, null);
-            mDialogProgressBar = ((ProgressBar) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_progressbar));
-            mDialogSeekTime = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_current));
-            mDialogTotalTime = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_duration));
-            mDialogIcon = ((ImageView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_image_tip));
-            mProgressDialog = new Dialog(getContext(), fm.jiecao.jcvideoplayer_lib.R.style.jc_style_dialog_progress);
-            mProgressDialog.setContentView(localView);
-            mProgressDialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
-            mProgressDialog.getWindow().addFlags(32);
-            mProgressDialog.getWindow().addFlags(16);
-            mProgressDialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = mProgressDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = 49;
-            localLayoutParams.y = getResources().getDimensionPixelOffset(fm.jiecao.jcvideoplayer_lib.R.dimen.jc_progress_dialog_margin_top);
-            mProgressDialog.getWindow().setAttributes(localLayoutParams);
-        }
-        if (!mProgressDialog.isShowing()) {
-            mProgressDialog.show();
-        }
 
+    }
 
-        mDialogSeekTime.setText(seekTime);
-        mDialogTotalTime.setText(" / " + totalTime);
-        mDialogProgressBar.setProgress(seekTimePosition * 100 / totalTimeDuration);
-        if (deltaX > 0) {
-            mDialogIcon.setBackgroundResource(R.drawable.jc_forward_icon);
-        } else {
-            mDialogIcon.setBackgroundResource(R.drawable.jc_backward_icon);
-        }
+    protected void dismissProgressDialog() {
+
     }
 
     protected void showVolumDialog(float deltaY) {
@@ -520,6 +488,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mDownVolume + deltaV, 0);
         int transformatVolume = (int) (mDownVolume * 100 / max + deltaY * 3 * 100 / mScreenHeight);
         mDialogVolumeProgressBar.setProgress(transformatVolume);
+    }
+
+    protected void dismissVolumDialog() {
+
     }
 
     @Override
