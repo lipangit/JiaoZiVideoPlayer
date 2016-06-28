@@ -74,6 +74,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected boolean mLooping = false;
 
     protected static Timer UPDATE_PROGRESS_TIMER;
+    protected ProgressTimerTask mProgressTimerTask;
+
     protected static JCBuriedPoint JC_BURIED_POINT;
     protected int mScreenWidth;
     protected int mScreenHeight;
@@ -601,27 +603,33 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected void startProgressTimer() {
         cancelProgressTimer();
         UPDATE_PROGRESS_TIMER = new Timer();
-        UPDATE_PROGRESS_TIMER.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (getContext() != null && getContext() instanceof Activity) {
-                    ((Activity) getContext()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE) {
-                                setTextAndProgress(0);
-                            }
-                        }
-                    });
-                }
-            }
-        }, 0, 300);
+        mProgressTimerTask = new ProgressTimerTask();
+        UPDATE_PROGRESS_TIMER.schedule(mProgressTimerTask, 0, 300);
     }
 
     protected void cancelProgressTimer() {
         if (UPDATE_PROGRESS_TIMER != null) {
             UPDATE_PROGRESS_TIMER.cancel();
-            UPDATE_PROGRESS_TIMER = null;
+        }
+        if (mProgressTimerTask != null) {
+            mProgressTimerTask.cancel();
+        }
+
+    }
+
+    protected class ProgressTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            if (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE) {
+                if (getContext() != null && getContext() instanceof Activity) {
+                    ((Activity) getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            setTextAndProgress(0);
+                        }
+                    });
+                }
+            }
         }
     }
 

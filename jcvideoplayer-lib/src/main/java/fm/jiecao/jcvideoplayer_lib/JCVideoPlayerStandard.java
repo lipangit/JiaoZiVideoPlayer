@@ -33,6 +33,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public ImageView coverImageView;
 
     protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
+    protected DismissControlViewTimerTask mDismissControlViewTimerTask;
+
     protected static JCBuriedPointStandard JC_BURIED_POINT_STANDARD;
 
     public JCVideoPlayerStandard(Context context) {
@@ -475,32 +477,39 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     private void startDismissControlViewTimer() {
         cancelDismissControlViewTimer();
         DISSMISS_CONTROL_VIEW_TIMER = new Timer();
-        DISSMISS_CONTROL_VIEW_TIMER.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (getContext() != null && getContext() instanceof Activity) {
-                    ((Activity) getContext()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mCurrentState != CURRENT_STATE_NORMAL
-                                    && mCurrentState != CURRENT_STATE_ERROR
-                                    && mCurrentState != CURRENT_STATE_AUTO_COMPLETE) {
-                                bottomContainer.setVisibility(View.INVISIBLE);
-                                topContainer.setVisibility(View.INVISIBLE);
-                                bottomProgressBar.setVisibility(View.VISIBLE);
-                                startButton.setVisibility(View.INVISIBLE);
-                            }
-                        }
-                    });
-                }
-            }
-        }, 2500);
+        mDismissControlViewTimerTask = new DismissControlViewTimerTask();
+        DISSMISS_CONTROL_VIEW_TIMER.schedule(mDismissControlViewTimerTask, 2500);
     }
 
     private void cancelDismissControlViewTimer() {
         if (DISSMISS_CONTROL_VIEW_TIMER != null) {
             DISSMISS_CONTROL_VIEW_TIMER.cancel();
-            DISSMISS_CONTROL_VIEW_TIMER = null;
+        }
+        if (mDismissControlViewTimerTask != null) {
+            mDismissControlViewTimerTask.cancel();
+        }
+
+    }
+
+    protected class DismissControlViewTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            if (mCurrentState != CURRENT_STATE_NORMAL
+                    && mCurrentState != CURRENT_STATE_ERROR
+                    && mCurrentState != CURRENT_STATE_AUTO_COMPLETE) {
+                if (getContext() != null && getContext() instanceof Activity) {
+                    ((Activity) getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            bottomContainer.setVisibility(View.INVISIBLE);
+                            topContainer.setVisibility(View.INVISIBLE);
+                            bottomProgressBar.setVisibility(View.VISIBLE);
+                            startButton.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+            }
         }
     }
 
