@@ -121,7 +121,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     startDismissControlViewTimer();
                     if (mChangePosition) {
                         int duration = getDuration();
-                        int progress = mResultTimePosition * 100 / (duration == 0 ? 1 : duration);
+                        int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
                         bottomProgressBar.setProgress(progress);
                     }
                     if (!mChangePosition && !mChangeVolume) {

@@ -90,10 +90,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     protected Dialog mProgressDialog;
     protected ProgressBar mDialogProgressBar;
-    protected TextView mDialogCurrentTime;
+    protected TextView mDialogSeekTime;
     protected TextView mDialogTotalTime;
     protected ImageView mDialogIcon;
-    protected int mResultTimePosition;//change postion when finger up
+    protected int mSeekTimePosition;//change postion when finger up
 
     protected Dialog mVolumeDialog;
     protected ProgressBar mDialogVolumeProgressBar;
@@ -398,7 +398,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         }
                     }
                     if (mChangePosition) {
-                        showProgressDialog(deltaX);
+
+                        int totalTimeDuration = getDuration();
+                        mSeekTimePosition = (int) (mDownPosition + deltaX * totalTimeDuration / mScreenWidth);
+                        if (mSeekTimePosition > totalTimeDuration)
+                            mSeekTimePosition = totalTimeDuration;
+                        String seekTime = JCUtils.stringForTime(mSeekTimePosition);
+                        String totalTime = JCUtils.stringForTime(totalTimeDuration);
+
+                        showProgressDialog(deltaX, seekTime, mSeekTimePosition, totalTime, totalTimeDuration);
                     }
                     if (mChangeVolume) {
                         showVolumDialog(-deltaY);
@@ -414,9 +422,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         mVolumeDialog.dismiss();
                     }
                     if (mChangePosition) {
-                        JCMediaManager.instance().mediaPlayer.seekTo(mResultTimePosition);
+                        JCMediaManager.instance().mediaPlayer.seekTo(mSeekTimePosition);
                         int duration = getDuration();
-                        int progress = mResultTimePosition * 100 / (duration == 0 ? 1 : duration);
+                        int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
                         progressBar.setProgress(progress);
                     }
                     /////////////////////
@@ -454,11 +462,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         return false;
     }
 
-    protected void showProgressDialog(float deltaX) {
+    protected void showProgressDialog(float deltaX,
+                                      String seekTime, int seekTimePosition,
+                                      String totalTime, int totalTimeDuration) {
         if (mProgressDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(fm.jiecao.jcvideoplayer_lib.R.layout.jc_progress_dialog, null);
             mDialogProgressBar = ((ProgressBar) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_progressbar));
-            mDialogCurrentTime = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_current));
+            mDialogSeekTime = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_current));
             mDialogTotalTime = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_duration));
             mDialogIcon = ((ImageView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_image_tip));
             mProgressDialog = new Dialog(getContext(), fm.jiecao.jcvideoplayer_lib.R.style.jc_style_dialog_progress);
@@ -475,12 +485,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (!mProgressDialog.isShowing()) {
             mProgressDialog.show();
         }
-        int totalTime = getDuration();
-        mResultTimePosition = (int) (mDownPosition + deltaX * totalTime / mScreenWidth);
-        if (mResultTimePosition > totalTime) mResultTimePosition = totalTime;
-        mDialogCurrentTime.setText(JCUtils.stringForTime(mResultTimePosition));
-        mDialogTotalTime.setText(" / " + JCUtils.stringForTime(totalTime) + "");
-        mDialogProgressBar.setProgress(mResultTimePosition * 100 / totalTime);
+
+
+        mDialogSeekTime.setText(seekTime);
+        mDialogTotalTime.setText(" / " + totalTime);
+        mDialogProgressBar.setProgress(seekTimePosition * 100 / totalTimeDuration);
         if (deltaX > 0) {
             mDialogIcon.setBackgroundResource(R.drawable.jc_forward_icon);
         } else {
