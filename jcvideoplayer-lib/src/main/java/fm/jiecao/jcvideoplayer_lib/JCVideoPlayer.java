@@ -2,7 +2,6 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.SurfaceTexture;
@@ -11,7 +10,6 @@ import android.media.MediaPlayer;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
@@ -21,7 +19,6 @@ import android.view.ViewParent;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -193,6 +190,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.start) {
+            Log.i(TAG, "onClick start [" + this.hashCode() + "] ");
             if (TextUtils.isEmpty(mUrl)) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
@@ -244,6 +242,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 startButtonLogic();
             }
         } else if (i == R.id.fullscreen) {
+            Log.i(TAG, "onClick fullscreen [" + this.hashCode() + "] ");
             if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) return;
             if (mIfCurrentIsFullscreen) {
                 //quit fullscreen
@@ -262,6 +261,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 JCFullScreenActivity.startActivityFromNormal(getContext(), mCurrentState, mUrl, JCVideoPlayer.this.getClass(), this.mObjects);
             }
         } else if (i == R.id.surface_container && mCurrentState == CURRENT_STATE_ERROR) {
+            Log.i(TAG, "onClick surfaceContainer State=Error [" + this.hashCode() + "] ");
             if (JC_BURIED_POINT != null) {
                 JC_BURIED_POINT.onClickStartError(mUrl, mObjects);
             }
@@ -314,7 +314,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     };
 
     protected void addTextureView() {
-        Log.i(TAG, "addTextureView [" + this.hashCode() + "] ");
+        Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
         if (textureViewContainer.getChildCount() > 0) {
             textureViewContainer.removeAllViews();
         }
@@ -357,6 +357,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (id == R.id.surface_container) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+                    Log.i(TAG, "onTouch surfaceContainer actionDown [" + this.hashCode() + "] ");
                     mTouchingProgressBar = true;
 
                     mDownX = x;
@@ -366,6 +367,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     /////////////////////
                     break;
                 case MotionEvent.ACTION_MOVE:
+                    Log.i(TAG, "onTouch surfaceContainer actionMove [" + this.hashCode() + "] ");
                     float deltaX = x - mDownX;
                     float deltaY = y - mDownY;
                     float absDeltaX = Math.abs(deltaX);
@@ -412,6 +414,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
                     break;
                 case MotionEvent.ACTION_UP:
+                    Log.i(TAG, "onTouch surfaceContainer actionUp [" + this.hashCode() + "] ");
                     mTouchingProgressBar = false;
                     dismissProgressDialog();
                     dismissVolumDialog();
@@ -435,6 +438,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         } else if (id == R.id.progress) {//if I am seeking bar,no mater whoever can not intercept my event
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+                    Log.i(TAG, "onTouch bottomProgress actionUp [" + this.hashCode() + "] ");
                     cancelProgressTimer();
                     ViewParent vpdown = getParent();
                     while (vpdown != null) {
@@ -443,6 +447,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     }
                     break;
                 case MotionEvent.ACTION_UP:
+                    Log.i(TAG, "onTouch bottomProgress actionDown [" + this.hashCode() + "] ");
                     startProgressTimer();
                     ViewParent vpup = getParent();
                     while (vpup != null) {
@@ -481,7 +486,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (fromUser) {
             int time = progress * getDuration() / 100;
             JCMediaManager.instance().mediaPlayer.seekTo(time);
-            Log.d(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
+            Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
         }
     }
 
@@ -574,17 +579,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public void onInfo(int what, int extra) {
-        Log.i(TAG, "onInfo what - " + what + " extra - " + extra);
+        Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
             BACKUP_PLAYING_BUFFERING_STATE = mCurrentState;
             setStateAndUi(CURRENT_STATE_PLAYING_BUFFERING_START);
-            Log.i(TAG, "MEDIA_INFO_BUFFERING_START");
+            Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
             if (BACKUP_PLAYING_BUFFERING_STATE != -1) {
                 setStateAndUi(BACKUP_PLAYING_BUFFERING_STATE);
                 BACKUP_PLAYING_BUFFERING_STATE = -1;
             }
-            Log.i(TAG, "MEDIA_INFO_BUFFERING_END");
+            Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
         }
     }
 
@@ -685,7 +690,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     protected void quitFullScreenGoToNormal() {
-        Log.i(TAG, "quitFullScreenGoToNormal [" + this.hashCode() + "] ");
+        Log.d(TAG, "quitFullScreenGoToNormal [" + this.hashCode() + "] ");
         if (JC_BURIED_POINT != null && JCMediaManager.instance().listener == this) {
             JC_BURIED_POINT.onQuitFullscreen(mUrl, mObjects);
         }
@@ -702,7 +707,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     protected void finishFullscreenActivity() {
         if (getContext() instanceof JCFullScreenActivity) {
-            Log.i(TAG, "finishFullscreenActivity [" + this.hashCode() + "] ");
+            Log.d(TAG, "finishFullscreenActivity [" + this.hashCode() + "] ");
             ((JCFullScreenActivity) getContext()).finish();
         }
     }
@@ -722,7 +727,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static void releaseAllVideos() {
         if (IF_RELEASE_WHEN_ON_PAUSE) {
-            Log.i(TAG, "releaseAllVideos");
+            Log.d(TAG, "releaseAllVideos");
             if (JCMediaManager.instance().listener != null) {
                 JCMediaManager.instance().listener.onCompletion();
             }
@@ -739,7 +744,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (JCMediaManager.instance().listener == this &&
 //      mCurrentState != CURRENT_STATE_NORMAL &&
                 (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
-            Log.i(TAG, "release [" + this.hashCode() + "]");
+            Log.d(TAG, "release [" + this.hashCode() + "]");
             releaseAllVideos();
         }
     }
