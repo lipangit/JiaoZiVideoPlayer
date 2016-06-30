@@ -607,6 +607,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void onBackFullscreen() {
         mCurrentState = JCMediaManager.instance().lastState;
         setStateAndUi(mCurrentState);
+        addTextureView();
     }
 
     protected void startProgressTimer() {
