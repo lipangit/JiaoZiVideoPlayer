@@ -49,7 +49,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected static final int CURRENT_STATE_PAUSE = 5;
     protected static final int CURRENT_STATE_AUTO_COMPLETE = 6;
     protected static final int CURRENT_STATE_ERROR = 7;
-    protected static int BACKUP_PLAYING_BUFFERING_STATE = 0;
+    protected static int BACKUP_PLAYING_BUFFERING_STATE = -1;
 
     protected boolean mTouchingProgressBar = false;
     protected boolean mIfCurrentIsFullscreen = false;
@@ -580,7 +580,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             setStateAndUi(CURRENT_STATE_PLAYING_BUFFERING_START);
             Log.i(TAG, "MEDIA_INFO_BUFFERING_START");
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
-            setStateAndUi(BACKUP_PLAYING_BUFFERING_STATE);
+            if (BACKUP_PLAYING_BUFFERING_STATE != -1) {
+                setStateAndUi(BACKUP_PLAYING_BUFFERING_STATE);
+                BACKUP_PLAYING_BUFFERING_STATE = -1;
+            }
             Log.i(TAG, "MEDIA_INFO_BUFFERING_END");
         }
     }
