@@ -329,6 +329,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+        Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
         mSurface = new Surface(surface);
         JCMediaManager.instance().setDisplay(mSurface);
     }
