@@ -2,12 +2,16 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -29,6 +33,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public ImageView coverImageView;
 
     protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
+    protected DismissControlViewTimerTask mDismissControlViewTimerTask;
+
     protected static JCBuriedPointStandard JC_BURIED_POINT_STANDARD;
 
     public JCVideoPlayerStandard(Context context) {
@@ -121,7 +127,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     startDismissControlViewTimer();
                     if (mChangePosition) {
                         int duration = getDuration();
-                        int progress = mResultTimePosition * 100 / (duration == 0 ? 1 : duration);
+                        int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
                         bottomProgressBar.setProgress(progress);
                     }
                     if (!mChangePosition && !mChangeVolume) {
@@ -383,35 +389,127 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
+    protected Dialog mProgressDialog;
+    protected ProgressBar mDialogProgressBar;
+    protected TextView mDialogSeekTime;
+    protected TextView mDialogTotalTime;
+    protected ImageView mDialogIcon;
+
+    @Override
+    protected void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
+        super.showProgressDialog(deltaX, seekTime, seekTimePosition, totalTime, totalTimeDuration);
+        if (mProgressDialog == null) {
+            View localView = LayoutInflater.from(getContext()).inflate(fm.jiecao.jcvideoplayer_lib.R.layout.jc_progress_dialog, null);
+            mDialogProgressBar = ((ProgressBar) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_progressbar));
+            mDialogSeekTime = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_current));
+            mDialogTotalTime = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_duration));
+            mDialogIcon = ((ImageView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_image_tip));
+            mProgressDialog = new Dialog(getContext(), fm.jiecao.jcvideoplayer_lib.R.style.jc_style_dialog_progress);
+            mProgressDialog.setContentView(localView);
+            mProgressDialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
+            mProgressDialog.getWindow().addFlags(32);
+            mProgressDialog.getWindow().addFlags(16);
+            mProgressDialog.getWindow().setLayout(-2, -2);
+            WindowManager.LayoutParams localLayoutParams = mProgressDialog.getWindow().getAttributes();
+            localLayoutParams.gravity = 49;
+            localLayoutParams.y = getResources().getDimensionPixelOffset(fm.jiecao.jcvideoplayer_lib.R.dimen.jc_progress_dialog_margin_top);
+            mProgressDialog.getWindow().setAttributes(localLayoutParams);
+        }
+        if (!mProgressDialog.isShowing()) {
+            mProgressDialog.show();
+        }
+
+        mDialogSeekTime.setText(seekTime);
+        mDialogTotalTime.setText(" / " + totalTime);
+        mDialogProgressBar.setProgress(seekTimePosition * 100 / totalTimeDuration);
+        if (deltaX > 0) {
+            mDialogIcon.setBackgroundResource(R.drawable.jc_forward_icon);
+        } else {
+            mDialogIcon.setBackgroundResource(R.drawable.jc_backward_icon);
+        }
+
+    }
+
+    @Override
+    protected void dismissProgressDialog() {
+        super.dismissProgressDialog();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+
+    protected Dialog mVolumeDialog;
+    protected ProgressBar mDialogVolumeProgressBar;
+
+    @Override
+    protected void showVolumDialog(float deltaY, int volumePercent) {
+        super.showVolumDialog(deltaY, volumePercent);
+        if (mVolumeDialog == null) {
+            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_volume_dialog, null);
+            mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
+            mVolumeDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
+            mVolumeDialog.setContentView(localView);
+            mVolumeDialog.getWindow().addFlags(8);
+            mVolumeDialog.getWindow().addFlags(32);
+            mVolumeDialog.getWindow().addFlags(16);
+            mVolumeDialog.getWindow().setLayout(-2, -2);
+            WindowManager.LayoutParams localLayoutParams = mVolumeDialog.getWindow().getAttributes();
+            localLayoutParams.gravity = 19;
+            localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.jc_volume_dialog_margin_left);
+            mVolumeDialog.getWindow().setAttributes(localLayoutParams);
+        }
+        if (!mVolumeDialog.isShowing()) {
+            mVolumeDialog.show();
+        }
+
+        mDialogVolumeProgressBar.setProgress(volumePercent);
+    }
+
+    @Override
+    protected void dismissVolumDialog() {
+        super.dismissVolumDialog();
+        if (mVolumeDialog != null) {
+            mVolumeDialog.dismiss();
+        }
+    }
+
     private void startDismissControlViewTimer() {
         cancelDismissControlViewTimer();
         DISSMISS_CONTROL_VIEW_TIMER = new Timer();
-        DISSMISS_CONTROL_VIEW_TIMER.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (getContext() != null && getContext() instanceof Activity) {
-                    ((Activity) getContext()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mCurrentState != CURRENT_STATE_NORMAL
-                                    && mCurrentState != CURRENT_STATE_ERROR
-                                    && mCurrentState != CURRENT_STATE_AUTO_COMPLETE) {
-                                bottomContainer.setVisibility(View.INVISIBLE);
-                                topContainer.setVisibility(View.INVISIBLE);
-                                bottomProgressBar.setVisibility(View.VISIBLE);
-                                startButton.setVisibility(View.INVISIBLE);
-                            }
-                        }
-                    });
-                }
-            }
-        }, 2500);
+        mDismissControlViewTimerTask = new DismissControlViewTimerTask();
+        DISSMISS_CONTROL_VIEW_TIMER.schedule(mDismissControlViewTimerTask, 2500);
     }
 
     private void cancelDismissControlViewTimer() {
         if (DISSMISS_CONTROL_VIEW_TIMER != null) {
             DISSMISS_CONTROL_VIEW_TIMER.cancel();
-            DISSMISS_CONTROL_VIEW_TIMER = null;
+        }
+        if (mDismissControlViewTimerTask != null) {
+            mDismissControlViewTimerTask.cancel();
+        }
+
+    }
+
+    protected class DismissControlViewTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            if (mCurrentState != CURRENT_STATE_NORMAL
+                    && mCurrentState != CURRENT_STATE_ERROR
+                    && mCurrentState != CURRENT_STATE_AUTO_COMPLETE) {
+                if (getContext() != null && getContext() instanceof Activity) {
+                    ((Activity) getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            bottomContainer.setVisibility(View.INVISIBLE);
+                            topContainer.setVisibility(View.INVISIBLE);
+                            bottomProgressBar.setVisibility(View.VISIBLE);
+                            startButton.setVisibility(View.INVISIBLE);
+                        }
+                    });
+                }
+            }
         }
     }
 
