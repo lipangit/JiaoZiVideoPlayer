@@ -1,7 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -75,7 +74,7 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                         mediaPlayer = new IjkMediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 //              mediaPlayer.setDataSource(context, Uri.parse(url), mapHeadData);
-                        Class<MediaPlayer> clazz = MediaPlayer.class;
+                        Class<IjkMediaPlayer> clazz = IjkMediaPlayer.class;
                         Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
                         method.invoke(mediaPlayer, ((FuckBean) msg.obj).url, ((FuckBean) msg.obj).mapHeadData);
                         mediaPlayer.setLooping(((FuckBean) msg.obj).looping);
