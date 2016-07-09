@@ -9,6 +9,8 @@
 
 真正实现Android的全屏功能，立志成为Android平台使用最广泛的视频播放控件  Q群:490442439
 
+正在全力研究 头条视频 和 天天快报 那样的用android.media.MediaPlayer小窗播放的功能，重点是在切换SurfaceView的时候或removeView的时候视频能连续播放.
+
 ##主要特点
 1. 全屏时启动新`Activity`实现播放器真正的全屏功能
 2. 可以完全自定义UI
