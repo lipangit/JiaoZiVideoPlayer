@@ -7,11 +7,11 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
 
-This project need translators, mother language is english, you can change everything edit readme, release note, formate variable and annotation.
+* This project need translators, mother language is english, you can change everything edit readme, release note, formate variable and annotation.
+* Now the research target is android.media.MediaPlayer setSurface by more surfaces the video is always continuous.
 
 Android truly full-screen capabilities, the Android platform to become the most widely used video playback controls. Q Group:490442439
 
-Now the research target is android.media.MediaPlayer setSurface by more surfaces the video is always continuous.
 
 [中文文档](README-ZH.md)
 
