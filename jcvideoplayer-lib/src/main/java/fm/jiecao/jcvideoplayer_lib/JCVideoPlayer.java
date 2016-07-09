@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -89,6 +90,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected int mSeekTimePosition;//change postion when finger up
 
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
+
+    protected Handler mHandler = new Handler();
 
     public JCVideoPlayer(Context context) {
         super(context);
@@ -631,14 +634,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         @Override
         public void run() {
             if (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE) {
-                if (getContext() != null && getContext() instanceof Activity) {
-                    ((Activity) getContext()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            setTextAndProgress(0);
-                        }
-                    });
-                }
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setTextAndProgress(0);
+                    }
+                });
             }
         }
     }
