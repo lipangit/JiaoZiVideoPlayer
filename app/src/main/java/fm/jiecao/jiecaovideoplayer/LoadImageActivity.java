@@ -74,7 +74,7 @@ public class LoadImageActivity extends AppCompatActivity {
         videoController5.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
                 "嫂子洗澡没");
         Uri uri = Uri.parse("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg");
-        videoController5.ivThumb.setImageURI(uri);
+        videoController5.thumbImageView.setImageURI(uri);
     }
 
     public class BitmapCache implements com.android.volley.toolbox.ImageLoader.ImageCache {

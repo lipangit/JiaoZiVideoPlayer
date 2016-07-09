@@ -199,7 +199,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 return;
             }
             if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR) {
-                if (!JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                if (!Utils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage(getResources().getString(R.string.tips_not_wifi));
                     builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
@@ -401,8 +401,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         mSeekTimePosition = (int) (mDownPosition + deltaX * totalTimeDuration / mScreenWidth);
                         if (mSeekTimePosition > totalTimeDuration)
                             mSeekTimePosition = totalTimeDuration;
-                        String seekTime = JCUtils.stringForTime(mSeekTimePosition);
-                        String totalTime = JCUtils.stringForTime(totalTimeDuration);
+                        String seekTime = Utils.stringForTime(mSeekTimePosition);
+                        String totalTime = Utils.stringForTime(totalTimeDuration);
 
                         showProgressDialog(deltaX, seekTime, mSeekTimePosition, totalTime, totalTimeDuration);
                     }
@@ -685,15 +685,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             if (progress != 0) progressBar.setProgress(progress);
         }
         if (secProgress != 0) progressBar.setSecondaryProgress(secProgress);
-        currentTimeTextView.setText(JCUtils.stringForTime(currentTime));
-        totalTimeTextView.setText(JCUtils.stringForTime(totalTime));
+        currentTimeTextView.setText(Utils.stringForTime(currentTime));
+        totalTimeTextView.setText(Utils.stringForTime(totalTime));
     }
 
     protected void resetProgressAndTime() {
         progressBar.setProgress(0);
         progressBar.setSecondaryProgress(0);
-        currentTimeTextView.setText(JCUtils.stringForTime(0));
-        totalTimeTextView.setText(JCUtils.stringForTime(0));
+        currentTimeTextView.setText(Utils.stringForTime(0));
+        totalTimeTextView.setText(Utils.stringForTime(0));
     }
 
     protected void quitFullScreenGoToNormal() {

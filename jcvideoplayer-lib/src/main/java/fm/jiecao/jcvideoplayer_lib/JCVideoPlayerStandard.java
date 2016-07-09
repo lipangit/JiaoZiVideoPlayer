@@ -158,7 +158,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 return;
             }
             if (mCurrentState == CURRENT_STATE_NORMAL) {
-                if (!JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                if (!Utils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage(getResources().getString(R.string.tips_not_wifi));
                     builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
@@ -517,11 +517,5 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         JC_BURIED_POINT_STANDARD = jcBuriedPointStandard;
         JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
     }
-
-//  @Override
-//  public void onCompletion() {
-//    super.onCompletion();
-//    cancelDismissControlViewTimer();
-//  }
 
 }
