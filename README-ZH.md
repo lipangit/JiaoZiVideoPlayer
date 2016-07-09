@@ -7,7 +7,7 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
 
-真正实现Android的全屏功能，立志成为Android平台使用最广泛的视频播放控件
+真正实现Android的全屏功能，立志成为Android平台使用最广泛的视频播放控件  Q群:490442439
 
 ##主要特点
 1. 全屏时启动新`Activity`实现播放器真正的全屏功能
