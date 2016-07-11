@@ -159,23 +159,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             }
             if (mCurrentState == CURRENT_STATE_NORMAL) {
                 if (!mUrl.startsWith("file") && !Utils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage(getResources().getString(R.string.tips_not_wifi));
-                    builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            startPlayLocic();
-                            WIFI_TIP_DIALOG_SHOWED = true;
-                        }
-                    });
-                    builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.create().show();
+                    showWifiDialog();
                     return;
                 }
                 startPlayLocic();
@@ -194,6 +178,28 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.back) {
             backFullscreen();
         }
+    }
+
+    @Override
+    public void showWifiDialog() {
+        super.showWifiDialog();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(getResources().getString(R.string.tips_not_wifi));
+        builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                startPlayLocic();
+                WIFI_TIP_DIALOG_SHOWED = true;
+            }
+        });
+        builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 
     private void startPlayLocic() {

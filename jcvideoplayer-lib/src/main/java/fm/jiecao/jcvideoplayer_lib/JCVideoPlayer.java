@@ -200,23 +200,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             }
             if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR) {
                 if (!mUrl.startsWith("file") && !Utils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage(getResources().getString(R.string.tips_not_wifi));
-                    builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            startButtonLogic();
-                            WIFI_TIP_DIALOG_SHOWED = true;
-                        }
-                    });
-                    builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.create().show();
+                    showWifiDialog();
                     return;
                 }
                 startButtonLogic();
@@ -270,6 +254,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             }
             prepareVideo();
         }
+    }
+
+    public void showWifiDialog() {
+
     }
 
     private void startButtonLogic() {
