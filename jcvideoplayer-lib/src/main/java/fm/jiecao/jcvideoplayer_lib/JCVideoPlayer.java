@@ -284,7 +284,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             JCMediaManager.instance().listener.onCompletion();
         }
         JCMediaManager.instance().listener = this;
-        addTextureView();
+        addTextureView();//添加了一个view不知道干什么用
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 

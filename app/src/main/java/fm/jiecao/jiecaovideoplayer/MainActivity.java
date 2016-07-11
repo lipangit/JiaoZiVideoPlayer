@@ -59,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         jcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.custom_videoplayer);
         jcVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8",
                 headData);
+//   jcVideoPlayerSimple.setUp("http://player.youku.com/player.php/sid/XMTYzMzIwNzY5Mg==/v.swf",
+//                headData);
+
+
+        //<embed src="http://player.youku.com/player.php/sid/XMTYzMzIwNzY5Mg==/v.swf
 
         jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
         jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4"
