@@ -199,7 +199,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 return;
             }
             if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR) {
-                if (!Utils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                if (!mUrl.startsWith("file") && !Utils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage(getResources().getString(R.string.tips_not_wifi));
                     builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
