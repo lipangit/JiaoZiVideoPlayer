@@ -68,6 +68,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected Object[] mObjects;
     protected Map<String, String> mMapHeadData = new HashMap<>();
     protected boolean mLooping = false;
+    public int seekToInAdvance = -1;
+
 
     protected static Timer UPDATE_PROGRESS_TIMER;
     protected ProgressTimerTask mProgressTimerTask;
@@ -501,8 +503,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         startProgressTimer();
         setStateAndUi(CURRENT_STATE_PLAYING);
     }
-
-    public int seekToInAdvance = -1;
 
     @Override
     public void onAutoCompletion() {
