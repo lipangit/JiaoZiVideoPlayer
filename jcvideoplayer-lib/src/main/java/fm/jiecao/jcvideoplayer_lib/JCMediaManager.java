@@ -85,7 +85,6 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
                         mediaPlayer.setOnInfoListener(JCMediaManager.this);
                         mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
                         mediaPlayer.prepareAsync();
-
                     } catch (NoSuchMethodException e) {
                         e.printStackTrace();
                     } catch (IllegalAccessException e) {
