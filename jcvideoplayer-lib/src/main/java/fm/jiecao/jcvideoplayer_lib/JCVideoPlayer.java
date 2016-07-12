@@ -715,7 +715,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         Log.d(TAG, "quitFullscreen [" + this.hashCode() + "] ");
         IF_FULLSCREEN_FROM_NORMAL = false;
         if (mIfFullscreenIsDirectly) {
-            JCMediaManager.instance().mediaPlayer.stop();
+            JCMediaManager.instance().mediaPlayer.release();
             finishFullscreenActivity();
         } else {
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
