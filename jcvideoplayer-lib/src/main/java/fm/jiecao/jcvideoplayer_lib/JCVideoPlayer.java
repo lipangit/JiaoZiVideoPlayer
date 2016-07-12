@@ -1,9 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -199,7 +197,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 return;
             }
             if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR) {
-                if (!mUrl.startsWith("file") && !Utils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                if (!mUrl.startsWith("file") && !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog();
                     return;
                 }
@@ -389,8 +387,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         mSeekTimePosition = (int) (mDownPosition + deltaX * totalTimeDuration / mScreenWidth);
                         if (mSeekTimePosition > totalTimeDuration)
                             mSeekTimePosition = totalTimeDuration;
-                        String seekTime = Utils.stringForTime(mSeekTimePosition);
-                        String totalTime = Utils.stringForTime(totalTimeDuration);
+                        String seekTime = JCUtils.stringForTime(mSeekTimePosition);
+                        String totalTime = JCUtils.stringForTime(totalTimeDuration);
 
                         showProgressDialog(deltaX, seekTime, mSeekTimePosition, totalTime, totalTimeDuration);
                     }
@@ -496,9 +494,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void onPrepared() {
         if (mCurrentState != CURRENT_STATE_PREPAREING) return;
         JCMediaManager.instance().mediaPlayer.start();
+        if (seekToInAdvance != -1) {
+            JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
+            seekToInAdvance = -1;
+        }
         startProgressTimer();
         setStateAndUi(CURRENT_STATE_PLAYING);
     }
+
+    public int seekToInAdvance = -1;
 
     @Override
     public void onAutoCompletion() {
@@ -673,15 +677,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             if (progress != 0) progressBar.setProgress(progress);
         }
         if (secProgress != 0) progressBar.setSecondaryProgress(secProgress);
-        currentTimeTextView.setText(Utils.stringForTime(currentTime));
-        totalTimeTextView.setText(Utils.stringForTime(totalTime));
+        currentTimeTextView.setText(JCUtils.stringForTime(currentTime));
+        totalTimeTextView.setText(JCUtils.stringForTime(totalTime));
     }
 
     protected void resetProgressAndTime() {
         progressBar.setProgress(0);
         progressBar.setSecondaryProgress(0);
-        currentTimeTextView.setText(Utils.stringForTime(0));
-        totalTimeTextView.setText(Utils.stringForTime(0));
+        currentTimeTextView.setText(JCUtils.stringForTime(0));
+        totalTimeTextView.setText(JCUtils.stringForTime(0));
     }
 
     protected void quitFullScreenGoToNormal() {

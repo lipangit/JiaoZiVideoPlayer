@@ -11,7 +11,7 @@ import java.util.Locale;
  * Created by Nathen
  * On 2016/02/21 12:25
  */
-public class Utils {
+public class JCUtils {
 
     public static String stringForTime(int timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
