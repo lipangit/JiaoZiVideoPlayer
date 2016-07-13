@@ -49,7 +49,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     public JCMediaPlayerListener lastListener() {
-        if (listener == null)
+        if (lastListener == null)
             return null;
         return lastListener.get();
     }
