@@ -45,7 +45,7 @@ compile 'fm.jiecao:jiecaovideoplayer:3.6.3'
 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
     android:id="@+id/custom_videoplayer_standard"
     android:layout_width="match_parent"
-    android:lay3.6.3out_height="200dp"/>
+    android:layout_height="200dp"/>
 ```
 
 3.设置视频地址、缩略图地址、标题
