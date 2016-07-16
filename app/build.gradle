@@ -37,6 +37,8 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
+    //If you can not start app, you cancel the annotation
+    //如果app无法启动,请取消下面的注释
     //Other ABIs: optional
 //    compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.6.0'
     compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.6.0'
