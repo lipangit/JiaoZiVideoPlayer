@@ -644,7 +644,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         int position = 0;
         if (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE) {
             try {
-                position = JCMediaManager.instance().mediaPlayer.getCurrentPosition();
+                position = (int) JCMediaManager.instance().mediaPlayer.getCurrentPosition();
             } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return position;
@@ -656,7 +656,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected int getDuration() {
         int duration = 0;
         try {
-            duration = JCMediaManager.instance().mediaPlayer.getDuration();
+            duration = (int) JCMediaManager.instance().mediaPlayer.getDuration();
         } catch (IllegalStateException e) {
             e.printStackTrace();
             return duration;

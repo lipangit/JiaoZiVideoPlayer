@@ -1,7 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -14,6 +13,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
+
 
 /**
  * <p>统一管理MediaPlayer的地方,只有一个mediaPlayer实例，那么不会有多个视频同时播放，也节省资源。</p>
@@ -21,12 +23,12 @@ import java.util.Map;
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener,
-        MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener,
-        MediaPlayer.OnVideoSizeChangedListener, MediaPlayer.OnInfoListener {
+public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPlayer.OnCompletionListener,
+        IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnErrorListener,
+        IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener {
     public static String TAG = JCVideoPlayer.TAG;
 
-    public MediaPlayer mediaPlayer;
+    public IjkMediaPlayer mediaPlayer;
     private static JCMediaManager JCMediaManager;
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
@@ -77,7 +79,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     public JCMediaManager() {
-        mediaPlayer = new MediaPlayer();
+        mediaPlayer = new IjkMediaPlayer();
         mMediaHandlerThread = new HandlerThread(TAG);
         mMediaHandlerThread.start();
         mMediaHandler = new MediaHandler((mMediaHandlerThread.getLooper()));
@@ -98,10 +100,10 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
                         currentVideoWidth = 0;
                         currentVideoHeight = 0;
                         mediaPlayer.release();
-                        mediaPlayer = new MediaPlayer();
+                        mediaPlayer = new IjkMediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 //              mediaPlayer.setDataSource(context, Uri.parse(url), mapHeadData);
-                        Class<MediaPlayer> clazz = MediaPlayer.class;
+                        Class<IjkMediaPlayer> clazz = IjkMediaPlayer.class;
                         Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
                         method.invoke(mediaPlayer, ((FuckBean) msg.obj).url, ((FuckBean) msg.obj).mapHeadData);
                         mediaPlayer.setLooping(((FuckBean) msg.obj).looping);
@@ -165,7 +167,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     @Override
-    public void onPrepared(MediaPlayer mp) {
+    public void onPrepared(IMediaPlayer mp) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -177,7 +179,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     @Override
-    public void onCompletion(MediaPlayer mp) {
+    public void onCompletion(IMediaPlayer mp) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -189,7 +191,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     @Override
-    public void onBufferingUpdate(MediaPlayer mp, final int percent) {
+    public void onBufferingUpdate(IMediaPlayer mp, final int percent) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -201,7 +203,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     @Override
-    public void onSeekComplete(MediaPlayer mp) {
+    public void onSeekComplete(IMediaPlayer mp) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -213,7 +215,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     @Override
-    public boolean onError(MediaPlayer mp, final int what, final int extra) {
+    public boolean onError(IMediaPlayer mp, final int what, final int extra) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -226,7 +228,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     @Override
-    public boolean onInfo(MediaPlayer mp, final int what, final int extra) {
+    public boolean onInfo(IMediaPlayer mp, final int what, final int extra) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -239,7 +241,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     @Override
-    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+    public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sar_num, int sar_den) {
         currentVideoWidth = mp.getVideoWidth();
         currentVideoHeight = mp.getVideoHeight();
         mainThreadHandler.post(new Runnable() {
