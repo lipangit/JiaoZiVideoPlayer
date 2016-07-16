@@ -25,18 +25,16 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
 
-    //    # required, enough for most devices.
-    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.5.1'
-    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.5.1'
-
-//    # Other ABIs: optional
-    compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.5.1'
-    compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.5.1'
-    compile 'tv.danmaku.ijk.media:ijkplayer-x86:0.5.1'
-    compile 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.5.1'
-
-//    # ExoPlayer as IMediaPlayer: optional, experimental
-    compile 'tv.danmaku.ijk.media:ijkplayer-exo:0.5.1'
+    //required, enough for most devices.
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.6.0'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.6.0'
+    //Other ABIs: optional
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.6.0'
+    compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.6.0'
+    compile 'tv.danmaku.ijk.media:ijkplayer-x86:0.6.0'
+    compile 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.6.0'
+    //ExoPlayer as IMediaPlayer: optional, experimental
+    //compile 'tv.danmaku.ijk.media:ijkplayer-exo:0.6.0'
 }
 
 apply from: '../gradle/maven_push.gradle'
