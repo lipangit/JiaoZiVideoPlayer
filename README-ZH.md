@@ -18,9 +18,8 @@
 4. 手势修改进度和音量
 5. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
 6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
-7. [支持hls,rtsp](https://developer.android.com/guide/appendix/media-formats.html)
-8. 占用空间非常小，不到100k
-9. 设置http头信息
+7. [支持hls,rtsp](https://github.com/Bilibili/ijkplayer)
+8. 设置http头信息
 
 ##效果
 
