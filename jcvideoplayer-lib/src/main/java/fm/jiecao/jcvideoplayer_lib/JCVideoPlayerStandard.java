@@ -158,24 +158,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 return;
             }
             if (mCurrentState == CURRENT_STATE_NORMAL) {
-                if (!Utils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage(getResources().getString(R.string.tips_not_wifi));
-                    builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            startPlayLocic();
-                            WIFI_TIP_DIALOG_SHOWED = true;
-                        }
-                    });
-                    builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.create().show();
+                if (!mUrl.startsWith("file") && !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                    showWifiDialog();
                     return;
                 }
                 startPlayLocic();
@@ -183,7 +167,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 onClickUiToggle();
             }
         } else if (i == R.id.surface_container) {
-            if (JC_BURIED_POINT_STANDARD != null && JCMediaManager.instance().listener == this) {
+            if (JC_BURIED_POINT_STANDARD != null && isCurrentMediaListener()) {
                 if (mIfCurrentIsFullscreen) {
                     JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(mUrl, mObjects);
                 } else {
@@ -194,6 +178,28 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.back) {
             backFullscreen();
         }
+    }
+
+    @Override
+    public void showWifiDialog() {
+        super.showWifiDialog();
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(getResources().getString(R.string.tips_not_wifi));
+        builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                startPlayLocic();
+                WIFI_TIP_DIALOG_SHOWED = true;
+            }
+        });
+        builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 
     private void startPlayLocic() {

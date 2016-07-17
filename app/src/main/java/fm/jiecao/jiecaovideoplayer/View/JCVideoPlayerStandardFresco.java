@@ -24,7 +24,7 @@ import java.util.TimerTask;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
 import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
-import fm.jiecao.jcvideoplayer_lib.Utils;
+import fm.jiecao.jcvideoplayer_lib.JCUtils;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jiecaovideoplayer.R;
 
@@ -166,7 +166,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
                 return;
             }
             if (mCurrentState == CURRENT_STATE_NORMAL) {
-                if (!Utils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                if (!JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage(getResources().getString(fm.jiecao.jcvideoplayer_lib.R.string.tips_not_wifi));
                     builder.setPositiveButton(getResources().getString(fm.jiecao.jcvideoplayer_lib.R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
@@ -191,7 +191,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
                 onClickUiToggle();
             }
         } else if (i == R.id.surface_container) {
-            if (JC_BURIED_POINT_STANDARD != null && JCMediaManager.instance().listener == this) {
+            if (JC_BURIED_POINT_STANDARD != null && isCurrentMediaListener()) {
                 if (mIfCurrentIsFullscreen) {
                     JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(mUrl, mObjects);
                 } else {

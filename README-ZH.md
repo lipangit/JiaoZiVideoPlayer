@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-3.6.3-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.0_beta-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -19,33 +19,33 @@
 5. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
 6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
 7. [支持hls,rtsp](https://developer.android.com/guide/appendix/media-formats.html)
-8. 占用空间非常小，不到60k
+8. 占用空间非常小，不到100k
 9. 设置http头信息
 
 ##效果
 
-**[jiecaovideoplayer-3.6.3-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.6.3-demo.apk)**
+**[jiecaovideoplayer-4.0_beta-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.0_beta-demo.apk)**
 
 ![Demo Screenshot][1]
 
 ##使用
 1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:3.6.3'
+compile 'fm.jiecao:jiecaovideoplayer:4.0_beta'
 ```
 
 或直接下载
 
-* [jiecaovideoplayer-3.6.3.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.6.3.aar)
-* [jiecaovideoplayer-3.6.3-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.6.3-javadoc.jar)
-* [jiecaovideoplayer-3.6.3-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-3.6.3-sources.jar)
+* [jiecaovideoplayer-4.0_beta.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.0_beta.aar)
+* [jiecaovideoplayer-4.0_beta-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.0_beta-javadoc.jar)
+* [jiecaovideoplayer-4.0_beta-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.0_beta-sources.jar)
 
 2.添加布局
 ```xml
 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
     android:id="@+id/custom_videoplayer_standard"
     android:layout_width="match_parent"
-    android:lay3.6.3out_height="200dp"/>
+    android:layout_height="200dp"/>
 ```
 
 3.设置视频地址、缩略图地址、标题
@@ -82,7 +82,7 @@ jcVideoPlayerStandard.startButton.performClick();
 
 ##贡献者
 
-[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw)
+[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw) [Miguel Aragues](https://github.com/Maragues)
 
 ## License MIT
 

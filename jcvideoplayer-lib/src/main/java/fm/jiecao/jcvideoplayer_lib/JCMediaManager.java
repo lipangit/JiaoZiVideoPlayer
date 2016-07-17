@@ -1,7 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -9,9 +8,13 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.view.Surface;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 
 /**
@@ -20,17 +23,15 @@ import java.util.Map;
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener,
-        MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener,
-        MediaPlayer.OnVideoSizeChangedListener, MediaPlayer.OnInfoListener {
+public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPlayer.OnCompletionListener,
+        IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnErrorListener,
+        IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener {
     public static String TAG = JCVideoPlayer.TAG;
 
-    public MediaPlayer mediaPlayer;
+    public IjkMediaPlayer mediaPlayer;
     private static JCMediaManager JCMediaManager;
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
-    public JCMediaPlayerListener listener;
-    public JCMediaPlayerListener lastListener;
     public int lastState;
 
     public static final int HANDLER_PREPARE = 0;
@@ -40,6 +41,36 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     MediaHandler mMediaHandler;
     Handler mainThreadHandler;
 
+    private WeakReference<JCMediaPlayerListener> listener;
+    private WeakReference<JCMediaPlayerListener> lastListener;
+
+    public JCMediaPlayerListener listener() {
+        if (listener == null)
+            return null;
+        return listener.get();
+    }
+
+    public JCMediaPlayerListener lastListener() {
+        if (lastListener == null)
+            return null;
+        return lastListener.get();
+    }
+
+    public void setListener(JCMediaPlayerListener listener) {
+        if (listener == null)
+            this.listener = null;
+        else
+            this.listener = new WeakReference<>(listener);
+    }
+
+    public void setLastListener(JCMediaPlayerListener lastListener) {
+        if (lastListener == null)
+            this.lastListener = null;
+        else
+            this.lastListener = new WeakReference<>(lastListener);
+    }
+
+
     public static JCMediaManager instance() {
         if (JCMediaManager == null) {
             JCMediaManager = new JCMediaManager();
@@ -48,7 +79,7 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     public JCMediaManager() {
-        mediaPlayer = new MediaPlayer();
+        mediaPlayer = new IjkMediaPlayer();
         mMediaHandlerThread = new HandlerThread(TAG);
         mMediaHandlerThread.start();
         mMediaHandler = new MediaHandler((mMediaHandlerThread.getLooper()));
@@ -69,10 +100,10 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
                         currentVideoWidth = 0;
                         currentVideoHeight = 0;
                         mediaPlayer.release();
-                        mediaPlayer = new MediaPlayer();
+                        mediaPlayer = new IjkMediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 //              mediaPlayer.setDataSource(context, Uri.parse(url), mapHeadData);
-                        Class<MediaPlayer> clazz = MediaPlayer.class;
+                        Class<IjkMediaPlayer> clazz = IjkMediaPlayer.class;
                         Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
                         method.invoke(mediaPlayer, ((FuckBean) msg.obj).url, ((FuckBean) msg.obj).mapHeadData);
                         mediaPlayer.setLooping(((FuckBean) msg.obj).looping);
@@ -136,60 +167,60 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     @Override
-    public void onPrepared(MediaPlayer mp) {
+    public void onPrepared(IMediaPlayer mp) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onPrepared();
+                    listener().onPrepared();
                 }
             }
         });
     }
 
     @Override
-    public void onCompletion(MediaPlayer mp) {
+    public void onCompletion(IMediaPlayer mp) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onAutoCompletion();
+                    listener().onAutoCompletion();
                 }
             }
         });
     }
 
     @Override
-    public void onBufferingUpdate(MediaPlayer mp, final int percent) {
+    public void onBufferingUpdate(IMediaPlayer mp, final int percent) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onBufferingUpdate(percent);
+                    listener().onBufferingUpdate(percent);
                 }
             }
         });
     }
 
     @Override
-    public void onSeekComplete(MediaPlayer mp) {
+    public void onSeekComplete(IMediaPlayer mp) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onSeekComplete();
+                    listener().onSeekComplete();
                 }
             }
         });
     }
 
     @Override
-    public boolean onError(MediaPlayer mp, final int what, final int extra) {
+    public boolean onError(IMediaPlayer mp, final int what, final int extra) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onError(what, extra);
+                    listener().onError(what, extra);
                 }
             }
         });
@@ -197,12 +228,12 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     @Override
-    public boolean onInfo(MediaPlayer mp, final int what, final int extra) {
+    public boolean onInfo(IMediaPlayer mp, final int what, final int extra) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onInfo(what, extra);
+                    listener().onInfo(what, extra);
                 }
             }
         });
@@ -210,14 +241,14 @@ public class JCMediaManager implements MediaPlayer.OnPreparedListener, MediaPlay
     }
 
     @Override
-    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+    public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sar_num, int sar_den) {
         currentVideoWidth = mp.getVideoWidth();
         currentVideoHeight = mp.getVideoHeight();
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (listener != null) {
-                    listener.onVideoSizeChanged();
+                    listener().onVideoSizeChanged();
                 }
             }
         });
