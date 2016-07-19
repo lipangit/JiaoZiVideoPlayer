@@ -119,7 +119,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         progressBar.setOnSeekBarChangeListener(this);
         bottomContainer.setOnClickListener(this);
         textureViewContainer.setOnClickListener(this);
-        progressBar.setOnTouchListener(this);
 
         textureViewContainer.setOnTouchListener(this);
         mScreenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
@@ -427,29 +426,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     }
                     break;
             }
-        } else if (id == R.id.progress) {//if I am seeking bar,no mater whoever can not intercept my event
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    Log.i(TAG, "onTouch bottomProgress actionUp [" + this.hashCode() + "] ");
-                    cancelProgressTimer();
-                    ViewParent vpdown = getParent();
-                    while (vpdown != null) {
-                        vpdown.requestDisallowInterceptTouchEvent(true);
-                        vpdown = vpdown.getParent();
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    Log.i(TAG, "onTouch bottomProgress actionDown [" + this.hashCode() + "] ");
-                    startProgressTimer();
-                    ViewParent vpup = getParent();
-                    while (vpup != null) {
-                        vpup.requestDisallowInterceptTouchEvent(false);
-                        vpup = vpup.getParent();
-                    }
-                    break;
-            }
         }
-
         return false;
     }
 
@@ -473,23 +450,33 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        if (mCurrentState != CURRENT_STATE_PLAYING &&
-                mCurrentState != CURRENT_STATE_PAUSE) return;
-        if (fromUser) {
-            int time = progress * getDuration() / 100;
-            JCMediaManager.instance().mediaPlayer.seekTo(time);
-            Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
-        }
     }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
-
+        Log.i(TAG, "bottomProgress onStartTrackingTouch [" + this.hashCode() + "] ");
+        cancelProgressTimer();
+        ViewParent vpdown = getParent();
+        while (vpdown != null) {
+            vpdown.requestDisallowInterceptTouchEvent(true);
+            vpdown = vpdown.getParent();
+        }
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
-
+        Log.i(TAG, "bottomProgress onStopTrackingTouch [" + this.hashCode() + "] ");
+        startProgressTimer();
+        ViewParent vpup = getParent();
+        while (vpup != null) {
+            vpup.requestDisallowInterceptTouchEvent(false);
+            vpup = vpup.getParent();
+        }
+        if (mCurrentState != CURRENT_STATE_PLAYING &&
+                mCurrentState != CURRENT_STATE_PAUSE) return;
+        int time = seekBar.getProgress() * getDuration() / 100;
+        JCMediaManager.instance().mediaPlayer.seekTo(time);
+        Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
     }
 
     @Override
