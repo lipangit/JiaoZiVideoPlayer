@@ -27,6 +27,14 @@ import java.util.TimerTask;
  */
 public class JCVideoPlayerStandard extends JCVideoPlayer {
 
+    protected int mCurrentScreen;
+    public static final int SCREEN_LIST = 0;
+    public static final int SCREEN_LIST_WINDOW = 1;
+    public static final int SCREEN_FULLSCREEN = 2;
+    public static final int SCREEN_DETAIL = 3;
+    public static final int SCREEN_DETAIL_WINDOW = 4;
+
+
     public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView titleTextView;
