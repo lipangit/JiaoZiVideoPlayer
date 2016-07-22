@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActiivty"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -20,22 +20,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ListActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".ListViewpagerActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".MultiHolderActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".LoadImageActivity"
-            android:screenOrientation="portrait"/>
 
     </application>
 
