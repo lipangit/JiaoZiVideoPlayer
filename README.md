@@ -32,6 +32,9 @@ Android truly full-screen capabilities, the Android platform to become the most 
 ![Demo Screenshot][1]
 
 ## Usage
+
+[Stable version is v3.6.3](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v3.6.3)
+
 1.Import library
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:4.1_alpha'
