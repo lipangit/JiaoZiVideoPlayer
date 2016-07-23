@@ -15,6 +15,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -61,7 +63,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public TextView currentTimeTextView, totalTimeTextView;
     public ViewGroup textureViewContainer;
     public ViewGroup topContainer, bottomContainer;
-    public JCResizeTextureView textureView;
     public Surface mSurface;
 
     protected String mUrl;
@@ -244,7 +245,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 JCMediaManager.instance().setListener(null);
                 IF_FULLSCREEN_FROM_NORMAL = true;
                 IF_RELEASE_WHEN_ON_PAUSE = false;
-                JCFullScreenActivity.startActivityFromNormal(getContext(), mCurrentState, mUrl, JCVideoPlayer.this.getClass(), this.mObjects);
+                toFullscreen();
+                //JCFullScreenActivity.startActivityFromNormal(getContext(), mCurrentState, mUrl, JCVideoPlayer.this.getClass(), this.mObjects);
             }
         } else if (i == R.id.surface_container && mCurrentState == CURRENT_STATE_ERROR) {
             Log.i(TAG, "onClick surfaceContainer State=Error [" + this.hashCode() + "] ");
@@ -252,6 +254,20 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 JC_BURIED_POINT.onClickStartError(mUrl, mObjects);
             }
             prepareVideo();
+        }
+    }
+
+    private void toFullscreen() {
+        ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        try {
+            Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
+            JCVideoPlayer mJcVideoPlayer = constructor.newInstance(getContext());
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 200);
+            vp.addView(mJcVideoPlayer, lp);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -308,13 +324,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (textureViewContainer.getChildCount() > 0) {
             textureViewContainer.removeAllViews();
         }
-        textureView = null;
-        textureView = new JCResizeTextureView(getContext());
-        textureView.setSurfaceTextureListener(this);
+        JCMediaManager.textureView = null;
+        JCMediaManager.textureView = new JCResizeTextureView(getContext());
+        JCMediaManager.textureView.setSurfaceTextureListener(this);
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
-        textureViewContainer.addView(textureView, layoutParams);
+        textureViewContainer.addView(JCMediaManager.textureView, layoutParams);
     }
 
     @Override
@@ -582,7 +598,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         int mVideoWidth = JCMediaManager.instance().currentVideoWidth;
         int mVideoHeight = JCMediaManager.instance().currentVideoHeight;
         if (mVideoWidth != 0 && mVideoHeight != 0) {
-            textureView.requestLayout();
+            JCMediaManager.textureView.requestLayout();
         }
     }
 

@@ -1,5 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -7,6 +8,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.Surface;
+import android.view.TextureView;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
@@ -28,8 +30,10 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener {
     public static String TAG = JCVideoPlayer.TAG;
 
-    public IjkMediaPlayer mediaPlayer;
     private static JCMediaManager JCMediaManager;
+    public IjkMediaPlayer mediaPlayer;
+    public static TextureView textureView;
+
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
     public int lastState;
@@ -43,33 +47,6 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
 
     private WeakReference<JCMediaPlayerListener> listener;
     private WeakReference<JCMediaPlayerListener> lastListener;
-
-    public JCMediaPlayerListener listener() {
-        if (listener == null)
-            return null;
-        return listener.get();
-    }
-
-    public JCMediaPlayerListener lastListener() {
-        if (lastListener == null)
-            return null;
-        return lastListener.get();
-    }
-
-    public void setListener(JCMediaPlayerListener listener) {
-        if (listener == null)
-            this.listener = null;
-        else
-            this.listener = new WeakReference<>(listener);
-    }
-
-    public void setLastListener(JCMediaPlayerListener lastListener) {
-        if (lastListener == null)
-            this.lastListener = null;
-        else
-            this.lastListener = new WeakReference<>(lastListener);
-    }
-
 
     public static JCMediaManager instance() {
         if (JCMediaManager == null) {
@@ -252,6 +229,32 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                 }
             }
         });
+    }
+
+    public JCMediaPlayerListener listener() {
+        if (listener == null)
+            return null;
+        return listener.get();
+    }
+
+    public JCMediaPlayerListener lastListener() {
+        if (lastListener == null)
+            return null;
+        return lastListener.get();
+    }
+
+    public void setListener(JCMediaPlayerListener listener) {
+        if (listener == null)
+            this.listener = null;
+        else
+            this.listener = new WeakReference<>(listener);
+    }
+
+    public void setLastListener(JCMediaPlayerListener lastListener) {
+        if (lastListener == null)
+            this.lastListener = null;
+        else
+            this.lastListener = new WeakReference<>(lastListener);
     }
 
     public interface JCMediaPlayerListener {

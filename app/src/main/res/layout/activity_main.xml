@@ -4,30 +4,16 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/container1"
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+        android:id="@+id/jc_video"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:orientation="vertical">
+        android:layout_height="200dp"/>
 
-
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/container2"
-        android:layout_width="match_parent"
-        android:layout_height="250dp">
-
-
-    </FrameLayout>
-
-    <RelativeLayout
-        android:id="@+id/container3"
-        android:layout_width="match_parent"
-        android:layout_height="250dp">
-
-
-    </RelativeLayout>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"/>
 
 
 </LinearLayout>

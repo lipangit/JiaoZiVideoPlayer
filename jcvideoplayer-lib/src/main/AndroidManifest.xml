@@ -9,10 +9,6 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
-        <activity
-            android:name=".JCFullScreenActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
