@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -200,6 +201,18 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             }
         });
         builder.create().show();
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        super.onStartTrackingTouch(seekBar);
+        cancelDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        super.onStopTrackingTouch(seekBar);
+        startDismissControlViewTimer();
     }
 
     private void startPlayLocic() {
