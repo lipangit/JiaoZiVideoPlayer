@@ -6,6 +6,7 @@ import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -262,8 +263,21 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer mJcVideoPlayer = constructor.newInstance(getContext());
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, 200);
+            WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+//            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getHeight());
+            int w = wm.getDefaultDisplay().getWidth();
+            int h = wm.getDefaultDisplay().getHeight();
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
+
+            lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(mJcVideoPlayer, lp);
+            mJcVideoPlayer.setUp(mUrl, mObjects);
+            mJcVideoPlayer.setStateAndUi(mCurrentState);
+            mJcVideoPlayer.setRotation(90);
+
+            ((AppCompatActivity) getContext()).getSupportActionBar().hide();
+            ((AppCompatActivity) getContext()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {

@@ -5,8 +5,8 @@ android {
     buildToolsVersion '23.0.2'
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 23
+        minSdkVersion 15
+        targetSdkVersion 24
         versionCode 32
         versionName "4.0_beta"
     }
@@ -24,6 +24,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.1.1'
 
     //required, enough for most devices.
     compile 'tv.danmaku.ijk.media:ijkplayer-java:0.6.0'

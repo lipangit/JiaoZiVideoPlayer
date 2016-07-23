@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "fm.jiecao.jiecaovideoplayer"
-        minSdkVersion 16
-        targetSdkVersion 23
+        minSdkVersion 15
+        targetSdkVersion 24
         versionCode 32
         versionName "4.0_beta"
     }
@@ -26,7 +26,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile project(':jcvideoplayer-lib')
-    compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.squareup.picasso:picasso:2.5.1'
     compile 'com.facebook.fresco:fresco:0.9.0'
