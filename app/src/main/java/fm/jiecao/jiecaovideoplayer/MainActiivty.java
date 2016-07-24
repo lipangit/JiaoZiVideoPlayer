@@ -2,8 +2,10 @@ package fm.jiecao.jiecaovideoplayer;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,8 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+
+import java.lang.reflect.Field;
 
 import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
@@ -35,18 +39,19 @@ public class MainActiivty extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
-            Toast.makeText(this, "返回键Back键测试", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
+//            Toast.makeText(this, "返回键Back键测试", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
     }
+
 }

@@ -247,8 +247,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 JCMediaManager.instance().setListener(null);
                 IF_FULLSCREEN_FROM_NORMAL = true;
                 IF_RELEASE_WHEN_ON_PAUSE = false;
-                toFullscreen();
-                //JCFullScreenActivity.startActivityFromNormal(getContext(), mCurrentState, mUrl, JCVideoPlayer.this.getClass(), this.mObjects);
+                toWindowFullscreen();
+//                JCFullScreenActivity.startActivityFromNormal(getContext(), mCurrentState, mUrl, JCVideoPlayer.this.getClass(), this.mObjects);
             }
         } else if (i == R.id.surface_container && mCurrentState == CURRENT_STATE_ERROR) {
             Log.i(TAG, "onClick surfaceContainer State=Error [" + this.hashCode() + "] ");
@@ -259,7 +259,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    private void toFullscreen() {
+    private void toWindowFullscreen() {
         ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
@@ -279,8 +279,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             mJcVideoPlayer.setRotation(90);
             ((AppCompatActivity) getContext()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
             ((AppCompatActivity) getContext()).getSupportActionBar().hide();
-
+            mJcVideoPlayer.setFocusable(true);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -323,6 +324,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         ((Activity) getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.instance().prepare(mUrl, mMapHeadData, mLooping);
         setStateAndUi(CURRENT_STATE_PREPAREING);
+
     }
 
     private static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
