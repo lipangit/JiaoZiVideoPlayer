@@ -318,10 +318,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
 
-            Log.d(TAG, "quitFullScreenGoToNormal [" + this.hashCode() + "] ");
-            if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
-                JC_BURIED_POINT.onQuitFullscreen(mUrl, mObjects);
-            }
             JCMediaManager.instance().setDisplay(null);
             JCMediaManager.instance().setListener(JCMediaManager.instance().lastListener());
             JCMediaManager.instance().setLastListener(null);

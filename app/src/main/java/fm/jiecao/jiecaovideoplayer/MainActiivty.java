@@ -51,7 +51,7 @@ public class MainActiivty extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (!JCVideoPlayer.backPress()) {
+        if (JCVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();
