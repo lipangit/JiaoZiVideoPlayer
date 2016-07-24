@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
@@ -273,16 +274,27 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             vp.addView(mJcVideoPlayer, lp);
             mJcVideoPlayer.setUp(mUrl, mObjects);
             mJcVideoPlayer.setStateAndUi(mCurrentState);
-            mJcVideoPlayer.setRotation(90);
+            mJcVideoPlayer.addTextureView();
 
-            ((AppCompatActivity) getContext()).getSupportActionBar().hide();
+            mJcVideoPlayer.setRotation(90);
             ((AppCompatActivity) getContext()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            ((AppCompatActivity) getContext()).getSupportActionBar().hide();
+
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
+            Toast.makeText(getContext(), "返回键Back键测试", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void showWifiDialog() {
