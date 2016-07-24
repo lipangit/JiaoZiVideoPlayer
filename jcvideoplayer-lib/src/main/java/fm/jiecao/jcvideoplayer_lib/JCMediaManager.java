@@ -7,6 +7,7 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
@@ -109,6 +110,7 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                     } else {
                         Surface holder = (Surface) msg.obj;
                         if (holder.isValid()) {
+                            Log.i(TAG, "set surface");
                             instance().mediaPlayer.setSurface(holder);
                         }
                     }
@@ -263,6 +265,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         void onAutoCompletion();
 
         void onCompletion();
+
+        boolean onBackPress();
 
         void onBufferingUpdate(int percent);
 

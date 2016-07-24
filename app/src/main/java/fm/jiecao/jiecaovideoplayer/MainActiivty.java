@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import java.lang.reflect.Field;
 
 import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
@@ -33,7 +34,7 @@ public class MainActiivty extends AppCompatActivity {
 
         jcVideo = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
         jcVideo.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
-                , "嫂子闭眼睛");
+                , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子闭眼睛");
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
                 jcVideo.thumbImageView);
 
@@ -50,6 +51,9 @@ public class MainActiivty extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        if (!JCVideoPlayer.backPress()) {
+            return;
+        }
         super.onBackPressed();
 
     }

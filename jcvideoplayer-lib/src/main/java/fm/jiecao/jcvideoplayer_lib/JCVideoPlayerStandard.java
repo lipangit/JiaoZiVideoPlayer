@@ -27,7 +27,6 @@ import java.util.TimerTask;
  */
 public class JCVideoPlayerStandard extends JCVideoPlayer {
 
-    protected int mCurrentScreen;
     public static final int SCREEN_LAYOUT_LIST = 0;
     public static final int SCREEN_WINDOW_FULLSCREEN = 1;
     public static final int SCREEN_WINDOW_TINY = 2;
@@ -69,9 +68,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public boolean setUp(String url, Object... objects) {
+    public boolean setUp(String url, int screen, Object... objects) {
         if (objects.length == 0) return false;
-        if (super.setUp(url, objects)) {
+        if (super.setUp(url, screen, objects)) {
             titleTextView.setText(objects[0].toString());
             if (mIfCurrentIsFullscreen) {
                 fullscreenButton.setImageResource(R.drawable.jc_shrink);

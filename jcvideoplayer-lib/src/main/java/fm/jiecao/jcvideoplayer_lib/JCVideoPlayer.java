@@ -41,6 +41,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static final String TAG = "JieCaoVideoPlayer";
 
+    protected int mCurrentScreen;
     protected int mCurrentState = -1;//-1相当于null
     protected static final int CURRENT_STATE_NORMAL = 0;
     protected static final int CURRENT_STATE_PREPAREING = 1;
@@ -135,19 +136,20 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JC_BURIED_POINT = jcBuriedPoint;
     }
 
-    public boolean setUp(String url, Object... objects) {
+    public boolean setUp(String url, int screen, Object... objects) {
         if (isCurrentMediaListener() &&
                 (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
         mCurrentState = CURRENT_STATE_NORMAL;
         this.mUrl = url;
         this.mObjects = objects;
+        this.mCurrentScreen = screen;
         setStateAndUi(CURRENT_STATE_NORMAL);
         return true;
     }
 
-    public boolean setUp(String url, Map<String, String> mapHeadData, Object... objects) {
-        if (setUp(url, objects)) {
+    public boolean setUp(String url, Map<String, String> mapHeadData, int screen, Object... objects) {
+        if (setUp(url, screen, objects)) {
             this.mMapHeadData.clear();
             this.mMapHeadData.putAll(mapHeadData);
             return true;
@@ -272,9 +274,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(mJcVideoPlayer, lp);
-            mJcVideoPlayer.setUp(mUrl, mObjects);
+            mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
             mJcVideoPlayer.setStateAndUi(mCurrentState);
             mJcVideoPlayer.addTextureView();
+            JCMediaManager.instance().setListener(mJcVideoPlayer);
 
             mJcVideoPlayer.setRotation(90);
             ((AppCompatActivity) getContext()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -289,17 +292,44 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
-            Toast.makeText(getContext(), "返回键Back键测试", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
+//            Toast.makeText(getContext(), "返回键Back键测试", Toast.LENGTH_SHORT).show();
+//            return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
     public void showWifiDialog() {
 
+    }
+
+    public static boolean backPress() {
+        if (JCMediaManager.instance().listener() != null) {
+            return JCMediaManager.instance().listener().onBackPress();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onBackPress() {
+        if (mCurrentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN) {
+            ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+            vp.removeView(this);
+
+            Log.d(TAG, "quitFullScreenGoToNormal [" + this.hashCode() + "] ");
+            if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
+                JC_BURIED_POINT.onQuitFullscreen(mUrl, mObjects);
+            }
+            JCMediaManager.instance().setDisplay(null);
+            JCMediaManager.instance().setListener(JCMediaManager.instance().lastListener());
+            JCMediaManager.instance().setLastListener(null);
+            JCMediaManager.instance().lastState = mCurrentState;//save state
+            JCMediaManager.instance().listener().onBackFullscreen();
+            return true;
+        }
+        return false;
     }
 
     private void startButtonLogic() {
@@ -549,7 +579,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (textureViewContainer.getChildCount() > 0) {
             textureViewContainer.removeAllViews();
         }
-        finishFullscreenActivity();
         if (IF_FULLSCREEN_FROM_NORMAL) {//如果在进入全屏后播放完就初始化自己非全屏的控件
             IF_FULLSCREEN_FROM_NORMAL = false;
             JCMediaManager.instance().lastListener().onAutoCompletion();
@@ -568,11 +597,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             textureViewContainer.removeAllViews();
         }
         //if fullscreen finish activity what ever the activity is directly or click fullscreen
-        finishFullscreenActivity();
 
         if (IF_FULLSCREEN_FROM_NORMAL) {//如果在进入全屏后播放完就初始化自己非全屏的控件
             IF_FULLSCREEN_FROM_NORMAL = false;
-            JCMediaManager.instance().lastListener().onCompletion();
+//            JCMediaManager.instance().lastListener().onCompletion();
         }
         JCMediaManager.instance().setListener(null);
         JCMediaManager.instance().setLastListener(null);
@@ -733,14 +761,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (mCurrentState == CURRENT_STATE_PAUSE) {
             JCMediaManager.instance().mediaPlayer.seekTo(JCMediaManager.instance().mediaPlayer.getCurrentPosition());
         }
-        finishFullscreenActivity();
-    }
-
-    protected void finishFullscreenActivity() {
-        if (getContext() instanceof JCFullScreenActivity) {
-            Log.d(TAG, "finishFullscreenActivity [" + this.hashCode() + "] ");
-            ((JCFullScreenActivity) getContext()).finish();
-        }
     }
 
     public void backFullscreen() {
@@ -748,7 +768,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         IF_FULLSCREEN_FROM_NORMAL = false;
         if (mIfFullscreenIsDirectly) {
             JCMediaManager.instance().mediaPlayer.release();
-            finishFullscreenActivity();
         } else {
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             IF_RELEASE_WHEN_ON_PAUSE = false;

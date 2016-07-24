@@ -27,8 +27,8 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     }
 
     @Override
-    public boolean setUp(String url, Object... objects) {
-        if (super.setUp(url, objects)) {
+    public boolean setUp(String url, int screen, Object... objects) {
+        if (super.setUp(url, screen, objects)) {
 //      if (mIfCurrentIsFullscreen) {
 //        fullscreenButton.setImageResource(R.drawable.jc_shrink);
 //      } else {
@@ -89,5 +89,10 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
             }
         }
         super.onProgressChanged(seekBar, progress, fromUser);
+    }
+
+    @Override
+    public boolean onBackPress() {
+        return false;
     }
 }
