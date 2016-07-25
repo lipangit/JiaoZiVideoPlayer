@@ -37,7 +37,7 @@ import java.util.TimerTask;
  * Created by Nathen
  * On 2016/04/10 15:45
  */
-public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, JCMediaManager.JCMediaPlayerListener, TextureView.SurfaceTextureListener {
+public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickListener, View.OnTouchListener, SeekBar.OnSeekBarChangeListener, JCMediaPlayerListener, TextureView.SurfaceTextureListener {
 
     public static final String TAG = "JieCaoVideoPlayer";
 
@@ -245,8 +245,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 }
                 //to fullscreen
                 JCMediaManager.instance().setDisplay(null);
-                JCMediaManager.instance().setLastListener(this);
-                JCMediaManager.instance().setListener(null);
+                JCVideoPlayerManager.setLastListener(this);
+                JCVideoPlayerManager.setListener(null);
                 IF_FULLSCREEN_FROM_NORMAL = true;
                 IF_RELEASE_WHEN_ON_PAUSE = false;
                 toWindowFullscreen();
@@ -277,7 +277,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
             mJcVideoPlayer.setStateAndUi(mCurrentState);
             mJcVideoPlayer.addTextureView();
-            JCMediaManager.instance().setListener(mJcVideoPlayer);
+            JCVideoPlayerManager.setListener(mJcVideoPlayer);
 
             mJcVideoPlayer.setRotation(90);
             ((AppCompatActivity) getContext()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -306,8 +306,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public static boolean backPress() {
-        if (JCMediaManager.instance().listener() != null) {
-            return JCMediaManager.instance().listener().onBackPress();
+        if (JCVideoPlayerManager.listener() != null) {
+            return JCVideoPlayerManager.listener().onBackPress();
         }
         return false;
     }
@@ -319,10 +319,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             vp.removeView(this);
 
             JCMediaManager.instance().setDisplay(null);
-            JCMediaManager.instance().setListener(JCMediaManager.instance().lastListener());
-            JCMediaManager.instance().setLastListener(null);
+            JCVideoPlayerManager.setListener(JCVideoPlayerManager.lastListener());
+            JCVideoPlayerManager.setLastListener(null);
             JCMediaManager.instance().lastState = mCurrentState;//save state
-            JCMediaManager.instance().listener().onBackFullscreen();
+            JCVideoPlayerManager.listener().onBackFullscreen();
             return true;
         }
         return false;
@@ -339,10 +339,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     protected void prepareVideo() {
         Log.d(TAG, "prepareVideo [" + this.hashCode() + "] ");
-        if (JCMediaManager.instance().listener() != null) {
-            JCMediaManager.instance().listener().onCompletion();
+        if (JCVideoPlayerManager.listener() != null) {
+            JCVideoPlayerManager.listener().onCompletion();
         }
-        JCMediaManager.instance().setListener(this);
+        JCVideoPlayerManager.setListener(this);
         addTextureView();
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
@@ -577,9 +577,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
         if (IF_FULLSCREEN_FROM_NORMAL) {//如果在进入全屏后播放完就初始化自己非全屏的控件
             IF_FULLSCREEN_FROM_NORMAL = false;
-            JCMediaManager.instance().lastListener().onAutoCompletion();
+            JCVideoPlayerManager.lastListener().onAutoCompletion();
         }
-        JCMediaManager.instance().setLastListener(null);
+        JCVideoPlayerManager.setLastListener(null);
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         ((Activity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -598,8 +598,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             IF_FULLSCREEN_FROM_NORMAL = false;
 //            JCMediaManager.instance().lastListener().onCompletion();
         }
-        JCMediaManager.instance().setListener(null);
-        JCMediaManager.instance().setLastListener(null);
+        JCVideoPlayerManager.setListener(null);
+        JCVideoPlayerManager.setLastListener(null);
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
 
@@ -754,10 +754,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             JC_BURIED_POINT.onQuitFullscreen(mUrl, mObjects);
         }
         JCMediaManager.instance().setDisplay(null);
-        JCMediaManager.instance().setListener(JCMediaManager.instance().lastListener());
-        JCMediaManager.instance().setLastListener(null);
+        JCVideoPlayerManager.setListener(JCVideoPlayerManager.lastListener());
+        JCVideoPlayerManager.setLastListener(null);
         JCMediaManager.instance().lastState = mCurrentState;//save state
-        JCMediaManager.instance().listener().onBackFullscreen();
+        JCVideoPlayerManager.listener().onBackFullscreen();
         if (mCurrentState == CURRENT_STATE_PAUSE) {
             JCMediaManager.instance().mediaPlayer.seekTo(JCMediaManager.instance().mediaPlayer.getCurrentPosition());
         }
@@ -778,8 +778,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static void releaseAllVideos() {
         if (IF_RELEASE_WHEN_ON_PAUSE) {
             Log.d(TAG, "releaseAllVideos");
-            if (JCMediaManager.instance().listener() != null) {
-                JCMediaManager.instance().listener().onCompletion();
+            if (JCVideoPlayerManager.listener() != null) {
+                JCVideoPlayerManager.listener().onCompletion();
             }
             JCMediaManager.instance().releaseMediaPlayer();
         } else {
@@ -799,7 +799,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     protected boolean isCurrentMediaListener() {
-        return JCMediaManager.instance().listener() != null
-                && JCMediaManager.instance().listener() == this;
+        return JCVideoPlayerManager.listener() != null
+                && JCVideoPlayerManager.listener() == this;
     }
 }

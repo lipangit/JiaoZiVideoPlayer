@@ -46,9 +46,6 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
     MediaHandler mMediaHandler;
     Handler mainThreadHandler;
 
-    private WeakReference<JCMediaPlayerListener> listener;
-    private WeakReference<JCMediaPlayerListener> lastListener;
-
     public static JCMediaManager instance() {
         if (JCMediaManager == null) {
             JCMediaManager = new JCMediaManager();
@@ -150,8 +147,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (listener != null) {
-                    listener().onPrepared();
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().onPrepared();
                 }
             }
         });
@@ -162,8 +159,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (listener != null) {
-                    listener().onAutoCompletion();
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().onAutoCompletion();
                 }
             }
         });
@@ -174,8 +171,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (listener != null) {
-                    listener().onBufferingUpdate(percent);
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().onBufferingUpdate(percent);
                 }
             }
         });
@@ -186,8 +183,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (listener != null) {
-                    listener().onSeekComplete();
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().onSeekComplete();
                 }
             }
         });
@@ -198,8 +195,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (listener != null) {
-                    listener().onError(what, extra);
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().onError(what, extra);
                 }
             }
         });
@@ -211,8 +208,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (listener != null) {
-                    listener().onInfo(what, extra);
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().onInfo(what, extra);
                 }
             }
         });
@@ -226,60 +223,13 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (listener != null) {
-                    listener().onVideoSizeChanged();
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().onVideoSizeChanged();
                 }
             }
         });
     }
 
-    public JCMediaPlayerListener listener() {
-        if (listener == null)
-            return null;
-        return listener.get();
-    }
-
-    public JCMediaPlayerListener lastListener() {
-        if (lastListener == null)
-            return null;
-        return lastListener.get();
-    }
-
-    public void setListener(JCMediaPlayerListener listener) {
-        if (listener == null)
-            this.listener = null;
-        else
-            this.listener = new WeakReference<>(listener);
-    }
-
-    public void setLastListener(JCMediaPlayerListener lastListener) {
-        if (lastListener == null)
-            this.lastListener = null;
-        else
-            this.lastListener = new WeakReference<>(lastListener);
-    }
-
-    public interface JCMediaPlayerListener {
-        void onPrepared();
-
-        void onAutoCompletion();
-
-        void onCompletion();
-
-        boolean onBackPress();
-
-        void onBufferingUpdate(int percent);
-
-        void onSeekComplete();
-
-        void onError(int what, int extra);
-
-        void onInfo(int what, int extra);
-
-        void onVideoSizeChanged();
-
-        void onBackFullscreen();
-    }
 
     private class FuckBean {
         String url;

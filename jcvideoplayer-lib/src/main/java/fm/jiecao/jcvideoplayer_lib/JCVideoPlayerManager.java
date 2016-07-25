@@ -2,6 +2,8 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.view.ViewGroup;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Put JCVideoPlayer into layout
  * From a JCVideoPlayer to another JCVideoPlayer
@@ -18,4 +20,32 @@ public class JCVideoPlayerManager {
 
     }
 
+    private static WeakReference<JCMediaPlayerListener> LISTENER;
+    private static WeakReference<JCMediaPlayerListener> LAST_LISTENER;
+
+    public static JCMediaPlayerListener listener() {
+        if (LISTENER == null)
+            return null;
+        return LISTENER.get();
+    }
+
+    public static JCMediaPlayerListener lastListener() {
+        if (LAST_LISTENER == null)
+            return null;
+        return LAST_LISTENER.get();
+    }
+
+    public static void setListener(JCMediaPlayerListener listener) {
+        if (listener == null)
+            LISTENER = null;
+        else
+            LISTENER = new WeakReference<>(listener);
+    }
+
+    public static void setLastListener(JCMediaPlayerListener lastListener) {
+        if (lastListener == null)
+            LAST_LISTENER = null;
+        else
+            LAST_LISTENER = new WeakReference<>(lastListener);
+    }
 }
