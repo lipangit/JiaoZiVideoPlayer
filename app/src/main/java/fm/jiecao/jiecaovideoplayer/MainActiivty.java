@@ -38,16 +38,13 @@ public class MainActiivty extends AppCompatActivity {
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
                 jcVideo.thumbImageView);
 
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
     }
-
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
-//            Toast.makeText(this, "返回键Back键测试", Toast.LENGTH_SHORT).show();
-//            return false;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
 
     @Override
     public void onBackPressed() {
@@ -55,7 +52,6 @@ public class MainActiivty extends AppCompatActivity {
             return;
         }
         super.onBackPressed();
-
     }
 
 }
