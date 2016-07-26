@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
@@ -283,12 +284,34 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
             ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
             ((AppCompatActivity) getContext()).getSupportActionBar().hide();
-            mJcVideoPlayer.setFocusable(true);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void toWindowTiny() {
+        JCVideoPlayerManager.setLastListener(this);
+        JCVideoPlayerManager.setListener(null);
+        ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        try {
+            Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
+            JCVideoPlayer mJcVideoPlayer = constructor.newInstance(getContext());
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
+            lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
+            vp.addView(mJcVideoPlayer, lp);
+            mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
+            mJcVideoPlayer.setStateAndUi(mCurrentState);
+            mJcVideoPlayer.addTextureView();
+            JCVideoPlayerManager.setListener(mJcVideoPlayer);
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 //    @Override
