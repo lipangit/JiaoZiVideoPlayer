@@ -12,6 +12,7 @@ import java.lang.ref.WeakReference;
 public class JCVideoPlayerManager {
 
     public static void changeJCVideoPlayer(JCVideoPlayer from, JCVideoPlayer to) {
+        //pass state screen
 
     }
 

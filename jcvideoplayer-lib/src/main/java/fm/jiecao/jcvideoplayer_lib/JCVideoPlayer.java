@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
@@ -42,51 +41,51 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static final String TAG = "JieCaoVideoPlayer";
 
     protected int mCurrentScreen;
-    protected int mCurrentState = -1;//-1相当于null
-    protected static final int CURRENT_STATE_NORMAL = 0;
-    protected static final int CURRENT_STATE_PREPAREING = 1;
-    protected static final int CURRENT_STATE_PLAYING = 2;
+    protected              int mCurrentState                         = -1;//-1相当于null
+    protected static final int CURRENT_STATE_NORMAL                  = 0;
+    protected static final int CURRENT_STATE_PREPAREING              = 1;
+    protected static final int CURRENT_STATE_PLAYING                 = 2;
     protected static final int CURRENT_STATE_PLAYING_BUFFERING_START = 3;
-    protected static final int CURRENT_STATE_PAUSE = 5;
-    protected static final int CURRENT_STATE_AUTO_COMPLETE = 6;
-    protected static final int CURRENT_STATE_ERROR = 7;
-    protected static int BACKUP_PLAYING_BUFFERING_STATE = -1;
+    protected static final int CURRENT_STATE_PAUSE                   = 5;
+    protected static final int CURRENT_STATE_AUTO_COMPLETE           = 6;
+    protected static final int CURRENT_STATE_ERROR                   = 7;
+    protected static       int BACKUP_PLAYING_BUFFERING_STATE        = -1;
 
-    protected boolean mTouchingProgressBar = false;
-    protected boolean mIfCurrentIsFullscreen = false;
-    protected boolean mIfFullscreenIsDirectly = false;//mIfCurrentIsFullscreen should be true first
-    protected static boolean IF_FULLSCREEN_FROM_NORMAL = false;//to prevent infinite looping
-    public static boolean IF_RELEASE_WHEN_ON_PAUSE = true;
-    protected static long CLICK_QUIT_FULLSCREEN_TIME = 0;
-    public static final int FULL_SCREEN_NORMAL_DELAY = 2000;
+    protected           boolean mTouchingProgressBar       = false;
+    protected           boolean mIfCurrentIsFullscreen     = false;
+    protected           boolean mIfFullscreenIsDirectly    = false;//mIfCurrentIsFullscreen should be true first
+    protected static    boolean IF_FULLSCREEN_FROM_NORMAL  = false;//to prevent infinite looping
+    public static       boolean IF_RELEASE_WHEN_ON_PAUSE   = true;
+    protected static    long    CLICK_QUIT_FULLSCREEN_TIME = 0;
+    public static final int     FULL_SCREEN_NORMAL_DELAY   = 2000;
 
     public ImageView startButton;
-    public SeekBar progressBar;
+    public SeekBar   progressBar;
     public ImageView fullscreenButton;
-    public TextView currentTimeTextView, totalTimeTextView;
+    public TextView  currentTimeTextView, totalTimeTextView;
     public ViewGroup textureViewContainer;
     public ViewGroup topContainer, bottomContainer;
     public Surface mSurface;
 
-    protected String mUrl;
+    protected String   mUrl;
     protected Object[] mObjects;
-    protected Map<String, String> mMapHeadData = new HashMap<>();
-    protected boolean mLooping = false;
-    public int seekToInAdvance = -1;
+    protected Map<String, String> mMapHeadData    = new HashMap<>();
+    protected boolean             mLooping        = false;
+    public    int                 seekToInAdvance = -1;
 
 
-    protected static Timer UPDATE_PROGRESS_TIMER;
-    protected ProgressTimerTask mProgressTimerTask;
+    protected static Timer             UPDATE_PROGRESS_TIMER;
+    protected        ProgressTimerTask mProgressTimerTask;
 
     protected static JCBuriedPoint JC_BURIED_POINT;
-    protected int mScreenWidth;
-    protected int mScreenHeight;
-    protected AudioManager mAudioManager;
+    protected        int           mScreenWidth;
+    protected        int           mScreenHeight;
+    protected        AudioManager  mAudioManager;
 
     protected int mThreshold = 80;
     protected float mDownX;
     protected float mDownY;
-    protected boolean mChangeVolume = false;
+    protected boolean mChangeVolume   = false;
     protected boolean mChangePosition = false;
     protected int mDownPosition;
     protected int mGestureDownVolume;

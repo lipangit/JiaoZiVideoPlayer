@@ -1,6 +1,5 @@
 package fm.jiecao.jcvideoplayer_lib;
 
-import android.content.Context;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
-import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -32,19 +30,19 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
     public static String TAG = JCVideoPlayer.TAG;
 
     private static JCMediaManager JCMediaManager;
-    public IjkMediaPlayer mediaPlayer;
-    public static TextureView textureView;
+    public         IjkMediaPlayer mediaPlayer;
+    public static  TextureView    textureView;
 
-    public int currentVideoWidth = 0;
+    public int currentVideoWidth  = 0;
     public int currentVideoHeight = 0;
     public int lastState;
 
-    public static final int HANDLER_PREPARE = 0;
+    public static final int HANDLER_PREPARE    = 0;
     public static final int HANDLER_SETDISPLAY = 1;
-    public static final int HANDLER_RELEASE = 2;
+    public static final int HANDLER_RELEASE    = 2;
     HandlerThread mMediaHandlerThread;
-    MediaHandler mMediaHandler;
-    Handler mainThreadHandler;
+    MediaHandler  mMediaHandler;
+    Handler       mainThreadHandler;
 
     public static JCMediaManager instance() {
         if (JCMediaManager == null) {
@@ -232,9 +230,9 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
 
 
     private class FuckBean {
-        String url;
+        String              url;
         Map<String, String> mapHeadData;
-        boolean looping;
+        boolean             looping;
 
         FuckBean(String url, Map<String, String> mapHeadData, boolean loop) {
             this.url = url;
