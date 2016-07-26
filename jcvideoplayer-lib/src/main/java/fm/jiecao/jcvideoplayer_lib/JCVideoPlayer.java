@@ -243,12 +243,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
                     JC_BURIED_POINT.onEnterFullscreen(mUrl, mObjects);
                 }
-                //to fullscreen
-                JCMediaManager.instance().setDisplay(null);
-                JCVideoPlayerManager.setLastListener(this);
-                JCVideoPlayerManager.setListener(null);
-                IF_FULLSCREEN_FROM_NORMAL = true;
-                IF_RELEASE_WHEN_ON_PAUSE = false;
+
                 toWindowFullscreen();
 //                JCFullScreenActivity.startActivityFromNormal(getContext(), mCurrentState, mUrl, JCVideoPlayer.this.getClass(), this.mObjects);
             }
@@ -262,6 +257,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     private void toWindowFullscreen() {
+        ((AppCompatActivity) getContext()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) getContext()).getSupportActionBar().hide();
+
+        IF_FULLSCREEN_FROM_NORMAL = true;
+        IF_RELEASE_WHEN_ON_PAUSE = false;
+
         ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
@@ -277,13 +280,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
             mJcVideoPlayer.setStateAndUi(mCurrentState);
             mJcVideoPlayer.addTextureView();
+            mJcVideoPlayer.setRotation(90);
+
+            JCVideoPlayerManager.setLastListener(this);
             JCVideoPlayerManager.setListener(mJcVideoPlayer);
 
-            mJcVideoPlayer.setRotation(90);
-            ((AppCompatActivity) getContext()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
-            ((AppCompatActivity) getContext()).getSupportActionBar().hide();
+
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
