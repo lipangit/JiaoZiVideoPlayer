@@ -44,6 +44,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected int mCurrentScreen;
     protected int mCurrentState = -1;//-1相当于null
 
+    public static final int SCREEN_LAYOUT_LIST       = 0;
+    public static final int SCREEN_WINDOW_FULLSCREEN = 1;
+    public static final int SCREEN_WINDOW_TINY       = 2;
+    public static final int SCREEN_LAYOUT_DETAIL     = 3;
+
     protected static final int CURRENT_STATE_NORMAL                  = 0;
     protected static final int CURRENT_STATE_PREPAREING              = 1;
     protected static final int CURRENT_STATE_PLAYING                 = 2;
@@ -51,10 +56,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected static final int CURRENT_STATE_PAUSE                   = 5;
     protected static final int CURRENT_STATE_AUTO_COMPLETE           = 6;
     protected static final int CURRENT_STATE_ERROR                   = 7;
-    protected static       int BACKUP_PLAYING_BUFFERING_STATE        = -1;
+
+    protected static int BACKUP_PLAYING_BUFFERING_STATE = -1;
 
     protected           boolean mTouchingProgressBar       = false;
-    protected           boolean mIfCurrentIsFullscreen     = false;
     protected           boolean mIfFullscreenIsDirectly    = false;//mIfCurrentIsFullscreen should be true first
     protected static    boolean IF_FULLSCREEN_FROM_NORMAL  = false;//to prevent infinite looping
     public static       boolean IF_RELEASE_WHEN_ON_PAUSE   = true;
@@ -214,19 +219,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 JCMediaManager.instance().mediaPlayer.pause();
                 setUiWitStateAndScreen(CURRENT_STATE_PAUSE);
                 if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
-                    if (mIfCurrentIsFullscreen) {
-                        JC_BURIED_POINT.onClickStopFullscreen(mUrl, mObjects);
-                    } else {
-                        JC_BURIED_POINT.onClickStop(mUrl, mObjects);
-                    }
+//                    if (mIfCurrentIsFullscreen) {
+//                        JC_BURIED_POINT.onClickStopFullscreen(mUrl, mObjects);
+//                    } else {
+//                        JC_BURIED_POINT.onClickStop(mUrl, mObjects);
+//                    }
                 }
             } else if (mCurrentState == CURRENT_STATE_PAUSE) {
                 if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
-                    if (mIfCurrentIsFullscreen) {
-                        JC_BURIED_POINT.onClickResumeFullscreen(mUrl, mObjects);
-                    } else {
-                        JC_BURIED_POINT.onClickResume(mUrl, mObjects);
-                    }
+//                    if (mIfCurrentIsFullscreen) {
+//                        JC_BURIED_POINT.onClickResumeFullscreen(mUrl, mObjects);
+//                    } else {
+//                        JC_BURIED_POINT.onClickResume(mUrl, mObjects);
+//                    }
                 }
                 JCMediaManager.instance().mediaPlayer.start();
                 setUiWitStateAndScreen(CURRENT_STATE_PLAYING);
@@ -236,9 +241,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         } else if (i == R.id.fullscreen) {
             Log.i(TAG, "onClick fullscreen [" + this.hashCode() + "] ");
             if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) return;
-            if (mIfCurrentIsFullscreen) {
+            if (mCurrentScreen == SCREEN_WINDOW_FULLSCREEN) {
                 //quit fullscreen
-                backFullscreen();
+                backPress();
             } else {
                 Log.d(TAG, "toFullscreenActivity [" + this.hashCode() + "] ");
                 if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
@@ -246,7 +251,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 }
 
                 toWindowFullscreen();
-//                JCFullScreenActivity.startActivityFromNormal(getContext(), mCurrentState, mUrl, JCVideoPlayer.this.getClass(), this.mObjects);
             }
         } else if (i == R.id.surface_container && mCurrentState == CURRENT_STATE_ERROR) {
             Log.i(TAG, "onClick surfaceContainer State=Error [" + this.hashCode() + "] ");
@@ -316,15 +320,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
 
     }
-
-//    @Override
-//    public boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
-//            Toast.makeText(getContext(), "返回键Back键测试", Toast.LENGTH_SHORT).show();
-//            return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
 
     public void showWifiDialog() {
 
@@ -458,7 +453,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     float deltaY = y - mDownY;
                     float absDeltaX = Math.abs(deltaX);
                     float absDeltaY = Math.abs(deltaY);
-                    if (mIfCurrentIsFullscreen) {
+                    if (mCurrentScreen == SCREEN_WINDOW_FULLSCREEN) {
                         if (!mChangePosition && !mChangeVolume) {
                             if (absDeltaX > mThreshold || absDeltaY > mThreshold) {
                                 cancelProgressTimer();
@@ -513,11 +508,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     /////////////////////
                     startProgressTimer();
                     if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
-                        if (mIfCurrentIsFullscreen) {
-                            JC_BURIED_POINT.onClickSeekbarFullscreen(mUrl, mObjects);
-                        } else {
-                            JC_BURIED_POINT.onClickSeekbar(mUrl, mObjects);
-                        }
+//                        if (mIfCurrentIsFullscreen) {
+//                            JC_BURIED_POINT.onClickSeekbarFullscreen(mUrl, mObjects);
+//                        } else {
+//                            JC_BURIED_POINT.onClickSeekbar(mUrl, mObjects);
+//                        }
                     }
                     break;
             }
@@ -590,11 +585,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void onAutoCompletion() {
         //make me normal first
         if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
-            if (mIfCurrentIsFullscreen) {
-                JC_BURIED_POINT.onAutoCompleteFullscreen(mUrl, mObjects);
-            } else {
-                JC_BURIED_POINT.onAutoComplete(mUrl, mObjects);
-            }
+//            if (mIfCurrentIsFullscreen) {
+//                JC_BURIED_POINT.onAutoCompleteFullscreen(mUrl, mObjects);
+//            } else {
+//                JC_BURIED_POINT.onAutoComplete(mUrl, mObjects);
+//            }
         }
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
         if (textureViewContainer.getChildCount() > 0) {

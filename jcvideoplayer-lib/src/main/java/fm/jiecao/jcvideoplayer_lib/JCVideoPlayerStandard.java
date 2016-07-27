@@ -27,17 +27,12 @@ import java.util.TimerTask;
  */
 public class JCVideoPlayerStandard extends JCVideoPlayer {
 
-    public static final int SCREEN_LAYOUT_LIST       = 0;
-    public static final int SCREEN_WINDOW_FULLSCREEN = 1;
-    public static final int SCREEN_WINDOW_TINY       = 2;
-    public static final int SCREEN_LAYOUT_DETAIL     = 3;
-
-
     public ImageView   backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView  titleTextView;
     public ImageView thumbImageView;
     public ImageView coverImageView;
+    public ImageView tinyBackImageView;
 
     protected static Timer                       DISSMISS_CONTROL_VIEW_TIMER;
     protected        DismissControlViewTimerTask mDismissControlViewTimerTask;
@@ -61,6 +56,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         thumbImageView = (ImageView) findViewById(R.id.thumb);
         coverImageView = (ImageView) findViewById(R.id.cover);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
+        tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
 
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
@@ -72,11 +68,16 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         if (objects.length == 0) return false;
         if (super.setUp(url, screen, objects)) {
             titleTextView.setText(objects[0].toString());
-            if (mIfCurrentIsFullscreen) {
+            if (mCurrentScreen == SCREEN_WINDOW_FULLSCREEN) {
                 fullscreenButton.setImageResource(R.drawable.jc_shrink);
-            } else {
+                backButton.setVisibility(View.VISIBLE);
+                tinyBackImageView.setVisibility(View.INVISIBLE);
+            } else if (mCurrentScreen == SCREEN_LAYOUT_LIST) {
                 fullscreenButton.setImageResource(R.drawable.jc_enlarge);
                 backButton.setVisibility(View.GONE);
+                tinyBackImageView.setVisibility(View.INVISIBLE);
+            } else if (mCurrentScreen == SCREEN_WINDOW_TINY) {
+                tinyBackImageView.setVisibility(View.VISIBLE);
             }
             return true;
         }
@@ -175,15 +176,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             }
         } else if (i == R.id.surface_container) {
             if (JC_BURIED_POINT_STANDARD != null && isCurrentMediaListener()) {
-                if (mIfCurrentIsFullscreen) {
-                    JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(mUrl, mObjects);
-                } else {
-                    JC_BURIED_POINT_STANDARD.onClickBlank(mUrl, mObjects);
-                }
+//                if (mIfCurrentIsFullscreen) {
+//                    JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(mUrl, mObjects);
+//                } else {
+//                    JC_BURIED_POINT_STANDARD.onClickBlank(mUrl, mObjects);
+//                }
             }
             startDismissControlViewTimer();
         } else if (i == R.id.back) {
-            backFullscreen();
+            backPress();
         }
     }
 
@@ -279,75 +280,208 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     //Unified management Ui
     private void changeUiToNormal() {
-        setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
-                View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
     }
 
     private void changeUiToPrepareingShow() {
-        setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPrepareingClear() {
-        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPlayingShow() {
-        setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPlayingClear() {
-        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPauseShow() {
-        setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPauseClear() {
-        setAllControlsVisible(View.INVISIBLE, View.VISIBLE, View.INVISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPlayingBufferingShow() {
-        setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPlayingBufferingClear() {
-        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
-        updateStartImage();
-    }
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
 
-    private void changeUiToClear() {
-        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
     }
 
     private void changeUiToCompleteShow() {
-        setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToCompleteClear() {
-        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToError() {
-        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro,
