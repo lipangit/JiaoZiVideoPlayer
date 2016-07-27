@@ -89,8 +89,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    protected void setStateAndUi(int state) {
-        super.setStateAndUi(state);
+    protected void setUiWitStateAndScreen(int state) {
+        super.setUiWitStateAndScreen(state);
         switch (mCurrentState) {
             case CURRENT_STATE_NORMAL:
                 changeUiToNormal();
@@ -279,129 +279,86 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     //Unified management Ui
     private void changeUiToNormal() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.VISIBLE);
-        coverImageView.setVisibility(View.VISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
+        setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
+                View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
         updateStartImage();
     }
 
     private void changeUiToPrepareingShow() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        loadingProgressBar.setVisibility(View.VISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.VISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
+        setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
+                View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
     }
 
     private void changeUiToPrepareingClear() {
-        topContainer.setVisibility(View.INVISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.VISIBLE);
+        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
     }
 
     private void changeUiToPlayingShow() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
+        setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
         updateStartImage();
     }
 
     private void changeUiToPlayingClear() {
-        changeUiToClear();
-        bottomProgressBar.setVisibility(View.VISIBLE);
+        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
     }
 
     private void changeUiToPauseShow() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
+        setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
         updateStartImage();
     }
 
     private void changeUiToPauseClear() {
-        changeUiToClear();
-        bottomProgressBar.setVisibility(View.VISIBLE);
+        setAllControlsVisible(View.INVISIBLE, View.VISIBLE, View.INVISIBLE,
+                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
     }
 
     private void changeUiToPlayingBufferingShow() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        loadingProgressBar.setVisibility(View.VISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
+        setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
+                View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
     }
 
     private void changeUiToPlayingBufferingClear() {
-        topContainer.setVisibility(View.INVISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        loadingProgressBar.setVisibility(View.VISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.VISIBLE);
+        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
         updateStartImage();
     }
 
     private void changeUiToClear() {
-        topContainer.setVisibility(View.INVISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
+        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
     }
 
     private void changeUiToCompleteShow() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.VISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
+        setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
         updateStartImage();
     }
 
     private void changeUiToCompleteClear() {
-        topContainer.setVisibility(View.INVISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.VISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.VISIBLE);
+        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
         updateStartImage();
     }
 
     private void changeUiToError() {
-        topContainer.setVisibility(View.INVISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.VISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
+        setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
         updateStartImage();
+    }
+
+    private void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro,
+                                       int thumbImg, int coverImg, int bottomPro) {
+        topContainer.setVisibility(topCon);
+        bottomContainer.setVisibility(bottomCon);
+        startButton.setVisibility(startBtn);
+        loadingProgressBar.setVisibility(loadingPro);
+        thumbImageView.setVisibility(thumbImg);
+        coverImageView.setVisibility(coverImg);
+        bottomProgressBar.setVisibility(bottomPro);
     }
 
     private void updateStartImage() {

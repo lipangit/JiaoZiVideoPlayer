@@ -41,8 +41,8 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     }
 
     @Override
-    protected void setStateAndUi(int state) {
-        super.setStateAndUi(state);
+    protected void setUiWitStateAndScreen(int state) {
+        super.setUiWitStateAndScreen(state);
         switch (mCurrentState) {
             case CURRENT_STATE_NORMAL:
                 startButton.setVisibility(View.VISIBLE);

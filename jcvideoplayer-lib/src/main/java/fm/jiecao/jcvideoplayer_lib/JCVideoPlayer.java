@@ -42,7 +42,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static final String TAG = "JieCaoVideoPlayer";
 
     protected int mCurrentScreen;
-    protected              int mCurrentState                         = -1;//-1相当于null
+    protected int mCurrentState = -1;//-1相当于null
+
     protected static final int CURRENT_STATE_NORMAL                  = 0;
     protected static final int CURRENT_STATE_PREPAREING              = 1;
     protected static final int CURRENT_STATE_PLAYING                 = 2;
@@ -144,7 +145,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         this.mUrl = url;
         this.mObjects = objects;
         this.mCurrentScreen = screen;
-        setStateAndUi(CURRENT_STATE_NORMAL);
+        setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         return true;
     }
 
@@ -162,7 +163,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     //set ui
-    protected void setStateAndUi(int state) {
+    protected void setUiWitStateAndScreen(int state) {
         mCurrentState = state;
         switch (mCurrentState) {
             case CURRENT_STATE_NORMAL:
@@ -211,7 +212,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             } else if (mCurrentState == CURRENT_STATE_PLAYING) {
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 JCMediaManager.instance().mediaPlayer.pause();
-                setStateAndUi(CURRENT_STATE_PAUSE);
+                setUiWitStateAndScreen(CURRENT_STATE_PAUSE);
                 if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
                     if (mIfCurrentIsFullscreen) {
                         JC_BURIED_POINT.onClickStopFullscreen(mUrl, mObjects);
@@ -228,7 +229,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     }
                 }
                 JCMediaManager.instance().mediaPlayer.start();
-                setStateAndUi(CURRENT_STATE_PLAYING);
+                setUiWitStateAndScreen(CURRENT_STATE_PLAYING);
             } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
                 startButtonLogic();
             }
@@ -278,7 +279,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(mJcVideoPlayer, lp);
             mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
-            mJcVideoPlayer.setStateAndUi(mCurrentState);
+            mJcVideoPlayer.setUiWitStateAndScreen(mCurrentState);
             mJcVideoPlayer.addTextureView();
             mJcVideoPlayer.setRotation(90);
 
@@ -304,7 +305,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(mJcVideoPlayer, lp);
             mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
-            mJcVideoPlayer.setStateAndUi(mCurrentState);
+            mJcVideoPlayer.setUiWitStateAndScreen(mCurrentState);
             mJcVideoPlayer.addTextureView();
             JCVideoPlayerManager.setListener(mJcVideoPlayer);
 
@@ -373,7 +374,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
         ((Activity) getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.instance().prepare(mUrl, mMapHeadData, mLooping);
-        setStateAndUi(CURRENT_STATE_PREPAREING);
+        setUiWitStateAndScreen(CURRENT_STATE_PREPAREING);
 
     }
 
@@ -582,7 +583,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             seekToInAdvance = -1;
         }
         startProgressTimer();
-        setStateAndUi(CURRENT_STATE_PLAYING);
+        setUiWitStateAndScreen(CURRENT_STATE_PLAYING);
     }
 
     @Override
@@ -595,7 +596,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 JC_BURIED_POINT.onAutoComplete(mUrl, mObjects);
             }
         }
-        setStateAndUi(CURRENT_STATE_AUTO_COMPLETE);
+        setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
         if (textureViewContainer.getChildCount() > 0) {
             textureViewContainer.removeAllViews();
         }
@@ -612,7 +613,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     @Override
     public void onCompletion() {
         //make me normal first
-        setStateAndUi(CURRENT_STATE_NORMAL);
+        setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         if (textureViewContainer.getChildCount() > 0) {
             textureViewContainer.removeAllViews();
         }
@@ -649,7 +650,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void onError(int what, int extra) {
         Log.e(TAG, "onError " + what + " - " + extra + " [" + this.hashCode() + "] ");
         if (what != 38 && what != -38) {
-            setStateAndUi(CURRENT_STATE_ERROR);
+            setUiWitStateAndScreen(CURRENT_STATE_ERROR);
         }
     }
 
@@ -658,11 +659,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
             BACKUP_PLAYING_BUFFERING_STATE = mCurrentState;
-            setStateAndUi(CURRENT_STATE_PLAYING_BUFFERING_START);
+            setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
             if (BACKUP_PLAYING_BUFFERING_STATE != -1) {
-                setStateAndUi(BACKUP_PLAYING_BUFFERING_STATE);
+                setUiWitStateAndScreen(BACKUP_PLAYING_BUFFERING_STATE);
                 BACKUP_PLAYING_BUFFERING_STATE = -1;
             }
             Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
@@ -681,7 +682,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     @Override
     public void onBackFullscreen() {
         mCurrentState = JCMediaManager.instance().lastState;
-        setStateAndUi(mCurrentState);
+        setUiWitStateAndScreen(mCurrentState);
         addTextureView();
 
         ((AppCompatActivity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
