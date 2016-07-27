@@ -60,6 +60,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
+        tinyBackImageView.setOnClickListener(this);
 
     }
 
@@ -78,6 +79,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 tinyBackImageView.setVisibility(View.INVISIBLE);
             } else if (mCurrentScreen == SCREEN_WINDOW_TINY) {
                 tinyBackImageView.setVisibility(View.VISIBLE);
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
             }
             return true;
         }
@@ -184,6 +187,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             }
             startDismissControlViewTimer();
         } else if (i == R.id.back) {
+            backPress();
+        } else if (i == R.id.back_tiny) {
             backPress();
         }
     }

@@ -308,7 +308,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(mJcVideoPlayer, lp);
-            mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
+            mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, mObjects);
             mJcVideoPlayer.setUiWitStateAndScreen(mCurrentState);
             mJcVideoPlayer.addTextureView();
             JCVideoPlayerManager.setListener(mJcVideoPlayer);
@@ -334,7 +334,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public boolean onBackPress() {
-        if (mCurrentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN) {
+        if (mCurrentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN
+                || mCurrentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_TINY) {
             ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
 
