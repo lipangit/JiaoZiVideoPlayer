@@ -103,6 +103,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     protected Handler mHandler = new Handler();
 
+    private static final int FULLSCREEN_ID = 33797;
+    private static final int TINY_ID       = 33798;
+
     public JCVideoPlayer(Context context) {
         super(context);
         init(context);
@@ -271,9 +274,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         IF_RELEASE_WHEN_ON_PAUSE = false;
 
         ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        View old = vp.findViewById(FULLSCREEN_ID);
+        if (old != null) {
+            vp.removeView(old);
+        }
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
-            JCVideoPlayer mJcVideoPlayer = constructor.newInstance(getContext());
+            JCVideoPlayer jcVideoPlayer = constructor.newInstance(getContext());
+            jcVideoPlayer.setId(FULLSCREEN_ID);
             WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
 //            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getHeight());
             int w = wm.getDefaultDisplay().getWidth();
@@ -281,14 +289,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
 
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
-            vp.addView(mJcVideoPlayer, lp);
-            mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
-            mJcVideoPlayer.setUiWitStateAndScreen(mCurrentState);
-            mJcVideoPlayer.addTextureView();
-            mJcVideoPlayer.setRotation(90);
+            vp.addView(jcVideoPlayer, lp);
+            jcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
+            jcVideoPlayer.setUiWitStateAndScreen(mCurrentState);
+            jcVideoPlayer.addTextureView();
+            jcVideoPlayer.setRotation(90);
 
             JCVideoPlayerManager.setLastListener(this);
-            JCVideoPlayerManager.setListener(mJcVideoPlayer);
+            JCVideoPlayerManager.setListener(jcVideoPlayer);
 
 
         } catch (InstantiationException e) {
@@ -302,9 +310,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCVideoPlayerManager.setLastListener(this);
         JCVideoPlayerManager.setListener(null);
         ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        View old = vp.findViewById(TINY_ID);
+        if (old != null) {
+            vp.removeView(old);
+        }
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer mJcVideoPlayer = constructor.newInstance(getContext());
+            mJcVideoPlayer.setId(TINY_ID);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(mJcVideoPlayer, lp);
