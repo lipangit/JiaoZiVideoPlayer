@@ -49,18 +49,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static final int SCREEN_WINDOW_TINY       = 2;
     public static final int SCREEN_LAYOUT_DETAIL     = 3;
 
-    protected static final int CURRENT_STATE_NORMAL                  = 0;
-    protected static final int CURRENT_STATE_PREPAREING              = 1;
-    protected static final int CURRENT_STATE_PLAYING                 = 2;
-    protected static final int CURRENT_STATE_PLAYING_BUFFERING_START = 3;
-    protected static final int CURRENT_STATE_PAUSE                   = 5;
-    protected static final int CURRENT_STATE_AUTO_COMPLETE           = 6;
-    protected static final int CURRENT_STATE_ERROR                   = 7;
+    public static final int CURRENT_STATE_NORMAL                  = 0;
+    public static final int CURRENT_STATE_PREPAREING              = 1;
+    public static final int CURRENT_STATE_PLAYING                 = 2;
+    public static final int CURRENT_STATE_PLAYING_BUFFERING_START = 3;
+    public static final int CURRENT_STATE_PAUSE                   = 5;
+    public static final int CURRENT_STATE_AUTO_COMPLETE           = 6;
+    public static final int CURRENT_STATE_ERROR                   = 7;
 
     protected static int BACKUP_PLAYING_BUFFERING_STATE = -1;
 
-    protected           boolean mTouchingProgressBar       = false;
-    protected           boolean mIfFullscreenIsDirectly    = false;//mIfCurrentIsFullscreen should be true first
+    protected boolean mTouchingProgressBar    = false;
+    protected boolean mIfFullscreenIsDirectly = false;//mIfCurrentIsFullscreen should be true first
+
     protected static    boolean IF_FULLSCREEN_FROM_NORMAL  = false;//to prevent infinite looping
     public static       boolean IF_RELEASE_WHEN_ON_PAUSE   = true;
     protected static    long    CLICK_QUIT_FULLSCREEN_TIME = 0;
@@ -103,8 +104,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     protected Handler mHandler = new Handler();
 
-    private static final int FULLSCREEN_ID = 33797;
-    private static final int TINY_ID       = 33798;
+    public static final int FULLSCREEN_ID = 33797;
+    public static final int TINY_ID       = 33798;
 
     public JCVideoPlayer(Context context) {
         super(context);
@@ -146,9 +147,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public boolean setUp(String url, int screen, Object... objects) {
-        if (isCurrentMediaListener() &&
-                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-            return false;
+//        if (isCurrentMediaListener() &&
+//                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+//            return false;
         mCurrentState = CURRENT_STATE_NORMAL;
         this.mUrl = url;
         this.mObjects = objects;
@@ -171,7 +172,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     //set ui
-    protected void setUiWitStateAndScreen(int state) {
+    public void setUiWitStateAndScreen(int state) {
         mCurrentState = state;
         switch (mCurrentState) {
             case CURRENT_STATE_NORMAL:
@@ -283,11 +284,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             JCVideoPlayer jcVideoPlayer = constructor.newInstance(getContext());
             jcVideoPlayer.setId(FULLSCREEN_ID);
             WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-//            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getHeight());
             int w = wm.getDefaultDisplay().getWidth();
             int h = wm.getDefaultDisplay().getHeight();
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
-
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(jcVideoPlayer, lp);
             jcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
@@ -407,7 +406,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     };
 
-    protected void addTextureView() {
+    public void addTextureView() {
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
         if (textureViewContainer.getChildCount() > 0) {
             textureViewContainer.removeAllViews();
@@ -617,6 +616,16 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         ((Activity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        View oldF = vp.findViewById(FULLSCREEN_ID);
+        View oldT = vp.findViewById(TINY_ID);
+        if (oldF != null) {
+            vp.removeView(oldF);
+        }
+        if (oldT != null) {
+            vp.removeView(oldT);
+        }
     }
 
     @Override
@@ -794,18 +803,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCVideoPlayerManager.listener().onBackFullscreen();
         if (mCurrentState == CURRENT_STATE_PAUSE) {
             JCMediaManager.instance().mediaPlayer.seekTo(JCMediaManager.instance().mediaPlayer.getCurrentPosition());
-        }
-    }
-
-    public void backFullscreen() {
-        Log.d(TAG, "quitFullscreen [" + this.hashCode() + "] ");
-        IF_FULLSCREEN_FROM_NORMAL = false;
-        if (mIfFullscreenIsDirectly) {
-            JCMediaManager.instance().mediaPlayer.release();
-        } else {
-            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
-            IF_RELEASE_WHEN_ON_PAUSE = false;
-            quitFullScreenGoToNormal();
         }
     }
 

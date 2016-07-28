@@ -93,7 +93,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    protected void setUiWitStateAndScreen(int state) {
+    public void setUiWitStateAndScreen(int state) {
         super.setUiWitStateAndScreen(state);
         switch (mCurrentState) {
             case CURRENT_STATE_NORMAL:

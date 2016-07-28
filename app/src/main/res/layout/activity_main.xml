@@ -10,10 +10,17 @@
         android:layout_height="200dp"/>
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
+        android:id="@+id/show_tiny_window"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="TinyWindow"/>
+        android:text="Tiny Window"/>
+
+    <Button
+        android:id="@+id/to_fullscreen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Fullscreen"/>
 
 </LinearLayout>
