@@ -41,8 +41,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static final String TAG = "JieCaoVideoPlayer";
 
-    protected int mCurrentScreen;
-    protected int mCurrentState = -1;//-1相当于null
+    protected int mCurrentState  = -1;
+    protected int mCurrentScreen = -1;
 
     public static final int SCREEN_LAYOUT_LIST       = 0;
     public static final int SCREEN_WINDOW_FULLSCREEN = 1;
@@ -57,6 +57,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static final int CURRENT_STATE_AUTO_COMPLETE           = 6;
     public static final int CURRENT_STATE_ERROR                   = 7;
 
+    //-----
     protected static int BACKUP_PLAYING_BUFFERING_STATE = -1;
 
     protected boolean mTouchingProgressBar    = false;
@@ -66,6 +67,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static       boolean IF_RELEASE_WHEN_ON_PAUSE   = true;
     protected static    long    CLICK_QUIT_FULLSCREEN_TIME = 0;
     public static final int     FULL_SCREEN_NORMAL_DELAY   = 2000;
+    //-----
 
     public ImageView startButton;
     public SeekBar   progressBar;
@@ -74,22 +76,29 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public ViewGroup textureViewContainer;
     public ViewGroup topContainer, bottomContainer;
     public Surface mSurface;
+    public static boolean             WIFI_TIP_DIALOG_SHOWED = false;
+    protected     String              mUrl                   = null;
+    protected     Object[]            mObjects               = null;
+    protected     Map<String, String> mMapHeadData           = new HashMap<>();
+    protected     boolean             mLooping               = false;
+    public        int                 seekToInAdvance        = -1;
 
-    protected String   mUrl;
-    protected Object[] mObjects;
-    protected Map<String, String> mMapHeadData    = new HashMap<>();
-    protected boolean             mLooping        = false;
-    public    int                 seekToInAdvance = -1;
-
-
+    public static final int FULLSCREEN_ID = 33797;
+    public static final int TINY_ID       = 33798;
+    protected int          mScreenWidth;
+    protected int          mScreenHeight;
+    protected AudioManager mAudioManager;
     protected static Timer             UPDATE_PROGRESS_TIMER;
-    protected        ProgressTimerTask mProgressTimerTask;
+    protected static ProgressTimerTask mProgressTimerTask;
 
-    protected static JCBuriedPoint JC_BURIED_POINT;
-    protected        int           mScreenWidth;
-    protected        int           mScreenHeight;
-    protected        AudioManager  mAudioManager;
+    //--
 
+    protected static JCBuriedPoint     JC_BURIED_POINT;
+
+    //--
+
+
+    //--
     protected int mThreshold = 80;
     protected float mDownX;
     protected float mDownY;
@@ -97,15 +106,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected boolean mChangePosition = false;
     protected int mDownPosition;
     protected int mGestureDownVolume;
-
     protected int mSeekTimePosition;//change postion when finger up
+//--
 
-    public static boolean WIFI_TIP_DIALOG_SHOWED = false;
 
     protected Handler mHandler = new Handler();
 
-    public static final int FULLSCREEN_ID = 33797;
-    public static final int TINY_ID       = 33798;
 
     public JCVideoPlayer(Context context) {
         super(context);
@@ -722,7 +728,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (mProgressTimerTask != null) {
             mProgressTimerTask.cancel();
         }
-
     }
 
     protected class ProgressTimerTask extends TimerTask {
