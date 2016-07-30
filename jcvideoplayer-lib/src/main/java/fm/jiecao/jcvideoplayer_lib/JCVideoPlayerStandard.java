@@ -634,9 +634,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    public static void setJcBuriedPointStandard(JCBuriedPointStandard jcBuriedPointStandard) {
-        JC_BURIED_POINT_STANDARD = jcBuriedPointStandard;
-        JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
-    }
+//    public static void setJcBuriedPointStandard(JCBuriedPointStandard jcBuriedPointStandard) {
+//        JC_BURIED_POINT_STANDARD = jcBuriedPointStandard;
+//        JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
+//    }
 
 }

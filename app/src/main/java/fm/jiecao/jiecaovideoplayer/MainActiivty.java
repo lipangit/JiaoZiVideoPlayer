@@ -1,11 +1,9 @@
 package fm.jiecao.jiecaovideoplayer;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -44,7 +42,7 @@ public class MainActiivty extends AppCompatActivity {
                 jcVideo.toWindowTiny();
             }
         });
-        findViewById(R.id.to_fullscreen).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.to_fullscreen_directly).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

@@ -27,7 +27,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPlayer.OnCompletionListener,
         IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnErrorListener,
         IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener {
-    public static String TAG = JCVideoPlayer.TAG;
+    public static String TAG = "JieCaoVideoPlayer";
 
     private static JCMediaManager JCMediaManager;
     public         IjkMediaPlayer mediaPlayer;
