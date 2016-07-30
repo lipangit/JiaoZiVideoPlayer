@@ -1,7 +1,5 @@
 package fm.jiecao.jcvideoplayer_lib;
 
-import android.view.ViewGroup;
-
 import java.lang.ref.WeakReference;
 
 /**
