@@ -85,15 +85,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static final int FULLSCREEN_ID = 33797;
     public static final int TINY_ID       = 33798;
-    protected int          mScreenWidth;
-    protected int          mScreenHeight;
-    protected AudioManager mAudioManager;
+    protected        int               mScreenWidth;
+    protected        int               mScreenHeight;
+    protected        AudioManager      mAudioManager;
     protected static Timer             UPDATE_PROGRESS_TIMER;
     protected static ProgressTimerTask mProgressTimerTask;
 
     //--
 
-    protected static JCBuriedPoint     JC_BURIED_POINT;
+    protected static JCBuriedPoint JC_BURIED_POINT;
 
     //--
 
@@ -312,8 +312,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void toWindowTiny() {
-        JCVideoPlayerManager.setLastListener(this);
-        JCVideoPlayerManager.setListener(null);
         ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(TINY_ID);
         if (old != null) {
@@ -329,6 +327,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, mObjects);
             mJcVideoPlayer.setUiWitStateAndScreen(mCurrentState);
             mJcVideoPlayer.addTextureView();
+            JCVideoPlayerManager.setLastListener(this);
             JCVideoPlayerManager.setListener(mJcVideoPlayer);
 
         } catch (InstantiationException e) {
@@ -345,26 +344,36 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static boolean backPress() {
         if (JCVideoPlayerManager.listener() != null) {
-            return JCVideoPlayerManager.listener().onBackPress();
+            return JCVideoPlayerManager.listener().goToOtherListener();
         }
         return false;
     }
 
     @Override
-    public boolean onBackPress() {
+    public boolean goToOtherListener() {
         if (mCurrentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN
                 || mCurrentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_TINY) {
             ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
 
-            JCMediaManager.instance().setDisplay(null);
             JCVideoPlayerManager.setListener(JCVideoPlayerManager.lastListener());
             JCVideoPlayerManager.setLastListener(null);
             JCMediaManager.instance().lastState = mCurrentState;//save state
-            JCVideoPlayerManager.listener().onBackFullscreen();
+            JCVideoPlayerManager.listener().goBackThisListener();
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void goBackThisListener() {
+        mCurrentState = JCMediaManager.instance().lastState;
+        setUiWitStateAndScreen(mCurrentState);
+        addTextureView();
+
+        ((AppCompatActivity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) getContext()).getSupportActionBar().show();
     }
 
     private void startButtonLogic() {
@@ -703,17 +712,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    @Override
-    public void onBackFullscreen() {
-        mCurrentState = JCMediaManager.instance().lastState;
-        setUiWitStateAndScreen(mCurrentState);
-        addTextureView();
-
-        ((AppCompatActivity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
-        ((AppCompatActivity) getContext()).getSupportActionBar().show();
-    }
-
     protected void startProgressTimer() {
         cancelProgressTimer();
         UPDATE_PROGRESS_TIMER = new Timer();
@@ -805,7 +803,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCVideoPlayerManager.setListener(JCVideoPlayerManager.lastListener());
         JCVideoPlayerManager.setLastListener(null);
         JCMediaManager.instance().lastState = mCurrentState;//save state
-        JCVideoPlayerManager.listener().onBackFullscreen();
+        JCVideoPlayerManager.listener().goBackThisListener();
         if (mCurrentState == CURRENT_STATE_PAUSE) {
             JCMediaManager.instance().mediaPlayer.seekTo(JCMediaManager.instance().mediaPlayer.getCurrentPosition());
         }

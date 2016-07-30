@@ -6,11 +6,9 @@ package fm.jiecao.jcvideoplayer_lib;
 public interface JCMediaPlayerListener {
     void onPrepared();
 
-    void onAutoCompletion();
-
     void onCompletion();
 
-    boolean onBackPress();
+    void onAutoCompletion();
 
     void onBufferingUpdate(int percent);
 
@@ -22,5 +20,8 @@ public interface JCMediaPlayerListener {
 
     void onVideoSizeChanged();
 
-    void onBackFullscreen();
+    void goBackThisListener();
+
+    boolean goToOtherListener();
+
 }

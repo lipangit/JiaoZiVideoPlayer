@@ -92,7 +92,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     }
 
     @Override
-    public boolean onBackPress() {
+    public boolean goToOtherListener() {
         return false;
     }
 }
