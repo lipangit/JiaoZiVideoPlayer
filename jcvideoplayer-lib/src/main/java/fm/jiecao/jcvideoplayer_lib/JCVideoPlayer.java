@@ -74,16 +74,16 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public TextView  currentTimeTextView, totalTimeTextView;
     public ViewGroup textureViewContainer;
     public ViewGroup topContainer, bottomContainer;
-    public Surface mSurface;
+    public Surface surface;
 
-    protected static Timer             UPDATE_PROGRESS_TIMER;
-    protected static ProgressTimerTask mProgressTimerTask;
+    protected static Timer UPDATE_PROGRESS_TIMER;
 
-    protected int          mScreenWidth;
-    protected int          mScreenHeight;
-    protected AudioManager mAudioManager;
-    protected Handler      mHandler;
-    protected int BACKUP_PLAYING_BUFFERING_STATE = -1;
+    protected int               mScreenWidth;
+    protected int               mScreenHeight;
+    protected AudioManager      mAudioManager;
+    protected Handler           mHandler;
+    protected ProgressTimerTask mProgressTimerTask;
+    protected int mBackUpBufferState = -1;
 
     protected boolean mTouchingProgressBar;
     protected float   mDownX;
@@ -449,13 +449,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-            BACKUP_PLAYING_BUFFERING_STATE = mCurrentState;
+            mBackUpBufferState = mCurrentState;
             setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
-            if (BACKUP_PLAYING_BUFFERING_STATE != -1) {
-                setUiWitStateAndScreen(BACKUP_PLAYING_BUFFERING_STATE);
-                BACKUP_PLAYING_BUFFERING_STATE = -1;
+            if (mBackUpBufferState != -1) {
+                setUiWitStateAndScreen(mBackUpBufferState);
+                mBackUpBufferState = -1;
             }
             Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
         }
@@ -484,8 +484,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
-        mSurface = new Surface(surface);
-        JCMediaManager.instance().setDisplay(mSurface);
+        this.surface = new Surface(surface);
+        JCMediaManager.instance().setDisplay(this.surface);
     }
 
     @Override
@@ -553,6 +553,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         View old = vp.findViewById(FULLSCREEN_ID);
         if (old != null) {
             vp.removeView(old);
+        }
+        if (textureViewContainer.getChildCount() > 0) {
+            textureViewContainer.removeAllViews();
         }
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);

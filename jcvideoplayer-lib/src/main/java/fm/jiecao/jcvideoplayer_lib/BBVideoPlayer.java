@@ -58,7 +58,7 @@
 //    public static final int CURRENT_STATE_ERROR                   = 7;
 //
 //    //-----
-//    protected static int BACKUP_PLAYING_BUFFERING_STATE = -1;
+//    protected static int mBackUpBufferState = -1;
 //
 //    protected boolean mTouchingProgressBar    = false;
 //    protected boolean mIfFullscreenIsDirectly = false;//mIfCurrentIsFullscreen should be true first
@@ -75,7 +75,7 @@
 //    public TextView  currentTimeTextView, totalTimeTextView;
 //    public ViewGroup textureViewContainer;
 //    public ViewGroup topContainer, bottomContainer;
-//    public Surface mSurface;
+//    public Surface surface;
 //    public static boolean             WIFI_TIP_DIALOG_SHOWED = false;
 //    protected     String              mUrl                   = null;
 //    protected     Object[]            mObjects               = null;
@@ -438,8 +438,8 @@
 //    @Override
 //    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
 //        Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
-//        mSurface = new Surface(surface);
-//        JCMediaManager.instance().setDisplay(mSurface);
+//        surface = new Surface(surface);
+//        JCMediaManager.instance().setDisplay(surface);
 //    }
 //
 //    @Override
@@ -691,13 +691,13 @@
 //    public void onInfo(int what, int extra) {
 //        Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
 //        if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-//            BACKUP_PLAYING_BUFFERING_STATE = mCurrentState;
+//            mBackUpBufferState = mCurrentState;
 //            setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);
 //            Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
 //        } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
-//            if (BACKUP_PLAYING_BUFFERING_STATE != -1) {
-//                setUiWitStateAndScreen(BACKUP_PLAYING_BUFFERING_STATE);
-//                BACKUP_PLAYING_BUFFERING_STATE = -1;
+//            if (mBackUpBufferState != -1) {
+//                setUiWitStateAndScreen(mBackUpBufferState);
+//                mBackUpBufferState = -1;
 //            }
 //            Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
 //        }

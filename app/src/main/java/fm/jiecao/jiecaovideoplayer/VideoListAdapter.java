@@ -1,6 +1,7 @@
 package fm.jiecao.jiecaovideoplayer;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,9 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * On 2016/02/07 01:20
  */
 public class VideoListAdapter extends BaseAdapter {
+
+    public static final String TAG = "JieCaoVideoPlayer";
+
     String[] videoUrls   = {"http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4",
             "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4"};
     String[] videoThumbs = {"http://img4.jiecaojingxuan.com/2016/5/1/3430ec64-e6a7-4d8e-b044-9d408e075b7c.jpg",
@@ -46,6 +50,9 @@ public class VideoListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        Log.e(TAG, "why you always getview");
+
         ViewHolder viewHolder;
         if (null == convertView) {
             viewHolder = new ViewHolder();
