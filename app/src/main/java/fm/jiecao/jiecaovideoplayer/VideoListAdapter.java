@@ -48,9 +48,10 @@ public class VideoListAdapter extends BaseAdapter {
         return 0;
     }
 
+    int a = 0;
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         Log.e(TAG, "why you always getview");
 
         ViewHolder viewHolder;
@@ -63,11 +64,14 @@ public class VideoListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.jcVideoPlayer.setUp(
+
+        boolean setUp = viewHolder.jcVideoPlayer.setUp(
                 videoUrls[videoIndexs[position]], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 videoTitles[videoIndexs[position]]);
-        ImageLoader.getInstance().displayImage(videoThumbs[videoIndexs[position]],
-                viewHolder.jcVideoPlayer.thumbImageView);
+        if (setUp) {
+            ImageLoader.getInstance().displayImage(videoThumbs[videoIndexs[position]],
+                    viewHolder.jcVideoPlayer.thumbImageView);
+        }
         return convertView;
     }
 

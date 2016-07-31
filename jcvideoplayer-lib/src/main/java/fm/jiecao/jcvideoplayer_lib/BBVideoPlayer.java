@@ -99,7 +99,7 @@
 //
 //
 //    //--
-//    protected int mThreshold = 80;
+//    protected int THRESHOLD = 80;
 //    protected float mDownX;
 //    protected float mDownY;
 //    protected boolean mChangeVolume   = false;
@@ -483,9 +483,9 @@
 //                    float absDeltaY = Math.abs(deltaY);
 //                    if (mCurrentScreen == SCREEN_WINDOW_FULLSCREEN) {
 //                        if (!mChangePosition && !mChangeVolume) {
-//                            if (absDeltaX > mThreshold || absDeltaY > mThreshold) {
+//                            if (absDeltaX > THRESHOLD || absDeltaY > THRESHOLD) {
 //                                cancelProgressTimer();
-//                                if (absDeltaX >= mThreshold) {
+//                                if (absDeltaX >= THRESHOLD) {
 //                                    mChangePosition = true;
 //                                    mDownPosition = getCurrentPositionWhenPlaying();
 //                                    if (JC_BURIED_POINT != null && isCurrentMediaListener()) {

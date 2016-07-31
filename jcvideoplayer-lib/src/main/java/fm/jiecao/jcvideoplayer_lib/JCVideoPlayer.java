@@ -39,11 +39,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static final String TAG = "JieCaoVideoPlayer";
 
-    public static final int FULLSCREEN_ID = 33797;
-    public static final int TINY_ID       = 33798;
-    public static final int mThreshold    = 80;
+    public static final int FULLSCREEN_ID            = 33797;
+    public static final int TINY_ID                  = 33798;
+    public static final int THRESHOLD                = 80;
+    public static final int FULL_SCREEN_NORMAL_DELAY = 500;
 
-    public static boolean WIFI_TIP_DIALOG_SHOWED = false;
+    public static boolean WIFI_TIP_DIALOG_SHOWED     = false;
+    public static long    CLICK_QUIT_FULLSCREEN_TIME = 0;
 
     public static final int SCREEN_LAYOUT_LIST       = 0;
     public static final int SCREEN_WINDOW_FULLSCREEN = 1;
@@ -129,6 +131,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public boolean setUp(String url, int screen, Object... objects) {
+        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+            return false;
         mCurrentState = CURRENT_STATE_NORMAL;
         mUrl = url;
         mObjects = objects;
@@ -138,10 +142,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public boolean setUp(String url, int screen, Map<String, String> mapHeadData, Object... objects) {
-        setUp(url, screen, objects);
-        mMapHeadData.clear();
-        mMapHeadData.putAll(mapHeadData);
-        return true;
+        if (setUp(url, screen, objects)) {
+            mMapHeadData.clear();
+            mMapHeadData.putAll(mapHeadData);
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -229,9 +235,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     float absDeltaY = Math.abs(deltaY);
                     if (mCurrentScreen == SCREEN_WINDOW_FULLSCREEN) {
                         if (!mChangePosition && !mChangeVolume) {
-                            if (absDeltaX > mThreshold || absDeltaY > mThreshold) {
+                            if (absDeltaX > THRESHOLD || absDeltaY > THRESHOLD) {
                                 cancelProgressTimer();
-                                if (absDeltaX >= mThreshold) {
+                                if (absDeltaX >= THRESHOLD) {
                                     mChangePosition = true;
                                     mDownPosition = getCurrentPositionWhenPlaying();
                                 } else {
@@ -419,6 +425,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             JCVideoPlayerManager.setLastListener(null);
             JCMediaManager.instance().lastState = mCurrentState;//save state
             JCVideoPlayerManager.listener().goBackThisListener();
+            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             return true;
         }
         return false;
@@ -694,6 +701,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             }
         }
     };
+
+    public void release() {
+        if (isCurrentMediaListener() &&
+                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
+            Log.d(TAG, "release [" + this.hashCode() + "]");
+            releaseAllVideos();
+        }
+    }
 
     public static void releaseAllVideos() {
         Log.d(TAG, "releaseAllVideos");
