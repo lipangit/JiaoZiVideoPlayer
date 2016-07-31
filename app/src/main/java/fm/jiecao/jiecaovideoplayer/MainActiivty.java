@@ -34,7 +34,7 @@ public class MainActiivty extends AppCompatActivity {
 
 
         jcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.simple_demo);
-        jcVideoPlayerSimple.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
+        jcVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子在家吗");
 
         jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
@@ -43,7 +43,7 @@ public class MainActiivty extends AppCompatActivity {
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
                 jcVideoPlayerStandard.thumbImageView);
 
-        findViewById(R.id.show_tiny_window).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.list_demo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 jcVideoPlayerStandard.toWindowTiny();

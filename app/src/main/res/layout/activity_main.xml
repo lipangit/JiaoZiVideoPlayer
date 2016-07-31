@@ -4,28 +4,61 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
-        android:id="@+id/simple_demo"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"/>
-
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-        android:id="@+id/jc_video"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"/>
-
-    <Button
-        android:id="@+id/show_tiny_window"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Tiny Window"/>
+        android:scrollbars="none">
 
-    <Button
-        android:id="@+id/play_directly_without_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Play Directly Without Layout"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="Base simple ui example"/>
+
+            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
+                android:id="@+id/simple_demo"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="Recommended standard ui example"/>
+
+            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+                android:id="@+id/jc_video"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
+            <Button
+                android:id="@+id/play_directly_without_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Play Directly Without Layout"/>
+
+            <Button
+                android:id="@+id/list_demo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="List Demo"/>
+
+            <Button
+                android:id="@+id/ui_demo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="UI Demo"/>
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
