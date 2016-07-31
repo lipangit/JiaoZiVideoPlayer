@@ -8,8 +8,8 @@ android {
         applicationId "fm.jiecao.jiecaovideoplayer"
         minSdkVersion 14
         targetSdkVersion 24
-        versionCode 34
-        versionName "4.5_preview"
+        versionCode 35
+        versionName "4.5_preview1"
     }
     buildTypes {
         release {
