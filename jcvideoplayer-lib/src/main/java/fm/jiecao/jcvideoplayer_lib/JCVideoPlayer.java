@@ -60,14 +60,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static final int CURRENT_STATE_AUTO_COMPLETE           = 6;
     public static final int CURRENT_STATE_ERROR                   = 7;
 
-    public int mCurrentState  = -1;
-    public int mCurrentScreen = -1;
+    public int currentState  = -1;
+    public int currentScreen = -1;
 
 
-    public String              mUrl            = null;
-    public Object[]            mObjects        = null;
-    public boolean             mLooping        = false;
-    public Map<String, String> mMapHeadData    = new HashMap<>();
+    public String              url             = null;
+    public Object[]            objects         = null;
+    public boolean             looping         = false;
+    public Map<String, String> mapHeadData     = new HashMap<>();
     public int                 seekToInAdvance = -1;
 
     public ImageView startButton;
@@ -133,18 +133,18 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public boolean setUp(String url, int screen, Object... objects) {
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
-        mCurrentState = CURRENT_STATE_NORMAL;
-        mUrl = url;
-        mObjects = objects;
-        mCurrentScreen = screen;
+        this.currentState = CURRENT_STATE_NORMAL;
+        this.url = url;
+        this.objects = objects;
+        this.currentScreen = screen;
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         return true;
     }
 
     public boolean setUp(String url, int screen, Map<String, String> mapHeadData, Object... objects) {
         if (setUp(url, screen, objects)) {
-            mMapHeadData.clear();
-            mMapHeadData.putAll(mapHeadData);
+            this.mapHeadData.clear();
+            this.mapHeadData.putAll(mapHeadData);
             return true;
         }
         return false;
@@ -155,37 +155,37 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         int i = v.getId();
         if (i == R.id.start) {
             Log.i(TAG, "onClick start [" + this.hashCode() + "] ");
-            if (TextUtils.isEmpty(mUrl)) {
+            if (TextUtils.isEmpty(url)) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_ERROR) {
-                if (!mUrl.startsWith("file") && !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+            if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR) {
+                if (!url.startsWith("file") && !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog();
                     return;
                 }
                 startButtonLogic();
-            } else if (mCurrentState == CURRENT_STATE_PLAYING) {
+            } else if (currentState == CURRENT_STATE_PLAYING) {
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 JCMediaManager.instance().mediaPlayer.pause();
                 setUiWitStateAndScreen(CURRENT_STATE_PAUSE);
-            } else if (mCurrentState == CURRENT_STATE_PAUSE) {
+            } else if (currentState == CURRENT_STATE_PAUSE) {
                 JCMediaManager.instance().mediaPlayer.start();
                 setUiWitStateAndScreen(CURRENT_STATE_PLAYING);
-            } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
+            } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 startButtonLogic();
             }
         } else if (i == R.id.fullscreen) {
             Log.i(TAG, "onClick fullscreen [" + this.hashCode() + "] ");
-            if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) return;
-            if (mCurrentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            if (currentState == CURRENT_STATE_AUTO_COMPLETE) return;
+            if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
                 //quit fullscreen
                 backPress();
             } else {
                 Log.d(TAG, "toFullscreenActivity [" + this.hashCode() + "] ");
                 toWindowFullscreen();
             }
-        } else if (i == R.id.surface_container && mCurrentState == CURRENT_STATE_ERROR) {
+        } else if (i == R.id.surface_container && currentState == CURRENT_STATE_ERROR) {
             Log.i(TAG, "onClick surfaceContainer State=Error [" + this.hashCode() + "] ");
             prepareVideo();
         }
@@ -206,7 +206,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
 
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        JCMediaManager.instance().prepare(mUrl, mMapHeadData, mLooping);
+        JCMediaManager.instance().prepare(url, mapHeadData, looping);
         setUiWitStateAndScreen(CURRENT_STATE_PREPAREING);
     }
 
@@ -233,7 +233,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     float deltaY = y - mDownY;
                     float absDeltaX = Math.abs(deltaX);
                     float absDeltaY = Math.abs(deltaY);
-                    if (mCurrentScreen == SCREEN_WINDOW_FULLSCREEN) {
+                    if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
                         if (!mChangePosition && !mChangeVolume) {
                             if (absDeltaX > THRESHOLD || absDeltaY > THRESHOLD) {
                                 cancelProgressTimer();
@@ -301,8 +301,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public void setUiWitStateAndScreen(int state) {
-        mCurrentState = state;
-        switch (mCurrentState) {
+        currentState = state;
+        switch (currentState) {
             case CURRENT_STATE_NORMAL:
                 if (isCurrentMediaListener()) {
                     cancelProgressTimer();
@@ -349,7 +349,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onPrepared() {
-        if (mCurrentState != CURRENT_STATE_PREPAREING) return;
+        if (currentState != CURRENT_STATE_PREPAREING) return;
         JCMediaManager.instance().mediaPlayer.start();
         if (seekToInAdvance != -1) {
             JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
@@ -363,9 +363,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onAutoCompletion() {
 //        if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
 //            if (mIfCurrentIsFullscreen) {
-//                JC_BURIED_POINT.onAutoCompleteFullscreen(mUrl, mObjects);
+//                JC_BURIED_POINT.onAutoCompleteFullscreen(url, objects);
 //            } else {
-//                JC_BURIED_POINT.onAutoComplete(mUrl, mObjects);
+//                JC_BURIED_POINT.onAutoComplete(url, objects);
 //            }
 //        }
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
@@ -416,14 +416,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public boolean goToOtherListener() {//这里这个名字这么写并不对,这是在回退的时候gotoother,如果直接gotoother就不叫这个名字
-        if (mCurrentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN
-                || mCurrentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_TINY) {
+        if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN
+                || currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_TINY) {
             ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
 
             JCVideoPlayerManager.setListener(JCVideoPlayerManager.lastListener());
             JCVideoPlayerManager.setLastListener(null);
-            JCMediaManager.instance().lastState = mCurrentState;//save state
+            JCMediaManager.instance().lastState = currentState;//save state
             JCVideoPlayerManager.listener().goBackThisListener();
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             return true;
@@ -433,7 +433,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onBufferingUpdate(int percent) {
-        if (mCurrentState != CURRENT_STATE_NORMAL && mCurrentState != CURRENT_STATE_PREPAREING) {
+        if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPAREING) {
             Log.v(TAG, "onBufferingUpdate " + percent + " [" + this.hashCode() + "] ");
             setTextAndProgress(percent);
         }
@@ -456,7 +456,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-            mBackUpBufferState = mCurrentState;
+            mBackUpBufferState = currentState;
             setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
@@ -479,8 +479,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void goBackThisListener() {
-        mCurrentState = JCMediaManager.instance().lastState;
-        setUiWitStateAndScreen(mCurrentState);
+        currentState = JCMediaManager.instance().lastState;
+        setUiWitStateAndScreen(currentState);
         addTextureView();
 
         ((AppCompatActivity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -536,8 +536,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             vpup.requestDisallowInterceptTouchEvent(false);
             vpup = vpup.getParent();
         }
-        if (mCurrentState != CURRENT_STATE_PLAYING &&
-                mCurrentState != CURRENT_STATE_PAUSE) return;
+        if (currentState != CURRENT_STATE_PLAYING &&
+                currentState != CURRENT_STATE_PAUSE) return;
         int time = seekBar.getProgress() * getDuration() / 100;
         JCMediaManager.instance().mediaPlayer.seekTo(time);
         Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
@@ -574,8 +574,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(jcVideoPlayer, lp);
-            jcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, mObjects);
-            jcVideoPlayer.setUiWitStateAndScreen(mCurrentState);
+            jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
+            jcVideoPlayer.setUiWitStateAndScreen(currentState);
             jcVideoPlayer.addTextureView();
             jcVideoPlayer.setRotation(90);
 
@@ -603,8 +603,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(mJcVideoPlayer, lp);
-            mJcVideoPlayer.setUp(mUrl, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, mObjects);
-            mJcVideoPlayer.setUiWitStateAndScreen(mCurrentState);
+            mJcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
+            mJcVideoPlayer.setUiWitStateAndScreen(currentState);
             mJcVideoPlayer.addTextureView();
             JCVideoPlayerManager.setLastListener(this);
             JCVideoPlayerManager.setListener(mJcVideoPlayer);
@@ -620,7 +620,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     protected class ProgressTimerTask extends TimerTask {
         @Override
         public void run() {
-            if (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE) {
+            if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
                 int position = getCurrentPositionWhenPlaying();
                 int duration = getDuration();
                 Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
@@ -636,7 +636,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     protected int getCurrentPositionWhenPlaying() {
         int position = 0;
-        if (mCurrentState == CURRENT_STATE_PLAYING || mCurrentState == CURRENT_STATE_PAUSE) {
+        if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
             try {
                 position = (int) JCMediaManager.instance().mediaPlayer.getCurrentPosition();
             } catch (IllegalStateException e) {

@@ -29,11 +29,11 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     @Override
     public boolean setUp(String url, int screen, Object... objects) {
         if (super.setUp(url, screen, objects)) {
-//      if (mIfCurrentIsFullscreen) {
-//        fullscreenButton.setImageResource(R.drawable.jc_shrink);
-//      } else {
-//        fullscreenButton.setImageResource(R.drawable.jc_enlarge);
-//      }
+            if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+                fullscreenButton.setImageResource(R.drawable.jc_shrink);
+            } else {
+                fullscreenButton.setImageResource(R.drawable.jc_enlarge);
+            }
             fullscreenButton.setVisibility(View.GONE);
             return true;
         }
@@ -43,7 +43,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     @Override
     public void setUiWitStateAndScreen(int state) {
         super.setUiWitStateAndScreen(state);
-        switch (mCurrentState) {
+        switch (currentState) {
             case CURRENT_STATE_NORMAL:
                 startButton.setVisibility(View.VISIBLE);
                 break;
@@ -62,9 +62,9 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     }
 
     private void updateStartImage() {
-        if (mCurrentState == CURRENT_STATE_PLAYING) {
+        if (currentState == CURRENT_STATE_PLAYING) {
             startButton.setImageResource(R.drawable.jc_click_pause_selector);
-        } else if (mCurrentState == CURRENT_STATE_ERROR) {
+        } else if (currentState == CURRENT_STATE_ERROR) {
             startButton.setImageResource(R.drawable.jc_click_error_selector);
         } else {
             startButton.setImageResource(R.drawable.jc_click_play_selector);
@@ -73,7 +73,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.fullscreen && mCurrentState == CURRENT_STATE_NORMAL) {
+        if (v.getId() == R.id.fullscreen && currentState == CURRENT_STATE_NORMAL) {
             Toast.makeText(getContext(), "Play video first", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -83,7 +83,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
-            if (mCurrentState == CURRENT_STATE_NORMAL) {
+            if (currentState == CURRENT_STATE_NORMAL) {
                 Toast.makeText(getContext(), "Play video first", Toast.LENGTH_SHORT).show();
                 return;
             }
