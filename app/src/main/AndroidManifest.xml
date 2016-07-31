@@ -31,7 +31,8 @@
         <activity android:name=".ActivityUI"/>
         <activity android:name=".ActivityUISmallChange"/>
         <activity android:name=".ActivityUIBigChange"/>
-        
+        <activity android:name=".ActivityUIImageLoader"/>
+
     </application>
 
 </manifest>

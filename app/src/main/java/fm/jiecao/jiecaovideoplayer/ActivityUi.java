@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by Nathen on 16/7/31.
@@ -31,14 +32,15 @@ public class ActivityUI extends AppCompatActivity {
         findViewById(R.id.big_change).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivityUI.this, ActivityUIBigChange.class));
+                Toast.makeText(ActivityUI.this, "Comming Soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(ActivityUI.this, ActivityUIBigChange.class));
             }
         });
 
         findViewById(R.id.imageloader).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivityUI.this, ActivityDirectlyPlay.class));
+                startActivity(new Intent(ActivityUI.this, ActivityUIImageLoader.class));
             }
         });
     }
