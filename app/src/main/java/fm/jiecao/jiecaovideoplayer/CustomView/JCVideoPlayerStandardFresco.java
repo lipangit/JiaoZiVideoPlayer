@@ -96,7 +96,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
 
     @Override
     public int getLayoutId() {
-        return R.layout.jc_layout_standard_fresco;
+        return R.layout.layout_standard_fresco;
     }
 
     @Override

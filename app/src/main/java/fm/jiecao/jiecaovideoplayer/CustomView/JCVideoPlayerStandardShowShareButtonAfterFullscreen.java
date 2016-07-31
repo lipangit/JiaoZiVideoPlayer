@@ -35,7 +35,7 @@ public class JCVideoPlayerStandardShowShareButtonAfterFullscreen extends JCVideo
 
     @Override
     public int getLayoutId() {
-        return R.layout.jc_layout_standard_with_share_button;
+        return R.layout.layout_standard_with_share_button;
     }
 
     @Override
