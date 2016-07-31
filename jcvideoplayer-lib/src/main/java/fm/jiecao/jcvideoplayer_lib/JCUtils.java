@@ -44,6 +44,7 @@ public class JCUtils {
     /**
      * Get activity from context object
      *
+     * @param context something
      * @return object of Activity or null if it is not Activity
      */
     public static Activity scanForActivity(Context context) {
