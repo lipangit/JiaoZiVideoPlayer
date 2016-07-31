@@ -6,12 +6,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityUI extends AppCompatActivity {
+public class ActivityUI extends AppCompatActivity implements View.OnClickListener {
+    Button mSmallChange, mBigChange, mImageLoader;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,27 +25,30 @@ public class ActivityUI extends AppCompatActivity {
         getSupportActionBar().setTitle("About UI");
         setContentView(R.layout.activity_ui);
 
-        findViewById(R.id.small_change).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ActivityUI.this, ActivityUISmallChange.class));
-            }
-        });
+        mSmallChange = (Button) findViewById(R.id.small_change);
+        mBigChange = (Button) findViewById(R.id.big_change);
+        mImageLoader = (Button) findViewById(R.id.imageloader);
 
-        findViewById(R.id.big_change).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mSmallChange.setOnClickListener(this);
+        mBigChange.setOnClickListener(this);
+        mImageLoader.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.small_change:
+                startActivity(new Intent(ActivityUI.this, ActivityUISmallChange.class));
+                break;
+            case R.id.big_change:
                 Toast.makeText(ActivityUI.this, "Comming Soon", Toast.LENGTH_SHORT).show();
 //                startActivity(new Intent(ActivityUI.this, ActivityUIBigChange.class));
-            }
-        });
-
-        findViewById(R.id.imageloader).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.imageloader:
                 startActivity(new Intent(ActivityUI.this, ActivityUIImageLoader.class));
-            }
-        });
+                break;
+        }
     }
 
     @Override
@@ -54,4 +60,5 @@ public class ActivityUI extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

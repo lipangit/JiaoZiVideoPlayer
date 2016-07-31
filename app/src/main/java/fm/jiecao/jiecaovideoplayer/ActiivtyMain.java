@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -15,16 +16,25 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 /**
  * Created by Nathen on 16/7/22.
  */
-public class ActiivtyMain extends AppCompatActivity {
+public class ActiivtyMain extends AppCompatActivity implements View.OnClickListener {
 
     JCVideoPlayerStandard jcVideoPlayerStandard;
     JCVideoPlayerSimple   jcVideoPlayerSimple;
+
+    Button aboutListView, aboutUI, playDirectly;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        aboutUI = (Button) findViewById(R.id.play_directly_without_layout);
+        aboutListView = (Button) findViewById(R.id.about_listview);
+        playDirectly = (Button) findViewById(R.id.about_ui);
+
+        aboutListView.setOnClickListener(this);
+        aboutUI.setOnClickListener(this);
+        playDirectly.setOnClickListener(this);
 
         jcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.simple_demo);
         jcVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
@@ -43,25 +53,21 @@ public class ActiivtyMain extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.about_listview).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ActiivtyMain.this, ActivityListView.class));
-            }
-        });
-        findViewById(R.id.play_directly_without_layout).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(ActiivtyMain.this, ActivityPlayDirectly.class));
-            }
-        });
+    }
 
-        findViewById(R.id.about_ui).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.play_directly_without_layout:
+                startActivity(new Intent(ActiivtyMain.this, ActivityPlayDirectly.class));
+                break;
+            case R.id.about_listview:
+                startActivity(new Intent(ActiivtyMain.this, ActivityListView.class));
+                break;
+            case R.id.about_ui:
                 startActivity(new Intent(ActiivtyMain.this, ActivityUI.class));
-            }
-        });
+                break;
+        }
     }
 
     @Override

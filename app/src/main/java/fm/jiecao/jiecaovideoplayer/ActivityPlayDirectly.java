@@ -1,27 +1,20 @@
 package fm.jiecao.jiecaovideoplayer;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.Toast;
-
-import java.lang.reflect.Constructor;
-
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerManager;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityPlayDirectly extends AppCompatActivity {
+public class ActivityPlayDirectly extends AppCompatActivity implements View.OnClickListener {
+    Button mStartFullscreen, mStartTiny;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +26,19 @@ public class ActivityPlayDirectly extends AppCompatActivity {
         getSupportActionBar().setTitle("PlayDirectlyWithoutLayout");
         setContentView(R.layout.activity_directly_play);
 
+        mStartFullscreen = (Button) findViewById(R.id.fullscreen);
+        mStartTiny = (Button) findViewById(R.id.tiny_window);
 
-        findViewById(R.id.fullscreen).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+        mStartFullscreen.setOnClickListener(this);
+        mStartTiny.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fullscreen:
+                //                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
 //                getSupportActionBar().setShowHideAnimationEnabled(false);
 //                getSupportActionBar().hide();
@@ -68,15 +69,11 @@ public class ActivityPlayDirectly extends AppCompatActivity {
 //                    e.printStackTrace();
 //                }
                 Toast.makeText(ActivityPlayDirectly.this, "Comming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        findViewById(R.id.tiny_window).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.tiny_window:
                 Toast.makeText(ActivityPlayDirectly.this, "Comming Soon", Toast.LENGTH_SHORT).show();
-            }
-        });
+                break;
+        }
     }
 
     @Override
