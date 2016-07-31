@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="ListView and Viewpayer"/>
+        android:text="ViewPager And ListView"/>
 
     <Button
         android:id="@+id/multi_holder_list"
@@ -31,5 +31,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="recyleview"/>
+        android:text="Recyleview"/>
 </LinearLayout>
