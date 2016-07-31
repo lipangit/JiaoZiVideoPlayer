@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * Created by Nathen on 16/7/31.
@@ -31,7 +32,7 @@ public class ActivityList extends AppCompatActivity {
         findViewById(R.id.viewpayer_list).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(ActivityList.this, ActivityListViewpager.class));
             }
         });
 
@@ -45,7 +46,7 @@ public class ActivityList extends AppCompatActivity {
         findViewById(R.id.recyleview).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(ActivityList.this, "Coming soon", Toast.LENGTH_SHORT).show();
             }
         });
     }

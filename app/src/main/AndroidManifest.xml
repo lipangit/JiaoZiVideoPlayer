@@ -25,6 +25,7 @@
 
         <activity android:name=".ActivityList"/>
         <activity android:name=".ActivityListNormal"/>
+        <activity android:name=".ActivityListViewpager"/>
 
         <activity android:name=".ActivityUi"/>
     </application>
