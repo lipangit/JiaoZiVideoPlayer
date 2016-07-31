@@ -47,19 +47,19 @@
                 android:text="Play Directly Without Layout"/>
 
             <Button
-                android:id="@+id/list_demo"
+                android:id="@+id/about_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="List Demo"/>
+                android:text="About List"/>
 
             <Button
-                android:id="@+id/ui_demo"
+                android:id="@+id/about_ui"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:text="UI Demo"/>
+                android:text="About Ui"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -36,7 +36,7 @@ public class ActiivtyMain extends AppCompatActivity {
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
                 jcVideoPlayerStandard.thumbImageView);
 
-        findViewById(R.id.list_demo).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.about_list).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(ActiivtyMain.this, ActivityList.class));
@@ -49,10 +49,10 @@ public class ActiivtyMain extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.ui_demo).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.about_ui).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActiivtyMain.this, ActivityUi.class));
+                startActivity(new Intent(ActiivtyMain.this, ActivityUI.class));
             }
         });
     }

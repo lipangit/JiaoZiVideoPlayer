@@ -19,7 +19,7 @@ public class ActivityList extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("ListActivity");
+        getSupportActionBar().setTitle("About List");
         setContentView(R.layout.activity_list);
 
         findViewById(R.id.normal_list).setOnClickListener(new View.OnClickListener() {

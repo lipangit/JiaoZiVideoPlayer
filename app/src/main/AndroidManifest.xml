@@ -28,7 +28,7 @@
         <activity android:name=".ActivityListViewpager"/>
         <activity android:name=".ActivityListMultiHolder"/>
 
-        <activity android:name=".ActivityUi"/>
+        <activity android:name=".ActivityUI"/>
     </application>
 
 </manifest>
