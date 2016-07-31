@@ -76,15 +76,15 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         if (objects.length == 0) return false;
         if (super.setUp(url, screen, objects)) {
             titleTextView.setText(objects[0].toString());
-            if (mCurrentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
                 fullscreenButton.setImageResource(R.drawable.jc_shrink);
                 backButton.setVisibility(View.VISIBLE);
                 tinyBackImageView.setVisibility(View.INVISIBLE);
-            } else if (mCurrentScreen == SCREEN_LAYOUT_LIST) {
+            } else if (currentScreen == SCREEN_LAYOUT_LIST) {
                 fullscreenButton.setImageResource(R.drawable.jc_enlarge);
                 backButton.setVisibility(View.GONE);
                 tinyBackImageView.setVisibility(View.INVISIBLE);
-            } else if (mCurrentScreen == SCREEN_WINDOW_TINY) {
+            } else if (currentScreen == SCREEN_WINDOW_TINY) {
                 tinyBackImageView.setVisibility(View.VISIBLE);
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -102,7 +102,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     @Override
     public void setUiWitStateAndScreen(int state) {
         super.setUiWitStateAndScreen(state);
-        switch (mCurrentState) {
+        switch (currentState) {
             case CURRENT_STATE_NORMAL:
                 changeUiToNormal();
                 break;
@@ -171,25 +171,25 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.thumb) {
-            if (TextUtils.isEmpty(mUrl)) {
+            if (TextUtils.isEmpty(url)) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (mCurrentState == CURRENT_STATE_NORMAL) {
-                if (!mUrl.startsWith("file") && !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+            if (currentState == CURRENT_STATE_NORMAL) {
+                if (!url.startsWith("file") && !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog();
                     return;
                 }
                 startPlayLocic();
-            } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
+            } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
             }
         } else if (i == R.id.surface_container) {
             if (JC_BURIED_POINT_STANDARD != null && isCurrentMediaListener()) {
 //                if (mIfCurrentIsFullscreen) {
-//                    JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(mUrl, mObjects);
+//                    JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(url, objects);
 //                } else {
-//                    JC_BURIED_POINT_STANDARD.onClickBlank(mUrl, mObjects);
+//                    JC_BURIED_POINT_STANDARD.onClickBlank(url, objects);
 //                }
             }
             startDismissControlViewTimer();
@@ -236,38 +236,38 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
 
     private void startPlayLocic() {
         if (JC_BURIED_POINT_STANDARD != null) {
-            JC_BURIED_POINT_STANDARD.onClickStartThumb(mUrl, mObjects);
+            JC_BURIED_POINT_STANDARD.onClickStartThumb(url, objects);
         }
         prepareVideo();
         startDismissControlViewTimer();
     }
 
     private void onClickUiToggle() {
-        if (mCurrentState == CURRENT_STATE_PREPAREING) {
+        if (currentState == CURRENT_STATE_PREPAREING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPrepareingClear();
             } else {
                 changeUiToPrepareingShow();
             }
-        } else if (mCurrentState == CURRENT_STATE_PLAYING) {
+        } else if (currentState == CURRENT_STATE_PLAYING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPlayingClear();
             } else {
                 changeUiToPlayingShow();
             }
-        } else if (mCurrentState == CURRENT_STATE_PAUSE) {
+        } else if (currentState == CURRENT_STATE_PAUSE) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPauseClear();
             } else {
                 changeUiToPauseShow();
             }
-        } else if (mCurrentState == CURRENT_STATE_AUTO_COMPLETE) {
+        } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToCompleteClear();
             } else {
                 changeUiToCompleteShow();
             }
-        } else if (mCurrentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
+        } else if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPlayingBufferingClear();
             } else {
@@ -292,7 +292,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
 
     //Unified management Ui
     private void changeUiToNormal() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
@@ -309,7 +309,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToPrepareingShow() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
@@ -325,7 +325,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToPrepareingClear() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
@@ -341,7 +341,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToPlayingShow() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -359,7 +359,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToPlayingClear() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -375,7 +375,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToPauseShow() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -393,7 +393,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToPauseClear() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.VISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -409,7 +409,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToPlayingBufferingShow() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -425,7 +425,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToPlayingBufferingClear() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
@@ -443,7 +443,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToCompleteShow() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -461,7 +461,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToCompleteClear() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
@@ -479,7 +479,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void changeUiToError() {
-        switch (mCurrentScreen) {
+        switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
@@ -508,9 +508,9 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void updateStartImage() {
-        if (mCurrentState == CURRENT_STATE_PLAYING) {
+        if (currentState == CURRENT_STATE_PLAYING) {
             startButton.setImageResource(R.drawable.jc_click_pause_selector);
-        } else if (mCurrentState == CURRENT_STATE_ERROR) {
+        } else if (currentState == CURRENT_STATE_ERROR) {
             startButton.setImageResource(R.drawable.jc_click_error_selector);
         } else {
             startButton.setImageResource(R.drawable.jc_click_play_selector);
@@ -623,9 +623,9 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
 
         @Override
         public void run() {
-            if (mCurrentState != CURRENT_STATE_NORMAL
-                    && mCurrentState != CURRENT_STATE_ERROR
-                    && mCurrentState != CURRENT_STATE_AUTO_COMPLETE) {
+            if (currentState != CURRENT_STATE_NORMAL
+                    && currentState != CURRENT_STATE_ERROR
+                    && currentState != CURRENT_STATE_AUTO_COMPLETE) {
                 if (getContext() != null && getContext() instanceof Activity) {
                     ((Activity) getContext()).runOnUiThread(new Runnable() {
                         @Override
