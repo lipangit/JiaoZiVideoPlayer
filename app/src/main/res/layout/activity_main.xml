@@ -4,6 +4,11 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
+    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
+        android:id="@+id/simple_demo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
     <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
         android:id="@+id/jc_video"
         android:layout_width="match_parent"
@@ -17,10 +22,10 @@
         android:text="Tiny Window"/>
 
     <Button
-        android:id="@+id/to_fullscreen_directly"
+        android:id="@+id/play_directly_without_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Fullscreen Directly"/>
+        android:text="Play Directly Without Layout"/>
 
 </LinearLayout>
