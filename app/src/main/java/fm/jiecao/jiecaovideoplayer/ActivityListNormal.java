@@ -13,7 +13,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  */
 public class ActivityListNormal extends AppCompatActivity {
     ListView         listView;
-    VideoListAdapter videoListAdapter;
+    AdapterVideoList adapterVideoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,12 +22,12 @@ public class ActivityListNormal extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("NormalListActivity");
-        setContentView(R.layout.activity_list_normal);
+        getSupportActionBar().setTitle("NormalList");
+        setContentView(R.layout.activity_list_content);
 
         listView = (ListView) findViewById(R.id.listview);
-        videoListAdapter = new VideoListAdapter(this);
-        listView.setAdapter(videoListAdapter);
+        adapterVideoList = new AdapterVideoList(this);
+        listView.setAdapter(adapterVideoList);
     }
 
     @Override

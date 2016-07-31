@@ -17,7 +17,7 @@ public class ActivityUi extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("ActivityUi");
+        getSupportActionBar().setTitle("UIActivity");
         setContentView(R.layout.activity_ui);
 
         findViewById(R.id.simple_change).setOnClickListener(new View.OnClickListener() {

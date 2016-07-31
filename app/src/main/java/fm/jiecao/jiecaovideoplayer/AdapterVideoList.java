@@ -16,7 +16,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by Nathen
  * On 2016/02/07 01:20
  */
-public class VideoListAdapter extends BaseAdapter {
+public class AdapterVideoList extends BaseAdapter {
 
     public static final String TAG = "JieCaoVideoPlayer";
 
@@ -29,7 +29,7 @@ public class VideoListAdapter extends BaseAdapter {
     int[] videoIndexs = {0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1};
     Context context;
 
-    public VideoListAdapter(Context context) {
+    public AdapterVideoList(Context context) {
         this.context = context;
     }
 

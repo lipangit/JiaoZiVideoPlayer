@@ -39,7 +39,7 @@ public class ActivityList extends AppCompatActivity {
         findViewById(R.id.multi_holder_list).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(ActivityList.this, ActivityListMultiHolder.class));
             }
         });
 

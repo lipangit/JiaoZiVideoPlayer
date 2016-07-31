@@ -26,16 +26,16 @@ public class ActivityListViewpager extends AppCompatActivity implements ViewPage
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("ListViewPagerDemo");
+        getSupportActionBar().setTitle("ListAndViewPager");
 
         List<View> listViews = new ArrayList<>();
         ListView listView1 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);
         ListView listView2 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);
         ListView listView3 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);
 
-        listView1.setAdapter(new VideoListAdapter(this));
-        listView2.setAdapter(new VideoListAdapter(this));
-        listView3.setAdapter(new VideoListAdapter(this));
+        listView1.setAdapter(new AdapterVideoList(this));
+        listView2.setAdapter(new AdapterVideoList(this));
+        listView3.setAdapter(new AdapterVideoList(this));
 
         listViews.add(listView1);
         listViews.add(listView2);
