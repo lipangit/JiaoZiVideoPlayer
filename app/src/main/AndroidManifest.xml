@@ -29,6 +29,9 @@
         <activity android:name=".ActivityListMultiHolder"/>
 
         <activity android:name=".ActivityUI"/>
+        <activity android:name=".ActivityUISmallChange"/>
+        <activity android:name=".ActivityUIBigChange"/>
+        
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package fm.jiecao.jiecaovideoplayer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,21 +24,21 @@ public class ActivityUI extends AppCompatActivity {
         findViewById(R.id.small_change).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(ActivityUI.this, ActivityUISmallChange.class));
             }
         });
 
         findViewById(R.id.big_change).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(ActivityUI.this, ActivityUIBigChange.class));
             }
         });
 
         findViewById(R.id.imageloader).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(ActivityUI.this, ActivityDirectlyPlay.class));
             }
         });
     }
