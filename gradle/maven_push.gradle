@@ -22,7 +22,7 @@ signing {
 
 group = "fm.jiecao"
 archivesBaseName = "jiecaovideoplayer"
-version = "4.1_alpha"
+version = "4.5_preview"
 
 uploadArchives {
     repositories {

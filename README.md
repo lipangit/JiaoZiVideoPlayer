@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.1_alpha-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.5_preview-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -27,24 +27,24 @@ Android truly full-screen capabilities, the Android platform to become the most 
 
 ## Effect
 
-**[jiecaovideoplayer-4.1_alpha-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.1_alpha-demo.apk)**
+**[jiecaovideoplayer-4.5_preview-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.5_preview-demo.apk)**
 
 ![Demo Screenshot][1]
 
 ## Usage
 
-[Stable version is v3.6.3](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v3.6.3)
+[Stable version is still v3.6.3](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v3.6.3)
 
 1.Import library
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:4.1_alpha'
+compile 'fm.jiecao:jiecaovideoplayer:4.5_preview'
 ```
 
 Or download lib
 
-* [jiecaovideoplayer-4.1_alpha.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.1_alpha.aar)
-* [jiecaovideoplayer-4.1_alpha-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.1_alpha-javadoc.jar)
-* [jiecaovideoplayer-4.1_alpha-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.1_alpha-sources.jar)
+* [jiecaovideoplayer-4.5_preview.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.5_preview.aar)
+* [jiecaovideoplayer-4.5_preview-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.5_preview-javadoc.jar)
+* [jiecaovideoplayer-4.5_preview-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.5_preview-sources.jar)
 
 2.Add JCVideoPlayer in your layout
 ```xml
