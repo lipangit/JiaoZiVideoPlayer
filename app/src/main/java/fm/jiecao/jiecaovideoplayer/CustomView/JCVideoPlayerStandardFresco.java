@@ -1,4 +1,4 @@
-package fm.jiecao.jiecaovideoplayer.View;
+package fm.jiecao.jiecaovideoplayer.CustomView;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -24,7 +24,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
-import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
 import fm.jiecao.jcvideoplayer_lib.JCUtils;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jiecaovideoplayer.R;

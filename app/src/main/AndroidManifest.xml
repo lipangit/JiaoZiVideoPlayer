@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ActivityDirectlyPlay"/>
+        <activity android:name=".ActivityPlayDirectly"/>
 
         <activity android:name=".ActivityListView"/>
         <activity android:name=".ActivityListViewNormal"/>

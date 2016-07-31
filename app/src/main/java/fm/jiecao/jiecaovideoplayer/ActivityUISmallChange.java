@@ -8,8 +8,8 @@ import android.view.MenuItem;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowShareButtonAfterFullscreen;
-import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowTitleAfterFullscreen;
+import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowShareButtonAfterFullscreen;
+import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTitleAfterFullscreen;
 
 /**
  * Created by Nathen on 16/7/31.

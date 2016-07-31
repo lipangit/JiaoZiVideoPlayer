@@ -68,7 +68,7 @@
                 android:layout_marginTop="18dp"
                 android:text="Fresco"/>
 
-            <fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardFresco
+            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardFresco
                 android:id="@+id/videocontroller5"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"

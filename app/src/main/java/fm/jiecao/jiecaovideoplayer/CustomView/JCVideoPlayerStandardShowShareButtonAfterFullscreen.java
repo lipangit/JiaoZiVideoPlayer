@@ -1,7 +1,6 @@
-package fm.jiecao.jiecaovideoplayer.View;
+package fm.jiecao.jiecaovideoplayer.CustomView;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;

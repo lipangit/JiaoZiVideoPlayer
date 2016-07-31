@@ -1,4 +1,4 @@
-package fm.jiecao.jiecaovideoplayer.View;
+package fm.jiecao.jiecaovideoplayer.CustomView;
 
 import android.content.Context;
 import android.util.AttributeSet;

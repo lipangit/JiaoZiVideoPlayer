@@ -45,7 +45,7 @@ public class ActiivtyMain extends AppCompatActivity {
         findViewById(R.id.play_directly_without_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActiivtyMain.this, ActivityDirectlyPlay.class));
+                startActivity(new Intent(ActiivtyMain.this, ActivityPlayDirectly.class));
             }
         });
 

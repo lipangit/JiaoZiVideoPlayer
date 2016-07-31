@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
-import fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardFresco;
+import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardFresco;
 
 /**
  * Created by Nathen on 16/7/31.
