@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -19,86 +19,54 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="18dp"
-                android:text="Base simple ui example" />
+                android:text="Base simple ui example"/>
 
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
-                android:id="@+id/custom_videoplayer"
+                android:id="@+id/simple_demo"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="18dp"
-                android:text="Recommended standard ui example" />
+                android:text="Recommended standard ui example"/>
 
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-                android:id="@+id/custom_videoplayer_standard"
+                android:id="@+id/jc_video"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="18dp"
-                android:text="Standard ui with share button, visible after fullscreen" />
-
-            <fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowShareButtonAfterFullscreen
-                android:id="@+id/custom_videoplayer_standard_with_share_button"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="18dp"
-                android:text="Standard ui show title after fullscreen" />
-
-            <fm.jiecao.jiecaovideoplayer.View.JCVideoPlayerStandardShowTitleAfterFullscreen
-                android:id="@+id/custom_videoplayer_standard_show_title_after_fullscreen"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp"/>
 
             <Button
-                android:id="@+id/to_fullscreen_simple"
+                android:id="@+id/tiny_win"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="To fullscreen derictly - simple ui" />
+                android:layout_gravity="center_horizontal"
+                android:text="VideoPlayer above is playing click me to tiny window"/>
 
             <Button
-                android:id="@+id/to_fullscreen_standard"
+                android:id="@+id/play_directly_without_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="To fullscreen derictly - standard ui" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="Play Directly Without Layout"/>
 
             <Button
-                android:id="@+id/to_list_activity"
+                android:id="@+id/about_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="List demo" />
+                android:layout_gravity="center_horizontal"
+                android:text="About ListView"/>
 
             <Button
-                android:id="@+id/to_list_viewpager_activity"
+                android:id="@+id/about_ui"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="List and Viewpager demo" />
-
-            <Button
-                android:id="@+id/to_multiholder_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Multi holder demo" />
-
-            <Button
-                android:id="@+id/to_loadimage_activity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Other load image library" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:text="About Ui"/>
         </LinearLayout>
     </ScrollView>
-
-
 </LinearLayout>

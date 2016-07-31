@@ -27,14 +27,15 @@ import java.util.TimerTask;
  */
 public class JCVideoPlayerStandard extends JCVideoPlayer {
 
-    public ImageView backButton;
+    public ImageView   backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
-    public TextView titleTextView;
+    public TextView  titleTextView;
     public ImageView thumbImageView;
     public ImageView coverImageView;
+    public ImageView tinyBackImageView;
 
-    protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
-    protected DismissControlViewTimerTask mDismissControlViewTimerTask;
+    protected static Timer                       DISSMISS_CONTROL_VIEW_TIMER;
+    protected        DismissControlViewTimerTask mDismissControlViewTimerTask;
 
     protected static JCBuriedPointStandard JC_BURIED_POINT_STANDARD;
 
@@ -55,22 +56,31 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         thumbImageView = (ImageView) findViewById(R.id.thumb);
         coverImageView = (ImageView) findViewById(R.id.cover);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
+        tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
 
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
+        tinyBackImageView.setOnClickListener(this);
 
     }
 
     @Override
-    public boolean setUp(String url, Object... objects) {
+    public boolean setUp(String url, int screen, Object... objects) {
         if (objects.length == 0) return false;
-        if (super.setUp(url, objects)) {
+        if (super.setUp(url, screen, objects)) {
             titleTextView.setText(objects[0].toString());
-            if (mIfCurrentIsFullscreen) {
+            if (mCurrentScreen == SCREEN_WINDOW_FULLSCREEN) {
                 fullscreenButton.setImageResource(R.drawable.jc_shrink);
-            } else {
+                backButton.setVisibility(View.VISIBLE);
+                tinyBackImageView.setVisibility(View.INVISIBLE);
+            } else if (mCurrentScreen == SCREEN_LAYOUT_LIST) {
                 fullscreenButton.setImageResource(R.drawable.jc_enlarge);
                 backButton.setVisibility(View.GONE);
+                tinyBackImageView.setVisibility(View.INVISIBLE);
+            } else if (mCurrentScreen == SCREEN_WINDOW_TINY) {
+                tinyBackImageView.setVisibility(View.VISIBLE);
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
             }
             return true;
         }
@@ -83,8 +93,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    protected void setStateAndUi(int state) {
-        super.setStateAndUi(state);
+    public void setUiWitStateAndScreen(int state) {
+        super.setUiWitStateAndScreen(state);
         switch (mCurrentState) {
             case CURRENT_STATE_NORMAL:
                 changeUiToNormal();
@@ -169,15 +179,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             }
         } else if (i == R.id.surface_container) {
             if (JC_BURIED_POINT_STANDARD != null && isCurrentMediaListener()) {
-                if (mIfCurrentIsFullscreen) {
-                    JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(mUrl, mObjects);
-                } else {
-                    JC_BURIED_POINT_STANDARD.onClickBlank(mUrl, mObjects);
-                }
+//                if (mIfCurrentIsFullscreen) {
+//                    JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(mUrl, mObjects);
+//                } else {
+//                    JC_BURIED_POINT_STANDARD.onClickBlank(mUrl, mObjects);
+//                }
             }
             startDismissControlViewTimer();
         } else if (i == R.id.back) {
-            backFullscreen();
+            backPress();
+        } else if (i == R.id.back_tiny) {
+            backPress();
         }
     }
 
@@ -273,129 +285,219 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     //Unified management Ui
     private void changeUiToNormal() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.VISIBLE);
-        coverImageView.setVisibility(View.VISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
     }
 
     private void changeUiToPrepareingShow() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        loadingProgressBar.setVisibility(View.VISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.VISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPrepareingClear() {
-        topContainer.setVisibility(View.INVISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.VISIBLE);
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPlayingShow() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPlayingClear() {
-        changeUiToClear();
-        bottomProgressBar.setVisibility(View.VISIBLE);
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPauseShow() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPauseClear() {
-        changeUiToClear();
-        bottomProgressBar.setVisibility(View.VISIBLE);
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPlayingBufferingShow() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        loadingProgressBar.setVisibility(View.VISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToPlayingBufferingClear() {
-        topContainer.setVisibility(View.INVISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        loadingProgressBar.setVisibility(View.VISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.VISIBLE);
-        updateStartImage();
-    }
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
 
-    private void changeUiToClear() {
-        topContainer.setVisibility(View.INVISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.INVISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
     }
 
     private void changeUiToCompleteShow() {
-        topContainer.setVisibility(View.VISIBLE);
-        bottomContainer.setVisibility(View.VISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.VISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToCompleteClear() {
-        topContainer.setVisibility(View.INVISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.VISIBLE);
-        coverImageView.setVisibility(View.INVISIBLE);
-        bottomProgressBar.setVisibility(View.VISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
     }
 
     private void changeUiToError() {
-        topContainer.setVisibility(View.INVISIBLE);
-        bottomContainer.setVisibility(View.INVISIBLE);
-        startButton.setVisibility(View.VISIBLE);
-        loadingProgressBar.setVisibility(View.INVISIBLE);
-        thumbImageView.setVisibility(View.INVISIBLE);
-        coverImageView.setVisibility(View.VISIBLE);
-        bottomProgressBar.setVisibility(View.INVISIBLE);
-        updateStartImage();
+        switch (mCurrentScreen) {
+            case SCREEN_LAYOUT_LIST:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                updateStartImage();
+                break;
+            case SCREEN_WINDOW_TINY:
+                break;
+        }
+
+    }
+
+    private void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro,
+                                       int thumbImg, int coverImg, int bottomPro) {
+        topContainer.setVisibility(topCon);
+        bottomContainer.setVisibility(bottomCon);
+        startButton.setVisibility(startBtn);
+        loadingProgressBar.setVisibility(loadingPro);
+        thumbImageView.setVisibility(thumbImg);
+        coverImageView.setVisibility(coverImg);
+        bottomProgressBar.setVisibility(bottomPro);
     }
 
     private void updateStartImage() {
@@ -408,11 +510,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    protected Dialog mProgressDialog;
+    protected Dialog      mProgressDialog;
     protected ProgressBar mDialogProgressBar;
-    protected TextView mDialogSeekTime;
-    protected TextView mDialogTotalTime;
-    protected ImageView mDialogIcon;
+    protected TextView    mDialogSeekTime;
+    protected TextView    mDialogTotalTime;
+    protected ImageView   mDialogIcon;
 
     @Override
     protected void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
@@ -458,7 +560,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
 
-    protected Dialog mVolumeDialog;
+    protected Dialog      mVolumeDialog;
     protected ProgressBar mDialogVolumeProgressBar;
 
     @Override
@@ -532,9 +634,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    public static void setJcBuriedPointStandard(JCBuriedPointStandard jcBuriedPointStandard) {
-        JC_BURIED_POINT_STANDARD = jcBuriedPointStandard;
-        JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
-    }
+//    public static void setJcBuriedPointStandard(JCBuriedPointStandard jcBuriedPointStandard) {
+//        JC_BURIED_POINT_STANDARD = jcBuriedPointStandard;
+//        JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
+//    }
 
 }

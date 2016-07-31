@@ -5,13 +5,13 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".DemoApplication"
+        android:name=".ApplicationDemo"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ActiivtyMain"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -21,21 +21,17 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ListActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ActivityPlayDirectly"/>
 
-        <activity
-            android:name=".ListViewpagerActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ActivityListView"/>
+        <activity android:name=".ActivityListViewNormal"/>
+        <activity android:name=".ActivityListViewViewpager"/>
+        <activity android:name=".ActivityListViewMultiHolder"/>
 
-        <activity
-            android:name=".MultiHolderActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity
-            android:name=".LoadImageActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".ActivityUI"/>
+        <activity android:name=".ActivityUISmallChange"/>
+        <activity android:name=".ActivityUIBigChange"/>
+        <activity android:name=".ActivityUIImageLoader"/>
 
     </application>
 

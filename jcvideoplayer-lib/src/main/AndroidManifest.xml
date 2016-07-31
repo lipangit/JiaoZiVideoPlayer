@@ -1,18 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="fm.jiecao.jcvideoplayer_lib">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="fm.jiecao.jcvideoplayer_lib">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <uses-sdk tools:overrideLibrary="com.example.ijkplayer_x86_64,
      tv.danmaku.ijk.media.player_arm64"/>
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
-        <activity
-            android:name=".JCFullScreenActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

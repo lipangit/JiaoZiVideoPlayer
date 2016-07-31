@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/black">
 
     <RelativeLayout
         android:id="@+id/surface_container"
@@ -22,7 +22,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#222222" />
+        android:background="#222222"/>
 
     <ImageView
         android:id="@+id/thumb"
@@ -35,7 +35,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="#000000"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"/>
 
     <LinearLayout
         android:id="@+id/layout_bottom"
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:text="00:00"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"/>
 
         <SeekBar
             android:id="@+id/progress"
@@ -68,7 +68,7 @@
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
             android:progressDrawable="@drawable/jc_seek_progress"
-            android:thumb="@drawable/jc_seek_thumb" />
+            android:thumb="@drawable/jc_seek_thumb"/>
 
         <TextView
             android:id="@+id/total"
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:text="00:00"
-            android:textColor="#ffffff" />
+            android:textColor="#ffffff"/>
 
         <ImageView
             android:id="@+id/fullscreen"
@@ -84,7 +84,7 @@
             android:layout_height="fill_parent"
             android:paddingRight="16dp"
             android:scaleType="center"
-            android:src="@drawable/jc_enlarge" />
+            android:src="@drawable/jc_enlarge"/>
     </LinearLayout>
 
     <ProgressBar
@@ -94,7 +94,16 @@
         android:layout_height="1.5dp"
         android:layout_alignParentBottom="true"
         android:max="100"
-        android:progressDrawable="@drawable/jc_progress" />
+        android:progressDrawable="@drawable/jc_progress"/>
+
+    <ImageView
+        android:id="@+id/back_tiny"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/jc_click_back_tiny_selector"
+        android:visibility="visible"/>
 
     <LinearLayout
         android:id="@+id/layout_top"
@@ -109,7 +118,7 @@
             android:layout_height="48dp"
             android:paddingLeft="10dp"
             android:scaleType="centerInside"
-            android:src="@drawable/jc_back" />
+            android:src="@drawable/jc_back"/>
 
         <TextView
             android:id="@+id/title"
@@ -117,7 +126,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
     </LinearLayout>
 
     <ProgressBar
@@ -127,7 +136,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:indeterminateDrawable="@drawable/jc_loading"
-        android:visibility="invisible" />
+        android:visibility="invisible"/>
 
     <ImageView
         android:id="@+id/start"
@@ -136,6 +145,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/jc_click_play_selector" />
+        android:src="@drawable/jc_click_play_selector"/>
 
 </RelativeLayout>
