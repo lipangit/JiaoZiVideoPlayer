@@ -23,10 +23,10 @@
 
         <activity android:name=".ActivityDirectlyPlay"/>
 
-        <activity android:name=".ActivityList"/>
-        <activity android:name=".ActivityListNormal"/>
-        <activity android:name=".ActivityListViewpager"/>
-        <activity android:name=".ActivityListMultiHolder"/>
+        <activity android:name=".ActivityListView"/>
+        <activity android:name=".ActivityListViewNormal"/>
+        <activity android:name=".ActivityListViewViewpager"/>
+        <activity android:name=".ActivityListViewMultiHolder"/>
 
         <activity android:name=".ActivityUI"/>
         <activity android:name=".ActivityUISmallChange"/>

@@ -47,11 +47,11 @@
                 android:text="Play Directly Without Layout"/>
 
             <Button
-                android:id="@+id/about_list"
+                android:id="@+id/about_listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="About List"/>
+                android:text="About ListView"/>
 
             <Button
                 android:id="@+id/about_ui"

@@ -20,18 +20,18 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by Nathen
  * On 2016/05/23 21:34
  */
-public class ActivityListMultiHolder extends AppCompatActivity {
+public class ActivityListViewMultiHolder extends AppCompatActivity {
     ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_content);
+        setContentView(R.layout.activity_listview_content);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("MultiHolder");
+        getSupportActionBar().setTitle("MultiHolderListView");
 
 
         listView = (ListView) findViewById(R.id.listview);

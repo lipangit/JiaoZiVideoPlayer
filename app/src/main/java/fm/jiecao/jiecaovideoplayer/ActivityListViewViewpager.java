@@ -17,16 +17,16 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  * Created by Nathen
  * On 2016/02/07 01:01
  */
-public class ActivityListViewpager extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class ActivityListViewViewpager extends AppCompatActivity implements ViewPager.OnPageChangeListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_viewpager);
+        setContentView(R.layout.activity_listview_viewpager);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("ListAndViewPager");
+        getSupportActionBar().setTitle("ListViewAndViewPager");
 
         List<View> listViews = new ArrayList<>();
         ListView listView1 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);

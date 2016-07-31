@@ -36,10 +36,10 @@ public class ActiivtyMain extends AppCompatActivity {
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
                 jcVideoPlayerStandard.thumbImageView);
 
-        findViewById(R.id.about_list).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.about_listview).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActiivtyMain.this, ActivityList.class));
+                startActivity(new Intent(ActiivtyMain.this, ActivityListView.class));
             }
         });
         findViewById(R.id.play_directly_without_layout).setOnClickListener(new View.OnClickListener() {

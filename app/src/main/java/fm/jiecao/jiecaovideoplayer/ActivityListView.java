@@ -11,7 +11,7 @@ import android.widget.Toast;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityList extends AppCompatActivity {
+public class ActivityListView extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,34 +19,34 @@ public class ActivityList extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("About List");
-        setContentView(R.layout.activity_list);
+        getSupportActionBar().setTitle("About ListView");
+        setContentView(R.layout.activity_listview);
 
         findViewById(R.id.normal_list).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivityList.this, ActivityListNormal.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewNormal.class));
             }
         });
 
         findViewById(R.id.viewpayer_list).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivityList.this, ActivityListViewpager.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewViewpager.class));
             }
         });
 
         findViewById(R.id.multi_holder_list).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ActivityList.this, ActivityListMultiHolder.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewMultiHolder.class));
             }
         });
 
         findViewById(R.id.recyleview).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ActivityList.this, "Coming soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivityListView.this, "Coming soon", Toast.LENGTH_SHORT).show();
             }
         });
     }

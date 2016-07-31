@@ -10,21 +10,21 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:text="Normal List"/>
+        android:text="Normal ListView"/>
 
     <Button
         android:id="@+id/viewpayer_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="List and Viewpayer"/>
+        android:text="ListView and Viewpayer"/>
 
     <Button
         android:id="@+id/multi_holder_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Multi holder"/>
+        android:text="Multi Holder ListView"/>
 
     <Button
         android:id="@+id/recyleview"
