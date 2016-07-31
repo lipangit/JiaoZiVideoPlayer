@@ -1,30 +1,21 @@
 package fm.jiecao.jiecaovideoplayer;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.lang.reflect.Constructor;
-
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
  * Created by Nathen on 16/7/22.
  */
-public class MainActiivty extends AppCompatActivity {
+public class ActiivtyMain extends AppCompatActivity {
 
     JCVideoPlayerStandard jcVideoPlayerStandard;
     JCVideoPlayerSimple   jcVideoPlayerSimple;
@@ -48,20 +39,20 @@ public class MainActiivty extends AppCompatActivity {
         findViewById(R.id.list_demo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActiivty.this, ListActivity.class));
+                startActivity(new Intent(ActiivtyMain.this, ActivityList.class));
             }
         });
         findViewById(R.id.play_directly_without_layout).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActiivty.this, DirectlyPlayActivity.class));
+                startActivity(new Intent(ActiivtyMain.this, ActivityDirectlyPlay.class));
             }
         });
 
         findViewById(R.id.ui_demo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActiivty.this, UiActivity.class));
+                startActivity(new Intent(ActiivtyMain.this, ActivityUi.class));
             }
         });
     }

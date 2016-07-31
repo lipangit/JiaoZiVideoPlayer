@@ -1,5 +1,6 @@
 package fm.jiecao.jiecaovideoplayer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,7 @@ import android.view.View;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ListActivity extends AppCompatActivity {
+public class ActivityList extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +24,7 @@ public class ListActivity extends AppCompatActivity {
         findViewById(R.id.normal_list).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(ActivityList.this, ActivityListNormal.class));
             }
         });
 

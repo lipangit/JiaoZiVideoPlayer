@@ -9,7 +9,7 @@ import android.view.View;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class UiActivity extends AppCompatActivity {
+public class ActivityUi extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +17,7 @@ public class UiActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("UiActivity");
+        getSupportActionBar().setTitle("ActivityUi");
         setContentView(R.layout.activity_ui);
 
         findViewById(R.id.simple_change).setOnClickListener(new View.OnClickListener() {

@@ -20,7 +20,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class DirectlyPlayActivity extends AppCompatActivity {
+public class ActivityDirectlyPlay extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +48,7 @@ public class DirectlyPlayActivity extends AppCompatActivity {
                 }
                 try {
                     Constructor<JCVideoPlayer> constructor = JCVideoPlayer.class.getConstructor(Context.class);
-                    JCVideoPlayer jcVideoPlayer = constructor.newInstance(DirectlyPlayActivity.this);
+                    JCVideoPlayer jcVideoPlayer = constructor.newInstance(ActivityDirectlyPlay.this);
                     jcVideoPlayer.setId(JCVideoPlayer.FULLSCREEN_ID);
                     WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
                     int w = wm.getDefaultDisplay().getWidth();
