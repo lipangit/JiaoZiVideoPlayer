@@ -15,7 +15,7 @@ Ambition is become the most widely used video playback control.
 [中文文档](README-ZH.md)
 
 ## Features
-1. Float tiny window
+1. Video fullscreen and float tiny window
 2. Completely custom ui
 3. In `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
 4. Gestrues to modify progress and volume
