@@ -7,12 +7,10 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
 
-真正实现Android的全屏功能，立志成为Android平台使用最广泛的视频播放控件  Q群:490442439
-
-正在全力研究 头条视频 和 天天快报 那样的用android.media.MediaPlayer小窗播放的功能，重点是在切换SurfaceView的时候或removeView的时候视频能连续播放.
+立志成为Android平台使用最广泛的视频播放控件  Q群:490442439
 
 ##主要特点
-1. 全屏时启动新`Activity`实现播放器真正的全屏功能
+1. 浮层小窗播放
 2. 可以完全自定义UI
 3. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
 4. 手势修改进度和音量
@@ -52,27 +50,19 @@ compile 'fm.jiecao:jiecaovideoplayer:4.5_preview1'
 
 3.设置视频地址、缩略图地址、标题
 ```java
-JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
-jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4"
-                , "嫂子想我没");
+JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
+jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
+                            , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子闭眼睛");
 jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
-4.在包含播放器的`Fragment`或`Activity`的`onPause()`方法中调用`JCVideoPlayer.releaseAllVideos();`
+4.在包含播放器的`Fragment`的`onPause()`方法中调用`JCVideoPlayer.releaseAllVideos();`
 
 ####其他接口
 
 直接进入全屏，比如在webview中视频播放的适配很麻烦很无头绪，调用此接口直接全屏播放
 ```java
-JCFullScreenActivity.startActivity(this,
-    "http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4",
-    JCVideoPlayerStandard.class,
-    "嫂子别摸我");
-```
-
-用代码控制播放按钮的点击,如果是普通状态会播放视频，如果是播放中会暂停视频
-```java
-jcVideoPlayerStandard.startButton.performClick();
+敬请期待
 ```
 
 ####混淆
@@ -84,7 +74,7 @@ jcVideoPlayerStandard.startButton.performClick();
 
 ##贡献者
 
-[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw) [Miguel Aragues](https://github.com/Maragues)
+[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw) [Miguel Aragues](https://github.com/Maragues) [e16din](https://github.com/e16din)
 
 ## License MIT
 

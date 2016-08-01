@@ -8,15 +8,14 @@
 </p>
 
 * This project need translators, mother language is english, you can change everything edit readme, release note, formate variable and annotation.
-* Now the research target is android.media.MediaPlayer setSurface by more surfaces the video is always continuous.
 
-Android truly full-screen capabilities, the Android platform to become the most widely used video playback controls. Q Group:490442439
+Ambition is become the most widely used video playback control.
 
 
 [中文文档](README-ZH.md)
 
 ## Features
-1. Launching new Fullscreen Activity when playing video in fullscreen mode
+1. Float tiny window
 2. Completely custom ui
 3. In `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
 4. Gestrues to modify progress and volume
@@ -56,27 +55,19 @@ Or download lib
 
 3.Set the video uri, video thumb url and video title
 ```java
-JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
-jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_bfbbfa3cea8f11e5aac3db03cda99974.f20.mp4"
-                , "嫂子想我没");
+JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
+jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
+                            , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子闭眼睛");
 jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
-4.Remember to invoke `JCVideoPlayer.releaseAllVideos();` in `onPause()` of `Fragment` or `Activity`
+4.Remember to invoke `JCVideoPlayer.releaseAllVideos();` in `onPause()` of `Activity`
 
 #### Other APIs
 
 Invoke `JCFullScreenActivity.startActivity(...)` to enter fullscreen directly.
 ```java
-JCFullScreenActivity.startActivity(this,
-    "http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4",
-    JCVideoPlayerStandard.class,
-    "嫂子别摸我");
-```
-
-Control play button,if state is normal it will play, if state is playing it will pause
-```java
-jcVideoPlayerStandard.startButton.performClick();
+Comming soon
 ```
 
 ProGuard
@@ -88,7 +79,7 @@ Need nothing
 
 ##Contributors
 
-[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw) [Miguel Aragues](https://github.com/Maragues)
+[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw) [Miguel Aragues](https://github.com/Maragues) [e16din](https://github.com/e16din)
 
 ## License MIT
 
