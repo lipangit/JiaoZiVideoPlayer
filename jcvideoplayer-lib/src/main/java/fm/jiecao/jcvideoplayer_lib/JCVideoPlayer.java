@@ -596,6 +596,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (old != null) {
             vp.removeView(old);
         }
+        if (textureViewContainer.getChildCount() > 0) {
+            textureViewContainer.removeAllViews();
+        }
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer mJcVideoPlayer = constructor.newInstance(getContext());
