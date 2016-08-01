@@ -86,7 +86,7 @@ public class ActivityListViewMultiHolder extends AppCompatActivity {
 
                 boolean setUp = viewHolder.jcVideoPlayer.setUp(
                         "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                        "嫂子上车");
+                        "嫂子快躲起来");
                 if (setUp) {
                     ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/3/14/2204a578-609b-440e-8af7-a0ee17ff3aee.jpg",
                             viewHolder.jcVideoPlayer.thumbImageView);

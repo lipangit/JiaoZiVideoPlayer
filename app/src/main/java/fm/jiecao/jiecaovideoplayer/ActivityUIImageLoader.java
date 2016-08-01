@@ -39,27 +39,27 @@ public class ActivityUIImageLoader extends AppCompatActivity {
 
         videoController1 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller1);
         videoController1.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                "嫂子张嘴");
+                "嫂子抓住");
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
                 videoController1.thumbImageView);
 
         videoController2 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller2);
         videoController2.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                "嫂子抬头");
+                "嫂子别晃");
         Glide.with(this)
                 .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
                 .into(videoController2.thumbImageView);
 
         videoController3 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller3);
         videoController3.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                "嫂子不困");
+                "嫂子别躲");
         Picasso.with(this)
                 .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
                 .into(videoController3.thumbImageView);
 
         videoController4 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller4);
         videoController4.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                "嫂子你个死猪");
+                "嫂子别忘了");
         RequestQueue mQueue = Volley.newRequestQueue(getApplicationContext());
         com.android.volley.toolbox.ImageLoader imageLoader = new com.android.volley.toolbox.ImageLoader(mQueue, new BitmapCache());
         com.android.volley.toolbox.ImageLoader.ImageListener listener =
@@ -68,7 +68,7 @@ public class ActivityUIImageLoader extends AppCompatActivity {
 
         videoController5 = (JCVideoPlayerStandardFresco) findViewById(R.id.videocontroller5);
         videoController5.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                "嫂子洗澡没");
+                "嫂子打电话");
         Uri uri = Uri.parse("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg");
         videoController5.thumbImageView.setImageURI(uri);
     }
