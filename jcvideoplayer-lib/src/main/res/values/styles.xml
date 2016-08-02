@@ -2,7 +2,7 @@
 <resources>
 
     <style name="jc_style_dialog_progress" parent="@android:style/Theme.Dialog">
-        <item name="android:windowBackground">@drawable/jc_dialog_progress_bg</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowAnimationStyle">@style/jc_popup_toast_anim</item>
         <item name="android:backgroundDimEnabled">false</item>
