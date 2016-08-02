@@ -56,7 +56,7 @@ public class ActiivtyMain extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        JCVideoPlayerStandard.setJcBuriedPointStandard(new MyJCBuriedPointStandard());
+        JCVideoPlayer.setJcBuriedPoint(new MyJCBuriedPointStandard());
 
     }
 

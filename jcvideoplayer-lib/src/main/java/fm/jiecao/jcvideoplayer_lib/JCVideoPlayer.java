@@ -742,7 +742,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCMediaManager.instance().releaseMediaPlayer();
     }
 
-    protected static void setJcBuriedPoint(JCBuriedPoint jcBuriedPoint) {
+    public static void setJcBuriedPoint(JCBuriedPoint jcBuriedPoint) {
         JC_BURIED_POINT = jcBuriedPoint;
     }
 
