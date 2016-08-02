@@ -69,7 +69,7 @@ public class ActivityPlayDirectly extends AppCompatActivity implements View.OnCl
                     FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
                     lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
                     vp.addView(jcVideoPlayer, lp);
-                    jcVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, "hello");
+                    jcVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, "嫂子别逗了");
                     jcVideoPlayer.addTextureView();
                     jcVideoPlayer.setRotation(90);
 
