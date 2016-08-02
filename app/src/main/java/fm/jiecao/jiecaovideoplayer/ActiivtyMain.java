@@ -115,8 +115,6 @@ public class ActiivtyMain extends AppCompatActivity implements View.OnClickListe
                     Log.i("Buried_Point", "unknow");
                     break;
             }
-
-            System.out.println("fdsfdsfdsfdsfs " + type + "  " + screen);
         }
     }
 
