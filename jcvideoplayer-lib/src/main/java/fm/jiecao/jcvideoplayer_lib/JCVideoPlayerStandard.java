@@ -543,7 +543,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
         mDialogSeekTime.setText(seekTime);
         mDialogTotalTime.setText(" / " + totalTime);
-        mDialogProgressBar.setProgress(seekTimePosition * 100 / totalTimeDuration);
+        mDialogProgressBar.setProgress(totalTimeDuration <= 0 ? 0 : (seekTimePosition * 100 / totalTimeDuration));
         if (deltaX > 0) {
             mDialogIcon.setBackgroundResource(R.drawable.jc_forward_icon);
         } else {
