@@ -5,8 +5,8 @@
               android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="152dp"
+        android:layout_height="152dp"
         android:gravity="center">
 
         <LinearLayout

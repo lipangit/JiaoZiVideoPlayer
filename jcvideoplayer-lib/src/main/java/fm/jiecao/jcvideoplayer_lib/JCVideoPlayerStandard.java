@@ -563,6 +563,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.showVolumDialog(deltaY, volumePercent);
         if (mVolumeDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_volume_dialog, null);
+            View content = localView.findViewById(R.id.content);
+            content.setRotation(90);
             mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
             mVolumeDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
             mVolumeDialog.setContentView(localView);
@@ -571,8 +573,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mVolumeDialog.getWindow().addFlags(16);
             mVolumeDialog.getWindow().setLayout(-2, -2);
             WindowManager.LayoutParams localLayoutParams = mVolumeDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = 19;
-            localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.jc_volume_dialog_margin_left);
+            localLayoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+//            localLayoutParams.y = getContext().getResources().getDimensionPixelOffset(R.dimen.jc_volume_dialog_margin_left);
             mVolumeDialog.getWindow().setAttributes(localLayoutParams);
         }
         if (!mVolumeDialog.isShowing()) {

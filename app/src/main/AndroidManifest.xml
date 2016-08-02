@@ -21,17 +21,35 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ActivityPlayDirectly"/>
+        <activity
+            android:name=".ActivityPlayDirectly"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".ActivityListView"/>
-        <activity android:name=".ActivityListViewNormal"/>
-        <activity android:name=".ActivityListViewViewpager"/>
-        <activity android:name=".ActivityListViewMultiHolder"/>
+        <activity
+            android:name=".ActivityListView"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ActivityListViewNormal"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ActivityListViewViewpager"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ActivityListViewMultiHolder"
+            android:screenOrientation="portrait"/>
 
-        <activity android:name=".ActivityUI"/>
-        <activity android:name=".ActivityUISmallChange"/>
-        <activity android:name=".ActivityUIBigChange"/>
-        <activity android:name=".ActivityUIImageLoader"/>
+        <activity
+            android:name=".ActivityUI"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ActivityUISmallChange"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ActivityUIBigChange"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ActivityUIImageLoader"
+            android:screenOrientation="portrait"/>
 
     </application>
 

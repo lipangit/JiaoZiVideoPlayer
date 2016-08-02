@@ -2,29 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:background="@drawable/jc_dialog_progress_bg"
               android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="40.0dip"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <RelativeLayout
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:gravity="center">
 
-        <ProgressBar
-            android:id="@+id/volume_progressbar"
-            style="@style/jc_vertical_progressBar"
-            android:layout_width="4.0dip"
-            android:layout_height="81.0dip"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16.0dip"
-            android:max="100"/>
+        <LinearLayout
+            android:id="@+id/content"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/jc_dialog_progress_bg"
+            android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16.0dip"
-            android:layout_marginTop="16.0dip"
-            android:src="@drawable/jc_volume_icon"/>
-    </LinearLayout>
+            <ProgressBar
+                android:id="@+id/volume_progressbar"
+                style="@style/jc_vertical_progressBar"
+                android:layout_width="4dp"
+                android:layout_height="81dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:max="100"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/jc_volume_icon"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+
 </LinearLayout>
