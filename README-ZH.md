@@ -67,7 +67,8 @@ jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/v
 
 ####混淆
 ```
-无需添加
+-keep class tv.danmaku.ijk.** { *; }
+-dontwarn tv.danmaku.ijk.**
 ```
 
 ##[自定义UI](./README_CUSTOM_UI-ZH.md)

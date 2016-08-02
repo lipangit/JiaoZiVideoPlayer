@@ -72,7 +72,8 @@ Comming soon
 
 ProGuard
 ```
-Need nothing
+-keep class tv.danmaku.ijk.** { *; }
+-dontwarn tv.danmaku.ijk.**
 ```
 
 ##[Custom UI](./README_CUSTOM_UI.md)
