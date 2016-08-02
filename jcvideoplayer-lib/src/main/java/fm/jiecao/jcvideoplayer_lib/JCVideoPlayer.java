@@ -423,9 +423,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                     JCBuriedPoint.ON_QUIT_FULLSCREEN :
                     JCBuriedPoint.ON_QUIT_TINYSCREEN);
+            if (JCVideoPlayerManager.lastListener() == null) {//directly fullscreen
+                JCVideoPlayerManager.listener().onCompletion();
+                ((AppCompatActivity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
+                ((AppCompatActivity) getContext()).getSupportActionBar().show();
+                return true;
+            }
             ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
-
             JCVideoPlayerManager.setListener(JCVideoPlayerManager.lastListener());
             JCVideoPlayerManager.setLastListener(null);
             JCMediaManager.instance().lastState = currentState;//save state
