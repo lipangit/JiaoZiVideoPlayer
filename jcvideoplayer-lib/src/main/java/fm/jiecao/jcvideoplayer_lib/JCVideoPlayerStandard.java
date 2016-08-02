@@ -27,8 +27,7 @@ import java.util.TimerTask;
  */
 public class JCVideoPlayerStandard extends JCVideoPlayer {
 
-    protected static JCBuriedPointStandard JC_BURIED_POINT_STANDARD;
-    protected static Timer                 DISSMISS_CONTROL_VIEW_TIMER;
+    protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
 
     public ImageView   backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
@@ -143,6 +142,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                         bottomProgressBar.setProgress(progress);
                     }
                     if (!mChangePosition && !mChangeVolume) {
+                        onEvent(JCBuriedPointStandard.ON_CLICK_BLANK);
                         onClickUiToggle();
                     }
                     break;
@@ -179,13 +179,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 onClickUiToggle();
             }
         } else if (i == R.id.surface_container) {
-            if (JC_BURIED_POINT_STANDARD != null && isCurrentMediaListener()) {
-//                if (mIfCurrentIsFullscreen) {
-//                    JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(url, objects);
-//                } else {
-//                    JC_BURIED_POINT_STANDARD.onClickBlank(url, objects);
-//                }
-            }
             startDismissControlViewTimer();
         } else if (i == R.id.back) {
             backPress();
@@ -229,11 +222,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     private void startPlayLocic() {
-        if (JC_BURIED_POINT_STANDARD != null) {
-            JC_BURIED_POINT_STANDARD.onClickStartThumb(url, objects);
-        }
         prepareVideo();
         startDismissControlViewTimer();
+        onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
     }
 
     private void onClickUiToggle() {
@@ -635,9 +626,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-//    public static void setJcBuriedPointStandard(JCBuriedPointStandard jcBuriedPointStandard) {
-//        JC_BURIED_POINT_STANDARD = jcBuriedPointStandard;
-//        JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
-//    }
+    public static void setJcBuriedPointStandard(JCBuriedPointStandard jcBuriedPointStandard) {
+        JCVideoPlayer.setJcBuriedPoint(jcBuriedPointStandard);
+    }
 
 }

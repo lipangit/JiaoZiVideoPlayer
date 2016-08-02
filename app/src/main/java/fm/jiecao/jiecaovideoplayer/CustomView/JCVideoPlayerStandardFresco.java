@@ -235,9 +235,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void startPlayLocic() {
-        if (JC_BURIED_POINT_STANDARD != null) {
-            JC_BURIED_POINT_STANDARD.onClickStartThumb(url, objects);
-        }
+        onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
         prepareVideo();
         startDismissControlViewTimer();
     }

@@ -6,32 +6,24 @@ package fm.jiecao.jcvideoplayer_lib;
  */
 public interface JCBuriedPoint {
 
-    void onClickStartIcon(String url, Object... objects);
+    int ON_CLICK_START_ICON          = 0;
+    int ON_CLICK_START_ERROR         = 1;
+    int ON_CLICK_START_AUTO_COMPLETE = 2;
 
-    void onClickStartError(String url, Object... objects);
+    int ON_CLICK_PAUSE   = 3;
+    int ON_CLICK_RESUME  = 4;
+    int ON_SEEK_POSITION = 5;
+    int ON_AUTO_COMPLETE = 6;
 
-    void onClickStop(String url, Object... objects);
+    int ON_ENTER_FULLSCREEN = 7;
+    int ON_QUIT_FULLSCREEN  = 8;
+    int ON_ENTER_TINYSCREEN = 9;
+    int ON_QUIT_TINYSCREEN  = 10;
 
-    void onClickStopFullscreen(String url, Object... objects);
 
-    void onClickResume(String url, Object... objects);
+    int ON_TOUCH_SCREEN_SEEK_VOLUME   = 11;
+    int ON_TOUCH_SCREEN_SEEK_POSITION = 12;
 
-    void onClickResumeFullscreen(String url, Object... objects);
-
-    void onClickSeekbar(String url, Object... objects);
-
-    void onClickSeekbarFullscreen(String url, Object... objects);
-
-    void onAutoComplete(String url, Object... objects);
-
-    void onAutoCompleteFullscreen(String url, Object... objects);
-
-    void onEnterFullscreen(String url, Object... objects);
-
-    void onQuitFullscreen(String url, Object... objects);
-
-    void onTouchScreenSeekVolume(String url, Object... objects);
-
-    void onTouchScreenSeekPosition(String url, Object... objects);
+    void onEvent(int type, String url, int screen, Object... objects);
 
 }
