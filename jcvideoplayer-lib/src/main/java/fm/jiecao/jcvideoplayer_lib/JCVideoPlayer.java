@@ -377,6 +377,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (oldT != null) {
             vp.removeView(oldT);
         }
+        ((AppCompatActivity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) getContext()).getSupportActionBar().show();
     }
 
     @Override

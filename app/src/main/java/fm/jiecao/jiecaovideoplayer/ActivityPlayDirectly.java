@@ -96,6 +96,12 @@ public class ActivityPlayDirectly extends AppCompatActivity implements View.OnCl
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
