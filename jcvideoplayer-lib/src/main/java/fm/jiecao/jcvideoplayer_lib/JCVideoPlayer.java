@@ -764,6 +764,40 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
+    public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
+        ((AppCompatActivity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ((AppCompatActivity) context).getSupportActionBar().setShowHideAnimationEnabled(false);
+        ((AppCompatActivity) context).getSupportActionBar().hide();
+
+        ViewGroup vp = (ViewGroup) ((AppCompatActivity) context).findViewById(Window.ID_ANDROID_CONTENT);
+        View old = vp.findViewById(JCVideoPlayer.FULLSCREEN_ID);
+        if (old != null) {
+            vp.removeView(old);
+        }
+        try {
+            Constructor<JCVideoPlayer> constructor = _class.getConstructor(Context.class);
+            JCVideoPlayer jcVideoPlayer = constructor.newInstance(context);
+            jcVideoPlayer.setId(JCVideoPlayerStandard.FULLSCREEN_ID);
+            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            int w = wm.getDefaultDisplay().getWidth();
+            int h = wm.getDefaultDisplay().getHeight();
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
+            lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
+            vp.addView(jcVideoPlayer, lp);
+            jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
+            jcVideoPlayer.addTextureView();
+            jcVideoPlayer.setRotation(90);
+
+            jcVideoPlayer.startButton.performClick();
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showWifiDialog() {
     }
 
