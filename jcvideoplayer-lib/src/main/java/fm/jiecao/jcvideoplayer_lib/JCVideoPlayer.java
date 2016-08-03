@@ -407,7 +407,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
 
         JCVideoPlayerManager.setListener(null);
-        JCVideoPlayerManager.setLastListener(null);
+//        JCVideoPlayerManager.setLastListener(null);
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
 
@@ -747,6 +747,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.d(TAG, "releaseAllVideos");
         if (JCVideoPlayerManager.listener() != null) {
             JCVideoPlayerManager.listener().onCompletion();
+        }
+        if (JCVideoPlayerManager.lastListener() != null) {
+            JCVideoPlayerManager.lastListener().onCompletion();
         }
         JCMediaManager.instance().releaseMediaPlayer();
     }

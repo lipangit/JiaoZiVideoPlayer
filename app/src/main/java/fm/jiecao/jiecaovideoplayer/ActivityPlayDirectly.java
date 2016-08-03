@@ -49,37 +49,7 @@ public class ActivityPlayDirectly extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fullscreen:
-                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                getSupportActionBar().setShowHideAnimationEnabled(false);
-                getSupportActionBar().hide();
-
-                ViewGroup vp = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
-                View old = vp.findViewById(JCVideoPlayer.FULLSCREEN_ID);
-                if (old != null) {
-                    vp.removeView(old);
-                }
-                try {
-                    Constructor<JCVideoPlayerStandard> constructor = JCVideoPlayerStandard.class.getConstructor(Context.class);
-                    JCVideoPlayerStandard jcVideoPlayer = constructor.newInstance(this);
-                    jcVideoPlayer.setId(JCVideoPlayerStandard.FULLSCREEN_ID);
-                    WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-                    int w = wm.getDefaultDisplay().getWidth();
-                    int h = wm.getDefaultDisplay().getHeight();
-                    FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
-                    lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
-                    vp.addView(jcVideoPlayer, lp);
-                    jcVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, "嫂子别逗了");
-                    jcVideoPlayer.addTextureView();
-                    jcVideoPlayer.setRotation(90);
-
-                    jcVideoPlayer.startButton.performClick();
-
-                } catch (InstantiationException e) {
-                    e.printStackTrace();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                JCVideoPlayerStandard.startFullscreenActivity(this, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
                 break;
             case R.id.tiny_window:
                 Toast.makeText(ActivityPlayDirectly.this, "Comming Soon", Toast.LENGTH_SHORT).show();
