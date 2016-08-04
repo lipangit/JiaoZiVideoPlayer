@@ -52,7 +52,7 @@ public class ActiivtyMain extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.tiny_win).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                jcVideoPlayerStandard.toWindowTiny();
+                jcVideoPlayerStandard.startWindowTiny();
             }
         });
 
