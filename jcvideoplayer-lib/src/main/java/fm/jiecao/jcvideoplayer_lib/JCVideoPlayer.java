@@ -425,6 +425,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
         if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN
                 || currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_TINY) {
+            if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN) {
+                final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.quit_fullscreen);
+                startAnimation(ra);
+            }
             onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                     JCBuriedPoint.ON_QUIT_FULLSCREEN :
                     JCBuriedPoint.ON_QUIT_TINYSCREEN);
@@ -601,7 +605,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             jcVideoPlayer.addTextureView();
             jcVideoPlayer.setRotation(90);
 
-            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_fullscreen);
+            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
             jcVideoPlayer.setAnimation(ra);
 
             JCVideoPlayerManager.setLastListener(this);
@@ -790,6 +794,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(jcVideoPlayer, lp);
+            
+            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
+            jcVideoPlayer.setAnimation(ra);
+
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.addTextureView();
             jcVideoPlayer.setRotation(90);

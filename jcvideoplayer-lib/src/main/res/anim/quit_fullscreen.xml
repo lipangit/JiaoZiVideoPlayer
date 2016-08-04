@@ -2,9 +2,9 @@
 <set xmlns:android="http://schemas.android.com/apk/res/android"
      android:interpolator="@android:anim/linear_interpolator">
     <rotate
-        android:duration="10"
-        android:fromDegrees="358"
+        android:duration="5"
+        android:fromDegrees="0"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:toDegrees="360"/>
+        android:toDegrees="-2"/>
 </set>
