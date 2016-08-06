@@ -6,6 +6,7 @@ import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -379,9 +380,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (oldT != null) {
             vp.removeView(oldT);
         }
-        ((AppCompatActivity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
-        ((AppCompatActivity) getContext()).getSupportActionBar().show();
+        showSupportActionBar(getContext());
     }
 
     @Override
@@ -434,9 +433,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     JCBuriedPoint.ON_QUIT_TINYSCREEN);
             if (JCVideoPlayerManager.lastListener() == null) {//directly fullscreen
                 JCVideoPlayerManager.listener().onCompletion();
-                ((AppCompatActivity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
-                ((AppCompatActivity) getContext()).getSupportActionBar().show();
+                showSupportActionBar(getContext());
                 return true;
             }
             ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
@@ -506,9 +503,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         setUiWitStateAndScreen(currentState);
         addTextureView();
 
-        ((AppCompatActivity) getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
-        ((AppCompatActivity) getContext()).getSupportActionBar().show();
+        showSupportActionBar(getContext());
     }
 
     @Override
@@ -577,10 +572,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     private void startWindowFullscreen() {
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
 
-        ((AppCompatActivity) getContext()).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ((AppCompatActivity) getContext()).getSupportActionBar().setShowHideAnimationEnabled(false);
-        ((AppCompatActivity) getContext()).getSupportActionBar().hide();
+        hideSupportActionBar(getContext());
 
         ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(FULLSCREEN_ID);
@@ -774,11 +766,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
-        ((AppCompatActivity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ((AppCompatActivity) context).getSupportActionBar().setShowHideAnimationEnabled(false);
-        ((AppCompatActivity) context).getSupportActionBar().hide();
 
+        hideSupportActionBar(context);
         ViewGroup vp = (ViewGroup) ((AppCompatActivity) context).findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(JCVideoPlayer.FULLSCREEN_ID);
         if (old != null) {
@@ -794,7 +783,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(jcVideoPlayer, lp);
-            
+
 //            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
 
@@ -808,6 +797,33 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static boolean ACTIONBAR_STATUS = false;
+
+    private static void hideSupportActionBar(Context context) {
+        ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
+        if (ab != null) {
+            ACTIONBAR_STATUS = ab.isShowing();//本来就是显示的
+            if (ACTIONBAR_STATUS) {
+                ((AppCompatActivity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                ab.setShowHideAnimationEnabled(false);
+                ab.hide();
+            } else {
+            }//本来就是关闭的,不管他
+        }
+    }
+
+    private static void showSupportActionBar(Context context) {
+        ((AppCompatActivity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
+        if (ab != null) {
+            if (ACTIONBAR_STATUS) {
+                ab.setShowHideAnimationEnabled(false);
+                ab.show();
+            }
         }
     }
 
