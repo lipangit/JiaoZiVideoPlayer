@@ -7,7 +7,7 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
 
-立志成为Android平台使用最广泛的视频播放控件  Q群:490442439
+立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
 
 ##主要特点
 1. 视频全屏播放和浮层小窗播放
