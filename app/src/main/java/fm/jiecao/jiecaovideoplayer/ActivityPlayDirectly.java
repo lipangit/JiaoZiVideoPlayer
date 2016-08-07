@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+
 /**
  * Created by Nathen on 16/7/31.
  */
@@ -37,42 +40,26 @@ public class ActivityPlayDirectly extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fullscreen:
-                //                getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//                getSupportActionBar().setShowHideAnimationEnabled(false);
-//                getSupportActionBar().hide();
-//
-//                ViewGroup vp = (ViewGroup) findViewById(Window.ID_ANDROID_CONTENT);
-//                View old = vp.findViewById(JCVideoPlayer.FULLSCREEN_ID);
-//                if (old != null) {
-//                    vp.removeView(old);
-//                }
-//                try {
-//                    Constructor<JCVideoPlayer> constructor = JCVideoPlayer.class.getConstructor(Context.class);
-//                    JCVideoPlayer jcVideoPlayer = constructor.newInstance(ActivityPlayDirectly.this);
-//                    jcVideoPlayer.setId(JCVideoPlayer.FULLSCREEN_ID);
-//                    WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-//                    int w = wm.getDefaultDisplay().getWidth();
-//                    int h = wm.getDefaultDisplay().getHeight();
-//                    FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
-//                    lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
-//                    vp.addView(jcVideoPlayer, lp);
-//                    jcVideoPlayer.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, "Hello");
-//                    jcVideoPlayer.addTextureView();
-//                    jcVideoPlayer.setRotation(90);
-//                    JCVideoPlayerManager.setListener(jcVideoPlayer);
-//                    jcVideoPlayer.startButton.performClick();
-//                } catch (InstantiationException e) {
-//                    e.printStackTrace();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-                Toast.makeText(ActivityPlayDirectly.this, "Comming Soon", Toast.LENGTH_SHORT).show();
+                JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
                 break;
             case R.id.tiny_window:
                 Toast.makeText(ActivityPlayDirectly.this, "Comming Soon", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
     }
 
     @Override

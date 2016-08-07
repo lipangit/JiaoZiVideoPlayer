@@ -6,10 +6,7 @@ package fm.jiecao.jcvideoplayer_lib;
  */
 public interface JCBuriedPointStandard extends JCBuriedPoint {
 
-    void onClickStartThumb(String url, Object... objects);
-
-    void onClickBlank(String url, Object... objects);
-
-    void onClickBlankFullscreen(String url, Object... objects);
-
+    int ON_CLICK_START_THUMB = 101;
+    int ON_CLICK_BLANK       = 102;
+    
 }
