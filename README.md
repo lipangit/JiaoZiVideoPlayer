@@ -15,6 +15,7 @@ Ambition is become the most widely used video playback control.
 [中文文档](README-ZH.md)
 
 ## Features
+
 1. Video fullscreen and float tiny window
 2. Completely custom ui
 3. In `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
@@ -61,13 +62,27 @@ jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5a
 jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
-4.Remember to invoke `JCVideoPlayer.releaseAllVideos();` in `onPause()` of `Activity`
+4.In `Activity`
+```java
+@Override
+public void onBackPressed() {
+    if (JCVideoPlayer.backPress()) {
+        return;
+    }
+    super.onBackPressed();
+}
+@Override
+protected void onPause() {
+    super.onPause();
+    JCVideoPlayer.releaseAllVideos();
+}
+```
 
 #### Other APIs
 
-Invoke `JCFullScreenActivity.startActivity(...)` to enter fullscreen directly.
+Start fullscreen directly.
 ```java
-Comming soon
+JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
 ```
 
 ProGuard
