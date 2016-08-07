@@ -33,8 +33,6 @@ Ambition is become the most widely used video playback control.
 
 ## Usage
 
-[Stable version is still v3.6.3](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v3.6.3)
-
 1.Import library
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:4.6'

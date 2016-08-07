@@ -27,8 +27,6 @@
 
 ##使用
 
-[稳定版本任然是v3.6.3](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v3.6.3)
-
 1.添加类库
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:4.6'
