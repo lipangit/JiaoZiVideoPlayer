@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.5_preview1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.6-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -26,7 +26,7 @@ Ambition is become the most widely used video playback control.
 
 ## Effect
 
-**[jiecaovideoplayer-4.5_preview1-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.5_preview1-demo.apk)**
+**[jiecaovideoplayer-4.6-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6-demo.apk)**
 
 ![Demo Screenshot][1]
 
@@ -36,14 +36,14 @@ Ambition is become the most widely used video playback control.
 
 1.Import library
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:4.5_preview1'
+compile 'fm.jiecao:jiecaovideoplayer:4.6'
 ```
 
 Or download lib
 
-* [jiecaovideoplayer-4.5_preview1.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.5_preview1.aar)
-* [jiecaovideoplayer-4.5_preview1-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.5_preview1-javadoc.jar)
-* [jiecaovideoplayer-4.5_preview1-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.5_preview1-sources.jar)
+* [jiecaovideoplayer-4.6.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.aar)
+* [jiecaovideoplayer-4.6-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6-javadoc.jar)
+* [jiecaovideoplayer-4.6-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6-sources.jar)
 
 2.Add JCVideoPlayer in your layout
 ```xml
