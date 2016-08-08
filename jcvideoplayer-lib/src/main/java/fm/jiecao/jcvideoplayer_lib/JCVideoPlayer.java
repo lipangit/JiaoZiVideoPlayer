@@ -47,6 +47,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static final int THRESHOLD                = 80;
     public static final int FULL_SCREEN_NORMAL_DELAY = 500;
 
+    public static boolean ACTION_BAR_EXIST           = true;
+    public static boolean TOOL_BAR_EXIST             = true;
     public static boolean WIFI_TIP_DIALOG_SHOWED     = false;
     public static long    CLICK_QUIT_FULLSCREEN_TIME = 0;
 
@@ -800,30 +802,30 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
-    private static boolean ACTIONBAR_STATUS = false;
-
     private static void hideSupportActionBar(Context context) {
-        ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
-        if (ab != null) {
-            ACTIONBAR_STATUS = ab.isShowing();//本来就是显示的
-            if (ACTIONBAR_STATUS) {
-                ((AppCompatActivity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if (ACTION_BAR_EXIST) {
+            ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
+            if (ab != null) {
                 ab.setShowHideAnimationEnabled(false);
                 ab.hide();
-            } else {
-            }//本来就是关闭的,不管他
+            }
+        }
+        if (TOOL_BAR_EXIST) {
+            ((AppCompatActivity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
     private static void showSupportActionBar(Context context) {
-        ((AppCompatActivity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
-        if (ab != null) {
-            if (ACTIONBAR_STATUS) {
+        if (ACTION_BAR_EXIST) {
+            ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
+            if (ab != null) {
                 ab.setShowHideAnimationEnabled(false);
                 ab.show();
             }
+        }
+        if (TOOL_BAR_EXIST) {
+            ((AppCompatActivity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 

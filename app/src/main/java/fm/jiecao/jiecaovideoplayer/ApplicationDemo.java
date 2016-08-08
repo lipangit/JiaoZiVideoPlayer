@@ -14,6 +14,8 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.squareup.leakcanary.LeakCanary;
 
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+
 /**
  * Created by Nathen
  * On 2015/12/01 11:29
@@ -25,6 +27,10 @@ public class ApplicationDemo extends Application {
         super.onCreate();
         LeakCanary.install(this);
         initUniversalImageLoader();
+
+        //it is public static, you can set this everywhere
+        //JCVideoPlayer.TOOL_BAR_EXIST = false;
+        //JCVideoPlayer.ACTION_BAR_EXIST = false;
     }
 
     private void initUniversalImageLoader() {
