@@ -389,16 +389,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onAutoCompletion() {
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
         onEvent(JCBuriedPoint.ON_AUTO_COMPLETE);
-        setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
-        if (textureViewContainer.getChildCount() > 0) {
-            textureViewContainer.removeAllViews();
+        if (JCVideoPlayerManager.listener() != null) {
+            JCVideoPlayerManager.listener().onCompletion();
+            JCVideoPlayerManager.setListener(null);
         }
-        JCVideoPlayerManager.setLastListener(null);
-        AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-        mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
-        JCUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        clearFullscreenLayout();
+        if (JCVideoPlayerManager.lastListener() != null) {
+            JCVideoPlayerManager.lastListener().onCompletion();
+            JCVideoPlayerManager.setLastListener(null);
+        }
     }
 
     @Override
@@ -409,7 +407,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             textureViewContainer.removeAllViews();
         }
 
-        JCVideoPlayerManager.setListener(null);
+        JCVideoPlayerManager.setListener(null);//这里还不完全,
 //        JCVideoPlayerManager.setLastListener(null);
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
@@ -833,8 +831,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public void showProgressDialog(float deltaX,
-                                      String seekTime, int seekTimePosition,
-                                      String totalTime, int totalTimeDuration) {
+                                   String seekTime, int seekTimePosition,
+                                   String totalTime, int totalTimeDuration) {
     }
 
     public void dismissProgressDialog() {
