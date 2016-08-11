@@ -12,7 +12,7 @@ import android.widget.Toast;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityUI extends AppCompatActivity implements View.OnClickListener {
+public class UIActivity extends AppCompatActivity implements View.OnClickListener {
     Button mSmallChange, mBigChange, mImageLoader;
 
     @Override
@@ -39,14 +39,14 @@ public class ActivityUI extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.small_change:
-                startActivity(new Intent(ActivityUI.this, ActivityUISmallChange.class));
+                startActivity(new Intent(UIActivity.this, UISmallChangeActivity.class));
                 break;
             case R.id.big_change:
-                Toast.makeText(ActivityUI.this, "Comming Soon", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(ActivityUI.this, ActivityUIBigChange.class));
+                Toast.makeText(UIActivity.this, "Comming Soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(UIActivity.this, UIBigChangeActivity.class));
                 break;
             case R.id.imageloader:
-                startActivity(new Intent(ActivityUI.this, ActivityUIImageLoader.class));
+                startActivity(new Intent(UIActivity.this, UIImageLoaderActivity.class));
                 break;
         }
     }

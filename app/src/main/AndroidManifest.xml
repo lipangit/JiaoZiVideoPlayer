@@ -5,13 +5,13 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".ApplicationDemo"
+        android:name=".DemoApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ActiivtyMain"
+            android:name=".MainActiivty"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -22,33 +22,33 @@
         </activity>
 
         <activity
-            android:name=".ActivityPlayDirectly"
+            android:name=".PlayDirectlyActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ActivityListView"
+            android:name=".ListViewActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ActivityListViewNormal"
+            android:name=".ListViewNormalActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ActivityListViewViewpager"
+            android:name=".ListViewViewpagerActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ActivityListViewMultiHolder"
+            android:name=".ListViewMultiHolderActivity"
             android:screenOrientation="portrait"/>
 
         <activity
-            android:name=".ActivityUI"
+            android:name=".UIActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ActivityUISmallChange"
+            android:name=".UISmallChangeActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ActivityUIBigChange"
+            android:name=".UIBigChangeActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ActivityUIImageLoader"
+            android:name=".UIImageLoaderActivity"
             android:screenOrientation="portrait"/>
 
     </application>

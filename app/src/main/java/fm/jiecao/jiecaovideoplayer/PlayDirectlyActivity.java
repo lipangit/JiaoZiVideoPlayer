@@ -14,7 +14,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityPlayDirectly extends AppCompatActivity implements View.OnClickListener {
+public class PlayDirectlyActivity extends AppCompatActivity implements View.OnClickListener {
     Button mStartFullscreen, mStartTiny;
 
     @Override
@@ -43,7 +43,7 @@ public class ActivityPlayDirectly extends AppCompatActivity implements View.OnCl
                 JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
                 break;
             case R.id.tiny_window:
-                Toast.makeText(ActivityPlayDirectly.this, "Comming Soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PlayDirectlyActivity.this, "Comming Soon", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

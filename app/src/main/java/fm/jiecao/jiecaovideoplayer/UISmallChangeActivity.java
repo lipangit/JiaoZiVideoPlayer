@@ -14,7 +14,7 @@ import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTitleAfte
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityUISmallChange extends AppCompatActivity {
+public class UISmallChangeActivity extends AppCompatActivity {
     JCVideoPlayerStandardShowShareButtonAfterFullscreen jcVideoPlayerStandardWithShareButton;
     JCVideoPlayerStandardShowTitleAfterFullscreen       jcVideoPlayerStandardShowTitleAfterFullscreen;
 

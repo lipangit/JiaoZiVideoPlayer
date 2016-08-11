@@ -20,7 +20,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  * Created by Nathen
  * On 2015/12/01 11:29
  */
-public class ApplicationDemo extends Application {
+public class DemoApplication extends Application {
 
     @Override
     public void onCreate() {

@@ -4,13 +4,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityUIBigChange extends AppCompatActivity {
+public class ListViewNormalActivity extends AppCompatActivity {
+    ListView         listView;
+    VideoListAdapter adapterVideoList;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,10 +22,12 @@ public class ActivityUIBigChange extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("BigChangeUI");
-        setContentView(R.layout.activity_ui_big_change);
+        getSupportActionBar().setTitle("NormalListView");
+        setContentView(R.layout.activity_listview_content);
 
-
+        listView = (ListView) findViewById(R.id.listview);
+        adapterVideoList = new VideoListAdapter(this);
+        listView.setAdapter(adapterVideoList);
     }
 
     @Override

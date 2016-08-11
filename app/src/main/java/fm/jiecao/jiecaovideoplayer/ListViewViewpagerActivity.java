@@ -17,7 +17,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  * Created by Nathen
  * On 2016/02/07 01:01
  */
-public class ActivityListViewViewpager extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class ListViewViewpagerActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,9 +33,9 @@ public class ActivityListViewViewpager extends AppCompatActivity implements View
         ListView listView2 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);
         ListView listView3 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);
 
-        listView1.setAdapter(new AdapterVideoList(this));
-        listView2.setAdapter(new AdapterVideoList(this));
-        listView3.setAdapter(new AdapterVideoList(this));
+        listView1.setAdapter(new VideoListAdapter(this));
+        listView2.setAdapter(new VideoListAdapter(this));
+        listView3.setAdapter(new VideoListAdapter(this));
 
         listViews.add(listView1);
         listViews.add(listView2);

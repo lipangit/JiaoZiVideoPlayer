@@ -54,7 +54,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    protected void init(Context context) {
+    public void init(Context context) {
         super.init(context);
         bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progressbar);
         titleTextView = (TextView) findViewById(R.id.title);
@@ -227,13 +227,13 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         startDismissControlViewTimer();
     }
 
-    private void startPlayLocic() {
+    public void startPlayLocic() {
         prepareVideo();
         startDismissControlViewTimer();
         onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
     }
 
-    private void onClickUiToggle() {
+    public void onClickUiToggle() {
         if (currentState == CURRENT_STATE_PREPAREING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPrepareingClear();
@@ -268,21 +268,21 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    protected void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
+    public void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
         super.setProgressAndTime(progress, secProgress, currentTime, totalTime);
         if (progress != 0) bottomProgressBar.setProgress(progress);
         if (secProgress != 0) bottomProgressBar.setSecondaryProgress(secProgress);
     }
 
     @Override
-    protected void resetProgressAndTime() {
+    public void resetProgressAndTime() {
         super.resetProgressAndTime();
         bottomProgressBar.setProgress(0);
         bottomProgressBar.setSecondaryProgress(0);
     }
 
     //Unified management Ui
-    private void changeUiToNormal() {
+    public void changeUiToNormal() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
@@ -299,7 +299,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    private void changeUiToPrepareingShow() {
+    public void changeUiToPrepareingShow() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
@@ -315,7 +315,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void changeUiToPrepareingClear() {
+    public void changeUiToPrepareingClear() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
@@ -331,7 +331,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void changeUiToPlayingShow() {
+    public void changeUiToPlayingShow() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
@@ -349,7 +349,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void changeUiToPlayingClear() {
+    public void changeUiToPlayingClear() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
@@ -365,7 +365,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void changeUiToPauseShow() {
+    public void changeUiToPauseShow() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
@@ -383,7 +383,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void changeUiToPauseClear() {
+    public void changeUiToPauseClear() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
@@ -399,7 +399,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void changeUiToPlayingBufferingShow() {
+    public void changeUiToPlayingBufferingShow() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
@@ -415,7 +415,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void changeUiToPlayingBufferingClear() {
+    public void changeUiToPlayingBufferingClear() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
@@ -433,7 +433,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void changeUiToCompleteShow() {
+    public void changeUiToCompleteShow() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
@@ -451,7 +451,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void changeUiToCompleteClear() {
+    public void changeUiToCompleteClear() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
@@ -469,7 +469,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void changeUiToError() {
+    public void changeUiToError() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
@@ -487,7 +487,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    private void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro,
+    public void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro,
                                        int thumbImg, int coverImg, int bottomPro) {
         topContainer.setVisibility(topCon);
         bottomContainer.setVisibility(bottomCon);
@@ -498,7 +498,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         bottomProgressBar.setVisibility(bottomPro);
     }
 
-    private void updateStartImage() {
+    public void updateStartImage() {
         if (currentState == CURRENT_STATE_PLAYING) {
             startButton.setImageResource(R.drawable.jc_click_pause_selector);
         } else if (currentState == CURRENT_STATE_ERROR) {
@@ -515,7 +515,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     protected ImageView   mDialogIcon;
 
     @Override
-    protected void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
+    public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
         super.showProgressDialog(deltaX, seekTime, seekTimePosition, totalTime, totalTimeDuration);
         if (mProgressDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(fm.jiecao.jcvideoplayer_lib.R.layout.jc_progress_dialog, null);
@@ -552,7 +552,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    protected void dismissProgressDialog() {
+    public void dismissProgressDialog() {
         super.dismissProgressDialog();
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
@@ -564,7 +564,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     protected ProgressBar mDialogVolumeProgressBar;
 
     @Override
-    protected void showVolumDialog(float deltaY, int volumePercent) {
+    public void showVolumDialog(float deltaY, int volumePercent) {
         super.showVolumDialog(deltaY, volumePercent);
         if (mVolumeDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_volume_dialog, null);
@@ -590,21 +590,21 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    protected void dismissVolumDialog() {
+    public void dismissVolumDialog() {
         super.dismissVolumDialog();
         if (mVolumeDialog != null) {
             mVolumeDialog.dismiss();
         }
     }
 
-    private void startDismissControlViewTimer() {
+    public void startDismissControlViewTimer() {
         cancelDismissControlViewTimer();
         DISSMISS_CONTROL_VIEW_TIMER = new Timer();
         mDismissControlViewTimerTask = new DismissControlViewTimerTask();
         DISSMISS_CONTROL_VIEW_TIMER.schedule(mDismissControlViewTimerTask, 2500);
     }
 
-    private void cancelDismissControlViewTimer() {
+    public void cancelDismissControlViewTimer() {
         if (DISSMISS_CONTROL_VIEW_TIMER != null) {
             DISSMISS_CONTROL_VIEW_TIMER.cancel();
         }
@@ -614,7 +614,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    protected class DismissControlViewTimerTask extends TimerTask {
+    public class DismissControlViewTimerTask extends TimerTask {
 
         @Override
         public void run() {

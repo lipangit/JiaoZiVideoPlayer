@@ -12,7 +12,7 @@ import android.widget.Toast;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityListView extends AppCompatActivity implements View.OnClickListener {
+public class ListViewActivity extends AppCompatActivity implements View.OnClickListener {
     Button mNormalList, mViewPagerList, mMultiHolderList, mRecyleView;
 
     @Override
@@ -41,16 +41,16 @@ public class ActivityListView extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.normal_list:
-                startActivity(new Intent(ActivityListView.this, ActivityListViewNormal.class));
+                startActivity(new Intent(ListViewActivity.this, ListViewNormalActivity.class));
                 break;
             case R.id.viewpayer_list:
-                startActivity(new Intent(ActivityListView.this, ActivityListViewViewpager.class));
+                startActivity(new Intent(ListViewActivity.this, ListViewViewpagerActivity.class));
                 break;
             case R.id.multi_holder_list:
-                startActivity(new Intent(ActivityListView.this, ActivityListViewMultiHolder.class));
+                startActivity(new Intent(ListViewActivity.this, ListViewMultiHolderActivity.class));
                 break;
             case R.id.recyleview:
-                Toast.makeText(ActivityListView.this, "Coming soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ListViewActivity.this, "Coming soon", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

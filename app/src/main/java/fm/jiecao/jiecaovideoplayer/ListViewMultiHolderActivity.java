@@ -20,7 +20,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by Nathen
  * On 2016/05/23 21:34
  */
-public class ActivityListViewMultiHolder extends AppCompatActivity {
+public class ListViewMultiHolderActivity extends AppCompatActivity {
     ListView listView;
 
     @Override

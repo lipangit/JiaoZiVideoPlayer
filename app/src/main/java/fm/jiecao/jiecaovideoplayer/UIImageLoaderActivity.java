@@ -22,7 +22,7 @@ import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardFresco;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityUIImageLoader extends AppCompatActivity {
+public class UIImageLoaderActivity extends AppCompatActivity {
     JCVideoPlayerStandard videoController1, videoController2, videoController3, videoController4;
     JCVideoPlayerStandardFresco videoController5;
 
