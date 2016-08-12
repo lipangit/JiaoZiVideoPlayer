@@ -89,6 +89,8 @@ ProGuard
 -dontwarn tv.danmaku.ijk.**
 ```
 
+Play video in assets you should copy to local path first.[Try by myself like this](https://github.com/Bilibili/ijkplayer/issues/1013)textureview will stop on first frame and error on logcat
+
 ##[Custom UI](./README_CUSTOM_UI.md)
 
 ##Contributors

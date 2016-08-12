@@ -83,6 +83,8 @@ JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http:/
 -dontwarn tv.danmaku.ijk.**
 ```
 
+播放Assets文件夹下的视频,请先拷贝到本地路径再播放.[亲测](https://github.com/Bilibili/ijkplayer/issues/1013)如果直接传参数IMediaDataSource,只停留在第一帧画面上并且后台会报错
+
 ##[自定义UI](./README_CUSTOM_UI-ZH.md)
 
 ##贡献者
