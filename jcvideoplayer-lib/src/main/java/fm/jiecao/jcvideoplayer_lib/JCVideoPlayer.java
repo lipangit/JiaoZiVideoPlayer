@@ -1,13 +1,12 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.support.v4.app.FragmentActivity;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -382,7 +381,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (oldT != null) {
             vp.removeView(oldT);
         }
-        showSupportActionBar(getContext());
+        //showSupportActionBar(getContext());
     }
 
     @Override
@@ -433,7 +432,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     JCBuriedPoint.ON_QUIT_TINYSCREEN);
             if (JCVideoPlayerManager.lastListener() == null) {//directly fullscreen
                 JCVideoPlayerManager.listener().onCompletion();
-                showSupportActionBar(getContext());
+                //showSupportActionBar(getContext());
                 return true;
             }
             ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
@@ -503,7 +502,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         setUiWitStateAndScreen(currentState);
         addTextureView();
 
-        showSupportActionBar(getContext());
+        //showSupportActionBar(getContext());
     }
 
     @Override
@@ -572,7 +571,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void startWindowFullscreen() {
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
 
-        hideSupportActionBar(getContext());
+        //hideSupportActionBar(getContext());
 
         ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(FULLSCREEN_ID);
@@ -767,8 +766,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
 
-        hideSupportActionBar(context);
-        ViewGroup vp = (ViewGroup) ((AppCompatActivity) context).findViewById(Window.ID_ANDROID_CONTENT);
+        //hideSupportActionBar(context);
+        ViewGroup vp = (ViewGroup) ((FragmentActivity) context).findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(JCVideoPlayer.FULLSCREEN_ID);
         if (old != null) {
             vp.removeView(old);
@@ -800,32 +799,33 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
-    public static void hideSupportActionBar(Context context) {
-        if (ACTION_BAR_EXIST) {
-            ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
-            if (ab != null) {
-                ab.setShowHideAnimationEnabled(false);
-                ab.hide();
-            }
-        }
-        if (TOOL_BAR_EXIST) {
-            ((AppCompatActivity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-    }
+    //public static void hideSupportActionBar(Context context) {
+    //    if (ACTION_BAR_EXIST) {
+    //        ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
+    //        if (ab != null) {
+    //            ab.setShowHideAnimationEnabled(false);
+    //            ab.hide();
+    //        }
+    //    }
+    //    if (TOOL_BAR_EXIST) {
+    //        ((AppCompatActivity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+    //                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    //    }
+    //}
 
-    public static void showSupportActionBar(Context context) {
-        if (ACTION_BAR_EXIST) {
-            ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
-            if (ab != null) {
-                ab.setShowHideAnimationEnabled(false);
-                ab.show();
-            }
-        }
-        if (TOOL_BAR_EXIST) {
-            ((AppCompatActivity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-    }
+    //public static void showSupportActionBar(Context context) {
+    //        if (ACTION_BAR_EXIST) {
+    //                ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
+    //                if (ab != null) {
+    //                        ab.setShowHideAnimationEnabled(false);
+    //                        ab.show();
+    //                    }
+    //            }
+    //        if (TOOL_BAR_EXIST) {
+    //                ((AppCompatActivity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    //            }
+    //    }
+
 
     public void showWifiDialog() {
     }
