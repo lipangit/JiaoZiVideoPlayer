@@ -765,6 +765,23 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
+    @Override
+    public void onListScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
+        int[] locationOnScreen = new int[2];
+        getLocationOnScreen(locationOnScreen);
+        int top = locationOnScreen[1];
+        int bottom = top + getHeight();
+        System.out.println("scroll top " + top + "  " + bottom);
+
+    }
+
+    public static void onListScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
+        Log.i(TAG, "onListScroll");
+        if (JCVideoPlayerManager.listener() != null) {
+            JCVideoPlayerManager.listener().onListScrollChange();
+        }
+    }
+
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
 
         hideSupportActionBar(context);

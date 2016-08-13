@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -28,6 +29,17 @@ public class ListViewNormalActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listview);
         adapterVideoList = new VideoListAdapter(this);
         listView.setAdapter(adapterVideoList);
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                JCVideoPlayer.onListScroll();
+            }
+        });
     }
 
     @Override
