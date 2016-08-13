@@ -768,10 +768,18 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onListScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
         int[] locationOnScreen = new int[2];
-        getLocationOnScreen(locationOnScreen);
+        getLocationInWindow(locationOnScreen);
         int top = locationOnScreen[1];
         int bottom = top + getHeight();
-        System.out.println("scroll top " + top + "  " + bottom);
+        if (bottom < 20) {//滑到顶了
+            //分两种情况,到底部和从顶部回来
+            System.out.println("onListScrollChange top " + top + "  " + bottom);
+        } else if (top > (mScreenHeight - 20)) {//滑到底部
+            //也分两种情况,到底部和从底部回来
+            System.out.println("onListScrollChange bottom " + top + "  " + bottom);
+        }
+        //但是两种回来的情况是lastListener去判断的,这可能就比较复杂了
+        System.out.println("onListScrollChange " + top + "  " + bottom);
 
     }
 
