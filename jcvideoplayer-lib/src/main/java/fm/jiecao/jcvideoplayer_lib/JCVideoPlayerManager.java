@@ -1,6 +1,9 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Put JCVideoPlayer into layout
@@ -19,32 +22,60 @@ public class JCVideoPlayerManager {
 //
 //    }
 
-    private static WeakReference<JCMediaPlayerListener> LISTENER;
-    private static WeakReference<JCMediaPlayerListener> LAST_LISTENER;
+    public static LinkedList<WeakReference<JCMediaPlayerListener>> LISTENERLIST = new LinkedList<>();
 
-    public static JCMediaPlayerListener listener() {
-        if (LISTENER == null)
+    public static void putListener(JCMediaPlayerListener listener) {
+        LISTENERLIST.push(new WeakReference<>(listener));
+    }
+
+    public static JCMediaPlayerListener popListener() {
+        if (LISTENERLIST.size() == 0) {
             return null;
-        return LISTENER.get();
+        }
+        return LISTENERLIST.pop().get();
     }
 
-    public static JCMediaPlayerListener lastListener() {
-        if (LAST_LISTENER == null)
+    public static JCMediaPlayerListener getFirst() {
+        if (LISTENERLIST.size() == 0) {
             return null;
-        return LAST_LISTENER.get();
+        }
+        return LISTENERLIST.getFirst().get();
     }
 
-    public static void setListener(JCMediaPlayerListener listener) {
-        if (listener == null)
-            LISTENER = null;
-        else
-            LISTENER = new WeakReference<>(listener);
+    public static void completeAll() {
+        JCMediaPlayerListener ll = popListener();
+        while (ll != null) {
+            ll.onCompletion();
+            ll = popListener();
+        }
     }
 
-    public static void setLastListener(JCMediaPlayerListener lastListener) {
-        if (lastListener == null)
-            LAST_LISTENER = null;
-        else
-            LAST_LISTENER = new WeakReference<>(lastListener);
-    }
+//    private static WeakReference<JCMediaPlayerListener> LISTENER;
+//    private static WeakReference<JCMediaPlayerListener> LAST_LISTENER;
+//
+//    public static JCMediaPlayerListener listener() {
+//        if (LISTENER == null)
+//            return null;
+//        return LISTENER.get();
+//    }
+//
+//    public static JCMediaPlayerListener lastListener() {
+//        if (LAST_LISTENER == null)
+//            return null;
+//        return LAST_LISTENER.get();
+//    }
+//
+//    public static void setListener(JCMediaPlayerListener listener) {
+//        if (listener == null)
+//            LISTENER = null;
+//        else
+//            LISTENER = new WeakReference<>(listener);
+//    }
+//
+//    public static void setLastListener(JCMediaPlayerListener lastListener) {
+//        if (lastListener == null)
+//            LAST_LISTENER = null;
+//        else
+//            LAST_LISTENER = new WeakReference<>(lastListener);
+//    }
 }

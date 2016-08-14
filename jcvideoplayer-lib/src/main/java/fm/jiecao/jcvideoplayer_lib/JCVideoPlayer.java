@@ -204,10 +204,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void prepareVideo() {
         Log.d(TAG, "prepareVideo [" + this.hashCode() + "] ");
-        if (JCVideoPlayerManager.listener() != null) {
-            JCVideoPlayerManager.listener().onCompletion();
-        }
-        JCVideoPlayerManager.setListener(this);
+        JCVideoPlayerManager.completeAll();
+        JCVideoPlayerManager.putListener(this);
         addTextureView();
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
@@ -389,14 +387,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onAutoCompletion() {
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
         onEvent(JCBuriedPoint.ON_AUTO_COMPLETE);
-        if (JCVideoPlayerManager.listener() != null) {
-            JCVideoPlayerManager.listener().onCompletion();
-            JCVideoPlayerManager.setListener(null);
-        }
-        if (JCVideoPlayerManager.lastListener() != null) {
-            JCVideoPlayerManager.lastListener().onCompletion();
-            JCVideoPlayerManager.setLastListener(null);
-        }
+        JCVideoPlayerManager.completeAll();
     }
 
     @Override
@@ -407,8 +398,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             textureViewContainer.removeAllViews();
         }
 
-        JCVideoPlayerManager.setListener(null);//这里还不完全,
-//        JCVideoPlayerManager.setLastListener(null);
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
 
@@ -431,21 +420,31 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                     JCBuriedPoint.ON_QUIT_FULLSCREEN :
                     JCBuriedPoint.ON_QUIT_TINYSCREEN);
-            if (JCVideoPlayerManager.lastListener() == null) {//directly fullscreen
-                JCVideoPlayerManager.listener().onCompletion();
+            if (JCVideoPlayerManager.LISTENERLIST.size() == 1) {//directly fullscreen
+                JCVideoPlayerManager.popListener().onCompletion();
                 showSupportActionBar(getContext());
                 return true;
             }
             ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
-            JCVideoPlayerManager.setListener(JCVideoPlayerManager.lastListener());
-            JCVideoPlayerManager.setLastListener(null);
             JCMediaManager.instance().lastState = currentState;//save state
-            JCVideoPlayerManager.listener().goBackThisListener();
+            JCVideoPlayerManager.popListener().onCompletion();
+            JCVideoPlayerManager.getFirst().goBackThisListener();
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void goBackThisListener() {
+        Log.i(TAG, "goBackThisListener " + " [" + this.hashCode() + "] ");
+
+        currentState = JCMediaManager.instance().lastState;
+        setUiWitStateAndScreen(currentState);
+        addTextureView();
+
+        showSupportActionBar(getContext());
     }
 
     @Override
@@ -493,17 +492,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (mVideoWidth != 0 && mVideoHeight != 0) {
             JCMediaManager.textureView.requestLayout();
         }
-    }
-
-    @Override
-    public void goBackThisListener() {
-        Log.i(TAG, "goBackThisListener " + " [" + this.hashCode() + "] ");
-
-        currentState = JCMediaManager.instance().lastState;
-        setUiWitStateAndScreen(currentState);
-        addTextureView();
-
-        showSupportActionBar(getContext());
     }
 
     @Override
@@ -563,8 +551,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static boolean backPress() {
         Log.i(TAG, "backPress");
-        if (JCVideoPlayerManager.listener() != null) {
-            return JCVideoPlayerManager.listener().goToOtherListener();
+        if (JCVideoPlayerManager.getFirst() != null) {
+            return JCVideoPlayerManager.getFirst().goToOtherListener();
         }
         return false;
     }
@@ -600,8 +588,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
 
-            JCVideoPlayerManager.setLastListener(this);
-            JCVideoPlayerManager.setListener(jcVideoPlayer);
+            JCVideoPlayerManager.putListener(jcVideoPlayer);
 
 
         } catch (InstantiationException e) {
@@ -633,8 +620,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             mJcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
             mJcVideoPlayer.setUiWitStateAndScreen(currentState);
             mJcVideoPlayer.addTextureView();
-            JCVideoPlayerManager.setLastListener(this);
-            JCVideoPlayerManager.setListener(mJcVideoPlayer);
+            JCVideoPlayerManager.putListener(mJcVideoPlayer);
 
         } catch (InstantiationException e) {
             e.printStackTrace();
@@ -740,18 +726,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public boolean isCurrentMediaListener() {
-        return JCVideoPlayerManager.listener() != null
-                && JCVideoPlayerManager.listener() == this;
+        return JCVideoPlayerManager.getFirst() != null
+                && JCVideoPlayerManager.getFirst() == this;
     }
 
     public static void releaseAllVideos() {
         Log.d(TAG, "releaseAllVideos");
-        if (JCVideoPlayerManager.listener() != null) {
-            JCVideoPlayerManager.listener().onCompletion();
-        }
-        if (JCVideoPlayerManager.lastListener() != null) {
-            JCVideoPlayerManager.lastListener().onCompletion();
-        }
+        JCVideoPlayerManager.completeAll();
         JCMediaManager.instance().releaseMediaPlayer();
     }
 
@@ -785,8 +766,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static void onListScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
         Log.i(TAG, "onListScroll");
-        if (JCVideoPlayerManager.listener() != null) {
-            JCVideoPlayerManager.listener().onListScrollChange();
+
+        if (JCVideoPlayerManager.getFirst() != null) {
+            JCVideoPlayerManager.getFirst().onListScrollChange();
         }
     }
 
