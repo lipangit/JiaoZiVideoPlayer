@@ -47,6 +47,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static final int THRESHOLD                = 80;
     public static final int FULL_SCREEN_NORMAL_DELAY = 500;
 
+    public static boolean ACTION_BAR_EXIST           = true;
+    public static boolean TOOL_BAR_EXIST             = true;
     public static boolean WIFI_TIP_DIALOG_SHOWED     = false;
     public static long    CLICK_QUIT_FULLSCREEN_TIME = 0;
 
@@ -110,7 +112,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         init(context);
     }
 
-    protected void init(Context context) {
+    public void init(Context context) {
         View.inflate(context, getLayoutId(), this);
         startButton = (ImageView) findViewById(R.id.start);
         fullscreenButton = (ImageView) findViewById(R.id.fullscreen);
@@ -200,7 +202,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
-    protected void prepareVideo() {
+    public void prepareVideo() {
         Log.d(TAG, "prepareVideo [" + this.hashCode() + "] ");
         if (JCVideoPlayerManager.listener() != null) {
             JCVideoPlayerManager.listener().onCompletion();
@@ -340,14 +342,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
-    protected void startProgressTimer() {
+    public void startProgressTimer() {
         cancelProgressTimer();
         UPDATE_PROGRESS_TIMER = new Timer();
         mProgressTimerTask = new ProgressTimerTask();
         UPDATE_PROGRESS_TIMER.schedule(mProgressTimerTask, 0, 300);
     }
 
-    protected void cancelProgressTimer() {
+    public void cancelProgressTimer() {
         if (UPDATE_PROGRESS_TIMER != null) {
             UPDATE_PROGRESS_TIMER.cancel();
         }
@@ -387,16 +389,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onAutoCompletion() {
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
         onEvent(JCBuriedPoint.ON_AUTO_COMPLETE);
-        setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
-        if (textureViewContainer.getChildCount() > 0) {
-            textureViewContainer.removeAllViews();
+        if (JCVideoPlayerManager.listener() != null) {
+            JCVideoPlayerManager.listener().onCompletion();
+            JCVideoPlayerManager.setListener(null);
         }
-        JCVideoPlayerManager.setLastListener(null);
-        AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-        mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
-        JCUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        clearFullscreenLayout();
+        if (JCVideoPlayerManager.lastListener() != null) {
+            JCVideoPlayerManager.lastListener().onCompletion();
+            JCVideoPlayerManager.setLastListener(null);
+        }
     }
 
     @Override
@@ -407,7 +407,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             textureViewContainer.removeAllViews();
         }
 
-        JCVideoPlayerManager.setListener(null);
+        JCVideoPlayerManager.setListener(null);//这里还不完全,
 //        JCVideoPlayerManager.setLastListener(null);
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
@@ -569,7 +569,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         return false;
     }
 
-    private void startWindowFullscreen() {
+    public void startWindowFullscreen() {
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
 
         hideSupportActionBar(getContext());
@@ -644,7 +644,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     }
 
-    protected class ProgressTimerTask extends TimerTask {
+    public class ProgressTimerTask extends TimerTask {
         @Override
         public void run() {
             if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
@@ -661,7 +661,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
-    protected int getCurrentPositionWhenPlaying() {
+    public int getCurrentPositionWhenPlaying() {
         int position = 0;
         if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
             try {
@@ -674,7 +674,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         return position;
     }
 
-    protected int getDuration() {
+    public int getDuration() {
         int duration = 0;
         try {
             duration = (int) JCMediaManager.instance().mediaPlayer.getDuration();
@@ -685,14 +685,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         return duration;
     }
 
-    protected void setTextAndProgress(int secProgress) {
+    public void setTextAndProgress(int secProgress) {
         int position = getCurrentPositionWhenPlaying();
         int duration = getDuration();
         int progress = position * 100 / (duration == 0 ? 1 : duration);
         setProgressAndTime(progress, secProgress, position, duration);
     }
 
-    protected void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
+    public void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
         if (!mTouchingProgressBar) {
             if (progress != 0) progressBar.setProgress(progress);
         }
@@ -702,14 +702,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         totalTimeTextView.setText(JCUtils.stringForTime(totalTime));
     }
 
-    protected void resetProgressAndTime() {
+    public void resetProgressAndTime() {
         progressBar.setProgress(0);
         progressBar.setSecondaryProgress(0);
         currentTimeTextView.setText(JCUtils.stringForTime(0));
         totalTimeTextView.setText(JCUtils.stringForTime(0));
     }
 
-    private static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
         public void onAudioFocusChange(int focusChange) {
             switch (focusChange) {
@@ -739,7 +739,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
-    protected boolean isCurrentMediaListener() {
+    public boolean isCurrentMediaListener() {
         return JCVideoPlayerManager.listener() != null
                 && JCVideoPlayerManager.listener() == this;
     }
@@ -800,50 +800,50 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
-    private static boolean ACTIONBAR_STATUS = false;
-
-    private static void hideSupportActionBar(Context context) {
-        ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
-        if (ab != null) {
-            ACTIONBAR_STATUS = ab.isShowing();//本来就是显示的
-            if (ACTIONBAR_STATUS) {
-                ((AppCompatActivity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    public static void hideSupportActionBar(Context context) {
+        if (ACTION_BAR_EXIST) {
+            ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
+            if (ab != null) {
                 ab.setShowHideAnimationEnabled(false);
                 ab.hide();
-            } else {
-            }//本来就是关闭的,不管他
+            }
+        }
+        if (TOOL_BAR_EXIST) {
+            ((AppCompatActivity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
-    private static void showSupportActionBar(Context context) {
-        ((AppCompatActivity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
-        if (ab != null) {
-            if (ACTIONBAR_STATUS) {
+    public static void showSupportActionBar(Context context) {
+        if (ACTION_BAR_EXIST) {
+            ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
+            if (ab != null) {
                 ab.setShowHideAnimationEnabled(false);
                 ab.show();
             }
+        }
+        if (TOOL_BAR_EXIST) {
+            ((AppCompatActivity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
     public void showWifiDialog() {
     }
 
-    protected void showProgressDialog(float deltaX,
-                                      String seekTime, int seekTimePosition,
-                                      String totalTime, int totalTimeDuration) {
+    public void showProgressDialog(float deltaX,
+                                   String seekTime, int seekTimePosition,
+                                   String totalTime, int totalTimeDuration) {
     }
 
-    protected void dismissProgressDialog() {
-
-    }
-
-    protected void showVolumDialog(float deltaY, int volumePercent) {
+    public void dismissProgressDialog() {
 
     }
 
-    protected void dismissVolumDialog() {
+    public void showVolumDialog(float deltaY, int volumePercent) {
+
+    }
+
+    public void dismissVolumDialog() {
 
     }
 

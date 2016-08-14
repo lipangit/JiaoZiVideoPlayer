@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C3.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.6-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.1%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.6.1-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -21,24 +21,22 @@
 
 ##效果
 
-**[jiecaovideoplayer-4.6-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6-demo.apk)**
+**[jiecaovideoplayer-4.6.1-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.1-demo.apk)**
 
 ![Demo Screenshot][1]
 
 ##使用
 
-[稳定版本任然是v3.6.3](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v3.6.3)
-
 1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:4.6'
+compile 'fm.jiecao:jiecaovideoplayer:4.6.1'
 ```
 
 或直接下载
 
-* [jiecaovideoplayer-4.6.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.aar)
-* [jiecaovideoplayer-4.6-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6-javadoc.jar)
-* [jiecaovideoplayer-4.6-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6-sources.jar)
+* [jiecaovideoplayer-4.6.1.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.1.aar)
+* [jiecaovideoplayer-4.6.1-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.1-javadoc.jar)
+* [jiecaovideoplayer-4.6.1-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.1-sources.jar)
 
 2.添加布局
 ```xml
@@ -56,13 +54,27 @@ jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5a
 jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
-4.在包含播放器的`Fragment`的`onPause()`方法中调用`JCVideoPlayer.releaseAllVideos();`
+4.在`Activity`中
+```java
+@Override
+public void onBackPressed() {
+    if (JCVideoPlayer.backPress()) {
+        return;
+    }
+    super.onBackPressed();
+}
+@Override
+protected void onPause() {
+    super.onPause();
+    JCVideoPlayer.releaseAllVideos();
+}
+```
 
 ####其他接口
 
-直接进入全屏，比如在webview中视频播放的适配很麻烦很无头绪，调用此接口直接全屏播放
+直接进入全屏
 ```java
-敬请期待
+JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
 ```
 
 ####混淆
@@ -70,6 +82,8 @@ jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/v
 -keep class tv.danmaku.ijk.** { *; }
 -dontwarn tv.danmaku.ijk.**
 ```
+
+播放Assets文件夹下的视频,请先拷贝到本地路径再播放.[亲测](https://github.com/Bilibili/ijkplayer/issues/1013)如果直接传参数IMediaDataSource,只停留在第一帧画面上并且后台会报错
 
 ##[自定义UI](./README_CUSTOM_UI-ZH.md)
 

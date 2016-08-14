@@ -55,7 +55,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     @Override
-    protected void init(Context context) {
+    public void init(Context context) {
         super.init(context);
         bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progressbar);
         titleTextView = (TextView) findViewById(R.id.title);
@@ -275,21 +275,21 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     @Override
-    protected void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
+    public void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
         super.setProgressAndTime(progress, secProgress, currentTime, totalTime);
         if (progress != 0) bottomProgressBar.setProgress(progress);
         if (secProgress != 0) bottomProgressBar.setSecondaryProgress(secProgress);
     }
 
     @Override
-    protected void resetProgressAndTime() {
+    public void resetProgressAndTime() {
         super.resetProgressAndTime();
         bottomProgressBar.setProgress(0);
         bottomProgressBar.setSecondaryProgress(0);
     }
 
     //Unified management Ui
-    private void changeUiToNormal() {
+    public void changeUiToNormal() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
@@ -306,7 +306,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         }
     }
 
-    private void changeUiToPrepareingShow() {
+    public void changeUiToPrepareingShow() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
@@ -522,7 +522,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     protected ImageView   mDialogIcon;
 
     @Override
-    protected void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
+    public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
         super.showProgressDialog(deltaX, seekTime, seekTimePosition, totalTime, totalTimeDuration);
         if (mProgressDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_progress_dialog, null);
@@ -557,7 +557,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     @Override
-    protected void dismissProgressDialog() {
+    public void dismissProgressDialog() {
         super.dismissProgressDialog();
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
@@ -569,7 +569,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     protected ProgressBar mDialogVolumeProgressBar;
 
     @Override
-    protected void showVolumDialog(float deltaY, int volumePercent) {
+    public void showVolumDialog(float deltaY, int volumePercent) {
         super.showVolumDialog(deltaY, volumePercent);
         if (mVolumeDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_volume_dialog, null);
@@ -593,7 +593,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     @Override
-    protected void dismissVolumDialog() {
+    public void dismissVolumDialog() {
         super.dismissVolumDialog();
         if (mVolumeDialog != null) {
             mVolumeDialog.dismiss();
