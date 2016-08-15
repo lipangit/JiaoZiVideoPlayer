@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ContextThemeWrapper;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -56,6 +58,22 @@ public class JCUtils {
             return scanForActivity(((ContextWrapper) context).getBaseContext());
         }
 
+        return null;
+    }
+
+    /**
+     * Get AppCompatActivity from context
+     *
+     * @param context
+     * @return AppCompatActivity if it's not null
+     */
+    public static AppCompatActivity getAppCompActivity(Context context) {
+        if (context == null) return null;
+        if (context instanceof AppCompatActivity) {
+            return (AppCompatActivity) context;
+        } else if (context instanceof ContextThemeWrapper) {
+            return getAppCompActivity(((ContextThemeWrapper) context).getBaseContext());
+        }
         return null;
     }
 }
