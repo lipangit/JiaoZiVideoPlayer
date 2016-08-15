@@ -753,16 +753,21 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         getLocationInWindow(locationOnScreen);
         int top = locationOnScreen[1];
         int bottom = top + getHeight();
-        if (bottom < 20) {//滑到顶了
-            //分两种情况,到底部和从顶部回来
-            System.out.println("onListScrollChange top " + top + "  " + bottom);
-        } else if (top > (mScreenHeight - 20)) {//滑到底部
-            //也分两种情况,到底部和从底部回来
-            System.out.println("onListScrollChange bottom " + top + "  " + bottom);
-        }
-        //但是两种回来的情况是lastListener去判断的,这可能就比较复杂了
         System.out.println("onListScrollChange " + top + "  " + bottom);
 
+        if (isCurrentMediaListener()) {
+            if (bottom < 20) {//滑到顶了-从顶部消失
+                System.out.println("onListScrollChange isMe top " + top + "  " + bottom);
+            } else if (top > (mScreenHeight - 20)) {//滑到底部-从底部消失
+                System.out.println("onListScrollChange isMe bottom " + top + "  " + bottom);
+            }
+        } else {
+            if (bottom > 20) {//滑到顶了-从顶部回来
+                System.out.println("onListScrollChange top " + top + "  " + bottom);
+            } else if (top < (mScreenHeight - 20)) {//滑到底部-从底部回来
+                System.out.println("onListScrollChange bottom " + top + "  " + bottom);
+            }
+        }
     }
 
     public static void onListScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
