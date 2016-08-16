@@ -139,6 +139,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public boolean setUp(String url, int screen, Object... objects) {
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
+        if (isCurrentMediaListener()) {//这里没有设置listener
+            System.out.println("onListScrollChange setup");
+        }
         this.currentState = CURRENT_STATE_NORMAL;
         this.url = url;
         this.objects = objects;
@@ -753,7 +756,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         getLocationInWindow(locationOnScreen);
         int top = locationOnScreen[1];
         int bottom = top + getHeight();
-        System.out.println("onListScrollChange " + top + "  " + bottom);
+//        System.out.println("onListScrollChange " + top + "  " + bottom);
 
         if (isCurrentMediaListener()) {
             if (bottom < 20) {//滑到顶了-从顶部消失
