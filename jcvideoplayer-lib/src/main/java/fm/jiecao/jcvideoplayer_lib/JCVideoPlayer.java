@@ -761,8 +761,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (isCurrentMediaListener()) {
             if (bottom < 20) {//滑到顶了-从顶部消失
                 System.out.println("onListScrollChange isMe top " + top + "  " + bottom);
+                startWindowTiny();
             } else if (top > (mScreenHeight - 20)) {//滑到底部-从底部消失
                 System.out.println("onListScrollChange isMe bottom " + top + "  " + bottom);
+                startWindowTiny();
             }
         } else {
             if (bottom > 20) {//滑到顶了-从顶部回来
