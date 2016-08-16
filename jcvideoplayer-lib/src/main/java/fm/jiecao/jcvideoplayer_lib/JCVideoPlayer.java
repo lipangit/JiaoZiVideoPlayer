@@ -694,7 +694,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
         if (secProgress > 95) secProgress = 100;
         if (secProgress != 0) progressBar.setSecondaryProgress(secProgress);
-        currentTimeTextView.setText(JCUtils.stringForTime(currentTime));
+        if (currentTime != 0) currentTimeTextView.setText(JCUtils.stringForTime(currentTime));
         totalTimeTextView.setText(JCUtils.stringForTime(totalTime));
     }
 
