@@ -52,10 +52,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static boolean WIFI_TIP_DIALOG_SHOWED     = false;
     public static long    CLICK_QUIT_FULLSCREEN_TIME = 0;
 
-    public static final int SCREEN_LAYOUT_LIST       = 0;
-    public static final int SCREEN_WINDOW_FULLSCREEN = 1;
-    public static final int SCREEN_WINDOW_TINY       = 2;
-    public static final int SCREEN_LAYOUT_DETAIL     = 3;
+    public static final int SCREEN_LAYOUT_NORMAL     = 0;
+    public static final int SCREEN_LAYOUT_LIST       = 1;
+    public static final int SCREEN_WINDOW_FULLSCREEN = 2;
+    public static final int SCREEN_WINDOW_TINY       = 3;
+    public static final int SCREEN_LAYOUT_DETAIL     = 4;
 
     public static final int CURRENT_STATE_NORMAL                  = 0;
     public static final int CURRENT_STATE_PREPAREING              = 1;

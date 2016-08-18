@@ -79,7 +79,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 fullscreenButton.setImageResource(R.drawable.jc_shrink);
                 backButton.setVisibility(View.VISIBLE);
                 tinyBackImageView.setVisibility(View.INVISIBLE);
-            } else if (currentScreen == SCREEN_LAYOUT_LIST) {
+            } else if (currentScreen == SCREEN_LAYOUT_NORMAL
+                    || currentScreen == SCREEN_LAYOUT_LIST) {
                 fullscreenButton.setImageResource(R.drawable.jc_enlarge);
                 backButton.setVisibility(View.GONE);
                 tinyBackImageView.setVisibility(View.INVISIBLE);
@@ -284,6 +285,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     //Unified management Ui
     public void changeUiToNormal() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
@@ -301,6 +303,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToPrepareingShow() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
@@ -317,6 +320,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToPrepareingClear() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
@@ -333,6 +337,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToPlayingShow() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -351,6 +356,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToPlayingClear() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
@@ -367,6 +373,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToPauseShow() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -385,6 +392,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToPauseClear() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -401,6 +409,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToPlayingBufferingShow() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -417,6 +426,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToPlayingBufferingClear() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
@@ -435,6 +445,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToCompleteShow() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -453,6 +464,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToCompleteClear() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
@@ -471,6 +483,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void changeUiToError() {
         switch (currentScreen) {
+            case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
@@ -488,7 +501,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     public void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro,
-                                       int thumbImg, int coverImg, int bottomPro) {
+                                      int thumbImg, int coverImg, int bottomPro) {
         topContainer.setVisibility(topCon);
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
