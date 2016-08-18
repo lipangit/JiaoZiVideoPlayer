@@ -141,7 +141,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
         if (isCurrentMediaListener()) {//这里没有设置listener
-            System.out.println("onListScrollChange setup " + hashCode());
+            Log.i(TAG, "onListScrollChange setup " + hashCode());
         }
         this.currentState = CURRENT_STATE_NORMAL;
         this.url = url;
@@ -753,25 +753,27 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onListScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN || currentScreen == SCREEN_WINDOW_TINY)
+            return;
         int[] locationOnScreen = new int[2];
-        getLocationOnScreen(locationOnScreen);
+        getLocationInWindow(locationOnScreen);//screen 227  window 229 i think they are same
         int top = locationOnScreen[1];
         int bottom = top + getHeight();
-        System.out.println("onListScrollChange " + top + "  " + bottom);
+//        System.out.println("onListScrollChange " + top + "  " + bottom);
 
         if (isCurrentMediaListener()) {
             if (bottom < 20) {//滑到顶了-从顶部消失
-                System.out.println("onListScrollChange isMe top " + hashCode() + " " + top + "  " + bottom);
+                Log.i(TAG, "onListScrollChange isMe top " + hashCode() + " " + top + "  " + bottom);
                 startWindowTiny();
             } else if (top > (mScreenHeight - 20)) {//滑到底部-从底部消失
-                System.out.println("onListScrollChange isMe bottom " + hashCode() + " " + top + "  " + bottom);
+                Log.i(TAG, "onListScrollChange isMe bottom " + hashCode() + " " + top + "  " + bottom);
                 startWindowTiny();
             }
         } else {
             if (bottom > 20) {//滑到顶了-从顶部回来
-                System.out.println("onListScrollChange top " + hashCode() + " " + top + "  " + bottom);
+                Log.i(TAG, "onListScrollChange top " + hashCode() + " " + top + "  " + bottom);
             } else if (top < (mScreenHeight - 20)) {//滑到底部-从底部回来
-                System.out.println("onListScrollChange bottom " + hashCode() + " " + top + "  " + bottom);
+                Log.i(TAG, "onListScrollChange bottom " + hashCode() + " " + top + "  " + bottom);
             }
         }
     }
