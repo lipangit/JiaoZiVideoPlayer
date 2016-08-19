@@ -403,9 +403,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             textureViewContainer.removeAllViews();
         }
 
-        JCMediaManager.instance().currentVideoWidth = 0;
-        JCMediaManager.instance().currentVideoHeight = 0;
-
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         JCUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -432,7 +429,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 return true;
             }
             ViewGroup vp = (ViewGroup) ((Activity) getContext()).getWindow().getDecorView();
-                    //.findViewById(Window.ID_ANDROID_CONTENT);
+            //.findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
             JCMediaManager.instance().lastState = currentState;//save state
             JCVideoPlayerManager.popListener().onCompletion();
@@ -494,11 +491,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onVideoSizeChanged() {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
 
-        int mVideoWidth = JCMediaManager.instance().currentVideoWidth;
-        int mVideoHeight = JCMediaManager.instance().currentVideoHeight;
-        if (mVideoWidth != 0 && mVideoHeight != 0) {
-            JCMediaManager.textureView.requestLayout();
-        }
+        JCMediaManager.textureView.requestLayout();
     }
 
     @Override

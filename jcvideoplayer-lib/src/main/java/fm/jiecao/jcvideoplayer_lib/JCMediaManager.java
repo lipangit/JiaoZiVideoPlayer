@@ -29,9 +29,9 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener {
     public static String TAG = "JieCaoVideoPlayer";
 
-    private static JCMediaManager JCMediaManager;
-    public         IjkMediaPlayer mediaPlayer;
-    public static  TextureView    textureView;
+    private static JCMediaManager      JCMediaManager;
+    public         IjkMediaPlayer      mediaPlayer;
+    public static  JCResizeTextureView textureView;
 
     public int currentVideoWidth  = 0;
     public int currentVideoHeight = 0;
@@ -107,6 +107,12 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                         if (holder.isValid()) {
                             Log.i(TAG, "set surface");
                             instance().mediaPlayer.setSurface(holder);
+                            mainThreadHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textureView.requestLayout();
+                                }
+                            });
                         }
                     }
                     break;
