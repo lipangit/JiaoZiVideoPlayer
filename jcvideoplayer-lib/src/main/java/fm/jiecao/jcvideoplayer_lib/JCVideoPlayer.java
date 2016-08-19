@@ -375,7 +375,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public void clearFullscreenLayout() {
-        ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) ((Activity) getContext()).getWindow().getDecorView();
+//                .findViewById(Window.ID_ANDROID_CONTENT);
         View oldF = vp.findViewById(FULLSCREEN_ID);
         View oldT = vp.findViewById(TINY_ID);
         if (oldF != null) {
@@ -430,7 +431,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 showSupportActionBar(getContext());
                 return true;
             }
-            ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+            ViewGroup vp = (ViewGroup) ((Activity) getContext()).getWindow().getDecorView();
+                    //.findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
             JCMediaManager.instance().lastState = currentState;//save state
             JCVideoPlayerManager.popListener().onCompletion();
@@ -567,7 +569,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
         hideSupportActionBar(getContext());
 
-        ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) ((Activity) getContext()).getWindow().getDecorView();
+//                .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(FULLSCREEN_ID);
         if (old != null) {
             vp.removeView(old);
@@ -607,7 +610,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
         onEvent(JCBuriedPoint.ON_ENTER_TINYSCREEN);
 
-        ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) ((Activity) getContext()).getWindow().getDecorView();
+//                .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(TINY_ID);
         if (old != null) {
             vp.removeView(old);
@@ -787,7 +791,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
 
         hideSupportActionBar(context);
-        ViewGroup vp = (ViewGroup) ((AppCompatActivity) context).findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) ((AppCompatActivity) context).getWindow().getDecorView();
+        //.findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(JCVideoPlayer.FULLSCREEN_ID);
         if (old != null) {
             vp.removeView(old);
