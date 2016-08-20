@@ -234,7 +234,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
     }
 
-    public void onClickUiToggle() {
+    public void onClickUiToggle() {//bottomContainer!=null
         if (currentState == CURRENT_STATE_PREPAREING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPrepareingClear();

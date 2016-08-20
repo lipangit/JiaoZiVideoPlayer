@@ -143,6 +143,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (isCurrentMediaListener()) {//这里没有设置listener
             Log.i(TAG, "onListScrollChange setup " + hashCode());
             startWindowTiny();//这里用不用检测是列表type的
+        } else if (isSecondMediaListener() &&
+                JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
+            backPress();
+            return false;
         }
         this.currentState = CURRENT_STATE_NORMAL;
         this.url = url;
@@ -731,6 +735,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public boolean isCurrentMediaListener() {
         return JCVideoPlayerManager.getFirst() != null
                 && JCVideoPlayerManager.getFirst() == this;
+    }
+
+    public boolean isSecondMediaListener() {
+        if (JCVideoPlayerManager.LISTENERLIST.size() > 1) {
+            return JCVideoPlayerManager.LISTENERLIST.get(1).get() != null
+                    && JCVideoPlayerManager.LISTENERLIST.get(1).get() == this;
+        }
+        return false;
     }
 
     public static void releaseAllVideos() {
