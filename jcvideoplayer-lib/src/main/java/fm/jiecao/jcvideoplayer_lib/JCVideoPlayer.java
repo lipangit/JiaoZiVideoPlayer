@@ -142,6 +142,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             return false;
         if (isCurrentMediaListener()) {//这里没有设置listener
             Log.i(TAG, "onListScrollChange setup " + hashCode());
+            startWindowTiny();//这里用不用检测是列表type的
         }
         this.currentState = CURRENT_STATE_NORMAL;
         this.url = url;
