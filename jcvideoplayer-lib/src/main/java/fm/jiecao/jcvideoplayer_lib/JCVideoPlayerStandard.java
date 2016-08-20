@@ -234,6 +234,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
     }
 
+    @Override
+    public void invisibleThumb() {
+        super.invisibleThumb();
+        thumbImageView.setVisibility(View.INVISIBLE);
+    }
+
     public void onClickUiToggle() {//bottomContainer!=null
         if (currentState == CURRENT_STATE_PREPAREING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {

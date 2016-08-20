@@ -137,21 +137,26 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mHandler = new Handler();
     }
 
+    public void invisibleThumb() {
+
+    }
+
     public boolean setUp(String url, int screen, Object... objects) {
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
         if (isCurrentMediaListener()) {//这里没有设置listener
             Log.i(TAG, "onListScrollChange setup " + hashCode());
             startWindowTiny();//这里用不用检测是列表type的
-        } else if (isSecondMediaListener() &&
-                JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
-            backPress();
-            return false;
         }
-        this.currentState = CURRENT_STATE_NORMAL;
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
+        if (isSecondMediaListener() &&
+                JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
+//            invisibleThumb();
+            backPress();
+            return true;
+        }
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         return true;
     }
