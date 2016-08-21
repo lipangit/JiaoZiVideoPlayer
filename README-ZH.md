@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.1%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.6.1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.6.2-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -21,7 +21,7 @@
 
 ##效果
 
-**[jiecaovideoplayer-4.6.1-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.1-demo.apk)**
+**[jiecaovideoplayer-4.6.2-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.2-demo.apk)**
 
 ![Demo Screenshot][1]
 
@@ -29,14 +29,14 @@
 
 1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:4.6.1'
+compile 'fm.jiecao:jiecaovideoplayer:4.6.2'
 ```
 
 或直接下载
 
-* [jiecaovideoplayer-4.6.1.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.1.aar)
-* [jiecaovideoplayer-4.6.1-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.1-javadoc.jar)
-* [jiecaovideoplayer-4.6.1-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.1-sources.jar)
+* [jiecaovideoplayer-4.6.2.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.2.aar)
+* [jiecaovideoplayer-4.6.2-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.2-javadoc.jar)
+* [jiecaovideoplayer-4.6.2-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.2-sources.jar)
 
 2.添加布局
 ```xml
@@ -48,7 +48,7 @@ compile 'fm.jiecao:jiecaovideoplayer:4.6.1'
 
 3.设置视频地址、缩略图地址、标题
 ```java
-JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
+JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
 jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
                             , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子闭眼睛");
 jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");

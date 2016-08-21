@@ -1,13 +1,11 @@
 package fm.jiecao.jcvideoplayer_lib;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,8 +18,6 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -373,7 +369,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public void clearFullscreenLayout() {
-        ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext())).findViewById(Window.ID_ANDROID_CONTENT);
         View oldF = vp.findViewById(FULLSCREEN_ID);
         View oldT = vp.findViewById(TINY_ID);
         if (oldF != null) {
@@ -436,7 +432,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 showSupportActionBar(getContext());
                 return true;
             }
-            ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+            ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext())).findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
             JCVideoPlayerManager.setListener(JCVideoPlayerManager.lastListener());
             JCVideoPlayerManager.setLastListener(null);
@@ -574,7 +570,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
         hideSupportActionBar(getContext());
 
-        ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext())).findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(FULLSCREEN_ID);
         if (old != null) {
             vp.removeView(old);
@@ -615,7 +611,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
         onEvent(JCBuriedPoint.ON_ENTER_TINYSCREEN);
 
-        ViewGroup vp = (ViewGroup) ((Activity) getContext()).findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext())).findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(TINY_ID);
         if (old != null) {
             vp.removeView(old);
@@ -698,7 +694,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
         if (secProgress > 95) secProgress = 100;
         if (secProgress != 0) progressBar.setSecondaryProgress(secProgress);
-        currentTimeTextView.setText(JCUtils.stringForTime(currentTime));
+        if (currentTime != 0) currentTimeTextView.setText(JCUtils.stringForTime(currentTime));
         totalTimeTextView.setText(JCUtils.stringForTime(totalTime));
     }
 
@@ -768,7 +764,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
 
         hideSupportActionBar(context);
-        ViewGroup vp = (ViewGroup) ((AppCompatActivity) context).findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) (JCUtils.getAppCompActivity(context)).findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(JCVideoPlayer.FULLSCREEN_ID);
         if (old != null) {
             vp.removeView(old);
@@ -802,28 +798,28 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static void hideSupportActionBar(Context context) {
         if (ACTION_BAR_EXIST) {
-            ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
+            ActionBar ab = JCUtils.getAppCompActivity(context).getSupportActionBar();
             if (ab != null) {
                 ab.setShowHideAnimationEnabled(false);
                 ab.hide();
             }
         }
         if (TOOL_BAR_EXIST) {
-            ((AppCompatActivity) context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            JCUtils.getAppCompActivity(context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
     public static void showSupportActionBar(Context context) {
         if (ACTION_BAR_EXIST) {
-            ActionBar ab = ((AppCompatActivity) context).getSupportActionBar();
+            ActionBar ab = JCUtils.getAppCompActivity(context).getSupportActionBar();
             if (ab != null) {
                 ab.setShowHideAnimationEnabled(false);
                 ab.show();
             }
         }
         if (TOOL_BAR_EXIST) {
-            ((AppCompatActivity) context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            JCUtils.getAppCompActivity(context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
