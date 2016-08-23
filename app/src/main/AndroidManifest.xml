@@ -50,6 +50,15 @@
         <activity
             android:name=".UIImageLoaderActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AutoTinyActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AutoTinyNormalActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AutoTInyListActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

@@ -39,11 +39,19 @@
                 android:layout_height="200dp"/>
 
             <Button
-                android:id="@+id/tiny_win"
+                android:id="@+id/tiny_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="VideoPlayer above is playing click me to tiny window"/>
+
+            <Button
+                android:id="@+id/auto_tiny_window"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="Auto tiny window"/>
 
             <Button
                 android:id="@+id/play_directly_without_layout"
