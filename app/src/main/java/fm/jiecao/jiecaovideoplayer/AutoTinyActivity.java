@@ -22,7 +22,7 @@ public class AutoTinyActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("AutoTiny");
+        getSupportActionBar().setTitle("AutoTinyWindow");
         setContentView(R.layout.activity_auto_tiny);
         normal = (Button) findViewById(R.id.screen_normal);
         list = (Button) findViewById(R.id.screen_list);
@@ -39,10 +39,11 @@ public class AutoTinyActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(this, AutoTinyNormalActivity.class));
                 break;
             case R.id.screen_list:
-                startActivity(new Intent(this, AutoTInyListActivity.class));
+                startActivity(new Intent(this, AutoTinyListActivity.class));
                 break;
         }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

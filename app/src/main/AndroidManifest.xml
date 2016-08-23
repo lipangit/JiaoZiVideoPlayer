@@ -54,10 +54,10 @@
             android:name=".AutoTinyActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".AutoTinyNormalActivity"
+            android:name=".AutoTinyListActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".AutoTInyListActivity"
+            android:name=".AutoTinyNormalActivity"
             android:screenOrientation="portrait"/>
 
     </application>

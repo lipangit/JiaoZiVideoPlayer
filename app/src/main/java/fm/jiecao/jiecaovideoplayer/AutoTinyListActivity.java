@@ -10,7 +10,9 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 /**
  * Created by Nathen on 16/8/23.
  */
-public class AutoTInyListActivity extends AppCompatActivity {
+public class AutoTinyListActivity extends AppCompatActivity {
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +21,8 @@ public class AutoTInyListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setTitle("AutoTinyList");
-        setContentView(R.layout.activity_auto_tiny_list);
+        setContentView(R.layout.activity_listview_content);
+
 
     }
 
@@ -46,5 +49,4 @@ public class AutoTInyListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
