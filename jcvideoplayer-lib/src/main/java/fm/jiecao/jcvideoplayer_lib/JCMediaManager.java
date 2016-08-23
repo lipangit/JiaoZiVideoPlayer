@@ -75,10 +75,7 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                         mediaPlayer.release();
                         mediaPlayer = new IjkMediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-//              mediaPlayer.setDataSource(context, Uri.parse(url), mapHeadData);
-                        Class<IjkMediaPlayer> clazz = IjkMediaPlayer.class;
-                        Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
-                        method.invoke(mediaPlayer, ((FuckBean) msg.obj).url, ((FuckBean) msg.obj).mapHeadData);
+                        mediaPlayer.setDataSource(((FuckBean) msg.obj).url, ((FuckBean) msg.obj).mapHeadData);
                         mediaPlayer.setLooping(((FuckBean) msg.obj).looping);
                         mediaPlayer.setOnPreparedListener(JCMediaManager.this);
                         mediaPlayer.setOnCompletionListener(JCMediaManager.this);
@@ -89,12 +86,6 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                         mediaPlayer.setOnInfoListener(JCMediaManager.this);
                         mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
                         mediaPlayer.prepareAsync();
-                    } catch (NoSuchMethodException e) {
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        e.printStackTrace();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
