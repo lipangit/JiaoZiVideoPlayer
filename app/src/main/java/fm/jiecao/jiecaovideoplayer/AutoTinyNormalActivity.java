@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -22,7 +23,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 /**
  * Created by Nathen on 16/8/23.
  */
-public class AutoTinyNormalActivity extends AppCompatActivity {
+public class AutoTinyNormalActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
     ListView     listView;
     LinearLayout headerLayout;
 
@@ -48,20 +49,17 @@ public class AutoTinyNormalActivity extends AppCompatActivity {
 
 
         Map<String, String> keyValuePair = new HashMap<>();
-        keyValuePair.put("Name", "name");
-        keyValuePair.put("Age", "age");
+        keyValuePair.put("key", "list item");
         List<Map<String, String>> list = new ArrayList<>();
         for (int i = 0; i < 50; i++) {
             list.add(keyValuePair);
         }
 
         ListAdapter adapter = new SimpleAdapter(this, list,
-                android.R.layout.simple_list_item_2, new String[]{"Name",
-                "Age"}, new int[]{android.R.id.text1,
-                android.R.id.text2});
+                android.R.layout.simple_list_item_1, new String[]{"key"}, new int[]{android.R.id.text1});
 
         listView.setAdapter(adapter);
-
+        listView.setOnScrollListener(this);
 
     }
 
@@ -89,4 +87,13 @@ public class AutoTinyNormalActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        JCVideoPlayer.onScroll();
+    }
 }

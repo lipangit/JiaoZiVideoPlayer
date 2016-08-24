@@ -24,6 +24,6 @@ public interface JCMediaPlayerListener {
 
     boolean goToOtherListener();
 
-    void onListScrollChange();
+    void onScrollChange();
 
 }

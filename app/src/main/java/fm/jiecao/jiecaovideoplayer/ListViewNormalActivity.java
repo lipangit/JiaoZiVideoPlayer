@@ -37,7 +37,7 @@ public class ListViewNormalActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                JCVideoPlayer.onListScroll();
+                JCVideoPlayer.onScroll();
             }
         });
     }

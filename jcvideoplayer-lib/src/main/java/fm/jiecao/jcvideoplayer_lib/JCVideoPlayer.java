@@ -18,10 +18,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -145,7 +142,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
         if (isCurrentMediaListener()) {//这里没有设置listener
-            Log.i(TAG, "onListScrollChange setup " + hashCode());
+            Log.i(TAG, "onScrollChange setup " + hashCode());
             startWindowTiny();//这里用不用检测是列表type的
         }
         this.url = url;
@@ -767,35 +764,35 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     @Override
-    public void onListScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
+    public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN || currentScreen == SCREEN_WINDOW_TINY)
             return;
         int[] locationOnScreen = new int[2];
         getLocationInWindow(locationOnScreen);//screen 227  window 229 i think they are same
         int top = locationOnScreen[1];
         int bottom = top + getHeight();
-//        System.out.println("onListScrollChange " + top + "  " + bottom);
+//        System.out.println("onScrollChange " + top + "  " + bottom);
 
         if (isCurrentMediaListener()) {
             if (bottom < 20) {//滑到顶了-从顶部消失
-                Log.i(TAG, "onListScrollChange isMe top " + hashCode() + " " + top + "  " + bottom);
+                Log.i(TAG, "onScrollChange isMe top " + hashCode() + " " + top + "  " + bottom);
                 startWindowTiny();
             } else if (top > (mScreenHeight - 20)) {//滑到底部-从底部消失
-                Log.i(TAG, "onListScrollChange isMe bottom " + hashCode() + " " + top + "  " + bottom);
+                Log.i(TAG, "onScrollChange isMe bottom " + hashCode() + " " + top + "  " + bottom);
                 startWindowTiny();
             }
         } else {
             if (bottom > 20) {//滑到顶了-从顶部回来
-                Log.i(TAG, "onListScrollChange top " + hashCode() + " " + top + "  " + bottom);
+                Log.i(TAG, "onScrollChange top " + hashCode() + " " + top + "  " + bottom);
             } else if (top < (mScreenHeight - 20)) {//滑到底部-从底部回来
-                Log.i(TAG, "onListScrollChange bottom " + hashCode() + " " + top + "  " + bottom);
+                Log.i(TAG, "onScrollChange bottom " + hashCode() + " " + top + "  " + bottom);
             }
         }
     }
 
-    public static void onListScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
+    public static void onScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
         if (JCVideoPlayerManager.getFirst() != null) {
-            JCVideoPlayerManager.getFirst().onListScrollChange();
+            JCVideoPlayerManager.getFirst().onScrollChange();
         }
     }
 
