@@ -107,6 +107,7 @@ public void onConfigurationChanged(Configuration newConfig) {
     }
 }
 ```
+0 is rotation degree
 
 ProGuard
 ```
