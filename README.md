@@ -24,6 +24,7 @@ Ambition is become the most widely used video playback control.
 6. It will not disturb or change the playing state when entering or exiting fullscreen
 7. [Support hls,rtsp](https://github.com/Bilibili/ijkplayer)
 8. Put head data
+9. Fullscreen on rotation (configChanges)
 
 ## Effect
 
@@ -82,6 +83,31 @@ Start fullscreen directly.
 ```java
 JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
 ```
+
+Start fullscreen on device rotation.
+Manifest
+```xml
+android:configChanges="keyboardHidden|orientation|screenSize"
+```
+Activity
+```java
+@Override
+public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    switch (newConfig.orientation) {
+        case Configuration.ORIENTATION_PORTRAIT:
+            JCVideoPlayer.backPress();
+            break;
+        case Configuration.ORIENTATION_LANDSCAPE:
+            if(JCVideoPlayerStandard.currentState == JCVideoPlayer.CURRENT_STATE_NORMAL) {
+                JCVideoPlayerStandard.startPlayLocic();
+            }
+            JCVideoPlayerStandard.startWindowFullscreen(0);
+            break;
+    }
+}
+```
+0 is rotation degree
 
 ProGuard
 ```
