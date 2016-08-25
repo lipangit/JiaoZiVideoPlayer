@@ -84,6 +84,30 @@ Start fullscreen directly.
 JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
 ```
 
+Start fullscreen on device rotation.
+Manifest
+```xml
+android:configChanges="keyboardHidden|orientation|screenSize"
+```
+Activity
+```java
+@Override
+public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    switch (newConfig.orientation) {
+        case Configuration.ORIENTATION_PORTRAIT:
+            JCVideoPlayer.backPress();
+            break;
+        case Configuration.ORIENTATION_LANDSCAPE:
+            if(JCVideoPlayerStandard.currentState == JCVideoPlayer.CURRENT_STATE_NORMAL) {
+                JCVideoPlayerStandard.startPlayLocic();
+            }
+            JCVideoPlayerStandard.startWindowFullscreen(0);
+            break;
+    }
+}
+```
+
 ProGuard
 ```
 -keep class tv.danmaku.ijk.** { *; }
