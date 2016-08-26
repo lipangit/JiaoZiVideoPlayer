@@ -24,7 +24,6 @@ Ambition is become the most widely used video playback control.
 6. It will not disturb or change the playing state when entering or exiting fullscreen
 7. [Support hls,rtsp](https://github.com/Bilibili/ijkplayer)
 8. Put head data
-9. Fullscreen on rotation (configChanges)
 
 ## Effect
 
