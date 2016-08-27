@@ -1,6 +1,10 @@
 package fm.jiecao.jiecaovideoplayer;
 
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +16,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPoint;
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
+import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
@@ -57,7 +63,76 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
         });
 
         JCVideoPlayer.setJcBuriedPoint(new MyJCBuriedPointStandard());
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorEventListener = new MySensorEventListener();
+    }
 
+    SensorManager         sensorManager;
+    MySensorEventListener sensorEventListener;
+
+    @Override
+    protected void onResume() {
+        Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(sensorEventListener);
+
+        JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    private final class MySensorEventListener implements SensorEventListener {
+        @Override
+        public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
+            float x = event.values[SensorManager.DATA_X];
+            float y = event.values[SensorManager.DATA_Y];
+            float z = event.values[SensorManager.DATA_Z];
+            if (x < -11) {
+                System.out.println("fdsfdsfdsf 向右倒");
+            } else if (x > 11) {
+                System.out.println("fdsfdsfdsf 向左倒");
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().autoFullscrenn();
+                }
+            } else if (y > 11) {
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().autoQuitFullscreen();
+                }
+            }
+
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.play_directly_without_layout:
+                startActivity(new Intent(MainActiivty.this, PlayDirectlyActivity.class));
+                break;
+            case R.id.about_listview:
+                startActivity(new Intent(MainActiivty.this, ListViewActivity.class));
+                break;
+            case R.id.about_ui:
+                startActivity(new Intent(MainActiivty.this, UIActivity.class));
+                break;
+        }
     }
 
     class MyJCBuriedPointStandard implements JCBuriedPointStandard {
@@ -117,34 +192,4 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.play_directly_without_layout:
-                startActivity(new Intent(MainActiivty.this, PlayDirectlyActivity.class));
-                break;
-            case R.id.about_listview:
-                startActivity(new Intent(MainActiivty.this, ListViewActivity.class));
-                break;
-            case R.id.about_ui:
-                startActivity(new Intent(MainActiivty.this, UIActivity.class));
-                break;
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JCVideoPlayer.releaseAllVideos();
-    }
-
 }

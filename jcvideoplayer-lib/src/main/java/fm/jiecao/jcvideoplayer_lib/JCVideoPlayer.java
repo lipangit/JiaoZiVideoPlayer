@@ -444,6 +444,30 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         return false;
     }
 
+    long lastAutoFullscreenTime = 0;
+
+    @Override
+    public void autoFullscrenn() {
+        if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
+                && isCurrentMediaListener()
+                && currentState == CURRENT_STATE_PLAYING
+                && currentScreen != SCREEN_WINDOW_FULLSCREEN) {
+            lastAutoFullscreenTime = System.currentTimeMillis();
+            startWindowFullscreen();
+        }
+    }
+
+    @Override
+    public void autoQuitFullscreen() {
+        if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
+                && isCurrentMediaListener()
+                && currentState == CURRENT_STATE_PLAYING
+                && currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            lastAutoFullscreenTime = System.currentTimeMillis();
+            backPress();
+        }
+    }
+
     @Override
     public void onBufferingUpdate(int percent) {
         if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPAREING) {
