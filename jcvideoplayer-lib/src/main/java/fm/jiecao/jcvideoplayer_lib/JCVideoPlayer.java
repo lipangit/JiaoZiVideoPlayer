@@ -2,6 +2,10 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -844,6 +848,32 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
         if (TOOL_BAR_EXIST) {
             JCUtils.getAppCompActivity(context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
+
+    public static class JCAutoFullscreenListener implements SensorEventListener {
+        @Override
+        public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
+            float x = event.values[SensorManager.DATA_X];
+            float y = event.values[SensorManager.DATA_Y];
+            float z = event.values[SensorManager.DATA_Z];
+            if (x < -11) {
+                //direction right
+            } else if (x > 11) {
+                //direction left
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().autoFullscrenn();
+                }
+            } else if (y > 11) {
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().autoQuitFullscreen();
+                }
+            }
+
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
     }
 

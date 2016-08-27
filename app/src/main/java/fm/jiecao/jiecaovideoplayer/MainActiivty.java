@@ -2,8 +2,6 @@ package fm.jiecao.jiecaovideoplayer;
 
 import android.content.Intent;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,9 +14,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPoint;
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
-import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerManager;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
@@ -26,6 +22,10 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by Nathen on 16/7/22.
  */
 public class MainActiivty extends AppCompatActivity implements View.OnClickListener {
+
+    JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
+    SensorManager                          sensorManager;
+
 
     JCVideoPlayerStandard jcVideoPlayerStandard;
     JCVideoPlayerSimple   jcVideoPlayerSimple;
@@ -64,11 +64,8 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
 
         JCVideoPlayer.setJcBuriedPoint(new MyJCBuriedPointStandard());
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorEventListener = new MySensorEventListener();
+        sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
     }
-
-    SensorManager         sensorManager;
-    MySensorEventListener sensorEventListener;
 
     @Override
     protected void onResume() {
@@ -77,12 +74,10 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
         super.onResume();
     }
 
-
     @Override
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(sensorEventListener);
-
         JCVideoPlayer.releaseAllVideos();
     }
 
@@ -94,31 +89,6 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
         super.onBackPressed();
     }
 
-    private final class MySensorEventListener implements SensorEventListener {
-        @Override
-        public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
-            float x = event.values[SensorManager.DATA_X];
-            float y = event.values[SensorManager.DATA_Y];
-            float z = event.values[SensorManager.DATA_Z];
-            if (x < -11) {
-                System.out.println("fdsfdsfdsf 向右倒");
-            } else if (x > 11) {
-                System.out.println("fdsfdsfdsf 向左倒");
-                if (JCVideoPlayerManager.listener() != null) {
-                    JCVideoPlayerManager.listener().autoFullscrenn();
-                }
-            } else if (y > 11) {
-                if (JCVideoPlayerManager.listener() != null) {
-                    JCVideoPlayerManager.listener().autoQuitFullscreen();
-                }
-            }
-
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    }
 
     @Override
     public void onClick(View v) {
