@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.2'
 
     defaultConfig {
         applicationId "fm.jiecao.jiecaovideoplayer"
@@ -36,13 +36,4 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
-    //If you can not start app, you cancel the annotation
-    //如果app无法启动,请取消下面的注释
-    //Other ABIs: optional
-//    compile 'tv.danmaku.ijk.media:ijkplayer-armv5:0.6.0'
-    compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.6.0'
-    compile 'tv.danmaku.ijk.media:ijkplayer-x86:0.6.0'
-    compile 'tv.danmaku.ijk.media:ijkplayer-x86_64:0.6.0'
-    //ExoPlayer as IMediaPlayer: optional, experimental
-    //compile 'tv.danmaku.ijk.media:ijkplayer-exo:0.6.0'
 }

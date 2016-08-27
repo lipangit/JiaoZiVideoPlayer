@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -451,7 +453,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     long lastAutoFullscreenTime = 0;
 
     @Override
-    public void autoFullscrenn() {
+    public void autoFullscreenLeft() {
         if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
                 && isCurrentMediaListener()
                 && currentState == CURRENT_STATE_PLAYING
@@ -621,8 +623,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             jcVideoPlayer.addTextureView();
             jcVideoPlayer.setRotation(90);
 
-//            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
-//            jcVideoPlayer.setAnimation(ra);
+            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
+            jcVideoPlayer.setAnimation(ra);
 
             JCVideoPlayerManager.setLastListener(this);
             JCVideoPlayerManager.setListener(jcVideoPlayer);
@@ -808,8 +810,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(jcVideoPlayer, lp);
 
-//            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
-//            jcVideoPlayer.setAnimation(ra);
+            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
+            jcVideoPlayer.setAnimation(ra);
 
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.addTextureView();
@@ -862,7 +864,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             } else if (x > 11) {
                 //direction left
                 if (JCVideoPlayerManager.listener() != null) {
-                    JCVideoPlayerManager.listener().autoFullscrenn();
+                    JCVideoPlayerManager.listener().autoFullscreenLeft();
                 }
             } else if (y > 11) {
                 if (JCVideoPlayerManager.listener() != null) {

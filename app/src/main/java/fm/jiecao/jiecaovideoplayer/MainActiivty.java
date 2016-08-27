@@ -88,8 +88,7 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
         }
         super.onBackPressed();
     }
-
-
+    
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
