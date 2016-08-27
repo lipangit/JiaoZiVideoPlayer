@@ -488,7 +488,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     public void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro,
-                                       int thumbImg, int coverImg, int bottomPro) {
+                                      int thumbImg, int coverImg, int bottomPro) {
         topContainer.setVisibility(topCon);
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
@@ -627,8 +627,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                         public void run() {
                             bottomContainer.setVisibility(View.INVISIBLE);
                             topContainer.setVisibility(View.INVISIBLE);
-                            bottomProgressBar.setVisibility(View.VISIBLE);
                             startButton.setVisibility(View.INVISIBLE);
+                            if (currentScreen != SCREEN_WINDOW_TINY) {
+                                bottomProgressBar.setVisibility(View.VISIBLE);
+                            }
                         }
                     });
                 }
