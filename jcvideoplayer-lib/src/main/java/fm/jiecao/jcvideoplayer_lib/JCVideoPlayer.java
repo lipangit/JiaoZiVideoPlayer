@@ -457,7 +457,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
                 && isCurrentMediaListener()
                 && currentState == CURRENT_STATE_PLAYING
-                && currentScreen != SCREEN_WINDOW_FULLSCREEN) {
+                && currentScreen != SCREEN_WINDOW_FULLSCREEN
+                && currentScreen != SCREEN_WINDOW_TINY) {
             lastAutoFullscreenTime = System.currentTimeMillis();
             startWindowFullscreen();
         }
