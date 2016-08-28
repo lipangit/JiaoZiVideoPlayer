@@ -30,17 +30,19 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
     JCVideoPlayerStandard jcVideoPlayerStandard;
     JCVideoPlayerSimple   jcVideoPlayerSimple;
 
-    Button aboutListView, aboutUI, playDirectly;
+    Button aboutListView, aboutUI, playDirectly, tinyWin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        tinyWin = (Button) findViewById(R.id.tiny_win);
         aboutUI = (Button) findViewById(R.id.play_directly_without_layout);
         aboutListView = (Button) findViewById(R.id.about_listview);
         playDirectly = (Button) findViewById(R.id.about_ui);
 
+        tinyWin.setOnClickListener(this);
         aboutListView.setOnClickListener(this);
         aboutUI.setOnClickListener(this);
         playDirectly.setOnClickListener(this);
@@ -54,13 +56,6 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子坐这");
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
                 jcVideoPlayerStandard.thumbImageView);
-
-        findViewById(R.id.tiny_win).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                jcVideoPlayerStandard.startWindowTiny();
-            }
-        });
 
         JCVideoPlayer.setJcBuriedPoint(new MyJCBuriedPointStandard());
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -92,6 +87,9 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.tiny_win:
+                jcVideoPlayerStandard.startWindowTiny();
+                break;
             case R.id.play_directly_without_layout:
                 startActivity(new Intent(MainActiivty.this, PlayDirectlyActivity.class));
                 break;
