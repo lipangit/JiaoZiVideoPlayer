@@ -69,9 +69,9 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onResume() {
+        super.onResume();
         Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        super.onResume();
     }
 
     @Override

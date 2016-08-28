@@ -24,6 +24,7 @@ Ambition is become the most widely used video playback control.
 6. It will not disturb or change the playing state when entering or exiting fullscreen
 7. [Support hls,rtsp](https://github.com/Bilibili/ijkplayer)
 8. Put head data
+9. Gravity sensor auto fullscreen
 
 ## Effect
 
@@ -81,6 +82,30 @@ protected void onPause() {
 Start fullscreen directly.
 ```java
 JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
+```
+
+Gravity sensor auto fullscreen
+```java
+JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
+SensorManager                          sensorManager;
+@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+    sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+    sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
+}
+@Override
+protected void onResume() {
+    super.onResume();
+    Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+}
+@Override
+protected void onPause() {
+    super.onPause();
+    sensorManager.unregisterListener(sensorEventListener);
+    JCVideoPlayer.releaseAllVideos();
+}
 ```
 
 ProGuard
