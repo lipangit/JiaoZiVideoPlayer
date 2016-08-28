@@ -104,7 +104,6 @@ protected void onResume() {
 protected void onPause() {
     super.onPause();
     sensorManager.unregisterListener(sensorEventListener);
-    JCVideoPlayer.releaseAllVideos();
 }
 ```
 
