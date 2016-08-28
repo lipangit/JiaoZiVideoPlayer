@@ -1,6 +1,8 @@
 package fm.jiecao.jiecaovideoplayer;
 
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,10 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by Nathen on 16/7/22.
  */
 public class MainActiivty extends AppCompatActivity implements View.OnClickListener {
+
+    JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
+    SensorManager                          sensorManager;
+
 
     JCVideoPlayerStandard jcVideoPlayerStandard;
     JCVideoPlayerSimple   jcVideoPlayerSimple;
@@ -57,7 +63,45 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
         });
 
         JCVideoPlayer.setJcBuriedPoint(new MyJCBuriedPointStandard());
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
+    }
 
+    @Override
+    protected void onResume() {
+        Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(sensorEventListener);
+        JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+    
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.play_directly_without_layout:
+                startActivity(new Intent(MainActiivty.this, PlayDirectlyActivity.class));
+                break;
+            case R.id.about_listview:
+                startActivity(new Intent(MainActiivty.this, ListViewActivity.class));
+                break;
+            case R.id.about_ui:
+                startActivity(new Intent(MainActiivty.this, UIActivity.class));
+                break;
+        }
     }
 
     class MyJCBuriedPointStandard implements JCBuriedPointStandard {
@@ -117,34 +161,4 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.play_directly_without_layout:
-                startActivity(new Intent(MainActiivty.this, PlayDirectlyActivity.class));
-                break;
-            case R.id.about_listview:
-                startActivity(new Intent(MainActiivty.this, ListViewActivity.class));
-                break;
-            case R.id.about_ui:
-                startActivity(new Intent(MainActiivty.this, UIActivity.class));
-                break;
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JCVideoPlayer.releaseAllVideos();
-    }
-
 }

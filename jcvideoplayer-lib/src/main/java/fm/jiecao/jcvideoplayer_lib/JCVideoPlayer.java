@@ -2,6 +2,10 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -18,6 +22,8 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -444,6 +450,36 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         return false;
     }
 
+    long lastAutoFullscreenTime = 0;
+
+    @Override
+    public void autoFullscreenLeft() {
+        if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
+                && isCurrentMediaListener()
+                && currentState == CURRENT_STATE_PLAYING
+                && currentScreen != SCREEN_WINDOW_FULLSCREEN
+                && currentScreen != SCREEN_WINDOW_TINY) {
+            lastAutoFullscreenTime = System.currentTimeMillis();
+            startWindowFullscreen();
+        }
+    }
+
+    @Override
+    public void autoFullscreenRight() {
+
+    }
+
+    @Override
+    public void autoQuitFullscreen() {
+        if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
+                && isCurrentMediaListener()
+                && currentState == CURRENT_STATE_PLAYING
+                && currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            lastAutoFullscreenTime = System.currentTimeMillis();
+            backPress();
+        }
+    }
+
     @Override
     public void onBufferingUpdate(int percent) {
         if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPAREING) {
@@ -593,8 +629,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             jcVideoPlayer.addTextureView();
             jcVideoPlayer.setRotation(90);
 
-//            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
-//            jcVideoPlayer.setAnimation(ra);
+            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
+            jcVideoPlayer.setAnimation(ra);
 
             JCVideoPlayerManager.setLastListener(this);
             JCVideoPlayerManager.setListener(jcVideoPlayer);
@@ -780,8 +816,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(jcVideoPlayer, lp);
 
-//            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
-//            jcVideoPlayer.setAnimation(ra);
+            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
+            jcVideoPlayer.setAnimation(ra);
 
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.addTextureView();
@@ -820,6 +856,32 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
         if (TOOL_BAR_EXIST) {
             JCUtils.getAppCompActivity(context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
+
+    public static class JCAutoFullscreenListener implements SensorEventListener {
+        @Override
+        public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
+            float x = event.values[SensorManager.DATA_X];
+            float y = event.values[SensorManager.DATA_Y];
+            float z = event.values[SensorManager.DATA_Z];
+            if (x < -11) {
+                //direction right
+            } else if (x > 11) {
+                //direction left
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().autoFullscreenLeft();
+                }
+            } else if (y > 11) {
+                if (JCVideoPlayerManager.listener() != null) {
+                    JCVideoPlayerManager.listener().autoQuitFullscreen();
+                }
+            }
+
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
     }
 

@@ -24,4 +24,9 @@ public interface JCMediaPlayerListener {
 
     boolean goToOtherListener();
 
+    void autoFullscreenLeft();
+
+    void autoFullscreenRight();
+
+    void autoQuitFullscreen();
 }
