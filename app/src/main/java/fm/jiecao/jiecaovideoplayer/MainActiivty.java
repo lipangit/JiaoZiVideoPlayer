@@ -88,7 +88,8 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tiny_win:
-                jcVideoPlayerStandard.startWindowTiny();
+//                jcVideoPlayerStandard.startWindowTiny();
+                startActivity(new Intent(MainActiivty.this, RecyclerViewNormalActivity.class));
                 break;
             case R.id.play_directly_without_layout:
                 startActivity(new Intent(MainActiivty.this, PlayDirectlyActivity.class));
