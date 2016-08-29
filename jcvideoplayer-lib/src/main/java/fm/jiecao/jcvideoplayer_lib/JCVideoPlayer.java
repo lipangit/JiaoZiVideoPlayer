@@ -134,10 +134,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mHandler = new Handler();
     }
 
-    public void invisibleThumb() {
-
-    }
-
     public boolean setUp(String url, int screen, Object... objects) {
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
@@ -150,7 +146,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         this.currentScreen = screen;
         if (isSecondMediaListener() &&
                 JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
-//            invisibleThumb();
             backPress();
             return true;
         }
@@ -784,8 +779,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         } else {
             if (bottom > 20) {//滑到顶了-从顶部回来
                 Log.i(TAG, "onScrollChange top " + hashCode() + " " + top + "  " + bottom);
+                backPress();
             } else if (top < (mScreenHeight - 20)) {//滑到底部-从底部回来
                 Log.i(TAG, "onScrollChange bottom " + hashCode() + " " + top + "  " + bottom);
+                backPress();
             }
         }
     }

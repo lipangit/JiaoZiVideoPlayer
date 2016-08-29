@@ -234,12 +234,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
     }
 
-    @Override
-    public void invisibleThumb() {
-        super.invisibleThumb();
-        thumbImageView.setVisibility(View.INVISIBLE);
-    }
-
     public void onClickUiToggle() {//bottomContainer!=null
         if (currentState == CURRENT_STATE_PREPAREING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
@@ -512,7 +506,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
         loadingProgressBar.setVisibility(loadingPro);
-        thumbImageView.setVisibility(thumbImg);
+        if (thumbImg == View.VISIBLE) {
+            thumbImageView.setVisibility(thumbImg);
+        } else {
+            thumbImageView.setVisibility(View.GONE);
+        }
         coverImageView.setVisibility(coverImg);
         bottomProgressBar.setVisibility(bottomPro);
     }
