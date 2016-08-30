@@ -53,9 +53,6 @@
         <activity
             android:name=".RecyclerViewNormalActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".ListViewAutoWindowTinyActivity"
-            android:screenOrientation="portrait"/>
 
     </application>
 
