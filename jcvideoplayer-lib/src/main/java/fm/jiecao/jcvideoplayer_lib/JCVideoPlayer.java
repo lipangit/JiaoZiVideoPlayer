@@ -865,14 +865,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             float x = event.values[SensorManager.DATA_X];
             float y = event.values[SensorManager.DATA_Y];
             float z = event.values[SensorManager.DATA_Z];
-            if (x < -11) {
+            if (x < -10) {
                 //direction right
-            } else if (x > 11) {
+            } else if (x > 10) {
                 //direction left
                 if (JCVideoPlayerManager.listener() != null) {
                     JCVideoPlayerManager.listener().autoFullscreenLeft();
                 }
-            } else if (y > 11) {
+            } else if (y > 9) {
                 if (JCVideoPlayerManager.listener() != null) {
                     JCVideoPlayerManager.listener().autoQuitFullscreen();
                 }
