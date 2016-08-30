@@ -29,7 +29,7 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
         mViewPagerList = (Button) findViewById(R.id.viewpayer_list);
         mMultiHolderList = (Button) findViewById(R.id.multi_holder_list);
         mRecyleView = (Button) findViewById(R.id.recyleview);
-
+        findViewById(R.id.listview_auto_window_tiny).setOnClickListener(this);
         mNormalList.setOnClickListener(this);
         mViewPagerList.setOnClickListener(this);
         mMultiHolderList.setOnClickListener(this);
@@ -51,6 +51,9 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.recyleview:
                 Toast.makeText(ListViewActivity.this, "Coming soon", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.listview_auto_window_tiny:
+                startActivity(new Intent(ListViewActivity.this,ListViewAutoWindowTinyActivity.class));
                 break;
         }
     }
