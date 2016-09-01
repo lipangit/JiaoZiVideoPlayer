@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
