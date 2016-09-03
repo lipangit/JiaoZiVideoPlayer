@@ -440,8 +440,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                     JCBuriedPoint.ON_QUIT_FULLSCREEN :
                     JCBuriedPoint.ON_QUIT_TINYSCREEN);
-            if (JCVideoPlayerManager.lastListener() == null) {//directly fullscreen
-                JCVideoPlayerManager.lastListener().onCompletion();
+            if (JCVideoPlayerManager.listener() == null) {//directly fullscreen
+                JCVideoPlayerManager.listener().onCompletion();
                 showSupportActionBar(getContext());
                 return true;
             }
