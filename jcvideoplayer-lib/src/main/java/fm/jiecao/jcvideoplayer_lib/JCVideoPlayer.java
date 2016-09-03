@@ -205,8 +205,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void prepareVideo() {
         Log.d(TAG, "prepareVideo [" + this.hashCode() + "] ");
-        if (JCVideoPlayerManager.listener() != null) {
-            JCVideoPlayerManager.listener().onCompletion();
+        // 解决全屏模式下的CURRENT_STATE_ERROR状态下, 点击重新加载后退出了全屏模式.
+        // 间接解决因为mediaplayer状态混乱(全屏模式下会prepare, 全屏模式被退出后小窗口状态异常,被点击后容易导致)引起的App Crash问题
+        if (currentScreen != SCREEN_WINDOW_FULLSCREEN) {
+            if (JCVideoPlayerManager.listener() != null) {
+                JCVideoPlayerManager.listener().onCompletion();
+            }
         }
         JCVideoPlayerManager.setListener(this);
         addTextureView();
@@ -247,8 +251,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                             if (absDeltaX > THRESHOLD || absDeltaY > THRESHOLD) {
                                 cancelProgressTimer();
                                 if (absDeltaX >= THRESHOLD) {
-                                    mChangePosition = true;
-                                    mDownPosition = getCurrentPositionWhenPlaying();
+                                    // 全屏模式下的CURRENT_STATE_ERROR状态下,不响应进度拖动事件.
+                                    // 否则会因为mediaplayer的状态非法导致App Crash
+                                    if (currentState != CURRENT_STATE_ERROR) {
+                                        mChangePosition = true;
+                                        mDownPosition = getCurrentPositionWhenPlaying();
+                                    }
                                 } else {
                                     mChangeVolume = true;
                                     mGestureDownVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
