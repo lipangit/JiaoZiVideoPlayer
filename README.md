@@ -22,7 +22,7 @@ Ambition is become the most widely used video playback control.
 4. Gestrues to modify progress and volume
 5. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
 6. It will not disturb or change the playing state when entering or exiting fullscreen
-7. [Support hls,rtsp](https://github.com/Bilibili/ijkplayer)
+7. Base on [ijkplayer](https://github.com/Bilibili/ijkplayer), support hls,rtsp
 8. Put head data
 9. Gravity sensor auto fullscreen
 

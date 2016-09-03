@@ -16,7 +16,7 @@
 4. 手势修改进度和音量
 5. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
 6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
-7. [支持hls,rtsp](https://github.com/Bilibili/ijkplayer)
+7. 基于[ijkplayer](https://github.com/Bilibili/ijkplayer) 支持hls,rtsp
 8. 设置http头信息
 9. 重力感应自动全屏
 
