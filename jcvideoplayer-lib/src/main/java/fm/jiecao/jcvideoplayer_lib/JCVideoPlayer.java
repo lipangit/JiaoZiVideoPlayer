@@ -93,7 +93,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     protected AudioManager      mAudioManager;
     protected Handler           mHandler;
     protected ProgressTimerTask mProgressTimerTask;
-    protected int mBackUpBufferState = -1;
 
     protected boolean mTouchingProgressBar;
     protected float   mDownX;
@@ -505,13 +504,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-            mBackUpBufferState = currentState;
+            JCMediaManager.instance().backUpBufferState = currentState;
             setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
-            if (mBackUpBufferState != -1) {
-                setUiWitStateAndScreen(mBackUpBufferState);
-                mBackUpBufferState = -1;
+            if (JCMediaManager.instance().backUpBufferState != -1) {
+                setUiWitStateAndScreen(JCMediaManager.instance().backUpBufferState);
+                JCMediaManager.instance().backUpBufferState = -1;
             }
             Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
         }
