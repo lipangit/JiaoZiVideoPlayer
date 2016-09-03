@@ -216,6 +216,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.instance().prepare(url, mapHeadData, looping);
+        JCMediaManager.instance().bufferPercent = 0;
         setUiWitStateAndScreen(CURRENT_STATE_PREPAREING);
     }
 
@@ -326,9 +327,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 resetProgressAndTime();
                 break;
             case CURRENT_STATE_PLAYING:
-                startProgressTimer();
-                break;
             case CURRENT_STATE_PAUSE:
+            case CURRENT_STATE_PLAYING_BUFFERING_START:
                 startProgressTimer();
                 break;
             case CURRENT_STATE_ERROR:
@@ -485,6 +485,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPAREING) {
             Log.v(TAG, "onBufferingUpdate " + percent + " [" + this.hashCode() + "] ");
             setTextAndProgress(percent);
+            JCMediaManager.instance().bufferPercent = percent;
         }
     }
 
@@ -686,7 +687,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        setTextAndProgress(0);
+                        setTextAndProgress(JCMediaManager.instance().bufferPercent);
                     }
                 });
             }

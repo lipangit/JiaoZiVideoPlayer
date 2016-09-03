@@ -34,6 +34,7 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
     public int currentVideoWidth  = 0;
     public int currentVideoHeight = 0;
     public int lastState;
+    public int bufferPercent;
 
     public static final int HANDLER_PREPARE    = 0;
     public static final int HANDLER_SETDISPLAY = 1;
