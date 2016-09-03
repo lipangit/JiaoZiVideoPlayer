@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.6.3-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.6.4-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -16,12 +16,13 @@
 4. 手势修改进度和音量
 5. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
 6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
-7. [支持hls,rtsp](https://github.com/Bilibili/ijkplayer)
+7. 基于[ijkplayer](https://github.com/Bilibili/ijkplayer), 支持hls,rtsp
 8. 设置http头信息
+9. 重力感应自动全屏
 
 ##效果
 
-**[jiecaovideoplayer-4.6.3-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.3-demo.apk)**
+**[jiecaovideoplayer-4.6.4-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.4-demo.apk)**
 
 ![Demo Screenshot][1]
 
@@ -29,14 +30,14 @@
 
 1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:4.6.3'
+compile 'fm.jiecao:jiecaovideoplayer:4.6.4'
 ```
 
 或直接下载
 
-* [jiecaovideoplayer-4.6.3.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.3.aar)
-* [jiecaovideoplayer-4.6.3-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.3-javadoc.jar)
-* [jiecaovideoplayer-4.6.3-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.3-sources.jar)
+* [jiecaovideoplayer-4.6.4.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.4.aar)
+* [jiecaovideoplayer-4.6.4-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.4-javadoc.jar)
+* [jiecaovideoplayer-4.6.4-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.4-sources.jar)
 
 2.添加布局
 ```xml
@@ -75,6 +76,29 @@ protected void onPause() {
 直接进入全屏
 ```java
 JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
+```
+
+重力感应自动进入全屏
+```java
+JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
+SensorManager                          sensorManager;
+@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+    sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
+}
+@Override
+protected void onResume() {
+    super.onResume();
+    Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+}
+@Override
+protected void onPause() {
+    super.onPause();
+    sensorManager.unregisterListener(sensorEventListener);
+}
 ```
 
 ####混淆

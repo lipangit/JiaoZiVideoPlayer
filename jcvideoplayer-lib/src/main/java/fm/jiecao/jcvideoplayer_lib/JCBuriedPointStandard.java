@@ -8,5 +8,5 @@ public interface JCBuriedPointStandard extends JCBuriedPoint {
 
     int ON_CLICK_START_THUMB = 101;
     int ON_CLICK_BLANK       = 102;
-    
+
 }

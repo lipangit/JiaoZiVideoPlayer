@@ -10,8 +10,6 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Map;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
@@ -36,6 +34,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
     public int currentVideoWidth  = 0;
     public int currentVideoHeight = 0;
     public int lastState;
+    public int bufferPercent;
+    public int backUpBufferState = -1;
 
     public static final int HANDLER_PREPARE    = 0;
     public static final int HANDLER_SETDISPLAY = 1;

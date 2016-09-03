@@ -93,7 +93,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     protected AudioManager      mAudioManager;
     protected Handler           mHandler;
     protected ProgressTimerTask mProgressTimerTask;
-    protected int mBackUpBufferState = -1;
 
     protected boolean mTouchingProgressBar;
     protected float   mDownX;
@@ -206,8 +205,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void prepareVideo() {
         Log.d(TAG, "prepareVideo [" + this.hashCode() + "] ");
-        if (JCVideoPlayerManager.listener() != null) {
-            JCVideoPlayerManager.listener().onCompletion();
+        // 解决全屏模式下的CURRENT_STATE_ERROR状态下, 点击重新加载后退出了全屏模式.
+        // 间接解决因为mediaplayer状态混乱(全屏模式下会prepare, 全屏模式被退出后小窗口状态异常,被点击后容易导致)引起的App Crash问题
+        if (currentScreen != SCREEN_WINDOW_FULLSCREEN) {
+            if (JCVideoPlayerManager.listener() != null) {
+                JCVideoPlayerManager.listener().onCompletion();
+            }
         }
         JCVideoPlayerManager.setListener(this);
         addTextureView();
@@ -216,6 +219,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.instance().prepare(url, mapHeadData, looping);
+        JCMediaManager.instance().bufferPercent = 0;
         setUiWitStateAndScreen(CURRENT_STATE_PREPAREING);
     }
 
@@ -247,8 +251,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                             if (absDeltaX > THRESHOLD || absDeltaY > THRESHOLD) {
                                 cancelProgressTimer();
                                 if (absDeltaX >= THRESHOLD) {
-                                    mChangePosition = true;
-                                    mDownPosition = getCurrentPositionWhenPlaying();
+                                    // 全屏模式下的CURRENT_STATE_ERROR状态下,不响应进度拖动事件.
+                                    // 否则会因为mediaplayer的状态非法导致App Crash
+                                    if (currentState != CURRENT_STATE_ERROR) {
+                                        mChangePosition = true;
+                                        mDownPosition = getCurrentPositionWhenPlaying();
+                                    }
                                 } else {
                                     mChangeVolume = true;
                                     mGestureDownVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
@@ -326,9 +334,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 resetProgressAndTime();
                 break;
             case CURRENT_STATE_PLAYING:
-                startProgressTimer();
-                break;
             case CURRENT_STATE_PAUSE:
+            case CURRENT_STATE_PLAYING_BUFFERING_START:
                 startProgressTimer();
                 break;
             case CURRENT_STATE_ERROR:
@@ -434,7 +441,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     JCBuriedPoint.ON_QUIT_FULLSCREEN :
                     JCBuriedPoint.ON_QUIT_TINYSCREEN);
             if (JCVideoPlayerManager.lastListener() == null) {//directly fullscreen
-                JCVideoPlayerManager.listener().onCompletion();
+                JCVideoPlayerManager.lastListener().onCompletion();
                 showSupportActionBar(getContext());
                 return true;
             }
@@ -485,6 +492,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPAREING) {
             Log.v(TAG, "onBufferingUpdate " + percent + " [" + this.hashCode() + "] ");
             setTextAndProgress(percent);
+            JCMediaManager.instance().bufferPercent = percent;
         }
     }
 
@@ -504,13 +512,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-            mBackUpBufferState = currentState;
+            JCMediaManager.instance().backUpBufferState = currentState;
             setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
-            if (mBackUpBufferState != -1) {
-                setUiWitStateAndScreen(mBackUpBufferState);
-                mBackUpBufferState = -1;
+            if (JCMediaManager.instance().backUpBufferState != -1) {
+                setUiWitStateAndScreen(JCMediaManager.instance().backUpBufferState);
+                JCMediaManager.instance().backUpBufferState = -1;
             }
             Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
         }
@@ -686,7 +694,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        setTextAndProgress(0);
+                        setTextAndProgress(JCMediaManager.instance().bufferPercent);
                     }
                 });
             }
@@ -865,14 +873,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             float x = event.values[SensorManager.DATA_X];
             float y = event.values[SensorManager.DATA_Y];
             float z = event.values[SensorManager.DATA_Z];
-            if (x < -11) {
+            if (x < -10) {
                 //direction right
-            } else if (x > 11) {
+            } else if (x > 10) {
                 //direction left
                 if (JCVideoPlayerManager.listener() != null) {
                     JCVideoPlayerManager.listener().autoFullscreenLeft();
                 }
-            } else if (y > 11) {
+            } else if (y > 9.5) {
                 if (JCVideoPlayerManager.listener() != null) {
                     JCVideoPlayerManager.listener().autoQuitFullscreen();
                 }

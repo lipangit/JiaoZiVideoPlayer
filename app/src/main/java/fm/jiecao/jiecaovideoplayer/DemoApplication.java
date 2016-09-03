@@ -14,8 +14,6 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.squareup.leakcanary.LeakCanary;
 
-import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
-
 /**
  * Created by Nathen
  * On 2015/12/01 11:29

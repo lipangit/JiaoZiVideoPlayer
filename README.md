@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.6.3-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.6.4-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -22,12 +22,13 @@ Ambition is become the most widely used video playback control.
 4. Gestrues to modify progress and volume
 5. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
 6. It will not disturb or change the playing state when entering or exiting fullscreen
-7. [Support hls,rtsp](https://github.com/Bilibili/ijkplayer)
+7. Base on [ijkplayer](https://github.com/Bilibili/ijkplayer), support hls,rtsp
 8. Put head data
+9. Gravity sensor auto fullscreen
 
 ## Effect
 
-**[jiecaovideoplayer-4.6.3-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.3-demo.apk)**
+**[jiecaovideoplayer-4.6.4-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.4-demo.apk)**
 
 ![Demo Screenshot][1]
 
@@ -35,14 +36,14 @@ Ambition is become the most widely used video playback control.
 
 1.Import library
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:4.6.3'
+compile 'fm.jiecao:jiecaovideoplayer:4.6.4'
 ```
 
 Or download lib
 
-* [jiecaovideoplayer-4.6.3.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.3.aar)
-* [jiecaovideoplayer-4.6.3-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.3-javadoc.jar)
-* [jiecaovideoplayer-4.6.3-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.3-sources.jar)
+* [jiecaovideoplayer-4.6.4.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.4.aar)
+* [jiecaovideoplayer-4.6.4-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.4-javadoc.jar)
+* [jiecaovideoplayer-4.6.4-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.4-sources.jar)
 
 2.Add JCVideoPlayer in your layout
 ```xml
@@ -81,6 +82,29 @@ protected void onPause() {
 Start fullscreen directly.
 ```java
 JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
+```
+
+Gravity sensor auto fullscreen
+```java
+JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
+SensorManager                          sensorManager;
+@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+super.onCreate(savedInstanceState);
+    sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+    sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
+}
+@Override
+protected void onResume() {
+    super.onResume();
+    Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+    sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+}
+@Override
+protected void onPause() {
+    super.onPause();
+    sensorManager.unregisterListener(sensorEventListener);
+}
 ```
 
 ProGuard

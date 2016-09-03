@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
  * Created by Nathen on 16/7/31.
@@ -50,7 +49,7 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(ListViewActivity.this, ListViewMultiHolderActivity.class));
                 break;
             case R.id.recyleview:
-                Toast.makeText(ListViewActivity.this, "Coming soon", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(ListViewActivity.this, RecyclerViewNormalActivity.class));
                 break;
         }
     }

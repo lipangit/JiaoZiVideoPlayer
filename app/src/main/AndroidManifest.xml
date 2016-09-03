@@ -50,6 +50,9 @@
         <activity
             android:name=".UIImageLoaderActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RecyclerViewNormalActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 
