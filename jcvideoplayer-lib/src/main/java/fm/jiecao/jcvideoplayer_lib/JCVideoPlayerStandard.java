@@ -5,8 +5,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -36,6 +39,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public ImageView thumbImageView;
     public ImageView coverImageView;
     public ImageView tinyBackImageView;
+
+    private static Bitmap  pauseSwitchCoverBitmap = null;
+    private static boolean isRefreshCover         = false;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
@@ -69,6 +75,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public boolean setUp(String url, int screen, Object... objects) {
         if (objects.length == 0) return false;
         if (super.setUp(url, screen, objects)) {
+            if (pauseSwitchCoverBitmap != null && coverImageView.getBackground() == null) {
+                coverImageView.setBackgroundColor(Color.parseColor("#222222"));//防止在复用的时候导致，闪一下上次暂停切换缓存的图的问题
+            }
             titleTextView.setText(objects[0].toString());
             if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
                 fullscreenButton.setImageResource(R.drawable.jc_shrink);
@@ -185,6 +194,55 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backPress();
         } else if (i == R.id.back_tiny) {
             backPress();
+        } else if (i == R.id.start) {
+            if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_PAUSE) {
+                isRefreshCover = true;//播放会才会刷新图缓存
+            }
+        }
+    }
+
+    @Override
+    public void prepareVideo() {
+        coverImageView.setBackgroundColor(Color.parseColor("#222222"));
+        coverImageView.setImageBitmap(null);
+        super.prepareVideo();
+    }
+
+    @Override
+    public void startWindowFullscreen() {
+        obtainCover();
+        super.startWindowFullscreen();
+        if (currentState == CURRENT_STATE_PAUSE) {
+            refreshCover(pauseSwitchCoverBitmap);
+        }
+    }
+
+    private void obtainCover() {
+        if (currentState == CURRENT_STATE_PAUSE) {
+            if (isRefreshCover) {
+                pauseSwitchCoverBitmap = JCMediaManager.textureView.getBitmap();
+                isRefreshCover = false;
+            }
+        }
+    }
+
+    @Override
+    public boolean goToOtherListener() {
+        obtainCover();
+        boolean b = super.goToOtherListener();
+        if (currentState == CURRENT_STATE_PAUSE) {
+            refreshCover(pauseSwitchCoverBitmap);
+        }
+        return b;
+    }
+
+
+    public void refreshCover(Bitmap bitmap) {
+        if (pauseSwitchCoverBitmap != null) {
+            JCVideoPlayerStandard jcVideoPlayerStandard = ((JCVideoPlayerStandard) JCVideoPlayerManager.listener());
+            jcVideoPlayerStandard.coverImageView.setBackgroundColor(Color.parseColor("#000000"));
+            jcVideoPlayerStandard.coverImageView.setImageBitmap(bitmap);
+            jcVideoPlayerStandard.coverImageView.setVisibility(VISIBLE);
         }
     }
 
@@ -219,6 +277,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         super.onStopTrackingTouch(seekBar);
+        if (currentState == CURRENT_STATE_PAUSE) {
+            isRefreshCover = true;
+        }
         startDismissControlViewTimer();
     }
 
@@ -364,12 +425,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -382,11 +443,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
