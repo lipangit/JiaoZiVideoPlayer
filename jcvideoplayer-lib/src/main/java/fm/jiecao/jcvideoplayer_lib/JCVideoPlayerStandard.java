@@ -5,8 +5,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -30,12 +32,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
 
-    public ImageView   backButton;
+    public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
-    public TextView  titleTextView;
+    public TextView titleTextView;
     public ImageView thumbImageView;
     public ImageView coverImageView;
     public ImageView tinyBackImageView;
+
+    private static Bitmap pauseSwitchCoverBitmap;
+    private static boolean isRefreshCover = false;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
@@ -185,7 +190,51 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backPress();
         } else if (i == R.id.back_tiny) {
             backPress();
+        } else if (i == R.id.start) {
+            if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_PAUSE) {
+                isRefreshCover = true;
+                Log.i(TAG, "onClick  start isRefreshCover=true [" + this.hashCode() + "] ");
+            }
         }
+    }
+
+    @Override
+    public void startWindowFullscreen() {
+        obtainCover();
+        super.startWindowFullscreen();
+        if (currentState == CURRENT_STATE_PAUSE) {
+            Log.i(TAG, "startWindowFullscreen  CURRENT_STATE_PAUSE [" + this.hashCode() + "] ");
+            refreshCover(pauseSwitchCoverBitmap);
+        }
+    }
+
+    private void obtainCover() {
+        Log.i(TAG, "onClick  fullscreen refresh ok bitmap [" + this.hashCode() + "] currentState == CURRENT_STATE_PAUSE" + (currentState == CURRENT_STATE_PAUSE) + "isRefreshCover=" + isRefreshCover);
+        if (currentState == CURRENT_STATE_PAUSE) {
+            if (isRefreshCover) {
+                pauseSwitchCoverBitmap = JCMediaManager.textureView.getBitmap();
+                isRefreshCover = false;
+                Log.i(TAG, "onClick  fullscreen refresh ok bitmap [" + this.hashCode() + "] ");
+            }
+        }
+    }
+
+    @Override
+    public boolean goToOtherListener() {
+        obtainCover();
+        boolean b = super.goToOtherListener();
+        if (currentState == CURRENT_STATE_PAUSE) {
+            refreshCover(pauseSwitchCoverBitmap);
+        }
+        return b;
+    }
+
+
+    public void refreshCover(Bitmap bitmap) {
+        Log.i(TAG, "refreshCover [" + this.hashCode() + "]");
+        JCVideoPlayerStandard jcVideoPlayerStandard = ((JCVideoPlayerStandard) JCVideoPlayerManager.listener());
+        jcVideoPlayerStandard.coverImageView.setImageBitmap(bitmap);
+        jcVideoPlayerStandard.coverImageView.setVisibility(VISIBLE);
     }
 
     @Override
@@ -219,6 +268,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         super.onStopTrackingTouch(seekBar);
+        Log.i(TAG, "onStopTrackingTouch  [" + this.hashCode() + "] currentState == CURRENT_STATE_PAUSE=" + (currentState == CURRENT_STATE_PAUSE));
+        if (currentState == CURRENT_STATE_PAUSE) {
+            isRefreshCover = true;
+        }
         startDismissControlViewTimer();
     }
 
@@ -364,12 +417,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, coverImageView.getVisibility() , View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -382,11 +435,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-                break;
+                    View.INVISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.INVISIBLE);
+            break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -503,11 +556,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    protected Dialog      mProgressDialog;
+    protected Dialog mProgressDialog;
     protected ProgressBar mDialogProgressBar;
-    protected TextView    mDialogSeekTime;
-    protected TextView    mDialogTotalTime;
-    protected ImageView   mDialogIcon;
+    protected TextView mDialogSeekTime;
+    protected TextView mDialogTotalTime;
+    protected ImageView mDialogIcon;
 
     @Override
     public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
@@ -555,7 +608,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
 
-    protected Dialog      mVolumeDialog;
+    protected Dialog mVolumeDialog;
     protected ProgressBar mDialogVolumeProgressBar;
 
     @Override
