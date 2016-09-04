@@ -192,8 +192,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backPress();
         } else if (i == R.id.start) {
             if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_PAUSE) {
-                isRefreshCover = true;
-                Log.i(TAG, "onClick  start isRefreshCover=true [" + this.hashCode() + "] ");
+                isRefreshCover = true;//播放会才会刷新图缓存
             }
         }
     }
@@ -203,18 +202,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         obtainCover();
         super.startWindowFullscreen();
         if (currentState == CURRENT_STATE_PAUSE) {
-            Log.i(TAG, "startWindowFullscreen  CURRENT_STATE_PAUSE [" + this.hashCode() + "] ");
             refreshCover(pauseSwitchCoverBitmap);
         }
     }
 
     private void obtainCover() {
-        Log.i(TAG, "onClick  fullscreen refresh ok bitmap [" + this.hashCode() + "] currentState == CURRENT_STATE_PAUSE" + (currentState == CURRENT_STATE_PAUSE) + "isRefreshCover=" + isRefreshCover);
         if (currentState == CURRENT_STATE_PAUSE) {
             if (isRefreshCover) {
                 pauseSwitchCoverBitmap = JCMediaManager.textureView.getBitmap();
                 isRefreshCover = false;
-                Log.i(TAG, "onClick  fullscreen refresh ok bitmap [" + this.hashCode() + "] ");
             }
         }
     }
@@ -231,7 +227,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
 
     public void refreshCover(Bitmap bitmap) {
-        Log.i(TAG, "refreshCover [" + this.hashCode() + "]");
         JCVideoPlayerStandard jcVideoPlayerStandard = ((JCVideoPlayerStandard) JCVideoPlayerManager.listener());
         jcVideoPlayerStandard.coverImageView.setImageBitmap(bitmap);
         jcVideoPlayerStandard.coverImageView.setVisibility(VISIBLE);
@@ -268,7 +263,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         super.onStopTrackingTouch(seekBar);
-        Log.i(TAG, "onStopTrackingTouch  [" + this.hashCode() + "] currentState == CURRENT_STATE_PAUSE=" + (currentState == CURRENT_STATE_PAUSE));
         if (currentState == CURRENT_STATE_PAUSE) {
             isRefreshCover = true;
         }
