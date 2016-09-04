@@ -766,25 +766,27 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         getLocationInWindow(locationOnScreen);//screen 227  window 229 i think they are same
         int top = locationOnScreen[1];
         int bottom = top + getHeight();
-//        System.out.println("onScrollChange " + top + "  " + bottom);
+        System.out.println("onScrollChange " + isShown());
+        if (!isShown()) {
+            startWindowTiny();
 
-        if (isCurrentMediaListener()) {
-            if (bottom < 20) {//滑到顶了-从顶部消失
-                Log.i(TAG, "onScrollChange isMe top " + hashCode() + " " + top + "  " + bottom);
-                startWindowTiny();
-            } else if (top > (mScreenHeight - 20)) {//滑到底部-从底部消失
-                Log.i(TAG, "onScrollChange isMe bottom " + hashCode() + " " + top + "  " + bottom);
-                startWindowTiny();
-            }
-        } else {
-            if (bottom > 20) {//滑到顶了-从顶部回来
-                Log.i(TAG, "onScrollChange top " + hashCode() + " " + top + "  " + bottom);
-                backPress();
-            } else if (top < (mScreenHeight - 20)) {//滑到底部-从底部回来
-                Log.i(TAG, "onScrollChange bottom " + hashCode() + " " + top + "  " + bottom);
-                backPress();
-            }
         }
+//        if (isCurrentMediaListener()) {
+//            if (bottom < 20) {//滑到顶了-从顶部消失
+//                Log.i(TAG, "onScrollChange isMe top " + hashCode() + " " + top + "  " + bottom);
+//                startWindowTiny();
+//            } else if (top > (mScreenHeight - 20)) {//滑到底部-从底部消失
+//                Log.i(TAG, "onScrollChange isMe bottom " + hashCode() + " " + top + "  " + bottom);
+//            }
+//        } else {
+//            if (bottom > 20) {//滑到顶了-从顶部回来
+//                Log.i(TAG, "onScrollChange top " + hashCode() + " " + top + "  " + bottom);
+//                backPress();
+//            } else if (top < (mScreenHeight - 20)) {//滑到底部-从底部回来
+//                Log.i(TAG, "onScrollChange bottom " + hashCode() + " " + top + "  " + bottom);
+//                backPress();
+//            }
+//        }
     }
 
     public static void onScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
