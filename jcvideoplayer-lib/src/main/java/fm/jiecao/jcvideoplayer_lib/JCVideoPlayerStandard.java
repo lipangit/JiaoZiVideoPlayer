@@ -39,7 +39,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public ImageView coverImageView;
     public ImageView tinyBackImageView;
 
-    private static Bitmap pauseSwitchCoverBitmap;
+    private static Bitmap pauseSwitchCoverBitmap=null;
     private static boolean isRefreshCover = false;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
@@ -74,6 +74,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public boolean setUp(String url, int screen, Object... objects) {
         if (objects.length == 0) return false;
         if (super.setUp(url, screen, objects)) {
+            coverImageView.setImageBitmap(null);//防止在复用的时候导致，闪一下上次暂停切换缓存的图的问题
             titleTextView.setText(objects[0].toString());
             if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
                 fullscreenButton.setImageResource(R.drawable.jc_shrink);
@@ -195,6 +196,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 isRefreshCover = true;//播放会才会刷新图缓存
             }
         }
+    }
+
+    @Override
+    public void prepareVideo() {
+        coverImageView.setImageBitmap(null);
+        super.prepareVideo();
     }
 
     @Override
