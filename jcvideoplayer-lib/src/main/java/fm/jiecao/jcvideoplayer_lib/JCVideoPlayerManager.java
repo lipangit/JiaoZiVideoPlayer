@@ -22,7 +22,12 @@ public class JCVideoPlayerManager {
 //
 //    }
 
+    public static WeakReference<JCMediaPlayerListener> CURRENT_SCROLL_LISTENER;
     public static LinkedList<WeakReference<JCMediaPlayerListener>> LISTENERLIST = new LinkedList<>();
+
+    public static void setCurrentScrollListener(JCMediaPlayerListener listener) {
+        CURRENT_SCROLL_LISTENER = new WeakReference<>(listener);
+    }
 
     public static void putListener(JCMediaPlayerListener listener) {
         LISTENERLIST.push(new WeakReference<>(listener));

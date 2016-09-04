@@ -768,8 +768,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         int bottom = top + getHeight();
         System.out.println("onScrollChange " + isShown());
         if (!isShown()) {
-            startWindowTiny();
-
+            if (currentScreen != SCREEN_WINDOW_TINY) {
+                startWindowTiny();
+            }
+        } else {
+            if (currentScreen == SCREEN_WINDOW_TINY) {
+                backPress();
+            }
         }
 //        if (isCurrentMediaListener()) {
 //            if (bottom < 20) {//滑到顶了-从顶部消失
@@ -791,7 +796,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static void onScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
         if (JCVideoPlayerManager.getFirst() != null) {
-            JCVideoPlayerManager.getFirst().onScrollChange();
+            JCVideoPlayer jd = (JCVideoPlayer) JCVideoPlayerManager.getFirst();
+            if (jd.currentScreen != JCVideoPlayer.SCREEN_WINDOW_TINY) {
+                JCVideoPlayerManager.getFirst().onScrollChange();
+            } else {
+                JCVideoPlayerManager.LISTENERLIST.get(1).get().onScrollChange();
+            }
         }
     }
 
