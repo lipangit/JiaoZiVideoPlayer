@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -32,15 +33,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
 
-    public ImageView backButton;
+    public ImageView   backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
-    public TextView titleTextView;
+    public TextView  titleTextView;
     public ImageView thumbImageView;
     public ImageView coverImageView;
     public ImageView tinyBackImageView;
 
-    private static Bitmap pauseSwitchCoverBitmap = null;
-    private static boolean isRefreshCover = false;
+    private static Bitmap  pauseSwitchCoverBitmap = null;
+    private static boolean isRefreshCover         = false;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
@@ -74,8 +75,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public boolean setUp(String url, int screen, Object... objects) {
         if (objects.length == 0) return false;
         if (super.setUp(url, screen, objects)) {
-            if (pauseSwitchCoverBitmap != null)
-                coverImageView.setImageBitmap(null);//防止在复用的时候导致，闪一下上次暂停切换缓存的图的问题
+            if (pauseSwitchCoverBitmap != null && coverImageView.getBackground() == null) {
+                coverImageView.setBackgroundColor(Color.parseColor("#222222"));//防止在复用的时候导致，闪一下上次暂停切换缓存的图的问题
+            }
             titleTextView.setText(objects[0].toString());
             if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
                 fullscreenButton.setImageResource(R.drawable.jc_shrink);
@@ -201,7 +203,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     @Override
     public void prepareVideo() {
-        if (pauseSwitchCoverBitmap != null) coverImageView.setImageBitmap(null);
+        coverImageView.setBackgroundColor(Color.parseColor("#222222"));
+        coverImageView.setImageBitmap(null);
         super.prepareVideo();
     }
 
@@ -235,8 +238,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
 
     public void refreshCover(Bitmap bitmap) {
-        if (pauseSwitchCoverBitmap!=null) {
+        if (pauseSwitchCoverBitmap != null) {
             JCVideoPlayerStandard jcVideoPlayerStandard = ((JCVideoPlayerStandard) JCVideoPlayerManager.listener());
+            jcVideoPlayerStandard.coverImageView.setBackgroundColor(Color.parseColor("#000000"));
             jcVideoPlayerStandard.coverImageView.setImageBitmap(bitmap);
             jcVideoPlayerStandard.coverImageView.setVisibility(VISIBLE);
         }
@@ -560,11 +564,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    protected Dialog mProgressDialog;
+    protected Dialog      mProgressDialog;
     protected ProgressBar mDialogProgressBar;
-    protected TextView mDialogSeekTime;
-    protected TextView mDialogTotalTime;
-    protected ImageView mDialogIcon;
+    protected TextView    mDialogSeekTime;
+    protected TextView    mDialogTotalTime;
+    protected ImageView   mDialogIcon;
 
     @Override
     public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
@@ -612,7 +616,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
 
-    protected Dialog mVolumeDialog;
+    protected Dialog      mVolumeDialog;
     protected ProgressBar mDialogVolumeProgressBar;
 
     @Override

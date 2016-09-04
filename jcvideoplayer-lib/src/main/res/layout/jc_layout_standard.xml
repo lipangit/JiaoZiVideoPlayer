@@ -22,7 +22,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="#000000"/>
+        android:background="#222222"/>
 
     <ImageView
         android:id="@+id/thumb"
