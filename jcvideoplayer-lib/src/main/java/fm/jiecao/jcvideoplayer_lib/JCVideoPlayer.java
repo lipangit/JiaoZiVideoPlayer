@@ -219,6 +219,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.instance().prepare(url, mapHeadData, looping);
         setUiWitStateAndScreen(CURRENT_STATE_PREPAREING);
+        if (currentState == SCREEN_LAYOUT_LIST) {
+            JCVideoPlayer.setCurrentScrollPlayerListener(this);
+        }
     }
 
     @Override
@@ -761,11 +764,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
         if (!isShown()) {
-            if (JCVideoPlayerManager.getFirst() == this) {
+            if (JCVideoPlayerManager.getFirst() == this &&
+                    JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
                 startWindowTiny();
             }
         } else {
-            if (JCVideoPlayerManager.getFirst() != this) {
+            if (JCVideoPlayerManager.getFirst() != this &&
+                    JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
                 backPress();
             }
         }

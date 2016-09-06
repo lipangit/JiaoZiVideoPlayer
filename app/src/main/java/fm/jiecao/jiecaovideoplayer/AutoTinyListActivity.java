@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.AbsListView;
+import android.widget.ListView;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
@@ -12,6 +14,8 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  */
 public class AutoTinyListActivity extends AppCompatActivity {
 
+    ListView         listView;
+    VideoListAdapter adapterVideoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,7 +27,20 @@ public class AutoTinyListActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("AutoTinyList");
         setContentView(R.layout.activity_listview_content);
 
+        listView = (ListView) findViewById(R.id.listview);
+        adapterVideoList = new VideoListAdapter(this);
+        listView.setAdapter(adapterVideoList);
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
 
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                JCVideoPlayer.onScroll();
+            }
+        });
     }
 
     @Override

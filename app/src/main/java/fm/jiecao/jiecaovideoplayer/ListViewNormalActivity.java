@@ -29,17 +29,6 @@ public class ListViewNormalActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listview);
         adapterVideoList = new VideoListAdapter(this);
         listView.setAdapter(adapterVideoList);
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                JCVideoPlayer.onScroll();
-            }
-        });
     }
 
     @Override

@@ -509,6 +509,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         if (thumbImg == View.VISIBLE) {
             thumbImageView.setVisibility(thumbImg);
         } else {
+            System.out.println("gonennnn " + objects[0]);
             thumbImageView.setVisibility(View.GONE);
         }
         coverImageView.setVisibility(coverImg);
