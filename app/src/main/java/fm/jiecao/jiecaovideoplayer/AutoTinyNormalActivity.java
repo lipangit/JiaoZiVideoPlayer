@@ -60,7 +60,7 @@ public class AutoTinyNormalActivity extends AppCompatActivity implements AbsList
 
         listView.setAdapter(adapter);
         listView.setOnScrollListener(this);
-
+        JCVideoPlayer.setCurrentScrollPlayerListener(jcVideoPlayerStandard);
     }
 
     @Override

@@ -760,49 +760,25 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN || currentScreen == SCREEN_WINDOW_TINY)
-            return;
-        int[] locationOnScreen = new int[2];
-        getLocationInWindow(locationOnScreen);//screen 227  window 229 i think they are same
-        int top = locationOnScreen[1];
-        int bottom = top + getHeight();
-        System.out.println("onScrollChange " + isShown());
         if (!isShown()) {
-            if (currentScreen != SCREEN_WINDOW_TINY) {
+            if (JCVideoPlayerManager.getFirst() == this) {
                 startWindowTiny();
             }
         } else {
-            if (currentScreen == SCREEN_WINDOW_TINY) {
+            if (JCVideoPlayerManager.getFirst() != this) {
                 backPress();
             }
         }
-//        if (isCurrentMediaListener()) {
-//            if (bottom < 20) {//滑到顶了-从顶部消失
-//                Log.i(TAG, "onScrollChange isMe top " + hashCode() + " " + top + "  " + bottom);
-//                startWindowTiny();
-//            } else if (top > (mScreenHeight - 20)) {//滑到底部-从底部消失
-//                Log.i(TAG, "onScrollChange isMe bottom " + hashCode() + " " + top + "  " + bottom);
-//            }
-//        } else {
-//            if (bottom > 20) {//滑到顶了-从顶部回来
-//                Log.i(TAG, "onScrollChange top " + hashCode() + " " + top + "  " + bottom);
-//                backPress();
-//            } else if (top < (mScreenHeight - 20)) {//滑到底部-从底部回来
-//                Log.i(TAG, "onScrollChange bottom " + hashCode() + " " + top + "  " + bottom);
-//                backPress();
-//            }
-//        }
     }
 
     public static void onScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
-        if (JCVideoPlayerManager.getFirst() != null) {
-            JCVideoPlayer jd = (JCVideoPlayer) JCVideoPlayerManager.getFirst();
-            if (jd.currentScreen != JCVideoPlayer.SCREEN_WINDOW_TINY) {
-                JCVideoPlayerManager.getFirst().onScrollChange();
-            } else {
-                JCVideoPlayerManager.LISTENERLIST.get(1).get().onScrollChange();
-            }
+        if (JCVideoPlayerManager.getCurrentScrollPlayerListener() != null) {
+            JCVideoPlayerManager.getCurrentScrollPlayerListener().onScrollChange();
         }
+    }
+
+    public static void setCurrentScrollPlayerListener(JCMediaPlayerListener listener) {
+        JCVideoPlayerManager.setCurrentScrollPlayerListener(listener);
     }
 
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {

@@ -12,21 +12,19 @@ import java.util.List;
  */
 public class JCVideoPlayerManager {
 
-//    public static void changeJCVideoPlayer(JCVideoPlayer from, JCVideoPlayer to) {
-//        //pass state screen
-//
-//    }
-//
-//    public static void createJCVideoPlayer(ViewGroup viewGroup, ViewGroup.LayoutParams params
-//            , JCVideoPlayer jcVideoPlayer) {
-//
-//    }
-
     public static WeakReference<JCMediaPlayerListener> CURRENT_SCROLL_LISTENER;
     public static LinkedList<WeakReference<JCMediaPlayerListener>> LISTENERLIST = new LinkedList<>();
 
-    public static void setCurrentScrollListener(JCMediaPlayerListener listener) {
+    public static void setCurrentScrollPlayerListener(JCMediaPlayerListener listener) {
         CURRENT_SCROLL_LISTENER = new WeakReference<>(listener);
+    }
+
+    public static JCMediaPlayerListener getCurrentScrollPlayerListener() {
+        if (CURRENT_SCROLL_LISTENER != null && CURRENT_SCROLL_LISTENER.get() != null) {
+            return CURRENT_SCROLL_LISTENER.get();
+        } else {
+            return null;
+        }
     }
 
     public static void putListener(JCMediaPlayerListener listener) {
