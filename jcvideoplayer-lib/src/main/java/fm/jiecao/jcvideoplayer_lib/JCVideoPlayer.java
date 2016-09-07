@@ -687,7 +687,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public class ProgressTimerTask extends TimerTask {
         @Override
         public void run() {
-            if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
+            if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE || currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
                 int position = getCurrentPositionWhenPlaying();
                 int duration = getDuration();
                 Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
@@ -703,7 +703,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public int getCurrentPositionWhenPlaying() {
         int position = 0;
-        if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
+        if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE || currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
             try {
                 position = (int) JCMediaManager.instance().mediaPlayer.getCurrentPosition();
             } catch (IllegalStateException e) {
