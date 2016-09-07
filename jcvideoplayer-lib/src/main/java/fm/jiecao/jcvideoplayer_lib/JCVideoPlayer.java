@@ -8,7 +8,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
@@ -37,6 +36,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import tv.danmaku.ijk.media.player.IMediaPlayer;
 
 /**
  * Created by Nathen on 16/7/30.
@@ -233,6 +234,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.instance().prepare(url, mapHeadData, looping);
         JCMediaManager.instance().bufferPercent = 0;
+        JCMediaManager.instance().videoRotation = 0;
         setUiWitStateAndScreen(CURRENT_STATE_PREPAREING);
     }
 
@@ -505,8 +507,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onBufferingUpdate(int percent) {
         if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPAREING) {
             Log.v(TAG, "onBufferingUpdate " + percent + " [" + this.hashCode() + "] ");
-            setTextAndProgress(percent);
             JCMediaManager.instance().bufferPercent = percent;
+            setTextAndProgress(percent);
         }
     }
 
@@ -525,16 +527,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
-        if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
+        if (what == IMediaPlayer.MEDIA_INFO_BUFFERING_START) {
             JCMediaManager.instance().backUpBufferState = currentState;
             setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
-        } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
+        } else if (what == IMediaPlayer.MEDIA_INFO_BUFFERING_END) {
             if (JCMediaManager.instance().backUpBufferState != -1) {
                 setUiWitStateAndScreen(JCMediaManager.instance().backUpBufferState);
                 JCMediaManager.instance().backUpBufferState = -1;
             }
             Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
+        } else if (what == IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED) {
+            JCMediaManager.instance().videoRotation = extra;
+            Log.d(TAG, "MEDIA_INFO_VIDEO_ROTATION_CHANGED");
         }
     }
 
