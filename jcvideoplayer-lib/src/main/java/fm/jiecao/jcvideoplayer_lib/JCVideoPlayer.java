@@ -330,6 +330,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCMediaManager.textureView = null;
         JCMediaManager.textureView = new JCResizeTextureView(getContext());
         JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
+        JCMediaManager.textureView.setRotation(JCMediaManager.instance().videoRotation);
         JCMediaManager.textureView.setSurfaceTextureListener(this);
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -539,6 +540,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
         } else if (what == IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED) {
             JCMediaManager.instance().videoRotation = extra;
+            JCMediaManager.textureView.setRotation(extra);
             Log.d(TAG, "MEDIA_INFO_VIDEO_ROTATION_CHANGED");
         }
     }

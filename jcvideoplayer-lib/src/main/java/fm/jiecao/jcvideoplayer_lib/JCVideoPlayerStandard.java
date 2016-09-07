@@ -170,6 +170,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
+    public void addTextureView() {
+        super.addTextureView();
+        coverImageView.setRotation(JCMediaManager.instance().videoRotation);
+    }
+
+    @Override
     public void onClick(View v) {
         super.onClick(v);
         int i = v.getId();
