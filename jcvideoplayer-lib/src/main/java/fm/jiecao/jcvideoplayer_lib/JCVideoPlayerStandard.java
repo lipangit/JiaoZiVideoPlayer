@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -31,7 +30,7 @@ import java.util.TimerTask;
  */
 public class JCVideoPlayerStandard extends JCVideoPlayer {
 
-    protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
+    protected static Timer DISMISS_CONTROL_VIEW_TIMER;
 
     public ImageView   backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
@@ -110,7 +109,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 changeUiToNormal();
                 break;
             case CURRENT_STATE_PREPAREING:
-                changeUiToPrepareingShow();
+                changeUiToPreparingShow();
                 startDismissControlViewTimer();
                 break;
             case CURRENT_STATE_PLAYING:
@@ -184,7 +183,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     showWifiDialog();
                     return;
                 }
-                startPlayLocic();
+                startPlayLogic();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
             }
@@ -255,7 +254,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                startPlayLocic();
+                startPlayLogic();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }
         });
@@ -283,7 +282,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         startDismissControlViewTimer();
     }
 
-    public void startPlayLocic() {
+    public void startPlayLogic() {
         prepareVideo();
         startDismissControlViewTimer();
         onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
@@ -292,9 +291,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onClickUiToggle() {
         if (currentState == CURRENT_STATE_PREPAREING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
-                changeUiToPrepareingClear();
+                changeUiToPreparingClear();
             } else {
-                changeUiToPrepareingShow();
+                changeUiToPreparingShow();
             }
         } else if (currentState == CURRENT_STATE_PLAYING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
@@ -355,7 +354,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    public void changeUiToPrepareingShow() {
+    public void changeUiToPreparingShow() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
@@ -371,7 +370,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    public void changeUiToPrepareingClear() {
+    public void changeUiToPreparingClear() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
@@ -620,8 +619,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     protected ProgressBar mDialogVolumeProgressBar;
 
     @Override
-    public void showVolumDialog(float deltaY, int volumePercent) {
-        super.showVolumDialog(deltaY, volumePercent);
+    public void showVolumeDialog(float deltaY, int volumePercent) {
+        super.showVolumeDialog(deltaY, volumePercent);
         if (mVolumeDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_volume_dialog, null);
             View content = localView.findViewById(R.id.content);
@@ -646,8 +645,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public void dismissVolumDialog() {
-        super.dismissVolumDialog();
+    public void dismissVolumeDialog() {
+        super.dismissVolumeDialog();
         if (mVolumeDialog != null) {
             mVolumeDialog.dismiss();
         }
@@ -655,14 +654,14 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void startDismissControlViewTimer() {
         cancelDismissControlViewTimer();
-        DISSMISS_CONTROL_VIEW_TIMER = new Timer();
+        DISMISS_CONTROL_VIEW_TIMER = new Timer();
         mDismissControlViewTimerTask = new DismissControlViewTimerTask();
-        DISSMISS_CONTROL_VIEW_TIMER.schedule(mDismissControlViewTimerTask, 2500);
+        DISMISS_CONTROL_VIEW_TIMER.schedule(mDismissControlViewTimerTask, 2500);
     }
 
     public void cancelDismissControlViewTimer() {
-        if (DISSMISS_CONTROL_VIEW_TIMER != null) {
-            DISSMISS_CONTROL_VIEW_TIMER.cancel();
+        if (DISMISS_CONTROL_VIEW_TIMER != null) {
+            DISMISS_CONTROL_VIEW_TIMER.cancel();
         }
         if (mDismissControlViewTimerTask != null) {
             mDismissControlViewTimerTask.cancel();

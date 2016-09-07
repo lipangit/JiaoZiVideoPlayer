@@ -281,7 +281,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mGestureDownVolume + deltaV, 0);
                         int volumePercent = (int) (mGestureDownVolume * 100 / max + deltaY * 3 * 100 / mScreenHeight);
 
-                        showVolumDialog(-deltaY, volumePercent);
+                        showVolumeDialog(-deltaY, volumePercent);
                     }
 
                     break;
@@ -289,7 +289,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     Log.i(TAG, "onTouch surfaceContainer actionUp [" + this.hashCode() + "] ");
                     mTouchingProgressBar = false;
                     dismissProgressDialog();
-                    dismissVolumDialog();
+                    dismissVolumeDialog();
                     if (mChangePosition) {
                         onEvent(JCBuriedPoint.ON_TOUCH_SCREEN_SEEK_POSITION);
                         JCMediaManager.instance().mediaPlayer.seekTo(mSeekTimePosition);
@@ -905,11 +905,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     }
 
-    public void showVolumDialog(float deltaY, int volumePercent) {
+    public void showVolumeDialog(float deltaY, int volumePercent) {
 
     }
 
-    public void dismissVolumDialog() {
+    public void dismissVolumeDialog() {
 
     }
 
