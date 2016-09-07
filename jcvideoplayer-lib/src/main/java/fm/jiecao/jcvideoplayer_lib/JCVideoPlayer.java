@@ -1,6 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -326,6 +327,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
         JCMediaManager.textureView = null;
         JCMediaManager.textureView = new JCResizeTextureView(getContext());
+        JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
         JCMediaManager.textureView.setSurfaceTextureListener(this);
 
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -543,7 +545,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         int mVideoWidth = JCMediaManager.instance().currentVideoWidth;
         int mVideoHeight = JCMediaManager.instance().currentVideoHeight;
         if (mVideoWidth != 0 && mVideoHeight != 0) {
-            JCMediaManager.textureView.requestLayout();
+            JCMediaManager.textureView.setVideoSize(new Point(mVideoWidth, mVideoHeight));
         }
     }
 

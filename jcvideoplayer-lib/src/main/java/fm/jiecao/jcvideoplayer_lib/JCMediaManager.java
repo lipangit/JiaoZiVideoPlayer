@@ -1,5 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.graphics.Point;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -8,7 +9,6 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
-import android.view.TextureView;
 
 import java.util.Map;
 
@@ -29,7 +29,7 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
 
     private static JCMediaManager JCMediaManager;
     public         IjkMediaPlayer mediaPlayer;
-    public static  TextureView    textureView;
+    public static  JCResizeTextureView textureView;
 
     public int currentVideoWidth  = 0;
     public int currentVideoHeight = 0;
@@ -57,6 +57,10 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mMediaHandlerThread.start();
         mMediaHandler = new MediaHandler((mMediaHandlerThread.getLooper()));
         mainThreadHandler = new Handler();
+    }
+
+    public Point getVideoSize(){
+        return new Point(currentVideoWidth, currentVideoHeight);
     }
 
     public class MediaHandler extends Handler {
