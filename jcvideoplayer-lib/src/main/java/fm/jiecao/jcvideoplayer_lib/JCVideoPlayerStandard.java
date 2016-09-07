@@ -507,9 +507,18 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         startButton.setVisibility(startBtn);
         loadingProgressBar.setVisibility(loadingPro);
         if (thumbImg == View.VISIBLE) {
-            thumbImageView.setVisibility(thumbImg);
+
+            if (currentState != CURRENT_STATE_PLAYING &&
+                    !url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+                if(objects[0].equals("嫂子出来")) {
+                    System.out.println("gonennnn -- " + objects[0]);
+                }
+                thumbImageView.setVisibility(thumbImg);
+            }
         } else {
-            System.out.println("gonennnn " + objects[0]);
+            if(objects[0].equals("嫂子出来")) {
+                System.out.println("gonennnn " + objects[0]);
+            }
             thumbImageView.setVisibility(View.GONE);
         }
         coverImageView.setVisibility(coverImg);
