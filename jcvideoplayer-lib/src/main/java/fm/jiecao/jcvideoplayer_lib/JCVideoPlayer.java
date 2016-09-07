@@ -67,7 +67,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public int currentScreen = -1;
 
 
-    public String              url             = null;
+    public String              url             = "";
     public Object[]            objects         = null;
     public boolean             looping         = false;
     public Map<String, String> mapHeadData     = new HashMap<>();
@@ -437,7 +437,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             //.findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
             JCMediaManager.instance().lastState = currentState;//save state
-            JCVideoPlayerManager.popListener().onCompletion();
+            JCVideoPlayerManager.popListener();
             JCVideoPlayerManager.getFirst().goBackThisListener();
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             return true;
@@ -765,12 +765,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
         if (!isShown()) {
             if (JCVideoPlayerManager.getFirst() == this &&
-                    JCMediaManager.instance().mediaPlayer.getDataSource() != null && JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
+                    url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
                 startWindowTiny();
             }
         } else {
             if (JCVideoPlayerManager.getFirst() != this &&
-                    JCMediaManager.instance().mediaPlayer.getDataSource() != null && JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
+                    url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
                 backPress();
             }
         }
