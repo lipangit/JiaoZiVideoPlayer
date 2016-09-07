@@ -106,7 +106,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
             case CURRENT_STATE_NORMAL:
                 changeUiToNormal();
                 break;
-            case CURRENT_STATE_PREPAREING:
+            case CURRENT_STATE_PREPARING:
                 changeUiToPreparingShow();
                 startDismissControlViewTimer();
                 break;
@@ -241,7 +241,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void onClickUiToggle() {
-        if (currentState == CURRENT_STATE_PREPAREING) {
+        if (currentState == CURRENT_STATE_PREPARING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPreparingClear();
             } else {

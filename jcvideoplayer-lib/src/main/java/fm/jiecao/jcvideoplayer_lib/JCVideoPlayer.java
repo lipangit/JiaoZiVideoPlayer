@@ -62,7 +62,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static final int SCREEN_LAYOUT_DETAIL     = 3;
 
     public static final int CURRENT_STATE_NORMAL                  = 0;
-    public static final int CURRENT_STATE_PREPAREING              = 1;
+    public static final int CURRENT_STATE_PREPARING               = 1;
     public static final int CURRENT_STATE_PLAYING                 = 2;
     public static final int CURRENT_STATE_PLAYING_BUFFERING_START = 3;
     public static final int CURRENT_STATE_PAUSE                   = 5;
@@ -235,7 +235,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCMediaManager.instance().prepare(url, mapHeadData, looping);
         JCMediaManager.instance().bufferPercent = 0;
         JCMediaManager.instance().videoRotation = 0;
-        setUiWitStateAndScreen(CURRENT_STATE_PREPAREING);
+        setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
     }
 
     @Override
@@ -347,7 +347,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     JCMediaManager.instance().releaseMediaPlayer();
                 }
                 break;
-            case CURRENT_STATE_PREPAREING:
+            case CURRENT_STATE_PREPARING:
                 resetProgressAndTime();
                 break;
             case CURRENT_STATE_PLAYING:
@@ -388,7 +388,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onPrepared() {
         Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
 
-        if (currentState != CURRENT_STATE_PREPAREING) return;
+        if (currentState != CURRENT_STATE_PREPARING) return;
         JCMediaManager.instance().mediaPlayer.start();
         if (seekToInAdvance != -1) {
             JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
@@ -506,7 +506,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onBufferingUpdate(int percent) {
-        if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPAREING) {
+        if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPARING) {
             Log.v(TAG, "onBufferingUpdate " + percent + " [" + this.hashCode() + "] ");
             JCMediaManager.instance().bufferPercent = percent;
             setTextAndProgress(percent);

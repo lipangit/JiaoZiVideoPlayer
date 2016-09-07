@@ -47,7 +47,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
             case CURRENT_STATE_NORMAL:
                 startButton.setVisibility(View.VISIBLE);
                 break;
-            case CURRENT_STATE_PREPAREING:
+            case CURRENT_STATE_PREPARING:
                 startButton.setVisibility(View.INVISIBLE);
                 break;
             case CURRENT_STATE_PLAYING:
