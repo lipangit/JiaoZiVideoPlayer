@@ -766,15 +766,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (!isShown()) {
             if (JCVideoPlayerManager.getFirst() == this &&
                     JCMediaManager.instance().mediaPlayer.getDataSource() != null && JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
-                if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-                    return ;
                 startWindowTiny();
             }
         } else {
             if (JCVideoPlayerManager.getFirst() != this &&
                     JCMediaManager.instance().mediaPlayer.getDataSource() != null && JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
-                if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-                    return ;
                 backPress();
             }
         }
