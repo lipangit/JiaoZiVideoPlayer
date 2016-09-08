@@ -233,8 +233,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.instance().prepare(url, mapHeadData, looping);
-        JCMediaManager.instance().bufferPercent = 0;
-        JCMediaManager.instance().videoRotation = 0;
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
     }
 
@@ -437,6 +435,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //        JCVideoPlayerManager.setLastListener(null);
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
+
+        JCMediaManager.instance().bufferPercent = 0;
+        JCMediaManager.instance().videoRotation = 0;
 
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
