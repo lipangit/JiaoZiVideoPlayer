@@ -21,7 +21,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 /**
  * Created by Nathen on 16/7/22.
  */
-public class MainActiivty extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
     SensorManager                          sensorManager;
@@ -91,13 +91,13 @@ public class MainActiivty extends AppCompatActivity implements View.OnClickListe
                 jcVideoPlayerStandard.startWindowTiny();
                 break;
             case R.id.play_directly_without_layout:
-                startActivity(new Intent(MainActiivty.this, PlayDirectlyActivity.class));
+                startActivity(new Intent(MainActivity.this, PlayDirectlyActivity.class));
                 break;
             case R.id.about_listview:
-                startActivity(new Intent(MainActiivty.this, ListViewActivity.class));
+                startActivity(new Intent(MainActivity.this, ListViewActivity.class));
                 break;
             case R.id.about_ui:
-                startActivity(new Intent(MainActiivty.this, UIActivity.class));
+                startActivity(new Intent(MainActivity.this, UIActivity.class));
                 break;
         }
     }
