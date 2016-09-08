@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import tv.danmaku.ijk.media.player.IMediaPlayer;
+
 /**
  * Created by Nathen
  * On 2016/04/18 16:15
@@ -36,7 +39,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView  titleTextView;
     public ImageView thumbImageView;
-    public ImageView coverImageView;
+    public JCResizeImageView coverImageView;
     public ImageView tinyBackImageView;
 
     private static Bitmap  pauseSwitchCoverBitmap = null;
@@ -60,7 +63,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         titleTextView = (TextView) findViewById(R.id.title);
         backButton = (ImageView) findViewById(R.id.back);
         thumbImageView = (ImageView) findViewById(R.id.thumb);
-        coverImageView = (ImageView) findViewById(R.id.cover);
+        coverImageView = (JCResizeImageView) findViewById(R.id.cover);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
 
@@ -172,6 +175,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void addTextureView() {
         super.addTextureView();
+        coverImageView.setVideoSize(JCMediaManager.instance().getVideoSize());
         coverImageView.setRotation(JCMediaManager.instance().videoRotation);
     }
 
@@ -217,37 +221,64 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void startWindowFullscreen() {
         obtainCover();
         super.startWindowFullscreen();
-        if (currentState == CURRENT_STATE_PAUSE) {
-            refreshCover(pauseSwitchCoverBitmap);
-        }
+        refreshCover();
+
     }
 
     private void obtainCover() {
-        if (currentState == CURRENT_STATE_PAUSE) {
+        if (isOkStateForCover()) {
             if (isRefreshCover) {
-                pauseSwitchCoverBitmap = JCMediaManager.textureView.getBitmap();
+                Point videoSize = JCMediaManager.instance().getVideoSize();
+                pauseSwitchCoverBitmap = JCMediaManager.textureView.getBitmap(videoSize.x, videoSize.y);
                 isRefreshCover = false;
             }
         }
+    }
+
+    private boolean isOkStateForCover() {
+        return currentState == CURRENT_STATE_PAUSE ||
+               currentState == CURRENT_STATE_PLAYING_BUFFERING_START;
     }
 
     @Override
     public boolean goToOtherListener() {
         obtainCover();
         boolean b = super.goToOtherListener();
-        if (currentState == CURRENT_STATE_PAUSE) {
-            refreshCover(pauseSwitchCoverBitmap);
-        }
+        refreshCover();
         return b;
     }
 
+    @Override
+    public void onInfo(int what, int extra) {
+        if (what == IMediaPlayer.MEDIA_INFO_BUFFERING_START) {
+            isRefreshCover = true; // 开始缓冲时需要缓存
+        } else if (what == IMediaPlayer.MEDIA_INFO_BUFFERING_END) {
+            if (JCMediaManager.instance().backUpBufferState != CURRENT_STATE_PAUSE) {
+                isRefreshCover = false; // 缓冲结束时不需要缓存
+            }
+        }
+        super.onInfo(what, extra);
+        if (what == IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED) {
+            coverImageView.setRotation(JCMediaManager.instance().videoRotation);
+        }
+    }
 
-    public void refreshCover(Bitmap bitmap) {
-        if (pauseSwitchCoverBitmap != null) {
-            JCVideoPlayerStandard jcVideoPlayerStandard = ((JCVideoPlayerStandard) JCVideoPlayerManager.listener());
-            jcVideoPlayerStandard.coverImageView.setBackgroundColor(Color.parseColor("#000000"));
-            jcVideoPlayerStandard.coverImageView.setImageBitmap(bitmap);
-            jcVideoPlayerStandard.coverImageView.setVisibility(VISIBLE);
+    @Override
+    public void onVideoSizeChanged() {
+        super.onVideoSizeChanged();
+        coverImageView.setVideoSize(JCMediaManager.instance().getVideoSize());
+    }
+
+    public void refreshCover() {
+        if (isOkStateForCover()) {
+            if (pauseSwitchCoverBitmap != null) {
+                JCVideoPlayerStandard jcVideoPlayer = ((JCVideoPlayerStandard) JCVideoPlayerManager.listener());
+                if (jcVideoPlayer != null) {
+                    jcVideoPlayer.coverImageView.setBackgroundColor(Color.parseColor("#000000"));
+                    jcVideoPlayer.coverImageView.setImageBitmap(pauseSwitchCoverBitmap);
+                    jcVideoPlayer.coverImageView.setVisibility(VISIBLE);
+                }
+            }
         }
     }
 
@@ -464,11 +495,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.VISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.VISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -480,12 +511,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+                        View.VISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.VISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+                        View.VISIBLE, View.INVISIBLE, coverImageView.getVisibility(), View.VISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -579,14 +610,14 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
         super.showProgressDialog(deltaX, seekTime, seekTimePosition, totalTime, totalTimeDuration);
         if (mProgressDialog == null) {
-            View localView = LayoutInflater.from(getContext()).inflate(fm.jiecao.jcvideoplayer_lib.R.layout.jc_progress_dialog, null);
+            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_progress_dialog, null);
             View content = localView.findViewById(R.id.content);
             content.setRotation(90);
-            mDialogProgressBar = ((ProgressBar) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_progressbar));
-            mDialogSeekTime = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_current));
-            mDialogTotalTime = ((TextView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.tv_duration));
-            mDialogIcon = ((ImageView) localView.findViewById(fm.jiecao.jcvideoplayer_lib.R.id.duration_image_tip));
-            mProgressDialog = new Dialog(getContext(), fm.jiecao.jcvideoplayer_lib.R.style.jc_style_dialog_progress);
+            mDialogProgressBar = ((ProgressBar) localView.findViewById(R.id.duration_progressbar));
+            mDialogSeekTime = ((TextView) localView.findViewById(R.id.tv_current));
+            mDialogTotalTime = ((TextView) localView.findViewById(R.id.tv_duration));
+            mDialogIcon = ((ImageView) localView.findViewById(R.id.duration_image_tip));
+            mProgressDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
             mProgressDialog.setContentView(localView);
             mProgressDialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
             mProgressDialog.getWindow().addFlags(32);
@@ -594,7 +625,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mProgressDialog.getWindow().setLayout(-2, -2);
             WindowManager.LayoutParams localLayoutParams = mProgressDialog.getWindow().getAttributes();
             localLayoutParams.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
-            localLayoutParams.x = getResources().getDimensionPixelOffset(fm.jiecao.jcvideoplayer_lib.R.dimen.jc_progress_dialog_margin_top) / 2;
+            localLayoutParams.x = getResources().getDimensionPixelOffset(R.dimen.jc_progress_dialog_margin_top) / 2;
             mProgressDialog.getWindow().setAttributes(localLayoutParams);
         }
         if (!mProgressDialog.isShowing()) {
