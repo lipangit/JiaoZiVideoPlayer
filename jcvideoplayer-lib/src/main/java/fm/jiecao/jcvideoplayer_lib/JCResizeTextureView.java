@@ -15,11 +15,11 @@ import android.view.TextureView;
  * On 2016/06/02 00:01
  */
 public class JCResizeTextureView extends TextureView {
-    private static final String TAG = "JCResizeTextureView";
-    private static final boolean DEBUG = false;
+    protected static final String TAG = "JCResizeTextureView";
+    protected static final boolean DEBUG = false;
 
     // x as width, y as height
-    private Point mVideoSize;
+    protected Point mVideoSize;
 
     public JCResizeTextureView(Context context) {
         super(context);
@@ -31,7 +31,7 @@ public class JCResizeTextureView extends TextureView {
         init();
     }
 
-    private void init() {
+    protected void init() {
         mVideoSize = new Point(0, 0);
     }
 
@@ -43,12 +43,24 @@ public class JCResizeTextureView extends TextureView {
     }
 
     @Override
+    public void setRotation(float rotation) {
+        if (rotation != getRotation()) {
+            super.setRotation(rotation);
+            requestLayout();
+        }
+    }
+
+    @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int videoWidth = mVideoSize.x;
         int videoHeight = mVideoSize.y;
 
         if (DEBUG) {
             Log.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
+            Log.i(TAG, "videoWidth=" + videoWidth + ", " + "videoHeight=" + videoHeight);
+            if (videoWidth > 0 && videoHeight > 0) {
+                Log.i(TAG, "videoWidth / videoHeight = " + videoWidth / videoHeight);
+            }
         }
 
         int width = getDefaultSize(videoWidth, widthMeasureSpec);
@@ -61,10 +73,9 @@ public class JCResizeTextureView extends TextureView {
             int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
 
             if (DEBUG) {
-                Log.i(TAG, "videoWidth=" + videoWidth + ", " + "videoHeight=" + videoHeight);
                 Log.i(TAG, "viewRotation =" + getRotation());
-                Log.i(TAG, "viewWidth  [" + MeasureSpec.toString(widthMeasureSpec) + "]");
-                Log.i(TAG, "viewHeight [" + MeasureSpec.toString(heightMeasureSpec) + "]");
+                Log.i(TAG, "widthMeasureSpec  [" + MeasureSpec.toString(widthMeasureSpec) + "]");
+                Log.i(TAG, "heightMeasureSpec [" + MeasureSpec.toString(heightMeasureSpec) + "]");
             }
 
             if (widthSpecMode == MeasureSpec.EXACTLY && heightSpecMode == MeasureSpec.EXACTLY) {
@@ -85,6 +96,7 @@ public class JCResizeTextureView extends TextureView {
                 if (heightSpecMode == MeasureSpec.AT_MOST && height > heightSpecSize) {
                     // couldn't match aspect ratio within the constraints
                     height = heightSpecSize;
+                    width = height * videoWidth / videoHeight;
                 }
             } else if (heightSpecMode == MeasureSpec.EXACTLY) {
                 // only the height is fixed, adjust the width to match aspect ratio if possible
@@ -93,6 +105,7 @@ public class JCResizeTextureView extends TextureView {
                 if (widthSpecMode == MeasureSpec.AT_MOST && width > widthSpecSize) {
                     // couldn't match aspect ratio within the constraints
                     width = widthSpecSize;
+                    height = width * videoHeight / videoWidth;
                 }
             } else {
                 // neither the width nor the height are fixed, try to use actual video size
@@ -114,6 +127,7 @@ public class JCResizeTextureView extends TextureView {
         }
         if (DEBUG) {
             Log.i(TAG, "viewWidth=" + width + ", " + "viewHeight=" + height);
+            Log.i(TAG, "viewWidth / viewHeight = " + width / height);
         }
         setMeasuredDimension(width, height);
     }
