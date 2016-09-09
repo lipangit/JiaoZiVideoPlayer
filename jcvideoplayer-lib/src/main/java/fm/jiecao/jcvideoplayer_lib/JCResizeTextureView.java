@@ -1,6 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,6 +21,7 @@ public class JCResizeTextureView extends TextureView {
 
     // x as width, y as height
     protected Point mVideoSize;
+    protected boolean hasUpdated;
 
     public JCResizeTextureView(Context context) {
         super(context);
@@ -31,12 +33,39 @@ public class JCResizeTextureView extends TextureView {
         init();
     }
 
-    protected void init() {
+    @Override
+    public Bitmap getBitmap() {
+        if (hasUpdated) {
+            return super.getBitmap();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Bitmap getBitmap(int width, int height) {
+        if (hasUpdated) {
+            return super.getBitmap(width, height);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Bitmap getBitmap(Bitmap bitmap) {
+        if (hasUpdated) {
+            return super.getBitmap(bitmap);
+        } else {
+            return null;
+        }
+    }
+
+    private void init() {
         mVideoSize = new Point(0, 0);
     }
 
     public void setVideoSize(Point videoSize) {
-        if (!mVideoSize.equals(videoSize)) {
+        if (videoSize != null && !mVideoSize.equals(videoSize)) {
             this.mVideoSize = videoSize;
             requestLayout();
         }
@@ -50,9 +79,17 @@ public class JCResizeTextureView extends TextureView {
         }
     }
 
+    /*
+        在明确TextureView已经被填充Image数据的情况下调用
+     */
+    public void setHasUpdated() {
+        hasUpdated = true;
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int viewRotation = (int) getRotation();
+        // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         if (viewRotation == 90 || viewRotation == 270) {
             int tempMeasureSpec = widthMeasureSpec;
             widthMeasureSpec = heightMeasureSpec;

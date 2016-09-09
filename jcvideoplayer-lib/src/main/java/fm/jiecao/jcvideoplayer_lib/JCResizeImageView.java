@@ -36,7 +36,7 @@ public class JCResizeImageView extends ImageView {
     }
 
     public void setVideoSize(Point videoSize) {
-        if (!mVideoSize.equals(videoSize)) {
+        if (videoSize != null && !mVideoSize.equals(videoSize)) {
             this.mVideoSize = videoSize;
             requestLayout();
         }
@@ -53,6 +53,7 @@ public class JCResizeImageView extends ImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int viewRotation = (int) getRotation();
+        // 如果判断成立，则说明显示的ImageView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         if (viewRotation == 90 || viewRotation == 270) {
             int tempMeasureSpec = widthMeasureSpec;
             widthMeasureSpec = heightMeasureSpec;
@@ -140,5 +141,12 @@ public class JCResizeImageView extends ImageView {
             Log.i(TAG, "viewWidth / viewHeight = " + width / height);
         }
         setMeasuredDimension(width, height);
+    }
+
+    @Override
+    public void setVisibility(int visibility) {
+        if (getVisibility() != visibility) {
+            super.setVisibility(visibility);
+        }
     }
 }

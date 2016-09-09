@@ -61,7 +61,11 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
     }
 
     public Point getVideoSize(){
-        return new Point(currentVideoWidth, currentVideoHeight);
+        if (currentVideoWidth != 0 && currentVideoHeight != 0) {
+            return new Point(currentVideoWidth, currentVideoHeight);
+        } else {
+            return null;
+        }
     }
 
     public class MediaHandler extends Handler {

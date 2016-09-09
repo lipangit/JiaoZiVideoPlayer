@@ -1,7 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -354,6 +353,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 startProgressTimer();
                 break;
             case CURRENT_STATE_ERROR:
+                cancelProgressTimer();
                 if (isCurrentMediaListener()) {
                     JCMediaManager.instance().releaseMediaPlayer();
                 }
@@ -436,6 +436,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
 
+        // 清理缓存变量
         JCMediaManager.instance().bufferPercent = 0;
         JCMediaManager.instance().videoRotation = 0;
 
@@ -549,12 +550,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onVideoSizeChanged() {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
-
-        int mVideoWidth = JCMediaManager.instance().currentVideoWidth;
-        int mVideoHeight = JCMediaManager.instance().currentVideoHeight;
-        if (mVideoWidth != 0 && mVideoHeight != 0) {
-            JCMediaManager.textureView.setVideoSize(new Point(mVideoWidth, mVideoHeight));
-        }
+        JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
     }
 
     @Override
