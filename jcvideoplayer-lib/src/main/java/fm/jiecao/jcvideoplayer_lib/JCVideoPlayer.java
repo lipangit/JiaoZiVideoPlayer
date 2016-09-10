@@ -138,12 +138,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mHandler = new Handler();
     }
 
-//    public boolean hasSetUpUrl() {
-//        if (!TextUtils.isEmpty(url)) {
-//            return true;
-//        }
-//        return false;
-//    }
+    public boolean hasSetUpUrl() {
+        if (!TextUtils.isEmpty(url)) {
+            return true;
+        }
+        return false;
+    }
 
     public boolean hasSetUpWithSameUrl(String url) {
         if (!TextUtils.isEmpty(this.url) && TextUtils.equals(this.url, url)) {
@@ -153,8 +153,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public boolean setUp(String url, int screen, Object... objects) {
-//        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-//            return false;
         this.currentState = CURRENT_STATE_NORMAL;
         this.url = url;
         this.objects = objects;
@@ -657,8 +655,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             jcVideoPlayer.addTextureView();
             jcVideoPlayer.setRotation(90);
 
-//            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
-//            jcVideoPlayer.setAnimation(ra);
+            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
+            jcVideoPlayer.setAnimation(ra);
 
             JCVideoPlayerManager.setLastListener(this);
             JCVideoPlayerManager.setListener(jcVideoPlayer);
@@ -844,8 +842,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(jcVideoPlayer, lp);
 
-//            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
-//            jcVideoPlayer.setAnimation(ra);
+            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
+            jcVideoPlayer.setAnimation(ra);
 
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.addTextureView();
