@@ -41,7 +41,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
     public class VideoListAdapter extends BaseAdapter {
 
-        int[] viewtype = {0, 1,  0, 1, 0, 1, 1, 0, 0, 1};//1 = jcvd, 0 = textView
+        int[] viewtype = {0, 1, 0, 1, 0, 1, 1, 0, 0, 1};//1 = jcvd, 0 = textView
 
         Context        context;
         LayoutInflater mInflater;
@@ -57,8 +57,8 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
         }
 
         @Override
-        public VideoBean getItem(int position) {
-            return VideoConstant.videos.get(position);
+        public Object getItem(int position) {
+            return null;
         }
 
         @Override
@@ -81,12 +81,11 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                     convertView.setTag(viewHolder);
                 }
 
-                VideoBean video = getItem(position);
                 boolean setUp = viewHolder.jcVideoPlayer.setUp(
-                        video.url, JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                        video.title);
+                        VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                        VideoConstant.videoTitles[position]);
                 if (setUp) {
-                    ImageLoader.getInstance().displayImage(video.thumb,
+                    ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[position],
                             viewHolder.jcVideoPlayer.thumbImageView);
                 }
             } else {

@@ -43,13 +43,4 @@ public class VideoConstant {
             "嫂子打游戏",
             "嫂子稳当的"};
 
-    public static ArrayList<VideoBean> videos;
-
-    static {
-        videos = new ArrayList<>();
-        int length = videoUrls.length;
-        for (int i = 0; i < length; i++) {
-            videos.add(new VideoBean(videoUrls[i], videoThumbs[i], videoTitles[i]));
-        }
-    }
 }

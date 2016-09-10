@@ -34,12 +34,11 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder [" + holder.jcVideoPlayer.hashCode() + "] position=" + position);
 
-        VideoBean video = getItem(position);
         boolean setUp = holder.jcVideoPlayer.setUp(
-                video.url, JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                video.title);
+                VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                VideoConstant.videoTitles[position]);
         if (setUp) {
-            ImageLoader.getInstance().displayImage(video.thumb,
+            ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[position],
                     holder.jcVideoPlayer.thumbImageView);
         }
 
@@ -48,10 +47,6 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
     @Override
     public int getItemCount() {
         return videoIndexs.length;
-    }
-
-    public VideoBean getItem(int position) {
-        return VideoConstant.videos.get(position);
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {

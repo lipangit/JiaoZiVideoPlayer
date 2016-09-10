@@ -33,16 +33,14 @@ public class VideoListAdapter extends BaseAdapter {
     }
 
     @Override
-    public VideoBean getItem(int position) {
-        return VideoConstant.videos.get(position);
+    public Object getItem(int position) {
+        return null;
     }
 
     @Override
     public long getItemId(int position) {
         return position;
     }
-
-    int a = 0;
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -59,12 +57,11 @@ public class VideoListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        VideoBean video = getItem(position);
         boolean setUp = viewHolder.jcVideoPlayer.setUp(
-                video.url, JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                video.title);
+                VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                VideoConstant.videoTitles[position]);
         if (setUp) {
-            ImageLoader.getInstance().displayImage(video.thumb,
+            ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[position],
                     viewHolder.jcVideoPlayer.thumbImageView);
         }
         return convertView;
