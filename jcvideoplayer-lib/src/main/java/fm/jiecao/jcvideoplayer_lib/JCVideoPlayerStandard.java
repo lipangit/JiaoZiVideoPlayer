@@ -37,10 +37,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public ImageView   backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
-    public TextView  titleTextView;
-    public ImageView thumbImageView;
-    public ImageView coverImageView;
-    public ImageView tinyBackImageView;
+    public TextView          titleTextView;
+    public ImageView         thumbImageView;
+    public ImageView         coverImageView;
+    public ImageView         tinyBackImageView;
     public JCResizeImageView cacheImageView;
 
     protected static Bitmap pauseSwitchCoverBitmap = null;
@@ -622,7 +622,13 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         topContainer.setVisibility(topCon);
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
-        loadingProgressBar.setVisibility(loadingPro);
+        if (loadingPro == View.VISIBLE) {
+            if (loadingProgressBar.getVisibility() != View.VISIBLE) {//make animation continous,如果原来的loading是显示的，会让这个loading的动画是连续的
+                loadingProgressBar.setVisibility(loadingPro);
+            }
+        } else {
+            loadingProgressBar.setVisibility(loadingPro);
+        }
         thumbImageView.setVisibility(thumbImg);
         coverImageView.setVisibility(coverImg);
         bottomProgressBar.setVisibility(bottomPro);

@@ -81,14 +81,12 @@ public class VideoListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (!viewHolder.jcVideoPlayer.hasSetUpWithSameUrl(videoUrls[videoIndexs[position]])) {
-            boolean setUp = viewHolder.jcVideoPlayer.setUp(
-                    videoUrls[videoIndexs[position]], JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                    videoTitles[videoIndexs[position]]);
-            if (setUp) {
-                ImageLoader.getInstance().displayImage(videoThumbs[videoIndexs[position]],
-                        viewHolder.jcVideoPlayer.thumbImageView);
-            }
+        boolean setUp = viewHolder.jcVideoPlayer.setUp(
+                videoUrls[videoIndexs[position]], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                videoTitles[videoIndexs[position]]);
+        if (setUp) {
+            ImageLoader.getInstance().displayImage(videoThumbs[videoIndexs[position]],
+                    viewHolder.jcVideoPlayer.thumbImageView);
         }
         return convertView;
     }
