@@ -655,8 +655,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             jcVideoPlayer.addTextureView();
             jcVideoPlayer.setRotation(90);
 
-            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
-            jcVideoPlayer.setAnimation(ra);
+//            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
+//            jcVideoPlayer.setAnimation(ra);
 
             JCVideoPlayerManager.setLastListener(this);
             JCVideoPlayerManager.setListener(jcVideoPlayer);
@@ -842,8 +842,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             vp.addView(jcVideoPlayer, lp);
 
-            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
-            jcVideoPlayer.setAnimation(ra);
+//            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
+//            jcVideoPlayer.setAnimation(ra);
 
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.addTextureView();
