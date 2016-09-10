@@ -142,11 +142,4 @@ public class JCResizeImageView extends ImageView {
         }
         setMeasuredDimension(width, height);
     }
-
-    @Override
-    public void setVisibility(int visibility) {
-        if (getVisibility() != visibility) {
-            super.setVisibility(visibility);
-        }
-    }
 }

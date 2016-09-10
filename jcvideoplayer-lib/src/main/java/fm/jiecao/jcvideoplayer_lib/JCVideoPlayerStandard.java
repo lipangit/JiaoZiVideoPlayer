@@ -622,13 +622,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         topContainer.setVisibility(topCon);
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
-        if (loadingPro == View.VISIBLE) {
-            if (loadingProgressBar.getVisibility() != View.VISIBLE) {//make animation continous,如果原来的loading是显示的，会让这个loading的动画是连续的
-                loadingProgressBar.setVisibility(loadingPro);
-            }
-        } else {
-            loadingProgressBar.setVisibility(loadingPro);
-        }
+        loadingProgressBar.setVisibility(loadingPro);
         thumbImageView.setVisibility(thumbImg);
         coverImageView.setVisibility(coverImg);
         bottomProgressBar.setVisibility(bottomPro);
