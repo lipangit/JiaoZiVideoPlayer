@@ -41,7 +41,8 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
     public class VideoListAdapter extends BaseAdapter {
 
-        int[] videoIndexs = {0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 1};//1 = jcvd, 0 = textView
+        int[] viewtype = {0, 1, 0, 1, 0, 1, 1, 0, 0, 1};//1 = jcvd, 0 = textView
+
         Context        context;
         LayoutInflater mInflater;
 
@@ -52,7 +53,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return videoIndexs.length;
+            return viewtype.length;
         }
 
         @Override
@@ -62,18 +63,14 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
         @Override
         public long getItemId(int position) {
-            return 0;
+            return position;
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             //This is the point
-            if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoHolder) {
-                ((VideoHolder) convertView.getTag()).jcVideoPlayer.release();
-            }
 
-
-            if (videoIndexs[position] == 1) {
+            if (getItemViewType(position) == 1) {
                 VideoHolder viewHolder;
                 if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoHolder) {
                     viewHolder = (VideoHolder) convertView.getTag();
@@ -85,14 +82,13 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                 }
 
                 boolean setUp = viewHolder.jcVideoPlayer.setUp(
-                        "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                        "嫂子快躲起来");
+                        VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                        VideoConstant.videoTitles[position]);
                 if (setUp) {
-                    ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/3/14/2204a578-609b-440e-8af7-a0ee17ff3aee.jpg",
+                    ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[position],
                             viewHolder.jcVideoPlayer.thumbImageView);
                 }
             } else {
-
                 TextViewHolder textViewHolder;
                 if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof TextViewHolder) {
                     textViewHolder = (TextViewHolder) convertView.getTag();
@@ -106,6 +102,16 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
             }
             return convertView;
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            return viewtype[position];
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;
         }
 
         class VideoHolder {
