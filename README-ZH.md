@@ -22,7 +22,7 @@
 
 ##效果
 
-**[jiecaovideoplayer-4.6.5-demo.apk](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.5-demo.apk)**
+**[jiecaovideoplayer-4.6.5-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.6.5/jiecaovideoplayer-4.6.5-demo.apk)**
 
 ![Demo Screenshot][1]
 
@@ -35,9 +35,9 @@ compile 'fm.jiecao:jiecaovideoplayer:4.6.5'
 
 或直接下载
 
-* [jiecaovideoplayer-4.6.5.aar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.5.aar)
-* [jiecaovideoplayer-4.6.5-javadoc.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.5-javadoc.jar)
-* [jiecaovideoplayer-4.6.5-sources.jar](https://raw.githubusercontent.com/lipangit/jiecaovideoplayer/develop/downloads/jiecaovideoplayer-4.6.5-sources.jar)
+* [jiecaovideoplayer-4.6.5.aar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.6.5/jiecaovideoplayer-4.6.5.aar)
+* [jiecaovideoplayer-4.6.5-javadoc.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.6.5/jiecaovideoplayer-4.6.5-javadoc.jar)
+* [jiecaovideoplayer-4.6.5-sources.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.6.5/jiecaovideoplayer-4.6.5-sources.jar)
 
 2.添加布局
 ```xml
