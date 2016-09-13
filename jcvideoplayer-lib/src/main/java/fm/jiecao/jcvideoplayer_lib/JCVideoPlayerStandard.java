@@ -143,7 +143,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onCompletion() {
         super.onCompletion();
         // 清理cover image,回收bitmap内存
-        clearCoverImage();
+        clearCacheImage();
     }
 
     @Override
@@ -609,7 +609,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     public void changeUiToError() {
-        clearCoverImage();
+        clearCacheImage();
         switch (currentScreen) {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
@@ -657,7 +657,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    public void clearCoverImage() {
+    public void clearCacheImage() {
         pauseSwitchCoverBitmap = null;
         cacheImageView.setImageBitmap(null);
     }
