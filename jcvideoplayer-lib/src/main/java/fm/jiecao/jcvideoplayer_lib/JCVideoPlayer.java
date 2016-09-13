@@ -763,6 +763,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
+        System.out.println("fdsfdsfxx " + isShown());
         if (!isShown()) {
             if (JCVideoPlayerManager.getFirst() == this &&
                     url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
