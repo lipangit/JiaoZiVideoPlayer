@@ -34,6 +34,12 @@ public class JCUtils {
         }
     }
 
+    /**
+     * This method requires the caller to hold the permission ACCESS_NETWORK_STATE.
+     *
+     * @param context a application context
+     * @return if wifi is connected,return true
+     */
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
