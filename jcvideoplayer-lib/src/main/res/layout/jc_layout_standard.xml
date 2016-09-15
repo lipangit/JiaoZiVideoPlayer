@@ -35,7 +35,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:background="#000000"
-        android:visibility="gone"
         android:scaleType="fitCenter"/>
 
     <LinearLayout
