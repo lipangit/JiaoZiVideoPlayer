@@ -137,20 +137,33 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public boolean setUp(String url, int screen, Object... objects) {
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
-        if (isCurrentMediaListener()) {//这里没有设置listener
-            Log.i(TAG, "onScrollChange setup " + hashCode());
-            startWindowTiny();//这里用不用检测是列表type的
-        }
+//        if (isCurrentMediaListener()) {//这里没有设置listener//这代码干什么用的
+//            Log.i(TAG, "onScrollChange setup " + hashCode());
+//            startWindowTiny();//这里用不用检测是列表type的
+//        }
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
-        if (isSecondMediaListener() &&
-                JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
-            backPress();
-            return true;
+//        if (isSecondMediaListener() &&//这又是干嘛用的
+//                JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
+//            backPress();
+//            return true;
+//        }
+        //如果是从tinyWindow返回的，那么就不进入normal状态，不进入任何状态
+        if (JCVideoPlayerManager.LISTENERLIST.size() > 1) {
+            if (JCVideoPlayerManager.LISTENERLIST.getFirst().get().getScreenType() == SCREEN_WINDOW_TINY) {
+                if (JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
+                    return true;
+                }
+            }
         }
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         return true;
+    }
+
+    @Override
+    public int getScreenType() {
+        return currentScreen;
     }
 
     public boolean setUp(String url, int screen, Map<String, String> mapHeadData, Object... objects) {
@@ -415,8 +428,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     @Override
-    public boolean goToOtherListener() {//这里这个名字这么写并不对,这是在回退的时候gotoother,如果直接gotoother就不叫这个名字
-        Log.i(TAG, "goToOtherListener " + " [" + this.hashCode() + "] ");
+    public boolean backToOtherListener() {//这里这个名字这么写并不对,这是在回退的时候gotoother,如果直接gotoother就不叫这个名字
+        Log.i(TAG, "backToOtherListener " + " [" + this.hashCode() + "] ");
 
         if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN
                 || currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_TINY) {
@@ -557,7 +570,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static boolean backPress() {
         Log.i(TAG, "backPress");
         if (JCVideoPlayerManager.getFirst() != null) {
-            return JCVideoPlayerManager.getFirst().goToOtherListener();
+            return JCVideoPlayerManager.getFirst().backToOtherListener();
         }
         return false;
     }
@@ -737,6 +750,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 && JCVideoPlayerManager.getFirst() == this;
     }
 
+    @Deprecated
     public boolean isSecondMediaListener() {
         if (JCVideoPlayerManager.LISTENERLIST.size() > 1) {
             return JCVideoPlayerManager.LISTENERLIST.get(1).get() != null
