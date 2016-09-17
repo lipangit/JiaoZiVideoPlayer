@@ -94,6 +94,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.tiny_window:
                 jcVideoPlayerStandard.startWindowTiny();
                 break;
+            case R.id.auto_tiny_window:
+                startActivity(new Intent(MainActivity.this, AutoTinyActivity.class));
+                break;
             case R.id.play_directly_without_layout:
                 startActivity(new Intent(MainActivity.this, PlayDirectlyActivity.class));
                 break;
