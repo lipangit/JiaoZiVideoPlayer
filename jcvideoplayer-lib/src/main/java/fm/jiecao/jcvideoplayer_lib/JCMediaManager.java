@@ -111,6 +111,7 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                     }
                     break;
                 case HANDLER_RELEASE:
+                    mediaPlayer.reset();
                     mediaPlayer.release();
                     break;
             }
