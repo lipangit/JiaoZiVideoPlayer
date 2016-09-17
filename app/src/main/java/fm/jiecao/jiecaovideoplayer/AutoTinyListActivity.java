@@ -10,9 +10,10 @@ import android.widget.ListView;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 
 /**
- * Created by Nathen on 16/7/31.
+ * Created by Nathen on 16/8/23.
  */
-public class ListViewNormalActivity extends AppCompatActivity {
+public class AutoTinyListActivity extends AppCompatActivity {
+
     ListView         listView;
     VideoListAdapter adapterVideoList;
 
@@ -23,12 +24,23 @@ public class ListViewNormalActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("NormalListView");
+        getSupportActionBar().setTitle("AutoTinyList");
         setContentView(R.layout.activity_listview_content);
 
         listView = (ListView) findViewById(R.id.listview);
         adapterVideoList = new VideoListAdapter(this);
         listView.setAdapter(adapterVideoList);
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                JCVideoPlayer.onScroll();
+            }
+        });
     }
 
     @Override

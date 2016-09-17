@@ -92,7 +92,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     }
 
     @Override
-    public boolean goToOtherListener() {
+    public boolean backToOtherListener() {
         return false;
     }
 }

@@ -30,30 +30,32 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     JCVideoPlayerStandard jcVideoPlayerStandard;
     JCVideoPlayerSimple   jcVideoPlayerSimple;
 
-    Button aboutListView, aboutUI, playDirectly, tinyWin;
+    Button tinyWindow, autoTinyWindow, aboutListView, aboutUI, playDirectly;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tinyWin = (Button) findViewById(R.id.tiny_win);
+        tinyWindow = (Button) findViewById(R.id.tiny_window);
+        autoTinyWindow = (Button) findViewById(R.id.auto_tiny_window);
         aboutUI = (Button) findViewById(R.id.play_directly_without_layout);
         aboutListView = (Button) findViewById(R.id.about_listview);
         playDirectly = (Button) findViewById(R.id.about_ui);
 
-        tinyWin.setOnClickListener(this);
+        tinyWindow.setOnClickListener(this);
+        autoTinyWindow.setOnClickListener(this);
         aboutListView.setOnClickListener(this);
         aboutUI.setOnClickListener(this);
         playDirectly.setOnClickListener(this);
 
         jcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.simple_demo);
         jcVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子在家吗");
+                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子在家吗");
 
         jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
         jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子坐这");
+                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子坐这");
         ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
                 jcVideoPlayerStandard.thumbImageView);
 
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tiny_win:
+            case R.id.tiny_window:
                 jcVideoPlayerStandard.startWindowTiny();
                 break;
             case R.id.play_directly_without_layout:
