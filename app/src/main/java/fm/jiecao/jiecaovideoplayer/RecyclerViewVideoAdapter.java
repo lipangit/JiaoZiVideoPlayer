@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
@@ -38,8 +39,9 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
                 VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 VideoConstant.videoTitles[position]);
         if (setUp) {
-            ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[position],
-                    holder.jcVideoPlayer.thumbImageView);
+            Picasso.with(holder.jcVideoPlayer.getContext())
+                    .load(VideoConstant.videoThumbs[position])
+                    .into(holder.jcVideoPlayer.thumbImageView);
         }
 
     }

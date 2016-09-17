@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
@@ -85,8 +86,9 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                         VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                         VideoConstant.videoTitles[position]);
                 if (setUp) {
-                    ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[position],
-                            viewHolder.jcVideoPlayer.thumbImageView);
+                    Picasso.with(ListViewMultiHolderActivity.this)
+                            .load(VideoConstant.videoThumbs[position])
+                            .into(viewHolder.jcVideoPlayer.thumbImageView);
                 }
             } else {
                 TextViewHolder textViewHolder;
@@ -99,7 +101,6 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                     textViewHolder.textView = (TextView) convertView.findViewById(R.id.textview);
                     convertView.setTag(textViewHolder);
                 }
-
             }
             return convertView;
         }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPoint;
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
@@ -56,8 +57,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
         jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子坐这");
-        ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
-                jcVideoPlayerStandard.thumbImageView);
+        Picasso.with(this)
+                .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
+                .into(jcVideoPlayerStandard.thumbImageView);
 
         JCVideoPlayer.setJcBuriedPoint(new MyJCBuriedPointStandard());
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
