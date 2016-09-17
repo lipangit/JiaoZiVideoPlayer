@@ -791,15 +791,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 && JCVideoPlayerManager.getFirst() == this;
     }
 
-    @Deprecated
-    public boolean isSecondMediaListener() {
-        if (JCVideoPlayerManager.LISTENERLIST.size() > 1) {
-            return JCVideoPlayerManager.LISTENERLIST.get(1).get() != null
-                    && JCVideoPlayerManager.LISTENERLIST.get(1).get() == this;
-        }
-        return false;
-    }
-
     public static void releaseAllVideos() {
         Log.d(TAG, "releaseAllVideos");
         JCVideoPlayerManager.completeAll();
