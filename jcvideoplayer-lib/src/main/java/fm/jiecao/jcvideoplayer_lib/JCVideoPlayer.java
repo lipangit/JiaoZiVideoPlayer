@@ -634,16 +634,18 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer jcVideoPlayer = constructor.newInstance(getContext());
             jcVideoPlayer.setId(FULLSCREEN_ID);
-            WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-            int w = wm.getDefaultDisplay().getWidth();
-            int h = wm.getDefaultDisplay().getHeight();
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
-            lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
+//            WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+//            int w = wm.getDefaultDisplay().getWidth();
+//            int h = wm.getDefaultDisplay().getHeight();
+//            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
+//            lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jcVideoPlayer, lp);
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.setUiWitStateAndScreen(currentState);
             jcVideoPlayer.addTextureView();
-            jcVideoPlayer.setRotation(90);
+//            jcVideoPlayer.setRotation(90);
 
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);

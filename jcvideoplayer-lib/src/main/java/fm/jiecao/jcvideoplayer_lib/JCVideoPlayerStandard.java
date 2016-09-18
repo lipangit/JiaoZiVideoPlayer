@@ -142,6 +142,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void onCompletion() {
         super.onCompletion();
+        JCUtils.switchNormalOrientation(getContext());
         // 清理cover image,回收bitmap内存
         clearCacheImage();
     }
@@ -316,6 +317,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void startWindowFullscreen() {
         obtainCache();
         super.startWindowFullscreen();
+        JCUtils.switchFullOrientation(getContext());
         refreshCache();
     }
 
@@ -323,6 +325,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public boolean backToOtherListener() {
         obtainCache();
         boolean b = super.backToOtherListener();
+        JCUtils.switchNormalOrientation(getContext());
         refreshCache();
         return b;
     }
