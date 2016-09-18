@@ -33,4 +33,5 @@ public interface JCMediaPlayerListener {
     void autoFullscreenRight();
 
     void autoQuitFullscreen();
+
 }
