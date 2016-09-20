@@ -45,12 +45,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static final int FULLSCREEN_ID            = 33797;
     public static final int TINY_ID                  = 33798;
     public static final int THRESHOLD                = 80;
-    public static final int FULL_SCREEN_NORMAL_DELAY = 500;
+//    public static final int FULL_SCREEN_NORMAL_DELAY = 500;
 
     public static boolean ACTION_BAR_EXIST           = true;
     public static boolean TOOL_BAR_EXIST             = true;
     public static boolean WIFI_TIP_DIALOG_SHOWED     = false;
-    public static long    CLICK_QUIT_FULLSCREEN_TIME = 0;
+//    public static long    CLICK_QUIT_FULLSCREEN_TIME = 0;
 
     public static final int SCREEN_LAYOUT_NORMAL     = 0;
     public static final int SCREEN_LAYOUT_LIST       = 1;
@@ -461,7 +461,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             JCMediaManager.instance().lastState = currentState;//save state
             JCVideoPlayerManager.popListener();
             JCVideoPlayerManager.getFirst().goBackThisListener();
-            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
+//            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             return true;
         }
         return false;
@@ -779,11 +779,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     };
 
     public void release() {
-        if (isCurrentMediaListener() &&
-                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
+//        if (isCurrentMediaListener() &&
+//                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
             Log.d(TAG, "release [" + this.hashCode() + "]");
             releaseAllVideos();
-        }
+//        }
     }
 
     public boolean isCurrentMediaListener() {
