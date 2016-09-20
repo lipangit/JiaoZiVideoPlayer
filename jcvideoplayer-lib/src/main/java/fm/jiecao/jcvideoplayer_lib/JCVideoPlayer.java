@@ -42,14 +42,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static final String TAG = "JieCaoVideoPlayer";
 
-    public static final int FULLSCREEN_ID            = 33797;
-    public static final int TINY_ID                  = 33798;
-    public static final int THRESHOLD                = 80;
+    public static final int FULLSCREEN_ID = 33797;
+    public static final int TINY_ID       = 33798;
+    public static final int THRESHOLD     = 80;
 //    public static final int FULL_SCREEN_NORMAL_DELAY = 500;
 
-    public static boolean ACTION_BAR_EXIST           = true;
-    public static boolean TOOL_BAR_EXIST             = true;
-    public static boolean WIFI_TIP_DIALOG_SHOWED     = false;
+    public static boolean ACTION_BAR_EXIST       = true;
+    public static boolean TOOL_BAR_EXIST         = true;
+    public static boolean WIFI_TIP_DIALOG_SHOWED = false;
 //    public static long    CLICK_QUIT_FULLSCREEN_TIME = 0;
 
     public static final int SCREEN_LAYOUT_NORMAL     = 0;
@@ -781,8 +781,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void release() {
 //        if (isCurrentMediaListener() &&
 //                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
-            Log.d(TAG, "release [" + this.hashCode() + "]");
-            releaseAllVideos();
+        Log.d(TAG, "release [" + this.hashCode() + "]");
+        releaseAllVideos();
 //        }
     }
 
@@ -809,15 +809,16 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
-        System.out.println("fdsfdsfxx " + isShown());
         if (!isShown()) {
             if (JCVideoPlayerManager.getFirst() == this &&
                     url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+                Log.i(TAG, "onScrollChange startWindowTiny [" + this.hashCode() + "] ");
                 startWindowTiny();
             }
         } else {
             if (JCVideoPlayerManager.getFirst() != this &&
                     url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+                Log.i(TAG, "onScrollChange backPress [" + this.hashCode() + "] ");
                 backPress();
             }
         }
@@ -825,12 +826,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static void onScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
         if (JCVideoPlayerManager.getCurrentScrollPlayerListener() != null &&
-                JCVideoPlayerManager.getCurrentScrollPlayerListener() == JCVideoPlayerManager.getFirst()) {
+                JCVideoPlayerManager.getCurrentScrollPlayerListener() == JCVideoPlayerManager.getFirst()) {//正在列表播放,检测是否进入小窗
+            Log.i(JCVideoPlayer.TAG, "onScroll if");
             JCVideoPlayerManager.getCurrentScrollPlayerListener().onScrollChange();
         } else if (JCVideoPlayerManager.LISTENERLIST.size() > 1 &&
                 ((JCVideoPlayer) JCVideoPlayerManager.getFirst()).currentScreen == SCREEN_WINDOW_TINY &&
-                JCVideoPlayerManager.getCurrentScrollPlayerListener() == JCVideoPlayerManager.LISTENERLIST.get(1).get()) {
+                JCVideoPlayerManager.getCurrentScrollPlayerListener() == JCVideoPlayerManager.LISTENERLIST.get(1).get()) {//没在列表播放,小窗正在播放,随时退回来
 //            在currentScrollPlayer为第二个listener的时候，全屏的时候不scroll,,tiny的时候才scroll，，
+            Log.i(JCVideoPlayer.TAG, "onScroll else if");
             JCVideoPlayerManager.getCurrentScrollPlayerListener().onScrollChange();
         }
     }

@@ -3,6 +3,7 @@ package fm.jiecao.jiecaovideoplayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -38,7 +39,7 @@ public class AutoTinyListActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                System.out.println("fdsfdsfdsfdsfdsf");
+//                Log.i(JCVideoPlayer.TAG, "onScroll");
                 JCVideoPlayer.onScroll();
             }
         });
