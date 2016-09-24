@@ -28,6 +28,10 @@ public interface JCMediaPlayerListener {
 
     int getScreenType();
 
+    String getUrl();
+
+    int getState();
+
     void autoFullscreenLeft();
 
     void autoFullscreenRight();

@@ -12,19 +12,32 @@ import java.util.List;
  */
 public class JCVideoPlayerManager {
 
-    public static WeakReference<JCMediaPlayerListener> CURRENT_SCROLL_LISTENER;
-    public static LinkedList<WeakReference<JCMediaPlayerListener>> LISTENERLIST = new LinkedList<>();
+    public static List<WeakReference<JCMediaPlayerListener>>       CURRENT_SCROLL_LISTENER_LIST = new LinkedList<>();
+    public static LinkedList<WeakReference<JCMediaPlayerListener>> LISTENERLIST                 = new LinkedList<>();
 
-    public static void setCurrentScrollPlayerListener(JCMediaPlayerListener listener) {
-        CURRENT_SCROLL_LISTENER = new WeakReference<>(listener);
+    public static void putScrollListener(JCMediaPlayerListener listener) {
+        if (listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_TINY ||
+                listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_FULLSCREEN) return;
+        for (int i = 0; i < CURRENT_SCROLL_LISTENER_LIST.size(); i++) {
+            if (CURRENT_SCROLL_LISTENER_LIST.get(i) == null &&
+                    CURRENT_SCROLL_LISTENER_LIST.get(i).get().getUrl() == listener.getUrl()) {
+                CURRENT_SCROLL_LISTENER_LIST.clear();
+                CURRENT_SCROLL_LISTENER_LIST.add(new WeakReference<>(listener));
+                return;
+            }
+        }
+//        for (int i = 0; i < CURRENT_SCROLL_LISTENER_LIST.size(); i++) {
+//            if (CURRENT_SCROLL_LISTENER_LIST.get(i) == null &&
+//                    CURRENT_SCROLL_LISTENER_LIST.get(i).get() == listener) {
+//                CURRENT_SCROLL_LISTENER_LIST.add(i, new WeakReference<>(listener));
+//                return;
+//            }
+//        }
+        CURRENT_SCROLL_LISTENER_LIST.add(new WeakReference<>(listener));//每次setUp的时候都应该add
     }
 
-    public static JCMediaPlayerListener getCurrentScrollPlayerListener() {
-        if (CURRENT_SCROLL_LISTENER != null && CURRENT_SCROLL_LISTENER.get() != null) {
-            return CURRENT_SCROLL_LISTENER.get();
-        } else {
-            return null;
-        }
+    public static void clearScrollListenerList() {
+        CURRENT_SCROLL_LISTENER_LIST.clear();
     }
 
     public static void putListener(JCMediaPlayerListener listener) {

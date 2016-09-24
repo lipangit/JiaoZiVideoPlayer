@@ -27,6 +27,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
@@ -142,21 +143,26 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
-        //如果是从tinyWindow返回的，那么就不进入normal状态，不进入任何状态
-        if (JCVideoPlayerManager.LISTENERLIST.size() > 1) {
-            if (JCVideoPlayerManager.LISTENERLIST.getFirst().get().getScreenType() == SCREEN_WINDOW_TINY) {
-                if (JCMediaManager.instance().mediaPlayer.getDataSource().equals(url)) {
-                    return true;
-                }
-            }
-        }
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
+        if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+            JCVideoPlayerManager.putScrollListener(this);
+        }
         return true;
     }
 
     @Override
     public int getScreenType() {
         return currentScreen;
+    }
+
+    @Override
+    public String getUrl() {
+        return url;
+    }
+
+    @Override
+    public int getState() {
+        return currentState;
     }
 
     public boolean setUp(String url, int screen, Map<String, String> mapHeadData, Object... objects) {
@@ -219,15 +225,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCVideoPlayerManager.completeAll();
         JCVideoPlayerManager.putListener(this);
         addTextureView();
+
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        JCVideoPlayerManager.clearScrollListenerList();
+        JCVideoPlayerManager.putScrollListener(this);
         JCMediaManager.instance().prepare(url, mapHeadData, looping);
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
-        if (currentState == SCREEN_LAYOUT_LIST) {
-            JCVideoPlayer.setCurrentScrollPlayerListener(this);
-        }
     }
 
     @Override
@@ -809,37 +815,35 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
-        if (!isShown()) {
-            if (JCVideoPlayerManager.getFirst() == this &&
-                    url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
-                Log.i(TAG, "onScrollChange startWindowTiny [" + this.hashCode() + "] ");
-                startWindowTiny();
-            }
-        } else {
-            if (JCVideoPlayerManager.getFirst() != this &&
-                    url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
-                Log.i(TAG, "onScrollChange backPress [" + this.hashCode() + "] ");
-                backPress();
+        if (objects[0].equals("嫂子出来")) {
+            System.out.println("sssssssss");
+        }
+        if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+            if (JCVideoPlayerManager.getFirst() == null) return;
+            if (JCVideoPlayerManager.getFirst().getScreenType() == SCREEN_WINDOW_TINY) {
+                //如果正在播放的是小窗,择机退出小窗
+                if (isShown()) {//已经显示,就退出小窗
+                    backPress();
+                }
+            } else {
+                //如果正在播放的不是小窗,择机进入小窗
+                if (!isShown()) {//已经隐藏
+                    startWindowTiny();
+                }
             }
         }
     }
 
     public static void onScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
-        if (JCVideoPlayerManager.getCurrentScrollPlayerListener() != null &&
-                JCVideoPlayerManager.getCurrentScrollPlayerListener() == JCVideoPlayerManager.getFirst()) {//正在列表播放,检测是否进入小窗
-            Log.i(JCVideoPlayer.TAG, "onScroll if");
-            JCVideoPlayerManager.getCurrentScrollPlayerListener().onScrollChange();
-        } else if (JCVideoPlayerManager.LISTENERLIST.size() > 1 &&
-                ((JCVideoPlayer) JCVideoPlayerManager.getFirst()).currentScreen == SCREEN_WINDOW_TINY &&
-                JCVideoPlayerManager.getCurrentScrollPlayerListener() == JCVideoPlayerManager.LISTENERLIST.get(1).get()) {//没在列表播放,小窗正在播放,随时退回来
-//            在currentScrollPlayer为第二个listener的时候，全屏的时候不scroll,,tiny的时候才scroll，，
-            Log.i(JCVideoPlayer.TAG, "onScroll else if");
-            JCVideoPlayerManager.getCurrentScrollPlayerListener().onScrollChange();
+        System.out.println("fdsfdsfsd " + JCVideoPlayerManager.CURRENT_SCROLL_LISTENER_LIST.size());
+        for (WeakReference<JCMediaPlayerListener> jcMediaPlayerListenerWeakReference : JCVideoPlayerManager.CURRENT_SCROLL_LISTENER_LIST) {
+            if (//jcMediaPlayerListenerWeakReference.get().getState() != CURRENT_STATE_NORMAL &&
+                    jcMediaPlayerListenerWeakReference.get().getState() != CURRENT_STATE_ERROR &&
+                            jcMediaPlayerListenerWeakReference.get().getState() != CURRENT_STATE_AUTO_COMPLETE) {
+//                System.out.println("fdsfdsfsd ");
+                jcMediaPlayerListenerWeakReference.get().onScrollChange();
+            }
         }
-    }
-
-    public static void setCurrentScrollPlayerListener(JCMediaPlayerListener listener) {
-        JCVideoPlayerManager.setCurrentScrollPlayerListener(listener);
     }
 
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
