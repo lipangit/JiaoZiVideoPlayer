@@ -18,14 +18,14 @@ public class JCVideoPlayerManager {
     public static void putScrollListener(JCMediaPlayerListener listener) {
         if (listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_TINY ||
                 listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_FULLSCREEN) return;
-        for (int i = 0; i < CURRENT_SCROLL_LISTENER_LIST.size(); i++) {
-            if (CURRENT_SCROLL_LISTENER_LIST.get(i) == null &&
-                    CURRENT_SCROLL_LISTENER_LIST.get(i).get().getUrl() == listener.getUrl()) {
-                CURRENT_SCROLL_LISTENER_LIST.clear();
-                CURRENT_SCROLL_LISTENER_LIST.add(new WeakReference<>(listener));
-                return;
-            }
-        }
+//        for (int i = 0; i < CURRENT_SCROLL_LISTENER_LIST.size(); i++) {
+//            if (CURRENT_SCROLL_LISTENER_LIST.get(i) == null &&
+//                    CURRENT_SCROLL_LISTENER_LIST.get(i).get().getUrl() == listener.getUrl()) {
+//                CURRENT_SCROLL_LISTENER_LIST.clear();
+//                CURRENT_SCROLL_LISTENER_LIST.add(new WeakReference<>(listener));
+//                return;
+//            }
+//        }
 //        for (int i = 0; i < CURRENT_SCROLL_LISTENER_LIST.size(); i++) {
 //            if (CURRENT_SCROLL_LISTENER_LIST.get(i) == null &&
 //                    CURRENT_SCROLL_LISTENER_LIST.get(i).get() == listener) {
@@ -33,6 +33,7 @@ public class JCVideoPlayerManager {
 //                return;
 //            }
 //        }
+        CURRENT_SCROLL_LISTENER_LIST.clear();
         CURRENT_SCROLL_LISTENER_LIST.add(new WeakReference<>(listener));//每次setUp的时候都应该add
     }
 

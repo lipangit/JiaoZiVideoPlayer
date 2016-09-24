@@ -828,19 +828,21 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             } else {
                 //如果正在播放的不是小窗,择机进入小窗
                 if (!isShown()) {//已经隐藏
-                    startWindowTiny();
+                    if (currentState != CURRENT_STATE_PLAYING) {
+                        releaseAllVideos();
+                    } else {
+                        startWindowTiny();
+                    }
                 }
             }
         }
     }
 
     public static void onScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
-        System.out.println("fdsfdsfsd " + JCVideoPlayerManager.CURRENT_SCROLL_LISTENER_LIST.size());
         for (WeakReference<JCMediaPlayerListener> jcMediaPlayerListenerWeakReference : JCVideoPlayerManager.CURRENT_SCROLL_LISTENER_LIST) {
             if (//jcMediaPlayerListenerWeakReference.get().getState() != CURRENT_STATE_NORMAL &&
                     jcMediaPlayerListenerWeakReference.get().getState() != CURRENT_STATE_ERROR &&
                             jcMediaPlayerListenerWeakReference.get().getState() != CURRENT_STATE_AUTO_COMPLETE) {
-//                System.out.println("fdsfdsfsd ");
                 jcMediaPlayerListenerWeakReference.get().onScrollChange();
             }
         }
