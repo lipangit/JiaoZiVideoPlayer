@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.util.LruCache;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
@@ -71,6 +72,14 @@ public class UIImageLoaderActivity extends AppCompatActivity {
                 "嫂子打电话");
         Uri uri = Uri.parse("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg");
         videoController5.thumbImageView.setImageURI(uri);
+
+        View vv = findViewById(R.id.scroll);
+        vv.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                videoController1.onScrollChange();
+            }
+        });
     }
 
     public class BitmapCache implements com.android.volley.toolbox.ImageLoader.ImageCache {

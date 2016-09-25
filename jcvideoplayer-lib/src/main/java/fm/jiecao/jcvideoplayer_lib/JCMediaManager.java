@@ -27,8 +27,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener {
     public static String TAG = "JieCaoVideoPlayer";
 
-    private static JCMediaManager JCMediaManager;
-    public         IjkMediaPlayer mediaPlayer;
+    private static JCMediaManager      JCMediaManager;
+    public         IjkMediaPlayer      mediaPlayer;
     public static  JCResizeTextureView textureView;
 
     public int currentVideoWidth  = 0;
@@ -107,10 +107,17 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                         if (holder.isValid()) {
                             Log.i(TAG, "set surface");
                             instance().mediaPlayer.setSurface(holder);
+                            mainThreadHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textureView.requestLayout();
+                                }
+                            });
                         }
                     }
                     break;
                 case HANDLER_RELEASE:
+                    mediaPlayer.reset();
                     mediaPlayer.release();
                     break;
             }
@@ -145,8 +152,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.listener() != null) {
-                    JCVideoPlayerManager.listener().onPrepared();
+                if (JCVideoPlayerManager.getFirst() != null) {
+                    JCVideoPlayerManager.getFirst().onPrepared();
                 }
             }
         });
@@ -157,8 +164,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.listener() != null) {
-                    JCVideoPlayerManager.listener().onAutoCompletion();
+                if (JCVideoPlayerManager.getFirst() != null) {
+                    JCVideoPlayerManager.getFirst().onAutoCompletion();
                 }
             }
         });
@@ -169,8 +176,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.listener() != null) {
-                    JCVideoPlayerManager.listener().onBufferingUpdate(percent);
+                if (JCVideoPlayerManager.getFirst() != null) {
+                    JCVideoPlayerManager.getFirst().onBufferingUpdate(percent);
                 }
             }
         });
@@ -181,8 +188,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.listener() != null) {
-                    JCVideoPlayerManager.listener().onSeekComplete();
+                if (JCVideoPlayerManager.getFirst() != null) {
+                    JCVideoPlayerManager.getFirst().onSeekComplete();
                 }
             }
         });
@@ -193,8 +200,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.listener() != null) {
-                    JCVideoPlayerManager.listener().onError(what, extra);
+                if (JCVideoPlayerManager.getFirst() != null) {
+                    JCVideoPlayerManager.getFirst().onError(what, extra);
                 }
             }
         });
@@ -206,8 +213,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.listener() != null) {
-                    JCVideoPlayerManager.listener().onInfo(what, extra);
+                if (JCVideoPlayerManager.getFirst() != null) {
+                    JCVideoPlayerManager.getFirst().onInfo(what, extra);
                 }
             }
         });
@@ -221,8 +228,8 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.listener() != null) {
-                    JCVideoPlayerManager.listener().onVideoSizeChanged();
+                if (JCVideoPlayerManager.getFirst() != null) {
+                    JCVideoPlayerManager.getFirst().onVideoSizeChanged();
                 }
             }
         });

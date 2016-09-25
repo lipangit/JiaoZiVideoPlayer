@@ -51,7 +51,15 @@
             android:name=".UIImageLoaderActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".RecyclerViewNormalActivity"
+            android:name=".RecyclerViewNormalActivity"/>
+        <activity
+            android:name=".AutoTinyActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AutoTinyListActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".AutoTinyNormalActivity"
             android:screenOrientation="portrait"/>
 
     </application>

@@ -4,27 +4,17 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/black">
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/surface_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
+        android:layout_height="match_parent">
 
-    </RelativeLayout>
+    </FrameLayout>
 
-    <RelativeLayout
-        android:id="@+id/cache_container"
+    <fm.jiecao.jcvideoplayer_lib.JCResizeImageView
+        android:id="@+id/cache"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
-
-        <fm.jiecao.jcvideoplayer_lib.JCResizeImageView
-            android:id="@+id/cache"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"/>
-
-    </RelativeLayout>
+        android:layout_height="match_parent"/>
 
     <ImageView
         android:id="@+id/cover"
