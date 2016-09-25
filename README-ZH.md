@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.6.5-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-4.7.0-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -22,22 +22,22 @@
 
 ##效果
 
-**[jiecaovideoplayer-4.6.5-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.6.5/jiecaovideoplayer-4.6.5-demo.apk)**
+**[jiecaovideoplayer-4.7.0-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.7.0/jiecaovideoplayer-4.7.0-demo.apk)**
 
 ![Demo Screenshot][1]
 
 ##使用
 
-1.添加类库
+1.添加类库,这个版本的目的是预览自动进入小窗功能,不要用在生产环境,稳定版本仍然是v4.6.5
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:4.6.5'
+compile 'fm.jiecao:jiecaovideoplayer:4.7.0'
 ```
 
 或直接下载
 
-* [jiecaovideoplayer-4.6.5.aar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.6.5/jiecaovideoplayer-4.6.5.aar)
-* [jiecaovideoplayer-4.6.5-javadoc.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.6.5/jiecaovideoplayer-4.6.5-javadoc.jar)
-* [jiecaovideoplayer-4.6.5-sources.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.6.5/jiecaovideoplayer-4.6.5-sources.jar)
+* [jiecaovideoplayer-4.7.0.aar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.7.0/jiecaovideoplayer-4.7.0.aar)
+* [jiecaovideoplayer-4.7.0-javadoc.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.7.0/jiecaovideoplayer-4.7.0-javadoc.jar)
+* [jiecaovideoplayer-4.7.0-sources.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.7.0/jiecaovideoplayer-4.7.0-sources.jar)
 
 2.添加布局
 ```xml
