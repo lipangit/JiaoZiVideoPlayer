@@ -8,3 +8,4 @@ gradle.properties
 /build
 /captures
 *.asc
+projectFilesBackup
