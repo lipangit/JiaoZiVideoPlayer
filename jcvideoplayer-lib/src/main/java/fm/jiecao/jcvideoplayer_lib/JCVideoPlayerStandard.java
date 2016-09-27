@@ -204,9 +204,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.back) {
             backPress();
         } else if (i == R.id.back_tiny) {
-            if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER_LIST.get(0).get() != null) {
-                if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER_LIST.get(0).get().getUrl() != JCMediaManager.instance().mediaPlayer.getDataSource()) {
-//                    if (!((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER_LIST.get(0).get()).isShown()) {
+            if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get() != null) {
+                if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get().getUrl() != JCMediaManager.instance().mediaPlayer.getDataSource()) {
+//                    if (!((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get(0).get()).isShown()) {
                         releaseAllVideos();
                         return;
 //                    }
