@@ -19,10 +19,6 @@ public class JCVideoPlayerManager {
         CURRENT_SCROLL_LISTENER = new WeakReference<>(listener);//每次setUp的时候都应该add
     }
 
-    public static void clearScrollListener() {
-        CURRENT_SCROLL_LISTENER = null;
-    }
-
     public static void putListener(JCMediaPlayerListener listener) {
         LISTENERLIST.push(new WeakReference<>(listener));
     }

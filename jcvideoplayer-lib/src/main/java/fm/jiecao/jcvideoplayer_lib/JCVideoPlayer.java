@@ -138,6 +138,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (!TextUtils.isEmpty(this.url) && TextUtils.equals(this.url, url)) {
             return false;
         }
+        if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER != null && JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get() != null) {
+            if (this == JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()) {
+                if (((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).getScreenType() != SCREEN_WINDOW_TINY) {
+                    if (((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).currentState == CURRENT_STATE_PLAYING) {
+                        ((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).startWindowTiny();//如果列表中,滑动过快,在还没来得及onScroll的时候自己已经被复用了
+                    }
+                }
+            }
+        }
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
@@ -228,7 +237,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        JCVideoPlayerManager.clearScrollListener();
         JCVideoPlayerManager.putScrollListener(this);
         JCMediaManager.instance().prepare(url, mapHeadData, looping);
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
