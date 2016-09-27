@@ -22,7 +22,7 @@
 
 ##效果
 
-**[jiecaovideoplayer-4.7.0-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.7.0/jiecaovideoplayer-4.7.0-demo.apk)**
+**[jiecaovideoplayer-4.7.0-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.7.0_Preview/jiecaovideoplayer-4.7.0-demo.apk)**
 
 ![Demo Screenshot][1]
 
