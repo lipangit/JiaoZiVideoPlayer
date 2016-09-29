@@ -142,7 +142,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             if (this == JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()) {
                 if (((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).getScreenType() != SCREEN_WINDOW_TINY) {
                     if (((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).currentState == CURRENT_STATE_PLAYING) {
-                        ((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).startWindowTiny();//如果列表中,滑动过快,在还没来得及onScroll的时候自己已经被复用了
+                        if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+                            ((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).startWindowTiny();//如果列表中,滑动过快,在还没来得及onScroll的时候自己已经被复用了
+                        }
                     }
                 }
             }
@@ -151,7 +153,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         this.objects = objects;
         this.currentScreen = screen;
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
-        if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+        if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {//如果初始化了一个正在tinyWindow的前身,就应该监听它的滑动,如果显示就在这个listener中播放
             JCVideoPlayerManager.putScrollListener(this);
         }
         return true;
@@ -471,7 +473,20 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //                .findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
             JCMediaManager.instance().lastState = currentState;//save state
+            if (JCVideoPlayerManager.LISTENERLIST.size() == 1) {
+                System.out.println("haha");
+            }
+
+            if (JCVideoPlayerManager.LISTENERLIST.size() == 2) {
+                System.out.println("hehe");
+            }
+            if (JCVideoPlayerManager.LISTENERLIST.size() == 3) {
+                System.out.println("wocao");
+            }
             JCVideoPlayerManager.popListener();
+            if (JCVideoPlayerManager.getFirst() == null) {
+                System.out.println("memeda");
+            }
             JCVideoPlayerManager.getFirst().goBackThisListener();
 //            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             return true;
