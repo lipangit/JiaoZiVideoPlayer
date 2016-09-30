@@ -140,11 +140,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
         if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER != null && JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get() != null) {
             if (this == JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()) {
-                if (((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).getScreenType() != SCREEN_WINDOW_TINY) {
-                    if (((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).currentState == CURRENT_STATE_PLAYING) {
-                        if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
-                            ((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).startWindowTiny();//如果列表中,滑动过快,在还没来得及onScroll的时候自己已经被复用了
-                        }
+                if (((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).currentState == CURRENT_STATE_PLAYING) {
+                    if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+                        ((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).startWindowTiny();//如果列表中,滑动过快,在还没来得及onScroll的时候自己已经被复用了
                     }
                 }
             }
@@ -836,14 +834,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
-        if (objects[0].equals("嫂子出来")) {
-            System.out.println("sssssssss");
-        }
         if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
             if (JCVideoPlayerManager.getFirst() == null) return;
             if (JCVideoPlayerManager.getFirst().getScreenType() == SCREEN_WINDOW_TINY) {
                 //如果正在播放的是小窗,择机退出小窗
                 if (isShown()) {//已经显示,就退出小窗
+                    if (objects[0].equals("嫂子溢出")) {
+                        System.out.println("sssssssss");
+                    }
                     backPress();
                 }
             } else {
