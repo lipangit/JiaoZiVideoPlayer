@@ -22,6 +22,26 @@ public class JCVideoPlayerManager {
     public static void putListener(JCMediaPlayerListener listener) {
         LISTENERLIST.push(new WeakReference<>(listener));
     }
+    public static void checkAndPutListener(JCMediaPlayerListener listener) {
+        if (listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_TINY ||
+                listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_FULLSCREEN) return;
+        int location = -1;
+        for (int i = 1; i < LISTENERLIST.size(); i++) {
+            JCMediaPlayerListener jcMediaPlayerListener = LISTENERLIST.get(i).get();
+            if (listener.getUrl().equals(jcMediaPlayerListener.getUrl())) {
+                location = i;
+            }
+        }
+        if (location != -1) {
+            LISTENERLIST.remove(location);
+            if (LISTENERLIST.size() <= location) {
+                LISTENERLIST.addLast(new WeakReference<>(listener));
+            } else {
+                LISTENERLIST.set(location, new WeakReference<>(listener));
+
+            }
+        }
+    }
 
     public static JCMediaPlayerListener popListener() {
         if (LISTENERLIST.size() == 0) {
