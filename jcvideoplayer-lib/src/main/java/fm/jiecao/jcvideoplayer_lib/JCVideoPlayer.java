@@ -26,6 +26,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
@@ -82,8 +83,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public ViewGroup topContainer, bottomContainer;
     public Surface surface;
 
-    protected static JCBuriedPoint JC_BURIED_POINT;
-    protected static Timer         UPDATE_PROGRESS_TIMER;
+    protected static WeakReference<JCBuriedPoint> JC_BURIED_POINT;
+    protected static Timer                        UPDATE_PROGRESS_TIMER;
 
     protected int               mScreenWidth;
     protected int               mScreenHeight;
@@ -824,12 +825,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void setJcBuriedPoint(JCBuriedPoint jcBuriedPoint) {
-        JC_BURIED_POINT = jcBuriedPoint;
+        JC_BURIED_POINT = new WeakReference<>(jcBuriedPoint);
     }
 
     public void onEvent(int type) {
-        if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
-            JC_BURIED_POINT.onEvent(type, url, currentScreen, objects);
+        if (JC_BURIED_POINT != null && JC_BURIED_POINT.get() != null && isCurrentMediaListener()) {
+            JC_BURIED_POINT.get().onEvent(type, url, currentScreen, objects);
         }
     }
 
