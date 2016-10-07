@@ -134,16 +134,22 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mHandler = new Handler();
     }
+    int step=-1;
 
     public boolean setUp(String url, int screen, Object... objects) {
         if (!TextUtils.isEmpty(this.url) && TextUtils.equals(this.url, url)) {
             return false;
         }
         JCVideoPlayerManager.checkAndPutListener(this);
+        step=-1;
         if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER != null && JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get() != null) {
+            step=0;
             if (this == JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()) {
+                step=1;
                 if (((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).currentState == CURRENT_STATE_PLAYING) {
-                    if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+                    step=2;
+                    if (this.url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+                        step=3;
                         ((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).startWindowTiny();//如果列表中,滑动过快,在还没来得及onScroll的时候自己已经被复用了
                     }
                 }
@@ -152,6 +158,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
+        System.out.println(step+"sss");
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {//如果初始化了一个正在tinyWindow的前身,就应该监听它的滑动,如果显示就在这个listener中播放
             JCVideoPlayerManager.putScrollListener(this);
@@ -816,9 +823,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public boolean isCurrentMediaListener() {
         return JCVideoPlayerManager.getFirst() != null
                 && JCVideoPlayerManager.getFirst() == this;
+                //&& url.equals(JCMediaManager.instance().mediaPlayer.getDataSource());
     }
 
     public static void releaseAllVideos() {
+
         Log.d(TAG, "releaseAllVideos");
         JCVideoPlayerManager.completeAll();
         JCMediaManager.instance().releaseMediaPlayer();
