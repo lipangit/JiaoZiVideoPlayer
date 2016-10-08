@@ -22,17 +22,14 @@ public class JCVideoPlayerManager {
     public static void putListener(JCMediaPlayerListener listener) {
         LISTENERLIST.push(new WeakReference<>(listener));
     }
-
     public static void checkAndPutListener(JCMediaPlayerListener listener) {
         if (listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_TINY ||
                 listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_FULLSCREEN) return;
         int location = -1;
         for (int i = 1; i < LISTENERLIST.size(); i++) {
             JCMediaPlayerListener jcMediaPlayerListener = LISTENERLIST.get(i).get();
-            if (jcMediaPlayerListener != null) {
-                if (listener.getUrl().equals(jcMediaPlayerListener.getUrl())) {
-                    location = i;
-                }
+            if (listener.getUrl().equals(jcMediaPlayerListener.getUrl())) {
+                location = i;
             }
         }
         if (location != -1) {
