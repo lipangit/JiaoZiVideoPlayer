@@ -22,7 +22,6 @@ import android.view.ViewParent;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,8 +83,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public ViewGroup topContainer, bottomContainer;
     public Surface surface;
 
-    protected static JCBuriedPoint JC_BURIED_POINT;
-    protected static Timer         UPDATE_PROGRESS_TIMER;
+    protected static WeakReference<JCBuriedPoint> JC_BURIED_POINT;
+    protected static Timer                        UPDATE_PROGRESS_TIMER;
 
     protected int               mScreenWidth;
     protected int               mScreenHeight;
@@ -140,11 +139,21 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (!TextUtils.isEmpty(this.url) && TextUtils.equals(this.url, url)) {
             return false;
         }
+        JCVideoPlayerManager.checkAndPutListener(this);
+        if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER != null && JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get() != null) {
+            if (this == JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()) {
+                if (((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).currentState == CURRENT_STATE_PLAYING) {
+                    if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+                        ((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get()).startWindowTiny();//如果列表中,滑动过快,在还没来得及onScroll的时候自己已经被复用了
+                    }
+                }
+            }
+        }
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
-        if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
+        if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {//如果初始化了一个正在tinyWindow的前身,就应该监听它的滑动,如果显示就在这个listener中播放
             JCVideoPlayerManager.putScrollListener(this);
         }
         return true;
@@ -230,7 +239,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        JCVideoPlayerManager.clearScrollListenerList();
         JCVideoPlayerManager.putScrollListener(this);
         JCMediaManager.instance().prepare(url, mapHeadData, looping);
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
@@ -804,20 +812,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void setJcBuriedPoint(JCBuriedPoint jcBuriedPoint) {
-        JC_BURIED_POINT = jcBuriedPoint;
+        JC_BURIED_POINT = new WeakReference<>(jcBuriedPoint);
     }
 
     public void onEvent(int type) {
-        if (JC_BURIED_POINT != null && isCurrentMediaListener()) {
-            JC_BURIED_POINT.onEvent(type, url, currentScreen, objects);
+        if (JC_BURIED_POINT != null && JC_BURIED_POINT.get() != null && isCurrentMediaListener()) {
+            JC_BURIED_POINT.get().onEvent(type, url, currentScreen, objects);
         }
     }
 
     @Override
     public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
-        if (objects[0].equals("嫂子出来")) {
-            System.out.println("sssssssss");
-        }
         if (url.equals(JCMediaManager.instance().mediaPlayer.getDataSource())) {
             if (JCVideoPlayerManager.getFirst() == null) return;
             if (JCVideoPlayerManager.getFirst().getScreenType() == SCREEN_WINDOW_TINY) {
@@ -839,11 +844,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void onScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
-        for (WeakReference<JCMediaPlayerListener> jcMediaPlayerListenerWeakReference : JCVideoPlayerManager.CURRENT_SCROLL_LISTENER_LIST) {
+        if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER != null && JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get() != null) {
+            JCMediaPlayerListener jcMediaPlayerListener = JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get();
             if (//jcMediaPlayerListenerWeakReference.get().getState() != CURRENT_STATE_NORMAL &&
-                    jcMediaPlayerListenerWeakReference.get().getState() != CURRENT_STATE_ERROR &&
-                            jcMediaPlayerListenerWeakReference.get().getState() != CURRENT_STATE_AUTO_COMPLETE) {
-                jcMediaPlayerListenerWeakReference.get().onScrollChange();
+                    jcMediaPlayerListener.getState() != CURRENT_STATE_ERROR &&
+                            jcMediaPlayerListener.getState() != CURRENT_STATE_AUTO_COMPLETE) {
+                jcMediaPlayerListener.onScrollChange();
             }
         }
     }
