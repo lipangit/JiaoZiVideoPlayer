@@ -36,7 +36,7 @@ Ambition is become the most widely used video playback control.
 
 1.Import library,new feature auto tiny window is not perfect this version, do not use it in you project, this is juct preview the feature , Stable version is still v4.6.5
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:4.7.0_preview'
+compile 'fm.jiecao:jiecaovideoplayer:4.7.1_preview'
 ```
 
 Or download lib
