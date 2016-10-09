@@ -28,7 +28,7 @@ Ambition is become the most widely used video playback control.
 
 ## Effect
 
-**[jiecaovideoplayer-4.7.0_preview-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.7.0_preview_Preview/jiecaovideoplayer-4.7.0_preview-demo.apk)**
+**[jiecaovideoplayer-4.7.0_preview-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.7.1_preview/jiecaovideoplayer-4.7.1_preview.apk)**
 
 ![Demo Screenshot][1]
 
@@ -41,9 +41,9 @@ compile 'fm.jiecao:jiecaovideoplayer:4.7.0_preview'
 
 Or download lib
 
-* [jiecaovideoplayer-4.7.0_preview.aar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.7.0_preview/jiecaovideoplayer-4.7.0_preview.aar)
-* [jiecaovideoplayer-4.7.0_preview-javadoc.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.7.0_preview/jiecaovideoplayer-4.7.0_preview-javadoc.jar)
-* [jiecaovideoplayer-4.7.0_preview-sources.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/4.7.0_preview/jiecaovideoplayer-4.7.0_preview-sources.jar)
+* [jiecaovideoplayer-4.7.0_preview.aar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.7.1_preview/jiecaovideoplayer-4.7.1_preview.aar)
+* [jiecaovideoplayer-4.7.0_preview-javadoc.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.7.1_preview/jiecaovideoplayer-4.7.1_preview-javadoc.jar)
+* [jiecaovideoplayer-4.7.0_preview-sources.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.7.1_preview/jiecaovideoplayer-4.7.1_preview-sources.jar)
 
 2.Add JCVideoPlayer in your layout
 ```xml
