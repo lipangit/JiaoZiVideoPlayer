@@ -473,20 +473,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //                .findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
             JCMediaManager.instance().lastState = currentState;//save state
-            if (JCVideoPlayerManager.LISTENERLIST.size() == 1) {
-                System.out.println("haha");
-            }
-
-            if (JCVideoPlayerManager.LISTENERLIST.size() == 2) {
-                System.out.println("hehe");
-            }
-            if (JCVideoPlayerManager.LISTENERLIST.size() == 3) {
-                System.out.println("wocao");
-            }
             JCVideoPlayerManager.popListener();
-            if (JCVideoPlayerManager.getFirst() == null) {
-                System.out.println("memeda");
-            }
             JCVideoPlayerManager.getFirst().goBackThisListener();
 //            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             return true;
@@ -841,9 +828,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             if (JCVideoPlayerManager.getFirst().getScreenType() == SCREEN_WINDOW_TINY) {
                 //如果正在播放的是小窗,择机退出小窗
                 if (isShown()) {//已经显示,就退出小窗
-                    if (objects[0].equals("嫂子溢出")) {
-                        System.out.println("sssssssss");
-                    }
                     backPress();
                 }
             } else {
