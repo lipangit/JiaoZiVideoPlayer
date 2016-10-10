@@ -458,7 +458,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onPrepared() {
         super.onPrepared();
         setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
                 View.INVISIBLE);
         startDismissControlViewTimer();
     }
@@ -661,9 +661,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         coverImageView.setVisibility(coverImg);
         bottomProgressBar.setVisibility(bottomPro);
         cacheImageView.setVisibility(cacheImg);
-        if(cacheImg==View.VISIBLE){
-            System.out.println("fdsfds");
-        }
     }
 
     public void updateStartImage() {
