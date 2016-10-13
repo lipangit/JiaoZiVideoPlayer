@@ -5,26 +5,17 @@
 
 <h1>hello h1</h1>
 <div class="content"></div>
-<div class="haha">
-    <img id="cont"
-         src="http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg"
-         style="width:100%;height:200px">
+<div id="cont" style="width:100%;height:200px">
 </div>
 
-<div class="haha">
-    <img id="cont1"
-         src="http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg"
-         style="width:100%;height:200px">
+<div id="cont1" style="width:100%;height:200px">
 </div>
+<!--它的height为什么是0呢-->
 <script>
     var cont=document.getElementById("cont");
-    cont.onload = function() {
-        jcvd.adViewJieCaoVideoPlayer(cont.width,cont.height,cont.offsetTop,cont.offsetLeft)
-    }
+    jcvd.adViewJieCaoVideoPlayer(cont.width,200,cont.offsetTop,cont.offsetLeft)
     var cont1=document.getElementById("cont1");
-    cont1.onload = function() {
-        jcvd.adViewJieCaoVideoPlayer(cont1.width,cont1.height,cont1.offsetTop,cont1.offsetLeft)
-    }
+    jcvd.adViewJieCaoVideoPlayer(cont1.width,200,cont1.offsetTop,cont1.offsetLeft)
 
 </script>
 </body>
