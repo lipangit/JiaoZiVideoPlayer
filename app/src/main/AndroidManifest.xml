@@ -61,6 +61,9 @@
         <activity
             android:name=".AutoTinyNormalActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".WebViewActivity"
+            android:screenOrientation="portrait"/>
 
     </application>
 

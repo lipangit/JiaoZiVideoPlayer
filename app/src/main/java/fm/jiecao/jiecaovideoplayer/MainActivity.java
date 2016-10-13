@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCBuriedPoint;
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     JCVideoPlayerStandard jcVideoPlayerStandard;
     JCVideoPlayerSimple   jcVideoPlayerSimple;
 
-    Button tinyWindow, autoTinyWindow, aboutListView, aboutUI, playDirectly;
+    Button tinyWindow, autoTinyWindow, aboutListView, aboutUI, playDirectly, aboutWebView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,12 +42,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         aboutUI = (Button) findViewById(R.id.play_directly_without_layout);
         aboutListView = (Button) findViewById(R.id.about_listview);
         playDirectly = (Button) findViewById(R.id.about_ui);
+        aboutWebView = (Button) findViewById(R.id.about_webview);
 
         tinyWindow.setOnClickListener(this);
         autoTinyWindow.setOnClickListener(this);
         aboutListView.setOnClickListener(this);
         aboutUI.setOnClickListener(this);
         playDirectly.setOnClickListener(this);
+        aboutWebView.setOnClickListener(this);
 
         jcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.simple_demo);
         jcVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
@@ -105,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.about_ui:
                 startActivity(new Intent(MainActivity.this, UIActivity.class));
+                break;
+            case R.id.about_webview:
+                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
                 break;
         }
     }
