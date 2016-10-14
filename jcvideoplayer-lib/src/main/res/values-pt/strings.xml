@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tips_not_wifi">Şu anda mobil veriyi kullanıyorsunuz, yüksek veri kaybına yol açabilir</string>
+    <string name="tips_not_wifi_confirm">Devam Et</string>
+    <string name="tips_not_wifi_cancel">Durdur</string>
+    <string name="no_url">URL Bulunamadı</string>
+</resources>
