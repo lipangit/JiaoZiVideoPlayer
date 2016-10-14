@@ -95,6 +95,7 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                         mediaPlayer.setOnInfoListener(JCMediaManager.this);
                         mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
                         mediaPlayer.prepareAsync();
+                        mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 1);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
