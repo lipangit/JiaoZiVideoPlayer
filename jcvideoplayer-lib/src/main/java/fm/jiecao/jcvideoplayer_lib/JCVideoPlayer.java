@@ -1,6 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -14,6 +15,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
@@ -103,6 +105,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     protected int     mGestureDownVolume;
     protected int     mSeekTimePosition;
 
+    protected boolean mFixedScale = false;
+
     public JCVideoPlayer(Context context) {
         super(context);
         init(context);
@@ -114,7 +118,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public void init(Context context) {
-        View.inflate(context, getLayoutId(), this);
+
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        layoutParams.gravity = Gravity.CENTER;
+        View content = LayoutInflater.from(context).inflate(getLayoutId(), this, false);
+        content.setBackgroundColor(Color.BLACK);
+        removeAllViews();
+        addView(content, layoutParams);
+
         startButton = (ImageView) findViewById(R.id.start);
         fullscreenButton = (ImageView) findViewById(R.id.fullscreen);
         progressBar = (SeekBar) findViewById(R.id.progress);
@@ -135,6 +146,24 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mHandler = new Handler();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (mFixedScale) {
+            final int specSize = MeasureSpec.getSize(widthMeasureSpec);
+            final int specHeight = (int) (specSize * 9.0f / 16.0f);
+
+            setMeasuredDimension(specSize, specHeight);
+
+            int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(specSize, MeasureSpec.EXACTLY);
+            int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(specHeight, MeasureSpec.EXACTLY);
+            if (getChildCount() > 0) {
+                getChildAt(0).measure(childWidthMeasureSpec, childHeightMeasureSpec);
+            }
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
     }
 
     public boolean setUp(String url, int screen, Object... objects) {
