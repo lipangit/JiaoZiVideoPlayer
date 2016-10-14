@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html>
 <body>
-
-
-<h1>hello h1</h1>
 <div class="content"></div>
 <div id="cont" style="width:100%;height:200px">
 </div>
-
-<div id="cont1" style="width:100%;height:200px">
+<div style="height:800px"></div>
+<div id="cont1" style="width:65%;height:200px;float:right;">
 </div>
-<!--它的height为什么是0呢-->
+<div style="height:800px"></div>
 <script>
     var cont=document.getElementById("cont");
-    jcvd.adViewJieCaoVideoPlayer(cont.width,200,cont.offsetTop,cont.offsetLeft)
+    jcvd.adViewJieCaoVideoPlayer(-1,200,0,0)
+    <!--jcvd.adViewJieCaoVideoPlayer(cont1.width,cont1.height,cont1.offsetTop,cont1.offsetLeft)-->
+
     var cont1=document.getElementById("cont1");
-    jcvd.adViewJieCaoVideoPlayer(cont1.width,200,cont1.offsetTop,cont1.offsetLeft)
+    jcvd.adViewJieCaoVideoPlayer(225,120,cont1.offsetTop,cont1.offsetLeft)
 
 </script>
 </body>

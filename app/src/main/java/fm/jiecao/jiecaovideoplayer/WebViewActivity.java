@@ -1,5 +1,6 @@
 package fm.jiecao.jiecaovideoplayer;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,7 @@ public class WebViewActivity extends AppCompatActivity {
     public class JCCallBack {
 
         @JavascriptInterface
-        public void adViewJieCaoVideoPlayer(final int width, final int height, final int top, final int bottom) {
+        public void adViewJieCaoVideoPlayer(final int width, final int height, final int top, final int left) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -47,7 +48,9 @@ public class WebViewActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     AbsoluteLayout.LayoutParams layoutParams = new AbsoluteLayout.LayoutParams(ll);
                     layoutParams.y = JCUtils.dip2px(WebViewActivity.this, top);
+                    layoutParams.x = JCUtils.dip2px(WebViewActivity.this, left);
                     layoutParams.height = JCUtils.dip2px(WebViewActivity.this, height);
+                    layoutParams.width = JCUtils.dip2px(WebViewActivity.this, width);
                     mWebView.addView(webVieo, layoutParams);
                 }
             });
