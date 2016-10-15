@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tips_not_wifi">Você está usando a rede móvel, você deseja mesmo ver o video?</string>
+    <string name="tips_not_wifi_confirm">Continuar</string>
+    <string name="tips_not_wifi_cancel">Parar</string>
+    <string name="no_url">Sem Vídeo</string>
+</resources>
