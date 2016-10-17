@@ -3,6 +3,7 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
@@ -78,5 +79,13 @@ public class JCUtils {
             return getAppCompActivity(((ContextThemeWrapper) context).getBaseContext());
         }
         return null;
+    }
+
+    public static void switchFullOrientation(Context context) {
+        getAppCompActivity(context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+    }
+
+    public static void switchNormalOrientation(Context context) {
+        getAppCompActivity(context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 }
