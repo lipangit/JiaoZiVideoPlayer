@@ -10,6 +10,7 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.support.annotation.IntDef;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -45,6 +46,14 @@ import java.util.TimerTask;
 public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayerListener, View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener, TextureView.SurfaceTextureListener {
 
     public static final String TAG = "JieCaoVideoPlayer";
+
+    @IntDef({SizeMode.MODE_DEFAULT,SizeMode.MODE_16_9,SizeMode.MODE_16_10,SizeMode.MODE_4_3})
+    public @interface SizeMode{
+        int MODE_DEFAULT = 0;
+        int MODE_16_9 = 9;
+        int MODE_16_10 = 10;
+        int MODE_4_3 = 12;
+    }
 
     public static final int FULLSCREEN_ID            = 33797;
     public static final int TINY_ID                  = 33798;
@@ -105,7 +114,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     protected int     mGestureDownVolume;
     protected int     mSeekTimePosition;
 
-    protected boolean mFixedScale = false;
+    protected @SizeMode int mFixedMode = SizeMode.MODE_16_9;
 
     public JCVideoPlayer(Context context) {
         super(context);
@@ -150,20 +159,41 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (mFixedScale) {
-            final int specSize = MeasureSpec.getSize(widthMeasureSpec);
-            final int specHeight = (int) (specSize * 9.0f / 16.0f);
+        switch (mFixedMode){
+            case SizeMode.MODE_DEFAULT:
+                super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+                break;
+            case SizeMode.MODE_16_9:
+            case SizeMode.MODE_16_10:
+            case SizeMode.MODE_4_3:
+                if (getChildCount() > 0) {
+                    final int specSize = MeasureSpec.getSize(widthMeasureSpec);
+                    final int specHeight = (int) ((specSize * (float)mFixedMode) / 16.0f);
 
-            setMeasuredDimension(specSize, specHeight);
+                    setMeasuredDimension(specSize, specHeight);
 
-            int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(specSize, MeasureSpec.EXACTLY);
-            int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(specHeight, MeasureSpec.EXACTLY);
-            if (getChildCount() > 0) {
-                getChildAt(0).measure(childWidthMeasureSpec, childHeightMeasureSpec);
-            }
-        } else {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+                    int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(specSize, MeasureSpec.EXACTLY);
+                    int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(specHeight, MeasureSpec.EXACTLY);
+
+                    getChildAt(0).measure(childWidthMeasureSpec, childHeightMeasureSpec);
+                }else{
+                    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+                }
+                break;
         }
+    }
+
+    /**
+     * size_mode 指的是容器类按照指定比例来计算高度,在视频展示中,一般宽度是固定的,这样内容视频会
+     * 按照最大填充来进行缩放{@link JCResizeTextureView},为占用的部分为黑色背景,设置SizeMode
+     * 容器会自行计算高度{@link #onMeasure(int widthMeasureSpec, int heightMeasureSpec)}
+     *
+     * @param mode {@link SizeMode}
+     *
+     * @author haoxiqiang
+     */
+    public void setSizeMode(@SizeMode int mode){
+        this.mFixedMode = mode;
     }
 
     public boolean setUp(String url, int screen, Object... objects) {
