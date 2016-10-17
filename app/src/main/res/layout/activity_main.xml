@@ -75,6 +75,14 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:text="About Ui"/>
+
+            <Button
+                android:id="@+id/about_webview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:text="About WebView"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
