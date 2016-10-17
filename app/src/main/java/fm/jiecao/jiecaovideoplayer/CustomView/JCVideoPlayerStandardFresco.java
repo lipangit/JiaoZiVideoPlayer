@@ -106,8 +106,8 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
             case CURRENT_STATE_NORMAL:
                 changeUiToNormal();
                 break;
-            case CURRENT_STATE_PREPAREING:
-                changeUiToPrepareingShow();
+            case CURRENT_STATE_PREPARING:
+                changeUiToPreparingShow();
                 startDismissControlViewTimer();
                 break;
             case CURRENT_STATE_PLAYING:
@@ -180,7 +180,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
                     showWifiDialog();
                     return;
                 }
-                startPlayLocic();
+                startPlayLogic();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
             }
@@ -209,7 +209,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                startPlayLocic();
+                startPlayLogic();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }
         });
@@ -234,18 +234,18 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         startDismissControlViewTimer();
     }
 
-    private void startPlayLocic() {
+    private void startPlayLogic() {
         onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
         prepareVideo();
         startDismissControlViewTimer();
     }
 
     private void onClickUiToggle() {
-        if (currentState == CURRENT_STATE_PREPAREING) {
+        if (currentState == CURRENT_STATE_PREPARING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
-                changeUiToPrepareingClear();
+                changeUiToPreparingClear();
             } else {
-                changeUiToPrepareingShow();
+                changeUiToPreparingShow();
             }
         } else if (currentState == CURRENT_STATE_PLAYING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
@@ -306,7 +306,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         }
     }
 
-    public void changeUiToPrepareingShow() {
+    public void changeUiToPreparingShow() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
@@ -322,7 +322,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
 
     }
 
-    private void changeUiToPrepareingClear() {
+    private void changeUiToPreparingClear() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
@@ -569,8 +569,8 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     protected ProgressBar mDialogVolumeProgressBar;
 
     @Override
-    public void showVolumDialog(float deltaY, int volumePercent) {
-        super.showVolumDialog(deltaY, volumePercent);
+    public void showVolumeDialog(float deltaY, int volumePercent) {
+        super.showVolumeDialog(deltaY, volumePercent);
         if (mVolumeDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_volume_dialog, null);
             mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
@@ -593,8 +593,8 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     @Override
-    public void dismissVolumDialog() {
-        super.dismissVolumDialog();
+    public void dismissVolumeDialog() {
+        super.dismissVolumeDialog();
         if (mVolumeDialog != null) {
             mVolumeDialog.dismiss();
         }

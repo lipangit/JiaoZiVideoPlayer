@@ -4,13 +4,12 @@
                 android:layout_height="match_parent"
                 android:background="@android:color/black">
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/surface_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
+        android:layout_height="match_parent">
 
-    </RelativeLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/layout_bottom"

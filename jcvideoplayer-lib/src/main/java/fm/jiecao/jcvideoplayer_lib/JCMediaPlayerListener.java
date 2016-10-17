@@ -22,11 +22,16 @@ public interface JCMediaPlayerListener {
 
     void goBackThisListener();
 
-    boolean goToOtherListener();
+    boolean backToOtherListener();
+
+    void onScrollChange();
+
+    int getScreenType();
 
     void autoFullscreenLeft();
 
     void autoFullscreenRight();
 
     void autoQuitFullscreen();
+
 }
