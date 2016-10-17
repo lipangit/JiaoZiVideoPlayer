@@ -930,11 +930,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 if (JCVideoPlayerManager.getFirst() != null) {
                     JCVideoPlayerManager.getFirst().autoFullscreenLeft();
                 }
-            } else if (y > 9.5) {
-                if (JCVideoPlayerManager.getFirst() != null) {
-                    JCVideoPlayerManager.getFirst().autoQuitFullscreen();
-                }
             }
+//            else if (y > 9.5) {
+//                if (JCVideoPlayerManager.getFirst() != null) {
+//                    JCVideoPlayerManager.getFirst().autoQuitFullscreen();
+//                }
+//            }
 
         }
 
