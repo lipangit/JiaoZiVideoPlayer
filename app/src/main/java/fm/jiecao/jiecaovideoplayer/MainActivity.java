@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子在家吗");
 
         jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
+        jcVideoPlayerStandard.setSizeMode(JCVideoPlayer.SizeMode.MODE_16_9);
         jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子坐这");
         Picasso.with(this)

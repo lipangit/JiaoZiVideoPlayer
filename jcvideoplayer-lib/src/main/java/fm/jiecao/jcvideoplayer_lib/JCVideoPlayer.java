@@ -1,6 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -8,11 +9,13 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.os.Handler;
+import android.support.annotation.IntDef;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
@@ -41,6 +44,14 @@ import tv.danmaku.ijk.media.player.IMediaPlayer;
 public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayerListener, View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener, TextureView.SurfaceTextureListener {
 
     public static final String TAG = "JieCaoVideoPlayer";
+
+    @IntDef({SizeMode.MODE_DEFAULT,SizeMode.MODE_16_9,SizeMode.MODE_16_10,SizeMode.MODE_4_3})
+    public @interface SizeMode{
+        int MODE_DEFAULT = 0;
+        int MODE_16_9 = 9;
+        int MODE_16_10 = 10;
+        int MODE_4_3 = 12;
+    }
 
     public static final int FULLSCREEN_ID = 33797;
     public static final int TINY_ID       = 33798;
@@ -101,6 +112,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     protected int     mGestureDownVolume;
     protected int     mSeekTimePosition;
 
+    protected @SizeMode int mFixedMode = SizeMode.MODE_16_9;
+
     public JCVideoPlayer(Context context) {
         super(context);
         init(context);
@@ -112,7 +125,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public void init(Context context) {
-        View.inflate(context, getLayoutId(), this);
+
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        layoutParams.gravity = Gravity.CENTER;
+        View content = LayoutInflater.from(context).inflate(getLayoutId(), this, false);
+        content.setBackgroundColor(Color.BLACK);
+        removeAllViews();
+        addView(content, layoutParams);
+
         startButton = (ImageView) findViewById(R.id.start);
         fullscreenButton = (ImageView) findViewById(R.id.fullscreen);
         progressBar = (SeekBar) findViewById(R.id.progress);
@@ -133,6 +153,45 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mHandler = new Handler();
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        switch (mFixedMode){
+            case SizeMode.MODE_DEFAULT:
+                super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+                break;
+            case SizeMode.MODE_16_9:
+            case SizeMode.MODE_16_10:
+            case SizeMode.MODE_4_3:
+                if (getChildCount() > 0) {
+                    final int specSize = MeasureSpec.getSize(widthMeasureSpec);
+                    final int specHeight = (int) ((specSize * (float)mFixedMode) / 16.0f);
+
+                    setMeasuredDimension(specSize, specHeight);
+
+                    int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(specSize, MeasureSpec.EXACTLY);
+                    int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(specHeight, MeasureSpec.EXACTLY);
+
+                    getChildAt(0).measure(childWidthMeasureSpec, childHeightMeasureSpec);
+                }else{
+                    super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+                }
+                break;
+        }
+    }
+
+    /**
+     * size_mode 指的是容器类按照指定比例来计算高度,在视频展示中,一般宽度是固定的,这样内容视频会
+     * 按照最大填充来进行缩放{@link JCResizeTextureView},为占用的部分为黑色背景,设置SizeMode
+     * 容器会自行计算高度{@link #onMeasure(int widthMeasureSpec, int heightMeasureSpec)}
+     *
+     * @param mode {@link SizeMode}
+     *
+     * @author haoxiqiang
+     */
+    public void setSizeMode(@SizeMode int mode){
+        this.mFixedMode = mode;
     }
 
     public boolean setUp(String url, int screen, Object... objects) {
