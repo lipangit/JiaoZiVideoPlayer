@@ -448,12 +448,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         JCUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         clearFullscreenLayout();
+        JCUtils.switchNormalOrientation(getContext());
+
     }
 
     @Override
     public boolean backToOtherListener() {//这里这个名字这么写并不对,这是在回退的时候gotoother,如果直接gotoother就不叫这个名字
         Log.i(TAG, "backToOtherListener " + " [" + this.hashCode() + "] ");
-
+        JCUtils.switchNormalOrientation(getContext());
         if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN
                 || currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_TINY) {
 //            if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN) {
@@ -635,6 +637,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void startWindowFullscreen() {
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
         hideSupportActionBar(getContext());
+        JCUtils.switchFullOrientation(getContext());
+
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext())).getWindow().getDecorView();
 //                .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(FULLSCREEN_ID);
@@ -672,6 +676,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public void startWindowTiny() {
