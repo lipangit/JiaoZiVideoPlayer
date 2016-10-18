@@ -484,7 +484,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     long lastAutoFullscreenTime = 0;
 
     @Override
-    public void autoFullscreenLeft() {
+    public void autoFullscreen() {
         if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
                 && isCurrentMediaListener()
                 && currentState == CURRENT_STATE_PLAYING
@@ -925,10 +925,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             float x = event.values[SensorManager.DATA_X];
             float y = event.values[SensorManager.DATA_Y];
             float z = event.values[SensorManager.DATA_Z];
-            if (x < -10 || x > 10) {
+            if ((x < -10 || x > 10) && Math.abs(y) < 1.5) {
                 //direction left
                 if (JCVideoPlayerManager.getFirst() != null) {
-                    JCVideoPlayerManager.getFirst().autoFullscreenLeft();
+                    JCVideoPlayerManager.getFirst().autoFullscreen();
                 }
             }
 //            else if (y > 9.5) {
