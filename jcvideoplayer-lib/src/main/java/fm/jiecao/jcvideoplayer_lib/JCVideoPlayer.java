@@ -426,6 +426,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onAutoCompletion() {
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
         onEvent(JCBuriedPoint.ON_AUTO_COMPLETE);
+        setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
+        JCVideoPlayerManager.popListener();//自己进入autoComplete状态，其他的进入complete状态
         JCVideoPlayerManager.completeAll();
     }
 
