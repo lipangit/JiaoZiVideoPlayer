@@ -32,7 +32,7 @@ public interface JCMediaPlayerListener {
 
     int getState();
 
-    void autoFullscreen();
+    void autoFullscreen(float x);
 
     void autoFullscreenRight();
 

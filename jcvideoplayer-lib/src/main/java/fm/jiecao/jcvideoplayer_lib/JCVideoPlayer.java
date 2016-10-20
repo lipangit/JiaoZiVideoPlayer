@@ -1,6 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -485,16 +486,21 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         return false;
     }
 
-    long lastAutoFullscreenTime = 0;
+    public static long lastAutoFullscreenTime = 0;
 
     @Override
-    public void autoFullscreen() {
-        if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
-                && isCurrentMediaListener()
+    public void autoFullscreen(float x) {
+        if (isCurrentMediaListener()
                 && currentState == CURRENT_STATE_PLAYING
                 && currentScreen != SCREEN_WINDOW_FULLSCREEN
                 && currentScreen != SCREEN_WINDOW_TINY) {
-            lastAutoFullscreenTime = System.currentTimeMillis();
+            if (x > 0) {
+                JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(
+                        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            } else {
+                JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(
+                        ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+            }
             startWindowFullscreen();
         }
     }
@@ -678,6 +684,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("FULLSCREEN: fullscreen over");
 
     }
 
@@ -929,14 +936,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static class JCAutoFullscreenListener implements SensorEventListener {
         @Override
         public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
-            float x = event.values[SensorManager.DATA_X];
+            final float x = event.values[SensorManager.DATA_X];
             float y = 0;//event.values[SensorManager.DATA_Y];
             float z = event.values[SensorManager.DATA_Z];
             if ((x < -10 || x > 10) && Math.abs(y) < 1.5) {
                 //direction left
-                if (JCVideoPlayerManager.getFirst() != null) {
-                    JCVideoPlayerManager.getFirst().autoFullscreen();
+                if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000) {
+                    if (JCVideoPlayerManager.getFirst() != null) {
+                        System.out.println("FULLSCREEN: SENSOR TO");
+                        JCVideoPlayerManager.getFirst().autoFullscreen(x);
+                    }
+                    lastAutoFullscreenTime = System.currentTimeMillis();
                 }
+
             }
 //            else if (y > 9.5) {
 //                if (JCVideoPlayerManager.getFirst() != null) {

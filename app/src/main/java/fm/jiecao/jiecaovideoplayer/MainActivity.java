@@ -1,6 +1,7 @@
 package fm.jiecao.jiecaovideoplayer;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -64,6 +65,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         JCVideoPlayer.setJcBuriedPoint(new MyJCBuriedPointStandard());
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation==Configuration.ORIENTATION_PORTRAIT){
+            System.out.println("FULLSCREEN: 竖竖");
+        }
+        if(newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
+            System.out.println("FULLSCREEN: 横");
+        }
     }
 
     @Override
