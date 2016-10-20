@@ -930,7 +930,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         @Override
         public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
             float x = event.values[SensorManager.DATA_X];
-            float y = event.values[SensorManager.DATA_Y];
+            float y = 0;//event.values[SensorManager.DATA_Y];
             float z = event.values[SensorManager.DATA_Z];
             if ((x < -10 || x > 10) && Math.abs(y) < 1.5) {
                 //direction left
