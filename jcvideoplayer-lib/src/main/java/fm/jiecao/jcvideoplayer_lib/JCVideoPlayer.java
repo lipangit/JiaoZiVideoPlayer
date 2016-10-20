@@ -684,8 +684,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("FULLSCREEN: fullscreen over");
-
     }
 
     public void startWindowTiny() {
@@ -937,25 +935,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         @Override
         public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
             final float x = event.values[SensorManager.DATA_X];
-            float y = 0;//event.values[SensorManager.DATA_Y];
+            float y = event.values[SensorManager.DATA_Y];
             float z = event.values[SensorManager.DATA_Z];
-            if ((x < -10 || x > 10) && Math.abs(y) < 1.5) {
-                //direction left
+            //过滤掉用力过猛会有一个反向的大数值
+            if (((x > -15 && x < -10) || (x < 15 && x > 10)) && Math.abs(y) < 1.5) {
                 if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000) {
                     if (JCVideoPlayerManager.getFirst() != null) {
-                        System.out.println("FULLSCREEN: SENSOR TO");
                         JCVideoPlayerManager.getFirst().autoFullscreen(x);
                     }
                     lastAutoFullscreenTime = System.currentTimeMillis();
                 }
-
             }
-//            else if (y > 9.5) {
-//                if (JCVideoPlayerManager.getFirst() != null) {
-//                    JCVideoPlayerManager.getFirst().autoQuitFullscreen();
-//                }
-//            }
-
         }
 
         @Override
