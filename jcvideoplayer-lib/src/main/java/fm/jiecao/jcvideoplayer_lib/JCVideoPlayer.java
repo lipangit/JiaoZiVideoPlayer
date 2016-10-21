@@ -43,15 +43,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static final String TAG = "JieCaoVideoPlayer";
 
-    public static final int FULLSCREEN_ID = 33797;
-    public static final int TINY_ID       = 33798;
-    public static final int THRESHOLD     = 80;
-//    public static final int FULL_SCREEN_NORMAL_DELAY = 500;
+    public static final int FULLSCREEN_ID            = 33797;
+    public static final int TINY_ID                  = 33798;
+    public static final int THRESHOLD                = 80;
+    public static final int FULL_SCREEN_NORMAL_DELAY = 500;
 
-    public static boolean ACTION_BAR_EXIST       = true;
-    public static boolean TOOL_BAR_EXIST         = true;
-    public static boolean WIFI_TIP_DIALOG_SHOWED = false;
-//    public static long    CLICK_QUIT_FULLSCREEN_TIME = 0;
+    public static boolean ACTION_BAR_EXIST           = true;
+    public static boolean TOOL_BAR_EXIST             = true;
+    public static boolean WIFI_TIP_DIALOG_SHOWED     = false;
+    public static long    CLICK_QUIT_FULLSCREEN_TIME = 0;
 
     public static final int SCREEN_LAYOUT_NORMAL     = 0;
     public static final int SCREEN_LAYOUT_LIST       = 1;
@@ -480,7 +480,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             JCMediaManager.instance().lastState = currentState;//save state
             JCVideoPlayerManager.popListener();
             JCVideoPlayerManager.getFirst().goBackThisListener();
-//            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
+            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             return true;
         }
         return false;
@@ -644,6 +644,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void startWindowFullscreen() {
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
+        CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
         hideSupportActionBar(getContext());
         JCUtils.switchFullOrientation(getContext());
 
@@ -807,11 +808,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     };
 
     public void release() {
-//        if (isCurrentMediaListener() &&
-//                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
-        Log.d(TAG, "release [" + this.hashCode() + "]");
-        releaseAllVideos();
-//        }
+        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
+            //如果正在全屏播放就不能手动调用release
+            if (JCVideoPlayerManager.getFirst() != null &&
+                    JCVideoPlayerManager.getFirst().getScreenType() != SCREEN_WINDOW_FULLSCREEN) {
+                Log.d(TAG, "release [" + this.hashCode() + "]");
+                releaseAllVideos();
+            }
+        }
     }
 
     public boolean isCurrentMediaListener() {
