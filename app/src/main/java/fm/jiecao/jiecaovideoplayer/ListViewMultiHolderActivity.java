@@ -83,14 +83,13 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                     convertView.setTag(viewHolder);
                 }
 
-                boolean setUp = viewHolder.jcVideoPlayer.setUp(
+                viewHolder.jcVideoPlayer.setUp(
                         VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                         VideoConstant.videoTitles[position]);
-                if (setUp) {
+
                     Picasso.with(ListViewMultiHolderActivity.this)
                             .load(VideoConstant.videoThumbs[position])
                             .into(viewHolder.jcVideoPlayer.thumbImageView);
-                }
             } else {
                 TextViewHolder textViewHolder;
                 if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof TextViewHolder) {
