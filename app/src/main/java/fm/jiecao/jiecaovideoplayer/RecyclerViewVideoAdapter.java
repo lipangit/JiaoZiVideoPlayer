@@ -35,15 +35,12 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder [" + holder.jcVideoPlayer.hashCode() + "] position=" + position);
 
-        boolean setUp = holder.jcVideoPlayer.setUp(
+        holder.jcVideoPlayer.setUp(
                 VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 VideoConstant.videoTitles[position]);
-        if (setUp) {
             Picasso.with(holder.jcVideoPlayer.getContext())
                     .load(VideoConstant.videoThumbs[position])
                     .into(holder.jcVideoPlayer.thumbImageView);
-        }
-
     }
 
     @Override
