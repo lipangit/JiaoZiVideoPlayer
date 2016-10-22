@@ -81,11 +81,25 @@ public class JCUtils {
         return null;
     }
 
+<<<<<<< Updated upstream
     public static void switchFullOrientation(Context context) {
         getAppCompActivity(context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+=======
+    public static int dip2px(Context context, float dpValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
+    }
+
+    public static void switchFullOrientation(Context context) {
+        getAppCompActivity(context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+>>>>>>> Stashed changes
     }
 
     public static void switchNormalOrientation(Context context) {
         getAppCompActivity(context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 }
