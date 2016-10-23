@@ -876,7 +876,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
-
+        JCUtils.switchFullOrientation(context);
         hideSupportActionBar(context);
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(context)).getWindow().getDecorView();
 //                .findViewById(Window.ID_ANDROID_CONTENT);
