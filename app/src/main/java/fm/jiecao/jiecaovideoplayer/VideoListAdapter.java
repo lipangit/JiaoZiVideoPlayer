@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -58,14 +57,13 @@ public class VideoListAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        boolean setUp = viewHolder.jcVideoPlayer.setUp(
+        viewHolder.jcVideoPlayer.setUp(
                 VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 VideoConstant.videoTitles[position]);
-        if (setUp) {
-            Picasso.with(convertView.getContext())
-                    .load(VideoConstant.videoThumbs[position])
-                    .into(viewHolder.jcVideoPlayer.thumbImageView);
-        }
+
+        Picasso.with(convertView.getContext())
+                .load(VideoConstant.videoThumbs[position])
+                .into(viewHolder.jcVideoPlayer.thumbImageView);
         return convertView;
     }
 

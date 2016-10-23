@@ -1,10 +1,11 @@
 package fm.jiecao.jiecaovideoplayer;
 
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.AbsListView;
 import android.widget.ListView;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -15,6 +16,9 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 public class ListViewNormalActivity extends AppCompatActivity {
     ListView         listView;
     VideoListAdapter adapterVideoList;
+
+    SensorManager                          sensorManager;
+    JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,6 +33,9 @@ public class ListViewNormalActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listview);
         adapterVideoList = new VideoListAdapter(this);
         listView.setAdapter(adapterVideoList);
+
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
     }
 
     @Override
@@ -40,8 +47,16 @@ public class ListViewNormalActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
+        sensorManager.unregisterListener(sensorEventListener);
         JCVideoPlayer.releaseAllVideos();
     }
 
