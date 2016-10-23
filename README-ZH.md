@@ -19,6 +19,7 @@
 7. 基于[ijkplayer](https://github.com/Bilibili/ijkplayer), 支持hls,rtsp
 8. 设置http头信息
 9. 重力感应自动全屏
+10. WebView嵌套本地视频
 
 ##效果
 

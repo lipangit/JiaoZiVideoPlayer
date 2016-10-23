@@ -25,6 +25,7 @@ Ambition is become the most widely used video playback control.
 7. Base on [ijkplayer](https://github.com/Bilibili/ijkplayer), support hls,rtsp
 8. Put head data
 9. Gravity sensor auto fullscreen
+10. WebView with local video control
 
 ## Effect
 
