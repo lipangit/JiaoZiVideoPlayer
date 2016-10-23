@@ -222,8 +222,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             } else {
                 Log.d(TAG, "toFullscreenActivity [" + this.hashCode() + "] ");
                 onEvent(JCBuriedPoint.ON_ENTER_FULLSCREEN);
-                JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(
-                        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                 startWindowFullscreen();
             }
         } else if (i == R.id.surface_container && currentState == CURRENT_STATE_ERROR) {
@@ -876,7 +874,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
-
+        JCUtils.switchFullOrientation(context);
         hideSupportActionBar(context);
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(context)).getWindow().getDecorView();
 //                .findViewById(Window.ID_ANDROID_CONTENT);

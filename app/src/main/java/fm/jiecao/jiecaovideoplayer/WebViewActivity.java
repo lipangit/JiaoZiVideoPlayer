@@ -46,10 +46,10 @@ public class WebViewActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     JCVideoPlayerStandard webVieo = new JCVideoPlayerStandard(WebViewActivity.this);
-                    webVieo.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4",
+                    webVieo.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4",
                             JCVideoPlayer.SCREEN_LAYOUT_LIST, "嫂子好困");
                     Picasso.with(WebViewActivity.this)
-                            .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
+                            .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
                             .into(webVieo.thumbImageView);
                     ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     AbsoluteLayout.LayoutParams layoutParams = new AbsoluteLayout.LayoutParams(ll);

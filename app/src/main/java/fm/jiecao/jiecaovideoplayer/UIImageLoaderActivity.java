@@ -39,38 +39,38 @@ public class UIImageLoaderActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("LoadImageDemo");
 
         videoController1 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller1);
-        videoController1.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
+        videoController1.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 "嫂子抓住");
-        ImageLoader.getInstance().displayImage("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg",
+        ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg",
                 videoController1.thumbImageView);
 
         videoController2 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller2);
-        videoController2.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
+        videoController2.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 "嫂子别晃");
         Glide.with(this)
-                .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
+                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
                 .into(videoController2.thumbImageView);
 
         videoController3 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller3);
-        videoController3.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
+        videoController3.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 "嫂子别躲");
         Picasso.with(this)
-                .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
+                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
                 .into(videoController3.thumbImageView);
 
         videoController4 = (JCVideoPlayerStandard) findViewById(R.id.videocontroller4);
-        videoController4.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
+        videoController4.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 "嫂子别忘了");
         RequestQueue mQueue = Volley.newRequestQueue(getApplicationContext());
         com.android.volley.toolbox.ImageLoader imageLoader = new com.android.volley.toolbox.ImageLoader(mQueue, new BitmapCache());
         com.android.volley.toolbox.ImageLoader.ImageListener listener =
                 com.android.volley.toolbox.ImageLoader.getImageListener(videoController4.thumbImageView, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
-        imageLoader.get("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg", listener);
+        imageLoader.get("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg", listener);
 
         videoController5 = (JCVideoPlayerStandardFresco) findViewById(R.id.videocontroller5);
-        videoController5.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
+        videoController5.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
                 "嫂子打电话");
-        Uri uri = Uri.parse("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg");
+        Uri uri = Uri.parse("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg");
         videoController5.thumbImageView.setImageURI(uri);
 
         View vv = findViewById(R.id.scroll);

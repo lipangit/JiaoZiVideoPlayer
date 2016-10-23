@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     JCVideoPlayerStandard mJcVideoPlayerStandard;
     JCVideoPlayerSimple   mJcVideoPlayerSimple;
 
-    Button mTinyWindow, mAutoTinyWindow, mAboutListView, mAboutUI, mPlayDirectly;
+    Button mTinyWindow, mAutoTinyWindow, mAboutListView, mAboutUI, mPlayDirectly,mAboutWebView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,22 +42,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAboutUI = (Button) findViewById(R.id.play_directly_without_layout);
         mAboutListView = (Button) findViewById(R.id.about_listview);
         mPlayDirectly = (Button) findViewById(R.id.about_ui);
+        mAboutWebView = (Button) findViewById(R.id.about_webview);
 
         mTinyWindow.setOnClickListener(this);
         mAutoTinyWindow.setOnClickListener(this);
         mAboutListView.setOnClickListener(this);
         mAboutUI.setOnClickListener(this);
         mPlayDirectly.setOnClickListener(this);
+        mAboutWebView.setOnClickListener(this);
 
         mJcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.simple_demo);
         mJcVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子在家吗");
 
         mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
-        mJcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
+        mJcVideoPlayerStandard.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子坐这");
         Picasso.with(this)
-                .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
+                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
                 .into(mJcVideoPlayerStandard.thumbImageView);
 //        mJcVideoPlayerStandard.setLoop(true);
 
