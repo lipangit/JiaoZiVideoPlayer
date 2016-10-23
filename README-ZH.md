@@ -29,7 +29,7 @@
 
 ##使用
 
-1.添加类库,这个版本的目的是预览自动进入小窗功能,不要用在生产环境,稳定版本仍然是v4.6.5
+1.添加类库
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:4.8.1'
 ```
