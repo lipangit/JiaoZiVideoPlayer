@@ -30,18 +30,18 @@ public class UISmallChangeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ui_small_change);
 
         jcVideoPlayerStandardWithShareButton = (JCVideoPlayerStandardShowShareButtonAfterFullscreen) findViewById(R.id.custom_videoplayer_standard_with_share_button);
-        jcVideoPlayerStandardWithShareButton.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
+        jcVideoPlayerStandardWithShareButton.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子上飞机");
         Picasso.with(this)
-                .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
+                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
                 .into(jcVideoPlayerStandardWithShareButton.thumbImageView);
 
 
         jcVideoPlayerStandardShowTitleAfterFullscreen = (JCVideoPlayerStandardShowTitleAfterFullscreen) findViewById(R.id.custom_videoplayer_standard_show_title_after_fullscreen);
-        jcVideoPlayerStandardShowTitleAfterFullscreen.setUp("http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
+        jcVideoPlayerStandardShowTitleAfterFullscreen.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子看电视");
         Picasso.with(this)
-                .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
+                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
                 .into(jcVideoPlayerStandardShowTitleAfterFullscreen.thumbImageView);
 //        jcVideoPlayerStandardShowTitleAfterFullscreen.setLoop(true);
     }
