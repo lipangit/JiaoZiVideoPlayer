@@ -7,7 +7,7 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
 
-立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
+####立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
 
 ##主要特点
 1. 视频全屏播放和浮层小窗播放
@@ -34,11 +34,7 @@
 compile 'fm.jiecao:jiecaovideoplayer:4.8.1'
 ```
 
-或直接下载
-
-* [jiecaovideoplayer-4.8.1.aar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1.aar)
-* [jiecaovideoplayer-4.8.1-javadoc.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1-javadoc.jar)
-* [jiecaovideoplayer-4.8.1-sources.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1-sources.jar)
+[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v4.8.1)
 
 2.添加布局
 ```xml
@@ -72,49 +68,17 @@ protected void onPause() {
 }
 ```
 
-####其他接口
-
-直接进入全屏
-```java
-JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
-```
-
-重力感应自动进入全屏
-```java
-JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
-SensorManager                          sensorManager;
-@Override
-protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-    sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
-}
-@Override
-protected void onResume() {
-    super.onResume();
-    Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-    sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
-}
-@Override
-protected void onPause() {
-    super.onPause();
-    sensorManager.unregisterListener(sensorEventListener);
-}
-```
-
 ####混淆
 ```
 -keep class tv.danmaku.ijk.** { *; }
 -dontwarn tv.danmaku.ijk.**
 ```
 
-播放Assets文件夹下的视频,请先拷贝到本地路径再播放.[亲测](https://github.com/Bilibili/ijkplayer/issues/1013)如果直接传参数IMediaDataSource,只停留在第一帧画面上并且后台会报错
+####[其他接口]()
 
-##[自定义UI](./README_CUSTOM_UI-ZH.md)
+####[自定义UI]()
 
-##贡献者
-
-[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw) [Miguel Aragues](https://github.com/Maragues) [e16din](https://github.com/e16din)
+##[贡献者](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
 
 ## License MIT
 
