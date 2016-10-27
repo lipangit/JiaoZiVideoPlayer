@@ -9,10 +9,9 @@
 
 * This project need translators, mother language is english, you can change everything edit readme, release note, formate variable and annotation.
 
-Ambition is become the most widely used video playback control.
+####Ambition is become the most widely used video playback control.
 
-
-[中文文档](README-ZH.md)
+[中文文档](README-ZH.md)           [WorkPlan](https://github.com/lipangit/JieCaoVideoPlayer/projects)
 
 ## Features
 
@@ -40,11 +39,7 @@ Ambition is become the most widely used video playback control.
 compile 'fm.jiecao:jiecaovideoplayer:4.8.1'
 ```
 
-Or download lib
-
-* [jiecaovideoplayer-4.8.1.aar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1.aar)
-* [jiecaovideoplayer-4.8.1-javadoc.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1-javadoc.jar)
-* [jiecaovideoplayer-4.8.1-sources.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1-sources.jar)
+[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v4.8.1)
 
 2.Add JCVideoPlayer in your layout
 ```xml
@@ -78,51 +73,19 @@ protected void onPause() {
 }
 ```
 
-#### Other APIs
-
-Start fullscreen directly.
-```java
-JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
-```
-
-Gravity sensor auto fullscreen
-```java
-JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
-SensorManager                          sensorManager;
-@Override
-protected void onCreate(@Nullable Bundle savedInstanceState) {
-super.onCreate(savedInstanceState);
-    sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-    sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
-}
-@Override
-protected void onResume() {
-    super.onResume();
-    Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-    sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
-}
-@Override
-protected void onPause() {
-    super.onPause();
-    sensorManager.unregisterListener(sensorEventListener);
-}
-```
-
-ProGuard
+####ProGuard
 ```
 -keep class tv.danmaku.ijk.** { *; }
 -dontwarn tv.danmaku.ijk.**
 ```
 
-Play video in assets you should copy to local path first.[Try by myself like this](https://github.com/Bilibili/ijkplayer/issues/1013)textureview will stop on first frame and error on logcat
+####[Other APIs]()
 
-##[Custom UI](./README_CUSTOM_UI.md)
+####[Custom UI]()
 
-##Contributors
+##[Contributors](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
 
-[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw) [Miguel Aragues](https://github.com/Maragues) [e16din](https://github.com/e16din)
-
-## License MIT
+##License MIT
 
 Copyright (c) 2015-2016 节操精选 http://jiecao.fm
 

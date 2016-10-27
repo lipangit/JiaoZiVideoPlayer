@@ -8,9 +8,11 @@
 </p>
 
 ####立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
-[英文文档](https://github.com/lipangit/JieCaoVideoPlayer) [工作计划](https://github.com/lipangit/JieCaoVideoPlayer/projects)
+
+[英文文档](https://github.com/lipangit/JieCaoVideoPlayer)           [工作计划](https://github.com/lipangit/JieCaoVideoPlayer/projects)
 
 ##主要特点
+
 1. 视频全屏播放和浮层小窗播放
 2. 可以完全自定义UI
 3. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
@@ -81,7 +83,7 @@ protected void onPause() {
 
 ##[贡献者](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
 
-## License MIT
+##License MIT
 
 Copyright (c) 2015-2016 节操精选 http://jiecao.fm
 
