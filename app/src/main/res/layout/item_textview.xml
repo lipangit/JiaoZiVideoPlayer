@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/textview"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="200dp"
         android:gravity="center"
         android:text="This is a holder with textview"
         android:textSize="18sp"
