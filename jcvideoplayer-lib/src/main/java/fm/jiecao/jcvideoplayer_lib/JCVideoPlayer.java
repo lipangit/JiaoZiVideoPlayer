@@ -428,6 +428,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onAutoCompletion() {
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
         onEvent(JCBuriedPoint.ON_AUTO_COMPLETE);
+        dismissVolumeDialog();
+        dismissProgressDialog();
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
         JCVideoPlayerManager.popListener();//自己进入autoComplete状态，其他的进入complete状态
         JCVideoPlayerManager.completeAll();
@@ -476,7 +478,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 return true;
             }
             ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
-                .findViewById(Window.ID_ANDROID_CONTENT);
+                    .findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
             JCMediaManager.instance().lastState = currentState;//save state
             JCVideoPlayerManager.popListener();
