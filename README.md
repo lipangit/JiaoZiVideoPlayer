@@ -79,9 +79,9 @@ protected void onPause() {
 -dontwarn tv.danmaku.ijk.**
 ```
 
-####[Other APIs]()
+####[Other APIs](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 
-####[Custom UI]()
+####[Custom UI](https://github.com/lipangit/JieCaoVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
 
 ##[Contributors](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
 
