@@ -41,11 +41,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public ImageView         thumbImageView;
     public ImageView         coverImageView;
     public ImageView         tinyBackImageView;
-    public JCResizeImageView cacheImageView;
 
-    protected static Bitmap pauseSwitchCoverBitmap = null;
-    protected boolean textureUpdated;
-    protected boolean textureSizeChanged;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
@@ -68,7 +64,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         coverImageView = (ImageView) findViewById(R.id.cover);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
-        cacheImageView = (JCResizeImageView) findViewById(R.id.cache);
 
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
@@ -93,8 +88,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             } else if (currentScreen == SCREEN_WINDOW_TINY) {
                 tinyBackImageView.setVisibility(View.VISIBLE);
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
             }
             return true;
         }
@@ -139,12 +133,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    @Override
-    public void onCompletion() {
-        super.onCompletion();
-        // 清理cover image,回收bitmap内存
-        clearCacheImage();
-    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -216,74 +204,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    private void obtainCache() {
-        Point videoSize = JCMediaManager.instance().getVideoSize();
-        if (videoSize != null) {
-            Bitmap bitmap = JCMediaManager.textureView.getBitmap(videoSize.x, videoSize.y);
-            if (bitmap != null) {
-                pauseSwitchCoverBitmap = bitmap;
-            }
-        }
-    }
 
-    public void refreshCache() {
-        if (pauseSwitchCoverBitmap != null) {
-            JCVideoPlayerStandard jcVideoPlayer = ((JCVideoPlayerStandard) JCVideoPlayerManager.getFirst());
-            if (jcVideoPlayer != null) {
-                jcVideoPlayer.cacheImageView.setImageBitmap(pauseSwitchCoverBitmap);
-                jcVideoPlayer.cacheImageView.setVisibility(VISIBLE);
-            }
-        }
-    }
-
-    @Override
-    public void onInfo(int what, int extra) {
-        super.onInfo(what, extra);
-        if (what == IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED) {
-            cacheImageView.setRotation(JCMediaManager.instance().videoRotation);
-        }
-    }
-
-    @Override
-    public void onVideoSizeChanged() {
-        super.onVideoSizeChanged();
-        cacheImageView.setVideoSize(JCMediaManager.instance().getVideoSize());
-    }
-
-    // onSurfaceTextureSizeChanged 在 onSurfaceTextureUpdated 之前调用
-
-    @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        super.onSurfaceTextureAvailable(surface, width, height);
-    }
-
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-        super.onSurfaceTextureSizeChanged(surface, width, height);
-
-        // 如果SurfaceTexture还没有更新Image，则记录SizeChanged事件，否则忽略
-        if (!textureUpdated) {
-            textureSizeChanged = true;
-        }
-    }
-
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        return super.onSurfaceTextureDestroyed(surface);
-    }
-
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-        super.onSurfaceTextureUpdated(surface);
-
-        // 如果textureSizeChanged=true，则说明此次Updated事件不是Image更新引起的
-        if (!textureSizeChanged) {
-            cacheImageView.setVisibility(INVISIBLE);
-            JCMediaManager.textureView.setHasUpdated();
-        } else {
-            textureSizeChanged = false;
-        }
-    }
 
     @Override
     public void showWifiDialog() {
@@ -311,28 +232,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onStartTrackingTouch(SeekBar seekBar) {
         super.onStartTrackingTouch(seekBar);
         cancelDismissControlViewTimer();
-    }
-
-    @Override
-    public void addTextureView() {
-        super.addTextureView();
-        cacheImageView.setVideoSize(JCMediaManager.instance().getVideoSize());
-        cacheImageView.setRotation(JCMediaManager.instance().videoRotation);
-    }
-
-    @Override
-    public void startWindowFullscreen() {
-        obtainCache();
-        super.startWindowFullscreen();
-        refreshCache();
-    }
-
-    @Override
-    public boolean backToOtherListener() {
-        obtainCache();
-        boolean b = super.backToOtherListener();
-        refreshCache();
-        return b;
     }
 
     @Override
@@ -400,14 +299,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -420,13 +317,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.VISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.VISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -439,13 +334,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.VISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.VISIBLE, View.VISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -458,8 +351,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onPrepared() {
         super.onPrepared();
         setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                View.INVISIBLE);
+                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
         startDismissControlViewTimer();
     }
 
@@ -468,14 +360,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -489,13 +379,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                        cacheImageView.getVisibility());
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                        cacheImageView.getVisibility());
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -508,14 +396,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        cacheImageView.getVisibility());
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        cacheImageView.getVisibility());
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -529,13 +415,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        cacheImageView.getVisibility());
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        cacheImageView.getVisibility());
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -548,13 +432,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        cacheImageView.getVisibility());
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        cacheImageView.getVisibility());
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -567,14 +449,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                        cacheImageView.getVisibility());
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                        cacheImageView.getVisibility());
+                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -588,14 +468,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -609,14 +487,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -631,14 +507,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -648,7 +522,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     public void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro,
-                                      int thumbImg, int coverImg, int bottomPro, int cacheImg) {
+                                      int thumbImg, int coverImg, int bottomPro) {
         topContainer.setVisibility(topCon);
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
@@ -660,7 +534,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
         coverImageView.setVisibility(coverImg);
         bottomProgressBar.setVisibility(bottomPro);
-        cacheImageView.setVisibility(cacheImg);
     }
 
     public void updateStartImage() {
@@ -673,10 +546,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-    public void clearCacheImage() {
-        pauseSwitchCoverBitmap = null;
-        cacheImageView.setImageBitmap(null);
-    }
 
     protected Dialog      mProgressDialog;
     protected ProgressBar mDialogProgressBar;
