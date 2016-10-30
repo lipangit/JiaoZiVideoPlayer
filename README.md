@@ -1,4 +1,4 @@
-<a href="https://github.com/lipangit/JieCaoVideoPlayer" target="_blank"><img src="https://raw.githubusercontent.com/lipangit/JieCaoVideoPlayer/develop/screenshots/logo2x.png" style="max-width:100%;"></a>
+<a href="https://github.com/lipangit/JieCaoVideoPlayer" target="_blank"><img src="https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.0/logo2x.png" style="max-width:100%;"></a>
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
@@ -9,10 +9,9 @@
 
 * This project need translators, mother language is english, you can change everything edit readme, release note, formate variable and annotation.
 
-Ambition is become the most widely used video playback control.
+####Ambition is become the most widely used video playback control.
 
-
-[中文文档](README-ZH.md)
+[中文文档](README-ZH.md)           [WorkPlan](https://github.com/lipangit/JieCaoVideoPlayer/projects)
 
 ## Features
 
@@ -25,6 +24,7 @@ Ambition is become the most widely used video playback control.
 7. Base on [ijkplayer](https://github.com/Bilibili/ijkplayer), support hls,rtsp
 8. Put head data
 9. Gravity sensor auto fullscreen
+10. WebView with local video control
 
 ## Effect
 
@@ -34,16 +34,12 @@ Ambition is become the most widely used video playback control.
 
 ## Usage
 
-1.Import library,new feature auto tiny window is not perfect this version, do not use it in you project, this is juct preview the feature , Stable version is still v4.6.5
+1.Import library
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:4.8.1'
 ```
 
-Or download lib
-
-* [jiecaovideoplayer-4.8.1.aar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1.aar)
-* [jiecaovideoplayer-4.8.1-javadoc.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1-javadoc.jar)
-* [jiecaovideoplayer-4.8.1-sources.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1-sources.jar)
+[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v4.8.1)
 
 2.Add JCVideoPlayer in your layout
 ```xml
@@ -77,51 +73,19 @@ protected void onPause() {
 }
 ```
 
-#### Other APIs
-
-Start fullscreen directly.
-```java
-JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
-```
-
-Gravity sensor auto fullscreen
-```java
-JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
-SensorManager                          sensorManager;
-@Override
-protected void onCreate(@Nullable Bundle savedInstanceState) {
-super.onCreate(savedInstanceState);
-    sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-    sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
-}
-@Override
-protected void onResume() {
-    super.onResume();
-    Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-    sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
-}
-@Override
-protected void onPause() {
-    super.onPause();
-    sensorManager.unregisterListener(sensorEventListener);
-}
-```
-
-ProGuard
+####ProGuard
 ```
 -keep class tv.danmaku.ijk.** { *; }
 -dontwarn tv.danmaku.ijk.**
 ```
 
-Play video in assets you should copy to local path first.[Try by myself like this](https://github.com/Bilibili/ijkplayer/issues/1013)textureview will stop on first frame and error on logcat
+####[Other APIs](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 
-##[Custom UI](./README_CUSTOM_UI.md)
+####[Custom UI](https://github.com/lipangit/JieCaoVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
 
-##Contributors
+##[Contributors](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
 
-[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw) [Miguel Aragues](https://github.com/Maragues) [e16din](https://github.com/e16din)
-
-## License MIT
+##License MIT
 
 Copyright (c) 2015-2016 节操精选 http://jiecao.fm
 
@@ -131,5 +95,5 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: ./screenshots/j7.jpg
+[1]: https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.0/j8.jpg
 

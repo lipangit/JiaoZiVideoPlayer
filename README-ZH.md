@@ -1,4 +1,4 @@
-<a href="https://github.com/lipangit/JieCaoVideoPlayer" target="_blank"><img src="https://raw.githubusercontent.com/lipangit/JieCaoVideoPlayer/develop/screenshots/logo2x.png" style="max-width:100%;"></a>
+<a href="https://github.com/lipangit/JieCaoVideoPlayer" target="_blank"><img src="https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.0/logo2x.png" style="max-width:100%;"></a>
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
@@ -7,9 +7,12 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
 
-立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
+####立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
+
+[英文文档](https://github.com/lipangit/JieCaoVideoPlayer)           [工作计划](https://github.com/lipangit/JieCaoVideoPlayer/projects)
 
 ##主要特点
+
 1. 视频全屏播放和浮层小窗播放
 2. 可以完全自定义UI
 3. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
@@ -19,6 +22,7 @@
 7. 基于[ijkplayer](https://github.com/Bilibili/ijkplayer), 支持hls,rtsp
 8. 设置http头信息
 9. 重力感应自动全屏
+10. WebView嵌套本地视频
 
 ##效果
 
@@ -28,16 +32,12 @@
 
 ##使用
 
-1.添加类库,这个版本的目的是预览自动进入小窗功能,不要用在生产环境,稳定版本仍然是v4.6.5
+1.添加类库
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:4.8.1'
 ```
 
-或直接下载
-
-* [jiecaovideoplayer-4.8.1.aar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1.aar)
-* [jiecaovideoplayer-4.8.1-javadoc.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1-javadoc.jar)
-* [jiecaovideoplayer-4.8.1-sources.jar](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.1/jiecaovideoplayer-4.8.1-sources.jar)
+[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v4.8.1)
 
 2.添加布局
 ```xml
@@ -71,51 +71,19 @@ protected void onPause() {
 }
 ```
 
-####其他接口
-
-直接进入全屏
-```java
-JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4", "嫂子辛苦了");
-```
-
-重力感应自动进入全屏
-```java
-JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
-SensorManager                          sensorManager;
-@Override
-protected void onCreate(@Nullable Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-    sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
-}
-@Override
-protected void onResume() {
-    super.onResume();
-    Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-    sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
-}
-@Override
-protected void onPause() {
-    super.onPause();
-    sensorManager.unregisterListener(sensorEventListener);
-}
-```
-
 ####混淆
 ```
 -keep class tv.danmaku.ijk.** { *; }
 -dontwarn tv.danmaku.ijk.**
 ```
 
-播放Assets文件夹下的视频,请先拷贝到本地路径再播放.[亲测](https://github.com/Bilibili/ijkplayer/issues/1013)如果直接传参数IMediaDataSource,只停留在第一帧画面上并且后台会报错
+####[其他API](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 
-##[自定义UI](./README_CUSTOM_UI-ZH.md)
+####[自定义UI](https://github.com/lipangit/JieCaoVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
 
-##贡献者
+##[贡献者](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
 
-[Nathen](https://github.com/lipangit) [Derlio](https://github.com/derlio) [zhangzzqq](https://github.com/zhangzzqq) [carmelo-ruota](https://github.com/carmelo-ruota) [wxxsw](https://github.com/wxxsw) [Miguel Aragues](https://github.com/Maragues) [e16din](https://github.com/e16din)
-
-## License MIT
+##License MIT
 
 Copyright (c) 2015-2016 节操精选 http://jiecao.fm
 
@@ -125,4 +93,4 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: ./screenshots/j7.jpg
+[1]: https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.0/j8.jpg
