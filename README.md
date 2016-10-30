@@ -11,7 +11,7 @@
 
 ####Ambition is become the most widely used video playback control.
 
-[中文文档](README-ZH.md)           [WorkPlan](https://github.com/lipangit/JieCaoVideoPlayer/projects)
+[中文文档](README-ZH.md)           [WorkPlan](https://github.com/lipangit/JieCaoVideoPlayer/projects/2)
 
 ## Features
 

@@ -9,7 +9,7 @@
 
 ####立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
 
-[英文文档](https://github.com/lipangit/JieCaoVideoPlayer)           [工作计划](https://github.com/lipangit/JieCaoVideoPlayer/projects)
+[英文文档](https://github.com/lipangit/JieCaoVideoPlayer)           [工作计划](https://github.com/lipangit/JieCaoVideoPlayer/projects/2)
 
 ##主要特点
 
