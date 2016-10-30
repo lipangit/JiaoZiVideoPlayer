@@ -34,6 +34,8 @@
 
 ## Usage
 
+Even the custom UI, or has changed to the Library, is also the four steps to use the player.
+
 1.Import library
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:4.8.1'

@@ -32,6 +32,8 @@
 
 ##使用
 
+即便是自定义UI，或者对Library有过修改，也是这四步骤来使用播放器。
+
 1.添加类库
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:4.8.1'
