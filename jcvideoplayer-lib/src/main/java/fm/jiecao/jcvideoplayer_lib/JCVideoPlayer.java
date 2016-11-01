@@ -234,7 +234,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 Log.d(TAG, "toFullscreenActivity [" + this.hashCode() + "] ");
                 onEvent(JCBuriedPoint.ON_ENTER_FULLSCREEN);
                 JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(
-                        ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                 startWindowFullscreen();
             }
         } else if (i == R.id.surface_container && currentState == CURRENT_STATE_ERROR) {
