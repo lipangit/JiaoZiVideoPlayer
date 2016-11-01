@@ -11,7 +11,7 @@
 
 ####Ambition is become the most widely used video playback control.
 
-[中文文档](README-ZH.md)           [WorkPlan](https://github.com/lipangit/JieCaoVideoPlayer/projects)
+[中文文档](README-ZH.md)           [WorkPlan](https://github.com/lipangit/JieCaoVideoPlayer/projects/2)
 
 ## Features
 
@@ -33,6 +33,8 @@
 ![Demo Screenshot][1]
 
 ## Usage
+
+Even the custom UI, or has changed to the Library, is also the four steps to use the player.
 
 1.Import library
 ```gradle
