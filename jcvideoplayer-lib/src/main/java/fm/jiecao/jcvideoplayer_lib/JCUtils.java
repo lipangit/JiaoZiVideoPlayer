@@ -86,12 +86,4 @@ public class JCUtils {
         return (int) (dpValue * scale + 0.5f);
     }
 
-//    public static void switchFullOrientation(Context context) {
-//        getAppCompActivity(context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-//    }
-//
-//    public static void switchNormalOrientation(Context context) {
-//        getAppCompActivity(context).setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-//    }
-
 }
