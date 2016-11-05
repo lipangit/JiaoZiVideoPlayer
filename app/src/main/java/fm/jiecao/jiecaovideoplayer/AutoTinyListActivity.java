@@ -39,7 +39,6 @@ public class AutoTinyListActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                Log.i(JCVideoPlayer.TAG, "onScroll");
                 JCVideoPlayer.onScroll();
             }
         });
