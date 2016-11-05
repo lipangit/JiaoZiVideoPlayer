@@ -54,6 +54,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static boolean ACTION_BAR_EXIST = true;
     public static boolean TOOL_BAR_EXIST = true;
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
+    public static int FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+    public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+
     public static long CLICK_QUIT_FULLSCREEN_TIME = 0;
 
     public static final int SCREEN_LAYOUT_NORMAL = 0;
@@ -233,8 +236,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             } else {
                 Log.d(TAG, "toFullscreenActivity [" + this.hashCode() + "] ");
                 onEvent(JCBuriedPoint.ON_ENTER_FULLSCREEN);
-                JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(
-                        ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                 startWindowFullscreen();
             }
         } else if (i == R.id.surface_container && currentState == CURRENT_STATE_ERROR) {
@@ -470,7 +471,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         JCUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         clearFullscreenLayout();
-        JCUtils.switchNormalOrientation(getContext());
+        JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
 
         // 清理cover image,回收bitmap内存
         clearCacheImage();
@@ -483,7 +484,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         obtainCache();
 
         Log.i(TAG, "backToOtherListener " + " [" + this.hashCode() + "] ");
-        JCUtils.switchNormalOrientation(getContext());
+        JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
         if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN
                 || currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_TINY) {
 //            if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN) {
@@ -688,7 +689,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
         CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
         hideSupportActionBar(getContext());
-        JCUtils.switchFullOrientation(getContext());
+        JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(FULLSCREEN_ORIENTATION);
 
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
@@ -915,6 +916,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
 
         hideSupportActionBar(context);
+        JCUtils.getAppCompActivity(context).setRequestedOrientation(FULLSCREEN_ORIENTATION);
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(context))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(JCVideoPlayer.FULLSCREEN_ID);
@@ -935,7 +937,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.addTextureView();
-//            jcVideoPlayer.setRotation(90);
 
             jcVideoPlayer.startButton.performClick();
 

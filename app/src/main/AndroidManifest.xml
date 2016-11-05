@@ -77,6 +77,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".WebViewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
     </application>
