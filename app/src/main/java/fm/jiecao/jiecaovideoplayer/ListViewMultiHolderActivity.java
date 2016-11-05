@@ -54,7 +54,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                         int lPosition = listView.getLastVisiblePosition();
                         //如果listview  有addheadview, 记得加上 headview 的数量
                         int vPosition = mAdapter.getVideoPosition();
-                        if(vPosition < fPosition || vPosition > lPosition)
+                        if (vPosition < fPosition || vPosition > lPosition)
                             JCVideoPlayer.releaseAllVideos();
 
                         break;
@@ -77,7 +77,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
         int[] viewtype = {0, 0, 0, 1, 0, 0, 0, 1, 0, 0};//1 = jcvd, 0 = textView
 
-        Context        context;
+        Context context;
         LayoutInflater mInflater;
         int videoPosition = -1;
 
@@ -127,9 +127,9 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                         VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                         VideoConstant.videoTitles[position]);
 
-                    Picasso.with(ListViewMultiHolderActivity.this)
-                            .load(VideoConstant.videoThumbs[position])
-                            .into(viewHolder.jcVideoPlayer.thumbImageView);
+                Picasso.with(ListViewMultiHolderActivity.this)
+                        .load(VideoConstant.videoThumbs[position])
+                        .into(viewHolder.jcVideoPlayer.thumbImageView);
             } else {
                 TextViewHolder textViewHolder;
                 if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof TextViewHolder) {

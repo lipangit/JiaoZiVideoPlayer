@@ -10,7 +10,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by Nathen on 16/8/23.
  */
 public class AutoTinyNormalActivity extends AppCompatActivity implements AbsListView.OnScrollListener {
-    ListView     listView;
+    ListView listView;
     LinearLayout headerLayout;
 
     @Override

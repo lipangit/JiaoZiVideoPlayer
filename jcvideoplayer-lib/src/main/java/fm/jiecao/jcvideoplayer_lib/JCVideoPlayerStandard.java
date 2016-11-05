@@ -5,12 +5,8 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.Point;
-import android.graphics.SurfaceTexture;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,8 +21,6 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import tv.danmaku.ijk.media.player.IMediaPlayer;
-
 /**
  * Created by Nathen
  * On 2016/04/18 16:15
@@ -35,12 +29,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     protected static Timer DISMISS_CONTROL_VIEW_TIMER;
 
-    public ImageView   backButton;
+    public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
-    public TextView          titleTextView;
-    public ImageView         thumbImageView;
-    public ImageView         coverImageView;
-    public ImageView         tinyBackImageView;
+    public TextView titleTextView;
+    public ImageView thumbImageView;
+    public ImageView coverImageView;
+    public ImageView tinyBackImageView;
 
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
@@ -203,7 +197,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backPress();
         }
     }
-
 
 
     @Override
@@ -547,11 +540,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
 
-    protected Dialog      mProgressDialog;
+    protected Dialog mProgressDialog;
     protected ProgressBar mDialogProgressBar;
-    protected TextView    mDialogSeekTime;
-    protected TextView    mDialogTotalTime;
-    protected ImageView   mDialogIcon;
+    protected TextView mDialogSeekTime;
+    protected TextView mDialogTotalTime;
+    protected ImageView mDialogIcon;
 
     @Override
     public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
@@ -597,7 +590,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
 
-    protected Dialog      mVolumeDialog;
+    protected Dialog mVolumeDialog;
     protected ProgressBar mDialogVolumeProgressBar;
 
     @Override

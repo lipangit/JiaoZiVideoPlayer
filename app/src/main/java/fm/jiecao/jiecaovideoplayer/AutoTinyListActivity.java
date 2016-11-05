@@ -3,7 +3,6 @@ package fm.jiecao.jiecaovideoplayer;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -15,7 +14,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  */
 public class AutoTinyListActivity extends AppCompatActivity {
 
-    ListView         listView;
+    ListView listView;
     VideoListAdapter adapterVideoList;
 
     @Override

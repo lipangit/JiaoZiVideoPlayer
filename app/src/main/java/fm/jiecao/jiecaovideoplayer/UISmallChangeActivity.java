@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -17,7 +16,7 @@ import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTitleAfte
  */
 public class UISmallChangeActivity extends AppCompatActivity {
     JCVideoPlayerStandardShowShareButtonAfterFullscreen jcVideoPlayerStandardWithShareButton;
-    JCVideoPlayerStandardShowTitleAfterFullscreen       jcVideoPlayerStandardShowTitleAfterFullscreen;
+    JCVideoPlayerStandardShowTitleAfterFullscreen jcVideoPlayerStandardShowTitleAfterFullscreen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

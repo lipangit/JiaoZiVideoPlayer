@@ -34,15 +34,15 @@ import fm.jiecao.jiecaovideoplayer.R;
  */
 public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
 
-    public ImageView   backButton;
+    public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
-    public TextView         titleTextView;
+    public TextView titleTextView;
     public SimpleDraweeView thumbImageView;
-    public ImageView        coverImageView;
-    public ImageView        tinyBackImageView;
+    public ImageView coverImageView;
+    public ImageView tinyBackImageView;
 
-    protected static Timer                       DISSMISS_CONTROL_VIEW_TIMER;
-    protected        DismissControlViewTimerTask mDismissControlViewTimerTask;
+    protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
+    protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
     protected static JCBuriedPointStandard JC_BURIED_POINT_STANDARD;
 
@@ -515,11 +515,11 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         }
     }
 
-    protected Dialog      mProgressDialog;
+    protected Dialog mProgressDialog;
     protected ProgressBar mDialogProgressBar;
-    protected TextView    mDialogSeekTime;
-    protected TextView    mDialogTotalTime;
-    protected ImageView   mDialogIcon;
+    protected TextView mDialogSeekTime;
+    protected TextView mDialogTotalTime;
+    protected ImageView mDialogIcon;
 
     @Override
     public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
@@ -565,7 +565,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
 
-    protected Dialog      mVolumeDialog;
+    protected Dialog mVolumeDialog;
     protected ProgressBar mDialogVolumeProgressBar;
 
     @Override

@@ -27,23 +27,23 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener {
     public static String TAG = "JieCaoVideoPlayer";
 
-    private static JCMediaManager      JCMediaManager;
-    public         IjkMediaPlayer      mediaPlayer;
-    public static  JCResizeTextureView textureView;
+    private static JCMediaManager JCMediaManager;
+    public IjkMediaPlayer mediaPlayer;
+    public static JCResizeTextureView textureView;
 
-    public int currentVideoWidth  = 0;
+    public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
     public int lastState;
     public int bufferPercent;
     public int backUpBufferState = -1;
     public int videoRotation;
 
-    public static final int HANDLER_PREPARE    = 0;
+    public static final int HANDLER_PREPARE = 0;
     public static final int HANDLER_SETDISPLAY = 1;
-    public static final int HANDLER_RELEASE    = 2;
+    public static final int HANDLER_RELEASE = 2;
     HandlerThread mMediaHandlerThread;
-    MediaHandler  mMediaHandler;
-    Handler       mainThreadHandler;
+    MediaHandler mMediaHandler;
+    Handler mainThreadHandler;
 
     public static JCMediaManager instance() {
         if (JCMediaManager == null) {
@@ -60,7 +60,7 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         mainThreadHandler = new Handler();
     }
 
-    public Point getVideoSize(){
+    public Point getVideoSize() {
         if (currentVideoWidth != 0 && currentVideoHeight != 0) {
             return new Point(currentVideoWidth, currentVideoHeight);
         } else {
@@ -238,9 +238,9 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
 
 
     private class FuckBean {
-        String              url;
+        String url;
         Map<String, String> mapHeadData;
-        boolean             looping;
+        boolean looping;
 
         FuckBean(String url, Map<String, String> mapHeadData, boolean loop) {
             this.url = url;
