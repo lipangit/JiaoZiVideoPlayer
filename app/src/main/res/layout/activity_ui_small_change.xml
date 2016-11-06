@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="18dp"
-                android:text="Standard ui textureview after auto complete" />
+                android:text="Standard ui show textureview after auto complete" />
 
             <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTextureViewAfterAutoComplete
                 android:id="@+id/custom_videoplayer_standard_show_textureview_aoto_complete"
