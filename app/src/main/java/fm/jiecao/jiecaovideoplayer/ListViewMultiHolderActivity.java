@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +24,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  */
 public class ListViewMultiHolderActivity extends AppCompatActivity {
     ListView listView;
+    VideoListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +38,16 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
 
         listView = (ListView) findViewById(R.id.listview);
-        listView.setAdapter(new VideoListAdapter(this));
+        mAdapter = new VideoListAdapter(this);
+        listView.setAdapter(mAdapter);
     }
 
 
     public class VideoListAdapter extends BaseAdapter {
 
-        int[] viewtype = {0, 1, 0, 1, 0, 1, 1, 0, 0, 1};//1 = jcvd, 0 = textView
+        int[] viewtype = {0, 0, 0, 1, 0, 0, 0, 1, 0, 0};//1 = jcvd, 0 = textView
 
-        Context        context;
+        Context context;
         LayoutInflater mInflater;
 
         public VideoListAdapter(Context context) {
@@ -87,9 +91,9 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                         VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                         VideoConstant.videoTitles[position]);
 
-                    Picasso.with(ListViewMultiHolderActivity.this)
-                            .load(VideoConstant.videoThumbs[position])
-                            .into(viewHolder.jcVideoPlayer.thumbImageView);
+                Picasso.with(ListViewMultiHolderActivity.this)
+                        .load(VideoConstant.videoThumbs[position])
+                        .into(viewHolder.jcVideoPlayer.thumbImageView);
             } else {
                 TextViewHolder textViewHolder;
                 if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof TextViewHolder) {

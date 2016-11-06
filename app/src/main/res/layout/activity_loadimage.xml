@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:paddingBottom="3dp">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="3dp">
 
     <ScrollView
         android:id="@+id/scroll"
@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="ImageLoader"/>
+                android:text="ImageLoader" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -29,7 +29,7 @@
                 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
                     android:id="@+id/videocontroller1"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"/>
+                    android:layout_height="200dp" />
             </LinearLayout>
 
 
@@ -37,49 +37,49 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="Glide"/>
+                android:text="Glide" />
 
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
                 android:id="@+id/videocontroller2"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="2dp"/>
+                android:layout_marginTop="2dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="Picasso"/>
+                android:text="Picasso" />
 
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
                 android:id="@+id/videocontroller3"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="2dp"/>
+                android:layout_marginTop="2dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="Volley"/>
+                android:text="Volley" />
 
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
                 android:id="@+id/videocontroller4"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="2dp"/>
+                android:layout_marginTop="2dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="Fresco"/>
+                android:text="Fresco" />
 
             <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardFresco
                 android:id="@+id/videocontroller5"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="2dp"/>
+                android:layout_marginTop="2dp" />
         </LinearLayout>
     </ScrollView>
 

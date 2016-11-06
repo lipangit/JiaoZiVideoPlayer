@@ -58,13 +58,4 @@ public class JCVideoPlayerStandardShowShareButtonAfterFullscreen extends JCVideo
         }
         return false;
     }
-//    @Override
-//    public void setUiWitStateAndScreen(int state) {
-//        super.setUiWitStateAndScreen(state);
-//        if (mIfCurrentIsFullscreen) {
-//            shareButton.setVisibility(View.VISIBLE);
-//        } else {
-//            shareButton.setVisibility(View.INVISIBLE);
-//        }
-//    }
 }

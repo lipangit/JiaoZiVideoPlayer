@@ -16,7 +16,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerManager;
  * Created by yujunkui on 16/8/29.
  */
 public class RecyclerViewNormalActivity extends AppCompatActivity {
-    RecyclerView             recyclerView;
+    RecyclerView recyclerView;
     RecyclerViewVideoAdapter adapterVideoList;
 
     @Override

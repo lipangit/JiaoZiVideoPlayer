@@ -22,6 +22,7 @@ public class JCVideoPlayerManager {
     public static void putListener(JCMediaPlayerListener listener) {
         LISTENERLIST.push(new WeakReference<>(listener));
     }
+
     public static void checkAndPutListener(JCMediaPlayerListener listener) {
         if (listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_TINY ||
                 listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_FULLSCREEN) return;

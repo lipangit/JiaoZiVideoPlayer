@@ -5,11 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowShareButtonAfterFullscreen;
+import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTextureViewAfterAutoComplete;
 import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTitleAfterFullscreen;
 
 /**
@@ -17,7 +17,8 @@ import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTitleAfte
  */
 public class UISmallChangeActivity extends AppCompatActivity {
     JCVideoPlayerStandardShowShareButtonAfterFullscreen jcVideoPlayerStandardWithShareButton;
-    JCVideoPlayerStandardShowTitleAfterFullscreen       jcVideoPlayerStandardShowTitleAfterFullscreen;
+    JCVideoPlayerStandardShowTitleAfterFullscreen jcVideoPlayerStandardShowTitleAfterFullscreen;
+    JCVideoPlayerStandardShowTextureViewAfterAutoComplete jcVideoPlayerStandardShowTextureViewAfterAutoComplete;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +44,13 @@ public class UISmallChangeActivity extends AppCompatActivity {
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
                 .into(jcVideoPlayerStandardShowTitleAfterFullscreen.thumbImageView);
-//        jcVideoPlayerStandardShowTitleAfterFullscreen.setLoop(true);
+
+        jcVideoPlayerStandardShowTextureViewAfterAutoComplete = (JCVideoPlayerStandardShowTextureViewAfterAutoComplete) findViewById(R.id.custom_videoplayer_standard_show_textureview_aoto_complete);
+        jcVideoPlayerStandardShowTextureViewAfterAutoComplete.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
+                , "嫂子还在浪");
+        Picasso.with(this)
+                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
+                .into(jcVideoPlayerStandardShowTextureViewAfterAutoComplete.thumbImageView);
     }
 
     @Override

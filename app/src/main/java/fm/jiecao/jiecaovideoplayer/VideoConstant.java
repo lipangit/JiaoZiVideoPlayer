@@ -1,13 +1,11 @@
 package fm.jiecao.jiecaovideoplayer;
 
-import java.util.ArrayList;
-
 /**
  * Created by shengjun on 16/9/10.
  */
 public class VideoConstant {
 
-    public static String[] videoUrls   = {
+    public static String[] videoUrls = {
             "http://video.jiecao.fm/8/17/bGQS3BQQWUYrlzP1K4Tg4Q__.mp4",
             "http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4",
             "http://video.jiecao.fm/8/18/%E5%A4%A7%E5%AD%A6.mp4",

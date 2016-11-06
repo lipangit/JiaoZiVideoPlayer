@@ -2,6 +2,8 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -20,6 +22,7 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -43,64 +46,72 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static final String TAG = "JieCaoVideoPlayer";
 
-    public static final int FULLSCREEN_ID            = 33797;
-    public static final int TINY_ID                  = 33798;
-    public static final int THRESHOLD                = 80;
+    public static final int FULLSCREEN_ID = 33797;
+    public static final int TINY_ID = 33798;
+    public static final int THRESHOLD = 80;
     public static final int FULL_SCREEN_NORMAL_DELAY = 500;
 
-    public static boolean ACTION_BAR_EXIST           = true;
-    public static boolean TOOL_BAR_EXIST             = true;
-    public static boolean WIFI_TIP_DIALOG_SHOWED     = false;
-    public static long    CLICK_QUIT_FULLSCREEN_TIME = 0;
+    public static boolean ACTION_BAR_EXIST = true;
+    public static boolean TOOL_BAR_EXIST = true;
+    public static boolean WIFI_TIP_DIALOG_SHOWED = false;
+    public static int FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+    public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 
-    public static final int SCREEN_LAYOUT_NORMAL     = 0;
-    public static final int SCREEN_LAYOUT_LIST       = 1;
+    public static long CLICK_QUIT_FULLSCREEN_TIME = 0;
+
+    public static final int SCREEN_LAYOUT_NORMAL = 0;
+    public static final int SCREEN_LAYOUT_LIST = 1;
     public static final int SCREEN_WINDOW_FULLSCREEN = 2;
-    public static final int SCREEN_WINDOW_TINY       = 3;
+    public static final int SCREEN_WINDOW_TINY = 3;
 
-    public static final int CURRENT_STATE_NORMAL                  = 0;
-    public static final int CURRENT_STATE_PREPARING               = 1;
-    public static final int CURRENT_STATE_PLAYING                 = 2;
+    public static final int CURRENT_STATE_NORMAL = 0;
+    public static final int CURRENT_STATE_PREPARING = 1;
+    public static final int CURRENT_STATE_PLAYING = 2;
     public static final int CURRENT_STATE_PLAYING_BUFFERING_START = 3;
-    public static final int CURRENT_STATE_PAUSE                   = 5;
-    public static final int CURRENT_STATE_AUTO_COMPLETE           = 6;
-    public static final int CURRENT_STATE_ERROR                   = 7;
+    public static final int CURRENT_STATE_PAUSE = 5;
+    public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
+    public static final int CURRENT_STATE_ERROR = 7;
 
-    public int currentState  = -1;
+    public int currentState = -1;
     public int currentScreen = -1;
 
 
-    public String              url             = "";
-    public Object[]            objects         = null;
-    public boolean             looping         = false;
-    public Map<String, String> mapHeadData     = new HashMap<>();
-    public int                 seekToInAdvance = -1;
+    public String url = "";
+    public Object[] objects = null;
+    public boolean looping = false;
+    public Map<String, String> mapHeadData = new HashMap<>();
+    public int seekToInAdvance = -1;
+    protected static Bitmap pauseSwitchCoverBitmap = null;
+    private boolean textureUpdated;
+    private boolean textureSizeChanged;
 
     public ImageView startButton;
-    public SeekBar   progressBar;
+    public JCResizeImageView cacheImageView;
+
+    public SeekBar progressBar;
     public ImageView fullscreenButton;
-    public TextView  currentTimeTextView, totalTimeTextView;
+    public TextView currentTimeTextView, totalTimeTextView;
     public ViewGroup textureViewContainer;
     public ViewGroup topContainer, bottomContainer;
     public Surface surface;
 
     protected static WeakReference<JCBuriedPoint> JC_BURIED_POINT;
-    protected static Timer                        UPDATE_PROGRESS_TIMER;
+    protected static Timer UPDATE_PROGRESS_TIMER;
 
-    protected int               mScreenWidth;
-    protected int               mScreenHeight;
-    protected AudioManager      mAudioManager;
-    protected Handler           mHandler;
+    protected int mScreenWidth;
+    protected int mScreenHeight;
+    protected AudioManager mAudioManager;
+    protected Handler mHandler;
     protected ProgressTimerTask mProgressTimerTask;
 
     protected boolean mTouchingProgressBar;
-    protected float   mDownX;
-    protected float   mDownY;
+    protected float mDownX;
+    protected float mDownY;
     protected boolean mChangeVolume;
     protected boolean mChangePosition;
-    protected int     mDownPosition;
-    protected int     mGestureDownVolume;
-    protected int     mSeekTimePosition;
+    protected int mDownPosition;
+    protected int mGestureDownVolume;
+    protected int mSeekTimePosition;
 
     public JCVideoPlayer(Context context) {
         super(context);
@@ -122,6 +133,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         bottomContainer = (ViewGroup) findViewById(R.id.layout_bottom);
         textureViewContainer = (ViewGroup) findViewById(R.id.surface_container);
         topContainer = (ViewGroup) findViewById(R.id.layout_top);
+        cacheImageView = (JCResizeImageView) findViewById(R.id.cache);
 
         startButton.setOnClickListener(this);
         fullscreenButton.setOnClickListener(this);
@@ -201,10 +213,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 prepareVideo();
                 onEvent(currentState != CURRENT_STATE_ERROR ? JCBuriedPoint.ON_CLICK_START_ICON : JCBuriedPoint.ON_CLICK_START_ERROR);
             } else if (currentState == CURRENT_STATE_PLAYING) {
+                obtainCache();
                 onEvent(JCBuriedPoint.ON_CLICK_PAUSE);
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 JCMediaManager.instance().mediaPlayer.pause();
                 setUiWitStateAndScreen(CURRENT_STATE_PAUSE);
+                refreshCache();
             } else if (currentState == CURRENT_STATE_PAUSE) {
                 onEvent(JCBuriedPoint.ON_CLICK_RESUME);
                 JCMediaManager.instance().mediaPlayer.start();
@@ -346,6 +360,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         Gravity.CENTER);
         textureViewContainer.addView(JCMediaManager.textureView, layoutParams);
+
+        cacheImageView.setVideoSize(JCMediaManager.instance().getVideoSize());
+        cacheImageView.setRotation(JCMediaManager.instance().videoRotation);
+
     }
 
     public void setUiWitStateAndScreen(int state) {
@@ -410,8 +428,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public void clearFullscreenLayout() {
-        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext())).getWindow().getDecorView();
-//                .findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+                .findViewById(Window.ID_ANDROID_CONTENT);
         View oldF = vp.findViewById(FULLSCREEN_ID);
         View oldT = vp.findViewById(TINY_ID);
         if (oldF != null) {
@@ -427,6 +445,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onAutoCompletion() {
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
         onEvent(JCBuriedPoint.ON_AUTO_COMPLETE);
+        dismissVolumeDialog();
+        dismissProgressDialog();
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
         JCVideoPlayerManager.popListener();//自己进入autoComplete状态，其他的进入complete状态
         JCVideoPlayerManager.completeAll();
@@ -451,14 +471,20 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         JCUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         clearFullscreenLayout();
-        JCUtils.switchNormalOrientation(getContext());
+        JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
+
+        // 清理cover image,回收bitmap内存
+        clearCacheImage();
 
     }
 
     @Override
     public boolean backToOtherListener() {//这里这个名字这么写并不对,这是在回退的时候gotoother,如果直接gotoother就不叫这个名字
+
+        obtainCache();
+
         Log.i(TAG, "backToOtherListener " + " [" + this.hashCode() + "] ");
-        JCUtils.switchNormalOrientation(getContext());
+        JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
         if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN
                 || currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_TINY) {
 //            if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN) {
@@ -474,15 +500,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 showSupportActionBar(getContext());
                 return true;
             }
-            ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext())).getWindow().getDecorView();
-//                .findViewById(Window.ID_ANDROID_CONTENT);
+            ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+                    .findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
             JCMediaManager.instance().lastState = currentState;//save state
             JCVideoPlayerManager.popListener();
             JCVideoPlayerManager.getFirst().goBackThisListener();
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
+
+            refreshCache();
+
             return true;
         }
+
         return false;
     }
 
@@ -503,11 +533,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             }
             startWindowFullscreen();
         }
-    }
-
-    @Override
-    public void autoFullscreenRight() {
-
     }
 
     @Override
@@ -553,6 +578,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
+
     @Override
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
@@ -569,7 +595,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         } else if (what == IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED) {
             JCMediaManager.instance().videoRotation = extra;
             JCMediaManager.textureView.setRotation(extra);
+            cacheImageView.setRotation(JCMediaManager.instance().videoRotation);
             Log.d(TAG, "MEDIA_INFO_VIDEO_ROTATION_CHANGED");
+
+
         }
     }
 
@@ -577,6 +606,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onVideoSizeChanged() {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
         JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
+        cacheImageView.setVideoSize(JCMediaManager.instance().getVideoSize());
     }
 
     @Override
@@ -589,6 +619,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
 
+        // 如果SurfaceTexture还没有更新Image，则记录SizeChanged事件，否则忽略
+        textureSizeChanged = true;
+        Log.i(TAG, "onSurfaceTextureSizeChanged [" + this.hashCode() + "] ");
     }
 
     @Override
@@ -599,7 +632,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-
+        // 如果textureSizeChanged=true，则说明此次Updated事件不是Image更新引起的   应该是TextureSizeChanged引起的 所以不需要更新 cacheImageView
+        Log.i(TAG, "onSurfaceTextureUpdated [" + this.hashCode() + "] textureSizeChanged=" + textureSizeChanged);
+        if (!textureSizeChanged) {
+            cacheImageView.setVisibility(INVISIBLE);
+            JCMediaManager.textureView.setHasUpdated();
+        } else {
+            textureSizeChanged = false;
+        }
     }
 
     @Override
@@ -643,13 +683,16 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public void startWindowFullscreen() {
+
+        obtainCache();
+
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
         CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
         hideSupportActionBar(getContext());
-        JCUtils.switchFullOrientation(getContext());
+        JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(FULLSCREEN_ORIENTATION);
 
-        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext())).getWindow().getDecorView();
-//                .findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+                .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(FULLSCREEN_ID);
         if (old != null) {
             vp.removeView(old);
@@ -661,18 +704,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer jcVideoPlayer = constructor.newInstance(getContext());
             jcVideoPlayer.setId(FULLSCREEN_ID);
-//            WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-//            int w = wm.getDefaultDisplay().getWidth();
-//            int h = wm.getDefaultDisplay().getHeight();
-//            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
-//            lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jcVideoPlayer, lp);
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.setUiWitStateAndScreen(currentState);
             jcVideoPlayer.addTextureView();
-//            jcVideoPlayer.setRotation(90);
 
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
@@ -685,14 +722,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        refreshCache();
+
     }
 
     public void startWindowTiny() {
         Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
         onEvent(JCBuriedPoint.ON_ENTER_TINYSCREEN);
 
-        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext())).getWindow().getDecorView();
-//                .findViewById(Window.ID_ANDROID_CONTENT);
+        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+                .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(TINY_ID);
         if (old != null) {
             vp.removeView(old);
@@ -874,10 +914,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
-        JCUtils.switchFullOrientation(context);
+
         hideSupportActionBar(context);
-        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(context)).getWindow().getDecorView();
-//                .findViewById(Window.ID_ANDROID_CONTENT);
+        JCUtils.getAppCompActivity(context).setRequestedOrientation(FULLSCREEN_ORIENTATION);
+        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(context))//.getWindow().getDecorView();
+                .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(JCVideoPlayer.FULLSCREEN_ID);
         if (old != null) {
             vp.removeView(old);
@@ -886,11 +927,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             Constructor<JCVideoPlayer> constructor = _class.getConstructor(Context.class);
             JCVideoPlayer jcVideoPlayer = constructor.newInstance(context);
             jcVideoPlayer.setId(JCVideoPlayerStandard.FULLSCREEN_ID);
-//            WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-//            int w = wm.getDefaultDisplay().getWidth();
-//            int h = wm.getDefaultDisplay().getHeight();
-//            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(h, w);
-//            lp.setMargins((w - h) / 2, -(w - h) / 2, 0, 0);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
@@ -901,7 +937,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.addTextureView();
-//            jcVideoPlayer.setRotation(90);
 
             jcVideoPlayer.startButton.performClick();
 
@@ -959,6 +994,32 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
+    }
+
+
+    private void obtainCache() {
+        Point videoSize = JCMediaManager.instance().getVideoSize();
+        if (videoSize != null) {
+            Bitmap bitmap = JCMediaManager.textureView.getBitmap(videoSize.x, videoSize.y);
+            if (bitmap != null) {
+                pauseSwitchCoverBitmap = bitmap;
+            }
+        }
+    }
+
+    public void refreshCache() {
+        if (pauseSwitchCoverBitmap != null) {
+            JCVideoPlayerStandard jcVideoPlayer = ((JCVideoPlayerStandard) JCVideoPlayerManager.getFirst());
+            if (jcVideoPlayer != null) {
+                jcVideoPlayer.cacheImageView.setImageBitmap(pauseSwitchCoverBitmap);
+                jcVideoPlayer.cacheImageView.setVisibility(VISIBLE);
+            }
+        }
+    }
+
+    public void clearCacheImage() {
+        pauseSwitchCoverBitmap = null;
+        cacheImageView.setImageBitmap(null);
     }
 
     public void showWifiDialog() {
