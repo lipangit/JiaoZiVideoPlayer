@@ -11,6 +11,7 @@ import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -39,37 +40,6 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listview);
         mAdapter = new VideoListAdapter(this);
         listView.setAdapter(mAdapter);
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView absListView, int scrollState) {
-                switch (scrollState) {
-                    //屏幕处于甩动状态
-                    case SCROLL_STATE_FLING:
-
-                        break;
-                    //停止滑动状态
-                    case SCROLL_STATE_IDLE:
-
-                        int fPosition = listView.getFirstVisiblePosition();
-                        int lPosition = listView.getLastVisiblePosition();
-                        //如果listview  有addheadview, 记得加上 headview 的数量
-                        int vPosition = mAdapter.getVideoPosition();
-                        if (vPosition < fPosition || vPosition > lPosition)
-                            JCVideoPlayer.releaseAllVideos();
-
-                        break;
-                    // 手指接触状态
-                    case SCROLL_STATE_TOUCH_SCROLL:
-
-                        break;
-                }
-            }
-
-            @Override
-            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-
-            }
-        });
     }
 
 
@@ -79,15 +49,10 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
         Context context;
         LayoutInflater mInflater;
-        int videoPosition = -1;
 
         public VideoListAdapter(Context context) {
             this.context = context;
             mInflater = LayoutInflater.from(context);
-        }
-
-        public int getVideoPosition() {
-            return videoPosition;
         }
 
         @Override
@@ -113,7 +78,6 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
             }
             if (getItemViewType(position) == 1) {
                 VideoHolder viewHolder;
-                videoPosition = position;
                 if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoHolder) {
                     viewHolder = (VideoHolder) convertView.getTag();
                 } else {
