@@ -52,8 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="Auto tiny window"
-                android:visibility="gone" />
+                android:text="Auto tiny window" />
 
             <Button
                 android:id="@+id/play_directly_without_layout"
