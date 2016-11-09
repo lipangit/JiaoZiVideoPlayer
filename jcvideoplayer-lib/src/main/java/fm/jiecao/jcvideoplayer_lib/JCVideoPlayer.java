@@ -95,7 +95,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public ViewGroup topContainer, bottomContainer;
     public Surface surface;
 
-    protected static WeakReference<JCUserAction> JC_BURIED_POINT;
+    protected static WeakReference<JCUserAction> JC_USER_EVENT;
     protected static Timer UPDATE_PROGRESS_TIMER;
 
     protected int mScreenWidth;
@@ -859,9 +859,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
+    //isCurrentMediaListener and isCurrenPlayUrl should be two logic methods,isCurrentMediaListener is for different jcvd with same
+    //url when fullscreen or tiny screen. isCurrenPlayUrl is to find where is myself when back from tiny screen.
     public boolean isCurrentMediaListener() {
         return JCVideoPlayerManager.getFirst() != null
                 && JCVideoPlayerManager.getFirst() == this;
+    }
+
+    public boolean isCurrenPlayingUrl() {
+        return url.equals(JCMediaManager.instance().mediaPlayer.getDataSource());
     }
 
     public static void releaseAllVideos() {
@@ -870,13 +876,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCMediaManager.instance().releaseMediaPlayer();
     }
 
-    public static void setJcUserAction(JCUserAction jcBuriedPoint) {
-        JC_BURIED_POINT = new WeakReference<>(jcBuriedPoint);
+    public static void setJcUserAction(JCUserAction jcUserEvent) {
+        JC_USER_EVENT = new WeakReference<>(jcUserEvent);
     }
 
     public void onEvent(int type) {
-        if (JC_BURIED_POINT != null && JC_BURIED_POINT.get() != null && isCurrentMediaListener()) {
-            JC_BURIED_POINT.get().onEvent(type, url, currentScreen, objects);
+        if (JC_USER_EVENT != null && JC_USER_EVENT.get() != null && isCurrentMediaListener()) {
+            JC_USER_EVENT.get().onEvent(type, url, currentScreen, objects);
         }
     }
 
