@@ -23,7 +23,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
+import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCUtils;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jiecaovideoplayer.R;
@@ -44,7 +44,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
-    protected static JCBuriedPointStandard JC_BURIED_POINT_STANDARD;
+    protected static JCUserActionStandard JC_BURIED_POINT_STANDARD;
 
     public JCVideoPlayerStandardFresco(Context context) {
         super(context);
@@ -235,7 +235,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void startPlayLogic() {
-        onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
+        onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
         prepareVideo();
         startDismissControlViewTimer();
     }

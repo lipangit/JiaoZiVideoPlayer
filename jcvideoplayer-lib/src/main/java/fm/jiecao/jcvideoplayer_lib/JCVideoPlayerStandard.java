@@ -145,7 +145,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                         bottomProgressBar.setProgress(progress);
                     }
                     if (!mChangePosition && !mChangeVolume) {
-                        onEvent(JCBuriedPointStandard.ON_CLICK_BLANK);
+                        onEvent(JCUserActionStandard.ON_CLICK_BLANK);
                         onClickUiToggle();
                     }
                     break;
@@ -235,7 +235,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void startPlayLogic() {
         prepareVideo();
-        onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
+        onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
     }
 
     public void onClickUiToggle() {

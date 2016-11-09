@@ -4,7 +4,7 @@ package fm.jiecao.jcvideoplayer_lib;
  * Created by Nathen
  * On 2016/04/04 22:13
  */
-public interface JCBuriedPoint {
+public interface JCUserAction {
 
     int ON_CLICK_START_ICON = 0;
     int ON_CLICK_START_ERROR = 1;

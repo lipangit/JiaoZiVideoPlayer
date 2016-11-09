@@ -95,7 +95,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public ViewGroup topContainer, bottomContainer;
     public Surface surface;
 
-    protected static WeakReference<JCBuriedPoint> JC_BURIED_POINT;
+    protected static WeakReference<JCUserAction> JC_BURIED_POINT;
     protected static Timer UPDATE_PROGRESS_TIMER;
 
     protected int mScreenWidth;
@@ -211,20 +211,20 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     return;
                 }
                 prepareVideo();
-                onEvent(currentState != CURRENT_STATE_ERROR ? JCBuriedPoint.ON_CLICK_START_ICON : JCBuriedPoint.ON_CLICK_START_ERROR);
+                onEvent(currentState != CURRENT_STATE_ERROR ? JCUserAction.ON_CLICK_START_ICON : JCUserAction.ON_CLICK_START_ERROR);
             } else if (currentState == CURRENT_STATE_PLAYING) {
                 obtainCache();
-                onEvent(JCBuriedPoint.ON_CLICK_PAUSE);
+                onEvent(JCUserAction.ON_CLICK_PAUSE);
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 JCMediaManager.instance().mediaPlayer.pause();
                 setUiWitStateAndScreen(CURRENT_STATE_PAUSE);
                 refreshCache();
             } else if (currentState == CURRENT_STATE_PAUSE) {
-                onEvent(JCBuriedPoint.ON_CLICK_RESUME);
+                onEvent(JCUserAction.ON_CLICK_RESUME);
                 JCMediaManager.instance().mediaPlayer.start();
                 setUiWitStateAndScreen(CURRENT_STATE_PLAYING);
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
-                onEvent(JCBuriedPoint.ON_CLICK_START_AUTO_COMPLETE);
+                onEvent(JCUserAction.ON_CLICK_START_AUTO_COMPLETE);
                 prepareVideo();
             }
         } else if (i == R.id.fullscreen) {
@@ -235,7 +235,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 backPress();
             } else {
                 Log.d(TAG, "toFullscreenActivity [" + this.hashCode() + "] ");
-                onEvent(JCBuriedPoint.ON_ENTER_FULLSCREEN);
+                onEvent(JCUserAction.ON_ENTER_FULLSCREEN);
                 startWindowFullscreen();
             }
         } else if (i == R.id.surface_container && currentState == CURRENT_STATE_ERROR) {
@@ -327,14 +327,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     dismissProgressDialog();
                     dismissVolumeDialog();
                     if (mChangePosition) {
-                        onEvent(JCBuriedPoint.ON_TOUCH_SCREEN_SEEK_POSITION);
+                        onEvent(JCUserAction.ON_TOUCH_SCREEN_SEEK_POSITION);
                         JCMediaManager.instance().mediaPlayer.seekTo(mSeekTimePosition);
                         int duration = getDuration();
                         int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
                         progressBar.setProgress(progress);
                     }
                     if (mChangeVolume) {
-                        onEvent(JCBuriedPoint.ON_TOUCH_SCREEN_SEEK_VOLUME);
+                        onEvent(JCUserAction.ON_TOUCH_SCREEN_SEEK_VOLUME);
                     }
                     startProgressTimer();
                     break;
@@ -444,7 +444,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onAutoCompletion() {
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
-        onEvent(JCBuriedPoint.ON_AUTO_COMPLETE);
+        onEvent(JCUserAction.ON_AUTO_COMPLETE);
         dismissVolumeDialog();
         dismissProgressDialog();
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
@@ -492,8 +492,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //                startAnimation(ra);
 //            }
             onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
-                    JCBuriedPoint.ON_QUIT_FULLSCREEN :
-                    JCBuriedPoint.ON_QUIT_TINYSCREEN);
+                    JCUserAction.ON_QUIT_FULLSCREEN :
+                    JCUserAction.ON_QUIT_TINYSCREEN);
             if (JCVideoPlayerManager.LISTENERLIST.size() == 1) {//directly fullscreen
                 JCVideoPlayerManager.popListener().onCompletion();
                 JCMediaManager.instance().releaseMediaPlayer();
@@ -660,7 +660,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         Log.i(TAG, "bottomProgress onStopTrackingTouch [" + this.hashCode() + "] ");
-        onEvent(JCBuriedPoint.ON_SEEK_POSITION);
+        onEvent(JCUserAction.ON_SEEK_POSITION);
         startProgressTimer();
         ViewParent vpup = getParent();
         while (vpup != null) {
@@ -729,7 +729,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void startWindowTiny() {
         Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
-        onEvent(JCBuriedPoint.ON_ENTER_TINYSCREEN);
+        onEvent(JCUserAction.ON_ENTER_TINYSCREEN);
 
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
@@ -870,7 +870,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCMediaManager.instance().releaseMediaPlayer();
     }
 
-    public static void setJcBuriedPoint(JCBuriedPoint jcBuriedPoint) {
+    public static void setJcUserAction(JCUserAction jcBuriedPoint) {
         JC_BURIED_POINT = new WeakReference<>(jcBuriedPoint);
     }
 
