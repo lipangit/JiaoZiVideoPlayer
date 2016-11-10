@@ -505,7 +505,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             vp.removeView(this);
             JCMediaManager.instance().lastState = currentState;//save state
             JCVideoPlayerManager.popListener();
-            JCVideoPlayerManager.getFirst().goBackThisListener();
+            JCVideoPlayerManager.getFirst().goBackThisListener();//这里，这时候就不要listener了，要找相同url的了，，没法解决啊窝草，
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
 
             refreshCache();
@@ -861,6 +861,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     //isCurrentMediaListener and isCurrenPlayUrl should be two logic methods,isCurrentMediaListener is for different jcvd with same
     //url when fullscreen or tiny screen. isCurrenPlayUrl is to find where is myself when back from tiny screen.
+    //Sometimes they are overlap.
     public boolean isCurrentMediaListener() {
         return JCVideoPlayerManager.getFirst() != null
                 && JCVideoPlayerManager.getFirst() == this;
