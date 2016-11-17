@@ -1009,7 +1009,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void refreshCache() {
         if (pauseSwitchCoverBitmap != null) {
-            JCVideoPlayerStandard jcVideoPlayer = ((JCVideoPlayerStandard) JCVideoPlayerManager.getFirst());
+            JCVideoPlayer jcVideoPlayer = ((JCVideoPlayer) JCVideoPlayerManager.getFirst());
             if (jcVideoPlayer != null) {
                 jcVideoPlayer.cacheImageView.setImageBitmap(pauseSwitchCoverBitmap);
                 jcVideoPlayer.cacheImageView.setVisibility(VISIBLE);
