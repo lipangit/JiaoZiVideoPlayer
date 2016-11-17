@@ -505,11 +505,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             vp.removeView(this);
             JCMediaManager.instance().lastState = currentState;//save state
             JCVideoPlayerManager.popListener();
-            JCVideoPlayerManager.getFirst().goBackThisListener();
-            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
+            if (JCVideoPlayerManager.getFirst() != null) {
+                JCVideoPlayerManager.getFirst().goBackThisListener();
+                CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
 
-            refreshCache();
-
+                refreshCache();
+            } else {
+                JCVideoPlayerManager.completeAll();
+            }
             return true;
         }
 
