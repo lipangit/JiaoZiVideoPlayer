@@ -19,20 +19,6 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true" />
 
-    <RelativeLayout
-        android:id="@+id/cache_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
-
-        <fm.jiecao.jcvideoplayer_lib.JCResizeImageView
-            android:id="@+id/cache"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true" />
-
-    </RelativeLayout>
-
     <ImageView
         android:id="@+id/cover"
         android:layout_width="wrap_content"

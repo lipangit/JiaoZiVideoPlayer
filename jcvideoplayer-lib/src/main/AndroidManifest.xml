@@ -4,8 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-sdk tools:overrideLibrary="com.example.ijkplayer_x86_64,
-     tv.danmaku.ijk.media.player_arm64" />
+    <uses-sdk tools:overrideLibrary="tv.danmaku.ijk.media.player_arm64,tv.danmaku.ijk.media.player_x86_64" />
     <application
         android:allowBackup="true"
         android:supportsRtl="true"></application>
