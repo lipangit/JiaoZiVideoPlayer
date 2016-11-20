@@ -23,7 +23,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import fm.jiecao.jcvideoplayer_lib.JCBuriedPointStandard;
+import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCUtils;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jiecaovideoplayer.R;
@@ -44,7 +44,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
-    protected static JCBuriedPointStandard JC_BURIED_POINT_STANDARD;
+    protected static JCUserActionStandard JC_USER_EVENT_STANDARD;
 
     public JCVideoPlayerStandardFresco(Context context) {
         super(context);
@@ -185,11 +185,11 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
                 onClickUiToggle();
             }
         } else if (i == R.id.surface_container) {
-            if (JC_BURIED_POINT_STANDARD != null && isCurrentMediaListener()) {
+            if (JC_USER_EVENT_STANDARD != null && isCurrentMediaListener()) {
 //                if (mIfCurrentIsFullscreen) {
-//                    JC_BURIED_POINT_STANDARD.onClickBlankFullscreen(url, objects);
+//                    JC_USER_EVENT_STANDARD.onClickBlankFullscreen(url, objects);
 //                } else {
-//                    JC_BURIED_POINT_STANDARD.onClickBlank(url, objects);
+//                    JC_USER_EVENT_STANDARD.onClickBlank(url, objects);
 //                }
             }
             startDismissControlViewTimer();
@@ -235,7 +235,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     private void startPlayLogic() {
-        onEvent(JCBuriedPointStandard.ON_CLICK_START_THUMB);
+        onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
         prepareVideo();
         startDismissControlViewTimer();
     }
