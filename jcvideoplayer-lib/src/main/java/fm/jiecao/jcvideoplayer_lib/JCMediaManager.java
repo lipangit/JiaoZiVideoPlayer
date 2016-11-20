@@ -1,7 +1,8 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.content.Context;
 import android.graphics.Point;
-import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
@@ -10,11 +11,22 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 
+import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
+import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+
 import java.util.Map;
-
-import tv.danmaku.ijk.media.player.IMediaPlayer;
-import tv.danmaku.ijk.media.player.IjkMediaPlayer;
-
 
 /**
  * <p>统一管理MediaPlayer的地方,只有一个mediaPlayer实例，那么不会有多个视频同时播放，也节省资源。</p>
@@ -28,8 +40,9 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
     public static String TAG = "JieCaoVideoPlayer";
 
     private static JCMediaManager JCMediaManager;
-    public IjkMediaPlayer mediaPlayer;
     public static JCResizeTextureView textureView;
+    public static SimpleExoPlayer simpleExoPlayer;
+
 
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
@@ -53,7 +66,6 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
     }
 
     public JCMediaManager() {
-        mediaPlayer = new IjkMediaPlayer();
         mMediaHandlerThread = new HandlerThread(TAG);
         mMediaHandlerThread.start();
         mMediaHandler = new MediaHandler((mMediaHandlerThread.getLooper()));
@@ -68,6 +80,9 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         }
     }
 
+    MappingTrackSelector trackSelector;
+    private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
+
     public class MediaHandler extends Handler {
         public MediaHandler(Looper looper) {
             super(looper);
@@ -81,33 +96,30 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                     try {
                         currentVideoWidth = 0;
                         currentVideoHeight = 0;
-                        mediaPlayer.release();
-                        mediaPlayer = new IjkMediaPlayer();
-                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        mediaPlayer.setDataSource(((FuckBean) msg.obj).url, ((FuckBean) msg.obj).mapHeadData);
-                        mediaPlayer.setLooping(((FuckBean) msg.obj).looping);
-                        mediaPlayer.setOnPreparedListener(JCMediaManager.this);
-                        mediaPlayer.setOnCompletionListener(JCMediaManager.this);
-                        mediaPlayer.setOnBufferingUpdateListener(JCMediaManager.this);
-                        mediaPlayer.setScreenOnWhilePlaying(true);
-                        mediaPlayer.setOnSeekCompleteListener(JCMediaManager.this);
-                        mediaPlayer.setOnErrorListener(JCMediaManager.this);
-                        mediaPlayer.setOnInfoListener(JCMediaManager.this);
-                        mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
-                        mediaPlayer.prepareAsync();
-                        mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 1);
+                        if (simpleExoPlayer != null) simpleExoPlayer.release();
+                        TrackSelection.Factory videoTrackSelectionFactory =
+                                new AdaptiveVideoTrackSelection.Factory(BANDWIDTH_METER);
+                        trackSelector = new DefaultTrackSelector(mMediaHandler, videoTrackSelectionFactory);
+                        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(((FuckBean) msg.obj).context, trackSelector, new DefaultLoadControl(),
+                                null, false);
+                        simpleExoPlayer.setPlayWhenReady(true);
+                        DataSource.Factory mediaDataSourceFactory = new DefaultDataSourceFactory(((FuckBean) msg.obj).context, BANDWIDTH_METER,
+                                new DefaultHttpDataSourceFactory("android_jcvd", BANDWIDTH_METER));
+                        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(((FuckBean) msg.obj).url), mediaDataSourceFactory,
+                                new DefaultExtractorsFactory(), mMediaHandler, null);
+                        simpleExoPlayer.prepare(mediaSource, true, true);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
                 case HANDLER_SETDISPLAY:
                     if (msg.obj == null) {
-                        instance().mediaPlayer.setSurface(null);
+                        simpleExoPlayer.setVideoSurface(null);
                     } else {
                         Surface holder = (Surface) msg.obj;
                         if (holder.isValid()) {
                             Log.i(TAG, "set surface");
-                            instance().mediaPlayer.setSurface(holder);
+                            simpleExoPlayer.setVideoSurface(holder);
                             mainThreadHandler.post(new Runnable() {
                                 @Override
                                 public void run() {
@@ -118,19 +130,18 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                     }
                     break;
                 case HANDLER_RELEASE:
-                    mediaPlayer.reset();
-                    mediaPlayer.release();
+                    simpleExoPlayer.release();
                     break;
             }
         }
     }
 
 
-    public void prepare(final String url, final Map<String, String> mapHeadData, boolean loop) {
+    public void prepare(final Context context, final String url, final Map<String, String> mapHeadData, boolean loop) {
         if (TextUtils.isEmpty(url)) return;
         Message msg = new Message();
         msg.what = HANDLER_PREPARE;
-        FuckBean fb = new FuckBean(url, mapHeadData, loop);
+        FuckBean fb = new FuckBean(context, url, mapHeadData, loop);
         msg.obj = fb;
         mMediaHandler.sendMessage(msg);
     }
@@ -241,8 +252,10 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         String url;
         Map<String, String> mapHeadData;
         boolean looping;
+        Context context;
 
-        FuckBean(String url, Map<String, String> mapHeadData, boolean loop) {
+        FuckBean(Context context, String url, Map<String, String> mapHeadData, boolean loop) {
+            this.context = context;
             this.url = url;
             this.mapHeadData = mapHeadData;
             this.looping = loop;
