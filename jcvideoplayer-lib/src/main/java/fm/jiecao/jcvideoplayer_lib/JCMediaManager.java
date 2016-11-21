@@ -12,8 +12,11 @@ import android.util.Log;
 import android.view.Surface;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -34,14 +37,13 @@ import java.util.Map;
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPlayer.OnCompletionListener,
-        IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnErrorListener,
-        IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnInfoListener {
+public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.VideoListener {
     public static String TAG = "JieCaoVideoPlayer";
 
     private static JCMediaManager JCMediaManager;
     public static JCResizeTextureView textureView;
     public static SimpleExoPlayer simpleExoPlayer;
+    public static String CURRENT_PLAYING_URL;
 
 
     public int currentVideoWidth = 0;
@@ -107,7 +109,12 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                                 new DefaultHttpDataSourceFactory("android_jcvd", BANDWIDTH_METER));
                         MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(((FuckBean) msg.obj).url), mediaDataSourceFactory,
                                 new DefaultExtractorsFactory(), mMediaHandler, null);
+                        simpleExoPlayer.addListener(JCMediaManager.this);
+                        simpleExoPlayer.setVideoListener(JCMediaManager.this);
+                        isPreparing = true;
+                        CURRENT_PLAYING_URL = ((FuckBean) msg.obj).url;
                         simpleExoPlayer.prepare(mediaSource, true, true);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -134,8 +141,9 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
                     break;
             }
         }
-    }
 
+
+    }
 
     public void prepare(final Context context, final String url, final Map<String, String> mapHeadData, boolean loop) {
         if (TextUtils.isEmpty(url)) return;
@@ -160,83 +168,63 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
     }
 
     @Override
-    public void onPrepared(IMediaPlayer mp) {
+    public void onLoadingChanged(boolean isLoading) {
+
+    }
+
+    public static boolean isPreparing = false;
+
+    @Override
+    public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+        if (isPreparing && playbackState == ExoPlayer.STATE_READY) {
+            // this is accurate
+            isPreparing = false;
+            mainThreadHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (JCVideoPlayerManager.getFirst() != null) {
+                        JCVideoPlayerManager.getFirst().onPrepared();
+                    }
+                }
+            });
+        } else if (playbackState == ExoPlayer.STATE_ENDED) {
+            mainThreadHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (JCVideoPlayerManager.getFirst() != null) {
+                        JCVideoPlayerManager.getFirst().onAutoCompletion();
+                    }
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onTimelineChanged(Timeline timeline, Object manifest) {
+
+    }
+
+    @Override
+    public void onPlayerError(ExoPlaybackException error) {
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (JCVideoPlayerManager.getFirst() != null) {
-                    JCVideoPlayerManager.getFirst().onPrepared();
+                    JCVideoPlayerManager.getFirst().onError(-10000, -10000);
                 }
             }
         });
     }
 
     @Override
-    public void onCompletion(IMediaPlayer mp) {
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getFirst() != null) {
-                    JCVideoPlayerManager.getFirst().onAutoCompletion();
-                }
-            }
-        });
+    public void onPositionDiscontinuity() {
+
     }
 
     @Override
-    public void onBufferingUpdate(IMediaPlayer mp, final int percent) {
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getFirst() != null) {
-                    JCVideoPlayerManager.getFirst().onBufferingUpdate(percent);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onSeekComplete(IMediaPlayer mp) {
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getFirst() != null) {
-                    JCVideoPlayerManager.getFirst().onSeekComplete();
-                }
-            }
-        });
-    }
-
-    @Override
-    public boolean onError(IMediaPlayer mp, final int what, final int extra) {
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getFirst() != null) {
-                    JCVideoPlayerManager.getFirst().onError(what, extra);
-                }
-            }
-        });
-        return true;
-    }
-
-    @Override
-    public boolean onInfo(IMediaPlayer mp, final int what, final int extra) {
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getFirst() != null) {
-                    JCVideoPlayerManager.getFirst().onInfo(what, extra);
-                }
-            }
-        });
-        return false;
-    }
-
-    @Override
-    public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sar_num, int sar_den) {
-        currentVideoWidth = mp.getVideoWidth();
-        currentVideoHeight = mp.getVideoHeight();
+    public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees, float pixelWidthHeightRatio) {
+        currentVideoWidth = width;
+        currentVideoHeight = height;
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -247,12 +235,78 @@ public class JCMediaManager implements IMediaPlayer.OnPreparedListener, IMediaPl
         });
     }
 
+    @Override
+    public void onRenderedFirstFrame() {
+
+    }
+
+    @Override
+    public void onVideoTracksDisabled() {
+
+    }
+//    @Override
+//    public void onBufferingUpdate(IMediaPlayer mp, final int percent) {
+//        mainThreadHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (JCVideoPlayerManager.getFirst() != null) {
+//                    JCVideoPlayerManager.getFirst().onBufferingUpdate(percent);
+//                }
+//            }
+//        });
+//    }
+
+//    @Override
+//    public void onSeekComplete(IMediaPlayer mp) {
+//        mainThreadHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (JCVideoPlayerManager.getFirst() != null) {
+//                    JCVideoPlayerManager.getFirst().onSeekComplete();
+//                }
+//            }
+//        });
+//    }
+
+//    @Override
+//    public boolean onError(IMediaPlayer mp, final int what, final int extra) {
+//
+//        return true;
+//    }
+
+//    @Override
+//    public boolean onInfo(IMediaPlayer mp, final int what, final int extra) {
+//        mainThreadHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (JCVideoPlayerManager.getFirst() != null) {
+//                    JCVideoPlayerManager.getFirst().onInfo(what, extra);
+//                }
+//            }
+//        });
+//        return false;
+//    }
+
+//    @Override
+//    public void onVideoSizeChanged(IMediaPlayer mp, int width, int height, int sar_num, int sar_den) {
+//        currentVideoWidth = mp.getVideoWidth();
+//        currentVideoHeight = mp.getVideoHeight();
+//        mainThreadHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (JCVideoPlayerManager.getFirst() != null) {
+//                    JCVideoPlayerManager.getFirst().onVideoSizeChanged();
+//                }
+//            }
+//        });
+//    }
+
 
     private class FuckBean {
+        Context context;
         String url;
         Map<String, String> mapHeadData;
         boolean looping;
-        Context context;
 
         FuckBean(Context context, String url, Map<String, String> mapHeadData, boolean loop) {
             this.context = context;

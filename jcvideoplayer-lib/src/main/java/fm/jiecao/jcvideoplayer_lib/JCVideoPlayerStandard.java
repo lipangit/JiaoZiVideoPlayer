@@ -187,7 +187,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backPress();
         } else if (i == R.id.back_tiny) {
             if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get() != null) {
-                if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get().getUrl() != JCMediaManager.instance().mediaPlayer.getDataSource()) {
+                if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get().getUrl() != JCMediaManager.CURRENT_PLAYING_URL) {
 //                    if (!((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get(0).get()).isShown()) {
                     releaseAllVideos();
                     return;
