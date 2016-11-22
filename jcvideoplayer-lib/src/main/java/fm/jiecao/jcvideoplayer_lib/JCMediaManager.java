@@ -55,7 +55,7 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
     public int videoRotation;
 
     public static final int HANDLER_PREPARE = 0;
-    public static final int HANDLER_SETDISPLAY = 1;
+//    public static final int HANDLER_SETDISPLAY = 1;
     public static final int HANDLER_RELEASE = 2;
     HandlerThread mMediaHandlerThread;
     MediaHandler mMediaHandler;
@@ -115,28 +115,29 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                         isPreparing = true;
                         CURRENT_PLAYING_URL = ((FuckBean) msg.obj).url;
                         simpleExoPlayer.prepare(mediaSource, true, true);
+                        simpleExoPlayer.setVideoSurface(new Surface(savedSurfaceTexture));
 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;
-                case HANDLER_SETDISPLAY:
-                    if (msg.obj == null) {
-                        simpleExoPlayer.setVideoSurface(null);
-                    } else {
-                        Surface holder = (Surface) msg.obj;
-                        if (holder.isValid()) {
-                            Log.i(TAG, "set surface");
-                            simpleExoPlayer.setVideoSurface(holder);
-                            mainThreadHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    textureView.requestLayout();
-                                }
-                            });
-                        }
-                    }
-                    break;
+//                case HANDLER_SETDISPLAY:
+//                    if (msg.obj == null) {
+//                        simpleExoPlayer.setVideoSurface(null);
+//                    } else {
+//                        Surface holder = (Surface) msg.obj;
+//                        if (holder.isValid()) {
+//                            Log.i(TAG, "set surface");
+//                            simpleExoPlayer.setVideoSurface(holder);
+//                            mainThreadHandler.post(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    textureView.requestLayout();
+//                                }
+//                            });
+//                        }
+//                    }
+//                    break;
                 case HANDLER_RELEASE:
                     simpleExoPlayer.release();
                     break;
@@ -161,12 +162,12 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
         mMediaHandler.sendMessage(msg);
     }
 
-    public void setDisplay(Surface holder) {
-        Message msg = new Message();
-        msg.what = HANDLER_SETDISPLAY;
-        msg.obj = holder;
-        mMediaHandler.sendMessage(msg);
-    }
+//    public void setDisplay(Surface holder) {
+//        Message msg = new Message();
+//        msg.what = HANDLER_SETDISPLAY;
+//        msg.obj = holder;
+//        mMediaHandler.sendMessage(msg);
+//    }
 
     @Override
     public void onLoadingChanged(boolean isLoading) {

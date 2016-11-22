@@ -620,7 +620,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
         if (JCMediaManager.savedSurfaceTexture == null) {
             JCMediaManager.savedSurfaceTexture = surface;
-            JCMediaManager.instance().setDisplay(new Surface(JCMediaManager.savedSurfaceTexture));
+//            JCMediaManager.instance().setDisplay(new Surface(JCMediaManager.savedSurfaceTexture));
         } else {
             JCMediaManager.textureView.setSurfaceTexture(JCMediaManager.savedSurfaceTexture);
         }
