@@ -354,7 +354,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
         JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
         JCMediaManager.textureView.setRotation(JCMediaManager.instance().videoRotation);
-        JCMediaManager.textureView.setSurfaceTextureListener(this);
+        if (currentScreen != SCREEN_WINDOW_FULLSCREEN) {
+            JCMediaManager.textureView.setSurfaceTextureListener(this);
+        }
 
         FrameLayout.LayoutParams layoutParams =
                 new FrameLayout.LayoutParams(
@@ -495,6 +497,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                     JCUserAction.ON_QUIT_FULLSCREEN :
                     JCUserAction.ON_QUIT_TINYSCREEN);
+            textureViewContainer.removeView(JCMediaManager.textureView);
             if (JCVideoPlayerManager.LISTENERLIST.size() == 1) {//directly fullscreen
                 JCVideoPlayerManager.popListener().onCompletion();
                 JCMediaManager.instance().releaseMediaPlayer();
@@ -617,10 +620,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
         if (JCMediaManager.savedSurfaceTexture == null) {
             JCMediaManager.savedSurfaceTexture = surface;
+            JCMediaManager.instance().setDisplay(new Surface(JCMediaManager.savedSurfaceTexture));
         } else {
             JCMediaManager.textureView.setSurfaceTexture(JCMediaManager.savedSurfaceTexture);
         }
-        JCMediaManager.instance().setDisplay(new Surface(JCMediaManager.savedSurfaceTexture));
     }
 
     @Override
