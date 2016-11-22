@@ -495,7 +495,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     public void changeUiToError() {
-        clearCacheImage();
         switch (currentScreen) {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
