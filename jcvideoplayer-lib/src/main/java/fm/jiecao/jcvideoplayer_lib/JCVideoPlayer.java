@@ -30,6 +30,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayer;
 
 import java.lang.ref.WeakReference;
@@ -464,7 +465,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         JCMediaManager.instance().currentVideoHeight = 0;
 
         // 清理缓存变量
-        JCMediaManager.instance().bufferPercent = 0;
         JCMediaManager.instance().videoRotation = 0;
 
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
@@ -562,11 +562,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onBufferingUpdate(int percent) {
-        if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPARING) {
-            Log.v(TAG, "onBufferingUpdate " + percent + " [" + this.hashCode() + "] ");
-            JCMediaManager.instance().bufferPercent = percent;
-            setTextAndProgress(percent);
-        }
+//        if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPARING) {
+//            Log.v(TAG, "onBufferingUpdate " + percent + " [" + this.hashCode() + "] ");
+//            setTextAndProgress(percent);
+//        }
     }
 
     @Override
@@ -773,7 +772,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        setTextAndProgress(JCMediaManager.instance().bufferPercent);
+                        setTextAndProgress();
                     }
                 });
             }
@@ -804,11 +803,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         return duration;
     }
 
-    public void setTextAndProgress(int secProgress) {
+    public void setTextAndProgress() {
         int position = getCurrentPositionWhenPlaying();
         int duration = getDuration();
         int progress = position * 100 / (duration == 0 ? 1 : duration);
-        setProgressAndTime(progress, secProgress, position, duration);
+        long secProgress = JCMediaManager.instance().simpleExoPlayer.getBufferedPosition();
+        setProgressAndTime(progress, progressBarValue(secProgress), position, duration);
     }
 
     public void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
@@ -826,6 +826,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         progressBar.setSecondaryProgress(0);
         currentTimeTextView.setText(JCUtils.stringForTime(0));
         totalTimeTextView.setText(JCUtils.stringForTime(0));
+    }
+
+    private int progressBarValue(long position) {
+        long duration = JCMediaManager.instance().simpleExoPlayer == null ?
+                C.TIME_UNSET : JCMediaManager.instance().simpleExoPlayer.getDuration();
+        return duration == C.TIME_UNSET || duration == 0 ? 0
+                : (int) ((position * 100) / duration);
     }
 
     public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {

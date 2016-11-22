@@ -49,7 +49,6 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
     public int lastState;
-    public int bufferPercent;
     public int backUpBufferState = -1;
     public int videoRotation;
 
