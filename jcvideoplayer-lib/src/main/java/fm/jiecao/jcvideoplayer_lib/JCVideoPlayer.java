@@ -349,8 +349,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (textureViewContainer.getChildCount() > 0) {
             textureViewContainer.removeAllViews();
         }
-        JCMediaManager.textureView = null;
-        JCMediaManager.textureView = new JCResizeTextureView(getContext());
+        if (JCMediaManager.textureView == null) {
+            JCMediaManager.textureView = new JCResizeTextureView(getContext());
+        }
         JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
         JCMediaManager.textureView.setRotation(JCMediaManager.instance().videoRotation);
         JCMediaManager.textureView.setSurfaceTextureListener(this);
@@ -614,8 +615,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
-        this.surface = new Surface(surface);
-        JCMediaManager.instance().setDisplay(this.surface);
+        if (JCMediaManager.savedSurfaceTexture == null) {
+            JCMediaManager.savedSurfaceTexture = surface;
+        } else {
+            JCMediaManager.textureView.setSurfaceTexture(JCMediaManager.savedSurfaceTexture);
+        }
+        JCMediaManager.instance().setDisplay(new Surface(JCMediaManager.savedSurfaceTexture));
     }
 
     @Override
@@ -628,8 +633,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        surface.release();
-        return true;
+
+        return JCMediaManager.savedSurfaceTexture == null;
     }
 
     @Override
@@ -700,7 +705,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             vp.removeView(old);
         }
         if (textureViewContainer.getChildCount() > 0) {
-            textureViewContainer.removeAllViews();
+            textureViewContainer.removeView(JCMediaManager.textureView);
         }
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);

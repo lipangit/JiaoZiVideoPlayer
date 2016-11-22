@@ -2,6 +2,7 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.SurfaceTexture;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -42,6 +43,7 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
 
     private static JCMediaManager JCMediaManager;
     public static JCResizeTextureView textureView;
+    public static SurfaceTexture savedSurfaceTexture;
     public static SimpleExoPlayer simpleExoPlayer;
     public static String CURRENT_PLAYING_URL;
 
