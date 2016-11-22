@@ -33,7 +33,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView titleTextView;
     public ImageView thumbImageView;
-    public ImageView coverImageView;
     public ImageView tinyBackImageView;
 
 
@@ -55,7 +54,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         titleTextView = (TextView) findViewById(R.id.title);
         backButton = (ImageView) findViewById(R.id.back);
         thumbImageView = (ImageView) findViewById(R.id.thumb);
-        coverImageView = (ImageView) findViewById(R.id.cover);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
 
@@ -524,7 +522,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else {
             thumbImageView.setVisibility(View.GONE);
         }
-        coverImageView.setVisibility(coverImg);
         bottomProgressBar.setVisibility(bottomPro);
     }
 

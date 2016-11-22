@@ -38,7 +38,6 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView titleTextView;
     public SimpleDraweeView thumbImageView;
-    public ImageView coverImageView;
     public ImageView tinyBackImageView;
 
     protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
@@ -61,7 +60,6 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         titleTextView = (TextView) findViewById(R.id.title);
         backButton = (ImageView) findViewById(R.id.back);
         thumbImageView = (SimpleDraweeView) findViewById(R.id.thumb);
-        coverImageView = (ImageView) findViewById(R.id.cover);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
 
@@ -501,7 +499,6 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         startButton.setVisibility(startBtn);
         loadingProgressBar.setVisibility(loadingPro);
         thumbImageView.setVisibility(thumbImg);
-        coverImageView.setVisibility(coverImg);
         bottomProgressBar.setVisibility(bottomPro);
     }
 
