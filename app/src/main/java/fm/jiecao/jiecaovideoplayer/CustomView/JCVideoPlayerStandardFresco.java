@@ -29,6 +29,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jiecaovideoplayer.R;
 
 /**
+ * Just replace thumb from ImageView to SimpleDraweeView
  * Created by Nathen
  * On 2016/05/01 22:59
  */

@@ -9,7 +9,6 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Surface;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -55,7 +54,7 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
     public int videoRotation;
 
     public static final int HANDLER_PREPARE = 0;
-//    public static final int HANDLER_SETDISPLAY = 1;
+    //    public static final int HANDLER_SETDISPLAY = 1;
     public static final int HANDLER_RELEASE = 2;
     HandlerThread mMediaHandlerThread;
     MediaHandler mMediaHandler;
@@ -139,7 +138,9 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
 //                    }
 //                    break;
                 case HANDLER_RELEASE:
-                    simpleExoPlayer.release();
+                    if (simpleExoPlayer != null) {
+                        simpleExoPlayer.release();
+                    }
                     break;
             }
         }

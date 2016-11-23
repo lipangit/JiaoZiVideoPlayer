@@ -31,13 +31,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                android:text="Fresco" />
+                android:text="Remove Annotation Will See Fresco" />
 
-            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardFresco
-                android:id="@+id/videocontroller2"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginTop="2dp" />
+            <!--<fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardFresco-->
+                <!--android:id="@+id/videocontroller2"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="200dp"-->
+                <!--android:layout_marginTop="2dp" />-->
         </LinearLayout>
     </ScrollView>
 
