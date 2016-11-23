@@ -1,12 +1,11 @@
 package fm.jiecao.jiecaovideoplayer;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
+//import com.facebook.drawee.backends.pipeline.Fresco;
 import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -24,7 +23,7 @@ public class UIImageLoaderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
+//        Fresco.initialize(this);
         setContentView(R.layout.activity_loadimage);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -52,11 +51,11 @@ public class UIImageLoaderActivity extends AppCompatActivity {
 //                com.android.volley.toolbox.ImageLoader.getImageListener(videoController1.thumbImageView, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
 //        imageLoader.get("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg", listener);
 
-        videoController2 = (JCVideoPlayerStandardFresco) findViewById(R.id.videocontroller2);
-        videoController2.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                "嫂子打电话");
-        Uri uri = Uri.parse("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg");
-        videoController2.thumbImageView.setImageURI(uri);
+//        videoController2 = (JCVideoPlayerStandardFresco) findViewById(R.id.videocontroller2);
+//        videoController2.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_LIST,
+//                "嫂子打电话");
+//        Uri uri = Uri.parse("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg");
+//        videoController2.thumbImageView.setImageURI(uri);
 
     }
 

@@ -18,7 +18,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+//import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,7 +37,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView titleTextView;
-    public SimpleDraweeView thumbImageView;
+//    public SimpleDraweeView thumbImageView;
     public ImageView tinyBackImageView;
 
     protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
@@ -59,11 +59,11 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progressbar);
         titleTextView = (TextView) findViewById(R.id.title);
         backButton = (ImageView) findViewById(R.id.back);
-        thumbImageView = (SimpleDraweeView) findViewById(R.id.thumb);
+//        thumbImageView = (SimpleDraweeView) findViewById(R.id.thumb);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
 
-        thumbImageView.setOnClickListener(this);
+//        thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
         tinyBackImageView.setOnClickListener(this);
 
@@ -498,7 +498,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
         loadingProgressBar.setVisibility(loadingPro);
-        thumbImageView.setVisibility(thumbImg);
+//        thumbImageView.setVisibility(thumbImg);
         bottomProgressBar.setVisibility(bottomPro);
     }
 
