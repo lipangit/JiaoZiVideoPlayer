@@ -101,6 +101,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                         currentVideoWidth = 0;
                         currentVideoHeight = 0;
                         if (simpleExoPlayer != null) simpleExoPlayer.release();
+                        isPreparing = true;
+                        savedSurfaceTexture = null;
                         TrackSelection.Factory videoTrackSelectionFactory =
                                 new AdaptiveVideoTrackSelection.Factory(BANDWIDTH_METER);
                         trackSelector = new DefaultTrackSelector(mMediaHandler, videoTrackSelectionFactory);
@@ -113,11 +115,11 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                                 new DefaultExtractorsFactory(), mMediaHandler, null);
                         simpleExoPlayer.addListener(JCMediaManager.this);
                         simpleExoPlayer.setVideoListener(JCMediaManager.this);
-                        isPreparing = true;
-                        savedSurfaceTexture = null;
                         CURRENT_PLAYING_URL = ((FuckBean) msg.obj).url;
                         simpleExoPlayer.prepare(mediaSource, true, true);
-
+                        if (savedSurfaceTexture != null) {
+                            simpleExoPlayer.setVideoSurface(new Surface(savedSurfaceTexture));
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -143,6 +145,7 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                     if (simpleExoPlayer != null) {
                         simpleExoPlayer.release();
                     }
+                    simpleExoPlayer = null;
                     break;
             }
         }
@@ -152,6 +155,7 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
 
     public void prepare(final Context context, final String url, final Map<String, String> mapHeadData, boolean loop) {
         if (TextUtils.isEmpty(url)) return;
+        releaseMediaPlayer();
         Message msg = new Message();
         msg.what = HANDLER_PREPARE;
         FuckBean fb = new FuckBean(context, url, mapHeadData, loop);
@@ -255,7 +259,9 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
         Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
-            simpleExoPlayer.setVideoSurface(new Surface(savedSurfaceTexture));
+            if (simpleExoPlayer != null) {
+                simpleExoPlayer.setVideoSurface(new Surface(savedSurfaceTexture));
+            }
         } else {
             textureView.setSurfaceTexture(savedSurfaceTexture);
         }
