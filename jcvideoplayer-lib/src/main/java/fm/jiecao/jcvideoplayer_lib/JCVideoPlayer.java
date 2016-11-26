@@ -2,7 +2,6 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.graphics.SurfaceTexture;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -15,7 +14,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -40,7 +38,7 @@ import java.util.TimerTask;
 /**
  * Created by Nathen on 16/7/30.
  */
-public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayerListener, View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener, TextureView.SurfaceTextureListener {
+public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayerListener, View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
     public static final String TAG = "JieCaoVideoPlayer";
 
@@ -80,7 +78,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public Map<String, String> mapHeadData = new HashMap<>();
     public int seekToInAdvance = -1;
     private boolean textureUpdated;
-    private boolean textureSizeChanged;
 
     public ImageView startButton;
 
@@ -324,13 +321,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
         if (JCMediaManager.textureView == null) {
             JCMediaManager.textureView = new JCResizeTextureView(getContext());
+            JCMediaManager.textureView.setSurfaceTextureListener(JCMediaManager.instance());
         }
-        textureViewContainer.removeView(JCMediaManager.textureView);
+//        textureViewContainer.removeView(JCMediaManager.textureView);
         JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
         JCMediaManager.textureView.setRotation(JCMediaManager.instance().videoRotation);
-        if (currentScreen != SCREEN_WINDOW_FULLSCREEN) {
-            JCMediaManager.textureView.setSurfaceTextureListener(this);
-        }
 
         FrameLayout.LayoutParams layoutParams =
                 new FrameLayout.LayoutParams(
@@ -456,6 +451,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //                startAnimation(ra);
 //            }
             textureViewContainer.removeView(JCMediaManager.textureView);
+            ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+                    .findViewById(Window.ID_ANDROID_CONTENT);
+            vp.removeView(this);
+
             onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                     JCUserAction.ON_QUIT_FULLSCREEN :
                     JCUserAction.ON_QUIT_TINYSCREEN);
@@ -468,9 +467,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //                return true;
 //            }
             JCMediaManager.instance().lastState = currentState;//save state
-            ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
-                    .findViewById(Window.ID_ANDROID_CONTENT);
-            vp.removeView(this);
             if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
                 JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().goBackOnThisFloor();
                 CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
@@ -569,41 +565,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onVideoSizeChanged() {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
         JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
-    }
-
-    @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
-        if (JCMediaManager.savedSurfaceTexture == null) {
-            JCMediaManager.savedSurfaceTexture = surface;
-//            JCMediaManager.instance().setDisplay(new Surface(JCMediaManager.savedSurfaceTexture));
-        } else {
-            JCMediaManager.textureView.setSurfaceTexture(JCMediaManager.savedSurfaceTexture);
-        }
-    }
-
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
-
-        // 如果SurfaceTexture还没有更新Image，则记录SizeChanged事件，否则忽略
-        textureSizeChanged = true;
-        Log.i(TAG, "onSurfaceTextureSizeChanged [" + this.hashCode() + "] ");
-    }
-
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        return JCMediaManager.savedSurfaceTexture == null;
-    }
-
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
-        // 如果textureSizeChanged=true，则说明此次Updated事件不是Image更新引起的   应该是TextureSizeChanged引起的 所以不需要更新 cacheImageView
-        Log.i(TAG, "onSurfaceTextureUpdated [" + this.hashCode() + "] textureSizeChanged=" + textureSizeChanged);
-        if (!textureSizeChanged) {
-            JCMediaManager.textureView.setHasUpdated();
-        } else {
-            textureSizeChanged = false;
-        }
     }
 
     @Override

@@ -9,7 +9,9 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Surface;
+import android.view.TextureView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -37,7 +39,7 @@ import java.util.Map;
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.VideoListener {
+public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.VideoListener, TextureView.SurfaceTextureListener {
     public static String TAG = "JieCaoVideoPlayer";
 
     private static JCMediaManager JCMediaManager;
@@ -112,9 +114,9 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                         simpleExoPlayer.addListener(JCMediaManager.this);
                         simpleExoPlayer.setVideoListener(JCMediaManager.this);
                         isPreparing = true;
+                        savedSurfaceTexture = null;
                         CURRENT_PLAYING_URL = ((FuckBean) msg.obj).url;
                         simpleExoPlayer.prepare(mediaSource, true, true);
-                        simpleExoPlayer.setVideoSurface(new Surface(savedSurfaceTexture));
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -246,6 +248,33 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
     @Override
     public void onVideoTracksDisabled() {
 
+    }
+
+    @Override
+    public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
+        Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
+        if (savedSurfaceTexture == null) {
+            savedSurfaceTexture = surfaceTexture;
+            simpleExoPlayer.setVideoSurface(new Surface(savedSurfaceTexture));
+        } else {
+            textureView.setSurfaceTexture(savedSurfaceTexture);
+        }
+    }
+
+    @Override
+    public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
+        // 如果SurfaceTexture还没有更新Image，则记录SizeChanged事件，否则忽略
+        Log.i(TAG, "onSurfaceTextureSizeChanged [" + this.hashCode() + "] ");
+    }
+
+    @Override
+    public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
+        return savedSurfaceTexture == null;
+    }
+
+    @Override
+    public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
+        Log.i(TAG, "onSurfaceTextureUpdated [" + this.hashCode() + "]");
     }
 //    @Override
 //    public void onBufferingUpdate(IMediaPlayer mp, final int percent) {
