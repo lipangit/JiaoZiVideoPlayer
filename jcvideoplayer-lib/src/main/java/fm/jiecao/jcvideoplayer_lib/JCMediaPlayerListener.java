@@ -20,9 +20,9 @@ public interface JCMediaPlayerListener {
 
     void onVideoSizeChanged();
 
-    void goBackThisListener();
+    void goBackOnThisFloor();
 
-    boolean backToOtherListener();
+    boolean downStairs();
 
     void onScrollChange();
 

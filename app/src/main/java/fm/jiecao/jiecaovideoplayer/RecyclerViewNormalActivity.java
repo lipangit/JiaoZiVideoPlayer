@@ -42,8 +42,8 @@ public class RecyclerViewNormalActivity extends AppCompatActivity {
 
             @Override
             public void onChildViewDetachedFromWindow(View view) {
-                if (JCVideoPlayerManager.getCurrentPlayListener() != null) {
-                    JCVideoPlayer videoPlayer = (JCVideoPlayer) JCVideoPlayerManager.getCurrentPlayListener();
+                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+                    JCVideoPlayer videoPlayer = (JCVideoPlayer) JCVideoPlayerManager.getCurrentJcvdOnFirtFloor();
                     if (((ViewGroup) view).indexOfChild(videoPlayer) != -1 && videoPlayer.currentState == JCVideoPlayer.CURRENT_STATE_PLAYING) {
                         JCVideoPlayer.releaseAllVideos();
                     }

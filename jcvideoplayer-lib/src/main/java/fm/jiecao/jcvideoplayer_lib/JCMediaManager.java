@@ -185,8 +185,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
             mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (JCVideoPlayerManager.getCurrentPlayListener() != null) {
-                        JCVideoPlayerManager.getCurrentPlayListener().onPrepared();
+                    if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+                        JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onPrepared();
                     }
                 }
             });
@@ -194,8 +194,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
             mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (JCVideoPlayerManager.getCurrentPlayListener() != null) {
-                        JCVideoPlayerManager.getCurrentPlayListener().onAutoCompletion();
+                    if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+                        JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onAutoCompletion();
                     }
                 }
             });
@@ -212,8 +212,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentPlayListener() != null) {
-                    JCVideoPlayerManager.getCurrentPlayListener().onError(-10000, -10000);
+                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+                    JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onError(-10000, -10000);
                 }
             }
         });
@@ -231,8 +231,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentPlayListener() != null) {
-                    JCVideoPlayerManager.getCurrentPlayListener().onVideoSizeChanged();
+                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+                    JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onVideoSizeChanged();
                 }
             }
         });
@@ -252,8 +252,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
 //        mainThreadHandler.post(new Runnable() {
 //            @Override
 //            public void run() {
-//                if (JCVideoPlayerManager.getCurrentPlayListener() != null) {
-//                    JCVideoPlayerManager.getCurrentPlayListener().onBufferingUpdate(percent);
+//                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+//                    JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onBufferingUpdate(percent);
 //                }
 //            }
 //        });
@@ -264,8 +264,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
 //        mainThreadHandler.post(new Runnable() {
 //            @Override
 //            public void run() {
-//                if (JCVideoPlayerManager.getCurrentPlayListener() != null) {
-//                    JCVideoPlayerManager.getCurrentPlayListener().onSeekComplete();
+//                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+//                    JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onSeekComplete();
 //                }
 //            }
 //        });
@@ -282,8 +282,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
 //        mainThreadHandler.post(new Runnable() {
 //            @Override
 //            public void run() {
-//                if (JCVideoPlayerManager.getCurrentPlayListener() != null) {
-//                    JCVideoPlayerManager.getCurrentPlayListener().onInfo(what, extra);
+//                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+//                    JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onInfo(what, extra);
 //                }
 //            }
 //        });
@@ -297,8 +297,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
 //        mainThreadHandler.post(new Runnable() {
 //            @Override
 //            public void run() {
-//                if (JCVideoPlayerManager.getCurrentPlayListener() != null) {
-//                    JCVideoPlayerManager.getCurrentPlayListener().onVideoSizeChanged();
+//                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+//                    JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onVideoSizeChanged();
 //                }
 //            }
 //        });

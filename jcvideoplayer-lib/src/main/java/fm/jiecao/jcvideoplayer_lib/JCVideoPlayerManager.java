@@ -20,19 +20,27 @@ public class JCVideoPlayerManager {
         FIRST_FLOOR_LIST.put(jcMediaPlayerListener.getUrl(), new WeakReference<>(jcMediaPlayerListener));
     }
 
-    public static JCMediaPlayerListener getCurrentPlayListener() {
+    public static void putSecondFloor(JCMediaPlayerListener jcMediaPlayerListener) {
+        SECOND_FLOOR = new WeakReference<>(jcMediaPlayerListener);
+    }
+
+    public static JCMediaPlayerListener getCurrentJcvdOnFirtFloor() {
         if (FIRST_FLOOR_LIST.get(JCMediaManager.CURRENT_PLAYING_URL) != null) {
             return FIRST_FLOOR_LIST.get(JCMediaManager.CURRENT_PLAYING_URL).get();
         }
         return null;
     }
 
+//    public static JCMediaPlayerListener findFirtFloor(){//need this when listview
+//        return null;
+//    }
+
     public static void completeAll() {
         if (SECOND_FLOOR != null) {
             SECOND_FLOOR.get().onCompletion();
         }
-        if (getCurrentPlayListener() != null) {
-            getCurrentPlayListener().onCompletion();
+        if (getCurrentJcvdOnFirtFloor() != null) {
+            getCurrentJcvdOnFirtFloor().onCompletion();
         }
     }
 }
