@@ -48,6 +48,18 @@
                 android:id="@+id/custom_videoplayer_standard_show_textureview_aoto_complete"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="Standard ui show textureview after auto complete" />
+
+            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardAutoComplete
+                android:id="@+id/custom_videoplayer_standard_aoto_complete"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
