@@ -134,8 +134,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         progressBar.setOnSeekBarChangeListener(this);
         bottomContainer.setOnClickListener(this);
         textureViewContainer.setOnClickListener(this);
-
         textureViewContainer.setOnTouchListener(this);
+
         mScreenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
@@ -322,12 +322,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void addTextureView() {
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
-        if (textureViewContainer.getChildCount() > 0) {
-            textureViewContainer.removeAllViews();
-        }
         if (JCMediaManager.textureView == null) {
             JCMediaManager.textureView = new JCResizeTextureView(getContext());
         }
+        textureViewContainer.removeView(JCMediaManager.textureView);
         JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
         JCMediaManager.textureView.setRotation(JCMediaManager.instance().videoRotation);
         if (currentScreen != SCREEN_WINDOW_FULLSCREEN) {
@@ -431,14 +429,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onCompletion() {
         Log.i(TAG, "onCompletion " + " [" + this.hashCode() + "] ");
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
-        if (textureViewContainer.getChildCount() > 0) {
-            textureViewContainer.removeAllViews();
-        }
-
+        // 清理缓存变量
+        textureViewContainer.removeView(JCMediaManager.textureView);
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
-
-        // 清理缓存变量
         JCMediaManager.instance().videoRotation = 0;
 
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
@@ -474,7 +468,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                     .findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
-            textureViewContainer.removeView(JCMediaManager.textureView);
             JCMediaManager.instance().lastState = currentState;//save state
             if (JCVideoPlayerManager.getCurrentPlayListener() != null) {
                 JCVideoPlayerManager.getCurrentPlayListener().goBackThisListener();
@@ -668,9 +661,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (old != null) {
             vp.removeView(old);
         }
-        if (textureViewContainer.getChildCount() > 0) {
-            textureViewContainer.removeView(JCMediaManager.textureView);
-        }
+        textureViewContainer.removeView(JCMediaManager.textureView);
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer jcVideoPlayer = constructor.newInstance(getContext());
@@ -701,9 +692,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (old != null) {
             vp.removeView(old);
         }
-        if (textureViewContainer.getChildCount() > 0) {
-            textureViewContainer.removeAllViews();
-        }
+        textureViewContainer.removeView(JCMediaManager.textureView);
+
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer mJcVideoPlayer = constructor.newInstance(getContext());
