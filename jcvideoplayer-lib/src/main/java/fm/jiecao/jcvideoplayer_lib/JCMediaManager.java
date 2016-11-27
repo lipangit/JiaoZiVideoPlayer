@@ -124,23 +124,6 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                         e.printStackTrace();
                     }
                     break;
-//                case HANDLER_SETDISPLAY:
-//                    if (msg.obj == null) {
-//                        simpleExoPlayer.setVideoSurface(null);
-//                    } else {
-//                        Surface holder = (Surface) msg.obj;
-//                        if (holder.isValid()) {
-//                            Log.i(TAG, "set surface");
-//                            simpleExoPlayer.setVideoSurface(holder);
-//                            mainThreadHandler.post(new Runnable() {
-//                                @Override
-//                                public void run() {
-//                                    textureView.requestLayout();
-//                                }
-//                            });
-//                        }
-//                    }
-//                    break;
                 case HANDLER_RELEASE:
                     if (simpleExoPlayer != null) {
                         simpleExoPlayer.release();
@@ -168,13 +151,6 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
         msg.what = HANDLER_RELEASE;
         mMediaHandler.sendMessage(msg);
     }
-
-//    public void setDisplay(Surface holder) {
-//        Message msg = new Message();
-//        msg.what = HANDLER_SETDISPLAY;
-//        msg.obj = holder;
-//        mMediaHandler.sendMessage(msg);
-//    }
 
     @Override
     public void onLoadingChanged(boolean isLoading) {

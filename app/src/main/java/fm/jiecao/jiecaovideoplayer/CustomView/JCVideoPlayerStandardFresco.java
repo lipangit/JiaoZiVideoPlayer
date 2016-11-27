@@ -18,8 +18,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.facebook.drawee.view.SimpleDraweeView;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,6 +25,8 @@ import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCUtils;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jiecaovideoplayer.R;
+
+//import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
  * Just replace thumb from ImageView to SimpleDraweeView
@@ -38,7 +38,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView titleTextView;
-//    public SimpleDraweeView thumbImageView;
+    //    public SimpleDraweeView thumbImageView;
     public ImageView tinyBackImageView;
 
     protected static Timer DISSMISS_CONTROL_VIEW_TIMER;
@@ -71,26 +71,23 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     @Override
-    public boolean setUp(String url, int screen, Object... objects) {
-        if (objects.length == 0) return false;
-        if (super.setUp(url, screen, objects)) {
-            titleTextView.setText(objects[0].toString());
-            if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-                fullscreenButton.setImageResource(R.drawable.jc_shrink);
-                backButton.setVisibility(View.VISIBLE);
-                tinyBackImageView.setVisibility(View.INVISIBLE);
-            } else if (currentScreen == SCREEN_LAYOUT_LIST) {
-                fullscreenButton.setImageResource(R.drawable.jc_enlarge);
-                backButton.setVisibility(View.GONE);
-                tinyBackImageView.setVisibility(View.INVISIBLE);
-            } else if (currentScreen == SCREEN_WINDOW_TINY) {
-                tinyBackImageView.setVisibility(View.VISIBLE);
-                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-            }
-            return true;
+    public void setUp(String url, int screen, Object... objects) {
+        super.setUp(url, screen, objects);
+        if (objects.length == 0) return;
+        titleTextView.setText(objects[0].toString());
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            fullscreenButton.setImageResource(R.drawable.jc_shrink);
+            backButton.setVisibility(View.VISIBLE);
+            tinyBackImageView.setVisibility(View.INVISIBLE);
+        } else if (currentScreen == SCREEN_LAYOUT_LIST) {
+            fullscreenButton.setImageResource(R.drawable.jc_enlarge);
+            backButton.setVisibility(View.GONE);
+            tinyBackImageView.setVisibility(View.INVISIBLE);
+        } else if (currentScreen == SCREEN_WINDOW_TINY) {
+            tinyBackImageView.setVisibility(View.VISIBLE);
+            setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
         }
-        return false;
     }
 
     @Override

@@ -47,15 +47,12 @@ public class JCVideoPlayerStandardShowShareButtonAfterFullscreen extends JCVideo
     }
 
     @Override
-    public boolean setUp(String url, int screen, Object... objects) {
-        if (super.setUp(url, screen, objects)) {
-            if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-                shareButton.setVisibility(View.VISIBLE);
-            } else {
-                shareButton.setVisibility(View.INVISIBLE);
-            }
-            return true;
+    public void setUp(String url, int screen, Object... objects) {
+        super.setUp(url, screen, objects);
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            shareButton.setVisibility(View.VISIBLE);
+        } else {
+            shareButton.setVisibility(View.INVISIBLE);
         }
-        return false;
     }
 }

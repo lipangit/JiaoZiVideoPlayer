@@ -30,8 +30,6 @@ import com.google.android.exoplayer2.ExoPlayer;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -75,7 +73,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public String url = "";
     public Object[] objects = null;
     public boolean looping = false;
-    public Map<String, String> mapHeadData = new HashMap<>();
     public int seekToInAdvance = -1;
 
     public ImageView startButton;
@@ -138,16 +135,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mHandler = new Handler();
     }
 
-    public boolean setUp(String url, int screen, Object... objects) {
+    public void setUp(String url, int screen, Object... objects) {
         if (!TextUtils.isEmpty(this.url) && TextUtils.equals(this.url, url)) {
-            return false;
+            return;
         }
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         JCVideoPlayerManager.putFirstFloor(this);
-        return true;
     }
 
     @Override
@@ -163,15 +159,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public int getState() {
         return currentState;
-    }
-
-    public boolean setUp(String url, int screen, Map<String, String> mapHeadData, Object... objects) {
-        if (setUp(url, screen, objects)) {
-            this.mapHeadData.clear();
-            this.mapHeadData.putAll(mapHeadData);
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -228,7 +215,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        JCMediaManager.instance().prepare(getContext(), url, mapHeadData, looping);
+        JCMediaManager.instance().prepare(getContext(), url, null, looping);
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
     }
 
