@@ -657,15 +657,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
-            JCVideoPlayer mJcVideoPlayer = constructor.newInstance(getContext());
-            mJcVideoPlayer.setId(TINY_ID);
+            JCVideoPlayer jcVideoPlayer = constructor.newInstance(getContext());
+            jcVideoPlayer.setId(TINY_ID);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
-            vp.addView(mJcVideoPlayer, lp);
-            mJcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
-            mJcVideoPlayer.setUiWitStateAndScreen(currentState);
-            mJcVideoPlayer.addTextureView();
-
+            vp.addView(jcVideoPlayer, lp);
+            jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
+            jcVideoPlayer.setUiWitStateAndScreen(currentState);
+            jcVideoPlayer.addTextureView();
+            JCVideoPlayerManager.putSecondFloor(jcVideoPlayer);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
