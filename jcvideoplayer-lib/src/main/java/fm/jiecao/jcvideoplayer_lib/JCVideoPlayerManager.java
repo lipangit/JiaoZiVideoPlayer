@@ -31,6 +31,13 @@ public class JCVideoPlayerManager {
         return null;
     }
 
+    public static JCMediaPlayerListener getCurrentJcvdOnSecondFloor() {
+        if (SECOND_FLOOR!= null) {
+            return SECOND_FLOOR.get();
+        }
+        return null;
+    }
+
 //    public static JCMediaPlayerListener findFirtFloor(){//need this when listview
 //        return null;
 //    }

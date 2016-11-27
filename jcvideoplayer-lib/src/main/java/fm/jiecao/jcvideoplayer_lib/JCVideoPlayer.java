@@ -601,8 +601,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static boolean backPress() {
         Log.i(TAG, "backPress");
-        if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
-            return JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().downStairs();
+        if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null) {
+            return JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().downStairs();
         }
         return false;
     }
