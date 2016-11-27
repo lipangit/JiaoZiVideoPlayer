@@ -46,7 +46,7 @@ public class JCVideoPlayerManager {
 //    }
 
     public static void completeAll() {
-        if (SECOND_FLOOR != null) {
+        if (SECOND_FLOOR != null && SECOND_FLOOR.get() != null) {
             SECOND_FLOOR.get().onCompletion();
         }
         if (getCurrentJcvdOnFirtFloor() != null) {
