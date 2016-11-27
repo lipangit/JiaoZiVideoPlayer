@@ -77,7 +77,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public boolean looping = false;
     public Map<String, String> mapHeadData = new HashMap<>();
     public int seekToInAdvance = -1;
-    private boolean textureUpdated;
 
     public ImageView startButton;
 
@@ -461,13 +460,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     JCUserAction.ON_QUIT_FULLSCREEN :
                     JCUserAction.ON_QUIT_TINYSCREEN);
 
-            //TODO directly fullscreen, just quit 直接全屏应该只是个特例，一样的对待应该
-//            if (JCVideoPlayerManager.SECOND_FLOOR != null) {
-//                JCVideoPlayerManager.popListener().onCompletion();
-//                JCMediaManager.instance().releaseMediaPlayer();
-//                showSupportActionBar(getContext());
-//                return true;
-//            }
+            JCVideoPlayerManager.putSecondFloor(null);
             JCMediaManager.instance().lastState = currentState;//save state
             if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
                 JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().goBackOnThisFloor();

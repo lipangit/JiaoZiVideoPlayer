@@ -24,7 +24,11 @@ public class JCVideoPlayerManager {
     }
 
     public static void putSecondFloor(JCMediaPlayerListener jcMediaPlayerListener) {
-        SECOND_FLOOR = new WeakReference<>(jcMediaPlayerListener);
+        if (jcMediaPlayerListener == null) {
+            SECOND_FLOOR = null;
+        } else {
+            SECOND_FLOOR = new WeakReference<>(jcMediaPlayerListener);
+        }
     }
 
     public static JCMediaPlayerListener getCurrentJcvdOnFirtFloor() {
