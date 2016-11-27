@@ -17,6 +17,9 @@ public class JCVideoPlayerManager {
     public static void putFirstFloor(JCMediaPlayerListener jcMediaPlayerListener) {
         //TODO clear null point
         //TODO 如果url不一样，但是listener一样（列表复用的时候），就要删除那个url的listener，设置新url的listener
+        if (jcMediaPlayerListener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_FULLSCREEN ||
+                jcMediaPlayerListener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_TINY)
+            return;
         FIRST_FLOOR_LIST.put(jcMediaPlayerListener.getUrl(), new WeakReference<>(jcMediaPlayerListener));
     }
 
@@ -32,7 +35,7 @@ public class JCVideoPlayerManager {
     }
 
     public static JCMediaPlayerListener getCurrentJcvdOnSecondFloor() {
-        if (SECOND_FLOOR!= null) {
+        if (SECOND_FLOOR != null) {
             return SECOND_FLOOR.get();
         }
         return null;
