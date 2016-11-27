@@ -328,7 +328,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         currentState = state;
         switch (currentState) {
             case CURRENT_STATE_NORMAL:
-                if (isCurrentMediaListener()) {
+                if (isCurrentMediaListener()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
                     cancelProgressTimer();
                     JCMediaManager.instance().releaseMediaPlayer();
                 }
@@ -673,7 +673,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public int getCurrentPositionWhenPlaying() {
         int position = 0;
-        if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE || currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
+        if (currentState == CURRENT_STATE_PLAYING ||
+                currentState == CURRENT_STATE_PAUSE ||
+                currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
             try {
                 position = (int) JCMediaManager.instance().simpleExoPlayer.getCurrentPosition();
             } catch (IllegalStateException e) {
@@ -764,7 +766,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     //isCurrentMediaListener and isCurrenPlayUrl should be two logic methods,isCurrentMediaListener is for different jcvd with same
     //url when fullscreen or tiny screen. isCurrenPlayUrl is to find where is myself when back from tiny screen.
     //Sometimes they are overlap.
-    public boolean isCurrentMediaListener() {
+    public boolean isCurrentMediaListener() {//虽然看这个函数很不爽，但是干不掉
         return JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null
                 && JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() == this;
     }
