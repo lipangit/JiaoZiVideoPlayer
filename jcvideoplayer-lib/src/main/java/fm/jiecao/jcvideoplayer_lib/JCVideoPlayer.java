@@ -793,22 +793,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
-        if (url.equals(JCMediaManager.CURRENT_PLAYING_URL)) {
-            if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() == null) return;
-            if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().getScreenType() == SCREEN_WINDOW_TINY) {
-                //如果正在播放的是小窗,择机退出小窗
-                if (isShown()) {//已经显示,就退出小窗
-                    backPress();
-                }
+        //如果正在播放的是小窗,择机退出小窗
+        if (isShown()) {//已经显示,就退出小窗
+            backPress();
+        } else if (!isShown()) {//已经隐藏          //如果正在播放的不是小窗,择机进入小窗
+            if (currentState != CURRENT_STATE_PLAYING) {
+                releaseAllVideos();
             } else {
-                //如果正在播放的不是小窗,择机进入小窗
-                if (!isShown()) {//已经隐藏
-                    if (currentState != CURRENT_STATE_PLAYING) {
-                        releaseAllVideos();
-                    } else {
-                        startWindowTiny();
-                    }
-                }
+                startWindowTiny();
             }
         }
     }
