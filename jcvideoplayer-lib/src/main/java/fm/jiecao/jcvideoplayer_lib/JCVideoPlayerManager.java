@@ -2,6 +2,7 @@ package fm.jiecao.jcvideoplayer_lib;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Put JCVideoPlayer into layout
@@ -53,8 +54,14 @@ public class JCVideoPlayerManager {
         if (SECOND_FLOOR != null && SECOND_FLOOR.get() != null) {
             SECOND_FLOOR.get().onCompletion();
         }
-        if (getCurrentJcvdOnFirtFloor() != null) {
-            getCurrentJcvdOnFirtFloor().onCompletion();
+        Set<String> set = FIRST_FLOOR_LIST.keySet();
+        for (String s : set) {
+            if (FIRST_FLOOR_LIST.get(s) != null && FIRST_FLOOR_LIST.get(s).get() != null && FIRST_FLOOR_LIST.get(s).get().getState() != JCVideoPlayer.CURRENT_STATE_NORMAL) {
+                FIRST_FLOOR_LIST.get(s).get().onCompletion();
+            }
         }
+//        if (getCurrentJcvdOnFirtFloor() != null) {
+//            getCurrentJcvdOnFirtFloor().onCompletion();
+//        }
     }
 }

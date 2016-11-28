@@ -208,6 +208,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public void prepareVideo() {
+        JCVideoPlayerManager.completeAll();
         Log.d(TAG, "prepareVideo [" + this.hashCode() + "] ");
         addTextureView();
 
