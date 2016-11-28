@@ -376,7 +376,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
 
         if (currentState != CURRENT_STATE_PREPARING) return;
-        JCMediaManager.instance().simpleExoPlayer.setPlayWhenReady(true);
         if (seekToInAdvance != -1) {
             JCMediaManager.instance().simpleExoPlayer.seekTo(seekToInAdvance);
             seekToInAdvance = -1;
