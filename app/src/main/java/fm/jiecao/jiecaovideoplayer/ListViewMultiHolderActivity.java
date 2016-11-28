@@ -86,11 +86,11 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                 }
 
                 viewHolder.jcVideoPlayer.setUp(
-                        VideoConstant.videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
-                        VideoConstant.videoTitles[position]);
+                        VideoConstant.videoUrls[0][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                        VideoConstant.videoTitles[0][position]);
 
                 Picasso.with(ListViewMultiHolderActivity.this)
-                        .load(VideoConstant.videoThumbs[position])
+                        .load(VideoConstant.videoThumbs[0][position])
                         .into(viewHolder.jcVideoPlayer.thumbImageView);
             } else {
                 TextViewHolder textViewHolder;

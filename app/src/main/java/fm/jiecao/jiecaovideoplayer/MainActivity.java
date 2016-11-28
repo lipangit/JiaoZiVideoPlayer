@@ -56,10 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子在家吗");
 
         mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
-        mJcVideoPlayerStandard.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4"
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子真嘚瑟");
+        mJcVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
+                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不咋信");
         Picasso.with(this)
-                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
+                .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
                 .into(mJcVideoPlayerStandard.thumbImageView);
         mJcVideoPlayerStandard.looping = true;
 

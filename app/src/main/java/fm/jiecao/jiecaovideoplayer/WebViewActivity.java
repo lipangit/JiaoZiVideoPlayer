@@ -40,23 +40,40 @@ public class WebViewActivity extends AppCompatActivity {
     public class JCCallBack {
 
         @JavascriptInterface
-        public void adViewJieCaoVideoPlayer(final int width, final int height, final int top, final int left) {
+        public void adViewJieCaoVideoPlayer(final int width, final int height, final int top, final int left, final int index) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    JCVideoPlayerStandard webVieo = new JCVideoPlayerStandard(WebViewActivity.this);
-                    webVieo.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4",
-                            JCVideoPlayer.SCREEN_LAYOUT_LIST, "嫂子好困");
-                    Picasso.with(WebViewActivity.this)
-                            .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
-                            .into(webVieo.thumbImageView);
-                    ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    AbsoluteLayout.LayoutParams layoutParams = new AbsoluteLayout.LayoutParams(ll);
-                    layoutParams.y = JCUtils.dip2px(WebViewActivity.this, top);
-                    layoutParams.x = JCUtils.dip2px(WebViewActivity.this, left);
-                    layoutParams.height = JCUtils.dip2px(WebViewActivity.this, height);
-                    layoutParams.width = JCUtils.dip2px(WebViewActivity.this, width);
-                    mWebView.addView(webVieo, layoutParams);
+                    if (index == 0) {
+                        JCVideoPlayerStandard webVieo = new JCVideoPlayerStandard(WebViewActivity.this);
+                        webVieo.setUp("http://video.jiecao.fm/11/16/c/68Tlrc9zNi3JomXpd-nUog__.mp4",
+                                JCVideoPlayer.SCREEN_LAYOUT_LIST, "嫂子骑大马");
+                        Picasso.with(WebViewActivity.this)
+                                .load("http://img4.jiecaojingxuan.com/2016/11/16/1d935cc5-a1e7-4779-bdfa-20fd7a60724c.jpg@!640_360")
+                                .into(webVieo.thumbImageView);
+                        ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        AbsoluteLayout.LayoutParams layoutParams = new AbsoluteLayout.LayoutParams(ll);
+                        layoutParams.y = JCUtils.dip2px(WebViewActivity.this, top);
+                        layoutParams.x = JCUtils.dip2px(WebViewActivity.this, left);
+                        layoutParams.height = JCUtils.dip2px(WebViewActivity.this, height);
+                        layoutParams.width = JCUtils.dip2px(WebViewActivity.this, width);
+                        mWebView.addView(webVieo, layoutParams);
+                    } else {
+                        JCVideoPlayerStandard webVieo = new JCVideoPlayerStandard(WebViewActivity.this);
+                        webVieo.setUp("http://video.jiecao.fm/11/14/xin/%E5%90%B8%E6%AF%92.mp4",
+                                JCVideoPlayer.SCREEN_LAYOUT_LIST, "嫂子失态了");
+                        Picasso.with(WebViewActivity.this)
+                                .load("http://img4.jiecaojingxuan.com/2016/11/14/a019ffc1-556c-4a85-b70c-b1b49811d577.jpg@!640_360")
+                                .into(webVieo.thumbImageView);
+                        ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        AbsoluteLayout.LayoutParams layoutParams = new AbsoluteLayout.LayoutParams(ll);
+                        layoutParams.y = JCUtils.dip2px(WebViewActivity.this, top);
+                        layoutParams.x = JCUtils.dip2px(WebViewActivity.this, left);
+                        layoutParams.height = JCUtils.dip2px(WebViewActivity.this, height);
+                        layoutParams.width = JCUtils.dip2px(WebViewActivity.this, width);
+                        mWebView.addView(webVieo, layoutParams);
+                    }
+
                 }
             });
 
