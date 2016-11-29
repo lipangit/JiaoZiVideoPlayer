@@ -210,8 +210,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void prepareVideo() {
         JCVideoPlayerManager.completeAll();
         Log.d(TAG, "prepareVideo [" + this.hashCode() + "] ");
+        initTextureView();
         addTextureView();
-
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -311,9 +311,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void addTextureView() {
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
-        removeTextureView();
-        JCMediaManager.textureView = new JCResizeTextureView(getContext());
-        JCMediaManager.textureView.setSurfaceTextureListener(JCMediaManager.instance());
         FrameLayout.LayoutParams layoutParams =
                 new FrameLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -472,6 +469,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 && currentState == CURRENT_STATE_PLAYING
                 && currentScreen != SCREEN_WINDOW_FULLSCREEN
                 && currentScreen != SCREEN_WINDOW_TINY) {
+            if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null &&
+                    JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() == SCREEN_WINDOW_FULLSCREEN)
+                return;
             if (x > 0) {
                 JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(
                         ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -593,7 +593,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public void startWindowFullscreen() {
-
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
         CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
         hideSupportActionBar(getContext());
