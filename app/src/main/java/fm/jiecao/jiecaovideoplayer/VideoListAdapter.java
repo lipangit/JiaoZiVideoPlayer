@@ -50,7 +50,6 @@ public class VideoListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.e(TAG, "why you always getview");
 
         ViewHolder viewHolder;
         if (null == convertView) {

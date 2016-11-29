@@ -250,7 +250,6 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
 
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
-        Log.i(TAG, "onSurfaceTextureUpdated [" + this.hashCode() + "]");
     }
 //    @Override
 //    public void onBufferingUpdate(IMediaPlayer mp, final int percent) {
