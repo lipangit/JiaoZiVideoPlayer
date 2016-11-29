@@ -662,7 +662,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE || currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
                 int position = getCurrentPositionWhenPlaying();
                 int duration = getDuration();
-                Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
+//                Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -802,7 +802,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             if (currentState != CURRENT_STATE_PLAYING) {
                 releaseAllVideos();
             } else {
-                startWindowTiny();
+                if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() == null) {
+                    startWindowTiny();
+                }
             }
         }
     }
