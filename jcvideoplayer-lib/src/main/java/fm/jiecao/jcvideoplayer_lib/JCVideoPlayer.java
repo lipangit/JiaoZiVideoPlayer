@@ -215,8 +215,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        JCMediaManager.instance().prepare(getContext(), url, null, looping);
+        JCMediaManager.CURRENT_PLAYING_URL = url;
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
     }
 
@@ -304,25 +303,30 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         return false;
     }
 
+    public void initTextureView() {
+        removeTextureView();
+        JCMediaManager.textureView = new JCResizeTextureView(getContext());
+        JCMediaManager.textureView.setSurfaceTextureListener(JCMediaManager.instance());
+    }
+
     public void addTextureView() {
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
-        if (JCMediaManager.textureView == null) {
-            JCMediaManager.textureView = new JCResizeTextureView(getContext());
-            JCMediaManager.textureView.setSurfaceTextureListener(JCMediaManager.instance());
-        }
-        if (JCMediaManager.textureView.getParent() != null) {
-            ((ViewGroup) JCMediaManager.textureView.getParent()).removeView(JCMediaManager.textureView);
-        }
-//        textureViewContainer.removeView(JCMediaManager.textureView);
-        JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
-        JCMediaManager.textureView.setRotation(JCMediaManager.instance().videoRotation);
-
+        removeTextureView();
+        JCMediaManager.textureView = new JCResizeTextureView(getContext());
+        JCMediaManager.textureView.setSurfaceTextureListener(JCMediaManager.instance());
         FrameLayout.LayoutParams layoutParams =
                 new FrameLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         Gravity.CENTER);
         textureViewContainer.addView(JCMediaManager.textureView, layoutParams);
+    }
+
+    public void removeTextureView() {
+        JCMediaManager.savedSurfaceTexture = null;
+        if (JCMediaManager.textureView != null && JCMediaManager.textureView.getParent() != null) {
+            ((ViewGroup) JCMediaManager.textureView.getParent()).removeView(JCMediaManager.textureView);
+        }
     }
 
     public void setUiWitStateAndScreen(int state) {
@@ -416,7 +420,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         textureViewContainer.removeView(JCMediaManager.textureView);
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
-        JCMediaManager.instance().videoRotation = 0;
 
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);

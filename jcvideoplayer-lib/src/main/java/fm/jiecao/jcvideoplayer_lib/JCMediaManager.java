@@ -53,7 +53,6 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
     public int currentVideoHeight = 0;
     public int lastState;
     public int backUpBufferState = -1;
-    public int videoRotation;
 
     public static final int HANDLER_PREPARE = 0;
     //    public static final int HANDLER_SETDISPLAY = 1;
@@ -102,7 +101,6 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                         currentVideoHeight = 0;
                         if (simpleExoPlayer != null) simpleExoPlayer.release();
                         isPreparing = true;
-                        savedSurfaceTexture = null;
                         TrackSelection.Factory videoTrackSelectionFactory =
                                 new AdaptiveVideoTrackSelection.Factory(BANDWIDTH_METER);
                         trackSelector = new DefaultTrackSelector(mMediaHandler, videoTrackSelectionFactory);
@@ -115,11 +113,9 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                                 new DefaultExtractorsFactory(), mMediaHandler, null);
                         simpleExoPlayer.addListener(JCMediaManager.this);
                         simpleExoPlayer.setVideoListener(JCMediaManager.this);
-                        CURRENT_PLAYING_URL = ((FuckBean) msg.obj).url;
+//                        CURRENT_PLAYING_URL = ((FuckBean) msg.obj).url;
                         simpleExoPlayer.prepare(mediaSource, true, true);
-                        if (savedSurfaceTexture != null) {
-                            simpleExoPlayer.setVideoSurface(new Surface(savedSurfaceTexture));
-                        }
+                        simpleExoPlayer.setVideoSurface(new Surface(savedSurfaceTexture));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -235,9 +231,7 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
         Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
-            if (simpleExoPlayer != null) {
-                simpleExoPlayer.setVideoSurface(new Surface(savedSurfaceTexture));
-            }
+            prepare(textureView.getContext(), CURRENT_PLAYING_URL, null, false);
         } else {
             textureView.setSurfaceTexture(savedSurfaceTexture);
         }
