@@ -139,6 +139,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (!TextUtils.isEmpty(this.url) && TextUtils.equals(this.url, url)) {
             return;
         }
+        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+            return;
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
@@ -586,6 +588,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static boolean backPress() {
         Log.i(TAG, "backPress");
+        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+            return false;
         if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null) {
             return JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().downStairs();
         }
@@ -594,7 +598,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void startWindowFullscreen() {
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
-        CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
         hideSupportActionBar(getContext());
         JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(FULLSCREEN_ORIENTATION);
 
@@ -618,7 +621,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             JCVideoPlayerManager.putSecondFloor(jcVideoPlayer);
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
-
+            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
         } catch (Exception e) {
             e.printStackTrace();
         }
