@@ -778,9 +778,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void releaseAllVideos() {
-        Log.d(TAG, "releaseAllVideos");
-        JCVideoPlayerManager.completeAll();
-        JCMediaManager.instance().releaseMediaPlayer();
+        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
+            Log.d(TAG, "releaseAllVideos");
+            JCVideoPlayerManager.completeAll();
+            JCMediaManager.instance().releaseMediaPlayer();
+        }
     }
 
     public static void setJcUserAction(JCUserAction jcUserEvent) {
