@@ -71,10 +71,10 @@
             android:name=".AutoTinyListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".AutoTinyNormalActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
+        <!--<activity-->
+            <!--android:name=".AutoTinyNormalActivity"-->
+            <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
+            <!--android:screenOrientation="portrait" />-->
         <activity
             android:name=".WebViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

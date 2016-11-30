@@ -816,10 +816,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static void onScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
         if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null && JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
-            JCMediaPlayerListener jcMediaPlayerListener = JCVideoPlayerManager.getCurrentJcvdOnFirtFloor();
-            if (jcMediaPlayerListener.getState() != CURRENT_STATE_ERROR &&
-                    jcMediaPlayerListener.getState() != CURRENT_STATE_AUTO_COMPLETE) {
-                jcMediaPlayerListener.onScrollChange();
+            if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null && JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() != SCREEN_WINDOW_FULLSCREEN) {
+                JCMediaPlayerListener jcMediaPlayerListener = JCVideoPlayerManager.getCurrentJcvdOnFirtFloor();
+                if (jcMediaPlayerListener.getState() != CURRENT_STATE_ERROR &&
+                        jcMediaPlayerListener.getState() != CURRENT_STATE_AUTO_COMPLETE) {
+                    jcMediaPlayerListener.onScrollChange();
+                }
             }
         }
     }
