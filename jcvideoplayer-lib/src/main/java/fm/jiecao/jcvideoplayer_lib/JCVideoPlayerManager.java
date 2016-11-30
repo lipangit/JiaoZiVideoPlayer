@@ -53,6 +53,7 @@ public class JCVideoPlayerManager {
     public static void completeAll() {
         if (SECOND_FLOOR != null && SECOND_FLOOR.get() != null) {
             SECOND_FLOOR.get().onCompletion();
+            putSecondFloor(null);
         }
         Set<String> set = FIRST_FLOOR_LIST.keySet();
         for (String s : set) {
