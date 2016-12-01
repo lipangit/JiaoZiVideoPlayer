@@ -139,8 +139,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (!TextUtils.isEmpty(this.url) && TextUtils.equals(this.url, url)) {
             return;
         }
-        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-            return;
+        if (((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)) {
+            if ((screen != SCREEN_WINDOW_TINY)) {
+                return;
+            }
+        }
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
@@ -814,9 +817,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
-    public static void onScroll() {//这里就应该保证,listener的正确的完整的赋值,调用非播放的控件
+    public static void onScroll() {//这里的本质就是全屏的时候第一层listener不接受scroll消息
         if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null && JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
-            if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null && JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() != SCREEN_WINDOW_FULLSCREEN) {
+            if ((JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null && JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() != SCREEN_WINDOW_FULLSCREEN) ||
+                    JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() == null) {
                 JCMediaPlayerListener jcMediaPlayerListener = JCVideoPlayerManager.getCurrentJcvdOnFirtFloor();
                 if (jcMediaPlayerListener.getState() != CURRENT_STATE_ERROR &&
                         jcMediaPlayerListener.getState() != CURRENT_STATE_AUTO_COMPLETE) {
