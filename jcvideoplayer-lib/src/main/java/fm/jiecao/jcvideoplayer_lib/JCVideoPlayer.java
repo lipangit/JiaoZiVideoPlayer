@@ -11,6 +11,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -46,7 +47,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public static final String TAG = "JieCaoVideoPlayer";
 
+    @IdRes
     public static final int FULLSCREEN_ID = 33797;
+    @IdRes
     public static final int TINY_ID = 33798;
     public static final int THRESHOLD = 80;
     public static final int FULL_SCREEN_NORMAL_DELAY = 500;
@@ -400,7 +403,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void startProgressTimer() {
         cancelProgressTimer();
         UPDATE_PROGRESS_TIMER = new Timer();
-        mProgressTimerTask = new ProgressTimerTask();
+        mProgressTimerTask = new ProgressTimerTask(this);
         UPDATE_PROGRESS_TIMER.schedule(mProgressTimerTask, 0, 300);
     }
 
@@ -763,19 +766,32 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     }
 
-    public class ProgressTimerTask extends TimerTask {
+    private static class ProgressTimerTask extends TimerTask {
+        private final WeakReference<JCVideoPlayer> jcVideoPlayerWeakReference;
+
+        ProgressTimerTask(JCVideoPlayer videoPlayer){
+            jcVideoPlayerWeakReference = new WeakReference<>(videoPlayer);
+        }
+
         @Override
         public void run() {
-            if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE || currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
-                int position = getCurrentPositionWhenPlaying();
-                int duration = getDuration();
-                Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        setTextAndProgress(JCMediaManager.instance().bufferPercent);
-                    }
-                });
+            if(jcVideoPlayerWeakReference.get() != null) {
+                final int currentState = jcVideoPlayerWeakReference.get().currentState;
+                if (currentState == CURRENT_STATE_PLAYING
+                        || currentState == CURRENT_STATE_PAUSE
+                        || currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
+                    int position = jcVideoPlayerWeakReference.get().getCurrentPositionWhenPlaying();
+                    int duration = jcVideoPlayerWeakReference.get().getDuration();
+                    Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
+                    jcVideoPlayerWeakReference.get().mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(jcVideoPlayerWeakReference.get() != null) {
+                                jcVideoPlayerWeakReference.get().setTextAndProgress(JCMediaManager.instance().bufferPercent);
+                            }
+                        }
+                    });
+                }
             }
         }
     }
