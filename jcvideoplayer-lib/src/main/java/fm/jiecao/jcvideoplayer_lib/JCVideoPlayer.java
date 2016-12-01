@@ -147,8 +147,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
-        setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         JCVideoPlayerManager.putFirstFloor(this);
+
+        if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null &&
+                JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getUrl() == url &&
+                JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() == SCREEN_WINDOW_TINY) {//setUp时候退出tiny
+            backPress();
+            return;
+        } else if (isCurrentMediaListener()) {
+            onScrollChange();
+        }
+        setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
     }
 
     @Override
@@ -337,7 +346,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             case CURRENT_STATE_NORMAL:
                 if (isCurrentMediaListener()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
                     cancelProgressTimer();
-                    JCMediaManager.instance().releaseMediaPlayer();
+                    if (isCurrenPlayingUrl()) {
+                        JCMediaManager.instance().releaseMediaPlayer();
+                    }
                 }
                 break;
             case CURRENT_STATE_PREPARING:
@@ -685,7 +696,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 currentState == CURRENT_STATE_PAUSE ||
                 currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
             try {
+//                if(JCMediaManager.instance().simpleExoPlayer!=null) {
                 position = (int) JCMediaManager.instance().simpleExoPlayer.getCurrentPosition();
+//                }
             } catch (IllegalStateException e) {
                 e.printStackTrace();
                 return position;
@@ -697,7 +710,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public int getDuration() {
         int duration = 0;
         try {
-            duration = (int) JCMediaManager.instance().simpleExoPlayer.getDuration();
+//            if(JCMediaManager.instance().simpleExoPlayer!=null) {
+                duration = (int) JCMediaManager.instance().simpleExoPlayer.getDuration();
+//            }
         } catch (IllegalStateException e) {
             e.printStackTrace();
             return duration;
@@ -808,7 +823,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             backPress();
         } else if (!isShown()) {//已经隐藏          //如果正在播放的不是小窗,择机进入小窗
             if (currentState != CURRENT_STATE_PLAYING) {
-                releaseAllVideos();
+//                releaseAllVideos();
             } else {
                 if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() == null) {
                     startWindowTiny();
@@ -818,7 +833,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void onScroll() {//这里的本质就是全屏的时候第一层listener不接受scroll消息
-        if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null && JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+        if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null && JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null &&
+                JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().getUrl() == JCMediaManager.CURRENT_PLAYING_URL) {
             if ((JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null && JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() != SCREEN_WINDOW_FULLSCREEN) ||
                     JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() == null) {
                 JCMediaPlayerListener jcMediaPlayerListener = JCVideoPlayerManager.getCurrentJcvdOnFirtFloor();
