@@ -139,29 +139,29 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (!TextUtils.isEmpty(this.url) && TextUtils.equals(this.url, url)) {
             return;
         }
-        if (((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)) {
-            if ((screen != SCREEN_WINDOW_TINY)) {
-                return;
-            }
-        }
+//        if (((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)) {
+//            if ((screen != SCREEN_WINDOW_TINY)) {
+//                return;
+//            }
+//        }
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
         JCVideoPlayerManager.putFirstFloor(this);
-        if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null &&
-                JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getUrl() == url &&
-                JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() == SCREEN_WINDOW_TINY) {//setUp时候退出tiny
-            backPress();
-            return;
-        } else if (isCurrentMediaListener()) {//setUp的时候进入tiny
-            onScrollChange();
-            setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
-            return;
-        }
+//        if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null &&
+//                JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getUrl() == url &&
+//                JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() == SCREEN_WINDOW_TINY) {//setUp时候退出tiny
+//            backPress();
+//            return;
+//        } else if (isCurrentMediaListener()) {//setUp的时候进入tiny
+//            onScrollChange();
+//            setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
+//            return;
+//        }
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
-        if (currentState == CURRENT_STATE_NORMAL && isCurrenPlayingUrl()) {
-            JCMediaManager.instance().releaseMediaPlayer();
-        }
+//        if (currentState == CURRENT_STATE_NORMAL && isCurrenPlayingUrl()) {
+//            JCMediaManager.instance().releaseMediaPlayer();
+//        }
     }
 
     @Override
@@ -350,6 +350,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             case CURRENT_STATE_NORMAL:
                 if (isCurrentMediaListener()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
                     cancelProgressTimer();
+                    JCMediaManager.instance().releaseMediaPlayer();
+                }
+                if ( isCurrenPlayingUrl()) {//currentState == CURRENT_STATE_NORMAL &&
                 }
                 break;
             case CURRENT_STATE_PREPARING:
@@ -430,9 +433,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onCompletion() {
         Log.i(TAG, "onCompletion " + " [" + this.hashCode() + "] ");
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
-        if (currentState == CURRENT_STATE_NORMAL && isCurrenPlayingUrl()) {
-            JCMediaManager.instance().releaseMediaPlayer();
-        }
+//        if (currentState == CURRENT_STATE_NORMAL && isCurrenPlayingUrl()) {
+//            JCMediaManager.instance().releaseMediaPlayer();
+//        }
         // 清理缓存变量
         textureViewContainer.removeView(JCMediaManager.textureView);
         JCMediaManager.instance().currentVideoWidth = 0;
@@ -823,17 +826,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
         //如果正在播放的是小窗,择机退出小窗
-        if (isShown()) {//已经显示,就退出小窗
-            backPress();
-        } else if (!isShown()) {//已经隐藏          //如果正在播放的不是小窗,择机进入小窗
-            if (currentState != CURRENT_STATE_PLAYING) {
-//                releaseAllVideos();
-            } else {
-                if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() == null) {
-                    startWindowTiny();
-                }
-            }
-        }
+//        if (isShown()) {//已经显示,就退出小窗
+//            backPress();
+//        } else if (!isShown()) {//已经隐藏          //如果正在播放的不是小窗,择机进入小窗
+//            if (currentState != CURRENT_STATE_PLAYING) {
+////                releaseAllVideos();
+//            } else {
+//                if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() == null) {
+//                    startWindowTiny();
+//                }
+//            }
+//        }
     }
 
     public static void onScroll() {//这里的本质就是全屏的时候第一层listener不接受scroll消息
