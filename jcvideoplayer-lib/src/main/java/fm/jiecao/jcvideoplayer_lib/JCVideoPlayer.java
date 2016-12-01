@@ -148,16 +148,20 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         this.objects = objects;
         this.currentScreen = screen;
         JCVideoPlayerManager.putFirstFloor(this);
-
         if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null &&
                 JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getUrl() == url &&
                 JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() == SCREEN_WINDOW_TINY) {//setUp时候退出tiny
             backPress();
             return;
-        } else if (isCurrentMediaListener()) {
+        } else if (isCurrentMediaListener()) {//setUp的时候进入tiny
             onScrollChange();
+            setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
+            return;
         }
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
+        if (currentState == CURRENT_STATE_NORMAL && isCurrenPlayingUrl()) {
+            JCMediaManager.instance().releaseMediaPlayer();
+        }
     }
 
     @Override
@@ -346,9 +350,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
             case CURRENT_STATE_NORMAL:
                 if (isCurrentMediaListener()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
                     cancelProgressTimer();
-                    if (isCurrenPlayingUrl()) {
-                        JCMediaManager.instance().releaseMediaPlayer();
-                    }
                 }
                 break;
             case CURRENT_STATE_PREPARING:
@@ -429,6 +430,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void onCompletion() {
         Log.i(TAG, "onCompletion " + " [" + this.hashCode() + "] ");
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
+        if (currentState == CURRENT_STATE_NORMAL && isCurrenPlayingUrl()) {
+            JCMediaManager.instance().releaseMediaPlayer();
+        }
         // 清理缓存变量
         textureViewContainer.removeView(JCMediaManager.textureView);
         JCMediaManager.instance().currentVideoWidth = 0;
@@ -711,7 +715,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         int duration = 0;
         try {
 //            if(JCMediaManager.instance().simpleExoPlayer!=null) {
-                duration = (int) JCMediaManager.instance().simpleExoPlayer.getDuration();
+            duration = (int) JCMediaManager.instance().simpleExoPlayer.getDuration();
 //            }
         } catch (IllegalStateException e) {
             e.printStackTrace();
