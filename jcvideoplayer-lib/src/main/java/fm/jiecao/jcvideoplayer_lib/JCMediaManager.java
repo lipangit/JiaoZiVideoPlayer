@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
@@ -36,6 +37,7 @@ import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
+import java.lang.ref.WeakReference;
 import java.util.Map;
 
 /**
@@ -49,11 +51,26 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
 
     public static String USER_AGENT = "android_jcvd";
     private static JCMediaManager JCMediaManager;
-    public static JCResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
     public SimpleExoPlayer simpleExoPlayer;
     public static String CURRENT_PLAYING_URL;
 
+    private WeakReference<JCResizeTextureView> weakTextureView;
+
+    void createTextureView(Context context){
+        JCResizeTextureView textureView = new JCResizeTextureView(context);
+        textureView.setVideoSize(getVideoSize());
+        textureView.setRotation(videoRotation);
+        weakTextureView = new WeakReference<>(textureView);
+    }
+
+    @Nullable
+    JCResizeTextureView textureView(){
+        if(weakTextureView == null)
+            return null;
+
+        return weakTextureView.get();
+    }
 
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;

@@ -325,24 +325,28 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void initTextureView() {
         removeTextureView();
-        JCMediaManager.textureView = new JCResizeTextureView(getContext());
-        JCMediaManager.textureView.setSurfaceTextureListener(JCMediaManager.instance());
+        JCMediaManager.instance().createTextureView(getContext());
+        if(JCMediaManager.instance().textureView() != null) {
+          JCMediaManager.instance().textureView().setSurfaceTextureListener(this);
+		}
     }
 
-    public void addTextureView() {
+    public void addTextureView() {        
+        if(JCMediaManager.instance().textureView() != null) {
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
         FrameLayout.LayoutParams layoutParams =
                 new FrameLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         Gravity.CENTER);
-        textureViewContainer.addView(JCMediaManager.textureView, layoutParams);
+        textureViewContainer.addView(JCMediaManager.instance().textureView(), layoutParams);
+        }
     }
 
     public void removeTextureView() {
         JCMediaManager.savedSurfaceTexture = null;
-        if (JCMediaManager.textureView != null && JCMediaManager.textureView.getParent() != null) {
-            ((ViewGroup) JCMediaManager.textureView.getParent()).removeView(JCMediaManager.textureView);
+        if (JCMediaManager.instance().textureView() != null && JCMediaManager.instance().textureView().getParent() != null) {
+            ((ViewGroup) JCMediaManager.instance().textureView().getParent()).removeView(JCMediaManager.instance().textureView());
         }
     }
 
@@ -574,7 +578,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onVideoSizeChanged() {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
-        JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
+        if(JCMediaManager.instance().textureView() != null) {
+          JCMediaManager.instance().textureView().setVideoSize(JCMediaManager.instance().getVideoSize());        }
     }
 
     @Override
