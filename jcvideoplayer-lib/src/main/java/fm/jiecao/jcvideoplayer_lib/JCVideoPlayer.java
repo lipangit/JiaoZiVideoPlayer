@@ -770,7 +770,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     Log.d(TAG, "AUDIOFOCUS_LOSS [" + this.hashCode() + "]");
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    if (JCMediaManager.instance().simpleExoPlayer.getPlaybackState() == ExoPlayer.STATE_READY) {
+                    if (JCMediaManager.instance().simpleExoPlayer != null &&
+                            JCMediaManager.instance().simpleExoPlayer.getPlaybackState() == ExoPlayer.STATE_READY) {
                         JCMediaManager.instance().simpleExoPlayer.setPlayWhenReady(false);
                     }
                     Log.d(TAG, "AUDIOFOCUS_LOSS_TRANSIENT [" + this.hashCode() + "]");
@@ -865,7 +866,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
         try {
             Constructor<JCVideoPlayer> constructor = _class.getConstructor(Context.class);
-            JCVideoPlayer jcVideoPlayer = constructor.newInstance(context);
+            final JCVideoPlayer jcVideoPlayer = constructor.newInstance(context);
             jcVideoPlayer.setId(JCVideoPlayer.FULLSCREEN_ID);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -877,13 +878,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
 //            jcVideoPlayer.addTextureView();
-
-            JCVideoPlayerManager.putSecondFloor(jcVideoPlayer);
+//            JCVideoPlayerManager.putFirstFloor(jcVideoPlayer);
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
-            jcVideoPlayer.startButton.performClick();
-
+                    jcVideoPlayer.startButton.performClick();
+            JCVideoPlayerManager.FIRST_FLOOR_LIST.put(url, new WeakReference<>((JCMediaPlayerListener) jcVideoPlayer));
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
