@@ -352,7 +352,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     cancelProgressTimer();
                     JCMediaManager.instance().releaseMediaPlayer();
                 }
-                if ( isCurrenPlayingUrl()) {//currentState == CURRENT_STATE_NORMAL &&
+                if (isCurrenPlayingUrl()) {//currentState == CURRENT_STATE_NORMAL &&
                 }
                 break;
             case CURRENT_STATE_PREPARING:
@@ -876,8 +876,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //            jcVideoPlayer.setAnimation(ra);
 
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
-            jcVideoPlayer.addTextureView();
+//            jcVideoPlayer.addTextureView();
 
+            JCVideoPlayerManager.putSecondFloor(jcVideoPlayer);
+//            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
+//            jcVideoPlayer.setAnimation(ra);
+            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             jcVideoPlayer.startButton.performClick();
 
         } catch (InstantiationException e) {
