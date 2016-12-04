@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -22,11 +23,15 @@ import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.dash.DashMediaSource;
+import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
+import com.google.android.exoplayer2.source.hls.HlsMediaSource;
+import com.google.android.exoplayer2.source.smoothstreaming.DefaultSsChunkSource;
+import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelection;
-import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
@@ -42,6 +47,7 @@ import java.util.Map;
 public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.VideoListener, TextureView.SurfaceTextureListener {
     public static String TAG = "JieCaoVideoPlayer";
 
+    public static String USER_AGENT = "android_jcvd";
     private static JCMediaManager JCMediaManager;
     public static JCResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
@@ -52,7 +58,6 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
     public int lastState;
-    public int backUpBufferState = -1;
 
     public static final int HANDLER_PREPARE = 0;
     //    public static final int HANDLER_SETDISPLAY = 1;
@@ -107,13 +112,9 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                         simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(((FuckBean) msg.obj).context, trackSelector, new DefaultLoadControl(),
                                 null, false);
                         simpleExoPlayer.setPlayWhenReady(true);
-                        DataSource.Factory mediaDataSourceFactory = new DefaultDataSourceFactory(((FuckBean) msg.obj).context, BANDWIDTH_METER,
-                                new DefaultHttpDataSourceFactory("android_jcvd", BANDWIDTH_METER));
-                        MediaSource mediaSource = new ExtractorMediaSource(Uri.parse(((FuckBean) msg.obj).url), mediaDataSourceFactory,
-                                new DefaultExtractorsFactory(), mMediaHandler, null);
+                        MediaSource mediaSource = buildMediaSource(((FuckBean) msg.obj).context, Uri.parse(((FuckBean) msg.obj).url));
                         simpleExoPlayer.addListener(JCMediaManager.this);
                         simpleExoPlayer.setVideoListener(JCMediaManager.this);
-//                        CURRENT_PLAYING_URL = ((FuckBean) msg.obj).url;
                         simpleExoPlayer.prepare(mediaSource, true, true);
                         simpleExoPlayer.setVideoSurface(new Surface(savedSurfaceTexture));
                     } catch (Exception e) {
@@ -128,8 +129,32 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                     break;
             }
         }
+    }
 
-
+    private MediaSource buildMediaSource(Context context, Uri uri) {
+        int type = JCUtils.getUrlType(uri.toString());
+        switch (type) {
+            case C.TYPE_SS:
+                return new SsMediaSource(uri, new DefaultDataSourceFactory(context, null,
+                        new DefaultHttpDataSourceFactory(USER_AGENT, null)),
+                        new DefaultSsChunkSource.Factory(new DefaultDataSourceFactory(context, BANDWIDTH_METER,
+                                new DefaultHttpDataSourceFactory(USER_AGENT, BANDWIDTH_METER))), mMediaHandler, null);
+            case C.TYPE_DASH:
+                return new DashMediaSource(uri, new DefaultDataSourceFactory(context, null,
+                        new DefaultHttpDataSourceFactory(USER_AGENT, null)),
+                        new DefaultDashChunkSource.Factory(new DefaultDataSourceFactory(context, BANDWIDTH_METER,
+                                new DefaultHttpDataSourceFactory(USER_AGENT, BANDWIDTH_METER))), mMediaHandler, null);
+            case C.TYPE_HLS:
+                return new HlsMediaSource(uri, new DefaultDataSourceFactory(context, BANDWIDTH_METER,
+                        new DefaultHttpDataSourceFactory(USER_AGENT, BANDWIDTH_METER)), mMediaHandler, null);
+            case C.TYPE_OTHER:
+                return new ExtractorMediaSource(uri, new DefaultDataSourceFactory(context, BANDWIDTH_METER,
+                        new DefaultHttpDataSourceFactory(USER_AGENT, BANDWIDTH_METER)), new DefaultExtractorsFactory(),
+                        mMediaHandler, null);
+            default: {
+                throw new IllegalStateException("Unsupported type: " + type);
+            }
+        }
     }
 
     public void prepare(final Context context, final String url, final Map<String, String> mapHeadData, boolean loop) {

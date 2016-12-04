@@ -60,24 +60,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mJcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.simple_demo);
         mJcVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子在家吗");
-        mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
 
-//        mJcVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
-//                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+        mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
+        mJcVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
+                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
 
         /** Play video in local path, eg:record by system camera **/
-//        cpAssertVideoToLocalPath();
-//        mJcVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
-//                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
-
+        cpAssertVideoToLocalPath();
+        mJcVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
+                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         /** Play video in assert **/
-//        mJcVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
-//                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+        mJcVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
+                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
 
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
                 .into(mJcVideoPlayerStandard.thumbImageView);
-        mJcVideoPlayerStandard.looping = true;
 
         JCVideoPlayer.setJcUserAction(new MyUserActionStandard());
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);

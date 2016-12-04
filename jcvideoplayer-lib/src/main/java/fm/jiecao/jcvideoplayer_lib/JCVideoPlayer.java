@@ -72,7 +72,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public String url = "";
     public Object[] objects = null;
-    public boolean looping = false;
     public int seekToInAdvance = -1;
 
     public ImageView startButton;
