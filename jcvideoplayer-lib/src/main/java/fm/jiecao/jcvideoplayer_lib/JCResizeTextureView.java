@@ -1,7 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,11 +16,9 @@ import android.view.TextureView;
  */
 public class JCResizeTextureView extends TextureView {
     protected static final String TAG = "JCResizeTextureView";
-    protected static final boolean DEBUG = false;
 
     // x as width, y as height
     protected Point mVideoSize;
-    protected boolean hasUpdated;
 
     public JCResizeTextureView(Context context) {
         super(context);
@@ -31,33 +28,6 @@ public class JCResizeTextureView extends TextureView {
     public JCResizeTextureView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
-    }
-
-    @Override
-    public Bitmap getBitmap() {
-        if (hasUpdated) {
-            return super.getBitmap();
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public Bitmap getBitmap(int width, int height) {
-        if (hasUpdated) {
-            return super.getBitmap(width, height);
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public Bitmap getBitmap(Bitmap bitmap) {
-        if (hasUpdated) {
-            return super.getBitmap(bitmap);
-        } else {
-            return null;
-        }
     }
 
     private void init() {
@@ -79,13 +49,6 @@ public class JCResizeTextureView extends TextureView {
         }
     }
 
-    /*
-        在明确TextureView已经被填充Image数据的情况下调用
-     */
-    public void setHasUpdated() {
-        hasUpdated = true;
-    }
-
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int viewRotation = (int) getRotation();
@@ -96,19 +59,15 @@ public class JCResizeTextureView extends TextureView {
             heightMeasureSpec = tempMeasureSpec;
         }
 
-        if (DEBUG) {
-            Log.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
-            Log.i(TAG, "viewRotation = " + viewRotation);
-        }
+        Log.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
+        Log.i(TAG, "viewRotation = " + viewRotation);
 
         int videoWidth = mVideoSize.x;
         int videoHeight = mVideoSize.y;
 
-        if (DEBUG) {
-            Log.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight);
-            if (videoWidth > 0 && videoHeight > 0) {
-                Log.i(TAG, "videoWidth / videoHeight = " + videoWidth / videoHeight);
-            }
+        Log.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight);
+        if (videoWidth > 0 && videoHeight > 0) {
+            Log.i(TAG, "videoWidth / videoHeight = " + videoWidth / videoHeight);
         }
 
         int width = getDefaultSize(videoWidth, widthMeasureSpec);
@@ -120,10 +79,8 @@ public class JCResizeTextureView extends TextureView {
             int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
             int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
 
-            if (DEBUG) {
-                Log.i(TAG, "widthMeasureSpec  [" + MeasureSpec.toString(widthMeasureSpec) + "]");
-                Log.i(TAG, "heightMeasureSpec [" + MeasureSpec.toString(heightMeasureSpec) + "]");
-            }
+            Log.i(TAG, "widthMeasureSpec  [" + MeasureSpec.toString(widthMeasureSpec) + "]");
+            Log.i(TAG, "heightMeasureSpec [" + MeasureSpec.toString(heightMeasureSpec) + "]");
 
             if (widthSpecMode == MeasureSpec.EXACTLY && heightSpecMode == MeasureSpec.EXACTLY) {
                 // the size is fixed
@@ -172,10 +129,8 @@ public class JCResizeTextureView extends TextureView {
         } else {
             // no size yet, just adopt the given spec sizes
         }
-        if (DEBUG) {
-            Log.i(TAG, "viewWidth = " + width + ", " + "viewHeight = " + height);
-            Log.i(TAG, "viewWidth / viewHeight = " + width / height);
-        }
+        Log.i(TAG, "viewWidth = " + width + ", " + "viewHeight = " + height);
+        Log.i(TAG, "viewWidth / viewHeight = " + width / height);
         setMeasuredDimension(width, height);
     }
 }

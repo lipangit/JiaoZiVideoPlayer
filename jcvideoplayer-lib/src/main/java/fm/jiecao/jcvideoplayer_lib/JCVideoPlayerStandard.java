@@ -33,7 +33,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView titleTextView;
     public ImageView thumbImageView;
-    public ImageView coverImageView;
     public ImageView tinyBackImageView;
 
 
@@ -55,7 +54,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         titleTextView = (TextView) findViewById(R.id.title);
         backButton = (ImageView) findViewById(R.id.back);
         thumbImageView = (ImageView) findViewById(R.id.thumb);
-        coverImageView = (ImageView) findViewById(R.id.cover);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
 
@@ -66,27 +64,24 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public boolean setUp(String url, int screen, Object... objects) {
-        if (objects.length == 0) return false;
-        if (super.setUp(url, screen, objects)) {
-            titleTextView.setText(objects[0].toString());
-            if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-                fullscreenButton.setImageResource(R.drawable.jc_shrink);
-                backButton.setVisibility(View.VISIBLE);
-                tinyBackImageView.setVisibility(View.INVISIBLE);
-            } else if (currentScreen == SCREEN_LAYOUT_NORMAL
-                    || currentScreen == SCREEN_LAYOUT_LIST) {
-                fullscreenButton.setImageResource(R.drawable.jc_enlarge);
-                backButton.setVisibility(View.GONE);
-                tinyBackImageView.setVisibility(View.INVISIBLE);
-            } else if (currentScreen == SCREEN_WINDOW_TINY) {
-                tinyBackImageView.setVisibility(View.VISIBLE);
-                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-            }
-            return true;
+    public void setUp(String url, int screen, Object... objects) {
+        super.setUp(url, screen, objects);
+        if (objects.length == 0) return;
+        titleTextView.setText(objects[0].toString());
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            fullscreenButton.setImageResource(R.drawable.jc_shrink);
+            backButton.setVisibility(View.VISIBLE);
+            tinyBackImageView.setVisibility(View.INVISIBLE);
+        } else if (currentScreen == SCREEN_LAYOUT_NORMAL
+                || currentScreen == SCREEN_LAYOUT_LIST) {
+            fullscreenButton.setImageResource(R.drawable.jc_enlarge);
+            backButton.setVisibility(View.GONE);
+            tinyBackImageView.setVisibility(View.INVISIBLE);
+        } else if (currentScreen == SCREEN_WINDOW_TINY) {
+            tinyBackImageView.setVisibility(View.VISIBLE);
+            setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
         }
-        return false;
     }
 
     @Override
@@ -186,8 +181,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.back) {
             backPress();
         } else if (i == R.id.back_tiny) {
-            if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get() != null) {
-                if (JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get().getUrl() != JCMediaManager.instance().mediaPlayer.getDataSource()) {
+            if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().getUrl() != JCMediaManager.CURRENT_PLAYING_URL) {
 //                    if (!((JCVideoPlayer) JCVideoPlayerManager.CURRENT_SCROLL_LISTENER.get(0).get()).isShown()) {
                     releaseAllVideos();
                     return;
@@ -495,7 +490,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     public void changeUiToError() {
-        clearCacheImage();
         switch (currentScreen) {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
@@ -520,12 +514,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
         loadingProgressBar.setVisibility(loadingPro);
-        if (thumbImg == View.VISIBLE) {
-            thumbImageView.setVisibility(thumbImg);
-        } else {
-            thumbImageView.setVisibility(View.GONE);
-        }
-        coverImageView.setVisibility(coverImg);
+        thumbImageView.setVisibility(thumbImg);
         bottomProgressBar.setVisibility(bottomPro);
     }
 

@@ -33,9 +33,9 @@ public class ListViewViewpagerActivity extends AppCompatActivity implements View
         ListView listView2 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);
         ListView listView3 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);
 
-        listView1.setAdapter(new VideoListAdapter(this));
-        listView2.setAdapter(new VideoListAdapter(this));
-        listView3.setAdapter(new VideoListAdapter(this));
+        listView1.setAdapter(new VideoListAdapter(this, 0));
+        listView2.setAdapter(new VideoListAdapter(this, 1));
+        listView3.setAdapter(new VideoListAdapter(this, 2));
 
         listViews.add(listView1);
         listViews.add(listView2);

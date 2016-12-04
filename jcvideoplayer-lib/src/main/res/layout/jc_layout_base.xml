@@ -11,12 +11,6 @@
 
     </FrameLayout>
 
-    <fm.jiecao.jcvideoplayer_lib.JCResizeImageView
-        android:id="@+id/cache"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
-
     <LinearLayout
         android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
