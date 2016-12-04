@@ -8,6 +8,8 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 
+import com.google.android.exoplayer2.C;
+
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -83,6 +85,21 @@ public class JCUtils {
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
+    }
+
+    @C.ContentType
+    public static int getUrlType(String url) {
+        if (url == null) {
+            return C.TYPE_OTHER;
+        } else if (url.contains(".mpd")) {
+            return C.TYPE_DASH;
+        } else if (url.contains(".ism") || url.contains(".isml")) {
+            return C.TYPE_SS;
+        } else if (url.contains(".m3u8")) {
+            return C.TYPE_HLS;
+        } else {
+            return C.TYPE_OTHER;
+        }
     }
 
 }

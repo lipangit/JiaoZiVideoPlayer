@@ -1,7 +1,8 @@
 package fm.jiecao.jcvideoplayer_lib;
 
 import java.lang.ref.WeakReference;
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Put JCVideoPlayer into layout
@@ -10,59 +11,58 @@ import java.util.LinkedList;
  */
 public class JCVideoPlayerManager {
 
-    public static WeakReference<JCMediaPlayerListener> CURRENT_SCROLL_LISTENER;
-    public static LinkedList<WeakReference<JCMediaPlayerListener>> LISTENERLIST = new LinkedList<>();
+    public static HashMap<String, WeakReference<JCMediaPlayerListener>> FIRST_FLOOR_LIST = new HashMap<>();
+    public static WeakReference<JCMediaPlayerListener> SECOND_FLOOR;
 
-    public static void putScrollListener(JCMediaPlayerListener listener) {
-        if (listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_TINY ||
-                listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_FULLSCREEN) return;
-        CURRENT_SCROLL_LISTENER = new WeakReference<>(listener);//每次setUp的时候都应该add
+    //When set up
+    public static void putFirstFloor(JCMediaPlayerListener jcMediaPlayerListener) {
+        //TODO clear null point
+        //TODO 如果url不一样，但是listener一样（列表复用的时候），就要删除那个url的listener，设置新url的listener
+        if (jcMediaPlayerListener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_FULLSCREEN ||
+                jcMediaPlayerListener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_TINY)
+            return;
+        FIRST_FLOOR_LIST.put(jcMediaPlayerListener.getUrl(), new WeakReference<>(jcMediaPlayerListener));
     }
 
-    public static void putListener(JCMediaPlayerListener listener) {
-        LISTENERLIST.push(new WeakReference<>(listener));
-    }
-
-    public static void checkAndPutListener(JCMediaPlayerListener listener) {
-        if (listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_TINY ||
-                listener.getScreenType() == JCVideoPlayer.SCREEN_WINDOW_FULLSCREEN) return;
-        int location = -1;
-        for (int i = 1; i < LISTENERLIST.size(); i++) {
-            JCMediaPlayerListener jcMediaPlayerListener = LISTENERLIST.get(i).get();
-            if (listener.getUrl().equals(jcMediaPlayerListener.getUrl())) {
-                location = i;
-            }
-        }
-        if (location != -1) {
-            LISTENERLIST.remove(location);
-            if (LISTENERLIST.size() <= location) {
-                LISTENERLIST.addLast(new WeakReference<>(listener));
-            } else {
-                LISTENERLIST.set(location, new WeakReference<>(listener));
-
-            }
+    public static void putSecondFloor(JCMediaPlayerListener jcMediaPlayerListener) {
+        if (jcMediaPlayerListener == null) {
+            SECOND_FLOOR = null;
+        } else {
+            SECOND_FLOOR = new WeakReference<>(jcMediaPlayerListener);
         }
     }
 
-    public static JCMediaPlayerListener popListener() {
-        if (LISTENERLIST.size() == 0) {
-            return null;
+    public static JCMediaPlayerListener getCurrentJcvdOnFirtFloor() {
+        if (FIRST_FLOOR_LIST.get(JCMediaManager.CURRENT_PLAYING_URL) != null) {
+            return FIRST_FLOOR_LIST.get(JCMediaManager.CURRENT_PLAYING_URL).get();
         }
-        return LISTENERLIST.pop().get();
+        return null;
     }
 
-    public static JCMediaPlayerListener getFirst() {
-        if (LISTENERLIST.size() == 0) {
-            return null;
+    public static JCMediaPlayerListener getCurrentJcvdOnSecondFloor() {
+        if (SECOND_FLOOR != null) {
+            return SECOND_FLOOR.get();
         }
-        return LISTENERLIST.getFirst().get();
+        return null;
     }
+
+//    public static JCMediaPlayerListener findFirtFloor(){//need this when listview
+//        return null;
+//    }
 
     public static void completeAll() {
-        JCMediaPlayerListener ll = popListener();
-        while (ll != null) {
-            ll.onCompletion();
-            ll = popListener();
+        if (SECOND_FLOOR != null && SECOND_FLOOR.get() != null) {
+            SECOND_FLOOR.get().onCompletion();
+            putSecondFloor(null);
         }
+        Set<String> set = FIRST_FLOOR_LIST.keySet();
+        for (String s : set) {
+            if (FIRST_FLOOR_LIST.get(s) != null && FIRST_FLOOR_LIST.get(s).get() != null && FIRST_FLOOR_LIST.get(s).get().getState() != JCVideoPlayer.CURRENT_STATE_NORMAL) {
+                FIRST_FLOOR_LIST.get(s).get().onCompletion();
+            }
+        }
+//        if (getCurrentJcvdOnFirtFloor() != null) {
+//            getCurrentJcvdOnFirtFloor().onCompletion();
+//        }
     }
 }

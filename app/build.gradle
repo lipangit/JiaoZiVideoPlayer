@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '24.0.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "fm.jiecao.jiecaovideoplayer"
-        minSdkVersion 14
-        targetSdkVersion 24
-        versionCode 47
-        versionName "4.8.3"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 48
+        versionName "5.0_preview"
     }
     buildTypes {
         release {
@@ -26,15 +26,15 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile project(':jcvideoplayer-lib')
-    compile 'com.github.bumptech.glide:glide:3.5.2'
+//    compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.squareup.picasso:picasso:2.5.1'
-    compile 'com.facebook.fresco:fresco:0.9.0'
-    compile 'com.mcxiaoke.volley:library:1.0.7'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+//    compile 'com.facebook.fresco:fresco:0.9.0'
+//    compile 'com.mcxiaoke.volley:library:1.0.7'
+//    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
-    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'com.android.support:recyclerview-v7:25.0.1'
 }
