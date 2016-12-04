@@ -652,7 +652,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void startWindowTiny() {
         Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
         onEvent(JCUserAction.ON_ENTER_TINYSCREEN);
-
+        if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR) return;
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         View old = vp.findViewById(TINY_ID);
@@ -882,7 +882,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
-                    jcVideoPlayer.startButton.performClick();
+            jcVideoPlayer.startButton.performClick();
             JCVideoPlayerManager.FIRST_FLOOR_LIST.put(url, new WeakReference<>((JCMediaPlayerListener) jcVideoPlayer));
         } catch (InstantiationException e) {
             e.printStackTrace();
