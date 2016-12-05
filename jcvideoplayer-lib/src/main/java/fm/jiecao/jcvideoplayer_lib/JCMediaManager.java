@@ -60,7 +60,7 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
     void createTextureView(Context context){
         JCResizeTextureView textureView = new JCResizeTextureView(context);
         textureView.setVideoSize(getVideoSize());
-        textureView.setRotation(videoRotation);
+        textureView.setSurfaceTextureListener(this);
         weakTextureView = new WeakReference<>(textureView);
     }
 
@@ -273,9 +273,11 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
         Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
-            prepare(textureView.getContext(), CURRENT_PLAYING_URL, null, false);
+            if(textureView() != null)
+                prepare(textureView().getContext(), CURRENT_PLAYING_URL, null, false);
         } else {
-            textureView.setSurfaceTexture(savedSurfaceTexture);
+            if(textureView() != null)
+                textureView().setSurfaceTexture(savedSurfaceTexture);
         }
     }
 

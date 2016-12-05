@@ -326,9 +326,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public void initTextureView() {
         removeTextureView();
         JCMediaManager.instance().createTextureView(getContext());
-        if(JCMediaManager.instance().textureView() != null) {
-          JCMediaManager.instance().textureView().setSurfaceTextureListener(this);
-		}
     }
 
     public void addTextureView() {        
@@ -443,7 +440,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //            JCMediaManager.instance().releaseMediaPlayer();
 //        }
         // 清理缓存变量
-        textureViewContainer.removeView(JCMediaManager.textureView);
+        removeTextureView();
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
 
@@ -467,7 +464,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //                final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.quit_fullscreen);
 //                startAnimation(ra);
 //            }
-            textureViewContainer.removeView(JCMediaManager.textureView);
+            removeTextureView();
             ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                     .findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
@@ -635,7 +632,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (old != null) {
             vp.removeView(old);
         }
-        textureViewContainer.removeView(JCMediaManager.textureView);
+        removeTextureView();
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer jcVideoPlayer = constructor.newInstance(getContext());
@@ -666,7 +663,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (old != null) {
             vp.removeView(old);
         }
-        textureViewContainer.removeView(JCMediaManager.textureView);
+        removeTextureView();
 
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
