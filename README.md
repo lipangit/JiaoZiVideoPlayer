@@ -76,10 +76,6 @@ protected void onPause() {
 ```
 
 ####ProGuard
-```
--keep class tv.danmaku.ijk.** { *; }
--dontwarn tv.danmaku.ijk.**
-```
 
 ####[Other APIs](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 

@@ -74,10 +74,6 @@ protected void onPause() {
 ```
 
 ####混淆
-```
--keep class tv.danmaku.ijk.** { *; }
--dontwarn tv.danmaku.ijk.**
-```
 
 ####[其他API](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 
