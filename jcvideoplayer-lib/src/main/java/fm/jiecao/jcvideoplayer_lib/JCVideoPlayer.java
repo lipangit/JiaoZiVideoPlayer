@@ -46,7 +46,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @IdRes
     public static final int TINY_ID = 33798;
     public static final int THRESHOLD = 80;
-    public static final int FULL_SCREEN_NORMAL_DELAY = 500;
+    public static final int FULL_SCREEN_NORMAL_DELAY = 200;
 
     public static boolean ACTION_BAR_EXIST = true;
     public static boolean TOOL_BAR_EXIST = true;
