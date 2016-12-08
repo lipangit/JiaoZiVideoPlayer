@@ -32,6 +32,13 @@ public class JCVideoPlayerManager {
         }
     }
 
+    public static JCMediaPlayerListener getCurrendJcvd() {
+        if (getCurrentJcvdOnSecondFloor() != null) {
+            return getCurrentJcvdOnSecondFloor();
+        }
+        return getCurrentJcvdOnFirtFloor();
+    }
+
     public static JCMediaPlayerListener getCurrentJcvdOnFirtFloor() {
         if (FIRST_FLOOR_LIST.get(JCMediaManager.CURRENT_PLAYING_URL) != null) {
             return FIRST_FLOOR_LIST.get(JCMediaManager.CURRENT_PLAYING_URL).get();

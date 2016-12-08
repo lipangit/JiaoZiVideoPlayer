@@ -429,6 +429,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         dismissVolumeDialog();
         dismissProgressDialog();
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
+
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            backPress();
+        }
     }
 
     @Override
