@@ -85,7 +85,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public ViewGroup textureViewContainer;
     public ViewGroup topContainer, bottomContainer;
 
-    protected static WeakReference<JCUserAction> JC_USER_EVENT;
+    protected static JCUserAction JC_USER_EVENT;
     protected static Timer UPDATE_PROGRESS_TIMER;
 
     protected int mScreenWidth;
@@ -826,12 +826,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void setJcUserAction(JCUserAction jcUserEvent) {
-        JC_USER_EVENT = new WeakReference<>(jcUserEvent);
+        JC_USER_EVENT = jcUserEvent;
     }
 
     public void onEvent(int type) {
-        if (JC_USER_EVENT != null && JC_USER_EVENT.get() != null && isCurrentMediaListenerOnFirstFloor()) {
-            JC_USER_EVENT.get().onEvent(type, url, currentScreen, objects);
+        if (JC_USER_EVENT != null && isCurrentMediaListenerOnFirstFloor()) {
+            JC_USER_EVENT.onEvent(type, url, currentScreen, objects);
         }
     }
 
