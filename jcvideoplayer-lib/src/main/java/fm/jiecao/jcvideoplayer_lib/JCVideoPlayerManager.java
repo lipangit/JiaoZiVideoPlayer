@@ -32,7 +32,7 @@ public class JCVideoPlayerManager {
         }
     }
 
-    public static JCMediaPlayerListener getCurrendJcvd() {
+    public static JCMediaPlayerListener getCurrentJcvd() {
         if (getCurrentJcvdOnSecondFloor() != null) {
             return getCurrentJcvdOnSecondFloor();
         }
@@ -68,8 +68,5 @@ public class JCVideoPlayerManager {
                 FIRST_FLOOR_LIST.get(s).get().onCompletion();
             }
         }
-//        if (getCurrentJcvdOnFirtFloor() != null) {
-//            getCurrentJcvdOnFirtFloor().onCompletion();
-//        }
     }
 }

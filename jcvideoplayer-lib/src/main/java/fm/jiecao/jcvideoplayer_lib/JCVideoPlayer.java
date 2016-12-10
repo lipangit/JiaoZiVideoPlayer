@@ -474,6 +474,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     JCUserAction.ON_QUIT_FULLSCREEN :
                     JCUserAction.ON_QUIT_TINYSCREEN);
 
+            if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() == this) {//如果这是直接全屏
+                JCVideoPlayerManager.completeAll();
+                JCMediaManager.instance().releaseMediaPlayer();
+                JCMediaManager.CURRENT_PLAYING_URL = null;
+                return true;
+            }
+
             JCVideoPlayerManager.putSecondFloor(null);
             JCMediaManager.instance().lastState = currentState;//save state
             if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
@@ -615,8 +622,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.i(TAG, "backPress");
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
-        if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null) {
-            return JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().downStairs();
+        if (JCVideoPlayerManager.getCurrentJcvd() != null) {
+            return JCVideoPlayerManager.getCurrentJcvd().downStairs();
         }
         return false;
     }
