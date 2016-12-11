@@ -325,24 +325,25 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     public void initTextureView() {
         removeTextureView();
-        JCMediaManager.textureView = new JCResizeTextureView(getContext());
-        JCMediaManager.textureView.setSurfaceTextureListener(JCMediaManager.instance());
+        JCMediaManager.instance().createTextureView(getContext());
     }
 
-    public void addTextureView() {
+    public void addTextureView() {        
+        if(JCMediaManager.instance().textureView() != null) {
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
         FrameLayout.LayoutParams layoutParams =
                 new FrameLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         Gravity.CENTER);
-        textureViewContainer.addView(JCMediaManager.textureView, layoutParams);
+        textureViewContainer.addView(JCMediaManager.instance().textureView(), layoutParams);
+        }
     }
 
     public void removeTextureView() {
         JCMediaManager.savedSurfaceTexture = null;
-        if (JCMediaManager.textureView != null && JCMediaManager.textureView.getParent() != null) {
-            ((ViewGroup) JCMediaManager.textureView.getParent()).removeView(JCMediaManager.textureView);
+        if (JCMediaManager.instance().textureView() != null && JCMediaManager.instance().textureView().getParent() != null) {
+            ((ViewGroup) JCMediaManager.instance().textureView().getParent()).removeView(JCMediaManager.instance().textureView());
         }
     }
 
@@ -441,7 +442,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //            JCMediaManager.instance().releaseMediaPlayer();
 //        }
         // 清理缓存变量
-        textureViewContainer.removeView(JCMediaManager.textureView);
+        removeTextureView();
         JCMediaManager.instance().currentVideoWidth = 0;
         JCMediaManager.instance().currentVideoHeight = 0;
 
@@ -465,7 +466,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //                final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.quit_fullscreen);
 //                startAnimation(ra);
 //            }
-            textureViewContainer.removeView(JCMediaManager.textureView);
+            removeTextureView();
             ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                     .findViewById(Window.ID_ANDROID_CONTENT);
             vp.removeView(this);
@@ -583,7 +584,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void onVideoSizeChanged() {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
-        JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());
+        if(JCMediaManager.instance().textureView() != null) {
+          JCMediaManager.instance().textureView().setVideoSize(JCMediaManager.instance().getVideoSize());        }
     }
 
     @Override
@@ -639,7 +641,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (old != null) {
             vp.removeView(old);
         }
-        textureViewContainer.removeView(JCMediaManager.textureView);
+        removeTextureView();
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
             JCVideoPlayer jcVideoPlayer = constructor.newInstance(getContext());
@@ -670,7 +672,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         if (old != null) {
             vp.removeView(old);
         }
-        textureViewContainer.removeView(JCMediaManager.textureView);
+        removeTextureView();
 
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
