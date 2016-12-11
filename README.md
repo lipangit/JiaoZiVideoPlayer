@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.0_preview-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.0.1_preview-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -28,7 +28,7 @@
 
 ## Effect
 
-**[jiecaovideoplayer-5.0_preview-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.0_preview/jiecaovideoplayer-5.0_preview.apk)**
+**[jiecaovideoplayer-5.0.1_preview-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.0.1_preview/jiecaovideoplayer-5.0.1_preview.apk)**
 
 ![Demo Screenshot][1]
 
@@ -38,10 +38,10 @@ Even the custom UI, or has changed to the Library, is also the four steps to use
 
 1.Import library but current stable version is still 4.8.3, 5.0 use exoplayer also have many problems.
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:5.0_preview'
+compile 'fm.jiecao:jiecaovideoplayer:5.0.1_preview'
 ```
 
-[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.0_preview)
+[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.0.1_preview)
 
 2.Add JCVideoPlayer in your layout
 ```xml
