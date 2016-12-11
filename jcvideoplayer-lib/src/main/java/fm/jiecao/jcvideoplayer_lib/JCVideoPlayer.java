@@ -46,7 +46,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @IdRes
     public static final int TINY_ID = 33798;
     public static final int THRESHOLD = 80;
-    public static final int FULL_SCREEN_NORMAL_DELAY = 500;
+    public static final int FULL_SCREEN_NORMAL_DELAY = 200;
 
     public static boolean ACTION_BAR_EXIST = true;
     public static boolean TOOL_BAR_EXIST = true;
@@ -85,7 +85,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     public ViewGroup textureViewContainer;
     public ViewGroup topContainer, bottomContainer;
 
-    protected static WeakReference<JCUserAction> JC_USER_EVENT;
+    protected static JCUserAction JC_USER_EVENT;
     protected static Timer UPDATE_PROGRESS_TIMER;
 
     protected int mScreenWidth;
@@ -155,7 +155,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 //                JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() == SCREEN_WINDOW_TINY) {//setUp时候退出tiny
 //            backPress();
 //            return;
-//        } else if (isCurrentMediaListener()) {//setUp的时候进入tiny
+//        } else if (isCurrentMediaListenerOnFirstFloor()) {//setUp的时候进入tiny
 //            onScrollChange();
 //            setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
 //            return;
@@ -350,11 +350,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         currentState = state;
         switch (currentState) {
             case CURRENT_STATE_NORMAL:
-                if (isCurrentMediaListener()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
+                if (isCurrentMediaListenerOnFirstFloor()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
                     cancelProgressTimer();
                     JCMediaManager.instance().releaseMediaPlayer();
-                }
-                if (isCurrenPlayingUrl()) {//currentState == CURRENT_STATE_NORMAL &&
                 }
                 break;
             case CURRENT_STATE_PREPARING:
@@ -367,7 +365,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                 break;
             case CURRENT_STATE_ERROR:
                 cancelProgressTimer();
-                if (isCurrentMediaListener()) {
+                if (isCurrentMediaListenerOnFirstFloor()) {
                     JCMediaManager.instance().releaseMediaPlayer();
                 }
                 break;
@@ -429,6 +427,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         dismissVolumeDialog();
         dismissProgressDialog();
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
+
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            backPress();
+        }
     }
 
     @Override
@@ -472,6 +474,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
                     JCUserAction.ON_QUIT_FULLSCREEN :
                     JCUserAction.ON_QUIT_TINYSCREEN);
 
+            if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() == this) {//如果这是直接全屏
+                JCVideoPlayerManager.completeAll();
+                JCMediaManager.instance().releaseMediaPlayer();
+                JCMediaManager.CURRENT_PLAYING_URL = null;
+                return true;
+            }
+
             JCVideoPlayerManager.putSecondFloor(null);
             JCMediaManager.instance().lastState = currentState;//save state
             if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
@@ -490,7 +499,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
 
     @Override
     public void autoFullscreen(float x) {
-        if (isCurrentMediaListener()
+        if (isCurrentMediaListenerOnFirstFloor()
                 && currentState == CURRENT_STATE_PLAYING
                 && currentScreen != SCREEN_WINDOW_FULLSCREEN
                 && currentScreen != SCREEN_WINDOW_TINY) {
@@ -511,7 +520,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     @Override
     public void autoQuitFullscreen() {
         if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
-                && isCurrentMediaListener()
+                && isCurrentMediaListenerOnFirstFloor()
                 && currentState == CURRENT_STATE_PLAYING
                 && currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             lastAutoFullscreenTime = System.currentTimeMillis();
@@ -613,8 +622,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         Log.i(TAG, "backPress");
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
-        if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null) {
-            return JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().downStairs();
+        if (JCVideoPlayerManager.getCurrentJcvd() != null) {
+            return JCVideoPlayerManager.getCurrentJcvd().downStairs();
         }
         return false;
     }
@@ -796,17 +805,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
         }
     }
 
-    //isCurrentMediaListener and isCurrenPlayUrl should be two logic methods,isCurrentMediaListener is for different jcvd with same
+    //isCurrentMediaListenerOnFirstFloor and isCurrenPlayUrl should be two logic methods,isCurrentMediaListenerOnFirstFloor is for different jcvd with same
     //url when fullscreen or tiny screen. isCurrenPlayUrl is to find where is myself when back from tiny screen.
     //Sometimes they are overlap.
-    public boolean isCurrentMediaListener() {//虽然看这个函数很不爽，但是干不掉
+    public boolean isCurrentMediaListenerOnFirstFloor() {//虽然看这个函数很不爽，但是干不掉
         return JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null
                 && JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() == this;
     }
 
-    public boolean isCurrenPlayingUrl() {
-        return url.equals(JCMediaManager.CURRENT_PLAYING_URL);
-    }
+//    public boolean isCurrenPlayingUrl() {
+//        return url.equals(JCMediaManager.CURRENT_PLAYING_URL);
+//    }
 
     public static void releaseAllVideos() {
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
@@ -817,12 +826,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements JCMediaPlayer
     }
 
     public static void setJcUserAction(JCUserAction jcUserEvent) {
-        JC_USER_EVENT = new WeakReference<>(jcUserEvent);
+        JC_USER_EVENT = jcUserEvent;
     }
 
     public void onEvent(int type) {
-        if (JC_USER_EVENT != null && JC_USER_EVENT.get() != null && isCurrentMediaListener()) {
-            JC_USER_EVENT.get().onEvent(type, url, currentScreen, objects);
+        if (JC_USER_EVENT != null && isCurrentMediaListenerOnFirstFloor()) {
+            JC_USER_EVENT.onEvent(type, url, currentScreen, objects);
         }
     }
 

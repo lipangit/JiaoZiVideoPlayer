@@ -32,6 +32,13 @@ public class JCVideoPlayerManager {
         }
     }
 
+    public static JCMediaPlayerListener getCurrentJcvd() {
+        if (getCurrentJcvdOnSecondFloor() != null) {
+            return getCurrentJcvdOnSecondFloor();
+        }
+        return getCurrentJcvdOnFirtFloor();
+    }
+
     public static JCMediaPlayerListener getCurrentJcvdOnFirtFloor() {
         if (FIRST_FLOOR_LIST.get(JCMediaManager.CURRENT_PLAYING_URL) != null) {
             return FIRST_FLOOR_LIST.get(JCMediaManager.CURRENT_PLAYING_URL).get();
@@ -61,8 +68,5 @@ public class JCVideoPlayerManager {
                 FIRST_FLOOR_LIST.get(s).get().onCompletion();
             }
         }
-//        if (getCurrentJcvdOnFirtFloor() != null) {
-//            getCurrentJcvdOnFirtFloor().onCompletion();
-//        }
     }
 }

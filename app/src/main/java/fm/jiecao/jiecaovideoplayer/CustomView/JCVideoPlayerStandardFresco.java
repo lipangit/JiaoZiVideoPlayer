@@ -181,7 +181,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
                 onClickUiToggle();
             }
         } else if (i == R.id.surface_container) {
-            if (JC_USER_EVENT_STANDARD != null && isCurrentMediaListener()) {
+            if (JC_USER_EVENT_STANDARD != null && isCurrentMediaListenerOnFirstFloor()) {
 //                if (mIfCurrentIsFullscreen) {
 //                    JC_USER_EVENT_STANDARD.onClickBlankFullscreen(url, objects);
 //                } else {

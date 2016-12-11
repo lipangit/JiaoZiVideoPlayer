@@ -188,8 +188,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
             mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
-                        JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onPrepared();
+                    if (JCVideoPlayerManager.getCurrentJcvd() != null) {
+                        JCVideoPlayerManager.getCurrentJcvd().onPrepared();
                     }
                 }
             });
@@ -197,8 +197,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
             mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
-                        JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onAutoCompletion();
+                    if (JCVideoPlayerManager.getCurrentJcvd() != null) {
+                        JCVideoPlayerManager.getCurrentJcvd().onAutoCompletion();
                     }
                 }
             });
@@ -215,8 +215,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
-                    JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onError(-10000, -10000);
+                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
+                    JCVideoPlayerManager.getCurrentJcvd().onError(-10000, -10000);
                 }
             }
         });
@@ -234,8 +234,8 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
-                    JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().onVideoSizeChanged();
+                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
+                    JCVideoPlayerManager.getCurrentJcvd().onVideoSizeChanged();
                 }
             }
         });

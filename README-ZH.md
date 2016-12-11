@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.0_preview-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.0.1_preview-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -26,7 +26,7 @@
 
 ##效果
 
-**[jiecaovideoplayer-5.0_preview-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.0_preview/jiecaovideoplayer-5.0_preview.apk)**
+**[jiecaovideoplayer-5.0.1_preview-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.0.1_preview/jiecaovideoplayer-5.0.1_preview.apk)**
 
 ![Demo Screenshot][1]
 
@@ -36,10 +36,10 @@
 
 1.添加类库，稳定版本是4.8.3，这是用exoplayer播放的预览版本，给大家看看初步的效果，还有很多问题。
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:5.0_preview'
+compile 'fm.jiecao:jiecaovideoplayer:5.0.1_preview'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.0_preview)
+[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.0.1_preview)
 
 2.添加布局
 ```xml
@@ -74,10 +74,6 @@ protected void onPause() {
 ```
 
 ####混淆
-```
--keep class tv.danmaku.ijk.** { *; }
--dontwarn tv.danmaku.ijk.**
-```
 
 ####[其他API](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 
