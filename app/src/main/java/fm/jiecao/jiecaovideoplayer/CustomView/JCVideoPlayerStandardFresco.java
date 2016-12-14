@@ -232,7 +232,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
 
     private void startPlayLogic() {
         onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
-        prepareVideo();
+        prepareMediaPlayer();
         startDismissControlViewTimer();
     }
 
