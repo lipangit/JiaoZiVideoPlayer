@@ -430,6 +430,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         vp.removeView(secJcvd);
+        secJcvd.setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         JCVideoPlayerManager.setSecondFloor(null);
     }
 
@@ -558,7 +559,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         JCVideoPlayerManager.getFirstFloor().currentScreen == SCREEN_WINDOW_TINY)) {//以前我总想把这两个判断写到一起，这分明是两个独立是逻辑
             //直接退出全屏和小窗
             JCVideoPlayerManager.getFirstFloor().clearFloatScreen();
-            JCVideoPlayerManager.getFirstFloor().currentState = CURRENT_STATE_NORMAL;
             JCMediaManager.instance().releaseMediaPlayer();
             JCVideoPlayerManager.setFirstFloor(null);
             return true;
