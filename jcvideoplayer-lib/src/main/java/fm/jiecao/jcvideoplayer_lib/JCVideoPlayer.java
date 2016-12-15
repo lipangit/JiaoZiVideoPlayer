@@ -424,12 +424,33 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     }
 
-    //只有在全屏或者小窗的时候才会进到这里，本质上应该都一样，清空上层的view，让自己继续播放
-    public boolean downStairs() {
-        Log.i(TAG, "downStairs " + " [" + this.hashCode() + "] ");
+    //退出全屏和小窗的方法
+    public void playOnThisJcvd() {
+        Log.i(TAG, "playOnThisJcvd " + " [" + this.hashCode() + "] ");
         JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
         showSupportActionBar(getContext());
+        onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
+                JCUserAction.ON_QUIT_FULLSCREEN :
+                JCUserAction.ON_QUIT_TINYSCREEN);
+        //1.清空全屏和小窗的jcvd
+        JCVideoPlayer secJcvd = JCVideoPlayerManager.getSecondFloor();
+        secJcvd.textureViewContainer.removeView(JCMediaManager.textureView);
+        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+                .findViewById(Window.ID_ANDROID_CONTENT);
+        vp.removeView(secJcvd);
+        JCMediaManager.instance().lastState = secJcvd.currentState;
+        //2.在本jcvd上播放
+        currentState = JCMediaManager.instance().lastState;
+        setUiWitStateAndScreen(currentState);
+        addTextureView();
+    }
 
+    //只有在全屏或者小窗的时候才会进到这里，本质上应该都一样，清空上层的view，让自己继续播放
+//    public boolean downStairs() {
+//        Log.i(TAG, "downStairs " + " [" + this.hashCode() + "] ");
+//        JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
+//        showSupportActionBar(getContext());
+//
 //        if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN
 //                || currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_TINY) {
 ////            if (currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN) {
@@ -462,9 +483,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 //            }
 //            return true;
 //        }
-
-        return false;
-    }
+//
+//        return false;
+//    }
 
     public static long lastAutoFullscreenTime = 0;
 
@@ -586,8 +607,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         Log.i(TAG, "backPress");
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
-        if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-            return JCVideoPlayerManager.getCurrentJcvd().downStairs();
+        if (JCVideoPlayerManager.getSecondFloor() != null) {
+            JCVideoPlayerManager.getFirstFloor().playOnThisJcvd();
+            return true;
         }
         return false;
     }
@@ -614,6 +636,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.setUiWitStateAndScreen(currentState);
             jcVideoPlayer.addTextureView();
+            JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
