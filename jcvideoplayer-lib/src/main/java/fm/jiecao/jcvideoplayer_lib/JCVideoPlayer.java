@@ -438,6 +438,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         vp.removeView(secJcvd);
+        JCVideoPlayerManager.setSecondFloor(null);
         JCMediaManager.instance().lastState = secJcvd.currentState;
         //2.在本jcvd上播放
         currentState = JCMediaManager.instance().lastState;
@@ -668,6 +669,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
             jcVideoPlayer.setUiWitStateAndScreen(currentState);
             jcVideoPlayer.addTextureView();
+            JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
