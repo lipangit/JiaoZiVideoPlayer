@@ -140,6 +140,16 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         this.objects = objects;
         this.currentScreen = screen;
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
+        if (listIndex != -1) {
+            if (url.equals(JCMediaManager.CURRENT_PLAYING_URL)) {
+                if (JCVideoPlayerManager.getSecondFloor() != null) {
+                    ifTiny = false;
+                    playOnThisJcvd();
+                }
+            }
+        } else {
+
+        }
     }
 
 
@@ -203,6 +213,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.CURRENT_PLAYING_URL = url;
         JCMediaManager.CURRENT_LIST_INDEX = listIndex;
+        JCMediaManager.CURRENT_PLAYING_OBJECTS = objects;
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
         JCVideoPlayerManager.setFirstFloor(this);
     }
@@ -418,10 +429,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 JCUserAction.ON_QUIT_FULLSCREEN :
                 JCUserAction.ON_QUIT_TINYSCREEN);
         //1.清空全屏和小窗的jcvd
-        JCMediaManager.instance().lastState = JCVideoPlayerManager.getSecondFloor().currentState;
+        currentState = JCVideoPlayerManager.getSecondFloor().currentState;
         clearFloatScreen();
         //2.在本jcvd上播放
-        currentState = JCMediaManager.instance().lastState;
         setUiWitStateAndScreen(currentState);
         addTextureView();
     }
@@ -603,7 +613,33 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+
+    public static void startWindowTiny_(Class class_) {
+        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(JCMediaManager.textureView.getContext()))//.getWindow().getDecorView();
+                .findViewById(Window.ID_ANDROID_CONTENT);
+        View old = vp.findViewById(TINY_ID);
+        if (old != null) {
+            vp.removeView(old);
+        }
+        ((ViewGroup) JCMediaManager.textureView.getParent()).removeView(JCMediaManager.textureView);
+        try {
+            Constructor<JCVideoPlayer> constructor = class_.getConstructor(Context.class);
+            JCVideoPlayer jcVideoPlayer = constructor.newInstance(JCMediaManager.textureView.getContext());
+            jcVideoPlayer.setId(TINY_ID);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
+            lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
+            vp.addView(jcVideoPlayer, lp);
+            jcVideoPlayer.setUp(JCMediaManager.CURRENT_PLAYING_URL, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, JCMediaManager.CURRENT_PLAYING_OBJECTS);
+            jcVideoPlayer.setUiWitStateAndScreen(JCVideoPlayerManager.getFirstFloor().currentState);
+            jcVideoPlayer.addTextureView();
+            JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void startWindowTiny() {
@@ -634,15 +670,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public class ProgressTimerTask extends TimerTask {
         @Override
         public void run() {
             if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE || currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
-                int position = getCurrentPositionWhenPlaying();
-                int duration = getDuration();
 //                Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
                 mHandler.post(new Runnable() {
                     @Override
@@ -778,6 +811,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public static int lastVisibleItem = -1;
+    public static boolean ifTiny = false;//这个有多个退出tiny的入口，setup要退出，不进setup scroll的时候也要退出
 
     //暂停和进入小窗都在这里
     public static void onScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount) {
@@ -786,12 +820,21 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (position >= 0) {
             if ((position < firstVisibleItem || position > lastVisibleItem)) { //进入小窗
                 if (JCVideoPlayerManager.getSecondFloor() == null) {
-                    releaseAllVideos();
+//                    releaseAllVideos();
+                    if (!ifTiny) {
+                        ifTiny = true;
+                        JCVideoPlayer.startWindowTiny_(JCVideoPlayerStandard.class);
+                    }
                 } else {
                 }
             } else {//退出小窗
                 if (JCVideoPlayerManager.getSecondFloor() != null) {
+                    if (ifTiny) {
+                        ifTiny = false;
+                        JCVideoPlayerManager.getFirstFloor().playOnThisJcvd();
+                    }
                 } else {
+
                 }
             }
         } else {//position是-1，说明不需要进入小窗，而是直接退出
