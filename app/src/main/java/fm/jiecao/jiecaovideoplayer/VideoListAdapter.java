@@ -1,7 +1,6 @@
 package fm.jiecao.jiecaovideoplayer;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,16 +55,17 @@ public class VideoListAdapter extends BaseAdapter {
             viewHolder = new ViewHolder();
             LayoutInflater mInflater = LayoutInflater.from(context);
             convertView = mInflater.inflate(R.layout.item_videoview, null);
-            viewHolder.jcVideoPlayer = (JCVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        viewHolder.jcVideoPlayer = (JCVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
         if (pager == -1) {
             viewHolder.jcVideoPlayer.setUp(
                     VideoConstant.videoUrls[0][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                     VideoConstant.videoTitles[0][position]);
-
+            viewHolder.jcVideoPlayer.setIndexInList(position);
+            System.out.println("fdsfdsfdsfdsfa setup " + position);
             Picasso.with(convertView.getContext())
                     .load(VideoConstant.videoThumbs[0][position])
                     .into(viewHolder.jcVideoPlayer.thumbImageView);
@@ -73,7 +73,7 @@ public class VideoListAdapter extends BaseAdapter {
             viewHolder.jcVideoPlayer.setUp(
                     VideoConstant.videoUrls[pager][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                     VideoConstant.videoTitles[pager][position]);
-
+            viewHolder.jcVideoPlayer.setIndexInList(position);
             Picasso.with(convertView.getContext())
                     .load(VideoConstant.videoThumbs[pager][position])
                     .into(viewHolder.jcVideoPlayer.thumbImageView);

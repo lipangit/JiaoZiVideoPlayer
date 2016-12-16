@@ -71,6 +71,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public String url = "";
     public Object[] objects = null;
     public int seekToInAdvance = -1;
+    public int listIndex = -1;
 
     public ImageView startButton;
     public SeekBar progressBar;
@@ -141,6 +142,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
     }
 
+
+    public void setIndexInList(int listIndex) {
+        this.listIndex = listIndex;
+    }
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -196,6 +202,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.CURRENT_PLAYING_URL = url;
+        JCMediaManager.CURRENT_LIST_INDEX = listIndex;
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
         JCVideoPlayerManager.setFirstFloor(this);
     }
@@ -310,10 +317,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         currentState = state;
         switch (currentState) {
             case CURRENT_STATE_NORMAL:
-                if (isCurrentMediaListenerOnFirstFloor()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
-                    cancelProgressTimer();
-                    JCMediaManager.instance().releaseMediaPlayer();
-                }
+                cancelProgressTimer();
+//                if (isCurrentJcvd()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
+//                    JCMediaManager.instance().releaseMediaPlayer();
+//                }
                 break;
             case CURRENT_STATE_PREPARING:
                 resetProgressAndTime();
@@ -325,9 +332,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 break;
             case CURRENT_STATE_ERROR:
                 cancelProgressTimer();
-                if (isCurrentMediaListenerOnFirstFloor()) {
-                    JCMediaManager.instance().releaseMediaPlayer();
-                }
                 break;
             case CURRENT_STATE_AUTO_COMPLETE:
                 cancelProgressTimer();
@@ -438,7 +442,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     //重力感应的时候调用的函数，
     public void autoFullscreen(float x) {
-        if (isCurrentMediaListenerOnFirstFloor()
+        if (isCurrentJcvd()
                 && currentState == CURRENT_STATE_PLAYING
                 && currentScreen != SCREEN_WINDOW_FULLSCREEN
                 && currentScreen != SCREEN_WINDOW_TINY) {
@@ -455,7 +459,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void autoQuitFullscreen() {
         if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
-                && isCurrentMediaListenerOnFirstFloor()
+                && isCurrentJcvd()
                 && currentState == CURRENT_STATE_PLAYING
                 && currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             lastAutoFullscreenTime = System.currentTimeMillis();
@@ -483,6 +487,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         Log.e(TAG, "onError " + what + " - " + extra + " [" + this.hashCode() + "] ");
         if (what != 38 && what != -38) {
             setUiWitStateAndScreen(CURRENT_STATE_ERROR);
+            if (isCurrentJcvd()) {
+                JCMediaManager.instance().releaseMediaPlayer();
+            }
         }
     }
 
@@ -739,10 +746,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 //        }
     }
 
-    //isCurrentMediaListenerOnFirstFloor and isCurrenPlayUrl should be two logic methods,isCurrentMediaListenerOnFirstFloor is for different jcvd with same
+    //isCurrentJcvd and isCurrenPlayUrl should be two logic methods,isCurrentJcvd is for different jcvd with same
     //url when fullscreen or tiny screen. isCurrenPlayUrl is to find where is myself when back from tiny screen.
     //Sometimes they are overlap.
-    public boolean isCurrentMediaListenerOnFirstFloor() {//虽然看这个函数很不爽，但是干不掉
+    public boolean isCurrentJcvd() {//虽然看这个函数很不爽，但是干不掉
         return JCVideoPlayerManager.getCurrentJcvd() != null
                 && JCVideoPlayerManager.getCurrentJcvd() == this;
     }
@@ -764,38 +771,46 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void onEvent(int type) {
-        if (JC_USER_EVENT != null && isCurrentMediaListenerOnFirstFloor()) {
+        if (JC_USER_EVENT != null && isCurrentJcvd()) {
             JC_USER_EVENT.onEvent(type, url, currentScreen, objects);
         }
     }
 
-    public void onScrollChange() {//这里需要自己判断自己是 进入小窗,退出小窗,暂停还是播放
-        //如果正在播放的是小窗,择机退出小窗
-//        if (isShown()) {//已经显示,就退出小窗
-//            backPress();
-//        } else if (!isShown()) {//已经隐藏          //如果正在播放的不是小窗,择机进入小窗
-//            if (currentState != CURRENT_STATE_PLAYING) {
-////                releaseAllVideos();
-//            } else {
-//                if (JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() == null) {
-//                    startWindowTiny();
-//                }
-//            }
-//        }
-    }
+    public static int lastVisibleItem = -1;
 
-    public static void onScroll() {//这里的本质就是全屏的时候第一层listener不接受scroll消息
-//        if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null && JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null &&
-//                JCVideoPlayerManager.getCurrentJcvdOnFirtFloor().getUrl() == JCMediaManager.CURRENT_PLAYING_URL) {
-//            if ((JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() != null && JCVideoPlayerManager.getCurrentJcvdOnSecondFloor().getScreenType() != SCREEN_WINDOW_FULLSCREEN) ||
-//                    JCVideoPlayerManager.getCurrentJcvdOnSecondFloor() == null) {
-//                JCMediaPlayerListener jcMediaPlayerListener = JCVideoPlayerManager.getCurrentJcvdOnFirtFloor();
-//                if (jcMediaPlayerListener.getState() != CURRENT_STATE_ERROR &&
-//                        jcMediaPlayerListener.getState() != CURRENT_STATE_AUTO_COMPLETE) {
-//                    jcMediaPlayerListener.onScrollChange();
-//                }
-//            }
-//        }
+    //暂停和进入小窗都在这里
+    public static void onScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        lastVisibleItem = firstVisibleItem + visibleItemCount;
+        JCVideoPlayer jcvd = JCVideoPlayerManager.getFirstFloor();
+        if (jcvd == null) {
+            return;
+        }
+        int position = JCMediaManager.CURRENT_LIST_INDEX;
+//        System.out.println("fdsfdsfdsfdsfa position " + position);
+        if (position >= 0) {
+            if ((position < firstVisibleItem || position > lastVisibleItem)) { //进入小窗
+                if (JCVideoPlayerManager.getSecondFloor() == null) {
+                    releaseAllVideos();
+                    jcvd.startWindowTiny();
+                    System.out.println("fdsfdsfdsfdsfa startWindowTiny");
+                } else {
+//                    System.out.println("fdsfdsfdsfdsfa startWindowTiny else");
+                }
+            } else {//退出小窗
+                if (JCVideoPlayerManager.getSecondFloor() != null) {
+                    if (jcvd.url.equals(JCMediaManager.CURRENT_PLAYING_URL)) {
+//                        jcvd.playOnThisJcvd();
+                        System.out.println("fdsfdsfdsfdsfa playOnThisJcvd");
+                    }
+                } else {
+//                    System.out.println("fdsfdsfdsfdsfa playOnThisJcvd else");
+                }
+            }
+        } else {//position是-1，说明不需要进入小窗，而是直接退出
+//            System.out.println("fdsfdsfdsfdsfa position=-1");
+            jcvd.release();
+        }
+
     }
 
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
