@@ -584,6 +584,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (old != null) {
             vp.removeView(old);
         }
+//        ((ViewGroup)JCMediaManager.textureView.getParent()).removeView(JCMediaManager.textureView);
         textureViewContainer.removeView(JCMediaManager.textureView);
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
@@ -781,34 +782,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     //暂停和进入小窗都在这里
     public static void onScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         lastVisibleItem = firstVisibleItem + visibleItemCount;
-        JCVideoPlayer jcvd = JCVideoPlayerManager.getFirstFloor();
-        if (jcvd == null) {
-            return;
-        }
         int position = JCMediaManager.CURRENT_LIST_INDEX;
-//        System.out.println("fdsfdsfdsfdsfa position " + position);
         if (position >= 0) {
             if ((position < firstVisibleItem || position > lastVisibleItem)) { //进入小窗
                 if (JCVideoPlayerManager.getSecondFloor() == null) {
                     releaseAllVideos();
-                    jcvd.startWindowTiny();
-                    System.out.println("fdsfdsfdsfdsfa startWindowTiny");
                 } else {
-//                    System.out.println("fdsfdsfdsfdsfa startWindowTiny else");
                 }
             } else {//退出小窗
                 if (JCVideoPlayerManager.getSecondFloor() != null) {
-                    if (jcvd.url.equals(JCMediaManager.CURRENT_PLAYING_URL)) {
-//                        jcvd.playOnThisJcvd();
-                        System.out.println("fdsfdsfdsfdsfa playOnThisJcvd");
-                    }
                 } else {
-//                    System.out.println("fdsfdsfdsfdsfa playOnThisJcvd else");
                 }
             }
         } else {//position是-1，说明不需要进入小窗，而是直接退出
-//            System.out.println("fdsfdsfdsfdsfa position=-1");
-            jcvd.release();
         }
 
     }
