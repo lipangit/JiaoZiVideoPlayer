@@ -49,7 +49,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static final int FULLSCREEN_ID = 33797;
     public static final int TINY_ID = 33798;
     public static final int THRESHOLD = 80;
-    public static final int FULL_SCREEN_NORMAL_DELAY = 200;
+    public static final int FULL_SCREEN_NORMAL_DELAY = 300;
     public static long CLICK_QUIT_FULLSCREEN_TIME = 0;
 
     public static final int SCREEN_LAYOUT_NORMAL = 0;
@@ -426,7 +426,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         vp.removeView(secJcvd);
-        secJcvd.setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
+//        secJcvd.onCompletion();
         JCVideoPlayerManager.setSecondFloor(null);
     }
 
@@ -551,12 +551,15 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
         if (JCVideoPlayerManager.getSecondFloor() != null) {
+            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             JCVideoPlayerManager.getFirstFloor().playOnThisJcvd();
             return true;
         } else if (JCVideoPlayerManager.getFirstFloor() != null &&
                 (JCVideoPlayerManager.getFirstFloor().currentScreen == SCREEN_WINDOW_FULLSCREEN ||
                         JCVideoPlayerManager.getFirstFloor().currentScreen == SCREEN_WINDOW_TINY)) {//以前我总想把这两个判断写到一起，这分明是两个独立是逻辑
+            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             //直接退出全屏和小窗
+            JCVideoPlayerManager.getCurrentJcvd().currentState = CURRENT_STATE_NORMAL;
             JCVideoPlayerManager.getFirstFloor().clearFloatScreen();
             JCMediaManager.instance().releaseMediaPlayer();
             JCVideoPlayerManager.setFirstFloor(null);
@@ -636,6 +639,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        System.out.println("fdsfdsfdsfds " + JCVideoPlayer.this.hashCode());
                         setTextAndProgress();
                     }
                 });
@@ -725,15 +729,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     };
 
     public void release() {
-//        if (url.equals(JCMediaManager.CURRENT_PLAYING_URL) &&
-//                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
-//            //如果正在全屏播放就不能手动调用release
-//            if (JCVideoPlayerManager.getSecondFloor() != null &&
-//                    JCVideoPlayerManager.getSecondFloor().getScreenType() != SCREEN_WINDOW_FULLSCREEN) {
-//                Log.d(TAG, "release [" + this.hashCode() + "]");
-//                releaseAllVideos();
-//            }
-//        }
+        if (url.equals(JCMediaManager.CURRENT_PLAYING_URL) &&
+                (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
+            //如果正在全屏播放就不能手动调用release
+            if (JCVideoPlayerManager.getSecondFloor() != null &&
+                    JCVideoPlayerManager.getSecondFloor().currentScreen != SCREEN_WINDOW_FULLSCREEN) {
+                Log.d(TAG, "release [" + this.hashCode() + "]");
+                releaseAllVideos();
+            } else if (JCVideoPlayerManager.getSecondFloor() == null) {
+                releaseAllVideos();
+            }
+        }
     }
 
     //isCurrentJcvd and isCurrenPlayUrl should be two logic methods,isCurrentJcvd is for different jcvd with same
