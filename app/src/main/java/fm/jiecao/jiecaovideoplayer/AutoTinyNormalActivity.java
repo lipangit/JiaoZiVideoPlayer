@@ -93,6 +93,6 @@ public class AutoTinyNormalActivity extends AppCompatActivity implements AbsList
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        JCVideoPlayer.onScroll(firstVisibleItem, visibleItemCount, totalItemCount);
+//        JCVideoPlayer.onScroll(firstVisibleItem, visibleItemCount, totalItemCount);
     }
 }

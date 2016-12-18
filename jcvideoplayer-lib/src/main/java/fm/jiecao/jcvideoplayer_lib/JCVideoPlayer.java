@@ -71,7 +71,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public String url = "";
     public Object[] objects = null;
     public int seekToInAdvance = -1;
-    public int listIndex = -1;
 
     public ImageView startButton;
     public SeekBar progressBar;
@@ -140,21 +139,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         this.objects = objects;
         this.currentScreen = screen;
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
-        if (listIndex != -1) {
-            if (url.equals(JCMediaManager.CURRENT_PLAYING_URL)) {
-                if (JCVideoPlayerManager.getSecondFloor() != null) {
-                    ifTiny = false;
-                    playOnThisJcvd();
-                }
-            }
-        } else {
-
-        }
-    }
-
-
-    public void setIndexInList(int listIndex) {
-        this.listIndex = listIndex;
     }
 
     @Override
@@ -212,8 +196,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.CURRENT_PLAYING_URL = url;
-        JCMediaManager.CURRENT_LIST_INDEX = listIndex;
-        JCMediaManager.CURRENT_PLAYING_OBJECTS = objects;
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
         JCVideoPlayerManager.setFirstFloor(this);
     }
@@ -329,9 +311,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         switch (currentState) {
             case CURRENT_STATE_NORMAL:
                 cancelProgressTimer();
-//                if (isCurrentJcvd()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
-//                    JCMediaManager.instance().releaseMediaPlayer();
-//                }
+                if (isCurrentJcvd()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
+                    JCMediaManager.instance().releaseMediaPlayer();
+                }
                 break;
             case CURRENT_STATE_PREPARING:
                 resetProgressAndTime();
@@ -616,32 +598,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
 
-    public static void startWindowTiny_(Class class_) {
-        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(JCMediaManager.textureView.getContext()))//.getWindow().getDecorView();
-                .findViewById(Window.ID_ANDROID_CONTENT);
-        View old = vp.findViewById(TINY_ID);
-        if (old != null) {
-            vp.removeView(old);
-        }
-        ((ViewGroup) JCMediaManager.textureView.getParent()).removeView(JCMediaManager.textureView);
-        try {
-            Constructor<JCVideoPlayer> constructor = class_.getConstructor(Context.class);
-            JCVideoPlayer jcVideoPlayer = constructor.newInstance(JCMediaManager.textureView.getContext());
-            jcVideoPlayer.setId(TINY_ID);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
-            lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
-            vp.addView(jcVideoPlayer, lp);
-            jcVideoPlayer.setUp(JCMediaManager.CURRENT_PLAYING_URL, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, JCMediaManager.CURRENT_PLAYING_OBJECTS);
-            jcVideoPlayer.setUiWitStateAndScreen(JCVideoPlayerManager.getFirstFloor().currentState);
-            jcVideoPlayer.addTextureView();
-            JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void startWindowTiny() {
         Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
         onEvent(JCUserAction.ON_ENTER_TINYSCREEN);
@@ -808,38 +764,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (JC_USER_EVENT != null && isCurrentJcvd()) {
             JC_USER_EVENT.onEvent(type, url, currentScreen, objects);
         }
-    }
-
-    public static int lastVisibleItem = -1;
-    public static boolean ifTiny = false;//这个有多个退出tiny的入口，setup要退出，不进setup scroll的时候也要退出
-
-    //暂停和进入小窗都在这里
-    public static void onScroll(int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        lastVisibleItem = firstVisibleItem + visibleItemCount;
-        int position = JCMediaManager.CURRENT_LIST_INDEX;
-        if (position >= 0) {
-            if ((position < firstVisibleItem || position > lastVisibleItem)) { //进入小窗
-                if (JCVideoPlayerManager.getSecondFloor() == null) {
-//                    releaseAllVideos();
-                    if (!ifTiny) {
-                        ifTiny = true;
-                        JCVideoPlayer.startWindowTiny_(JCVideoPlayerStandard.class);
-                    }
-                } else {
-                }
-            } else {//退出小窗
-                if (JCVideoPlayerManager.getSecondFloor() != null) {
-                    if (ifTiny) {
-                        ifTiny = false;
-                        JCVideoPlayerManager.getFirstFloor().playOnThisJcvd();
-                    }
-                } else {
-
-                }
-            }
-        } else {//position是-1，说明不需要进入小窗，而是直接退出
-        }
-
     }
 
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {

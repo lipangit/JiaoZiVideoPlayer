@@ -54,7 +54,6 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
     public SimpleExoPlayer simpleExoPlayer;
     public static int CURRENT_LIST_INDEX = -1;//only used in list
     public static String CURRENT_PLAYING_URL;
-    public static Object[] CURRENT_PLAYING_OBJECTS;//这几个变量只是为列表小窗准备
 
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
