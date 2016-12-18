@@ -87,9 +87,4 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
         }
         super.onProgressChanged(seekBar, progress, fromUser);
     }
-
-    @Override
-    public boolean downStairs() {
-        return false;
-    }
 }
