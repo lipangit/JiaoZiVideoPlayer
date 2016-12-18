@@ -52,12 +52,11 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
     public static JCResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
     public SimpleExoPlayer simpleExoPlayer;
+    public static int CURRENT_LIST_INDEX = -1;//only used in list
     public static String CURRENT_PLAYING_URL;
-
 
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
-    public int lastState;
 
     public static final int HANDLER_PREPARE = 0;
     //    public static final int HANDLER_SETDISPLAY = 1;
