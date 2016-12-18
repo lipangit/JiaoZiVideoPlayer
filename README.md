@@ -28,7 +28,7 @@
 
 ## Effect
 
-**[jiecaovideoplayer-5.1-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.1/jiecaovideoplayer-5.1.apk)**
+**[jiecaovideoplayer-5.1.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.1/jiecaovideoplayer-5.1.apk)**
 
 ![Demo Screenshot][1]
 
