@@ -44,17 +44,17 @@ compile 'fm.jiecao:jiecaovideoplayer:5.1'
 2.Add JCVideoPlayer in your layout
 ```xml
 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-    android:id="@+id/custom_videoplayer_standard"
+    android:id="@+id/videoplayer"
     android:layout_width="match_parent"
     android:layout_height="200dp"/>
 ```
 
 3.Set the video uri, video thumb url and video title
 ```java
-JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
+JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.videoplayer);
 jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
-                            , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子闭眼睛");
-jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+                            , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子闭眼睛");
+jcVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.In `Activity`
