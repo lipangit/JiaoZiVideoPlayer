@@ -21,10 +21,8 @@
 4. Gestrues to modify progress and volume
 5. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
 6. It will not disturb or change the playing state when entering or exiting fullscreen
-7. Base on [ijkplayer](https://github.com/Bilibili/ijkplayer), support hls,rtsp
-8. Put head data
-9. Gravity sensor auto fullscreen
-10. WebView with local video control
+7. Gravity sensor auto fullscreen
+8. WebView with local video control
 
 ## Effect
 
@@ -76,6 +74,9 @@ protected void onPause() {
 ```
 
 ####ProGuard
+```
+-keep class com.google.android.exoplayer.** { *; }
+```
 
 ####[Other APIs](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 
