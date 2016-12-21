@@ -3,10 +3,12 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
+import android.text.TextUtils;
 
 import com.google.android.exoplayer2.C;
 
@@ -102,4 +104,36 @@ public class JCUtils {
         }
     }
 
+    public static void saveProgress(Context context, String url, int progress) {
+        SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = spn.edit();
+        editor.putInt(url, progress);
+        editor.commit();
+    }
+
+    public static int getSavedProgress(Context context, String url) {
+        SharedPreferences spn;
+        spn = context.getSharedPreferences("JCVD_PROGRESS",
+                Context.MODE_PRIVATE);
+        return spn.getInt(url, 0);// 获取当前网络状态，默认无网络
+    }
+
+    /**
+     * if url == null, clear all progress
+     *
+     * @param context
+     * @param url     if url!=null clear this url progress
+     */
+    public static void clearSavedProgress(Context context, String url) {
+        if (TextUtils.isEmpty(url)) {
+            SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
+                    Context.MODE_PRIVATE);
+            spn.edit().clear().commit();
+        } else {
+            SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
+                    Context.MODE_PRIVATE);
+            spn.edit().putInt(url, 0).commit();
+        }
+    }
 }

@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onPause();
         mSensorManager.unregisterListener(mSensorEventListener);
         JCVideoPlayer.releaseAllVideos();
+
+//        JCVideoPlayer.clearSavedProgress(this, null);
     }
 
     @Override
