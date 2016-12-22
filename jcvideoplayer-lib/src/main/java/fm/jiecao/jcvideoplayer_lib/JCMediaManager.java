@@ -22,6 +22,7 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
+import com.google.android.exoplayer2.source.LoopingMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
 import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource;
@@ -54,6 +55,7 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
     public SimpleExoPlayer simpleExoPlayer;
     public static int CURRENT_LIST_INDEX = -1;//only used in list
     public static String CURRENT_PLAYING_URL;
+    public static boolean CURRENT_PLING_LOOP;
 
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
@@ -112,6 +114,9 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
                                 null, false);
                         simpleExoPlayer.setPlayWhenReady(true);
                         MediaSource mediaSource = buildMediaSource(((FuckBean) msg.obj).context, Uri.parse(((FuckBean) msg.obj).url));
+                        if (CURRENT_PLING_LOOP) {
+                            mediaSource = new LoopingMediaSource(mediaSource);
+                        }
                         simpleExoPlayer.addListener(JCMediaManager.this);
                         simpleExoPlayer.setVideoListener(JCMediaManager.this);
                         simpleExoPlayer.prepare(mediaSource, true, true);
@@ -255,7 +260,7 @@ public class JCMediaManager implements ExoPlayer.EventListener, SimpleExoPlayer.
         Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
-            prepare(textureView.getContext(), CURRENT_PLAYING_URL, null, false);
+            prepare(textureView.getContext(), CURRENT_PLAYING_URL, null, CURRENT_PLING_LOOP);
         } else {
             textureView.setSurfaceTexture(savedSurfaceTexture);
         }
