@@ -285,6 +285,25 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         return false;
     }
 
+    int widthRatio = 16;
+    int heightRatio = 9;
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (widthRatio != 0 && heightRatio != 0) {
+            int specWidth = MeasureSpec.getSize(widthMeasureSpec);
+            int specHeight = (int) ((specWidth * (float) heightRatio) / widthRatio);
+            setMeasuredDimension(specWidth, specHeight);
+
+            int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(specWidth, MeasureSpec.EXACTLY);
+            int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(specHeight, MeasureSpec.EXACTLY);
+            getChildAt(0).measure(childWidthMeasureSpec, childHeightMeasureSpec);
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+
+    }
+
     public void initTextureView() {
         removeTextureView();
         JCMediaManager.textureView = new JCResizeTextureView(getContext());
