@@ -384,6 +384,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void onAutoCompletion() {
+        //加上这句，避免循环播放video的时候，内存不断飙升。
+        Runtime.getRuntime().gc();
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
         onEvent(JCUserAction.ON_AUTO_COMPLETE);
         dismissVolumeDialog();
