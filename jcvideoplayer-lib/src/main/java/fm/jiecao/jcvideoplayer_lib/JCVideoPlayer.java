@@ -285,8 +285,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         return false;
     }
 
-    int widthRatio = 16;
-    int heightRatio = 9;
+    public int widthRatio = 16;
+    public int heightRatio = 9;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
