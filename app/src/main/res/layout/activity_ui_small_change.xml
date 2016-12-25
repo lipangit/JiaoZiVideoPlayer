@@ -60,6 +60,30 @@
                 android:id="@+id/custom_videoplayer_standard_aoto_complete"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="Standard ui 1:1" />
+
+            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardAutoComplete
+                android:id="@+id/jc_videoplayer_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="Standard ui 16:9" />
+
+            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardAutoComplete
+                android:id="@+id/jc_videoplayer_16_9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

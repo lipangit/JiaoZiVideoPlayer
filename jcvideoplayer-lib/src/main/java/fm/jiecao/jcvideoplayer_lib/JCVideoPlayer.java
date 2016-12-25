@@ -67,6 +67,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public int currentState = -1;
     public int currentScreen = -1;
+    public boolean loop = false;
 
     public String url = "";
     public Object[] objects = null;
@@ -196,6 +197,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.CURRENT_PLAYING_URL = url;
+        JCMediaManager.CURRENT_PLING_LOOP = loop;
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
         JCVideoPlayerManager.setFirstFloor(this);
     }
@@ -283,6 +285,25 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         return false;
     }
 
+    public int widthRatio = 16;
+    public int heightRatio = 9;
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (widthRatio != 0 && heightRatio != 0) {
+            int specWidth = MeasureSpec.getSize(widthMeasureSpec);
+            int specHeight = (int) ((specWidth * (float) heightRatio) / widthRatio);
+            setMeasuredDimension(specWidth, specHeight);
+
+            int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(specWidth, MeasureSpec.EXACTLY);
+            int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(specHeight, MeasureSpec.EXACTLY);
+            getChildAt(0).measure(childWidthMeasureSpec, childHeightMeasureSpec);
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+
+    }
+
     public void initTextureView() {
         removeTextureView();
         JCMediaManager.textureView = new JCResizeTextureView(getContext());
@@ -357,6 +378,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (seekToInAdvance != -1) {
             JCMediaManager.instance().simpleExoPlayer.seekTo(seekToInAdvance);
             seekToInAdvance = -1;
+        } else {
+            int position = JCUtils.getSavedProgress(getContext(), url);
+            if (position != 0) {
+                JCMediaManager.instance().simpleExoPlayer.seekTo(position);
+            }
         }
         startProgressTimer();
         setUiWitStateAndScreen(CURRENT_STATE_PLAYING);
@@ -377,6 +403,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void onAutoCompletion() {
+        //加上这句，避免循环播放video的时候，内存不断飙升。
+        Runtime.getRuntime().gc();
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
         onEvent(JCUserAction.ON_AUTO_COMPLETE);
         dismissVolumeDialog();
@@ -386,10 +414,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             backPress();
         }
+        JCUtils.saveProgress(getContext(), url, 0);
     }
 
     public void onCompletion() {
         Log.i(TAG, "onCompletion " + " [" + this.hashCode() + "] ");
+        //save position
+        if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
+            int position = getCurrentPositionWhenPlaying();
+//            int duration = getDuration();
+            JCUtils.saveProgress(getContext(), url, position);
+        }
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         // 清理缓存变量
         textureViewContainer.removeView(JCMediaManager.textureView);
@@ -401,7 +436,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         clearFullscreenLayout();
         JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
-
     }
 
     //退出全屏和小窗的方法
@@ -639,7 +673,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        System.out.println("fdsfdsfdsfds " + JCVideoPlayer.this.hashCode());
                         setTextAndProgress();
                     }
                 });
@@ -847,6 +880,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
         }
+    }
+
+    public static void clearSavedProgress(Context context, String url) {
+        JCUtils.clearSavedProgress(context, url);
     }
 
     public void showWifiDialog() {

@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.0-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.2-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -19,14 +19,12 @@
 4. 手势修改进度和音量
 5. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
 6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
-7. 基于[ijkplayer](https://github.com/Bilibili/ijkplayer), 支持hls,rtsp
-8. 设置http头信息
-9. 重力感应自动全屏
-10. WebView嵌套本地视频
+7. 重力感应自动全屏
+8. WebView嵌套本地视频控件
 
 ##效果
 
-**[jiecaovideoplayer-5.0-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.0/jiecaovideoplayer-5.0.apk)**
+**[jiecaovideoplayer-5.2.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.2/jiecaovideoplayer-5.2.apk)**
 
 ![Demo Screenshot][1]
 
@@ -36,25 +34,25 @@
 
 1.添加类库，稳定版本是4.8.3，这是用exoplayer播放的预览版本，给大家看看初步的效果，还有很多问题。
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:5.0'
+compile 'fm.jiecao:jiecaovideoplayer:5.2'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.0)
+[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.2)
 
 2.添加布局
 ```xml
 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-    android:id="@+id/custom_videoplayer_standard"
+    android:id="@+id/videoplayer"
     android:layout_width="match_parent"
     android:layout_height="200dp"/>
 ```
 
 3.设置视频地址、缩略图地址、标题
 ```java
-JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
+JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.videoplayer);
 jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
-                            , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子闭眼睛");
-jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+                            , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子闭眼睛");
+jcVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.在`Activity`中
@@ -74,6 +72,9 @@ protected void onPause() {
 ```
 
 ####混淆
+```
+-keep class com.google.android.exoplayer.** { *; }
+```
 
 ####[其他API](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 

@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.2-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -21,14 +21,12 @@
 4. Gestrues to modify progress and volume
 5. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
 6. It will not disturb or change the playing state when entering or exiting fullscreen
-7. Base on [ijkplayer](https://github.com/Bilibili/ijkplayer), support hls,rtsp
-8. Put head data
-9. Gravity sensor auto fullscreen
-10. WebView with local video control
+7. Gravity sensor auto fullscreen
+8. WebView with local video control
 
 ## Effect
 
-**[jiecaovideoplayer-5.1-demo.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.1/jiecaovideoplayer-5.1.apk)**
+**[jiecaovideoplayer-5.2.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.2/jiecaovideoplayer-5.2.apk)**
 
 ![Demo Screenshot][1]
 
@@ -38,25 +36,25 @@ Even the custom UI, or has changed to the Library, is also the four steps to use
 
 1.Import library but current stable version is still 4.8.3, 5.0 use exoplayer also have many problems.
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:5.1'
+compile 'fm.jiecao:jiecaovideoplayer:5.2'
 ```
 
-[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.1)
+[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.2)
 
 2.Add JCVideoPlayer in your layout
 ```xml
 <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-    android:id="@+id/custom_videoplayer_standard"
+    android:id="@+id/videoplayer"
     android:layout_width="match_parent"
     android:layout_height="200dp"/>
 ```
 
 3.Set the video uri, video thumb url and video title
 ```java
-JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.custom_videoplayer_standard);
+JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.videoplayer);
 jcVideoPlayerStandard.setUp("http://2449.vod.myqcloud.com/2449_22ca37a6ea9011e5acaaf51d105342e3.f20.mp4"
-                            , JCVideoPlayerStandard.SCREEN_LAYOUT_LIST, "嫂子闭眼睛");
-jcVideoPlayerStandard.thumbImageView.setThumbInCustomProject("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+                            , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子闭眼睛");
+jcVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.In `Activity`
@@ -76,6 +74,9 @@ protected void onPause() {
 ```
 
 ####ProGuard
+```
+-keep class com.google.android.exoplayer.** { *; }
+```
 
 ####[Other APIs](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 

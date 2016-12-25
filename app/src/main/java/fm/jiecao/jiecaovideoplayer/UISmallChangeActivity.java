@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
+import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardAutoComplete;
 import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowShareButtonAfterFullscreen;
 import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTextureViewAfterAutoComplete;
@@ -21,6 +22,8 @@ public class UISmallChangeActivity extends AppCompatActivity {
     JCVideoPlayerStandardShowTitleAfterFullscreen jcVideoPlayerStandardShowTitleAfterFullscreen;
     JCVideoPlayerStandardShowTextureViewAfterAutoComplete jcVideoPlayerStandardShowTextureViewAfterAutoComplete;
     JCVideoPlayerStandardAutoComplete jcVideoPlayerStandardAutoComplete;
+
+    JCVideoPlayerStandard jcVideoPlayerStandard_1_1, jcVideoPlayerStandard_16_9;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,6 +63,24 @@ public class UISmallChangeActivity extends AppCompatActivity {
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
                 .into(jcVideoPlayerStandardAutoComplete.thumbImageView);
+
+        jcVideoPlayerStandard_1_1 = (JCVideoPlayerStandardAutoComplete) findViewById(R.id.jc_videoplayer_1_1);
+        jcVideoPlayerStandard_1_1.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
+                , "嫂子有事吗");
+        Picasso.with(this)
+                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
+                .into(jcVideoPlayerStandard_1_1.thumbImageView);
+        jcVideoPlayerStandard_1_1.widthRatio = 1;
+        jcVideoPlayerStandard_1_1.heightRatio = 1;
+
+        jcVideoPlayerStandard_16_9 = (JCVideoPlayerStandardAutoComplete) findViewById(R.id.jc_videoplayer_16_9);
+        jcVideoPlayerStandard_16_9.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
+                , "嫂子来不了");
+        Picasso.with(this)
+                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
+                .into(jcVideoPlayerStandard_16_9.thumbImageView);
+        jcVideoPlayerStandard_16_9.widthRatio = 16;
+        jcVideoPlayerStandard_16_9.heightRatio = 9;
     }
 
     @Override
