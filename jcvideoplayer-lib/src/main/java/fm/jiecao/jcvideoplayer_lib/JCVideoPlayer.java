@@ -290,6 +290,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN || currentScreen == SCREEN_WINDOW_TINY) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            return;
+        }
         if (widthRatio != 0 && heightRatio != 0) {
             int specWidth = MeasureSpec.getSize(widthMeasureSpec);
             int specHeight = (int) ((specWidth * (float) heightRatio) / widthRatio);
