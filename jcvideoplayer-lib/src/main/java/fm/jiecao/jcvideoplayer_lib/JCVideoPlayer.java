@@ -768,12 +768,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void release() {
         if (url.equals(JCMediaManager.CURRENT_PLAYING_URL) &&
                 (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
-            //如果正在全屏播放就不能手动调用release
+            //在非全屏的情况下只能backPress()
             if (JCVideoPlayerManager.getSecondFloor() != null &&
-                    JCVideoPlayerManager.getSecondFloor().currentScreen != SCREEN_WINDOW_FULLSCREEN) {
+                    JCVideoPlayerManager.getSecondFloor().currentScreen == SCREEN_WINDOW_FULLSCREEN) {//点击全屏
+            } else if (JCVideoPlayerManager.getSecondFloor() == null && JCVideoPlayerManager.getFirstFloor() != null &&
+                    JCVideoPlayerManager.getFirstFloor().currentScreen == SCREEN_WINDOW_FULLSCREEN) {//直接全屏
+            } else {
                 Log.d(TAG, "release [" + this.hashCode() + "]");
-                releaseAllVideos();
-            } else if (JCVideoPlayerManager.getSecondFloor() == null) {
                 releaseAllVideos();
             }
         }
