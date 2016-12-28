@@ -9,7 +9,7 @@
 
 * This project need translators, mother language is english, you can change everything edit readme, release note, formate variable and annotation.
 
-####Ambition is become the most widely used video playback control.
+####Ambition is become the most widely used video playback control. Q群:490442439 验证信息:jcvd
 
 [中文文档](README-ZH.md)           [WorkPlan](https://github.com/lipangit/JieCaoVideoPlayer/projects/2)
 
