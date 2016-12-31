@@ -72,7 +72,7 @@
                 android:text="About ListView" />
 
             <Button
-                android:id="@+id/about_ui"
+                android:id="@+id/about_api"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"

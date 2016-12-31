@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     JCVideoPlayerStandard mJcVideoPlayerStandard;
     JCVideoPlayerSimple mJcVideoPlayerSimple;
 
-    Button mTinyWindow, mAutoTinyWindow, mAboutListView, mAboutUI, mPlayDirectly, mAboutWebView;
+    Button mTinyWindow, mAutoTinyWindow, mAboutListView, mPlayDirectly, mAboutApi, mAboutWebView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,16 +45,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mTinyWindow = (Button) findViewById(R.id.tiny_window);
         mAutoTinyWindow = (Button) findViewById(R.id.auto_tiny_window);
-        mAboutUI = (Button) findViewById(R.id.play_directly_without_layout);
+        mPlayDirectly = (Button) findViewById(R.id.play_directly_without_layout);
         mAboutListView = (Button) findViewById(R.id.about_listview);
-        mPlayDirectly = (Button) findViewById(R.id.about_ui);
+        mAboutApi = (Button) findViewById(R.id.about_api);
         mAboutWebView = (Button) findViewById(R.id.about_webview);
 
         mTinyWindow.setOnClickListener(this);
         mAutoTinyWindow.setOnClickListener(this);
         mAboutListView.setOnClickListener(this);
-        mAboutUI.setOnClickListener(this);
         mPlayDirectly.setOnClickListener(this);
+        mAboutApi.setOnClickListener(this);
         mAboutWebView.setOnClickListener(this);
 
         mJcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.simple_demo);
@@ -122,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.about_listview:
                 startActivity(new Intent(MainActivity.this, ListViewActivity.class));
                 break;
-            case R.id.about_ui:
-                startActivity(new Intent(MainActivity.this, UIActivity.class));
+            case R.id.about_api:
+                startActivity(new Intent(MainActivity.this, ApiActivity.class));
                 break;
             case R.id.about_webview:
                 startActivity(new Intent(MainActivity.this, WebViewActivity.class));
