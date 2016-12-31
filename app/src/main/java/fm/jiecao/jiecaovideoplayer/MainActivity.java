@@ -1,8 +1,6 @@
 package fm.jiecao.jiecaovideoplayer;
 
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -28,9 +26,6 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by Nathen on 16/7/22.
  */
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-    JCVideoPlayer.JCAutoFullscreenListener mSensorEventListener;
-    SensorManager mSensorManager;
 
 
     JCVideoPlayerStandard mJcVideoPlayerStandard;
@@ -64,39 +59,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
         mJcVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
-//        mJcVideoPlayerStandard.loop = true;
-
-        /** Play video in local path, eg:record by system camera **/
-//        cpAssertVideoToLocalPath();
-//        mJcVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
-//                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
-        /** Play video in assert **/
-//        mJcVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
-//                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
 
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
                 .into(mJcVideoPlayerStandard.thumbImageView);
 
         JCVideoPlayer.setJcUserAction(new MyUserActionStandard());
-        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mSensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Sensor accelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(mSensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        mSensorManager.unregisterListener(mSensorEventListener);
         JCVideoPlayer.releaseAllVideos();
-
-//        JCVideoPlayer.clearSavedProgress(this, null);
     }
 
     @Override
@@ -189,23 +164,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void cpAssertVideoToLocalPath() {
-        try {
-            InputStream myInput;
-            OutputStream myOutput = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4");
-            myInput = this.getAssets().open("local_video.mp4");
-            byte[] buffer = new byte[1024];
-            int length = myInput.read(buffer);
-            while (length > 0) {
-                myOutput.write(buffer, 0, length);
-                length = myInput.read(buffer);
-            }
-
-            myOutput.flush();
-            myInput.close();
-            myOutput.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
