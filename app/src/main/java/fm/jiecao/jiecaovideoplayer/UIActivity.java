@@ -13,7 +13,7 @@ import android.widget.Toast;
  * Created by Nathen on 16/7/31.
  */
 public class UIActivity extends AppCompatActivity implements View.OnClickListener {
-    Button mSmallChange, mBigChange, mImageLoader;
+    Button mSmallChange, mBigChange, mImageLoader, mOrientation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,10 +28,12 @@ public class UIActivity extends AppCompatActivity implements View.OnClickListene
         mSmallChange = (Button) findViewById(R.id.small_change);
         mBigChange = (Button) findViewById(R.id.big_change);
         mImageLoader = (Button) findViewById(R.id.imageloader);
+        mOrientation = (Button) findViewById(R.id.orientation);
 
         mSmallChange.setOnClickListener(this);
         mBigChange.setOnClickListener(this);
         mImageLoader.setOnClickListener(this);
+        mOrientation.setOnClickListener(this);
 
     }
 
@@ -47,6 +49,9 @@ public class UIActivity extends AppCompatActivity implements View.OnClickListene
                 break;
             case R.id.imageloader:
                 startActivity(new Intent(UIActivity.this, UIImageLoaderActivity.class));
+                break;
+            case R.id.orientation:
+                startActivity(new Intent(UIActivity.this, OrientationActivity.class));
                 break;
         }
     }
