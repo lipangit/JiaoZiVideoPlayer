@@ -71,6 +71,14 @@ protected void onPause() {
 }
 ```
 
+5.在`AndroidManifest.xml`中
+```
+<activity
+    android:name=".MainActivity"
+    android:configChanges="orientation|screenSize|keyboardHidden"
+    android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
+```
+
 ####混淆
 ```
 -keep class com.google.android.exoplayer.** { *; }

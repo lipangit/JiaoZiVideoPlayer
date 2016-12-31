@@ -73,6 +73,14 @@ protected void onPause() {
 }
 ```
 
+5.In AndroidManifest.xml
+```
+<activity
+    android:name=".MainActivity"
+    android:configChanges="orientation|screenSize|keyboardHidden"
+    android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
+```
+
 ####ProGuard
 ```
 -keep class com.google.android.exoplayer.** { *; }
