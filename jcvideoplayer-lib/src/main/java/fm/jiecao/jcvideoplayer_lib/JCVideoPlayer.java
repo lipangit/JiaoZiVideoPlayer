@@ -440,6 +440,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         clearFullscreenLayout();
         JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
+
+        JCMediaManager.textureView = null;
+        JCMediaManager.savedSurfaceTexture = null;
+//        JCMediaManager.textureView = null;
     }
 
     //退出全屏和小窗的方法
