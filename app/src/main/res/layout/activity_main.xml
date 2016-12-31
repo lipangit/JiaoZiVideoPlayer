@@ -14,25 +14,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="18dp"
-                android:text="Base simple ui example" />
-
-            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
-                android:id="@+id/simple_demo"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="18dp"
-                android:text="Recommended standard ui example" />
-
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
                 android:id="@+id/jc_video"
                 android:layout_width="match_parent"
