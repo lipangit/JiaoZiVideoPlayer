@@ -498,20 +498,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    /**
-     *以后可能用到这个函数
-     */
-//    public void onBufferingUpdate(int percent) {
-//        if (currentState != CURRENT_STATE_NORMAL && currentState != CURRENT_STATE_PREPARING) {
-//            Log.v(TAG, "onBufferingUpdate " + percent + " [" + this.hashCode() + "] ");
-//            setProgressAndText(percent);
-//        }
-//    }
-
-    /**
-     * 以后可能用到这个函数
-     */
     public void onSeekComplete() {
+
     }
 
     public void onError(int what, int extra) {
@@ -524,30 +512,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    /**
-     * 以后可能用到这个函数
-     */
-//    public void onInfo(int what, int extra) {
-//        Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
-//        if (what == IMediaPlayer.MEDIA_INFO_BUFFERING_START) {
-//            JCMediaManager.instance().backUpBufferState = currentState;
-//            setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);
-//            Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
-//        } else if (what == IMediaPlayer.MEDIA_INFO_BUFFERING_END) {
-//            if (JCMediaManager.instance().backUpBufferState != -1) {
-//                setUiWitStateAndScreen(JCMediaManager.instance().backUpBufferState);
-//                JCMediaManager.instance().backUpBufferState = -1;
-//            }
-//            Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
-//        } else if (what == IMediaPlayer.MEDIA_INFO_VIDEO_ROTATION_CHANGED) {
-//            JCMediaManager.instance().videoRotation = extra;
-//            JCMediaManager.textureView.setRotation(extra);
-//            cacheImageView.setRotation(JCMediaManager.instance().videoRotation);
-//            Log.d(TAG, "MEDIA_INFO_VIDEO_ROTATION_CHANGED");
-//
-//
-//        }
-//    }
+    public void onInfo(int what, int extra) {
+        Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
+    }
+
     public void onVideoSizeChanged() {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
         JCMediaManager.textureView.setVideoSize(JCMediaManager.instance().getVideoSize());

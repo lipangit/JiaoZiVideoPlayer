@@ -217,7 +217,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
             @Override
             public void run() {
                 if (JCVideoPlayerManager.getFirstFloor() != null) {
-//                    JCVideoPlayerManager.getFirstFloor().onInfo(what, extra);
+                    JCVideoPlayerManager.getFirstFloor().onInfo(what, extra);
                 }
             }
         });
