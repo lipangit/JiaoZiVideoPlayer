@@ -10,8 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.TextUtils;
 
-import com.google.android.exoplayer2.C;
-
 import java.util.Formatter;
 import java.util.Locale;
 
@@ -89,21 +87,6 @@ public class JCUtils {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    @C.ContentType
-    public static int getUrlType(String url) {
-        if (url == null) {
-            return C.TYPE_OTHER;
-        } else if (url.contains(".mpd")) {
-            return C.TYPE_DASH;
-        } else if (url.contains(".ism") || url.contains(".isml")) {
-            return C.TYPE_SS;
-        } else if (url.contains(".m3u8")) {
-            return C.TYPE_HLS;
-        } else {
-            return C.TYPE_OTHER;
-        }
-    }
-
     public static void saveProgress(Context context, String url, int progress) {
         SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
                 Context.MODE_PRIVATE);
@@ -116,7 +99,7 @@ public class JCUtils {
         SharedPreferences spn;
         spn = context.getSharedPreferences("JCVD_PROGRESS",
                 Context.MODE_PRIVATE);
-        return spn.getInt(url, 0);// 获取当前网络状态，默认无网络
+        return spn.getInt(url, 0);
     }
 
     /**
