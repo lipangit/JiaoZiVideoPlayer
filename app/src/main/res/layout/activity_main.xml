@@ -14,25 +14,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="18dp"
-                android:text="Base simple ui example" />
-
-            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
-                android:id="@+id/simple_demo"
-                android:layout_width="match_parent"
-                android:layout_height="200dp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:layout_marginTop="18dp"
-                android:text="Recommended standard ui example" />
-
             <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
                 android:id="@+id/jc_video"
                 android:layout_width="match_parent"
@@ -72,13 +53,13 @@
                 android:text="About ListView" />
 
             <Button
-                android:id="@+id/about_ui"
+                android:id="@+id/about_api"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                android:text="About Ui" />
+                android:text="About Api" />
 
             <Button
                 android:id="@+id/about_webview"

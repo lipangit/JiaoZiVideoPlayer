@@ -270,12 +270,12 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
         }
     }
 
-    @Override
-    public void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
-        super.setProgressAndTime(progress, secProgress, currentTime, totalTime);
-        if (progress != 0) bottomProgressBar.setProgress(progress);
-        if (secProgress != 0) bottomProgressBar.setSecondaryProgress(secProgress);
-    }
+//    @Override
+//    public void setProgressAndTime(int progress, int secProgress, int currentTime, int totalTime) {
+//        super.setProgressAndTime(progress, secProgress, currentTime, totalTime);
+//        if (progress != 0) bottomProgressBar.setProgress(progress);
+//        if (secProgress != 0) bottomProgressBar.setSecondaryProgress(secProgress);
+//    }
 
     @Override
     public void resetProgressAndTime() {

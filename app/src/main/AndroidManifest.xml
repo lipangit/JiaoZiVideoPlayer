@@ -46,7 +46,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".UIActivity"
+            android:name=".ApiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
@@ -55,10 +55,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".UIBigChangeActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".UIImageLoaderActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
@@ -81,6 +77,10 @@
             android:name=".WebViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".OrientationActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="landscape" />
 
     </application>
 
