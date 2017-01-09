@@ -41,6 +41,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static boolean TOOL_BAR_EXIST = true;
     public static int FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
     public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+    public static boolean SAVE_PROGRESS = true;
 
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
 
@@ -62,7 +63,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static final int CURRENT_STATE_PAUSE = 5;
     public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
     public static final int CURRENT_STATE_ERROR = 7;
-    
+
     int BACKUP_PLAYING_BUFFERING_STATE = -1;
 
     public int currentState = -1;
@@ -71,7 +72,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public String url = "";
     public Object[] objects = null;
-    public int seekToInAdvance = -1;
+    public int seekToInAdvance = 0;
 
     public ImageView startButton;
     public SeekBar progressBar;
@@ -379,9 +380,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
 
         if (currentState != CURRENT_STATE_PREPARING) return;
-        if (seekToInAdvance != -1) {
+        if (seekToInAdvance != 0) {
             JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
-            seekToInAdvance = -1;
+            seekToInAdvance = 0;
         } else {
             int position = JCUtils.getSavedProgress(getContext(), url);
             if (position != 0) {

@@ -62,6 +62,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
                 .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
                 .into(mJcVideoPlayerStandard.thumbImageView);
         mJcVideoPlayerStandard.loop = true;
+//        JCVideoPlayer.SAVE_PROGRESS = false;
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
 //        mJcVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
