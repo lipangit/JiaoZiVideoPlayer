@@ -23,6 +23,8 @@
 6. It will not disturb or change the playing state when entering or exiting fullscreen
 7. Gravity sensor auto fullscreen
 8. WebView with local video control
+9. [Support https and rtsp]{https://developer.android.com/guide/topics/media/media-formats.html}
+10. Less than 100kb
 
 ## Effect
 
@@ -79,11 +81,6 @@ protected void onPause() {
     android:name=".MainActivity"
     android:configChanges="orientation|screenSize|keyboardHidden"
     android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
-```
-
-####ProGuard
-```
--keep class com.google.android.exoplayer.** { *; }
 ```
 
 ####[Other APIs](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)

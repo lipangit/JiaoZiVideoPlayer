@@ -21,6 +21,8 @@
 6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
 7. 重力感应自动全屏
 8. WebView嵌套本地视频控件
+9. [支持https和rtsp]{https://developer.android.com/guide/topics/media/media-formats.html}
+10. 小于 100kb
 
 ##效果
 
@@ -77,11 +79,6 @@ protected void onPause() {
     android:name=".MainActivity"
     android:configChanges="orientation|screenSize|keyboardHidden"
     android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
-```
-
-####混淆
-```
--keep class com.google.android.exoplayer.** { *; }
 ```
 
 ####[其他API](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
