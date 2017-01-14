@@ -9,6 +9,8 @@
 
 ####立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
 
+目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
+
 [英文文档](https://github.com/lipangit/JieCaoVideoPlayer)           [工作计划](https://github.com/lipangit/JieCaoVideoPlayer/projects/2)
 
 ##主要特点
@@ -32,9 +34,9 @@
 
 ##使用
 
-即便是自定义UI，或者对Library有过修改，也是这四步骤来使用播放器。
+即便是自定义UI，或者对Library有过修改，也是这五步骤来使用播放器。
 
-1.添加类库，稳定版本是4.8.3，这是用exoplayer播放的预览版本，给大家看看初步的效果，还有很多问题。
+1.添加类库
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:5.3'
 ```

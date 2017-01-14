@@ -11,6 +11,8 @@
 
 ####Ambition is become the most widely used video playback control. Q群:490442439 验证信息:jcvd
 
+I think the final solution for play video in android is android.media.MediaPlayer, other player is not in the trend, even if the android.media.MediaPlayer have disavantages we should make concession, if android.media.MediaPlayer have defect we will think to change other player.
+
 [中文文档](README-ZH.md)           [WorkPlan](https://github.com/lipangit/JieCaoVideoPlayer/projects/2)
 
 ## Features
@@ -34,9 +36,9 @@
 
 ## Usage
 
-Even the custom UI, or has changed to the Library, is also the four steps to use the player.
+Even the custom UI, or has changed to the Library, is also the five steps to use the player.
 
-1.Import library but current stable version is still 4.8.3, 5.0 use exoplayer also have many problems.
+1.Import library
 ```gradle
 compile 'fm.jiecao:jiecaovideoplayer:5.3'
 ```
