@@ -23,7 +23,7 @@
 6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
 7. 重力感应自动全屏
 8. WebView嵌套本地视频控件
-9. [支持https和rtsp]{https://developer.android.com/guide/topics/media/media-formats.html}
+9. [支持https和rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
 10. 小于 100kb
 
 ##效果

@@ -25,7 +25,7 @@ I think the final solution for play video in android is android.media.MediaPlaye
 6. It will not disturb or change the playing state when entering or exiting fullscreen
 7. Gravity sensor auto fullscreen
 8. WebView with local video control
-9. [Support https and rtsp]{https://developer.android.com/guide/topics/media/media-formats.html}
+9. [Support https and rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
 10. Less than 100kb
 
 ## Effect
