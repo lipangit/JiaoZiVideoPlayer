@@ -627,14 +627,14 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.showBrightnessDialog(brightnessPercent);
         if (mBrightnessDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_brightness, null);
-            mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.brightness_progressbar));
+            mDialogBrightnessProgressBar = ((ProgressBar) localView.findViewById(R.id.brightness_progressbar));
             mBrightnessDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
             mBrightnessDialog.setContentView(localView);
             mBrightnessDialog.getWindow().addFlags(8);
             mBrightnessDialog.getWindow().addFlags(32);
             mBrightnessDialog.getWindow().addFlags(16);
             mBrightnessDialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = mVolumeDialog.getWindow().getAttributes();
+            WindowManager.LayoutParams localLayoutParams = mBrightnessDialog.getWindow().getAttributes();
             localLayoutParams.gravity = 19;
             localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.jc_volume_dialog_margin_left);
             mBrightnessDialog.getWindow().setAttributes(localLayoutParams);

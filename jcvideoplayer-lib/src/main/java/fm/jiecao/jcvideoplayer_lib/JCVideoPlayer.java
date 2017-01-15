@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -95,8 +96,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected float mDownY;
     protected boolean mChangeVolume;
     protected boolean mChangePosition;
-    protected int mDownPosition;
+    protected boolean mChangeBrightness;
+    protected int mGestureDownPosition;
     protected int mGestureDownVolume;
+    protected float mGestureDownBrightness;
     protected int mSeekTimePosition;
 
     public JCVideoPlayer(Context context) {
@@ -218,6 +221,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     mDownY = y;
                     mChangeVolume = false;
                     mChangePosition = false;
+                    mChangeBrightness = false;
                     break;
                 case MotionEvent.ACTION_MOVE:
                     Log.i(TAG, "onTouch surfaceContainer actionMove [" + this.hashCode() + "] ");
@@ -226,7 +230,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     float absDeltaX = Math.abs(deltaX);
                     float absDeltaY = Math.abs(deltaY);
                     if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-                        if (!mChangePosition && !mChangeVolume) {
+                        if (!mChangePosition && !mChangeVolume && !mChangeBrightness) {
                             if (absDeltaX > THRESHOLD || absDeltaY > THRESHOLD) {
                                 cancelProgressTimer();
                                 if (absDeltaX >= THRESHOLD) {
@@ -234,18 +238,29 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                                     // 否则会因为mediaplayer的状态非法导致App Crash
                                     if (currentState != CURRENT_STATE_ERROR) {
                                         mChangePosition = true;
-                                        mDownPosition = getCurrentPositionWhenPlaying();
+                                        mGestureDownPosition = getCurrentPositionWhenPlaying();
                                     }
                                 } else {
-                                    mChangeVolume = true;
-                                    mGestureDownVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                                    //如果y轴滑动距离超过设置的处理范围，那么进行滑动事件处理
+                                    if (mDownX < mScreenWidth * 0.5f) {//左侧改变亮度
+                                        mChangeBrightness = true;
+                                        try {
+                                            mGestureDownBrightness = Settings.System.getInt(getContext().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
+                                            System.out.println("当前亮度 " + mGestureDownBrightness);
+                                        } catch (Settings.SettingNotFoundException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {//右侧改变声音
+                                        mChangeVolume = true;
+                                        mGestureDownVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                                    }
                                 }
                             }
                         }
                     }
                     if (mChangePosition) {
                         int totalTimeDuration = getDuration();
-                        mSeekTimePosition = (int) (mDownPosition + deltaX * totalTimeDuration / mScreenWidth);
+                        mSeekTimePosition = (int) (mGestureDownPosition + deltaX * totalTimeDuration / mScreenWidth);
                         if (mSeekTimePosition > totalTimeDuration)
                             mSeekTimePosition = totalTimeDuration;
                         String seekTime = JCUtils.stringForTime(mSeekTimePosition);
@@ -258,11 +273,30 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
                         int deltaV = (int) (max * deltaY * 3 / mScreenHeight);
                         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mGestureDownVolume + deltaV, 0);
+                        //dialog中显示百分比
                         int volumePercent = (int) (mGestureDownVolume * 100 / max + deltaY * 3 * 100 / mScreenHeight);
-
                         showVolumeDialog(-deltaY, volumePercent);
+                        System.out.println("percentfdsfdsf : " + volumePercent + " " + deltaY);
                     }
 
+                    if (mChangeBrightness) {
+                        deltaY = -deltaY;
+                        int deltaV = (int) (255 * deltaY * 3 / mScreenHeight);
+                        WindowManager.LayoutParams params = JCUtils.getAppCompActivity(getContext()).getWindow().getAttributes();
+                        if (((mGestureDownBrightness + deltaV) / 255) >= 1) {//这和声音有区别，必须自己过滤一下负值
+                            params.screenBrightness = 1;
+                        } else if (((mGestureDownBrightness + deltaV) / 255) <= 0) {
+                            params.screenBrightness = 0.01f;
+                        } else {
+                            params.screenBrightness = (mGestureDownBrightness + deltaV) / 255;
+                        }
+                        JCUtils.getAppCompActivity(getContext()).getWindow().setAttributes(params);
+                        //dialog中显示百分比
+                        int brightnessPercent = (int) (mGestureDownBrightness * 100 / 255 + deltaY * 3 * 100 / mScreenHeight);
+                        System.out.println("percentfdsfdsf : " + brightnessPercent + " " + deltaY + " " + mGestureDownBrightness);
+                        showBrightnessDialog(brightnessPercent);
+//                        mDownY = y;
+                    }
                     break;
                 case MotionEvent.ACTION_UP:
                     Log.i(TAG, "onTouch surfaceContainer actionUp [" + this.hashCode() + "] ");
