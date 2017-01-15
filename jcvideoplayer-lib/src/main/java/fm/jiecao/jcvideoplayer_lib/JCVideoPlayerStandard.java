@@ -621,6 +621,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     protected Dialog mBrightnessDialog;
     protected ProgressBar mDialogBrightnessProgressBar;
+    protected TextView mDialogBrightnessTextView;
 
     @Override
     public void showBrightnessDialog(int brightnessPercent) {
@@ -628,21 +629,28 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         if (mBrightnessDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_brightness, null);
             mDialogBrightnessProgressBar = ((ProgressBar) localView.findViewById(R.id.brightness_progressbar));
+            mDialogBrightnessTextView = ((TextView) localView.findViewById(R.id.tv_brightness));
             mBrightnessDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
             mBrightnessDialog.setContentView(localView);
-            mBrightnessDialog.getWindow().addFlags(8);
+            mBrightnessDialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
             mBrightnessDialog.getWindow().addFlags(32);
             mBrightnessDialog.getWindow().addFlags(16);
             mBrightnessDialog.getWindow().setLayout(-2, -2);
             WindowManager.LayoutParams localLayoutParams = mBrightnessDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = 19;
-            localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.jc_volume_dialog_margin_left);
+            localLayoutParams.gravity = 49;
+            localLayoutParams.y = getResources().getDimensionPixelOffset(fm.jiecao.jcvideoplayer_lib.R.dimen.jc_progress_dialog_margin_top);
             mBrightnessDialog.getWindow().setAttributes(localLayoutParams);
+
         }
         if (!mBrightnessDialog.isShowing()) {
             mBrightnessDialog.show();
         }
-
+        if (brightnessPercent > 100) {
+            brightnessPercent = 100;
+        } else if (brightnessPercent < 0) {
+            brightnessPercent = 0;
+        }
+        mDialogBrightnessTextView.setText(brightnessPercent + "%");
         mDialogBrightnessProgressBar.setProgress(brightnessPercent);
     }
 

@@ -303,6 +303,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     mTouchingProgressBar = false;
                     dismissProgressDialog();
                     dismissVolumeDialog();
+                    dismissBrightnessDialog();
                     if (mChangePosition) {
                         onEvent(JCUserAction.ON_TOUCH_SCREEN_SEEK_POSITION);
                         JCMediaManager.instance().mediaPlayer.seekTo(mSeekTimePosition);
@@ -448,6 +449,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         onEvent(JCUserAction.ON_AUTO_COMPLETE);
         dismissVolumeDialog();
         dismissProgressDialog();
+        dismissBrightnessDialog();
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
 
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
