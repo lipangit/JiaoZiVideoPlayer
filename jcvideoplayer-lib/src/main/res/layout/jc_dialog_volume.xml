@@ -6,25 +6,25 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="40.0dip"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <ProgressBar
             android:id="@+id/volume_progressbar"
             style="@style/jc_vertical_progressBar"
-            android:layout_width="4.0dip"
-            android:layout_height="81.0dip"
+            android:layout_width="4dp"
+            android:layout_height="81dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16.0dip"
+            android:layout_marginTop="16dp"
             android:max="100" />
 
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="16.0dip"
-            android:layout_marginTop="16.0dip"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/jc_volume_icon" />
     </LinearLayout>
 </LinearLayout>

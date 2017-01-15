@@ -895,6 +895,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     }
 
+    public void showBrightnessDialog(int brightnessPercent) {
+
+    }
+
+    public void dismissBrightnessDialog() {
+
+    }
 
     public abstract int getLayoutId();
 

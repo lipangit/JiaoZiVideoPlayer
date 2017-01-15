@@ -545,7 +545,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
         super.showProgressDialog(deltaX, seekTime, seekTimePosition, totalTime, totalTimeDuration);
         if (mProgressDialog == null) {
-            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_progress_dialog, null);
+            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_progress, null);
             mDialogProgressBar = ((ProgressBar) localView.findViewById(R.id.duration_progressbar));
             mDialogSeekTime = ((TextView) localView.findViewById(R.id.tv_current));
             mDialogTotalTime = ((TextView) localView.findViewById(R.id.tv_duration));
@@ -584,7 +584,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-
     protected Dialog mVolumeDialog;
     protected ProgressBar mDialogVolumeProgressBar;
 
@@ -592,7 +591,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void showVolumeDialog(float deltaY, int volumePercent) {
         super.showVolumeDialog(deltaY, volumePercent);
         if (mVolumeDialog == null) {
-            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_volume_dialog, null);
+            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_volume, null);
             mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
             mVolumeDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
             mVolumeDialog.setContentView(localView);
@@ -617,6 +616,41 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.dismissVolumeDialog();
         if (mVolumeDialog != null) {
             mVolumeDialog.dismiss();
+        }
+    }
+
+    protected Dialog mBrightnessDialog;
+    protected ProgressBar mDialogBrightnessProgressBar;
+
+    @Override
+    public void showBrightnessDialog(int brightnessPercent) {
+        super.showBrightnessDialog(brightnessPercent);
+        if (mBrightnessDialog == null) {
+            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_brightness, null);
+            mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.brightness_progressbar));
+            mBrightnessDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
+            mBrightnessDialog.setContentView(localView);
+            mBrightnessDialog.getWindow().addFlags(8);
+            mBrightnessDialog.getWindow().addFlags(32);
+            mBrightnessDialog.getWindow().addFlags(16);
+            mBrightnessDialog.getWindow().setLayout(-2, -2);
+            WindowManager.LayoutParams localLayoutParams = mVolumeDialog.getWindow().getAttributes();
+            localLayoutParams.gravity = 19;
+            localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.jc_volume_dialog_margin_left);
+            mBrightnessDialog.getWindow().setAttributes(localLayoutParams);
+        }
+        if (!mBrightnessDialog.isShowing()) {
+            mBrightnessDialog.show();
+        }
+
+        mDialogBrightnessProgressBar.setProgress(brightnessPercent);
+    }
+
+    @Override
+    public void dismissBrightnessDialog() {
+        super.dismissBrightnessDialog();
+        if (mBrightnessDialog != null) {
+            mBrightnessDialog.dismiss();
         }
     }
 
