@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -261,6 +262,35 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 changeUiToPlayingBufferingClear();
             } else {
                 changeUiToPlayingBufferingShow();
+            }
+        }
+    }
+
+    public void onCLickUiToggleToClear() {
+        if (currentState == CURRENT_STATE_PREPARING) {
+            if (bottomContainer.getVisibility() == View.VISIBLE) {
+                changeUiToPreparingClear();
+            } else {
+            }
+        } else if (currentState == CURRENT_STATE_PLAYING) {
+            if (bottomContainer.getVisibility() == View.VISIBLE) {
+                changeUiToPlayingClear();
+            } else {
+            }
+        } else if (currentState == CURRENT_STATE_PAUSE) {
+            if (bottomContainer.getVisibility() == View.VISIBLE) {
+                changeUiToPauseClear();
+            } else {
+            }
+        } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+            if (bottomContainer.getVisibility() == View.VISIBLE) {
+                changeUiToCompleteClear();
+            } else {
+            }
+        } else if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
+            if (bottomContainer.getVisibility() == View.VISIBLE) {
+                changeUiToPlayingBufferingClear();
+            } else {
             }
         }
     }
@@ -557,8 +587,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mProgressDialog.getWindow().addFlags(16);
             mProgressDialog.getWindow().setLayout(-2, -2);
             WindowManager.LayoutParams localLayoutParams = mProgressDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = 49;
-            localLayoutParams.y = getResources().getDimensionPixelOffset(fm.jiecao.jcvideoplayer_lib.R.dimen.jc_progress_dialog_margin_top);
+            localLayoutParams.gravity = Gravity.CENTER;
             mProgressDialog.getWindow().setAttributes(localLayoutParams);
         }
         if (!mProgressDialog.isShowing()) {
@@ -573,7 +602,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else {
             mDialogIcon.setBackgroundResource(R.drawable.jc_backward_icon);
         }
-
+        onCLickUiToggleToClear();
     }
 
     @Override
@@ -600,15 +629,14 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mVolumeDialog.getWindow().addFlags(16);
             mVolumeDialog.getWindow().setLayout(-2, -2);
             WindowManager.LayoutParams localLayoutParams = mVolumeDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = 19;
-            localLayoutParams.x = getContext().getResources().getDimensionPixelOffset(R.dimen.jc_volume_dialog_margin_left);
+            localLayoutParams.gravity = Gravity.CENTER;
             mVolumeDialog.getWindow().setAttributes(localLayoutParams);
         }
         if (!mVolumeDialog.isShowing()) {
             mVolumeDialog.show();
         }
-
         mDialogVolumeProgressBar.setProgress(volumePercent);
+        onCLickUiToggleToClear();
     }
 
     @Override
@@ -637,8 +665,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mBrightnessDialog.getWindow().addFlags(16);
             mBrightnessDialog.getWindow().setLayout(-2, -2);
             WindowManager.LayoutParams localLayoutParams = mBrightnessDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = 49;
-            localLayoutParams.y = getResources().getDimensionPixelOffset(fm.jiecao.jcvideoplayer_lib.R.dimen.jc_progress_dialog_margin_top);
+            localLayoutParams.gravity = Gravity.CENTER;
             mBrightnessDialog.getWindow().setAttributes(localLayoutParams);
 
         }
@@ -652,6 +679,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
         mDialogBrightnessTextView.setText(brightnessPercent + "%");
         mDialogBrightnessProgressBar.setProgress(brightnessPercent);
+        onCLickUiToggleToClear();
     }
 
     @Override
