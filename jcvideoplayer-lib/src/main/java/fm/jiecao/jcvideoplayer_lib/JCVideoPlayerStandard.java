@@ -615,12 +615,16 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     protected Dialog mVolumeDialog;
     protected ProgressBar mDialogVolumeProgressBar;
+    protected TextView mDialogVolumeTextView;
+    protected ImageView mDialogVolumeImageView;
 
     @Override
     public void showVolumeDialog(float deltaY, int volumePercent) {
         super.showVolumeDialog(deltaY, volumePercent);
         if (mVolumeDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_volume, null);
+            mDialogVolumeImageView = ((ImageView) localView.findViewById(R.id.volume_image_tip));
+            mDialogVolumeTextView = ((TextView) localView.findViewById(R.id.tv_volume));
             mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
             mVolumeDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
             mVolumeDialog.setContentView(localView);
@@ -635,6 +639,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         if (!mVolumeDialog.isShowing()) {
             mVolumeDialog.show();
         }
+        if (volumePercent <= 0) {
+            mDialogVolumeImageView.setBackgroundResource();
+        } else {
+            mDialogVolumeImageView.setBackgroundResource();
+        }
+        if (volumePercent > 100) {
+            volumePercent = 100;
+        } else if (volumePercent < 0) {
+            volumePercent = 0;
+        }
+        mDialogVolumeTextView.setText(volumePercent + "%");
         mDialogVolumeProgressBar.setProgress(volumePercent);
         onCLickUiToggleToClear();
     }
@@ -656,8 +671,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.showBrightnessDialog(brightnessPercent);
         if (mBrightnessDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_brightness, null);
-            mDialogBrightnessProgressBar = ((ProgressBar) localView.findViewById(R.id.brightness_progressbar));
             mDialogBrightnessTextView = ((TextView) localView.findViewById(R.id.tv_brightness));
+            mDialogBrightnessProgressBar = ((ProgressBar) localView.findViewById(R.id.brightness_progressbar));
             mBrightnessDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
             mBrightnessDialog.setContentView(localView);
             mBrightnessDialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
