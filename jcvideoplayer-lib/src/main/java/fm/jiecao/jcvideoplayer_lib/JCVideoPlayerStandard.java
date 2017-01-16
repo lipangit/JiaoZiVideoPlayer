@@ -640,9 +640,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mVolumeDialog.show();
         }
         if (volumePercent <= 0) {
-            mDialogVolumeImageView.setBackgroundResource();
+            mDialogVolumeImageView.setBackgroundResource(R.drawable.jc_close_volume);
         } else {
-            mDialogVolumeImageView.setBackgroundResource();
+            mDialogVolumeImageView.setBackgroundResource(R.drawable.jc_add_volume);
         }
         if (volumePercent > 100) {
             volumePercent = 100;

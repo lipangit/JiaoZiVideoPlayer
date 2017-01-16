@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:src="@drawable/brightness_video" />
+            android:src="@drawable/jc_brightness_video" />
 
         <TextView
             android:id="@+id/tv_brightness"
