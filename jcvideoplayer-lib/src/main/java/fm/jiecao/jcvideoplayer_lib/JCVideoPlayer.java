@@ -28,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -70,6 +71,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public int currentState = -1;
     public int currentScreen = -1;
     public boolean loop = false;
+    public Map<String, String> headData;
 
     public String url = "";
     public Object[] objects = null;
@@ -143,6 +145,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
+        this.headData = null;
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
     }
 
@@ -202,6 +205,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.CURRENT_PLAYING_URL = url;
         JCMediaManager.CURRENT_PLING_LOOP = loop;
+        JCMediaManager.MAP_HEADER_DATA = headData;
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
         JCVideoPlayerManager.setFirstFloor(this);
     }
