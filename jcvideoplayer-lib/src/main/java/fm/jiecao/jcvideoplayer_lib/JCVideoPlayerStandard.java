@@ -172,7 +172,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     showWifiDialog();
                     return;
                 }
-                startPlayLogic();
+                startVideo();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
             }
@@ -181,12 +181,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.back) {
             backPress();
         } else if (i == R.id.back_tiny) {
-//            if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-//                if (JCVideoPlayerManager.getCurrentJcvd().getUrl() != JCMediaManager.CURRENT_PLAYING_URL) {
-//                    releaseAllVideos();
-//                    return;
-//                }
-//            }
             backPress();
         }
     }
@@ -201,7 +195,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                startPlayLogic();
+                startVideo();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }
         });
@@ -226,7 +220,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         startDismissControlViewTimer();
     }
 
-    public void startPlayLogic() {
+    public void startVideo() {
         prepareMediaPlayer();
         onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
     }
