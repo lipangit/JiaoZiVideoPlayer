@@ -64,7 +64,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
     public static final int CURRENT_STATE_ERROR = 7;
 
-    int BACKUP_PLAYING_BUFFERING_STATE = -1;
+    public static int BACKUP_PLAYING_BUFFERING_STATE = -1;
 
     public int currentState = -1;
     public int currentScreen = -1;
@@ -520,6 +520,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
+            if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) return;
             BACKUP_PLAYING_BUFFERING_STATE = currentState;
             setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);//没这个case
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
