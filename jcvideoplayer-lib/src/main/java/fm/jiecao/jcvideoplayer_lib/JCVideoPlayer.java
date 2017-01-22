@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,6 +43,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static boolean TOOL_BAR_EXIST = true;
     public static int FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
     public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+    public static boolean SAVE_PROGRESS = true;
 
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
 
@@ -62,16 +65,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static final int CURRENT_STATE_PAUSE = 5;
     public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
     public static final int CURRENT_STATE_ERROR = 7;
-    
-    int BACKUP_PLAYING_BUFFERING_STATE = -1;
+
+    public static int BACKUP_PLAYING_BUFFERING_STATE = -1;
 
     public int currentState = -1;
     public int currentScreen = -1;
     public boolean loop = false;
+    public Map<String, String> headData;
 
     public String url = "";
     public Object[] objects = null;
-    public int seekToInAdvance = -1;
+    public int seekToInAdvance = 0;
 
     public ImageView startButton;
     public SeekBar progressBar;
@@ -94,8 +98,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected float mDownY;
     protected boolean mChangeVolume;
     protected boolean mChangePosition;
-    protected int mDownPosition;
+    protected boolean mChangeBrightness;
+    protected int mGestureDownPosition;
     protected int mGestureDownVolume;
+    protected float mGestureDownBrightness;
     protected int mSeekTimePosition;
 
     public JCVideoPlayer(Context context) {
@@ -139,6 +145,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         this.url = url;
         this.objects = objects;
         this.currentScreen = screen;
+        this.headData = null;
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
     }
 
@@ -198,6 +205,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.CURRENT_PLAYING_URL = url;
         JCMediaManager.CURRENT_PLING_LOOP = loop;
+        JCMediaManager.MAP_HEADER_DATA = headData;
         setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
         JCVideoPlayerManager.setFirstFloor(this);
     }
@@ -217,6 +225,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     mDownY = y;
                     mChangeVolume = false;
                     mChangePosition = false;
+                    mChangeBrightness = false;
                     break;
                 case MotionEvent.ACTION_MOVE:
                     Log.i(TAG, "onTouch surfaceContainer actionMove [" + this.hashCode() + "] ");
@@ -225,7 +234,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     float absDeltaX = Math.abs(deltaX);
                     float absDeltaY = Math.abs(deltaY);
                     if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-                        if (!mChangePosition && !mChangeVolume) {
+                        if (!mChangePosition && !mChangeVolume && !mChangeBrightness) {
                             if (absDeltaX > THRESHOLD || absDeltaY > THRESHOLD) {
                                 cancelProgressTimer();
                                 if (absDeltaX >= THRESHOLD) {
@@ -233,18 +242,29 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                                     // 否则会因为mediaplayer的状态非法导致App Crash
                                     if (currentState != CURRENT_STATE_ERROR) {
                                         mChangePosition = true;
-                                        mDownPosition = getCurrentPositionWhenPlaying();
+                                        mGestureDownPosition = getCurrentPositionWhenPlaying();
                                     }
                                 } else {
-                                    mChangeVolume = true;
-                                    mGestureDownVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                                    //如果y轴滑动距离超过设置的处理范围，那么进行滑动事件处理
+                                    if (mDownX < mScreenWidth * 0.5f) {//左侧改变亮度
+                                        mChangeBrightness = true;
+                                        try {
+                                            mGestureDownBrightness = Settings.System.getInt(getContext().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
+                                            System.out.println("当前亮度 " + mGestureDownBrightness);
+                                        } catch (Settings.SettingNotFoundException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {//右侧改变声音
+                                        mChangeVolume = true;
+                                        mGestureDownVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                                    }
                                 }
                             }
                         }
                     }
                     if (mChangePosition) {
                         int totalTimeDuration = getDuration();
-                        mSeekTimePosition = (int) (mDownPosition + deltaX * totalTimeDuration / mScreenWidth);
+                        mSeekTimePosition = (int) (mGestureDownPosition + deltaX * totalTimeDuration / mScreenWidth);
                         if (mSeekTimePosition > totalTimeDuration)
                             mSeekTimePosition = totalTimeDuration;
                         String seekTime = JCUtils.stringForTime(mSeekTimePosition);
@@ -257,17 +277,37 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         int max = mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
                         int deltaV = (int) (max * deltaY * 3 / mScreenHeight);
                         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mGestureDownVolume + deltaV, 0);
+                        //dialog中显示百分比
                         int volumePercent = (int) (mGestureDownVolume * 100 / max + deltaY * 3 * 100 / mScreenHeight);
-
                         showVolumeDialog(-deltaY, volumePercent);
+                        System.out.println("percentfdsfdsf : " + volumePercent + " " + deltaY);
                     }
 
+                    if (mChangeBrightness) {
+                        deltaY = -deltaY;
+                        int deltaV = (int) (255 * deltaY * 3 / mScreenHeight);
+                        WindowManager.LayoutParams params = JCUtils.getAppCompActivity(getContext()).getWindow().getAttributes();
+                        if (((mGestureDownBrightness + deltaV) / 255) >= 1) {//这和声音有区别，必须自己过滤一下负值
+                            params.screenBrightness = 1;
+                        } else if (((mGestureDownBrightness + deltaV) / 255) <= 0) {
+                            params.screenBrightness = 0.01f;
+                        } else {
+                            params.screenBrightness = (mGestureDownBrightness + deltaV) / 255;
+                        }
+                        JCUtils.getAppCompActivity(getContext()).getWindow().setAttributes(params);
+                        //dialog中显示百分比
+                        int brightnessPercent = (int) (mGestureDownBrightness * 100 / 255 + deltaY * 3 * 100 / mScreenHeight);
+                        System.out.println("percentfdsfdsf : " + brightnessPercent + " " + deltaY + " " + mGestureDownBrightness);
+                        showBrightnessDialog(brightnessPercent);
+//                        mDownY = y;
+                    }
                     break;
                 case MotionEvent.ACTION_UP:
                     Log.i(TAG, "onTouch surfaceContainer actionUp [" + this.hashCode() + "] ");
                     mTouchingProgressBar = false;
                     dismissProgressDialog();
                     dismissVolumeDialog();
+                    dismissBrightnessDialog();
                     if (mChangePosition) {
                         onEvent(JCUserAction.ON_TOUCH_SCREEN_SEEK_POSITION);
                         JCMediaManager.instance().mediaPlayer.seekTo(mSeekTimePosition);
@@ -379,9 +419,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
 
         if (currentState != CURRENT_STATE_PREPARING) return;
-        if (seekToInAdvance != -1) {
+        if (seekToInAdvance != 0) {
             JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
-            seekToInAdvance = -1;
+            seekToInAdvance = 0;
         } else {
             int position = JCUtils.getSavedProgress(getContext(), url);
             if (position != 0) {
@@ -413,6 +453,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         onEvent(JCUserAction.ON_AUTO_COMPLETE);
         dismissVolumeDialog();
         dismissProgressDialog();
+        dismissBrightnessDialog();
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
 
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
@@ -519,6 +560,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
+            if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) return;
             BACKUP_PLAYING_BUFFERING_STATE = currentState;
             setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);//没这个case
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
@@ -736,9 +778,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     Log.d(TAG, "AUDIOFOCUS_LOSS [" + this.hashCode() + "]");
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    if (JCMediaManager.instance().mediaPlayer != null &&
-                            JCMediaManager.instance().mediaPlayer.isPlaying()) {
-                        JCMediaManager.instance().mediaPlayer.pause();
+                    try {
+                        if (JCMediaManager.instance().mediaPlayer != null &&
+                                JCMediaManager.instance().mediaPlayer.isPlaying()) {
+                            JCMediaManager.instance().mediaPlayer.pause();
+                        }
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
                     }
                     Log.d(TAG, "AUDIOFOCUS_LOSS_TRANSIENT [" + this.hashCode() + "]");
                     break;
@@ -894,6 +940,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     }
 
+    public void showBrightnessDialog(int brightnessPercent) {
+
+    }
+
+    public void dismissBrightnessDialog() {
+
+    }
 
     public abstract int getLayoutId();
 

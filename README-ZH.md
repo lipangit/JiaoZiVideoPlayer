@@ -2,12 +2,14 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.3-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.4-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
 
 ####立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
+
+目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
 
 [英文文档](https://github.com/lipangit/JieCaoVideoPlayer)           [工作计划](https://github.com/lipangit/JieCaoVideoPlayer/projects/2)
 
@@ -21,23 +23,25 @@
 6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
 7. 重力感应自动全屏
 8. WebView嵌套本地视频控件
+9. [支持https和rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
+10. 小于 100kb
 
 ##效果
 
-**[jiecaovideoplayer-5.3.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.3/jiecaovideoplayer-5.3.apk)**
+**[jiecaovideoplayer-5.4.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.4/jiecaovideoplayer-5.4.apk)**
 
 ![Demo Screenshot][1]
 
 ##使用
 
-即便是自定义UI，或者对Library有过修改，也是这四步骤来使用播放器。
+即便是自定义UI，或者对Library有过修改，也是这五步骤来使用播放器。
 
-1.添加类库，稳定版本是4.8.3，这是用exoplayer播放的预览版本，给大家看看初步的效果，还有很多问题。
+1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:5.3'
+compile 'fm.jiecao:jiecaovideoplayer:5.4'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.3)
+[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.4)
 
 2.添加布局
 ```xml
@@ -77,11 +81,6 @@ protected void onPause() {
     android:name=".MainActivity"
     android:configChanges="orientation|screenSize|keyboardHidden"
     android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
-```
-
-####混淆
-```
--keep class com.google.android.exoplayer.** { *; }
 ```
 
 ####[其他API](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
