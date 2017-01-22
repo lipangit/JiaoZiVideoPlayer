@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/jc_dialog_progress_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="155dp"
+        android:layout_height="120dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/volume_image_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/tv_volume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
+            android:textColor="#ffffffff"
+            android:textSize="16sp" />
+
+        <ProgressBar
+            android:id="@+id/volume_progressbar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="3dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginTop="8dp"
+            android:max="100"
+            android:progressDrawable="@drawable/jc_dialog_progress" />
+    </LinearLayout>
+</LinearLayout>

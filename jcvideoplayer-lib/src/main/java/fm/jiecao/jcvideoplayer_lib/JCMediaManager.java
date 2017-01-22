@@ -1,6 +1,5 @@
 package fm.jiecao.jcvideoplayer_lib;
 
-import android.content.Context;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
@@ -9,7 +8,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
@@ -33,7 +31,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
     public MediaPlayer mediaPlayer = new MediaPlayer();
     public static String CURRENT_PLAYING_URL;
     public static boolean CURRENT_PLING_LOOP;
-
+    public static Map<String, String> MAP_HEADER_DATA;
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
 
@@ -81,11 +79,10 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
                         mediaPlayer.release();
                         mediaPlayer = new MediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        // mediaPlayer.setDataSource(context, Uri.parse(url), mapHeadData);
                         Class<MediaPlayer> clazz = MediaPlayer.class;
                         Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
-                        method.invoke(mediaPlayer, ((FuckBean) msg.obj).url, ((FuckBean) msg.obj).mapHeadData);
-                        mediaPlayer.setLooping(((FuckBean) msg.obj).looping);
+                        method.invoke(mediaPlayer, CURRENT_PLAYING_URL, MAP_HEADER_DATA);
+                        mediaPlayer.setLooping(CURRENT_PLING_LOOP);
                         mediaPlayer.setOnPreparedListener(JCMediaManager.this);
                         mediaPlayer.setOnCompletionListener(JCMediaManager.this);
                         mediaPlayer.setOnBufferingUpdateListener(JCMediaManager.this);
@@ -107,13 +104,10 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         }
     }
 
-    public void prepare(final Context context, final String url, final Map<String, String> mapHeadData, boolean loop) {
-        if (TextUtils.isEmpty(url)) return;
+    public void prepare() {
         releaseMediaPlayer();
         Message msg = new Message();
         msg.what = HANDLER_PREPARE;
-        FuckBean fb = new FuckBean(context, url, mapHeadData, loop);
-        msg.obj = fb;
         mMediaHandler.sendMessage(msg);
     }
 
@@ -128,7 +122,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
-            prepare(textureView.getContext(), CURRENT_PLAYING_URL, null, CURRENT_PLING_LOOP);
+            prepare();
         } else {
             textureView.setSurfaceTexture(savedSurfaceTexture);
         }
@@ -238,17 +232,4 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         });
     }
 
-    private class FuckBean {
-        Context context;
-        String url;
-        Map<String, String> mapHeadData;
-        boolean looping;
-
-        FuckBean(Context context, String url, Map<String, String> mapHeadData, boolean loop) {
-            this.context = context;
-            this.url = url;
-            this.mapHeadData = mapHeadData;
-            this.looping = loop;
-        }
-    }
 }
