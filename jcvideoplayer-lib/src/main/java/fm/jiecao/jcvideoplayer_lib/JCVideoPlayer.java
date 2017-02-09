@@ -490,9 +490,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     //退出全屏和小窗的方法
     public void playOnThisJcvd() {
         Log.i(TAG, "playOnThisJcvd " + " [" + this.hashCode() + "] ");
-        onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
+/*        onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                 JCUserAction.ON_QUIT_FULLSCREEN :
-                JCUserAction.ON_QUIT_TINYSCREEN);
+                JCUserAction.ON_QUIT_TINYSCREEN);*/
         //1.清空全屏和小窗的jcvd
         currentState = JCVideoPlayerManager.getSecondFloor().currentState;
         clearFloatScreen();
@@ -616,6 +616,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             return false;
         if (JCVideoPlayerManager.getSecondFloor() != null) {
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
+
+            JCVideoPlayer jcVideoPlayer = JCVideoPlayerManager.getSecondFloor();
+            jcVideoPlayer.onEvent(jcVideoPlayer.currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
+                    JCUserAction.ON_QUIT_FULLSCREEN :
+                    JCUserAction.ON_QUIT_TINYSCREEN);
+
             JCVideoPlayerManager.getFirstFloor().playOnThisJcvd();
             return true;
         } else if (JCVideoPlayerManager.getFirstFloor() != null &&
