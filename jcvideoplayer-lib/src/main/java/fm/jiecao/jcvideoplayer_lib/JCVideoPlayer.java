@@ -749,8 +749,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setBufferProgress(int bufferProgress) {
-//        int percent = progressBarValue(bufferProgress);
-//        if (percent > 95) percent = 100;
         if (bufferProgress != 0) progressBar.setSecondaryProgress(bufferProgress);
     }
 
@@ -760,13 +758,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         currentTimeTextView.setText(JCUtils.stringForTime(0));
         totalTimeTextView.setText(JCUtils.stringForTime(0));
     }
-
-//    private int progressBarValue(long position) {
-//        long duration = JCMediaManager.instance().mediaPlayer == null ?
-//                C.TIME_UNSET : JCMediaManager.instance().mediaPlayer.getDuration();
-//        return duration == C.TIME_UNSET || duration == 0 ? 0
-//                : (int) ((position * 100) / duration);
-//    }
 
     public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override

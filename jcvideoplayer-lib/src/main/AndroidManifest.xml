@@ -2,8 +2,5 @@
     package="fm.jiecao.jcvideoplayer_lib">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <application
-        android:allowBackup="true"
-        android:supportsRtl="true">
-    </application>
+
 </manifest>
