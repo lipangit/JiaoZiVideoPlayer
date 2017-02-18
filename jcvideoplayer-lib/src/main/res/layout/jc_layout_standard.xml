@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:background="#99000000"
+        android:background="@drawable/ww"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="invisible">
@@ -43,19 +43,21 @@
             android:textColor="#ffffff" />
 
         <SeekBar
-            android:id="@+id/progress"
+            android:id="@+id/bottom_seek_progress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1.0"
             android:background="@null"
             android:max="100"
-            android:maxHeight="4dp"
-            android:minHeight="4dp"
+            android:maxHeight="1.0dip"
+            android:minHeight="1.0dip"
             android:paddingBottom="8dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:paddingTop="8dp"
-            android:progressDrawable="@drawable/jc_seek_progress"
-            android:thumb="@drawable/jc_seek_thumb" />
+            android:progressDrawable="@drawable/jc_bottom_seek_progress"
+            android:thumb="@drawable/jc_bottom_seek_thumb" />
 
         <TextView
             android:id="@+id/total"
@@ -75,13 +77,13 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/bottom_progressbar"
+        android:id="@+id/bottom_progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
         android:layout_alignParentBottom="true"
         android:max="100"
-        android:progressDrawable="@drawable/jc_progress" />
+        android:progressDrawable="@drawable/jc_bottom_progress" />
 
     <ImageView
         android:id="@+id/back_tiny"

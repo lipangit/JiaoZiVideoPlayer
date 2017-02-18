@@ -52,7 +52,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void init(Context context) {
         super.init(context);
-        bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progressbar);
+        bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progress);
         titleTextView = (TextView) findViewById(R.id.title);
         backButton = (ImageView) findViewById(R.id.back);
         thumbImageView = (ImageView) findViewById(R.id.thumb);
@@ -158,7 +158,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     }
                     break;
             }
-        } else if (id == R.id.progress) {
+        } else if (id == R.id.bottom_seek_progress) {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     cancelDismissControlViewTimer();
