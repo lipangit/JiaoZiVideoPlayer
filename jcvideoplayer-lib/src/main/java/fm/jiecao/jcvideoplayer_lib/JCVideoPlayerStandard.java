@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -73,16 +74,27 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             fullscreenButton.setImageResource(R.drawable.jc_shrink);
             backButton.setVisibility(View.VISIBLE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
+            changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_fullscreen));
         } else if (currentScreen == SCREEN_LAYOUT_NORMAL
                 || currentScreen == SCREEN_LAYOUT_LIST) {
             fullscreenButton.setImageResource(R.drawable.jc_enlarge);
             backButton.setVisibility(View.GONE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
+            changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_normal));
         } else if (currentScreen == SCREEN_WINDOW_TINY) {
             tinyBackImageView.setVisibility(View.VISIBLE);
             setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                     View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
         }
+    }
+
+    public void changeStartButtonSize(int size) {
+        ViewGroup.LayoutParams lp = startButton.getLayoutParams();
+        lp.height = size;
+        lp.width = size;
+        lp = loadingProgressBar.getLayoutParams();
+        lp.height = size;
+        lp.width = size;
     }
 
     @Override
