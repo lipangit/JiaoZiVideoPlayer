@@ -118,7 +118,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         View.inflate(context, getLayoutId(), this);
         startButton = (ImageView) findViewById(R.id.start);
         fullscreenButton = (ImageView) findViewById(R.id.fullscreen);
-        progressBar = (SeekBar) findViewById(R.id.progress);
+        progressBar = (SeekBar) findViewById(R.id.bottom_seek_progress);
         currentTimeTextView = (TextView) findViewById(R.id.current);
         totalTimeTextView = (TextView) findViewById(R.id.total);
         bottomContainer = (ViewGroup) findViewById(R.id.layout_bottom);
