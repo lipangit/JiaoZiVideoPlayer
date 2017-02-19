@@ -38,7 +38,7 @@
             android:id="@+id/current"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="14dp"
             android:text="00:00"
             android:textColor="#ffffff" />
 
@@ -53,8 +53,8 @@
             android:maxHeight="1.0dip"
             android:minHeight="1.0dip"
             android:paddingBottom="8dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             android:paddingTop="8dp"
             android:progressDrawable="@drawable/jc_bottom_seek_progress"
             android:thumb="@drawable/jc_bottom_seek_thumb" />
@@ -63,16 +63,16 @@
             android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="16dp"
             android:text="00:00"
             android:textColor="#ffffff" />
 
         <ImageView
             android:id="@+id/fullscreen"
-            android:layout_width="wrap_content"
+            android:layout_width="24.5dp"
             android:layout_height="fill_parent"
-            android:paddingRight="16dp"
-            android:scaleType="center"
+            android:layout_marginLeft="14.0dip"
+            android:layout_marginRight="14.0dip"
+            android:scaleType="centerInside"
             android:src="@drawable/jc_enlarge" />
     </LinearLayout>
 
