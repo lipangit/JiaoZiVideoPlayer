@@ -29,11 +29,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     @Override
     public void setUp(String url, int screen, Object... objects) {
         super.setUp(url, screen, objects);
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            fullscreenButton.setImageResource(R.drawable.jc_shrink);
-        } else {
-            fullscreenButton.setImageResource(R.drawable.jc_enlarge);
-        }
+        updateFullscreenButton();
         fullscreenButton.setVisibility(View.GONE);
     }
 
@@ -65,6 +61,14 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
             startButton.setImageResource(R.drawable.jc_click_error_selector);
         } else {
             startButton.setImageResource(R.drawable.jc_click_play_selector);
+        }
+    }
+
+    public void updateFullscreenButton() {
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            fullscreenButton.setImageResource(R.drawable.jc_shrink);
+        } else {
+            fullscreenButton.setImageResource(R.drawable.jc_enlarge);
         }
     }
 

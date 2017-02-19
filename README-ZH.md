@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.4-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.5-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -28,7 +28,7 @@
 
 ##效果
 
-**[jiecaovideoplayer-5.4.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.4/jiecaovideoplayer-5.4.apk)**
+**[jiecaovideoplayer-5.5.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.5/jiecaovideoplayer-5.5.apk)**
 
 ![Demo Screenshot][1]
 
@@ -38,10 +38,10 @@
 
 1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:5.4'
+compile 'fm.jiecao:jiecaovideoplayer:5.5'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.4)
+[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.5)
 
 2.添加布局
 ```xml
@@ -99,4 +99,4 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v4.8.0/j8.jpg
+[1]: https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.3/j9.jpg

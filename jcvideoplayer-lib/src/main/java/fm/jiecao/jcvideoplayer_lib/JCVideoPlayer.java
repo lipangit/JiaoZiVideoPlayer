@@ -118,7 +118,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         View.inflate(context, getLayoutId(), this);
         startButton = (ImageView) findViewById(R.id.start);
         fullscreenButton = (ImageView) findViewById(R.id.fullscreen);
-        progressBar = (SeekBar) findViewById(R.id.progress);
+        progressBar = (SeekBar) findViewById(R.id.bottom_seek_progress);
         currentTimeTextView = (TextView) findViewById(R.id.current);
         totalTimeTextView = (TextView) findViewById(R.id.total);
         bottomContainer = (ViewGroup) findViewById(R.id.layout_bottom);
@@ -490,9 +490,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     //退出全屏和小窗的方法
     public void playOnThisJcvd() {
         Log.i(TAG, "playOnThisJcvd " + " [" + this.hashCode() + "] ");
-        onEvent(currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
-                JCUserAction.ON_QUIT_FULLSCREEN :
-                JCUserAction.ON_QUIT_TINYSCREEN);
         //1.清空全屏和小窗的jcvd
         currentState = JCVideoPlayerManager.getSecondFloor().currentState;
         clearFloatScreen();
@@ -616,6 +613,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             return false;
         if (JCVideoPlayerManager.getSecondFloor() != null) {
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
+            JCVideoPlayer jcVideoPlayer = JCVideoPlayerManager.getSecondFloor();
+            jcVideoPlayer.onEvent(jcVideoPlayer.currentScreen == JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
+                    JCUserAction.ON_QUIT_FULLSCREEN :
+                    JCUserAction.ON_QUIT_TINYSCREEN);
             JCVideoPlayerManager.getFirstFloor().playOnThisJcvd();
             return true;
         } else if (JCVideoPlayerManager.getFirstFloor() != null &&
@@ -748,8 +749,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setBufferProgress(int bufferProgress) {
-//        int percent = progressBarValue(bufferProgress);
-//        if (percent > 95) percent = 100;
         if (bufferProgress != 0) progressBar.setSecondaryProgress(bufferProgress);
     }
 
@@ -759,13 +758,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         currentTimeTextView.setText(JCUtils.stringForTime(0));
         totalTimeTextView.setText(JCUtils.stringForTime(0));
     }
-
-//    private int progressBarValue(long position) {
-//        long duration = JCMediaManager.instance().mediaPlayer == null ?
-//                C.TIME_UNSET : JCMediaManager.instance().mediaPlayer.getDuration();
-//        return duration == C.TIME_UNSET || duration == 0 ? 0
-//                : (int) ((position * 100) / duration);
-//    }
 
     public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override

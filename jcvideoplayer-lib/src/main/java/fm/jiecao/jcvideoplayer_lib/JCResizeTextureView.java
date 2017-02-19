@@ -51,23 +51,18 @@ public class JCResizeTextureView extends TextureView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        Log.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
         int viewRotation = (int) getRotation();
+        int videoWidth = mVideoSize.x;
+        int videoHeight = mVideoSize.y;
+        Log.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight);
+        Log.i(TAG, "viewRotation = " + viewRotation);
+
         // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         if (viewRotation == 90 || viewRotation == 270) {
             int tempMeasureSpec = widthMeasureSpec;
             widthMeasureSpec = heightMeasureSpec;
             heightMeasureSpec = tempMeasureSpec;
-        }
-
-        Log.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
-        Log.i(TAG, "viewRotation = " + viewRotation);
-
-        int videoWidth = mVideoSize.x;
-        int videoHeight = mVideoSize.y;
-
-        Log.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight);
-        if (videoWidth > 0 && videoHeight > 0) {
-            Log.i(TAG, "videoWidth / videoHeight = " + videoWidth / videoHeight);
         }
 
         int width = getDefaultSize(videoWidth, widthMeasureSpec);
@@ -86,7 +81,6 @@ public class JCResizeTextureView extends TextureView {
                 // the size is fixed
                 width = widthSpecSize;
                 height = heightSpecSize;
-
                 // for compatibility, we adjust size based on aspect ratio
                 if (videoWidth * height < width * videoHeight) {
                     width = height * videoWidth / videoHeight;
@@ -129,8 +123,6 @@ public class JCResizeTextureView extends TextureView {
         } else {
             // no size yet, just adopt the given spec sizes
         }
-        Log.i(TAG, "viewWidth = " + width + ", " + "viewHeight = " + height);
-        Log.i(TAG, "viewWidth / viewHeight = " + width / height);
         setMeasuredDimension(width, height);
     }
 }
