@@ -106,7 +106,7 @@
             android:layout_height="48dp"
             android:paddingLeft="10dp"
             android:scaleType="centerInside"
-            android:src="@drawable/jc_back" />
+            android:src="@drawable/jc_back_normal" />
 
         <TextView
             android:id="@+id/title"

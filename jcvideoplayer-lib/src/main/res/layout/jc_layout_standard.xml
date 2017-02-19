@@ -97,17 +97,17 @@
     <LinearLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="60dp"
         android:background="@drawable/jc_title_bg"
         android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:paddingLeft="10dp"
+            android:layout_width="23dp"
+            android:layout_height="match_parent"
+            android:paddingLeft="14dp"
             android:scaleType="centerInside"
-            android:src="@drawable/jc_back" />
+            android:src="@drawable/jc_back_normal" />
 
         <TextView
             android:id="@+id/title"
