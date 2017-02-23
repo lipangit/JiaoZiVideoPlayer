@@ -9,7 +9,7 @@ import com.squareup.picasso.Picasso;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
-import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardAutoComplete;
+import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardAutoCompleteAfterFullscreen;
 import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowShareButtonAfterFullscreen;
 import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTextureViewAfterAutoComplete;
 import fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTitleAfterFullscreen;
@@ -21,7 +21,7 @@ public class UISmallChangeActivity extends AppCompatActivity {
     JCVideoPlayerStandardShowShareButtonAfterFullscreen jcVideoPlayerStandardWithShareButton;
     JCVideoPlayerStandardShowTitleAfterFullscreen jcVideoPlayerStandardShowTitleAfterFullscreen;
     JCVideoPlayerStandardShowTextureViewAfterAutoComplete jcVideoPlayerStandardShowTextureViewAfterAutoComplete;
-    JCVideoPlayerStandardAutoComplete jcVideoPlayerStandardAutoComplete;
+    JCVideoPlayerStandardAutoCompleteAfterFullscreen jcVideoPlayerStandardAutoCompleteAfterFullscreen;
 
     JCVideoPlayerStandard jcVideoPlayerStandard_1_1, jcVideoPlayerStandard_16_9;
 
@@ -57,14 +57,14 @@ public class UISmallChangeActivity extends AppCompatActivity {
                 .load("http://img4.jiecaojingxuan.com/2016/11/18/e7ea659f-c3d2-4979-9ea5-f993b05e5930.png@!640_360")
                 .into(jcVideoPlayerStandardShowTextureViewAfterAutoComplete.thumbImageView);
 
-        jcVideoPlayerStandardAutoComplete = (JCVideoPlayerStandardAutoComplete) findViewById(R.id.custom_videoplayer_standard_aoto_complete);
-        jcVideoPlayerStandardAutoComplete.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
+        jcVideoPlayerStandardAutoCompleteAfterFullscreen = (JCVideoPlayerStandardAutoCompleteAfterFullscreen) findViewById(R.id.custom_videoplayer_standard_aoto_complete);
+        jcVideoPlayerStandardAutoCompleteAfterFullscreen.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子没来");
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
-                .into(jcVideoPlayerStandardAutoComplete.thumbImageView);
+                .into(jcVideoPlayerStandardAutoCompleteAfterFullscreen.thumbImageView);
 
-        jcVideoPlayerStandard_1_1 = (JCVideoPlayerStandardAutoComplete) findViewById(R.id.jc_videoplayer_1_1);
+        jcVideoPlayerStandard_1_1 = (JCVideoPlayerStandardAutoCompleteAfterFullscreen) findViewById(R.id.jc_videoplayer_1_1);
         jcVideoPlayerStandard_1_1.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子有事吗");
         Picasso.with(this)
@@ -73,7 +73,7 @@ public class UISmallChangeActivity extends AppCompatActivity {
         jcVideoPlayerStandard_1_1.widthRatio = 1;
         jcVideoPlayerStandard_1_1.heightRatio = 1;
 
-        jcVideoPlayerStandard_16_9 = (JCVideoPlayerStandardAutoComplete) findViewById(R.id.jc_videoplayer_16_9);
+        jcVideoPlayerStandard_16_9 = (JCVideoPlayerStandardAutoCompleteAfterFullscreen) findViewById(R.id.jc_videoplayer_16_9);
         jcVideoPlayerStandard_16_9.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子来不了");
         Picasso.with(this)

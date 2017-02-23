@@ -9,12 +9,12 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
  * Created by Nathen on 2016/11/26.
  */
 
-public class JCVideoPlayerStandardAutoComplete extends JCVideoPlayerStandard {
-    public JCVideoPlayerStandardAutoComplete(Context context) {
+public class JCVideoPlayerStandardAutoCompleteAfterFullscreen extends JCVideoPlayerStandard {
+    public JCVideoPlayerStandardAutoCompleteAfterFullscreen(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerStandardAutoComplete(Context context, AttributeSet attrs) {
+    public JCVideoPlayerStandardAutoCompleteAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
