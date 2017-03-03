@@ -93,7 +93,7 @@ public class JCUtils {
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = spn.edit();
         editor.putInt(url, progress);
-        editor.commit();
+        editor.apply();
     }
 
     public static int getSavedProgress(Context context, String url) {
@@ -114,11 +114,11 @@ public class JCUtils {
         if (TextUtils.isEmpty(url)) {
             SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
                     Context.MODE_PRIVATE);
-            spn.edit().clear().commit();
+            spn.edit().clear().apply();
         } else {
             SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
                     Context.MODE_PRIVATE);
-            spn.edit().putInt(url, 0).commit();
+            spn.edit().putInt(url, 0).apply();
         }
     }
 }
