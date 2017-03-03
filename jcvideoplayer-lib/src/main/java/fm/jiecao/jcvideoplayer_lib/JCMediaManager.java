@@ -201,7 +201,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
                 }
             }
         });
-        return false;
+        return true;
     }
 
     @Override
