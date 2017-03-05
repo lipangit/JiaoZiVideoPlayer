@@ -172,8 +172,8 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getFirstFloor() != null) {
-                    JCVideoPlayerManager.getFirstFloor().setBufferProgress(percent);
+                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
+                    JCVideoPlayerManager.getCurrentJcvd().setBufferProgress(percent);
                 }
             }
         });
@@ -184,8 +184,8 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JCVideoPlayerManager.getFirstFloor() != null) {
-                    JCVideoPlayerManager.getFirstFloor().onSeekComplete();
+                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
+                    JCVideoPlayerManager.getCurrentJcvd().onSeekComplete();
                 }
             }
         });
@@ -201,7 +201,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
                 }
             }
         });
-        return false;
+        return true;
     }
 
     @Override
