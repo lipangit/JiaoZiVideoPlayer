@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.5.1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.5.2-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
@@ -30,7 +30,7 @@ I think the final solution for play video in android is android.media.MediaPlaye
 
 ## Effect
 
-**[jiecaovideoplayer-5.5.1.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.5.1/jiecaovideoplayer-5.5.1.apk)**
+**[jiecaovideoplayer-5.5.2.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.5.2/jiecaovideoplayer-5.5.2.apk)**
 
 ![Demo Screenshot][1]
 
@@ -40,10 +40,10 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:5.5.1'
+compile 'fm.jiecao:jiecaovideoplayer:5.5.2'
 ```
 
-[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.5.1)
+[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.5.2)
 
 2.Add JCVideoPlayer in your layout
 ```xml
