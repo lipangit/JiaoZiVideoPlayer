@@ -752,4 +752,16 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             }
         }
     }
+
+    @Override
+    public void onAutoCompletion() {
+        super.onAutoCompletion();
+        cancelDismissControlViewTimer();
+    }
+
+    @Override
+    public void onCompletion() {
+        super.onCompletion();
+        cancelDismissControlViewTimer();
+    }
 }

@@ -454,6 +454,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         dismissVolumeDialog();
         dismissProgressDialog();
         dismissBrightnessDialog();
+        cancelProgressTimer();
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
 
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
@@ -470,6 +471,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 //            int duration = getDuration();
             JCUtils.saveProgress(getContext(), url, position);
         }
+        cancelProgressTimer();
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         // 清理缓存变量
         textureViewContainer.removeView(JCMediaManager.textureView);
