@@ -1,5 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.util.Log;
+
 /**
  * Put JCVideoPlayer into layout
  * From a JCVideoPlayer to another JCVideoPlayer
@@ -9,6 +11,16 @@ public class JCVideoPlayerManager {
 
     public static JCVideoPlayer FIRST_FLOOR_JCVD;
     public static JCVideoPlayer SECOND_FLOOR_JCVD;
+    public static JCVideoPlayer FULLSCREEN_JCVD;
+
+
+    public static JCVideoPlayer getFullscreenJcvd() {
+        return FULLSCREEN_JCVD;
+    }
+
+    public static void setFullscreenJcvd(JCVideoPlayer fullscreenJcvd) {
+        FULLSCREEN_JCVD = fullscreenJcvd;
+    }
 
     public static void setFirstFloor(JCVideoPlayer jcVideoPlayer) {
         FIRST_FLOOR_JCVD = jcVideoPlayer;
@@ -41,6 +53,13 @@ public class JCVideoPlayerManager {
         if (FIRST_FLOOR_JCVD != null) {
             FIRST_FLOOR_JCVD.onCompletion();
             FIRST_FLOOR_JCVD = null;
+        }
+    }
+
+    public static void releaseFullscreenVideos(){
+        if (FULLSCREEN_JCVD != null) {
+            FULLSCREEN_JCVD.onCompletion();
+            FULLSCREEN_JCVD = null;
         }
     }
 }
