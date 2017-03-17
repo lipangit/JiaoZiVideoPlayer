@@ -486,8 +486,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
         JCMediaManager.textureView = null;
         JCMediaManager.savedSurfaceTexture = null;
-        cancelProgressTimer();
-//        JCMediaManager.textureView = null;
     }
 
     //退出全屏和小窗的方法
@@ -820,7 +818,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
             Log.d(TAG, "releaseAllVideos");
             JCVideoPlayerManager.completeAll();
-            JCVideoPlayerManager.releaseFullscreenVideos();
             JCMediaManager.instance().releaseMediaPlayer();
         }
     }
@@ -856,7 +853,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             jcVideoPlayer.startButton.performClick();
-            JCVideoPlayerManager.setFullscreenJcvd(jcVideoPlayer);
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
