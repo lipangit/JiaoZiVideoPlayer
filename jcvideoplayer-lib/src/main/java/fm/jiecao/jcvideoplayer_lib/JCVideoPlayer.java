@@ -461,6 +461,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             backPress();
         }
         JCUtils.saveProgress(getContext(), url, 0);
+
+        JCMediaManager.textureView = null;
+        JCMediaManager.savedSurfaceTexture = null;
     }
 
     public void onCompletion() {
@@ -507,7 +510,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         vp.removeView(secJcvd);
-//        secJcvd.onCompletion();
         JCVideoPlayerManager.setSecondFloor(null);
     }
 
