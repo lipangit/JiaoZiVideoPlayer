@@ -716,6 +716,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public int getCurrentPositionWhenPlaying() {
         int position = 0;
+        if (JCMediaManager.instance().mediaPlayer == null) return position;//这行代码不应该在这，如果代码和逻辑万无一失的话，心头之恨呐
         if (currentState == CURRENT_STATE_PLAYING ||
                 currentState == CURRENT_STATE_PAUSE ||
                 currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
@@ -731,6 +732,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public int getDuration() {
         int duration = 0;
+        if (JCMediaManager.instance().mediaPlayer == null) return duration;
         try {
             duration = JCMediaManager.instance().mediaPlayer.getDuration();
         } catch (IllegalStateException e) {
