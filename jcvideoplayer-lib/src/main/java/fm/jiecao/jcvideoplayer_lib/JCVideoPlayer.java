@@ -47,8 +47,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
 
-    public static final int FULLSCREEN_ID = 33797;
-    public static final int TINY_ID = 33798;
+    public static final int FULLSCREEN_ID = R.id.fixed_fullscreen_id;
+    public static final int TINY_ID = R.id.fixed_tinyscreen_id;
     public static final int THRESHOLD = 80;
     public static final int FULL_SCREEN_NORMAL_DELAY = 300;
     public static long CLICK_QUIT_FULLSCREEN_TIME = 0;
