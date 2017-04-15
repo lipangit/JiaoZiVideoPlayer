@@ -462,7 +462,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
         JCUtils.saveProgress(getContext(), url, 0);
 
-        JCMediaManager.textureView = null;
+//        JCMediaManager.textureView = null;
         JCMediaManager.savedSurfaceTexture = null;
     }
 
@@ -487,7 +487,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         clearFullscreenLayout();
         JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
 
-        JCMediaManager.textureView = null;
+//        JCMediaManager.textureView = null;
         JCMediaManager.savedSurfaceTexture = null;
     }
 
