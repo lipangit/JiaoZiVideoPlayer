@@ -2,14 +2,14 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.5.2-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.5.3-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
 
 * This project need translators, mother language is english, you can change everything edit readme, release note, formate variable and annotation.
 
-####Ambition is become the most widely used video playback control. Q群:490442439 验证信息:jcvd
+#### Ambition is become the most widely used video playback control. Q群:490442439 验证信息:jcvd
 
 I think the final solution for play video in android is android.media.MediaPlayer, other player is not in the trend, even if the android.media.MediaPlayer have disavantages we should make concession, if android.media.MediaPlayer have defect we will think to change other player.
 
@@ -30,7 +30,7 @@ I think the final solution for play video in android is android.media.MediaPlaye
 
 ## Effect
 
-**[jiecaovideoplayer-5.5.2.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.5.2/jiecaovideoplayer-5.5.2.apk)**
+**[jiecaovideoplayer-5.5.3.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.5.3/jiecaovideoplayer-5.5.3.apk)**
 
 ![Demo Screenshot][1]
 
@@ -40,10 +40,10 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:5.5.2'
+compile 'fm.jiecao:jiecaovideoplayer:5.5.3'
 ```
 
-[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.5.2)
+[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.5.3)
 
 2.Add JCVideoPlayer in your layout
 ```xml
@@ -85,13 +85,13 @@ protected void onPause() {
     android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
 ```
 
-####[Other APIs](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
+#### [Other APIs](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 
-####[Custom UI](https://github.com/lipangit/JieCaoVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
+#### [Custom UI](https://github.com/lipangit/JieCaoVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
 
-##[Contributors](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
+## [Contributors](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
 
-##License MIT
+## License MIT
 
 Copyright (c) 2015-2016 节操精选 http://jiecao.fm
 

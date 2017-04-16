@@ -1,5 +1,7 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.util.Log;
+
 /**
  * Put JCVideoPlayer into layout
  * From a JCVideoPlayer to another JCVideoPlayer

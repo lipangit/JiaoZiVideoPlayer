@@ -217,6 +217,20 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+                    dialog.dismiss();
+                    clearFullscreenLayout();
+                }
+            }
+        });
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                dialog.dismiss();
+                if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+                    dialog.dismiss();
+                    clearFullscreenLayout();
+                }
             }
         });
         builder.create().show();
@@ -751,5 +765,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 }
             }
         }
+    }
+
+    @Override
+    public void onAutoCompletion() {
+        super.onAutoCompletion();
+        cancelDismissControlViewTimer();
+    }
+
+    @Override
+    public void onCompletion() {
+        super.onCompletion();
+        cancelDismissControlViewTimer();
     }
 }

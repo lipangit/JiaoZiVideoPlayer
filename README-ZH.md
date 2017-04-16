@@ -2,18 +2,18 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.5.2-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.5.3-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
 </p>
 
-####立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
+#### 立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
 
 目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
 
 [英文文档](https://github.com/lipangit/JieCaoVideoPlayer)           [工作计划](https://github.com/lipangit/JieCaoVideoPlayer/projects/2)
 
-##主要特点
+## 主要特点
 
 1. 视频全屏播放和浮层小窗播放
 2. 可以完全自定义UI
@@ -26,22 +26,22 @@
 9. [支持https和rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
 10. 小于 100kb
 
-##效果
+## 效果
 
-**[jiecaovideoplayer-5.5.2.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.5.2/jiecaovideoplayer-5.5.2.apk)**
+**[jiecaovideoplayer-5.5.3.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.5.3/jiecaovideoplayer-5.5.3.apk)**
 
 ![Demo Screenshot][1]
 
-##使用
+## 使用
 
 即便是自定义UI，或者对Library有过修改，也是这五步骤来使用播放器。
 
 1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:5.5.2'
+compile 'fm.jiecao:jiecaovideoplayer:5.5.3'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.5.2)
+[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.5.3)
 
 2.添加布局
 ```xml
@@ -83,13 +83,13 @@ protected void onPause() {
     android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
 ```
 
-####[其他API](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
+#### [其他API](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
 
-####[自定义UI](https://github.com/lipangit/JieCaoVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
+#### [自定义UI](https://github.com/lipangit/JieCaoVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
 
-##[贡献者](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
+## [贡献者](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
 
-##License MIT
+## License MIT
 
 Copyright (c) 2015-2016 节操精选 http://jiecao.fm
 

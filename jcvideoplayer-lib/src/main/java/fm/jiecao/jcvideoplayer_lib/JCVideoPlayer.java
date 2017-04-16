@@ -454,12 +454,16 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         dismissVolumeDialog();
         dismissProgressDialog();
         dismissBrightnessDialog();
+        cancelProgressTimer();
         setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
 
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             backPress();
         }
         JCUtils.saveProgress(getContext(), url, 0);
+
+//        JCMediaManager.textureView = null;
+        JCMediaManager.savedSurfaceTexture = null;
     }
 
     public void onCompletion() {
@@ -470,6 +474,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 //            int duration = getDuration();
             JCUtils.saveProgress(getContext(), url, position);
         }
+        cancelProgressTimer();
         setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
         // 清理缓存变量
         textureViewContainer.removeView(JCMediaManager.textureView);
@@ -482,9 +487,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         clearFullscreenLayout();
         JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
 
-        JCMediaManager.textureView = null;
-        JCMediaManager.savedSurfaceTexture = null;
 //        JCMediaManager.textureView = null;
+        JCMediaManager.savedSurfaceTexture = null;
     }
 
     //退出全屏和小窗的方法
@@ -506,7 +510,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         vp.removeView(secJcvd);
-//        secJcvd.onCompletion();
         JCVideoPlayerManager.setSecondFloor(null);
     }
 
@@ -713,6 +716,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public int getCurrentPositionWhenPlaying() {
         int position = 0;
+        if (JCMediaManager.instance().mediaPlayer == null) return position;//这行代码不应该在这，如果代码和逻辑万无一失的话，心头之恨呐
         if (currentState == CURRENT_STATE_PLAYING ||
                 currentState == CURRENT_STATE_PAUSE ||
                 currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
@@ -728,6 +732,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public int getDuration() {
         int duration = 0;
+        if (JCMediaManager.instance().mediaPlayer == null) return duration;
         try {
             duration = JCMediaManager.instance().mediaPlayer.getDuration();
         } catch (IllegalStateException e) {
@@ -941,6 +946,5 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public abstract int getLayoutId();
-
 
 }
