@@ -39,7 +39,18 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
-
+    protected Dialog mProgressDialog;
+    protected ProgressBar mDialogProgressBar;
+    protected TextView mDialogSeekTime;
+    protected TextView mDialogTotalTime;
+    protected ImageView mDialogIcon;
+    protected Dialog mVolumeDialog;
+    protected ProgressBar mDialogVolumeProgressBar;
+    protected TextView mDialogVolumeTextView;
+    protected ImageView mDialogVolumeImageView;
+    protected Dialog mBrightnessDialog;
+    protected ProgressBar mDialogBrightnessProgressBar;
+    protected TextView mDialogBrightnessTextView;
 
     public JCVideoPlayerStandard(Context context) {
         super(context);
@@ -135,7 +146,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         int id = v.getId();
@@ -193,12 +203,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.surface_container) {
             startDismissControlViewTimer();
         } else if (i == R.id.back) {
-            backPress();
+            getMediaManagerInstance().backPress();
         } else if (i == R.id.back_tiny) {
-            backPress();
+            getMediaManagerInstance().backPress();
         }
     }
-
 
     @Override
     public void showWifiDialog() {
@@ -585,13 +594,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-
-    protected Dialog mProgressDialog;
-    protected ProgressBar mDialogProgressBar;
-    protected TextView mDialogSeekTime;
-    protected TextView mDialogTotalTime;
-    protected ImageView mDialogIcon;
-
     @Override
     public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
         super.showProgressDialog(deltaX, seekTime, seekTimePosition, totalTime, totalTimeDuration);
@@ -633,11 +635,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mProgressDialog.dismiss();
         }
     }
-
-    protected Dialog mVolumeDialog;
-    protected ProgressBar mDialogVolumeProgressBar;
-    protected TextView mDialogVolumeTextView;
-    protected ImageView mDialogVolumeImageView;
 
     @Override
     public void showVolumeDialog(float deltaY, int volumePercent) {
@@ -682,10 +679,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mVolumeDialog.dismiss();
         }
     }
-
-    protected Dialog mBrightnessDialog;
-    protected ProgressBar mDialogBrightnessProgressBar;
-    protected TextView mDialogBrightnessTextView;
 
     @Override
     public void showBrightnessDialog(int brightnessPercent) {
@@ -743,6 +736,18 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
+    @Override
+    public void onAutoCompletion() {
+        super.onAutoCompletion();
+        cancelDismissControlViewTimer();
+    }
+
+    @Override
+    public void onCompletion() {
+        super.onCompletion();
+        cancelDismissControlViewTimer();
+    }
+
     public class DismissControlViewTimerTask extends TimerTask {
 
         @Override
@@ -765,17 +770,5 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 }
             }
         }
-    }
-
-    @Override
-    public void onAutoCompletion() {
-        super.onAutoCompletion();
-        cancelDismissControlViewTimer();
-    }
-
-    @Override
-    public void onCompletion() {
-        super.onCompletion();
-        cancelDismissControlViewTimer();
     }
 }

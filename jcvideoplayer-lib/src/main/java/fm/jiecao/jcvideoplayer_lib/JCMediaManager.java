@@ -1,19 +1,22 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.content.Context;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
-import android.view.Surface;
 import android.view.TextureView;
+import android.view.ViewGroup;
 
-import java.lang.reflect.Method;
 import java.util.Map;
+
+import static fm.jiecao.jcvideoplayer_lib.JCVideoPlayer.CLICK_QUIT_FULLSCREEN_TIME;
+import static fm.jiecao.jcvideoplayer_lib.JCVideoPlayer.CURRENT_STATE_NORMAL;
+import static fm.jiecao.jcvideoplayer_lib.JCVideoPlayer.CURRENT_STATE_PAUSE;
+import static fm.jiecao.jcvideoplayer_lib.JCVideoPlayer.CURRENT_STATE_PLAYING;
+import static fm.jiecao.jcvideoplayer_lib.JCVideoPlayer.CURRENT_STATE_PLAYING_BUFFERING_START;
+import static fm.jiecao.jcvideoplayer_lib.JCVideoPlayer.FULL_SCREEN_NORMAL_DELAY;
+import static fm.jiecao.jcvideoplayer_lib.JCVideoPlayer.SCREEN_WINDOW_FULLSCREEN;
+import static fm.jiecao.jcvideoplayer_lib.JCVideoPlayer.SCREEN_WINDOW_TINY;
 
 /**
  * <p>统一管理MediaPlayer的地方,只有一个mediaPlayer实例，那么不会有多个视频同时播放，也节省资源。</p>
@@ -21,101 +24,220 @@ import java.util.Map;
  * Created by Nathen
  * On 2015/11/30 15:39
  */
-public class JCMediaManager implements TextureView.SurfaceTextureListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
+public  class JCMediaManager implements TextureView.SurfaceTextureListener, MediaManager {
+    public static final int HANDLER_PREPARE = 0;
+    public static final int HANDLER_RELEASE = 2;
+    public static final int MEDIA = 0, IJK = 1;
     public static String TAG = "JieCaoVideoPlayer";
-
-    private static JCMediaManager JCMediaManager;
     public static JCResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
-    public MediaPlayer mediaPlayer = new MediaPlayer();
     public static String CURRENT_PLAYING_URL;
     public static boolean CURRENT_PLING_LOOP;
     public static Map<String, String> MAP_HEADER_DATA;
-    public int currentVideoWidth = 0;
-    public int currentVideoHeight = 0;
+    public static int whichPlayer;
+    private static fm.jiecao.jcvideoplayer_lib.JCMediaManager JCMediaManager;
 
-    public static final int HANDLER_PREPARE = 0;
-    public static final int HANDLER_RELEASE = 2;
-    HandlerThread mMediaHandlerThread;
-    MediaHandler mMediaHandler;
-    Handler mainThreadHandler;
+    private AbstractPlayerControllerWrapper mWrapper;
 
-    public static JCMediaManager instance() {
+    public JCMediaManager() {
+        setWrapper(new AbstractPlayerControllerWrapper());
+    }
+
+    public static fm.jiecao.jcvideoplayer_lib.JCMediaManager instance() {
         if (JCMediaManager == null) {
             JCMediaManager = new JCMediaManager();
         }
         return JCMediaManager;
     }
 
-    public JCMediaManager() {
-        mMediaHandlerThread = new HandlerThread(TAG);
-        mMediaHandlerThread.start();
-        mMediaHandler = new MediaHandler((mMediaHandlerThread.getLooper()));
-        mainThreadHandler = new Handler();
+    public static JCResizeTextureView getTextureView() {
+        return textureView;
     }
 
-    public Point getVideoSize() {
-        if (currentVideoWidth != 0 && currentVideoHeight != 0) {
-            return new Point(currentVideoWidth, currentVideoHeight);
-        } else {
-            return null;
+    public static void setTextureView(JCResizeTextureView resizeTextureView) {
+        textureView = resizeTextureView;
+    }
+
+    public void onVideoSizeChanged() {
+        textureView.setVideoSize(getVideoSize());
+    }
+
+    public boolean backPress() {
+        Log.i(TAG, "backPress");
+        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+            return false;
+        if (JCVideoPlayerManager.getSecondFloor() != null) {
+            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
+            JCVideoPlayer jcVideoPlayer = JCVideoPlayerManager.getSecondFloor();
+            jcVideoPlayer.onEvent(jcVideoPlayer.currentScreen == SCREEN_WINDOW_FULLSCREEN ?
+                    JCUserAction.ON_QUIT_FULLSCREEN :
+                    JCUserAction.ON_QUIT_TINYSCREEN);
+            JCVideoPlayerManager.getFirstFloor().playOnThisJcvd();
+            return true;
+        } else if (JCVideoPlayerManager.getFirstFloor() != null &&
+                (JCVideoPlayerManager.getFirstFloor().currentScreen == SCREEN_WINDOW_FULLSCREEN ||
+                        JCVideoPlayerManager.getFirstFloor().currentScreen == SCREEN_WINDOW_TINY)) {//以前我总想把这两个判断写到一起，这分明是两个独立是逻辑
+            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
+            //直接退出全屏和小窗
+            JCVideoPlayerManager.getCurrentJcvd().currentState = CURRENT_STATE_NORMAL;
+            JCVideoPlayerManager.getFirstFloor().clearFloatScreen();
+            releaseMediaPlayer();
+            JCVideoPlayerManager.setFirstFloor(null);
+            return true;
+        }
+        return false;
+    }
+
+    public void releaseAllVideos() {
+        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
+            Log.d(TAG, "releaseAllVideos");
+            JCVideoPlayerManager.completeAll();
+            releaseMediaPlayer();
         }
     }
 
-    public class MediaHandler extends Handler {
-        public MediaHandler(Looper looper) {
-            super(looper);
-        }
+    public AbstractPlayerControllerWrapper getWrapper() {
+        return mWrapper;
+    }
 
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case HANDLER_PREPARE:
-                    try {
-                        currentVideoWidth = 0;
-                        currentVideoHeight = 0;
-                        mediaPlayer.release();
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        Class<MediaPlayer> clazz = MediaPlayer.class;
-                        Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
-                        method.invoke(mediaPlayer, CURRENT_PLAYING_URL, MAP_HEADER_DATA);
-                        mediaPlayer.setLooping(CURRENT_PLING_LOOP);
-                        mediaPlayer.setOnPreparedListener(JCMediaManager.this);
-                        mediaPlayer.setOnCompletionListener(JCMediaManager.this);
-                        mediaPlayer.setOnBufferingUpdateListener(JCMediaManager.this);
-                        mediaPlayer.setScreenOnWhilePlaying(true);
-                        mediaPlayer.setOnSeekCompleteListener(JCMediaManager.this);
-                        mediaPlayer.setOnErrorListener(JCMediaManager.this);
-                        mediaPlayer.setOnInfoListener(JCMediaManager.this);
-                        mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
-                        mediaPlayer.prepareAsync();
-                        mediaPlayer.setSurface(new Surface(savedSurfaceTexture));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case HANDLER_RELEASE:
-                    mediaPlayer.release();
-                    break;
+    public void setWrapper(AbstractPlayerControllerWrapper wrapper) {
+        mWrapper = wrapper;
+    }
+
+    private void removeTextureView() {
+        savedSurfaceTexture = null;
+        if (textureView != null && textureView.getParent() != null) {
+            ((ViewGroup) textureView.getParent()).removeView(textureView);
+        }
+    }
+
+    public void initTextureView(Context context) {
+        removeTextureView();
+        textureView = new JCResizeTextureView(context);
+        textureView.setSurfaceTextureListener(this);
+    }
+
+    @Override
+    public void setCurrentVideoWH(int width, int height) {
+        getWrapper().setCurrentVideoWH(width, height);
+    }
+
+    @Override
+    public void pauseIfPlaying() {
+        try {
+            if (getWrapper().getMediaPlayer() != null &&
+                    getWrapper().getMediaPlayer().isPlaying()) {
+                getWrapper().getMediaPlayer().pause();
+            }
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int getCurrentPositionWhenPlaying(int currentState) {
+        int position = 0;
+        if (getWrapper().getMediaPlayer() == null) return position;//这行代码不应该在这，如果代码和逻辑万无一失的话，心头之恨呐
+        if (currentState == CURRENT_STATE_PLAYING ||
+                currentState == CURRENT_STATE_PAUSE ||
+                currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
+            try {
+                position = (int) getWrapper().getMediaPlayer().getCurrentPosition();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                return position;
             }
         }
+        return position;
     }
 
-    public void prepare() {
-        releaseMediaPlayer();
-        Message msg = new Message();
-        msg.what = HANDLER_PREPARE;
-        mMediaHandler.sendMessage(msg);
+    @Override
+    public int getDuration() {
+        int duration = 0;
+        if (getWrapper().getMediaPlayer() == null) return duration;
+        try {
+            duration = (int) getWrapper().getMediaPlayer().getDuration();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+            return duration;
+        }
+        return duration;
     }
 
+    @Override
+    public Point getVideoSize() {
+        return getWrapper().getVideoSize();
+    }
+
+    @Override
+    public void start() {
+        getWrapper().start();
+    }
+
+    @Override
+    public void release() {
+        if (getWrapper() != null) {
+            getWrapper().release();
+        }
+    }
+
+    @Override
+    public void pause() {
+        getWrapper().pause();
+    }
+
+    @Override
+    public void seekTo(int var1) {
+        getWrapper().seekTo(var1);
+    }
+
+    //    player listener callback
+    @Override
+    public void onCompletion() {
+        getWrapper().onCompletion();
+    }
+
+    @Override
+    public void onBufferingUpdate(final int percent) {
+        getWrapper().onBufferingUpdate(percent);
+    }
+
+    @Override
+    public void onSeekComplete() {
+        getWrapper().onSeekComplete();
+    }
+
+    @Override
+    public boolean onError(final int what, final int extra) {
+        return getWrapper().onError(what, extra);
+    }
+
+    @Override
+    public boolean onInfo(final int what, final int extra) {
+        return getWrapper().onInfo(what, extra);
+    }
+
+    @Override
+    public void onVideoSizeChanged(int width, int height) {
+        getWrapper().onVideoSizeChanged(width, height);
+    }
+
+    @Override
+    public void onPrepared() {
+        getWrapper().onPrepared();
+    }
+
+    //handler callback
+    private void prepare() {
+        getWrapper().prepare();
+    }
+
+    @Override
     public void releaseMediaPlayer() {
-        Message msg = new Message();
-        msg.what = HANDLER_RELEASE;
-        mMediaHandler.sendMessage(msg);
+        getWrapper().releaseMediaPlayer();
     }
 
+    //texture callback
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
         Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
@@ -141,94 +263,4 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
     }
-
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-        mediaPlayer.start();
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onPrepared();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onCompletion(MediaPlayer mp) {
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onAutoCompletion();
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onBufferingUpdate(MediaPlayer mp, final int percent) {
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().setBufferProgress(percent);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onSeekComplete(MediaPlayer mp) {
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onSeekComplete();
-                }
-            }
-        });
-    }
-
-    @Override
-    public boolean onError(MediaPlayer mp, final int what, final int extra) {
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onError(what, extra);
-                }
-            }
-        });
-        return true;
-    }
-
-    @Override
-    public boolean onInfo(MediaPlayer mp, final int what, final int extra) {
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onInfo(what, extra);
-                }
-            }
-        });
-        return false;
-    }
-
-    @Override
-    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-        currentVideoWidth = width;
-        currentVideoHeight = height;
-        mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                    JCVideoPlayerManager.getCurrentJcvd().onVideoSizeChanged();
-                }
-            }
-        });
-    }
-
 }
