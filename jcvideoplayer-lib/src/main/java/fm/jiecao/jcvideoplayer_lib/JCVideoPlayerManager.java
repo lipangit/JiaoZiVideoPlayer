@@ -10,20 +10,20 @@ public class JCVideoPlayerManager {
     public static JCVideoPlayer FIRST_FLOOR_JCVD;
     public static JCVideoPlayer SECOND_FLOOR_JCVD;
 
-    public static void setFirstFloor(JCVideoPlayer jcVideoPlayer) {
-        FIRST_FLOOR_JCVD = jcVideoPlayer;
-    }
-
-    public static void setSecondFloor(JCVideoPlayer jcVideoPlayer) {
-        SECOND_FLOOR_JCVD = jcVideoPlayer;
-    }
-
     public static JCVideoPlayer getFirstFloor() {
         return FIRST_FLOOR_JCVD;
     }
 
+    public static void setFirstFloor(JCVideoPlayer jcVideoPlayer) {
+        FIRST_FLOOR_JCVD = jcVideoPlayer;
+    }
+
     public static JCVideoPlayer getSecondFloor() {
         return SECOND_FLOOR_JCVD;
+    }
+
+    public static void setSecondFloor(JCVideoPlayer jcVideoPlayer) {
+        SECOND_FLOOR_JCVD = jcVideoPlayer;
     }
 
     public static JCVideoPlayer getCurrentJcvd() {
