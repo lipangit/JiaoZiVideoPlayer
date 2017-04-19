@@ -14,6 +14,7 @@ import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import fm.jiecao.jiecaovideoplayer.CustomPlayer.MyPlayer;
 
 /**
  * Created by Nathen on 16/7/22.
@@ -21,7 +22,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    JCVideoPlayerStandard mJcVideoPlayerStandard;
+    MyPlayer mJcVideoPlayerStandard;
 
     Button mTinyWindow, mAutoTinyWindow, mAboutListView, mPlayDirectly, mAboutApi, mAboutWebView;
 
@@ -44,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAboutApi.setOnClickListener(this);
         mAboutWebView.setOnClickListener(this);
 
-        mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
+
+        mJcVideoPlayerStandard = (MyPlayer) findViewById(R.id.jc_video);
         mJcVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
@@ -57,14 +59,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
+        mJcVideoPlayerStandard.getMediaManagerInstance().releaseAllVideos();
         JCVideoPlayer.releaseAllVideos();
     }
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (mJcVideoPlayerStandard.getMediaManagerInstance().backPress()) {
             return;
         }
+//        if (JCVideoPlayer.backPress()) {
+//            return;
+//        }
         super.onBackPressed();
     }
 
