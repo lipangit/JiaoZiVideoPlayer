@@ -461,9 +461,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             backPress();
         }
         JCUtils.saveProgress(getContext(), url, 0);
-
-//        JCMediaManager.textureView = null;
-        JCMediaManager.savedSurfaceTexture = null;
     }
 
     public void onCompletion() {
