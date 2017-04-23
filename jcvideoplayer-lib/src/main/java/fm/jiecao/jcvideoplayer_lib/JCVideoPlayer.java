@@ -461,9 +461,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             backPress();
         }
         JCUtils.saveProgress(getContext(), url, 0);
-
-//        JCMediaManager.textureView = null;
-        JCMediaManager.savedSurfaceTexture = null;
     }
 
     public void onCompletion() {
@@ -505,11 +502,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void clearFloatScreen() {
         JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(NORMAL_ORIENTATION);
         showSupportActionBar(getContext());
-        JCVideoPlayer secJcvd = JCVideoPlayerManager.getCurrentJcvd();
-        secJcvd.textureViewContainer.removeView(JCMediaManager.textureView);
+        JCVideoPlayer currJcvd = JCVideoPlayerManager.getCurrentJcvd();
+        currJcvd.textureViewContainer.removeView(JCMediaManager.textureView);
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        vp.removeView(secJcvd);
+        vp.removeView(currJcvd);
         JCVideoPlayerManager.setSecondFloor(null);
     }
 
