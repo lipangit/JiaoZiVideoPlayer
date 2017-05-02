@@ -248,11 +248,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                                     //如果y轴滑动距离超过设置的处理范围，那么进行滑动事件处理
                                     if (mDownX < mScreenWidth * 0.5f) {//左侧改变亮度
                                         mChangeBrightness = true;
-                                        try {
-                                            mGestureDownBrightness = Settings.System.getInt(getContext().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
-                                            System.out.println("当前亮度 " + mGestureDownBrightness);
-                                        } catch (Settings.SettingNotFoundException e) {
-                                            e.printStackTrace();
+                                        WindowManager.LayoutParams lp = JCUtils.getAppCompActivity(getContext()).getWindow().getAttributes();
+                                        if (lp.screenBrightness < 0) {
+                                            try {
+                                                mGestureDownBrightness = Settings.System.getInt(getContext().getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
+                                                Log.i(TAG, "current system brightness: " + mGestureDownBrightness);
+                                            } catch (Settings.SettingNotFoundException e) {
+                                                e.printStackTrace();
+                                            }
+                                        } else {
+                                            mGestureDownBrightness = lp.screenBrightness * 255;
+                                            Log.i(TAG, "current activity brightness: " + mGestureDownBrightness);
                                         }
                                     } else {//右侧改变声音
                                         mChangeVolume = true;
@@ -280,7 +286,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         //dialog中显示百分比
                         int volumePercent = (int) (mGestureDownVolume * 100 / max + deltaY * 3 * 100 / mScreenHeight);
                         showVolumeDialog(-deltaY, volumePercent);
-                        System.out.println("percentfdsfdsf : " + volumePercent + " " + deltaY);
                     }
 
                     if (mChangeBrightness) {
@@ -297,7 +302,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                         JCUtils.getAppCompActivity(getContext()).getWindow().setAttributes(params);
                         //dialog中显示百分比
                         int brightnessPercent = (int) (mGestureDownBrightness * 100 / 255 + deltaY * 3 * 100 / mScreenHeight);
-                        System.out.println("percentfdsfdsf : " + brightnessPercent + " " + deltaY + " " + mGestureDownBrightness);
                         showBrightnessDialog(brightnessPercent);
 //                        mDownY = y;
                     }
