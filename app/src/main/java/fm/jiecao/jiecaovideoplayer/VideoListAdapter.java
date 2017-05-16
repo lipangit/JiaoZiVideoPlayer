@@ -64,7 +64,6 @@ public class VideoListAdapter extends BaseAdapter {
             viewHolder.jcVideoPlayer.setUp(
                     VideoConstant.videoUrls[0][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
                     VideoConstant.videoTitles[0][position]);
-            System.out.println("fdsfdsfdsfdsfa setup " + position);
             Picasso.with(convertView.getContext())
                     .load(VideoConstant.videoThumbs[0][position])
                     .into(viewHolder.jcVideoPlayer.thumbImageView);
