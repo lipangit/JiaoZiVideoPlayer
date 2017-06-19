@@ -17,8 +17,9 @@ public class DemoFragment extends Fragment {
     ListView listView;
     int index;
 
-    public DemoFragment(int index) {
+    public DemoFragment setIndex(int index) {
         this.index = index;
+        return this;
     }
 
     @Override

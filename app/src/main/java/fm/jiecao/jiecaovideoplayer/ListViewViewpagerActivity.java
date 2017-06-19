@@ -33,9 +33,9 @@ public class ListViewViewpagerActivity extends AppCompatActivity implements View
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setTitle("ViewPagerAndListView");
 
-        fragmentList.add(new DemoFragment(0));
-        fragmentList.add(new DemoFragment(1));
-        fragmentList.add(new DemoFragment(2));
+        fragmentList.add(new DemoFragment().setIndex(0));
+        fragmentList.add(new DemoFragment().setIndex(1));
+        fragmentList.add(new DemoFragment().setIndex(2));
 
         MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager());
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
