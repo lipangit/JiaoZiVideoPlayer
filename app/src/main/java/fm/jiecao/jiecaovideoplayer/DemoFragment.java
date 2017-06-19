@@ -11,7 +11,6 @@ import android.widget.ListView;
 /**
  * Created by Nathen on 2017/6/9.
  */
-
 public class DemoFragment extends Fragment {
 
     ListView listView;

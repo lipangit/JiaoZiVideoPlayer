@@ -40,7 +40,7 @@ public class JCUtils {
     /**
      * This method requires the caller to hold the permission ACCESS_NETWORK_STATE.
      *
-     * @param context a application context
+     * @param context context
      * @return if wifi is connected,return true
      */
     public static boolean isWifiConnected(Context context) {
@@ -52,7 +52,7 @@ public class JCUtils {
     /**
      * Get activity from context object
      *
-     * @param context something
+     * @param context context
      * @return object of Activity or null if it is not Activity
      */
     public static Activity scanForActivity(Context context) {
@@ -70,7 +70,7 @@ public class JCUtils {
     /**
      * Get AppCompatActivity from context
      *
-     * @param context
+     * @param context context
      * @return AppCompatActivity if it's not null
      */
     public static AppCompatActivity getAppCompActivity(Context context) {
@@ -108,7 +108,7 @@ public class JCUtils {
     /**
      * if url == null, clear all progress
      *
-     * @param context
+     * @param context context
      * @param url     if url!=null clear this url progress
      */
     public static void clearSavedProgress(Context context, String url) {
