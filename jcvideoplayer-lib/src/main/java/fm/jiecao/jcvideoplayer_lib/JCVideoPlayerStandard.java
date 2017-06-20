@@ -601,15 +601,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mDialogSeekTime = ((TextView) localView.findViewById(R.id.tv_current));
             mDialogTotalTime = ((TextView) localView.findViewById(R.id.tv_duration));
             mDialogIcon = ((ImageView) localView.findViewById(R.id.duration_image_tip));
-            mProgressDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
-            mProgressDialog.setContentView(localView);
-            mProgressDialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
-            mProgressDialog.getWindow().addFlags(32);
-            mProgressDialog.getWindow().addFlags(16);
-            mProgressDialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = mProgressDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = Gravity.CENTER;
-            mProgressDialog.getWindow().setAttributes(localLayoutParams);
+            mProgressDialog = createDialogWithView(localView);
         }
         if (!mProgressDialog.isShowing()) {
             mProgressDialog.show();
@@ -647,15 +639,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mDialogVolumeImageView = ((ImageView) localView.findViewById(R.id.volume_image_tip));
             mDialogVolumeTextView = ((TextView) localView.findViewById(R.id.tv_volume));
             mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
-            mVolumeDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
-            mVolumeDialog.setContentView(localView);
-            mVolumeDialog.getWindow().addFlags(8);
-            mVolumeDialog.getWindow().addFlags(32);
-            mVolumeDialog.getWindow().addFlags(16);
-            mVolumeDialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = mVolumeDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = Gravity.CENTER;
-            mVolumeDialog.getWindow().setAttributes(localLayoutParams);
+            mVolumeDialog = createDialogWithView(localView);
         }
         if (!mVolumeDialog.isShowing()) {
             mVolumeDialog.show();
@@ -694,16 +678,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_brightness, null);
             mDialogBrightnessTextView = ((TextView) localView.findViewById(R.id.tv_brightness));
             mDialogBrightnessProgressBar = ((ProgressBar) localView.findViewById(R.id.brightness_progressbar));
-            mBrightnessDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
-            mBrightnessDialog.setContentView(localView);
-            mBrightnessDialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
-            mBrightnessDialog.getWindow().addFlags(32);
-            mBrightnessDialog.getWindow().addFlags(16);
-            mBrightnessDialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = mBrightnessDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = Gravity.CENTER;
-            mBrightnessDialog.getWindow().setAttributes(localLayoutParams);
-
+            mBrightnessDialog = createDialogWithView(localView);
         }
         if (!mBrightnessDialog.isShowing()) {
             mBrightnessDialog.show();
@@ -724,6 +699,21 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         if (mBrightnessDialog != null) {
             mBrightnessDialog.dismiss();
         }
+    }
+
+    public Dialog createDialogWithView(View localView) {
+        Dialog dialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
+        dialog.setContentView(localView);
+        Window window = dialog.getWindow();
+        window.addFlags(Window.FEATURE_ACTION_BAR);
+        window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        window.setLayout(-2, -2);
+        WindowManager.LayoutParams localLayoutParams = window.getAttributes();
+        localLayoutParams.gravity = Gravity.CENTER;
+        window.setAttributes(localLayoutParams);
+
+        return dialog;
     }
 
     public void startDismissControlViewTimer() {
