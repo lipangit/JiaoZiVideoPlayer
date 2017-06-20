@@ -3,7 +3,6 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.content.Context;
 import android.graphics.Point;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.TextureView;
 
 /**
@@ -51,12 +50,12 @@ public class JCResizeTextureView extends TextureView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Log.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
+        JCUtils.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
         int viewRotation = (int) getRotation();
         int videoWidth = mVideoSize.x;
         int videoHeight = mVideoSize.y;
-        Log.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight);
-        Log.i(TAG, "viewRotation = " + viewRotation);
+        JCUtils.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight);
+        JCUtils.i(TAG, "viewRotation = " + viewRotation);
 
         // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         if (viewRotation == 90 || viewRotation == 270) {
@@ -74,8 +73,8 @@ public class JCResizeTextureView extends TextureView {
             int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);
             int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);
 
-            Log.i(TAG, "widthMeasureSpec  [" + MeasureSpec.toString(widthMeasureSpec) + "]");
-            Log.i(TAG, "heightMeasureSpec [" + MeasureSpec.toString(heightMeasureSpec) + "]");
+            JCUtils.i(TAG, "widthMeasureSpec  [" + MeasureSpec.toString(widthMeasureSpec) + "]");
+            JCUtils.i(TAG, "heightMeasureSpec [" + MeasureSpec.toString(heightMeasureSpec) + "]");
 
             if (widthSpecMode == MeasureSpec.EXACTLY && heightSpecMode == MeasureSpec.EXACTLY) {
                 // the size is fixed
