@@ -75,7 +75,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.fullscreen && currentState == CURRENT_STATE_NORMAL) {
-            Toast.makeText(getContext(), getResources().getString(R.string.play_first), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Play video first", Toast.LENGTH_SHORT).show();
             return;
         }
         super.onClick(v);
@@ -85,7 +85,7 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
             if (currentState == CURRENT_STATE_NORMAL) {
-                Toast.makeText(getContext(), getResources().getString(R.string.play_first), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Play video first", Toast.LENGTH_SHORT).show();
                 return;
             }
         }
