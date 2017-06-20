@@ -712,7 +712,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         WindowManager.LayoutParams localLayoutParams = window.getAttributes();
         localLayoutParams.gravity = Gravity.CENTER;
         window.setAttributes(localLayoutParams);
-
         return dialog;
     }
 
