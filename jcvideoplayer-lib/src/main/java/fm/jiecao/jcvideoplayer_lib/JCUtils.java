@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -120,18 +119,6 @@ public class JCUtils {
             SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
                     Context.MODE_PRIVATE);
             spn.edit().putInt(url, 0).apply();
-        }
-    }
-
-    public static void i(String tag, String msg) {
-        if(BuildConfig.DEBUG) {
-            Log.i(tag, msg);
-        }
-    }
-
-    public static void d(String tag, String msg) {
-        if(BuildConfig.DEBUG) {
-            Log.i(tag, msg);
         }
     }
 }

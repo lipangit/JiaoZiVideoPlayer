@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 
@@ -117,7 +118,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-        JCUtils.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
+        Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
             prepare();
@@ -129,7 +130,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
         // 如果SurfaceTexture还没有更新Image，则记录SizeChanged事件，否则忽略
-        JCUtils.i(TAG, "onSurfaceTextureSizeChanged [" + this.hashCode() + "] ");
+        Log.i(TAG, "onSurfaceTextureSizeChanged [" + this.hashCode() + "] ");
     }
 
     @Override
