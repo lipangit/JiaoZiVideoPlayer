@@ -71,8 +71,8 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
 //        mJcVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
 //                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         /** Play video in assert, but not work now **/
-        mJcVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+//        mJcVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
+//                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
 
         /** ImageLoader **/
 //        ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg",
