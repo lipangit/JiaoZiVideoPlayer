@@ -114,6 +114,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         init(context);
     }
 
+    public abstract int getLayoutId();
+
     public void init(Context context) {
         View.inflate(context, getLayoutId(), this);
         startButton = (ImageView) findViewById(R.id.start);
@@ -757,6 +759,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 && JCVideoPlayerManager.getCurrentJcvd() == this;
     }
 
+    //    public boolean isCurrenPlayingUrl() {
+//        return url.equals(JCMediaManager.CURRENT_PLAYING_URL);
+//    }
+
     public static boolean backPress() {
         Log.i(TAG, "backPress");
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
@@ -794,7 +800,32 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         addTextureView();
     }
 
+    public static void showSupportActionBar(Context context) {
+        if (ACTION_BAR_EXIST) {
+            ActionBar ab = JCUtils.getAppCompActivity(context).getSupportActionBar();
+            if (ab != null) {
+                ab.setShowHideAnimationEnabled(false);
+                ab.show();
+            }
+        }
+        if (TOOL_BAR_EXIST) {
+            JCUtils.getAppCompActivity(context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
 
+    public static void hideSupportActionBar(Context context) {
+        if (ACTION_BAR_EXIST) {
+            ActionBar ab = JCUtils.getAppCompActivity(context).getSupportActionBar();
+            if (ab != null) {
+                ab.setShowHideAnimationEnabled(false);
+                ab.hide();
+            }
+        }
+        if (TOOL_BAR_EXIST) {
+            JCUtils.getAppCompActivity(context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
 
     public static long lastAutoFullscreenTime = 0;
 
@@ -825,8 +856,40 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    public void onSeekComplete() {
+    public static class JCAutoFullscreenListener implements SensorEventListener {
+        @Override
+        public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
+            final float x = event.values[SensorManager.DATA_X];
+            float y = event.values[SensorManager.DATA_Y];
+            float z = event.values[SensorManager.DATA_Z];
+            //过滤掉用力过猛会有一个反向的大数值
+            if (((x > -15 && x < -10) || (x < 15 && x > 10)) && Math.abs(y) < 1.5) {
+                if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000) {
+                    if (JCVideoPlayerManager.getCurrentJcvd() != null) {
+                        JCVideoPlayerManager.getCurrentJcvd().autoFullscreen(x);
+                    }
+                    lastAutoFullscreenTime = System.currentTimeMillis();
+                }
+            }
+        }
 
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
+    }
+
+    public static void clearSavedProgress(Context context, String url) {
+        JCUtils.clearSavedProgress(context, url);
+    }
+
+    public static void setJcUserAction(JCUserAction jcUserEvent) {
+        JC_USER_EVENT = jcUserEvent;
+    }
+
+    public void onEvent(int type) {
+        if (JC_USER_EVENT != null && isCurrentJcvd()) {
+            JC_USER_EVENT.onEvent(type, url, currentScreen, objects);
+        }
     }
 
     public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
@@ -856,72 +919,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     };
 
-//    public boolean isCurrenPlayingUrl() {
-//        return url.equals(JCMediaManager.CURRENT_PLAYING_URL);
-//    }
+    //TODO 是否有用
+    public void onSeekComplete() {
 
-    public static void setJcUserAction(JCUserAction jcUserEvent) {
-        JC_USER_EVENT = jcUserEvent;
     }
 
-    public void onEvent(int type) {
-        if (JC_USER_EVENT != null && isCurrentJcvd()) {
-            JC_USER_EVENT.onEvent(type, url, currentScreen, objects);
-        }
-    }
-
-    public static void hideSupportActionBar(Context context) {
-        if (ACTION_BAR_EXIST) {
-            ActionBar ab = JCUtils.getAppCompActivity(context).getSupportActionBar();
-            if (ab != null) {
-                ab.setShowHideAnimationEnabled(false);
-                ab.hide();
-            }
-        }
-        if (TOOL_BAR_EXIST) {
-            JCUtils.getAppCompActivity(context).getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-    }
-
-    public static void showSupportActionBar(Context context) {
-        if (ACTION_BAR_EXIST) {
-            ActionBar ab = JCUtils.getAppCompActivity(context).getSupportActionBar();
-            if (ab != null) {
-                ab.setShowHideAnimationEnabled(false);
-                ab.show();
-            }
-        }
-        if (TOOL_BAR_EXIST) {
-            JCUtils.getAppCompActivity(context).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        }
-    }
-
-    public static class JCAutoFullscreenListener implements SensorEventListener {
-        @Override
-        public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
-            final float x = event.values[SensorManager.DATA_X];
-            float y = event.values[SensorManager.DATA_Y];
-            float z = event.values[SensorManager.DATA_Z];
-            //过滤掉用力过猛会有一个反向的大数值
-            if (((x > -15 && x < -10) || (x < 15 && x > 10)) && Math.abs(y) < 1.5) {
-                if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000) {
-                    if (JCVideoPlayerManager.getCurrentJcvd() != null) {
-                        JCVideoPlayerManager.getCurrentJcvd().autoFullscreen(x);
-                    }
-                    lastAutoFullscreenTime = System.currentTimeMillis();
-                }
-            }
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
-    }
-
-    public static void clearSavedProgress(Context context, String url) {
-        JCUtils.clearSavedProgress(context, url);
-    }
 
     public void showWifiDialog() {
     }
@@ -950,7 +952,5 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void dismissBrightnessDialog() {
 
     }
-
-    public abstract int getLayoutId();
 
 }
