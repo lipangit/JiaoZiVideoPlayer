@@ -549,7 +549,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onError(int what, int extra) {
         Log.e(TAG, "onError " + what + " - " + extra + " [" + this.hashCode() + "] ");
-        if (what != 38 && what != -38) {
+        if (what != 38 && extra != -38) {
             setUiWitStateAndScreen(CURRENT_STATE_ERROR);
             if (isCurrentJcvd()) {
                 JCMediaManager.instance().releaseMediaPlayer();
