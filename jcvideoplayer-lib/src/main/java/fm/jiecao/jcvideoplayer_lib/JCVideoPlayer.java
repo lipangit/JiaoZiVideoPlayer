@@ -763,6 +763,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 //        return url.equals(JCMediaManager.CURRENT_PLAYING_URL);
 //    }
 
+    //退出全屏和小窗的方法
+    public void playOnThisJcvd() {
+        Log.i(TAG, "playOnThisJcvd " + " [" + this.hashCode() + "] ");
+        //1.清空全屏和小窗的jcvd
+        currentState = JCVideoPlayerManager.getSecondFloor().currentState;
+        clearFloatScreen();
+        //2.在本jcvd上播放
+        setUiWitStateAndScreen(currentState);
+        addTextureView();
+    }
+
     public static boolean backPress() {
         Log.i(TAG, "backPress");
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
@@ -787,17 +798,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             return true;
         }
         return false;
-    }
-
-    //退出全屏和小窗的方法
-    public void playOnThisJcvd() {
-        Log.i(TAG, "playOnThisJcvd " + " [" + this.hashCode() + "] ");
-        //1.清空全屏和小窗的jcvd
-        currentState = JCVideoPlayerManager.getSecondFloor().currentState;
-        clearFloatScreen();
-        //2.在本jcvd上播放
-        setUiWitStateAndScreen(currentState);
-        addTextureView();
     }
 
     public static void showSupportActionBar(Context context) {
