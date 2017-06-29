@@ -183,9 +183,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             if (currentState == CURRENT_STATE_NORMAL) {
                 if (!url.startsWith("file") && !url.startsWith("/") &&
                         !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog();
+                    showWifiDialog(JCUserActionStandard.ON_CLICK_START_THUMB);
                     return;
                 }
+                onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
@@ -201,14 +202,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
 
     @Override
-    public void showWifiDialog() {
-        super.showWifiDialog();
+    public void showWifiDialog(int action) {
+        super.showWifiDialog(action);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(getResources().getString(R.string.tips_not_wifi));
         builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }
@@ -246,11 +248,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onStopTrackingTouch(SeekBar seekBar) {
         super.onStopTrackingTouch(seekBar);
         startDismissControlViewTimer();
-    }
-
-    public void startVideo() {
-        prepareMediaPlayer();
-        onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
     }
 
     public void onClickUiToggle() {

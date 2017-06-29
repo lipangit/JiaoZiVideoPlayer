@@ -162,10 +162,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             }
             if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR) {
                 if (!url.startsWith("file") && !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog();
+                    showWifiDialog(JCUserActionStandard.ON_CLICK_START_ICON);
                     return;
                 }
-                prepareMediaPlayer();
+                startVideo();
                 onEvent(currentState != CURRENT_STATE_ERROR ? JCUserAction.ON_CLICK_START_ICON : JCUserAction.ON_CLICK_START_ERROR);
             } else if (currentState == CURRENT_STATE_PLAYING) {
                 onEvent(JCUserAction.ON_CLICK_PAUSE);
@@ -178,7 +178,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 setUiWitStateAndScreen(CURRENT_STATE_PLAYING);
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onEvent(JCUserAction.ON_CLICK_START_AUTO_COMPLETE);
-                prepareMediaPlayer();
+                startVideo();
             }
         } else if (i == R.id.fullscreen) {
             Log.i(TAG, "onClick fullscreen [" + this.hashCode() + "] ");
@@ -193,7 +193,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             }
         } else if (i == R.id.surface_container && currentState == CURRENT_STATE_ERROR) {
             Log.i(TAG, "onClick surfaceContainer State=Error [" + this.hashCode() + "] ");
-            prepareMediaPlayer();
+            startVideo();
         }
     }
 
@@ -316,9 +316,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         return false;
     }
 
-    public void prepareMediaPlayer() {
+    public void startVideo() {
         JCVideoPlayerManager.completeAll();
-        Log.d(TAG, "prepareMediaPlayer [" + this.hashCode() + "] ");
+        Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
         initTextureView();
         addTextureView();
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
@@ -925,7 +925,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
 
-    public void showWifiDialog() {
+    public void showWifiDialog(int event) {
     }
 
     public void showProgressDialog(float deltaX,

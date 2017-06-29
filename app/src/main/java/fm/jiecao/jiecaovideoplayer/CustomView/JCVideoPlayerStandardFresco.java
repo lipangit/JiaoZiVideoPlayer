@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCUtils;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -174,7 +175,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
             }
             if (currentState == CURRENT_STATE_NORMAL) {
                 if (!url.startsWith("file") && !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog();
+                    showWifiDialog(JCUserActionStandard.ON_CLICK_START_THUMB);
                     return;
                 }
                 startPlayLogic();
@@ -198,8 +199,8 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     }
 
     @Override
-    public void showWifiDialog() {
-        super.showWifiDialog();
+    public void showWifiDialog(int action) {
+        super.showWifiDialog(action);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(getResources().getString(R.string.tips_not_wifi));
         builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
@@ -233,7 +234,7 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
 
     private void startPlayLogic() {
         onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
-        prepareMediaPlayer();
+        startVideo();
         startDismissControlViewTimer();
     }
 
