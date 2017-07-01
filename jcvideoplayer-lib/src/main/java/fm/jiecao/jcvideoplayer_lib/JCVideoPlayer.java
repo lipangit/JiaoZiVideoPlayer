@@ -389,10 +389,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onStatePlaying() {
         currentState = CURRENT_STATE_PLAYING;
+        startProgressTimer();
     }
 
     public void onStatePause() {
         currentState = CURRENT_STATE_PAUSE;
+        startProgressTimer();
     }
 
     public void onStatePlaybackBufferingStart() {
