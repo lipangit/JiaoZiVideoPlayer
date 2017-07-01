@@ -148,7 +148,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         this.objects = objects;
         this.currentScreen = screen;
         this.headData = null;
-        setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
+        onStateNormal();
     }
 
     @Override
@@ -171,11 +171,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 onEvent(JCUserAction.ON_CLICK_PAUSE);
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 JCMediaManager.instance().mediaPlayer.pause();
-                setUiWitStateAndScreen(CURRENT_STATE_PAUSE);
+                onStatePause();
             } else if (currentState == CURRENT_STATE_PAUSE) {
                 onEvent(JCUserAction.ON_CLICK_RESUME);
                 JCMediaManager.instance().mediaPlayer.start();
-                setUiWitStateAndScreen(CURRENT_STATE_PLAYING);
+                onStatePlaying();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onEvent(JCUserAction.ON_CLICK_START_AUTO_COMPLETE);
                 startVideo();
@@ -327,7 +327,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCMediaManager.CURRENT_PLAYING_URL = url;
         JCMediaManager.CURRENT_PLING_LOOP = loop;
         JCMediaManager.MAP_HEADER_DATA = headData;
-        setUiWitStateAndScreen(CURRENT_STATE_PREPARING);
+        onStatePreparing();
         JCVideoPlayerManager.setFirstFloor(this);
     }
 
@@ -345,35 +345,71 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             }
         }
         startProgressTimer();
-        setUiWitStateAndScreen(CURRENT_STATE_PLAYING);
+        onStatePlaying();
     }
 
-    public void setUiWitStateAndScreen(int state) {
-        currentState = state;
-        switch (currentState) {
+    public void setState(int state) {
+        switch (state) {
             case CURRENT_STATE_NORMAL:
-                cancelProgressTimer();
-                if (isCurrentJcvd()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
-                    JCMediaManager.instance().releaseMediaPlayer();
-                }
+                onStateNormal();
                 break;
             case CURRENT_STATE_PREPARING:
-                resetProgressAndTime();
+                onStatePreparing();
                 break;
             case CURRENT_STATE_PLAYING:
+                onStatePlaying();
+                break;
             case CURRENT_STATE_PAUSE:
+                onStatePause();
+                break;
             case CURRENT_STATE_PLAYING_BUFFERING_START:
-                startProgressTimer();
+                onStatePlaybackBufferingStart();
                 break;
             case CURRENT_STATE_ERROR:
-                cancelProgressTimer();
+                onStateError();
                 break;
             case CURRENT_STATE_AUTO_COMPLETE:
-                cancelProgressTimer();
-                progressBar.setProgress(100);
-                currentTimeTextView.setText(totalTimeTextView.getText());
+                onStateAutoComplete();
                 break;
         }
+    }
+
+    public void onStateNormal() {
+        currentState = CURRENT_STATE_NORMAL;
+        cancelProgressTimer();
+        if (isCurrentJcvd()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
+            JCMediaManager.instance().releaseMediaPlayer();
+        }
+    }
+
+    public void onStatePreparing() {
+        currentState = CURRENT_STATE_PREPARING;
+        resetProgressAndTime();
+    }
+
+    public void onStatePlaying() {
+        currentState = CURRENT_STATE_PLAYING;
+    }
+
+    public void onStatePause() {
+        currentState = CURRENT_STATE_PAUSE;
+    }
+
+    public void onStatePlaybackBufferingStart() {
+        currentState = CURRENT_STATE_PLAYING_BUFFERING_START;
+        startProgressTimer();
+    }
+
+    public void onStateError() {
+        currentState = CURRENT_STATE_ERROR;
+        cancelProgressTimer();
+    }
+
+    public void onStateAutoComplete() {
+        currentState = CURRENT_STATE_AUTO_COMPLETE;
+        cancelProgressTimer();
+        progressBar.setProgress(100);
+        currentTimeTextView.setText(totalTimeTextView.getText());
     }
 
     public void onInfo(int what, int extra) {
@@ -381,11 +417,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
             if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) return;
             BACKUP_PLAYING_BUFFERING_STATE = currentState;
-            setUiWitStateAndScreen(CURRENT_STATE_PLAYING_BUFFERING_START);//没这个case
+            onStatePlaybackBufferingStart();
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
             if (BACKUP_PLAYING_BUFFERING_STATE != -1) {
-                setUiWitStateAndScreen(BACKUP_PLAYING_BUFFERING_STATE);
+                setState(BACKUP_PLAYING_BUFFERING_STATE);
                 BACKUP_PLAYING_BUFFERING_STATE = -1;
             }
             Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
@@ -395,7 +431,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void onError(int what, int extra) {
         Log.e(TAG, "onError " + what + " - " + extra + " [" + this.hashCode() + "] ");
         if (what != 38 && what != -38) {
-            setUiWitStateAndScreen(CURRENT_STATE_ERROR);
+            onStateError();
             if (isCurrentJcvd()) {
                 JCMediaManager.instance().releaseMediaPlayer();
             }
@@ -434,7 +470,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         dismissProgressDialog();
         dismissBrightnessDialog();
         cancelProgressTimer();
-        setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
+        onStateAutoComplete();
 
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             backPress();
@@ -451,7 +487,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             JCUtils.saveProgress(getContext(), url, position);
         }
         cancelProgressTimer();
-        setUiWitStateAndScreen(CURRENT_STATE_NORMAL);
+        onStateNormal();
         // 清理缓存变量
         textureViewContainer.removeView(JCMediaManager.textureView);
         JCMediaManager.instance().currentVideoWidth = 0;
@@ -681,7 +717,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jcVideoPlayer, lp);
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
-            jcVideoPlayer.setUiWitStateAndScreen(currentState);
+            jcVideoPlayer.setState(currentState);
             jcVideoPlayer.addTextureView();
             JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
@@ -712,7 +748,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(jcVideoPlayer, lp);
             jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
-            jcVideoPlayer.setUiWitStateAndScreen(currentState);
+            jcVideoPlayer.setState(currentState);
             jcVideoPlayer.addTextureView();
             JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
         } catch (InstantiationException e) {
@@ -770,7 +806,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         currentState = JCVideoPlayerManager.getSecondFloor().currentState;
         clearFloatScreen();
         //2.在本jcvd上播放
-        setUiWitStateAndScreen(currentState);
+        setState(currentState);
         addTextureView();
     }
 

@@ -96,39 +96,39 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayer {
     public int getLayoutId() {
         return R.layout.layout_standard_fresco;
     }
-
-    @Override
-    public void setUiWitStateAndScreen(int state) {
-        super.setUiWitStateAndScreen(state);
-        switch (currentState) {
-            case CURRENT_STATE_NORMAL:
-                changeUiToNormal();
-                break;
-            case CURRENT_STATE_PREPARING:
-                changeUiToPreparingShow();
-                startDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_PLAYING:
-                changeUiToPlayingShow();
-                startDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_PAUSE:
-                changeUiToPauseShow();
-                cancelDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_ERROR:
-                changeUiToError();
-                break;
-            case CURRENT_STATE_AUTO_COMPLETE:
-                changeUiToCompleteShow();
-                cancelDismissControlViewTimer();
-                bottomProgressBar.setProgress(100);
-                break;
-            case CURRENT_STATE_PLAYING_BUFFERING_START:
-                changeUiToPlayingBufferingShow();
-                break;
-        }
-    }
+//
+//    @Override
+//    public void setUiWitStateAndScreen(int state) {
+//        super.setUiWitStateAndScreen(state);
+//        switch (currentState) {
+//            case CURRENT_STATE_NORMAL:
+//                changeUiToNormal();
+//                break;
+//            case CURRENT_STATE_PREPARING:
+//                changeUiToPreparingShow();
+//                startDismissControlViewTimer();
+//                break;
+//            case CURRENT_STATE_PLAYING:
+//                changeUiToPlayingShow();
+//                startDismissControlViewTimer();
+//                break;
+//            case CURRENT_STATE_PAUSE:
+//                changeUiToPauseShow();
+//                cancelDismissControlViewTimer();
+//                break;
+//            case CURRENT_STATE_ERROR:
+//                changeUiToError();
+//                break;
+//            case CURRENT_STATE_AUTO_COMPLETE:
+//                changeUiToCompleteShow();
+//                cancelDismissControlViewTimer();
+//                bottomProgressBar.setProgress(100);
+//                break;
+//            case CURRENT_STATE_PLAYING_BUFFERING_START:
+//                changeUiToPlayingBufferingShow();
+//                break;
+//        }
+//    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {

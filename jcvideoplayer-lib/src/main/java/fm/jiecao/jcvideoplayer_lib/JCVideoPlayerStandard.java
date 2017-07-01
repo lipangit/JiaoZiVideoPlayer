@@ -103,38 +103,51 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public void setUiWitStateAndScreen(int state) {
-        super.setUiWitStateAndScreen(state);
-        switch (currentState) {
-            case CURRENT_STATE_NORMAL:
-                changeUiToNormal();
-                break;
-            case CURRENT_STATE_PREPARING:
-                changeUiToPreparingShow();
-                startDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_PLAYING:
-                changeUiToPlayingShow();
-                startDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_PAUSE:
-                changeUiToPauseShow();
-                cancelDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_ERROR:
-                changeUiToError();
-                break;
-            case CURRENT_STATE_AUTO_COMPLETE:
-                changeUiToCompleteShow();
-                cancelDismissControlViewTimer();
-                bottomProgressBar.setProgress(100);
-                break;
-            case CURRENT_STATE_PLAYING_BUFFERING_START:
-                changeUiToPlayingBufferingShow();
-                break;
-        }
+    public void onStateNormal() {
+        super.onStateNormal();
+        changeUiToNormal();
     }
 
+    @Override
+    public void onStatePreparing() {
+        super.onStatePreparing();
+        changeUiToPreparingShow();
+        startDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStatePlaying() {
+        super.onStatePlaying();
+        changeUiToPlayingShow();
+        startDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStatePause() {
+        super.onStatePause();
+        changeUiToPauseShow();
+        cancelDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStatePlaybackBufferingStart() {
+        super.onStatePlaybackBufferingStart();
+        changeUiToPlayingBufferingShow();
+    }
+
+    @Override
+    public void onStateError() {
+        super.onStateError();
+        changeUiToError();
+    }
+
+    @Override
+    public void onStateAutoComplete() {
+        super.onStateAutoComplete();
+        changeUiToCompleteShow();
+        cancelDismissControlViewTimer();
+        bottomProgressBar.setProgress(100);
+    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
