@@ -47,6 +47,82 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayerStandard {
         super(context, attrs);
     }
 
+<<<<<<< 3ef93e840f336e09e9053f2918a0358bb1d289ba
+=======
+    @Override
+    public void init(Context context) {
+        super.init(context);
+        bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progress);
+        titleTextView = (TextView) findViewById(R.id.title);
+        backButton = (ImageView) findViewById(R.id.back);
+//        thumbImageView = (SimpleDraweeView) findViewById(R.id.thumb);
+        loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
+        tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
+
+//        thumbImageView.setOnClickListener(this);
+        backButton.setOnClickListener(this);
+        tinyBackImageView.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void setUp(String url, int screen, Object... objects) {
+        super.setUp(url, screen, objects);
+        if (objects.length == 0) return;
+        titleTextView.setText(objects[0].toString());
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            fullscreenButton.setImageResource(R.drawable.jc_shrink);
+            backButton.setVisibility(View.VISIBLE);
+            tinyBackImageView.setVisibility(View.INVISIBLE);
+        } else if (currentScreen == SCREEN_LAYOUT_LIST) {
+            fullscreenButton.setImageResource(R.drawable.jc_enlarge);
+            backButton.setVisibility(View.GONE);
+            tinyBackImageView.setVisibility(View.INVISIBLE);
+        } else if (currentScreen == SCREEN_WINDOW_TINY) {
+            tinyBackImageView.setVisibility(View.VISIBLE);
+            setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.layout_standard_fresco;
+    }
+//
+//    @Override
+//    public void setUiWitStateAndScreen(int state) {
+//        super.setUiWitStateAndScreen(state);
+//        switch (currentState) {
+//            case CURRENT_STATE_NORMAL:
+//                changeUiToNormal();
+//                break;
+//            case CURRENT_STATE_PREPARING:
+//                changeUiToPreparingShow();
+//                startDismissControlViewTimer();
+//                break;
+//            case CURRENT_STATE_PLAYING:
+//                changeUiToPlayingShow();
+//                startDismissControlViewTimer();
+//                break;
+//            case CURRENT_STATE_PAUSE:
+//                changeUiToPauseShow();
+//                cancelDismissControlViewTimer();
+//                break;
+//            case CURRENT_STATE_ERROR:
+//                changeUiToError();
+//                break;
+//            case CURRENT_STATE_AUTO_COMPLETE:
+//                changeUiToCompleteShow();
+//                cancelDismissControlViewTimer();
+//                bottomProgressBar.setProgress(100);
+//                break;
+//            case CURRENT_STATE_PLAYING_BUFFERING_START:
+//                changeUiToPlayingBufferingShow();
+//                break;
+//        }
+//    }
+>>>>>>> on state call back
 
 
 }

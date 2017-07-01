@@ -19,11 +19,21 @@ public class JCVideoPlayerStandardShowTextureViewAfterAutoComplete extends JCVid
         super(context, attrs);
     }
 
+<<<<<<< 3ef93e840f336e09e9053f2918a0358bb1d289ba
     @Override
     public void onAutoCompletion() {
         super.onAutoCompletion();
         thumbImageView.setVisibility(View.GONE);
     }
+=======
+//    @Override
+//    public void setUiWitStateAndScreen(int state) {
+//        super.setUiWitStateAndScreen(state);
+//        if (state == CURRENT_STATE_AUTO_COMPLETE) {
+//            thumbImageView.setVisibility(View.GONE);
+//        }
+//    }
+>>>>>>> on state call back
 
     @Override
     public void onClickUiToggle() {
