@@ -608,17 +608,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        setProgressAndText();
+                        int position = getCurrentPositionWhenPlaying();
+                        int duration = getDuration();
+                        int progress = position * 100 / (duration == 0 ? 1 : duration);
+                        setProgressAndText(progress, position, duration);
                     }
                 });
             }
         }
     }
 
-    public void setProgressAndText() {
-        int position = getCurrentPositionWhenPlaying();
-        int duration = getDuration();
-        int progress = position * 100 / (duration == 0 ? 1 : duration);
+    public void setProgressAndText(int progress, int position, int duration) {
         if (!mTouchingProgressBar) {
             if (progress != 0) progressBar.setProgress(progress);
         }

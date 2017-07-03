@@ -327,11 +327,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public void setProgressAndText() {
-        super.setProgressAndText();
-        int position = getCurrentPositionWhenPlaying();
-        int duration = getDuration();
-        int progress = position * 100 / (duration == 0 ? 1 : duration);
+    public void setProgressAndText(int progress, int position, int duration) {
+        super.setProgressAndText(progress, position, duration);
         if (progress != 0) bottomProgressBar.setProgress(progress);
     }
 
