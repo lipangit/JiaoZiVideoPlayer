@@ -2,12 +2,9 @@ package fm.jiecao.jiecaovideoplayer.CustomView;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import fm.jiecao.jcvideoplayer_lib.JCMediaManager;
-import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
