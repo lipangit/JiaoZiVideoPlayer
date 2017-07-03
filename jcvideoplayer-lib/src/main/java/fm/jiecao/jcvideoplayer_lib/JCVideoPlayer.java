@@ -136,6 +136,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mHandler = new Handler();
+
+        NORMAL_ORIENTATION = context.getResources().getConfiguration().orientation;
     }
 
     public void setUp(String url, int screen, Object... objects) {
