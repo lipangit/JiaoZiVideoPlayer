@@ -103,38 +103,51 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public void setUiWitStateAndScreen(int state) {
-        super.setUiWitStateAndScreen(state);
-        switch (currentState) {
-            case CURRENT_STATE_NORMAL:
-                changeUiToNormal();
-                break;
-            case CURRENT_STATE_PREPARING:
-                changeUiToPreparingShow();
-                startDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_PLAYING:
-                changeUiToPlayingShow();
-                startDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_PAUSE:
-                changeUiToPauseShow();
-                cancelDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_ERROR:
-                changeUiToError();
-                break;
-            case CURRENT_STATE_AUTO_COMPLETE:
-                changeUiToCompleteShow();
-                cancelDismissControlViewTimer();
-                bottomProgressBar.setProgress(100);
-                break;
-            case CURRENT_STATE_PLAYING_BUFFERING_START:
-                changeUiToPlayingBufferingShow();
-                break;
-        }
+    public void onStateNormal() {
+        super.onStateNormal();
+        changeUiToNormal();
     }
 
+    @Override
+    public void onStatePreparing() {
+        super.onStatePreparing();
+        changeUiToPreparingShow();
+        startDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStatePlaying() {
+        super.onStatePlaying();
+        changeUiToPlayingShow();
+        startDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStatePause() {
+        super.onStatePause();
+        changeUiToPauseShow();
+        cancelDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStatePlaybackBufferingStart() {
+        super.onStatePlaybackBufferingStart();
+        changeUiToPlayingBufferingShow();
+    }
+
+    @Override
+    public void onStateError() {
+        super.onStateError();
+        changeUiToError();
+    }
+
+    @Override
+    public void onStateAutoComplete() {
+        super.onStateAutoComplete();
+        changeUiToCompleteShow();
+        cancelDismissControlViewTimer();
+        bottomProgressBar.setProgress(100);
+    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -183,9 +196,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             if (currentState == CURRENT_STATE_NORMAL) {
                 if (!url.startsWith("file") && !url.startsWith("/") &&
                         !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog();
+                    showWifiDialog(JCUserActionStandard.ON_CLICK_START_THUMB);
                     return;
                 }
+                onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
@@ -201,14 +215,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
 
     @Override
-    public void showWifiDialog() {
-        super.showWifiDialog();
+    public void showWifiDialog(int action) {
+        super.showWifiDialog(action);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(getResources().getString(R.string.tips_not_wifi));
         builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }
@@ -246,11 +261,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onStopTrackingTouch(SeekBar seekBar) {
         super.onStopTrackingTouch(seekBar);
         startDismissControlViewTimer();
-    }
-
-    public void startVideo() {
-        prepareMediaPlayer();
-        onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
     }
 
     public void onClickUiToggle() {
@@ -317,11 +327,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public void setProgressAndText() {
-        super.setProgressAndText();
-        int position = getCurrentPositionWhenPlaying();
-        int duration = getDuration();
-        int progress = position * 100 / (duration == 0 ? 1 : duration);
+    public void setProgressAndText(int progress, int position, int duration) {
+        super.setProgressAndText(progress, position, duration);
         if (progress != 0) bottomProgressBar.setProgress(progress);
     }
 
