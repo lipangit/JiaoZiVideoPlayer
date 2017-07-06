@@ -336,7 +336,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public void onPrepared() {
         Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
 
-        if (currentState != CURRENT_STATE_PREPARING) return;
+        if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PLAYING_BUFFERING_START)
+            return;
         if (seekToInAdvance != 0) {
             JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
             seekToInAdvance = 0;
@@ -432,7 +433,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
             if (BACKUP_PLAYING_BUFFERING_STATE != -1) {
-                setState(BACKUP_PLAYING_BUFFERING_STATE);
+                if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
+                    setState(BACKUP_PLAYING_BUFFERING_STATE);
+                }
                 BACKUP_PLAYING_BUFFERING_STATE = -1;
             }
             Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
@@ -441,7 +444,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onError(int what, int extra) {
         Log.e(TAG, "onError " + what + " - " + extra + " [" + this.hashCode() + "] ");
-        if (what != 38 && what != -38) {
+        if (what != 38 && what != -38 && extra != -38) {
             onStateError();
             if (isCurrentJcvd()) {
                 JCMediaManager.instance().releaseMediaPlayer();
