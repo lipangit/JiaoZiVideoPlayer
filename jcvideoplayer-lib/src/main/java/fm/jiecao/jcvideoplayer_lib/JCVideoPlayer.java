@@ -892,6 +892,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(
                         ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
             }
+            onEvent(JCUserAction.ON_ENTER_FULLSCREEN);
             startWindowFullscreen();
         }
     }
