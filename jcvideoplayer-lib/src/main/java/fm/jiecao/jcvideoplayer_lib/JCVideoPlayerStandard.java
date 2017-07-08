@@ -587,6 +587,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             startButton.setImageResource(R.drawable.jc_click_pause_selector);
         } else if (currentState == CURRENT_STATE_ERROR) {
             startButton.setImageResource(R.drawable.jc_click_error_selector);
+        } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+            startButton.setImageResource(R.drawable.jc_click_restart_selector);
         } else {
             startButton.setImageResource(R.drawable.jc_click_play_selector);
         }
