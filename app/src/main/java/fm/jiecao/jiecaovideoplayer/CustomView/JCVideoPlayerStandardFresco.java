@@ -47,8 +47,6 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayerStandard {
         super(context, attrs);
     }
 
-<<<<<<< 3ef93e840f336e09e9053f2918a0358bb1d289ba
-=======
     @Override
     public void init(Context context) {
         super.init(context);
@@ -89,40 +87,6 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayerStandard {
     public int getLayoutId() {
         return R.layout.layout_standard_fresco;
     }
-//
-//    @Override
-//    public void setUiWitStateAndScreen(int state) {
-//        super.setUiWitStateAndScreen(state);
-//        switch (currentState) {
-//            case CURRENT_STATE_NORMAL:
-//                changeUiToNormal();
-//                break;
-//            case CURRENT_STATE_PREPARING:
-//                changeUiToPreparingShow();
-//                startDismissControlViewTimer();
-//                break;
-//            case CURRENT_STATE_PLAYING:
-//                changeUiToPlayingShow();
-//                startDismissControlViewTimer();
-//                break;
-//            case CURRENT_STATE_PAUSE:
-//                changeUiToPauseShow();
-//                cancelDismissControlViewTimer();
-//                break;
-//            case CURRENT_STATE_ERROR:
-//                changeUiToError();
-//                break;
-//            case CURRENT_STATE_AUTO_COMPLETE:
-//                changeUiToCompleteShow();
-//                cancelDismissControlViewTimer();
-//                bottomProgressBar.setProgress(100);
-//                break;
-//            case CURRENT_STATE_PLAYING_BUFFERING_START:
-//                changeUiToPlayingBufferingShow();
-//                break;
-//        }
-//    }
->>>>>>> on state call back
 
 
 }

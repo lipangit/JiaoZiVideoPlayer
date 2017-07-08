@@ -21,11 +21,7 @@ public class JCVideoPlayerStandardAutoCompleteAfterFullscreen extends JCVideoPla
     @Override
     public void onAutoCompletion() {
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-<<<<<<< 3ef93e840f336e09e9053f2918a0358bb1d289ba
             onStateAutoComplete();
-=======
-//            setUiWitStateAndScreen(CURRENT_STATE_AUTO_COMPLETE);
->>>>>>> on state call back
         } else {
             super.onAutoCompletion();
         }
