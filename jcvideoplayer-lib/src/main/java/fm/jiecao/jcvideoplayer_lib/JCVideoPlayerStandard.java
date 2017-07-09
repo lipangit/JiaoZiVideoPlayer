@@ -103,38 +103,51 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public void setUiWitStateAndScreen(int state) {
-        super.setUiWitStateAndScreen(state);
-        switch (currentState) {
-            case CURRENT_STATE_NORMAL:
-                changeUiToNormal();
-                break;
-            case CURRENT_STATE_PREPARING:
-                changeUiToPreparingShow();
-                startDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_PLAYING:
-                changeUiToPlayingShow();
-                startDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_PAUSE:
-                changeUiToPauseShow();
-                cancelDismissControlViewTimer();
-                break;
-            case CURRENT_STATE_ERROR:
-                changeUiToError();
-                break;
-            case CURRENT_STATE_AUTO_COMPLETE:
-                changeUiToCompleteShow();
-                cancelDismissControlViewTimer();
-                bottomProgressBar.setProgress(100);
-                break;
-            case CURRENT_STATE_PLAYING_BUFFERING_START:
-                changeUiToPlayingBufferingShow();
-                break;
-        }
+    public void onStateNormal() {
+        super.onStateNormal();
+        changeUiToNormal();
     }
 
+    @Override
+    public void onStatePreparing() {
+        super.onStatePreparing();
+        changeUiToPreparingShow();
+        startDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStatePlaying() {
+        super.onStatePlaying();
+        changeUiToPlayingShow();
+        startDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStatePause() {
+        super.onStatePause();
+        changeUiToPauseShow();
+        cancelDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStatePlaybackBufferingStart() {
+        super.onStatePlaybackBufferingStart();
+        changeUiToPlayingBufferingShow();
+    }
+
+    @Override
+    public void onStateError() {
+        super.onStateError();
+        changeUiToError();
+    }
+
+    @Override
+    public void onStateAutoComplete() {
+        super.onStateAutoComplete();
+        changeUiToCompleteShow();
+        cancelDismissControlViewTimer();
+        bottomProgressBar.setProgress(100);
+    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -183,9 +196,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             if (currentState == CURRENT_STATE_NORMAL) {
                 if (!url.startsWith("file") && !url.startsWith("/") &&
                         !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog();
+                    showWifiDialog(JCUserActionStandard.ON_CLICK_START_THUMB);
                     return;
                 }
+                onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
@@ -201,14 +215,15 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
 
     @Override
-    public void showWifiDialog() {
-        super.showWifiDialog();
+    public void showWifiDialog(int action) {
+        super.showWifiDialog(action);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(getResources().getString(R.string.tips_not_wifi));
         builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }
@@ -246,11 +261,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onStopTrackingTouch(SeekBar seekBar) {
         super.onStopTrackingTouch(seekBar);
         startDismissControlViewTimer();
-    }
-
-    public void startVideo() {
-        prepareMediaPlayer();
-        onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
     }
 
     public void onClickUiToggle() {
@@ -317,11 +327,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public void setProgressAndText() {
-        super.setProgressAndText();
-        int position = getCurrentPositionWhenPlaying();
-        int duration = getDuration();
-        int progress = position * 100 / (duration == 0 ? 1 : duration);
+    public void setProgressAndText(int progress, int position, int duration) {
+        super.setProgressAndText(progress, position, duration);
         if (progress != 0) bottomProgressBar.setProgress(progress);
     }
 
@@ -601,15 +608,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mDialogSeekTime = ((TextView) localView.findViewById(R.id.tv_current));
             mDialogTotalTime = ((TextView) localView.findViewById(R.id.tv_duration));
             mDialogIcon = ((ImageView) localView.findViewById(R.id.duration_image_tip));
-            mProgressDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
-            mProgressDialog.setContentView(localView);
-            mProgressDialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
-            mProgressDialog.getWindow().addFlags(32);
-            mProgressDialog.getWindow().addFlags(16);
-            mProgressDialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = mProgressDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = Gravity.CENTER;
-            mProgressDialog.getWindow().setAttributes(localLayoutParams);
+            mProgressDialog = createDialogWithView(localView);
         }
         if (!mProgressDialog.isShowing()) {
             mProgressDialog.show();
@@ -647,15 +646,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mDialogVolumeImageView = ((ImageView) localView.findViewById(R.id.volume_image_tip));
             mDialogVolumeTextView = ((TextView) localView.findViewById(R.id.tv_volume));
             mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
-            mVolumeDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
-            mVolumeDialog.setContentView(localView);
-            mVolumeDialog.getWindow().addFlags(8);
-            mVolumeDialog.getWindow().addFlags(32);
-            mVolumeDialog.getWindow().addFlags(16);
-            mVolumeDialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = mVolumeDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = Gravity.CENTER;
-            mVolumeDialog.getWindow().setAttributes(localLayoutParams);
+            mVolumeDialog = createDialogWithView(localView);
         }
         if (!mVolumeDialog.isShowing()) {
             mVolumeDialog.show();
@@ -694,16 +685,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_brightness, null);
             mDialogBrightnessTextView = ((TextView) localView.findViewById(R.id.tv_brightness));
             mDialogBrightnessProgressBar = ((ProgressBar) localView.findViewById(R.id.brightness_progressbar));
-            mBrightnessDialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
-            mBrightnessDialog.setContentView(localView);
-            mBrightnessDialog.getWindow().addFlags(Window.FEATURE_ACTION_BAR);
-            mBrightnessDialog.getWindow().addFlags(32);
-            mBrightnessDialog.getWindow().addFlags(16);
-            mBrightnessDialog.getWindow().setLayout(-2, -2);
-            WindowManager.LayoutParams localLayoutParams = mBrightnessDialog.getWindow().getAttributes();
-            localLayoutParams.gravity = Gravity.CENTER;
-            mBrightnessDialog.getWindow().setAttributes(localLayoutParams);
-
+            mBrightnessDialog = createDialogWithView(localView);
         }
         if (!mBrightnessDialog.isShowing()) {
             mBrightnessDialog.show();
@@ -724,6 +706,20 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         if (mBrightnessDialog != null) {
             mBrightnessDialog.dismiss();
         }
+    }
+
+    public Dialog createDialogWithView(View localView) {
+        Dialog dialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
+        dialog.setContentView(localView);
+        Window window = dialog.getWindow();
+        window.addFlags(Window.FEATURE_ACTION_BAR);
+        window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+        window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        window.setLayout(-2, -2);
+        WindowManager.LayoutParams localLayoutParams = window.getAttributes();
+        localLayoutParams.gravity = Gravity.CENTER;
+        window.setAttributes(localLayoutParams);
+        return dialog;
     }
 
     public void startDismissControlViewTimer() {

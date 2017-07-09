@@ -1,6 +1,9 @@
 package fm.jiecao.jiecaovideoplayer;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +21,8 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  * On 2016/02/07 01:01
  */
 public class ListViewViewpagerActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+    List<DemoFragment> fragmentList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,20 +33,11 @@ public class ListViewViewpagerActivity extends AppCompatActivity implements View
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setTitle("ViewPagerAndListView");
 
-        List<View> listViews = new ArrayList<>();
-        ListView listView1 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);
-        ListView listView2 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);
-        ListView listView3 = (ListView) getLayoutInflater().inflate(R.layout.layout_list, null);
+        fragmentList.add(new DemoFragment().setIndex(0));
+        fragmentList.add(new DemoFragment().setIndex(1));
+        fragmentList.add(new DemoFragment().setIndex(2));
 
-        listView1.setAdapter(new VideoListAdapter(this, 0));
-        listView2.setAdapter(new VideoListAdapter(this, 1));
-        listView3.setAdapter(new VideoListAdapter(this, 2));
-
-        listViews.add(listView1);
-        listViews.add(listView2);
-        listViews.add(listView3);
-
-        MyAdapter myAdapter = new MyAdapter(listViews);
+        MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager());
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(myAdapter);
         viewPager.setOnPageChangeListener(this);
@@ -68,36 +64,22 @@ public class ListViewViewpagerActivity extends AppCompatActivity implements View
 
     }
 
-    public class MyAdapter extends PagerAdapter {
+    public class MyAdapter extends FragmentPagerAdapter {
 
-        List<View> viewLists;
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-        public MyAdapter(List<View> lists) {
-            viewLists = lists;
+        @Override
+        public Fragment getItem(int i) {
+            return fragmentList.get(i);
         }
 
         @Override
         public int getCount() {
-            // TODO Auto-generated method stub
-            return viewLists.size();
+            return fragmentList.size();
         }
 
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            // TODO Auto-generated method stub
-            return arg0 == arg1;
-        }
-
-        @Override
-        public void destroyItem(View view, int position, Object object) {
-            ((ViewPager) view).removeView(viewLists.get(position));
-        }
-
-        @Override
-        public Object instantiateItem(View view, int position) {
-            ((ViewPager) view).addView(viewLists.get(position), 0);
-            return viewLists.get(position);
-        }
     }
 
     @Override

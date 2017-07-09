@@ -13,15 +13,4 @@
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 
-    <style name="jc_vertical_progressBar">
-        <item name="android:maxWidth">12dp</item>
-        <item name="android:indeterminateOnly">false</item>
-        <item name="android:indeterminateDrawable">
-            @android:drawable/progress_indeterminate_horizontal
-        </item>
-        <item name="android:progressDrawable">@drawable/jc_volume_progress_bg</item>
-        <item name="android:indeterminateDuration">3500</item>
-        <item name="android:indeterminateBehavior">repeat</item>
-        <item name="android:minWidth">1dp</item>
-    </style>
 </resources>

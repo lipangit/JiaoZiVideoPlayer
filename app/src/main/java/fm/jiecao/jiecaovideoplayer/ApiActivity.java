@@ -70,7 +70,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
 //        cpAssertVideoToLocalPath();
 //        mJcVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
 //                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
-        /** Play video in assert **/
+        /** Play video in assert, but not work now **/
 //        mJcVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
 //                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
 
