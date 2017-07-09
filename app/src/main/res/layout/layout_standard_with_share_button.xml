@@ -50,8 +50,8 @@
             android:layout_weight="1.0"
             android:background="@null"
             android:max="100"
-            android:maxHeight="1.0dip"
-            android:minHeight="1.0dip"
+            android:maxHeight="1dp"
+            android:minHeight="1dp"
             android:paddingBottom="8dp"
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
@@ -70,8 +70,8 @@
             android:id="@+id/fullscreen"
             android:layout_width="24.5dp"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="14.0dip"
-            android:layout_marginRight="14.0dip"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="14dp"
             android:scaleType="centerInside"
             android:src="@drawable/jc_enlarge" />
     </LinearLayout>
