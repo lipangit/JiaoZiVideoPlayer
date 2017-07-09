@@ -144,7 +144,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void onStateAutoComplete() {
         super.onStateAutoComplete();
-        changeUiToCompleteShow();
+        changeUiToCompleteClear();
         cancelDismissControlViewTimer();
         bottomProgressBar.setProgress(100);
     }
@@ -281,12 +281,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 changeUiToPauseClear();
             } else {
                 changeUiToPauseShow();
-            }
-        } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
-            if (bottomContainer.getVisibility() == View.VISIBLE) {
-                changeUiToCompleteClear();
-            } else {
-                changeUiToCompleteShow();
             }
         } else if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
@@ -538,12 +532,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         switch (currentScreen) {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
-                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
-                setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
