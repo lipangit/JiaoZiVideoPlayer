@@ -143,8 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/battery_level_10"
-                android:paddingTop="10.0dip" />
+                android:background="@drawable/battery_level_10" />
 
             <TextView
                 android:id="@+id/video_current_time"

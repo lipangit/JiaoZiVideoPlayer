@@ -15,11 +15,14 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -36,7 +39,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public TextView titleTextView;
     public ImageView thumbImageView;
     public ImageView tinyBackImageView;
-
+    public LinearLayout batteryTimeLayout;
+    public ImageView battery_level;
+    public TextView video_current_time;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
@@ -52,12 +57,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void init(Context context) {
         super.init(context);
+
+        batteryTimeLayout = (LinearLayout) findViewById(R.id.battery_time_layout);
         bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progress);
         titleTextView = (TextView) findViewById(R.id.title);
         backButton = (ImageView) findViewById(R.id.back);
         thumbImageView = (ImageView) findViewById(R.id.thumb);
         loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
+        battery_level = (ImageView) findViewById(R.id.battery_level);
+        video_current_time = (TextView) findViewById(R.id.video_current_time);
+
 
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
@@ -74,6 +84,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             fullscreenButton.setImageResource(R.drawable.jc_shrink);
             backButton.setVisibility(View.VISIBLE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
+            batteryTimeLayout.setVisibility(View.VISIBLE);
             changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_fullscreen));
         } else if (currentScreen == SCREEN_LAYOUT_NORMAL
                 || currentScreen == SCREEN_LAYOUT_LIST) {
@@ -81,11 +92,20 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backButton.setVisibility(View.GONE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
             changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_normal));
+            batteryTimeLayout.setVisibility(View.INVISIBLE);
         } else if (currentScreen == SCREEN_WINDOW_TINY) {
             tinyBackImageView.setVisibility(View.VISIBLE);
             setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                     View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+            batteryTimeLayout.setVisibility(View.INVISIBLE);
         }
+        setSystemText();
+    }
+
+    public void setSystemText() {
+        SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm");
+        Date date = new Date();
+        video_current_time.setText(dateFormater.format(date));
     }
 
     public void changeStartButtonSize(int size) {
