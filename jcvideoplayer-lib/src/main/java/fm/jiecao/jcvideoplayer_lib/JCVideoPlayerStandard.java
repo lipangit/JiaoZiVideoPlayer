@@ -334,17 +334,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 int level = intent.getIntExtra("level", 0);
                 int scale = intent.getIntExtra("scale", 100);
                 int percent = level * 100 / scale;
-                if (percent < 10) {
+                if (percent < 15) {
                     battery_level.setBackgroundResource(R.drawable.battery_level_10);
-                } else if (percent >= 10 && percent < 30) {
+                } else if (percent >= 15 && percent < 40) {
                     battery_level.setBackgroundResource(R.drawable.battery_level_30);
-                } else if (percent >= 30 && percent < 50) {
+                } else if (percent >= 40 && percent < 60) {
                     battery_level.setBackgroundResource(R.drawable.battery_level_50);
-                } else if (percent >= 50 && percent < 70) {
+                } else if (percent >= 60 && percent < 80) {
                     battery_level.setBackgroundResource(R.drawable.battery_level_70);
-                } else if (percent >= 70 && percent < 90) {
+                } else if (percent >= 80 && percent < 95) {
                     battery_level.setBackgroundResource(R.drawable.battery_level_90);
-                } else {
+                } else if (percent >= 95 && percent <= 100) {
                     battery_level.setBackgroundResource(R.drawable.battery_level_100);
                 }
                 getContext().unregisterReceiver(battertReceiver);
