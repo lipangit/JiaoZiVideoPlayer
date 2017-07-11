@@ -99,6 +99,9 @@
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:background="@drawable/jc_title_bg"
         android:gravity="center_vertical">
 
@@ -110,6 +113,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:paddingLeft="12dp"
+            android:paddingStart="12dp"
             android:scaleType="centerInside"
             android:src="@drawable/jc_click_back_selector" />
 
@@ -118,11 +122,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:layout_toEndOf="@+id/back"
             android:layout_toRightOf="@+id/back"
-            android:paddingLeft="12dp"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
@@ -140,8 +143,8 @@
 
             <ImageView
                 android:id="@+id/battery_level"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="23dp"
+                android:layout_height="10dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/battery_level_10" />
 

@@ -3,8 +3,11 @@ package fm.jiecao.jcvideoplayer_lib;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -99,13 +102,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
             batteryTimeLayout.setVisibility(View.INVISIBLE);
         }
-        setSystemText();
-    }
-
-    public void setSystemText() {
-        SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm");
-        Date date = new Date();
-        video_current_time.setText(dateFormater.format(date));
+        setSystemTimeAndBattery();
     }
 
     public void changeStartButtonSize(int size) {
@@ -284,11 +281,16 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     public void onClickUiToggle() {
+        if (bottomContainer.getVisibility() != View.VISIBLE) {
+
+            setSystemTimeAndBattery();
+        }
         if (currentState == CURRENT_STATE_PREPARING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPreparingClear();
             } else {
                 changeUiToPreparingShow();
+                setSystemTimeAndBattery();
             }
         } else if (currentState == CURRENT_STATE_PLAYING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
@@ -310,6 +312,46 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             }
         }
     }
+
+    public void setSystemTimeAndBattery() {
+        SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm");
+        Date date = new Date();
+        video_current_time.setText(dateFormater.format(date));
+        if (!brocasting) {
+            getContext().registerReceiver(
+                    battertReceiver,
+                    new IntentFilter(Intent.ACTION_BATTERY_CHANGED)
+            );
+        }
+    }
+
+    private boolean brocasting = false;
+
+    private BroadcastReceiver battertReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
+                int level = intent.getIntExtra("level", 0);
+                int scale = intent.getIntExtra("scale", 100);
+                int percent = level * 100 / scale;
+                if (percent < 10) {
+                    battery_level.setBackgroundResource(R.drawable.battery_level_10);
+                } else if (percent >= 10 && percent < 30) {
+                    battery_level.setBackgroundResource(R.drawable.battery_level_30);
+                } else if (percent >= 30 && percent < 50) {
+                    battery_level.setBackgroundResource(R.drawable.battery_level_50);
+                } else if (percent >= 50 && percent < 70) {
+                    battery_level.setBackgroundResource(R.drawable.battery_level_70);
+                } else if (percent >= 70 && percent < 90) {
+                    battery_level.setBackgroundResource(R.drawable.battery_level_90);
+                } else {
+                    battery_level.setBackgroundResource(R.drawable.battery_level_100);
+                }
+                getContext().unregisterReceiver(battertReceiver);
+                brocasting = false;
+            }
+        }
+    };
 
     public void onCLickUiToggleToClear() {
         if (currentState == CURRENT_STATE_PREPARING) {
