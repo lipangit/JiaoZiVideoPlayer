@@ -146,7 +146,7 @@
                 android:layout_width="23dp"
                 android:layout_height="10dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/battery_level_10" />
+                android:background="@drawable/jc_battery_level_10" />
 
             <TextView
                 android:id="@+id/video_current_time"
