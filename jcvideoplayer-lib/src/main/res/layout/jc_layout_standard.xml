@@ -195,5 +195,6 @@
         android:layout_marginTop="6dp"
         android:text="@string/replay"
         android:textColor="#ffffff"
+        android:textSize="13sp"
         android:visibility="invisible" />
 </RelativeLayout>
