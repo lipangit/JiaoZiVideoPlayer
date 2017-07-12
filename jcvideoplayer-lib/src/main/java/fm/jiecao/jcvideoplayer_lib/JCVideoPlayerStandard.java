@@ -648,7 +648,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             startButton.setImageResource(R.drawable.jc_click_error_selector);
             retryTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
-            startButton.setImageResource(R.drawable.jc_click_restart_selector);
+            startButton.setImageResource(R.drawable.jc_click_replay_selector);
             retryTextView.setVisibility(VISIBLE);
         } else {
             startButton.setImageResource(R.drawable.jc_click_play_selector);
