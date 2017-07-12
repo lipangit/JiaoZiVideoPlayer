@@ -4,4 +4,5 @@
     <string name="tips_not_wifi_confirm">继续播放</string>
     <string name="tips_not_wifi_cancel">停止播放</string>
     <string name="no_url">播放地址无效</string>
+    <string name="replay">重播</string>
 </resources>

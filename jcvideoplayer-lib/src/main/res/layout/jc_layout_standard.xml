@@ -171,6 +171,7 @@
         android:visibility="invisible" />
 
     <LinearLayout
+        android:id="@+id/start_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -185,4 +186,14 @@
     </LinearLayout>
 
 
+    <TextView
+        android:id="@+id/retry_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/start_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="6dp"
+        android:text="@string/replay"
+        android:textColor="#ffffff"
+        android:visibility="invisible" />
 </RelativeLayout>

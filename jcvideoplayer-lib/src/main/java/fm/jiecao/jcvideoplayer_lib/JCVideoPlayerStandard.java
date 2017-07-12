@@ -45,6 +45,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public LinearLayout batteryTimeLayout;
     public ImageView battery_level;
     public TextView video_current_time;
+    public TextView retryTextView;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
@@ -70,6 +71,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
         battery_level = (ImageView) findViewById(R.id.battery_level);
         video_current_time = (TextView) findViewById(R.id.video_current_time);
+        retryTextView = (TextView) findViewById(R.id.retry_text);
 
 
         thumbImageView.setOnClickListener(this);
@@ -641,12 +643,16 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void updateStartImage() {
         if (currentState == CURRENT_STATE_PLAYING) {
             startButton.setImageResource(R.drawable.jc_click_pause_selector);
+            retryTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_ERROR) {
             startButton.setImageResource(R.drawable.jc_click_error_selector);
+            retryTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
             startButton.setImageResource(R.drawable.jc_click_restart_selector);
+            retryTextView.setVisibility(VISIBLE);
         } else {
             startButton.setImageResource(R.drawable.jc_click_play_selector);
+            retryTextView.setVisibility(INVISIBLE);
         }
     }
 
