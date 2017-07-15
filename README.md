@@ -1,5 +1,4 @@
 <a href="https://github.com/lipangit/JieCaoVideoPlayer" target="_blank"><img src="https://user-images.githubusercontent.com/2038071/28239412-461eb2b6-699e-11e7-8eed-3796b28f8a6e.png" style="max-width:100%;"></a>
-![](https://user-images.githubusercontent.com/2038071/28239412-461eb2b6-699e-11e7-8eed-3796b28f8a6e.png)
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
@@ -33,7 +32,7 @@ I think the final solution for play video in android is android.media.MediaPlaye
 
 **[jiecaovideoplayer-5.7.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.7/jiecaovideoplayer-5.7.apk)**
 
-![](https://user-images.githubusercontent.com/2038071/28239401-040b6338-699e-11e7-9a0e-8f53534fb3d7.jpg)
+![Demo Screenshot][1]
 
 ## Usage
 
@@ -102,3 +101,4 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+[1]: https://user-images.githubusercontent.com/2038071/28239401-040b6338-699e-11e7-9a0e-8f53534fb3d7.jpg
