@@ -8,14 +8,16 @@ import android.view.View;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 
 /**
+ * 这里可以监听到视频播放的生命周期和播放状态
+ * 所有关于视频的逻辑都应该写在这里
  * Created by Nathen on 2017/7/2.
  */
-public class JCVideoPlayerStandardShowState extends JCVideoPlayerStandard {
-    public JCVideoPlayerStandardShowState(Context context) {
+public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
+    public MyJCVideoPlayerStandard(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerStandardShowState(Context context, AttributeSet attrs) {
+    public MyJCVideoPlayerStandard(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

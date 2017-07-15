@@ -14,6 +14,7 @@ import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
+import fm.jiecao.jiecaovideoplayer.CustomView.MyJCVideoPlayerStandard;
 
 /**
  * Created by Nathen on 16/7/22.
@@ -21,7 +22,7 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    JCVideoPlayerStandard mJcVideoPlayerStandard;
+    MyJCVideoPlayerStandard myJCVideoPlayerStandard;
 
     Button mTinyWindow, mAutoTinyWindow, mAboutListView, mPlayDirectly, mAboutApi, mAboutWebView;
 
@@ -44,12 +45,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAboutApi.setOnClickListener(this);
         mAboutWebView.setOnClickListener(this);
 
-        mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
-        mJcVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
+        myJCVideoPlayerStandard = (MyJCVideoPlayerStandard) findViewById(R.id.jc_video);
+        myJCVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
-                .into(mJcVideoPlayerStandard.thumbImageView);
+                .into(myJCVideoPlayerStandard.thumbImageView);
 
         JCVideoPlayer.setJcUserAction(new MyUserActionStandard());
     }
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tiny_window:
-                mJcVideoPlayerStandard.startWindowTiny();
+                myJCVideoPlayerStandard.startWindowTiny();
                 break;
             case R.id.auto_tiny_window:
                 startActivity(new Intent(MainActivity.this, AutoTinyActivity.class));

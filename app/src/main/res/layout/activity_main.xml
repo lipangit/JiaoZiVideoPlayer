@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+            <fm.jiecao.jiecaovideoplayer.CustomView.MyJCVideoPlayerStandard
                 android:id="@+id/jc_video"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
