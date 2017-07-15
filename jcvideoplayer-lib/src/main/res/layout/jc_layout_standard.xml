@@ -122,11 +122,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
             android:layout_marginLeft="12dp"
+            android:layout_marginRight="8dp"
             android:layout_marginStart="12dp"
             android:layout_toEndOf="@+id/back"
+            android:layout_toLeftOf="@+id/battery_time_layout"
             android:layout_toRightOf="@+id/back"
-            android:textColor="@android:color/white"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#ffffff"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -155,7 +160,6 @@
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_vertical"
                 android:maxLines="1"
-                android:text="11:11"
                 android:textColor="#ffffffff"
                 android:textSize="12.0sp" />
         </LinearLayout>

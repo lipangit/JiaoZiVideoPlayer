@@ -97,12 +97,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backButton.setVisibility(View.GONE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
             changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_normal));
-            batteryTimeLayout.setVisibility(View.INVISIBLE);
+            batteryTimeLayout.setVisibility(View.GONE);
         } else if (currentScreen == SCREEN_WINDOW_TINY) {
             tinyBackImageView.setVisibility(View.VISIBLE);
             setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                     View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-            batteryTimeLayout.setVisibility(View.INVISIBLE);
+            batteryTimeLayout.setVisibility(View.GONE);
         }
         setSystemTimeAndBattery();
     }
