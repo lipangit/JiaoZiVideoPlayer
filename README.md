@@ -1,5 +1,5 @@
-<a href="https://github.com/lipangit/JieCaoVideoPlayer" target="_blank"><img src="" style="max-width:100%;"></a>
-![](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.7/logo2x.png)
+<a href="https://github.com/lipangit/JieCaoVideoPlayer" target="_blank"><img src="https://user-images.githubusercontent.com/2038071/28239412-461eb2b6-699e-11e7-8eed-3796b28f8a6e.png" style="max-width:100%;"></a>
+![](https://user-images.githubusercontent.com/2038071/28239412-461eb2b6-699e-11e7-8eed-3796b28f8a6e.png)
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
@@ -33,7 +33,7 @@ I think the final solution for play video in android is android.media.MediaPlaye
 
 **[jiecaovideoplayer-5.7.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.7/jiecaovideoplayer-5.7.apk)**
 
-![](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.7/j10.jpg)
+![](https://user-images.githubusercontent.com/2038071/28239401-040b6338-699e-11e7-9a0e-8f53534fb3d7.jpg)
 
 ## Usage
 
