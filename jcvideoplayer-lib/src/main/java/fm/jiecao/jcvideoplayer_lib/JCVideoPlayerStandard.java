@@ -107,6 +107,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         setSystemTimeAndBattery();
     }
 
+    public void changeUrlAndPlay(String url, Object... objects) {
+        super.changeUrlAndPlay(url, objects);
+        loadingProgressBar.setVisibility(VISIBLE);
+    }
+
     public void changeStartButtonSize(int size) {
         ViewGroup.LayoutParams lp = startButton.getLayoutParams();
         lp.height = size;

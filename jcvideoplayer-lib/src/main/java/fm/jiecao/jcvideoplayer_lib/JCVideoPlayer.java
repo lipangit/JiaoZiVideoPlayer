@@ -153,6 +153,17 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         onStateNormal();
     }
 
+    public void changeUrlAndPlay(String url, Object... objects) {
+        this.url = url;
+        this.objects = objects;
+        JCMediaManager.CURRENT_PLAYING_URL = this.url;
+        JCMediaManager.CURRENT_PLING_LOOP = this.loop;
+        JCMediaManager.MAP_HEADER_DATA = this.headData;
+
+        JCMediaManager.instance().prepare();
+//        onStatePreparing();
+    }
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
