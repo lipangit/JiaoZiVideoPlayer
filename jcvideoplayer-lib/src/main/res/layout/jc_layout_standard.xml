@@ -67,6 +67,15 @@
             android:text="00:00"
             android:textColor="#ffffff" />
 
+        <TextView
+            android:id="@+id/quality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:paddingLeft="8dp"
+            android:text="标清"
+            android:textColor="#ffffff" />
+
         <ImageView
             android:id="@+id/fullscreen"
             android:layout_width="52.5dp"
