@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -247,11 +248,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             quality_normal.setOnClickListener(this);
             quality_high.setOnClickListener(this);
             quality_super.setOnClickListener(this);
-            pw = new PopupWindow(layout,0,400,true);
+            pw = new PopupWindow(layout, 0, 400, true);
             pw.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
             pw.setContentView(layout);
             TextView tv = (TextView) findViewById(R.id.quality);
-            pw.showAsDropDown(tv,-65,-10);
+            pw.showAsDropDown(tv, -65, -10);
         } else if (i == R.id.quality_normal || i == R.id.quality_high || i == R.id.quality_super) {
             Log.e(TAG, "Quality: " + String.valueOf(i));
         }
