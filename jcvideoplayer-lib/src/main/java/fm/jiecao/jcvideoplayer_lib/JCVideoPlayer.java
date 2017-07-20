@@ -154,17 +154,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         onStateNormal();
     }
 
-    public void changeUrlAndPlay(String url, Object... objects) {
-        this.url = url;
-        this.objects = objects;
-        JCMediaManager.CURRENT_PLAYING_URL = this.url;
-        JCMediaManager.CURRENT_PLING_LOOP = this.loop;
-        JCMediaManager.MAP_HEADER_DATA = this.headData;
-
-        JCMediaManager.instance().prepare();
-//        onStatePreparing();
-    }
-
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -372,6 +361,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             case CURRENT_STATE_PREPARING:
                 onStatePreparing();
                 break;
+            case CURRENT_STATE_PREPARING_CHANGING_URL:
+//                onStatePreparingChangingUrl();
+                break;
             case CURRENT_STATE_PLAYING:
                 onStatePlaying();
                 break;
@@ -399,10 +391,27 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
+    public void changeUrlAndPlay(String url, Object... objects) {
+        this.url = url;
+        this.objects = objects;
+        JCMediaManager.CURRENT_PLAYING_URL = this.url;
+        JCMediaManager.CURRENT_PLING_LOOP = this.loop;
+        JCMediaManager.MAP_HEADER_DATA = this.headData;
+
+        JCMediaManager.instance().prepare();
+//        onStatePreparing();
+    }
+
     public void onStatePreparing() {
         Log.i(TAG, "onStatePreparing " + " [" + this.hashCode() + "] ");
         currentState = CURRENT_STATE_PREPARING;
         resetProgressAndTime();
+    }
+
+    public void onStatePreparingChangingUrl(String tag) {
+        currentState = CURRENT_STATE_PREPARING_CHANGING_URL;
+        //播放从map里取得这个tag的url
+
     }
 
     public void onStatePlaying() {

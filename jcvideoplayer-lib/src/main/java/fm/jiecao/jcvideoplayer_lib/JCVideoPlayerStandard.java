@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -137,6 +138,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.onStatePreparing();
         changeUiToPreparingShow();
         startDismissControlViewTimer();
+    }
+
+    @Override
+    public void onStatePreparingChangingUrl(String tag) {
+        super.onStatePreparingChangingUrl(tag);
+
     }
 
     @Override
