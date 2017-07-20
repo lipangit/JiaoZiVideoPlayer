@@ -60,8 +60,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static final int CURRENT_STATE_NORMAL = 0;
     public static final int CURRENT_STATE_PREPARING = 1;
-    public static final int CURRENT_STATE_PLAYING = 2;
-    public static final int CURRENT_STATE_PLAYING_BUFFERING_START = 3;
+    public static final int CURRENT_STATE_PREPARING_CHANGING_URL = 2;
+    public static final int CURRENT_STATE_PLAYING = 3;
+    public static final int CURRENT_STATE_PLAYING_BUFFERING_START = 4;
     public static final int CURRENT_STATE_PAUSE = 5;
     public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
     public static final int CURRENT_STATE_ERROR = 7;
