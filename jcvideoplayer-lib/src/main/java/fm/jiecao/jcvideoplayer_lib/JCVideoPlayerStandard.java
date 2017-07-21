@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -80,9 +81,13 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    @Override
-    public void setUp(String url, int screen, Object... objects) {
-        super.setUp(url, screen, objects);
+//    @Override
+//    public void setUp(String url, int screen, Object... objects) {
+//        super.setUp(url, screen, objects);
+//    }
+
+    public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
+        super.setUp(urlMap, defaultUrlMapIndex, screen, objects);
         if (objects.length == 0) return;
         titleTextView.setText(objects[0].toString());
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
@@ -140,8 +145,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public void onStatePreparingChangingUrl(int urlMapIndex) {
-        super.onStatePreparingChangingUrl(urlMapIndex);
+    public void onStatePreparingChangingUrl(int urlMapIndex, int seekToInAdvance) {
+        super.onStatePreparingChangingUrl(urlMapIndex, seekToInAdvance);
 
     }
 

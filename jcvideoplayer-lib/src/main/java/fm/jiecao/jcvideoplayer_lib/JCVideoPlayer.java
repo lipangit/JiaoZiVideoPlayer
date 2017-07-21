@@ -365,6 +365,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setState(int state) {
+        setState(state, 0, 0);
+    }
+
+    public void setState(int state, int urlMapIndex, int seekToInAdvance) {
         switch (state) {
             case CURRENT_STATE_NORMAL:
                 onStateNormal();
@@ -373,7 +377,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 onStatePreparing();
                 break;
             case CURRENT_STATE_PREPARING_CHANGING_URL:
-//                onStatePreparingChangingUrl();
+                onStatePreparingChangingUrl(urlMapIndex, seekToInAdvance);
                 break;
             case CURRENT_STATE_PLAYING:
                 onStatePlaying();
@@ -408,9 +412,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         resetProgressAndTime();
     }
 
-    public void onStatePreparingChangingUrl(int urlMapIndex) {
+    public void onStatePreparingChangingUrl(int urlMapIndex, int seekToInAdvance) {
         currentState = CURRENT_STATE_PREPARING_CHANGING_URL;
         this.currentUrlMapIndex = urlMapIndex;
+        this.seekToInAdvance = seekToInAdvance;
         JCMediaManager.CURRENT_PLAYING_URL = JCUtils.getCurrentUrlFromMap(urlMap, this.currentUrlMapIndex);
         JCMediaManager.CURRENT_PLING_LOOP = this.loop;
         JCMediaManager.MAP_HEADER_DATA = this.headData;

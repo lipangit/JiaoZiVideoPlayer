@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.LinkedHashMap;
+
 import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -46,8 +48,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAboutWebView.setOnClickListener(this);
 
         myJCVideoPlayerStandard = (MyJCVideoPlayerStandard) findViewById(R.id.jc_video);
-        myJCVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
+
+        LinkedHashMap map = new LinkedHashMap();
+        map.put("高清", "http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4");
+        map.put("标清", "http://video.jiecao.fm/8/16/%E4%BF%AF%E5%8D%A7%E6%92%91.mp4");
+        map.put("普清", "http://video.jiecao.fm/8/16/%E9%B8%AD%E5%AD%90.mp4");
+        myJCVideoPlayerStandard.setUp(map, 0
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+
+
+//        myJCVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
+//                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
                 .into(myJCVideoPlayerStandard.thumbImageView);
