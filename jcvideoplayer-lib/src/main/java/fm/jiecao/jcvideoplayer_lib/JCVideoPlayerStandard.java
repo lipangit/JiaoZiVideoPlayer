@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -141,8 +140,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     @Override
-    public void onStatePreparingChangingUrl(String tag) {
-        super.onStatePreparingChangingUrl(tag);
+    public void onStatePreparingChangingUrl(int urlMapIndex) {
+        super.onStatePreparingChangingUrl(urlMapIndex);
 
     }
 
@@ -220,13 +219,13 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.thumb) {
-            if (TextUtils.isEmpty(JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex))) {
+            if (TextUtils.isEmpty(JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
             if (currentState == CURRENT_STATE_NORMAL) {
-                if (!JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex).startsWith("file") &&
-                        !JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex).startsWith("/") &&
+                if (!JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("file") &&
+                        !JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("/") &&
                         !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog(JCUserActionStandard.ON_CLICK_START_THUMB);
                     return;

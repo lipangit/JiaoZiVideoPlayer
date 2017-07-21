@@ -126,7 +126,7 @@ public class JCUtils {
 
     public static String getCurrentUrlFromMap(LinkedHashMap<String, String> map, int index) {
         if (map.size() == 1) {
-            return map.get(JCVideoPlayer.URL_KEY_DEFAULT);
+            return getIndexFromLinkedMap(map, index);
         } else {
             return getIndexFromLinkedMap(map, index);
         }
