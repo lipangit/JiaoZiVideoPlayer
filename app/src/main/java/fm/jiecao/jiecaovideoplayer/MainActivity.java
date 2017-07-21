@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAboutWebView.setOnClickListener(this);
 
         myJCVideoPlayerStandard = (MyJCVideoPlayerStandard) findViewById(R.id.jc_video);
-        myJCVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
+        myJCVideoPlayerStandard.setUp("http://sg.v-ask.net/954-1500438087235-export.mp4"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tiny_window:
-                myJCVideoPlayerStandard.changeUrlAndPlay("http://video.jiecao.fm/11/16/c/68Tlrc9zNi3JomXpd-nUog__.mp4");
+//                myJCVideoPlayerStandard.changeUrlAndPlay("http://video.jiecao.fm/11/16/c/68Tlrc9zNi3JomXpd-nUog__.mp4");
 //                myJCVideoPlayerStandard.startWindowTiny();
                 break;
             case R.id.auto_tiny_window:

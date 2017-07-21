@@ -28,6 +28,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -74,7 +76,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public boolean loop = false;
     public Map<String, String> headData;
 
-    public String url = "";
+    //    public String url = "";
     public Object[] objects = null;
     public int seekToInAdvance = 0;
 
@@ -144,10 +146,18 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setUp(String url, int screen, Object... objects) {
-        if (!TextUtils.isEmpty(this.url) && TextUtils.equals(this.url, url)) {
-            return;
-        }
-        this.url = url;
+        LinkedHashMap map = new LinkedHashMap();
+        map.put(URL_KEY_DEFAULT, url);
+        setUp(map, screen, objects);
+    }
+
+    LinkedHashMap urlMap;
+    int urlMapIndex = 0;
+
+    public static final String URL_KEY_DEFAULT = "URL_KEY_DEFAULT";
+
+    public void setUp(LinkedHashMap urlMap, int screen, Object... objects) {
+        this.urlMap = urlMap;
         this.objects = objects;
         this.currentScreen = screen;
         this.headData = null;
@@ -159,12 +169,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         int i = v.getId();
         if (i == R.id.start) {
             Log.i(TAG, "onClick start [" + this.hashCode() + "] ");
-            if (TextUtils.isEmpty(url)) {
+            if (TextUtils.isEmpty(JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex))) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
             if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR) {
-                if (!url.startsWith("file") && !url.startsWith("/") &&
+                if (!JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex).startsWith("file") && !
+                        JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex).startsWith("/") &&
                         !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog(JCUserActionStandard.ON_CLICK_START_ICON);
                     return;
@@ -328,7 +339,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        JCMediaManager.CURRENT_PLAYING_URL = url;
+        JCMediaManager.CURRENT_PLAYING_URL = JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex);
         JCMediaManager.CURRENT_PLING_LOOP = loop;
         JCMediaManager.MAP_HEADER_DATA = headData;
         onStatePreparing();
@@ -344,7 +355,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
             seekToInAdvance = 0;
         } else {
-            int position = JCUtils.getSavedProgress(getContext(), url);
+            int position = JCUtils.getSavedProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex));
             if (position != 0) {
                 JCMediaManager.instance().mediaPlayer.seekTo(position);
             }
@@ -391,16 +402,16 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    public void changeUrlAndPlay(String url, Object... objects) {
-        this.url = url;
-        this.objects = objects;
-        JCMediaManager.CURRENT_PLAYING_URL = this.url;
-        JCMediaManager.CURRENT_PLING_LOOP = this.loop;
-        JCMediaManager.MAP_HEADER_DATA = this.headData;
-
-        JCMediaManager.instance().prepare();
-//        onStatePreparing();
-    }
+//    public void changeUrlAndPlay(String url, Object... objects) {
+//        this.url = url;
+//        this.objects = objects;
+//        JCMediaManager.CURRENT_PLAYING_URL = this.url;
+//        JCMediaManager.CURRENT_PLING_LOOP = this.loop;
+//        JCMediaManager.MAP_HEADER_DATA = this.headData;
+//
+//        JCMediaManager.instance().prepare();
+////        onStatePreparing();
+//    }
 
     public void onStatePreparing() {
         Log.i(TAG, "onStatePreparing " + " [" + this.hashCode() + "] ");
@@ -511,7 +522,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             backPress();
         }
-        JCUtils.saveProgress(getContext(), url, 0);
+        JCUtils.saveProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex), 0);
     }
 
     public void onCompletion() {
@@ -520,7 +531,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
             int position = getCurrentPositionWhenPlaying();
 //            int duration = getDuration();
-            JCUtils.saveProgress(getContext(), url, position);
+            JCUtils.saveProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex), position);
         }
         cancelProgressTimer();
         onStateNormal();
@@ -540,7 +551,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void release() {
-        if (url.equals(JCMediaManager.CURRENT_PLAYING_URL) &&
+        if (JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex).equals(JCMediaManager.CURRENT_PLAYING_URL) &&
                 (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
             //在非全屏的情况下只能backPress()
             if (JCVideoPlayerManager.getSecondFloor() != null &&
@@ -752,7 +763,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jcVideoPlayer, lp);
-            jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
+            jcVideoPlayer.setUp(JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex), JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.setState(currentState);
             jcVideoPlayer.addTextureView();
             JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
@@ -783,7 +794,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(jcVideoPlayer, lp);
-            jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
+            jcVideoPlayer.setUp(JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex), JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
             jcVideoPlayer.setState(currentState);
             jcVideoPlayer.addTextureView();
             JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
@@ -960,8 +971,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void onEvent(int type) {
-        if (JC_USER_EVENT != null && isCurrentJcvd()) {
-            JC_USER_EVENT.onEvent(type, url, currentScreen, objects);
+        if (JC_USER_EVENT != null && isCurrentJcvd() && urlMap != null) {
+            JC_USER_EVENT.onEvent(type, JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex), currentScreen, objects);
         }
     }
 

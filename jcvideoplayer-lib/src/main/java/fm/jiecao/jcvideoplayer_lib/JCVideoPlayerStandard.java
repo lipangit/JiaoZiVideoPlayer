@@ -108,10 +108,10 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         setSystemTimeAndBattery();
     }
 
-    public void changeUrlAndPlay(String url, Object... objects) {
-        super.changeUrlAndPlay(url, objects);
-        loadingProgressBar.setVisibility(VISIBLE);
-    }
+//    public void changeUrlAndPlay(String url, Object... objects) {
+//        super.changeUrlAndPlay(url, objects);
+//        loadingProgressBar.setVisibility(VISIBLE);
+//    }
 
     public void changeStartButtonSize(int size) {
         ViewGroup.LayoutParams lp = startButton.getLayoutParams();
@@ -220,12 +220,13 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.thumb) {
-            if (TextUtils.isEmpty(url)) {
+            if (TextUtils.isEmpty(JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex))) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
             if (currentState == CURRENT_STATE_NORMAL) {
-                if (!url.startsWith("file") && !url.startsWith("/") &&
+                if (!JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex).startsWith("file") &&
+                        !JCUtils.getCurrentUrlFromMap(urlMap, urlMapIndex).startsWith("/") &&
                         !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog(JCUserActionStandard.ON_CLICK_START_THUMB);
                     return;
