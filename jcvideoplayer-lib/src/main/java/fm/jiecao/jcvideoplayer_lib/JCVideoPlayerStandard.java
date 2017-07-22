@@ -81,11 +81,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-//    @Override
-//    public void setUp(String url, int screen, Object... objects) {
-//        super.setUp(url, screen, objects);
-//    }
-
     public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
         super.setUp(urlMap, defaultUrlMapIndex, screen, objects);
         if (objects.length == 0) return;
@@ -111,11 +106,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
         setSystemTimeAndBattery();
     }
-
-//    public void changeUrlAndPlay(String url, Object... objects) {
-//        super.changeUrlAndPlay(url, objects);
-//        loadingProgressBar.setVisibility(VISIBLE);
-//    }
 
     public void changeStartButtonSize(int size) {
         ViewGroup.LayoutParams lp = startButton.getLayoutParams();
@@ -147,7 +137,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     @Override
     public void onStatePreparingChangingUrl(int urlMapIndex, int seekToInAdvance) {
         super.onStatePreparingChangingUrl(urlMapIndex, seekToInAdvance);
-
+        loadingProgressBar.setVisibility(VISIBLE);
+        startButton.setVisibility(INVISIBLE);
     }
 
     @Override
