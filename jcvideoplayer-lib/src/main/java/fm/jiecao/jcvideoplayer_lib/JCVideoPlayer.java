@@ -348,7 +348,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onPrepared() {
         Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
-
         if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PLAYING_BUFFERING_START)
             return;
         if (seekToInAdvance != 0) {

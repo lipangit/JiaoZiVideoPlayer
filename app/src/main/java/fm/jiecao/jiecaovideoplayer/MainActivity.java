@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tiny_window:
+                myJCVideoPlayerStandard.onStatePreparingChangingUrl(1, 0);
 //                myJCVideoPlayerStandard.changeUrlAndPlay("http://video.jiecao.fm/11/16/c/68Tlrc9zNi3JomXpd-nUog__.mp4");
 //                myJCVideoPlayerStandard.startWindowTiny();
                 break;
