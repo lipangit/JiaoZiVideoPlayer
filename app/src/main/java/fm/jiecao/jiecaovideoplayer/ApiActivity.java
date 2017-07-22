@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple;
@@ -56,8 +57,13 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         mJcVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子在家吗");
 
+
         mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
-        mJcVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
+        LinkedHashMap map = new LinkedHashMap();
+        map.put("高清", "http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4");
+        map.put("标清", "http://video.jiecao.fm/8/16/%E4%BF%AF%E5%8D%A7%E6%92%91.mp4");
+        map.put("普清", "http://video.jiecao.fm/8/16/%E9%B8%AD%E5%AD%90.mp4");
+        mJcVideoPlayerStandard.setUp(map, 2
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
@@ -65,6 +71,8 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         mJcVideoPlayerStandard.loop = true;
         mJcVideoPlayerStandard.headData = new HashMap<>();
         mJcVideoPlayerStandard.headData.put("key", "value");
+
+
 //        JCVideoPlayer.SAVE_PROGRESS = false;
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
