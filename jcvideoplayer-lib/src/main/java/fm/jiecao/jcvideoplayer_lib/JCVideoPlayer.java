@@ -1,5 +1,6 @@
 package fm.jiecao.jcvideoplayer_lib;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
@@ -11,6 +12,7 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -142,7 +144,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mHandler = new Handler();
 
-        NORMAL_ORIENTATION = context.getResources().getConfiguration().orientation;
+        try {
+            if (isCurrentJcvd()) {
+                NORMAL_ORIENTATION = ((AppCompatActivity) context).getRequestedOrientation();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setUp(String url, int screen, Object... objects) {
