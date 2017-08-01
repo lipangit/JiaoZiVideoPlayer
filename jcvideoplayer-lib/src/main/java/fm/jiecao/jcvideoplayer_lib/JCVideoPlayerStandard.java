@@ -242,41 +242,40 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backPress();
         } else if (i == R.id.quality) {
             // 以下为清晰度选择，假定清晰度是MAP用objects[2]传入的。
-            if (objects[2] != null) {
 
-                LayoutInflater inflater = (LayoutInflater) getContext()
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.video_quality_items, null);
+            //根据map生成powindow
+            LayoutInflater inflater = (LayoutInflater) getContext()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.video_quality_items, null);
 
-                OnClickListener mQualityListener = new OnClickListener() {
-                    public void onClick(View v) {
-                        //在这里从v中提取key然后从Map提取Values，开始切换逻辑
-                        Log.e(TAG, "onClick: " + ((TextView) v).getText());
-                    }
-                };
+            OnClickListener mQualityListener = new OnClickListener() {
+                public void onClick(View v) {
+                    //在这里从v中提取key然后从Map提取Values，开始切换逻辑
+                    Log.e(TAG, "onClick: " + ((TextView) v).getText());
+                }
+            };
 
-                // 这里做一个循环给TextView传入Map的key。
-                TextView t1 = (TextView) View.inflate(getContext(), R.layout.items, null);
-                t1.setText((String) ((Map) objects[2]).get("标清"));
-                TextView t2 = (TextView) View.inflate(getContext(), R.layout.items, null);
-                t2.setText((String) ((Map) objects[2]).get("高清"));
-                TextView t3 = (TextView) View.inflate(getContext(), R.layout.items, null);
-                t3.setText((String) ((Map) objects[2]).get("超清"));
-                layout.addView(t3, 0);
-                layout.addView(t2, 1);
-                layout.addView(t1, 2);
-                t1.setOnClickListener(mQualityListener);
-                t2.setOnClickListener(mQualityListener);
-                t3.setOnClickListener(mQualityListener);
-                //For循环到这里为止
+            // 这里做一个循环给TextView传入Map的key。
+            TextView t1 = (TextView) View.inflate(getContext(), R.layout.items, null);
+            t1.setText((String) ((Map) objects[2]).get("标清"));
+            TextView t2 = (TextView) View.inflate(getContext(), R.layout.items, null);
+            t2.setText((String) ((Map) objects[2]).get("高清"));
+            TextView t3 = (TextView) View.inflate(getContext(), R.layout.items, null);
+            t3.setText((String) ((Map) objects[2]).get("超清"));
+            layout.addView(t3, 0);
+            layout.addView(t2, 1);
+            layout.addView(t1, 2);
+            t1.setOnClickListener(mQualityListener);
+            t2.setOnClickListener(mQualityListener);
+            t3.setOnClickListener(mQualityListener);
+            //For循环到这里为止
 
-                pw = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
-                pw.setContentView(layout);
-                TextView tv = (TextView) findViewById(R.id.quality);
-                pw.showAsDropDown(tv);
-                layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-                pw.update(tv, -40, 0, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
-            }
+            pw = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+            pw.setContentView(layout);
+            TextView tv = (TextView) findViewById(R.id.quality);
+            pw.showAsDropDown(tv);
+            layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+            pw.update(tv, -40, 0, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
         }
     }
 
