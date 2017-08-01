@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -260,20 +261,16 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 }
             };
 
-            // 这里做一个循环给TextView传入Map的key。
-            TextView t1 = (TextView) View.inflate(getContext(), R.layout.items, null);
-            t1.setText((String) ((Map) objects[2]).get("标清"));
-            TextView t2 = (TextView) View.inflate(getContext(), R.layout.items, null);
-            t2.setText((String) ((Map) objects[2]).get("高清"));
-            TextView t3 = (TextView) View.inflate(getContext(), R.layout.items, null);
-            t3.setText((String) ((Map) objects[2]).get("超清"));
-            layout.addView(t3, 0);
-            layout.addView(t2, 1);
-            layout.addView(t1, 2);
-            t1.setOnClickListener(mQualityListener);
-            t2.setOnClickListener(mQualityListener);
-            t3.setOnClickListener(mQualityListener);
-            //For循环到这里为止
+            for (int i1 = 0; i1 < urlMap.size(); i1++) {
+                String key = JCUtils.getKeyFromLinkedMap(urlMap, i1);
+                TextView t1 = (TextView) View.inflate(getContext(), R.layout.items, null);
+                t1.setText(key);
+                layout.addView(t1, i1);
+                t1.setOnClickListener(mQualityListener);
+                if (i1 == currentUrlMapIndex) {
+                    t1.setTextColor(Color.parseColor("#00ff00"));
+                }
+            }
 
             clarityPopWindow = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
             clarityPopWindow.setContentView(layout);

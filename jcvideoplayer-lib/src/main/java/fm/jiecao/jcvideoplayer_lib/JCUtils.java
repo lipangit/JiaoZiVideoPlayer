@@ -126,18 +126,30 @@ public class JCUtils {
 
     public static String getCurrentUrlFromMap(LinkedHashMap<String, String> map, int index) {
         if (map.size() == 1) {
-            return getIndexFromLinkedMap(map, index);
+            return getValueFromLinkedMap(map, index);
         } else {
-            return getIndexFromLinkedMap(map, index);
+            return getValueFromLinkedMap(map, index);
         }
     }
 
-    public static String getIndexFromLinkedMap(LinkedHashMap<String, String> map, int index) {
+    public static String getValueFromLinkedMap(LinkedHashMap<String, String> map, int index) {
         int currentIndex = 0;
         for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
             Object key = it.next();
             if (currentIndex == index) {
                 return map.get(key);
+            }
+            currentIndex++;
+        }
+        return null;
+    }
+
+    public static String getKeyFromLinkedMap(LinkedHashMap<String, String> map, int index) {
+        int currentIndex = 0;
+        for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
+            Object key = it.next();
+            if (currentIndex == index) {
+                return key.toString();
             }
             currentIndex++;
         }
