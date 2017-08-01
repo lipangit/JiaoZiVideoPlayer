@@ -68,7 +68,7 @@
             android:textColor="#ffffff" />
 
         <TextView
-            android:id="@+id/quality"
+            android:id="@+id/clarity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"

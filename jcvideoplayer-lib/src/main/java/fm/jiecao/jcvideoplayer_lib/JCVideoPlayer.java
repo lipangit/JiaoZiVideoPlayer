@@ -1,6 +1,5 @@
 package fm.jiecao.jcvideoplayer_lib;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
@@ -87,7 +86,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public TextView currentTimeTextView, totalTimeTextView;
     public ViewGroup textureViewContainer;
     public ViewGroup topContainer, bottomContainer;
-    public TextView quality;
 
     protected static JCUserAction JC_USER_EVENT;
     protected static Timer UPDATE_PROGRESS_TIMER;
@@ -131,7 +129,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         bottomContainer = (ViewGroup) findViewById(R.id.layout_bottom);
         textureViewContainer = (ViewGroup) findViewById(R.id.surface_container);
         topContainer = (ViewGroup) findViewById(R.id.layout_top);
-        quality = (TextView) findViewById(R.id.quality);
 
         startButton.setOnClickListener(this);
         fullscreenButton.setOnClickListener(this);
@@ -139,7 +136,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         bottomContainer.setOnClickListener(this);
         textureViewContainer.setOnClickListener(this);
         textureViewContainer.setOnTouchListener(this);
-        quality.setOnClickListener(this);
 
         mScreenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;

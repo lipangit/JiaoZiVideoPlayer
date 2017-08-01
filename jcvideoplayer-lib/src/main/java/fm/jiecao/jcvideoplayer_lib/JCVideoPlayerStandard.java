@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,11 +26,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Timer;
@@ -54,7 +50,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public ImageView battery_level;
     public TextView video_current_time;
     public TextView retryTextView;
-    public PopupWindow pw;
+    public TextView clarity;
+    public PopupWindow clarityPopWindow;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
@@ -81,11 +78,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         battery_level = (ImageView) findViewById(R.id.battery_level);
         video_current_time = (TextView) findViewById(R.id.video_current_time);
         retryTextView = (TextView) findViewById(R.id.retry_text);
-
+        clarity = (TextView) findViewById(R.id.clarity);
 
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
         tinyBackImageView.setOnClickListener(this);
+        clarity.setOnClickListener(this);
 
     }
 
@@ -98,7 +96,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backButton.setVisibility(View.VISIBLE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
             batteryTimeLayout.setVisibility(View.VISIBLE);
-            quality.setVisibility(View.VISIBLE);
+            clarity.setVisibility(View.VISIBLE);
             changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_fullscreen));
         } else if (currentScreen == SCREEN_LAYOUT_NORMAL
                 || currentScreen == SCREEN_LAYOUT_LIST) {
@@ -107,13 +105,13 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             tinyBackImageView.setVisibility(View.INVISIBLE);
             changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_normal));
             batteryTimeLayout.setVisibility(View.GONE);
-            quality.setVisibility(View.GONE);
+            clarity.setVisibility(View.GONE);
         } else if (currentScreen == SCREEN_WINDOW_TINY) {
             tinyBackImageView.setVisibility(View.VISIBLE);
             setAllControlsVisible(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                     View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
             batteryTimeLayout.setVisibility(View.GONE);
-            quality.setVisibility(View.GONE);
+            clarity.setVisibility(View.GONE);
         }
         setSystemTimeAndBattery();
     }
@@ -248,8 +246,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backPress();
         } else if (i == R.id.back_tiny) {
             backPress();
-        } else if (i == R.id.quality) {
-            // 以下为清晰度选择，假定清晰度是MAP用objects[2]传入的。
+        } else if (i == R.id.clarity) {
 
             //根据map生成powindow
             LayoutInflater inflater = (LayoutInflater) getContext()
@@ -278,12 +275,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             t3.setOnClickListener(mQualityListener);
             //For循环到这里为止
 
-            pw = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
-            pw.setContentView(layout);
-            TextView tv = (TextView) findViewById(R.id.quality);
-            pw.showAsDropDown(tv);
+            clarityPopWindow = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+            clarityPopWindow.setContentView(layout);
+            TextView tv = (TextView) findViewById(R.id.clarity);
+            clarityPopWindow.showAsDropDown(tv);
             layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            pw.update(tv, -40, 0, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
+            clarityPopWindow.update(tv, -40, 0, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
         }
     }
 
@@ -875,8 +872,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                             if (currentScreen != SCREEN_WINDOW_TINY) {
                                 bottomProgressBar.setVisibility(View.VISIBLE);
                             }
-                            if (pw != null) {
-                                pw.dismiss();
+                            if (clarityPopWindow != null) {
+                                clarityPopWindow.dismiss();
                             }
                         }
                     });
