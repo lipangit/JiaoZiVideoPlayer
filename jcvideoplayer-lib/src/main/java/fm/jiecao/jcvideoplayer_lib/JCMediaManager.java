@@ -118,7 +118,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-        Log.i(TAG, "onSurfaceTextureAvailable [" + this.hashCode() + "] ");
+        Log.i(TAG, "onSurfaceTextureAvailable [" + JCVideoPlayerManager.getCurrentJcvd().hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
             prepare();
@@ -130,7 +130,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
         // 如果SurfaceTexture还没有更新Image，则记录SizeChanged事件，否则忽略
-        Log.i(TAG, "onSurfaceTextureSizeChanged [" + this.hashCode() + "] ");
+        Log.i(TAG, "onSurfaceTextureSizeChanged [" + JCVideoPlayerManager.getCurrentJcvd().hashCode() + "] ");
     }
 
     @Override

@@ -30,6 +30,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -62,8 +63,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static final int CURRENT_STATE_NORMAL = 0;
     public static final int CURRENT_STATE_PREPARING = 1;
-    public static final int CURRENT_STATE_PLAYING = 2;
-    public static final int CURRENT_STATE_PLAYING_BUFFERING_START = 3;
+    public static final int CURRENT_STATE_PREPARING_CHANGING_URL = 2;
+    public static final int CURRENT_STATE_PLAYING = 3;
+    public static final int CURRENT_STATE_PLAYING_BUFFERING_START = 4;
     public static final int CURRENT_STATE_PAUSE = 5;
     public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
     public static final int CURRENT_STATE_ERROR = 7;
@@ -75,7 +77,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public boolean loop = false;
     public Map<String, String> headData;
 
-    public String url = "";
+    //    public String url = "";
     public Object[] objects = null;
     public int seekToInAdvance = 0;
 
@@ -154,12 +156,21 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setUp(String url, int screen, Object... objects) {
-        if (!TextUtils.isEmpty(this.url) && TextUtils.equals(this.url, url)) {
-            return;
-        }
-        this.url = url;
-        this.objects = objects;
+        LinkedHashMap map = new LinkedHashMap();
+        map.put(URL_KEY_DEFAULT, url);
+        setUp(map, 0, screen, objects);
+    }
+
+    LinkedHashMap urlMap;
+    int currentUrlMapIndex = 0;
+
+    public static final String URL_KEY_DEFAULT = "URL_KEY_DEFAULT";
+
+    public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
+        this.urlMap = urlMap;
+        this.currentUrlMapIndex = defaultUrlMapIndex;
         this.currentScreen = screen;
+        this.objects = objects;
         this.headData = null;
         onStateNormal();
     }
@@ -169,12 +180,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         int i = v.getId();
         if (i == R.id.start) {
             Log.i(TAG, "onClick start [" + this.hashCode() + "] ");
-            if (TextUtils.isEmpty(url)) {
+            if (TextUtils.isEmpty(JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
             if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR) {
-                if (!url.startsWith("file") && !url.startsWith("/") &&
+                if (!JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("file") && !
+                        JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("/") &&
                         !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog(JCUserActionStandard.ON_CLICK_START_ICON);
                     return;
@@ -338,7 +350,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        JCMediaManager.CURRENT_PLAYING_URL = url;
+        JCMediaManager.CURRENT_PLAYING_URL = JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex);
         JCMediaManager.CURRENT_PLING_LOOP = loop;
         JCMediaManager.MAP_HEADER_DATA = headData;
         onStatePreparing();
@@ -347,14 +359,13 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onPrepared() {
         Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
-
-        if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PLAYING_BUFFERING_START)
+        if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PREPARING_CHANGING_URL && currentState != CURRENT_STATE_PLAYING_BUFFERING_START)
             return;
         if (seekToInAdvance != 0) {
             JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
             seekToInAdvance = 0;
         } else {
-            int position = JCUtils.getSavedProgress(getContext(), url);
+            int position = JCUtils.getSavedProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex));
             if (position != 0) {
                 JCMediaManager.instance().mediaPlayer.seekTo(position);
             }
@@ -364,12 +375,19 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setState(int state) {
+        setState(state, 0, 0);
+    }
+
+    public void setState(int state, int urlMapIndex, int seekToInAdvance) {
         switch (state) {
             case CURRENT_STATE_NORMAL:
                 onStateNormal();
                 break;
             case CURRENT_STATE_PREPARING:
                 onStatePreparing();
+                break;
+            case CURRENT_STATE_PREPARING_CHANGING_URL:
+                onStatePreparingChangingUrl(urlMapIndex, seekToInAdvance);
                 break;
             case CURRENT_STATE_PLAYING:
                 onStatePlaying();
@@ -402,6 +420,16 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         Log.i(TAG, "onStatePreparing " + " [" + this.hashCode() + "] ");
         currentState = CURRENT_STATE_PREPARING;
         resetProgressAndTime();
+    }
+
+    public void onStatePreparingChangingUrl(int urlMapIndex, int seekToInAdvance) {
+        currentState = CURRENT_STATE_PREPARING_CHANGING_URL;
+        this.currentUrlMapIndex = urlMapIndex;
+        this.seekToInAdvance = seekToInAdvance;
+        JCMediaManager.CURRENT_PLAYING_URL = JCUtils.getCurrentUrlFromMap(urlMap, this.currentUrlMapIndex);
+        JCMediaManager.CURRENT_PLING_LOOP = this.loop;
+        JCMediaManager.MAP_HEADER_DATA = this.headData;
+        JCMediaManager.instance().prepare();
     }
 
     public void onStatePlaying() {
@@ -501,7 +529,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             backPress();
         }
-        JCUtils.saveProgress(getContext(), url, 0);
+        JCUtils.saveProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex), 0);
     }
 
     public void onCompletion() {
@@ -510,7 +538,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
             int position = getCurrentPositionWhenPlaying();
 //            int duration = getDuration();
-            JCUtils.saveProgress(getContext(), url, position);
+            JCUtils.saveProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex), position);
         }
         cancelProgressTimer();
         onStateNormal();
@@ -530,7 +558,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void release() {
-        if (url.equals(JCMediaManager.CURRENT_PLAYING_URL) &&
+        if (JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).equals(JCMediaManager.CURRENT_PLAYING_URL) &&
                 (System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
             //在非全屏的情况下只能backPress()
             if (JCVideoPlayerManager.getSecondFloor() != null &&
@@ -742,7 +770,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jcVideoPlayer, lp);
-            jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
+            jcVideoPlayer.setUp(urlMap, currentUrlMapIndex, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.setState(currentState);
             jcVideoPlayer.addTextureView();
             JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
@@ -773,7 +801,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(jcVideoPlayer, lp);
-            jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
+            jcVideoPlayer.setUp(urlMap, currentUrlMapIndex, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
             jcVideoPlayer.setState(currentState);
             jcVideoPlayer.addTextureView();
             JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
@@ -785,6 +813,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
+        LinkedHashMap map = new LinkedHashMap();
+        map.put(URL_KEY_DEFAULT, url);
+        startFullscreen(context, _class, map, 0, objects);
+    }
+
+    public static void startFullscreen(Context context, Class _class, LinkedHashMap urlMap, int defaultUrlMapIndex, Object... objects) {
         hideSupportActionBar(context);
         JCUtils.getAppCompActivity(context).setRequestedOrientation(FULLSCREEN_ORIENTATION);
         ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(context))//.getWindow().getDecorView();
@@ -802,7 +836,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             vp.addView(jcVideoPlayer, lp);
 //            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
-            jcVideoPlayer.setUp(url, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
+            jcVideoPlayer.setUp(urlMap, defaultUrlMapIndex, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             jcVideoPlayer.startButton.performClick();
         } catch (InstantiationException e) {
@@ -950,8 +984,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void onEvent(int type) {
-        if (JC_USER_EVENT != null && isCurrentJcvd()) {
-            JC_USER_EVENT.onEvent(type, url, currentScreen, objects);
+        if (JC_USER_EVENT != null && isCurrentJcvd() && urlMap != null) {
+            JC_USER_EVENT.onEvent(type, JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex), currentScreen, objects);
         }
     }
 

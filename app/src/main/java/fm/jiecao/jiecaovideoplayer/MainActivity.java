@@ -10,6 +10,8 @@ import android.widget.Button;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.LinkedHashMap;
+
 import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -46,10 +48,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAboutWebView.setOnClickListener(this);
 
         myJCVideoPlayerStandard = (MyJCVideoPlayerStandard) findViewById(R.id.jc_video);
-        myJCVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4"
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+        myJCVideoPlayerStandard.setUp("http://video.jiecao.fm/11/23/xu/%E5%A6%B9%E5%A6%B9.mp4"
+                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子快长大");
         Picasso.with(this)
-                .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
+                .load("http://img4.jiecaojingxuan.com/2016/11/23/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png@!640_360")
                 .into(myJCVideoPlayerStandard.thumbImageView);
 
         JCVideoPlayer.setJcUserAction(new MyUserActionStandard());
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tiny_window:
+//                myJCVideoPlayerStandard.onStatePreparingChangingUrl(1, 0);
                 myJCVideoPlayerStandard.startWindowTiny();
                 break;
             case R.id.auto_tiny_window:
