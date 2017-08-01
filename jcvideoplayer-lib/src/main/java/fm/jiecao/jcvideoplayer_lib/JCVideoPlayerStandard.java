@@ -255,17 +255,25 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.clarity) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.jc_layout_clarity, null);
+            final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.jc_layout_clarity, null);
 
             OnClickListener mQualityListener = new OnClickListener() {
                 public void onClick(View v) {
-                    if (clarityPopWindow != null) {
-                        clarityPopWindow.dismiss();
-                    }
                     int index = (int) v.getTag();
                     onStatePreparingChangingUrl(index, 0);
                     clarity.setText(JCUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
-
+                    for (int j = 0; j < layout.getChildCount(); j++) {//设置点击之后的颜色
+                        if (j == currentUrlMapIndex) {
+                            ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#fff85959"));
+                            Log.e(TAG, "onClick: -- " + j);
+                        } else {
+                            ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#ffffff"));
+                            Log.e(TAG, "onClick: ++ " + j);
+                        }
+                    }
+                    if (clarityPopWindow != null) {
+                        clarityPopWindow.dismiss();
+                    }
                 }
             };
 
