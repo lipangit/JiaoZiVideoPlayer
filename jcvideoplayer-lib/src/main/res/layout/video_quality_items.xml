@@ -3,50 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/video_quality_wrapper_area"
     android:layout_width="80dp"
-    android:layout_height="128dp"
+    android:layout_height="wrap_content"
+    android:paddingBottom="6dp"
     android:background="@drawable/tabbar_tips"
-    android:orientation="vertical"
-    android:visibility="visible">
-
-    <TextView
-        android:id="@+id/quality_super"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="8dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="8dp"
-        android:text="超清"
-        android:textColor="#ffffff"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/quality_high"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="8dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="8dp"
-        android:text="高清"
-        android:textColor="#ffffff"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/quality_normal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="8dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="8dp"
-        android:text="标清"
-        android:textColor="#ffffff"
-        android:textSize="14sp" />
+    android:orientation="vertical">
 </LinearLayout>

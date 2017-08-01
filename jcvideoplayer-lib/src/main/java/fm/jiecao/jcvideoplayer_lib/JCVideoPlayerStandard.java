@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,8 +27,12 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -48,9 +54,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public TextView video_current_time;
     public TextView retryTextView;
     public PopupWindow pw;
-    public TextView quality_normal;
-    public TextView quality_high;
-    public TextView quality_super;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
 
@@ -238,22 +241,42 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.back_tiny) {
             backPress();
         } else if (i == R.id.quality) {
-            LayoutInflater inflater = (LayoutInflater) getContext()
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.video_quality_items, null);
-            quality_normal = (TextView) layout.findViewById(R.id.quality_normal);
-            quality_high = (TextView) layout.findViewById(R.id.quality_high);
-            quality_super = (TextView) layout.findViewById(R.id.quality_super);
-            quality_normal.setOnClickListener(this);
-            quality_high.setOnClickListener(this);
-            quality_super.setOnClickListener(this);
-            pw = new PopupWindow(layout,0,400,true);
-            pw.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-            pw.setContentView(layout);
-            TextView tv = (TextView) findViewById(R.id.quality);
-            pw.showAsDropDown(tv,-65,-10);
-        } else if (i == R.id.quality_normal || i == R.id.quality_high || i == R.id.quality_super) {
-            Log.e(TAG, "Quality: " + String.valueOf(i));
+            // 以下为清晰度选择，假定清晰度是MAP用objects[2]传入的。
+            if (objects[2] != null) {
+
+                LayoutInflater inflater = (LayoutInflater) getContext()
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.video_quality_items, null);
+
+                OnClickListener mQualityListener = new OnClickListener() {
+                    public void onClick(View v) {
+                        //在这里从v中提取key然后从Map提取Values，开始切换逻辑
+                        Log.e(TAG, "onClick: " + ((TextView) v).getText());
+                    }
+                };
+
+                // 这里做一个循环给TextView传入Map的key。
+                TextView t1 = (TextView) View.inflate(getContext(), R.layout.items, null);
+                t1.setText((String) ((Map) objects[2]).get("标清"));
+                TextView t2 = (TextView) View.inflate(getContext(), R.layout.items, null);
+                t2.setText((String) ((Map) objects[2]).get("高清"));
+                TextView t3 = (TextView) View.inflate(getContext(), R.layout.items, null);
+                t3.setText((String) ((Map) objects[2]).get("超清"));
+                layout.addView(t3, 0);
+                layout.addView(t2, 1);
+                layout.addView(t1, 2);
+                t1.setOnClickListener(mQualityListener);
+                t2.setOnClickListener(mQualityListener);
+                t3.setOnClickListener(mQualityListener);
+                //For循环到这里为止
+
+                pw = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
+                pw.setContentView(layout);
+                TextView tv = (TextView) findViewById(R.id.quality);
+                pw.showAsDropDown(tv);
+                layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                pw.update(tv, -40, 0, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
+            }
         }
     }
 

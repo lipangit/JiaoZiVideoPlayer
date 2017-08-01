@@ -72,8 +72,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:paddingLeft="8dp"
+            android:paddingLeft="20dp"
             android:text="标清"
+            android:textAlignment="center"
             android:textColor="#ffffff" />
 
         <ImageView
