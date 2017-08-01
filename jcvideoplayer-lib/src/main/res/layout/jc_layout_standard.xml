@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:paddingLeft="20dp"
-            android:text="标清"
+            android:text="clarity"
             android:textAlignment="center"
             android:textColor="#ffffff" />
 

@@ -29,7 +29,6 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -97,7 +96,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             backButton.setVisibility(View.VISIBLE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
             batteryTimeLayout.setVisibility(View.VISIBLE);
-            clarity.setVisibility(View.VISIBLE);
+            if (urlMap.size() == 1) {
+                clarity.setVisibility(GONE);
+            } else {
+                clarity.setText(JCUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
+                clarity.setVisibility(View.VISIBLE);
+            }
             changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_fullscreen));
         } else if (currentScreen == SCREEN_LAYOUT_NORMAL
                 || currentScreen == SCREEN_LAYOUT_LIST) {
@@ -115,6 +119,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             clarity.setVisibility(View.GONE);
         }
         setSystemTimeAndBattery();
+
     }
 
     public void changeStartButtonSize(int size) {
@@ -248,36 +253,39 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.back_tiny) {
             backPress();
         } else if (i == R.id.clarity) {
-
-            //根据map生成powindow
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.video_quality_items, null);
+            LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.jc_layout_clarity, null);
 
             OnClickListener mQualityListener = new OnClickListener() {
                 public void onClick(View v) {
-                    //在这里从v中提取key然后从Map提取Values，开始切换逻辑
-                    Log.e(TAG, "onClick: " + ((TextView) v).getText());
+                    if (clarityPopWindow != null) {
+                        clarityPopWindow.dismiss();
+                    }
+                    int index = (int) v.getTag();
+                    onStatePreparingChangingUrl(index, 0);
+                    clarity.setText(JCUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
+
                 }
             };
 
-            for (int i1 = 0; i1 < urlMap.size(); i1++) {
-                String key = JCUtils.getKeyFromLinkedMap(urlMap, i1);
-                TextView t1 = (TextView) View.inflate(getContext(), R.layout.items, null);
-                t1.setText(key);
-                layout.addView(t1, i1);
-                t1.setOnClickListener(mQualityListener);
-                if (i1 == currentUrlMapIndex) {
-                    t1.setTextColor(Color.parseColor("#00ff00"));
+            for (int j = 0; j < urlMap.size(); j++) {
+                String key = JCUtils.getKeyFromLinkedMap(urlMap, j);
+                TextView clarityItem = (TextView) View.inflate(getContext(), R.layout.jc_layout_clarity_item, null);
+                clarityItem.setText(key);
+                clarityItem.setTag(j);
+                layout.addView(clarityItem, j);
+                clarityItem.setOnClickListener(mQualityListener);
+                if (j == currentUrlMapIndex) {
+                    clarityItem.setTextColor(Color.parseColor("#fff85959"));
                 }
             }
 
             clarityPopWindow = new PopupWindow(layout, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
             clarityPopWindow.setContentView(layout);
-            TextView tv = (TextView) findViewById(R.id.clarity);
-            clarityPopWindow.showAsDropDown(tv);
+            clarityPopWindow.showAsDropDown(clarity);
             layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            clarityPopWindow.update(tv, -40, 0, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
+            clarityPopWindow.update(clarity, -40, 46, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
         }
     }
 
@@ -333,8 +341,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void onClickUiToggle() {
         if (bottomContainer.getVisibility() != View.VISIBLE) {
-
             setSystemTimeAndBattery();
+            clarity.setText(JCUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
         }
         if (currentState == CURRENT_STATE_PREPARING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
@@ -866,11 +874,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                             bottomContainer.setVisibility(View.INVISIBLE);
                             topContainer.setVisibility(View.INVISIBLE);
                             startButton.setVisibility(View.INVISIBLE);
-                            if (currentScreen != SCREEN_WINDOW_TINY) {
-                                bottomProgressBar.setVisibility(View.VISIBLE);
-                            }
                             if (clarityPopWindow != null) {
                                 clarityPopWindow.dismiss();
+                            }
+                            if (currentScreen != SCREEN_WINDOW_TINY) {
+                                bottomProgressBar.setVisibility(View.VISIBLE);
                             }
                         }
                     });
@@ -889,5 +897,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onCompletion() {
         super.onCompletion();
         cancelDismissControlViewTimer();
+        if (clarityPopWindow != null) {
+            clarityPopWindow.dismiss();
+        }
     }
 }
