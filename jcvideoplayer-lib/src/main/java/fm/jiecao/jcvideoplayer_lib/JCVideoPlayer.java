@@ -757,7 +757,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (old != null) {
             vp.removeView(old);
         }
-//        ((ViewGroup)JCMediaManager.textureView.getParent()).removeView(JCMediaManager.textureView);
         textureViewContainer.removeView(JCMediaManager.textureView);
         try {
             Constructor<JCVideoPlayer> constructor = (Constructor<JCVideoPlayer>) JCVideoPlayer.this.getClass().getConstructor(Context.class);
@@ -772,6 +771,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
+            onStateNormal();
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
         } catch (Exception e) {
             e.printStackTrace();
@@ -801,6 +801,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             jcVideoPlayer.setState(currentState);
             jcVideoPlayer.addTextureView();
             JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
+            onStateNormal();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
