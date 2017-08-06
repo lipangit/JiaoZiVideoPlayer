@@ -163,6 +163,10 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     public static final String URL_KEY_DEFAULT = "URL_KEY_DEFAULT";
 
     public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
+        if (this.urlMap != null && !TextUtils.isEmpty(JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex)) &&
+                TextUtils.equals(JCUtils.getCurrentUrlFromMap(this.urlMap, currentUrlMapIndex), JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
+            return;
+        }
         this.urlMap = urlMap;
         this.currentUrlMapIndex = defaultUrlMapIndex;
         this.currentScreen = screen;
