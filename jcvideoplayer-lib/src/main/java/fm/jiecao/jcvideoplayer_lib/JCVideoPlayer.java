@@ -376,22 +376,6 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         startProgressTimer();
         onStatePlaying();
     }
-    public void onPrepared() {
-//        Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
-//        if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PREPARING_CHANGING_URL && currentState != CURRENT_STATE_PLAYING_BUFFERING_START)
-//            return;
-//        if (seekToInAdvance != 0) {
-//            JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
-//            seekToInAdvance = 0;
-//        } else {
-//            int position = JCUtils.getSavedProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex));
-//            if (position != 0) {
-//                JCMediaManager.instance().mediaPlayer.seekTo(position);
-//            }
-//        }
-//        startProgressTimer();
-//        onStatePlaying();
-    }
 
     public void setState(int state) {
         setState(state, 0, 0);

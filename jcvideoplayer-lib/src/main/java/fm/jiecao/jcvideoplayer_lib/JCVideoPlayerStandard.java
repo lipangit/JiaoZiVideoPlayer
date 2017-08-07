@@ -527,15 +527,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         startDismissControlViewTimer();
     }
 
-//    //JustPreparedUi
-//    @Override
-//    public void onPrepared() {
-//        super.onPrepared();
-//        setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-//                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
-//        startDismissControlViewTimer();
-//    }
-
     public void changeUiToPlayingShow() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_NORMAL:
