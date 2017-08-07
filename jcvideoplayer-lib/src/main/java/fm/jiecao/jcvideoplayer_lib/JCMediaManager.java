@@ -78,9 +78,6 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
                         mediaPlayer.release();
                         mediaPlayer = new MediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        Class<MediaPlayer> clazz = MediaPlayer.class;
-                        Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
-                        method.invoke(mediaPlayer, CURRENT_PLAYING_URL, MAP_HEADER_DATA);
                         mediaPlayer.setLooping(CURRENT_PLING_LOOP);
                         mediaPlayer.setOnPreparedListener(JCMediaManager.this);
                         mediaPlayer.setOnCompletionListener(JCMediaManager.this);
@@ -90,6 +87,9 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
                         mediaPlayer.setOnErrorListener(JCMediaManager.this);
                         mediaPlayer.setOnInfoListener(JCMediaManager.this);
                         mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
+                        Class<MediaPlayer> clazz = MediaPlayer.class;
+                        Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
+                        method.invoke(mediaPlayer, CURRENT_PLAYING_URL, MAP_HEADER_DATA);
                         mediaPlayer.prepareAsync();
                         mediaPlayer.setSurface(new Surface(savedSurfaceTexture));
                     } catch (Exception e) {
