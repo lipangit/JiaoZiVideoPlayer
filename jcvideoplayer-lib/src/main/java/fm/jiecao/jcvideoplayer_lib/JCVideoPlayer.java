@@ -41,6 +41,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static final String TAG = "JieCaoVideoPlayer";
 
+    protected boolean isVideoRendingStart = false;
     public static boolean ACTION_BAR_EXIST = true;
     public static boolean TOOL_BAR_EXIST = true;
     public static int FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
@@ -172,6 +173,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         this.currentScreen = screen;
         this.objects = objects;
         this.headData = null;
+        isVideoRendingStart = false;
         onStateNormal();
     }
 
@@ -357,8 +359,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCVideoPlayerManager.setFirstFloor(this);
     }
 
-    public void onPrepared() {
-        Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
+    public void onVideoRendingStart() {
+        Log.i(TAG, "onVideoRendingStart " + " [" + this.hashCode() + "] ");
+        isVideoRendingStart = true;
         if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PREPARING_CHANGING_URL && currentState != CURRENT_STATE_PLAYING_BUFFERING_START)
             return;
         if (seekToInAdvance != 0) {
@@ -372,6 +375,22 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
         startProgressTimer();
         onStatePlaying();
+    }
+    public void onPrepared() {
+//        Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
+//        if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PREPARING_CHANGING_URL && currentState != CURRENT_STATE_PLAYING_BUFFERING_START)
+//            return;
+//        if (seekToInAdvance != 0) {
+//            JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
+//            seekToInAdvance = 0;
+//        } else {
+//            int position = JCUtils.getSavedProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex));
+//            if (position != 0) {
+//                JCMediaManager.instance().mediaPlayer.seekTo(position);
+//            }
+//        }
+//        startProgressTimer();
+//        onStatePlaying();
     }
 
     public void setState(int state) {
@@ -479,6 +498,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 BACKUP_PLAYING_BUFFERING_STATE = -1;
             }
             Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
+        }else if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START){
+            onVideoRendingStart();
         }
     }
 
@@ -555,6 +576,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
         JCMediaManager.textureView = null;
         JCMediaManager.savedSurfaceTexture = null;
+        isVideoRendingStart = false;
     }
 
     public void release() {
