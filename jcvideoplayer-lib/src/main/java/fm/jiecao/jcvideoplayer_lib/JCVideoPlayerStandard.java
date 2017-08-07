@@ -521,14 +521,22 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
-    //JustPreparedUi
     @Override
-    public void onPrepared() {
-        super.onPrepared();
+    public void onVideoRendingStart() {
+        super.onVideoRendingStart();
         setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
                 View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
         startDismissControlViewTimer();
     }
+
+//    //JustPreparedUi
+//    @Override
+//    public void onPrepared() {
+//        super.onPrepared();
+//        setAllControlsVisible(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
+//                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+//        startDismissControlViewTimer();
+//    }
 
     public void changeUiToPlayingShow() {
         switch (currentScreen) {
@@ -697,6 +705,12 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void setAllControlsVisible(int topCon, int bottomCon, int startBtn, int loadingPro,
                                       int thumbImg, int coverImg, int bottomPro) {
+        //TODO 这个地方由于前边的各种状态不是太明白，所以暂时只能这样写一下（目前没发现问题），作者可以优化一下
+        if (!isVideoRendingStart && currentScreen != SCREEN_WINDOW_FULLSCREEN && currentScreen != SCREEN_WINDOW_TINY) {
+            //只要没开始播放，一直显示缩略图
+            thumbImg = VISIBLE;
+        }
+
         topContainer.setVisibility(topCon);
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
