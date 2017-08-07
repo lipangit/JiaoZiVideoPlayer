@@ -67,6 +67,16 @@
             android:text="00:00"
             android:textColor="#ffffff" />
 
+        <TextView
+            android:id="@+id/clarity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:paddingLeft="20dp"
+            android:text="clarity"
+            android:textAlignment="center"
+            android:textColor="#ffffff" />
+
         <ImageView
             android:id="@+id/fullscreen"
             android:layout_width="52.5dp"
@@ -93,7 +103,7 @@
         android:layout_marginLeft="6dp"
         android:layout_marginTop="6dp"
         android:background="@drawable/jc_click_back_tiny_selector"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/layout_top"

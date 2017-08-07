@@ -49,9 +49,12 @@ public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
         super.startVideo();
     }
 
+    /**
+     * onPrepared
+     */
     @Override
-    public void onPrepared() {
-        super.onPrepared();
+    public void onVideoRendingStart() {
+        super.onVideoRendingStart();
     }
 
     @Override
