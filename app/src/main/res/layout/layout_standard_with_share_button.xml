@@ -66,12 +66,22 @@
             android:text="00:00"
             android:textColor="#ffffff" />
 
+        <TextView
+            android:id="@+id/clarity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:paddingLeft="20dp"
+            android:text="clarity"
+            android:textAlignment="center"
+            android:textColor="#ffffff" />
+
         <ImageView
             android:id="@+id/fullscreen"
-            android:layout_width="24.5dp"
+            android:layout_width="52.5dp"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
             android:scaleType="centerInside"
             android:src="@drawable/jc_enlarge" />
     </LinearLayout>
