@@ -482,7 +482,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                 BACKUP_PLAYING_BUFFERING_STATE = -1;
             }
             Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
-        }else if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START){
+        } else if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
             onVideoRendingStart();
         }
     }
@@ -871,6 +871,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         Log.i(TAG, "playOnThisJcvd " + " [" + this.hashCode() + "] ");
         //1.清空全屏和小窗的jcvd
         currentState = JCVideoPlayerManager.getSecondFloor().currentState;
+        currentUrlMapIndex = JCVideoPlayerManager.getSecondFloor().currentUrlMapIndex;
         clearFloatScreen();
         //2.在本jcvd上播放
         setState(currentState);
