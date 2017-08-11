@@ -60,7 +60,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+//        JCVideoPlayer.releaseAllVideos();
+        myJCVideoPlayerStandard.pauseVideoByClick();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        myJCVideoPlayerStandard.resumeVideoByClick();
     }
 
     @Override
