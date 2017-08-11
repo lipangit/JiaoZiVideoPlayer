@@ -33,13 +33,4 @@ dependencies {
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 
     compile 'com.android.support:recyclerview-v7:25.3.1'
-
-    compile 'com.android.support:appcompat-v7:25.3.1'
-
-    // 使用ijkplayer需要添加以下依赖，使用原生播放器无需添加
-    // 具体使用请参考：https://github.com/Bilibili/ijkplayer
-    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.2'
-    // 依赖下载比较慢，这里直接使用so文件:libijkffmpeg.so; libijkplayer.so; libijksdl.so
-//    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.2'
-
 }

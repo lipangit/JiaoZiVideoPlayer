@@ -12,7 +12,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.LinkedHashMap;
 
-import fm.jiecao.jcvideoplayer_lib.JCPlayerFactory;
 import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
@@ -32,10 +31,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//         播放器选择IjkMediaPlayer
-        JCPlayerFactory.init(JCPlayerFactory.TYPE_IJK_MEDIA_PLAYER);
-
         setContentView(R.layout.activity_main);
 
         mTinyWindow = (Button) findViewById(R.id.tiny_window);
