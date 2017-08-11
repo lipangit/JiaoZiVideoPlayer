@@ -198,11 +198,11 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             } else if (currentState == CURRENT_STATE_PLAYING) {
                 onEvent(JCUserAction.ON_CLICK_PAUSE);
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
-                JCMediaManager.instance().mediaPlayer.pause();
+                JCMediaManager.instance().pause();
                 onStatePause();
             } else if (currentState == CURRENT_STATE_PAUSE) {
                 onEvent(JCUserAction.ON_CLICK_RESUME);
-                JCMediaManager.instance().mediaPlayer.start();
+                JCMediaManager.instance().start();
                 onStatePlaying();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onEvent(JCUserAction.ON_CLICK_START_AUTO_COMPLETE);
@@ -329,7 +329,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     dismissBrightnessDialog();
                     if (mChangePosition) {
                         onEvent(JCUserAction.ON_TOUCH_SCREEN_SEEK_POSITION);
-                        JCMediaManager.instance().mediaPlayer.seekTo(mSeekTimePosition);
+                        JCMediaManager.instance().seekTo(mSeekTimePosition);
                         int duration = getDuration();
                         int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
                         progressBar.setProgress(progress);
@@ -365,12 +365,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PREPARING_CHANGING_URL && currentState != CURRENT_STATE_PLAYING_BUFFERING_START)
             return;
         if (seekToInAdvance != 0) {
-            JCMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
+            JCMediaManager.instance().seekTo(seekToInAdvance);
             seekToInAdvance = 0;
         } else {
             int position = JCUtils.getSavedProgress(getContext(), JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex));
             if (position != 0) {
-                JCMediaManager.instance().mediaPlayer.seekTo(position);
+                JCMediaManager.instance().seekTo(position);
             }
         }
         startProgressTimer();
@@ -697,31 +697,16 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public int getCurrentPositionWhenPlaying() {
         int position = 0;
-        if (JCMediaManager.instance().mediaPlayer == null)
-            return position;//这行代码不应该在这，如果代码和逻辑万无一失的话，心头之恨呐
         if (currentState == CURRENT_STATE_PLAYING ||
                 currentState == CURRENT_STATE_PAUSE ||
                 currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
-            try {
-                position = JCMediaManager.instance().mediaPlayer.getCurrentPosition();
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-                return position;
-            }
+            position = JCMediaManager.instance().getCurrentPosition();
         }
         return position;
     }
 
     public int getDuration() {
-        int duration = 0;
-        if (JCMediaManager.instance().mediaPlayer == null) return duration;
-        try {
-            duration = JCMediaManager.instance().mediaPlayer.getDuration();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-            return duration;
-        }
-        return duration;
+        return JCMediaManager.instance().getDuration();
     }
 
     @Override
@@ -748,7 +733,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentState != CURRENT_STATE_PLAYING &&
                 currentState != CURRENT_STATE_PAUSE) return;
         int time = seekBar.getProgress() * getDuration() / 100;
-        JCMediaManager.instance().mediaPlayer.seekTo(time);
+        JCMediaManager.instance().seekTo(time);
         Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
     }
 
@@ -1008,13 +993,8 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
                     Log.d(TAG, "AUDIOFOCUS_LOSS [" + this.hashCode() + "]");
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-                    try {
-                        if (JCMediaManager.instance().mediaPlayer != null &&
-                                JCMediaManager.instance().mediaPlayer.isPlaying()) {
-                            JCMediaManager.instance().mediaPlayer.pause();
-                        }
-                    } catch (IllegalStateException e) {
-                        e.printStackTrace();
+                    if (JCMediaManager.instance() != null && JCMediaManager.instance().isPlaying()) {
+                        JCMediaManager.instance().pause();
                     }
                     Log.d(TAG, "AUDIOFOCUS_LOSS_TRANSIENT [" + this.hashCode() + "]");
                     break;

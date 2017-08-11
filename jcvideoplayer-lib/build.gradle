@@ -24,7 +24,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    provided 'com.android.support:appcompat-v7:25.3.1'
+    provided 'tv.danmaku.ijk.media:ijkplayer-java:0.8.2'
 }
 
 apply from: '../gradle/maven_push.gradle'
