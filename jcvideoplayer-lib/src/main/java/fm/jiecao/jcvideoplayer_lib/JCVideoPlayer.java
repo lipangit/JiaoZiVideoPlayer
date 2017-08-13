@@ -788,6 +788,16 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
+    protected JCVideoPlayer getFullScreenVideoPlayer() {
+        ViewGroup vp = (ViewGroup) (JCUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+            .findViewById(Window.ID_ANDROID_CONTENT);
+        return (JCVideoPlayer) vp.findViewById(FULLSCREEN_ID);
+    }
+
+    public boolean isFullScreenMode() {
+        return getFullScreenVideoPlayer() != null;
+    }
+
     public void startWindowTiny() {
         Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
         onEvent(JCUserAction.ON_ENTER_TINYSCREEN);
@@ -850,6 +860,36 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Pauses the video player.
+     * It pauses the video with some state and icon changing.
+     */
+    public void pauseVideoByClick() {
+        if (isFullScreenMode()) {
+            JCVideoPlayer videoPlayer = getFullScreenVideoPlayer();
+            if (videoPlayer.currentState == CURRENT_STATE_PLAYING) {
+                videoPlayer.findViewById(R.id.start).performClick();
+            }
+        } else if (currentState == CURRENT_STATE_PLAYING) {
+            startButton.performClick();
+        }
+    }
+
+    /**
+     * Resumes the video player.
+     * It resumes the video with some state and icon changing.
+     */
+    public void resumeVideoByClick() {
+        if (isFullScreenMode()) {
+            JCVideoPlayer videoPlayer = getFullScreenVideoPlayer();
+            if (videoPlayer.currentState != CURRENT_STATE_PLAYING && videoPlayer.currentState != CURRENT_STATE_ERROR) {
+                videoPlayer.findViewById(R.id.start).performClick();
+            }
+        } else if (currentState != CURRENT_STATE_PLAYING && currentState != CURRENT_STATE_ERROR) {
+            startButton.performClick();
         }
     }
 
