@@ -35,6 +35,7 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
     public int currentVideoHeight = 0;
 
     public static final int HANDLER_PREPARE = 0;
+    public static final int HANDLER_SET_DISPLAY = 1;
     public static final int HANDLER_RELEASE = 2;
     HandlerThread mMediaHandlerThread;
     MediaHandler mMediaHandler;
@@ -91,7 +92,6 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
                         Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
                         method.invoke(mediaPlayer, CURRENT_PLAYING_URL, MAP_HEADER_DATA);
                         mediaPlayer.prepareAsync();
-                        mediaPlayer.setSurface(new Surface(savedSurfaceTexture));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -99,6 +99,28 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
                 case HANDLER_RELEASE:
                     mediaPlayer.release();
                     break;
+                case HANDLER_SET_DISPLAY:
+                    setSurface(msg.obj);
+                    break;
+            }
+        }
+
+        private void setSurface(Object obj) {
+            try {
+                if (obj == null) {
+                    if (mediaPlayer != null) {
+                        mediaPlayer.setSurface(null);
+                    }
+                } else {
+                    Surface holder = (Surface) obj;
+                    if (holder.isValid()) {
+                        if (mediaPlayer != null) {
+                            mediaPlayer.setSurface(holder);
+                        }
+                    }
+                }
+            } catch (Throwable e) {
+                e.printStackTrace();
             }
         }
     }
@@ -116,14 +138,25 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mMediaHandler.sendMessage(msg);
     }
 
+    private void setDisplay(Surface holder) {
+        if (mMediaHandler != null) {
+            Message msg = new Message();
+            msg.what = HANDLER_SET_DISPLAY;
+            msg.obj = holder;
+            mMediaHandler.sendMessage(msg);
+        }
+    }
+
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
         Log.i(TAG, "onSurfaceTextureAvailable [" + JCVideoPlayerManager.getCurrentJcvd().hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
-            prepare();
+            setDisplay(new Surface(surfaceTexture));
         } else {
-            textureView.setSurfaceTexture(savedSurfaceTexture);
+            if (textureView != null) {
+                textureView.setSurfaceTexture(savedSurfaceTexture);
+            }
         }
     }
 

@@ -8,6 +8,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
@@ -44,7 +45,9 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
     protected boolean isVideoRendingStart = false;
     public static boolean ACTION_BAR_EXIST = true;
     public static boolean TOOL_BAR_EXIST = true;
-    public static int FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+    public static int FULLSCREEN_ORIENTATION = Build.VERSION.SDK_INT <= 19
+            ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            : ActivityInfo.SCREEN_ORIENTATION_SENSOR;
     public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     public static boolean SAVE_PROGRESS = true;
 
@@ -348,13 +351,14 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCVideoPlayerManager.completeAll();
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
         initTextureView();
-        addTextureView();
+        addTextureView(true);
         AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JCUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JCMediaManager.CURRENT_PLAYING_URL = JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex);
         JCMediaManager.CURRENT_PLING_LOOP = loop;
         JCMediaManager.MAP_HEADER_DATA = headData;
+        JCMediaManager.instance().prepare();
         onStatePreparing();
         JCVideoPlayerManager.setFirstFloor(this);
     }
@@ -592,8 +596,18 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         JCMediaManager.textureView.setSurfaceTextureListener(JCMediaManager.instance());
     }
 
-    public void addTextureView() {
+    /**
+     * 添加TextureView
+     * 4.4版本一下需要调用initTextureView 部分机型会有crash: Error during detachFromGLContext
+     * @param init
+     */
+    public void addTextureView(boolean init) {
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
+
+        if (Build.VERSION.SDK_INT <= 19 || init) {
+            initTextureView();
+        }
+
         FrameLayout.LayoutParams layoutParams =
                 new FrameLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
@@ -758,6 +772,12 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void startWindowFullscreen() {
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
+
+        if (Build.VERSION.SDK_INT <= 19) {
+            JCMediaManager.textureView = null;
+            JCMediaManager.savedSurfaceTexture = null;
+        }
+
         hideSupportActionBar(getContext());
         JCUtils.getAppCompActivity(getContext()).setRequestedOrientation(FULLSCREEN_ORIENTATION);
 
@@ -777,7 +797,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             vp.addView(jcVideoPlayer, lp);
             jcVideoPlayer.setUp(urlMap, currentUrlMapIndex, JCVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
             jcVideoPlayer.setState(currentState);
-            jcVideoPlayer.addTextureView();
+            jcVideoPlayer.addTextureView(false);
             JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
@@ -809,7 +829,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
             vp.addView(jcVideoPlayer, lp);
             jcVideoPlayer.setUp(urlMap, currentUrlMapIndex, JCVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
             jcVideoPlayer.setState(currentState);
-            jcVideoPlayer.addTextureView();
+            jcVideoPlayer.addTextureView(false);
             JCVideoPlayerManager.setSecondFloor(jcVideoPlayer);
             onStateNormal();
         } catch (InstantiationException e) {
@@ -875,7 +895,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
         clearFloatScreen();
         //2.在本jcvd上播放
         setState(currentState);
-        addTextureView();
+        addTextureView(false);
     }
 
     public static boolean backPress() {
