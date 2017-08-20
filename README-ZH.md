@@ -41,7 +41,7 @@
 compile 'fm.jiecao:jiecaovideoplayer:5.8.1'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.8.1)
+[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.8.1) 不建议
 
 2.添加布局
 ```xml

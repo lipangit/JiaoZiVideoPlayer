@@ -43,7 +43,7 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 compile 'fm.jiecao:jiecaovideoplayer:5.8.1'
 ```
 
-[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.8.1)
+[Or download lib](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.8.1) not recommended
 
 2.Add JCVideoPlayer in your layout
 ```xml
