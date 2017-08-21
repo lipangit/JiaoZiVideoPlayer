@@ -782,6 +782,7 @@ public abstract class JCVideoPlayer extends FrameLayout implements View.OnClickL
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jcVideoPlayer.setAnimation(ra);
             onStateNormal();
+            jcVideoPlayer.startProgressTimer();
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
         } catch (Exception e) {
             e.printStackTrace();
