@@ -37,6 +37,30 @@ public class WebViewActivity extends AppCompatActivity {
         mWebView.loadUrl("file:///android_asset/jcvd.html");
     }
 
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public class JCCallBack {
 
         @JavascriptInterface
@@ -78,29 +102,5 @@ public class WebViewActivity extends AppCompatActivity {
             });
 
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JCVideoPlayer.releaseAllVideos();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

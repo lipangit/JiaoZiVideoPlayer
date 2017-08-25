@@ -61,24 +61,6 @@ public class ListViewViewpagerActivity extends AppCompatActivity implements View
 
     }
 
-    public class MyAdapter extends FragmentPagerAdapter {
-
-        public MyAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-            return fragmentList.get(i);
-        }
-
-        @Override
-        public int getCount() {
-            return fragmentList.size();
-        }
-
-    }
-
     @Override
     public void onBackPressed() {
         if (JCVideoPlayer.backPress()) {
@@ -95,5 +77,23 @@ public class ListViewViewpagerActivity extends AppCompatActivity implements View
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public class MyAdapter extends FragmentPagerAdapter {
+
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return fragmentList.get(i);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
     }
 }

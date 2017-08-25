@@ -40,6 +40,29 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
         listView.setAdapter(mAdapter);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (JCVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JCVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public class VideoListAdapter extends BaseAdapter {
 
@@ -124,29 +147,5 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
         class TextViewHolder {
             TextView textView;
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JCVideoPlayer.releaseAllVideos();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

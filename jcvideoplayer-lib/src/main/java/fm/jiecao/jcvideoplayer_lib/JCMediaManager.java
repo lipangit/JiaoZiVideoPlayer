@@ -22,30 +22,21 @@ import java.util.Map;
  * On 2015/11/30 15:39
  */
 public class JCMediaManager implements TextureView.SurfaceTextureListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
+    public static final int HANDLER_PREPARE = 0;
+    public static final int HANDLER_RELEASE = 2;
     public static String TAG = "JieCaoVideoPlayer";
-
-    private static JCMediaManager JCMediaManager;
     public static JCResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
-    public MediaPlayer mediaPlayer = new MediaPlayer();
     public static String CURRENT_PLAYING_URL;
     public static boolean CURRENT_PLING_LOOP;
     public static Map<String, String> MAP_HEADER_DATA;
+    private static JCMediaManager JCMediaManager;
+    public MediaPlayer mediaPlayer = new MediaPlayer();
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
-
-    public static final int HANDLER_PREPARE = 0;
-    public static final int HANDLER_RELEASE = 2;
     HandlerThread mMediaHandlerThread;
     MediaHandler mMediaHandler;
     Handler mainThreadHandler;
-
-    public static JCMediaManager instance() {
-        if (JCMediaManager == null) {
-            JCMediaManager = new JCMediaManager();
-        }
-        return JCMediaManager;
-    }
 
     public JCMediaManager() {
         mMediaHandlerThread = new HandlerThread(TAG);
@@ -54,52 +45,18 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
         mainThreadHandler = new Handler();
     }
 
+    public static JCMediaManager instance() {
+        if (JCMediaManager == null) {
+            JCMediaManager = new JCMediaManager();
+        }
+        return JCMediaManager;
+    }
+
     public Point getVideoSize() {
         if (currentVideoWidth != 0 && currentVideoHeight != 0) {
             return new Point(currentVideoWidth, currentVideoHeight);
         } else {
             return null;
-        }
-    }
-
-    public class MediaHandler extends Handler {
-        public MediaHandler(Looper looper) {
-            super(looper);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case HANDLER_PREPARE:
-                    try {
-                        currentVideoWidth = 0;
-                        currentVideoHeight = 0;
-                        mediaPlayer.release();
-                        mediaPlayer = new MediaPlayer();
-                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                        mediaPlayer.setLooping(CURRENT_PLING_LOOP);
-                        mediaPlayer.setOnPreparedListener(JCMediaManager.this);
-                        mediaPlayer.setOnCompletionListener(JCMediaManager.this);
-                        mediaPlayer.setOnBufferingUpdateListener(JCMediaManager.this);
-                        mediaPlayer.setScreenOnWhilePlaying(true);
-                        mediaPlayer.setOnSeekCompleteListener(JCMediaManager.this);
-                        mediaPlayer.setOnErrorListener(JCMediaManager.this);
-                        mediaPlayer.setOnInfoListener(JCMediaManager.this);
-                        mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
-                        Class<MediaPlayer> clazz = MediaPlayer.class;
-                        Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
-                        method.invoke(mediaPlayer, CURRENT_PLAYING_URL, MAP_HEADER_DATA);
-                        mediaPlayer.prepareAsync();
-                        mediaPlayer.setSurface(new Surface(savedSurfaceTexture));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    break;
-                case HANDLER_RELEASE:
-                    mediaPlayer.release();
-                    break;
-            }
         }
     }
 
@@ -221,6 +178,47 @@ public class JCMediaManager implements TextureView.SurfaceTextureListener, Media
                 }
             }
         });
+    }
+
+    public class MediaHandler extends Handler {
+        public MediaHandler(Looper looper) {
+            super(looper);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case HANDLER_PREPARE:
+                    try {
+                        currentVideoWidth = 0;
+                        currentVideoHeight = 0;
+                        mediaPlayer.release();
+                        mediaPlayer = new MediaPlayer();
+                        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                        mediaPlayer.setLooping(CURRENT_PLING_LOOP);
+                        mediaPlayer.setOnPreparedListener(JCMediaManager.this);
+                        mediaPlayer.setOnCompletionListener(JCMediaManager.this);
+                        mediaPlayer.setOnBufferingUpdateListener(JCMediaManager.this);
+                        mediaPlayer.setScreenOnWhilePlaying(true);
+                        mediaPlayer.setOnSeekCompleteListener(JCMediaManager.this);
+                        mediaPlayer.setOnErrorListener(JCMediaManager.this);
+                        mediaPlayer.setOnInfoListener(JCMediaManager.this);
+                        mediaPlayer.setOnVideoSizeChangedListener(JCMediaManager.this);
+                        Class<MediaPlayer> clazz = MediaPlayer.class;
+                        Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
+                        method.invoke(mediaPlayer, CURRENT_PLAYING_URL, MAP_HEADER_DATA);
+                        mediaPlayer.prepareAsync();
+                        mediaPlayer.setSurface(new Surface(savedSurfaceTexture));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case HANDLER_RELEASE:
+                    mediaPlayer.release();
+                    break;
+            }
+        }
     }
 
 }

@@ -11,7 +11,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -54,7 +53,44 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public PopupWindow clarityPopWindow;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
-
+    protected Dialog mProgressDialog;
+    protected ProgressBar mDialogProgressBar;
+    protected TextView mDialogSeekTime;
+    protected TextView mDialogTotalTime;
+    protected ImageView mDialogIcon;
+    protected Dialog mVolumeDialog;
+    protected ProgressBar mDialogVolumeProgressBar;
+    protected TextView mDialogVolumeTextView;
+    protected ImageView mDialogVolumeImageView;
+    protected Dialog mBrightnessDialog;
+    protected ProgressBar mDialogBrightnessProgressBar;
+    protected TextView mDialogBrightnessTextView;
+    private boolean brocasting = false;
+    private BroadcastReceiver battertReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
+                int level = intent.getIntExtra("level", 0);
+                int scale = intent.getIntExtra("scale", 100);
+                int percent = level * 100 / scale;
+                if (percent < 15) {
+                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_10);
+                } else if (percent >= 15 && percent < 40) {
+                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_30);
+                } else if (percent >= 40 && percent < 60) {
+                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_50);
+                } else if (percent >= 60 && percent < 80) {
+                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_70);
+                } else if (percent >= 80 && percent < 95) {
+                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_90);
+                } else if (percent >= 95 && percent <= 100) {
+                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_100);
+                }
+                getContext().unregisterReceiver(battertReceiver);
+                brocasting = false;
+            }
+        }
+    };
 
     public JCVideoPlayerStandard(Context context) {
         super(context);
@@ -295,7 +331,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-
     @Override
     public void showWifiDialog(int action) {
         super.showWifiDialog(action);
@@ -389,34 +424,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             );
         }
     }
-
-    private boolean brocasting = false;
-
-    private BroadcastReceiver battertReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
-                int level = intent.getIntExtra("level", 0);
-                int scale = intent.getIntExtra("scale", 100);
-                int percent = level * 100 / scale;
-                if (percent < 15) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_10);
-                } else if (percent >= 15 && percent < 40) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_30);
-                } else if (percent >= 40 && percent < 60) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_50);
-                } else if (percent >= 60 && percent < 80) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_70);
-                } else if (percent >= 80 && percent < 95) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_90);
-                } else if (percent >= 95 && percent <= 100) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_100);
-                }
-                getContext().unregisterReceiver(battertReceiver);
-                brocasting = false;
-            }
-        }
-    };
 
     public void onCLickUiToggleToClear() {
         if (currentState == CURRENT_STATE_PREPARING) {
@@ -724,13 +731,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     }
 
-
-    protected Dialog mProgressDialog;
-    protected ProgressBar mDialogProgressBar;
-    protected TextView mDialogSeekTime;
-    protected TextView mDialogTotalTime;
-    protected ImageView mDialogIcon;
-
     @Override
     public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
         super.showProgressDialog(deltaX, seekTime, seekTimePosition, totalTime, totalTimeDuration);
@@ -764,11 +764,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mProgressDialog.dismiss();
         }
     }
-
-    protected Dialog mVolumeDialog;
-    protected ProgressBar mDialogVolumeProgressBar;
-    protected TextView mDialogVolumeTextView;
-    protected ImageView mDialogVolumeImageView;
 
     @Override
     public void showVolumeDialog(float deltaY, int volumePercent) {
@@ -805,10 +800,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mVolumeDialog.dismiss();
         }
     }
-
-    protected Dialog mBrightnessDialog;
-    protected ProgressBar mDialogBrightnessProgressBar;
-    protected TextView mDialogBrightnessTextView;
 
     @Override
     public void showBrightnessDialog(int brightnessPercent) {
@@ -871,6 +862,21 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     }
 
+    @Override
+    public void onAutoCompletion() {
+        super.onAutoCompletion();
+        cancelDismissControlViewTimer();
+    }
+
+    @Override
+    public void onCompletion() {
+        super.onCompletion();
+        cancelDismissControlViewTimer();
+        if (clarityPopWindow != null) {
+            clarityPopWindow.dismiss();
+        }
+    }
+
     public class DismissControlViewTimerTask extends TimerTask {
 
         @Override
@@ -895,21 +901,6 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                     });
                 }
             }
-        }
-    }
-
-    @Override
-    public void onAutoCompletion() {
-        super.onAutoCompletion();
-        cancelDismissControlViewTimer();
-    }
-
-    @Override
-    public void onCompletion() {
-        super.onCompletion();
-        cancelDismissControlViewTimer();
-        if (clarityPopWindow != null) {
-            clarityPopWindow.dismiss();
         }
     }
 }

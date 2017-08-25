@@ -10,8 +10,6 @@ import android.widget.Button;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.LinkedHashMap;
-
 import fm.jiecao.jcvideoplayer_lib.JCUserAction;
 import fm.jiecao.jcvideoplayer_lib.JCUserActionStandard;
 import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
