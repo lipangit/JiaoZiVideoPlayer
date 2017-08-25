@@ -30,7 +30,10 @@ public class DemoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInastanceState) {
         listView = (ListView) inflater.inflate(R.layout.layout_list, container, false);
-        listView.setAdapter(new VideoListAdapter(getActivity(), index));
+        listView.setAdapter(new VideoListAdapter(getActivity(),
+                VideoConstant.videoUrls[index],
+                VideoConstant.videoTitles[index],
+                VideoConstant.videoThumbs[index]));
         return listView;
     }
 }

@@ -15,7 +15,6 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
  */
 public class ListViewNormalActivity extends AppCompatActivity {
     ListView listView;
-    VideoListAdapter adapterVideoList;
 
     SensorManager sensorManager;
     JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
@@ -31,8 +30,10 @@ public class ListViewNormalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_listview_content);
 
         listView = (ListView) findViewById(R.id.listview);
-        adapterVideoList = new VideoListAdapter(this);
-        listView.setAdapter(adapterVideoList);
+        listView.setAdapter(new VideoListAdapter(this,
+                VideoConstant.videoUrls[0],
+                VideoConstant.videoTitles[0],
+                VideoConstant.videoThumbs[0]));
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();

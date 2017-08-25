@@ -14,7 +14,6 @@ import fm.jiecao.jcvideoplayer_lib.JCVideoPlayer;
 public class AutoTinyListActivity extends AppCompatActivity {
 
     ListView listView;
-    VideoListAdapter adapterVideoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,8 +26,10 @@ public class AutoTinyListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_listview_content);
 
         listView = (ListView) findViewById(R.id.listview);
-        adapterVideoList = new VideoListAdapter(this);
-        listView.setAdapter(adapterVideoList);
+        listView.setAdapter(new VideoListAdapter(this,
+                VideoConstant.videoUrls[0],
+                VideoConstant.videoTitles[0],
+                VideoConstant.videoThumbs[0]));
 //        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
 //            @Override
 //            public void onScrollStateChanged(AbsListView view, int scrollState) {
