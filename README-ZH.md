@@ -83,11 +83,7 @@ protected void onPause() {
     android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
 ```
 
-#### [其他API](https://github.com/lipangit/JieCaoVideoPlayer/wiki/API)
-
-#### [自定义UI](https://github.com/lipangit/JieCaoVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
-
-## [贡献者](https://github.com/lipangit/JieCaoVideoPlayer/graphs/contributors)
+#### [Wiki](https://github.com/lipangit/JieCaoVideoPlayer/wiki)
 
 ## License MIT
 
