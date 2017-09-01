@@ -40,7 +40,7 @@ public class PlayDirectlyActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fullscreen:
-                JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, "http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4", "嫂子辛苦了");
+                JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, VideoConstant.videoUrlList[6], "嫂子辛苦了");
                 break;
             case R.id.tiny_window:
                 Toast.makeText(PlayDirectlyActivity.this, "Comming Soon", Toast.LENGTH_SHORT).show();

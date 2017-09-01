@@ -66,7 +66,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         mJcVideoPlayerStandard.setUp(map, 2
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
-                .load("http://img4.jiecaojingxuan.c1/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
+                .load(VideoConstant.videoThumbList[0])
                 .into(mJcVideoPlayerStandard.thumbImageView);
         mJcVideoPlayerStandard.loop = true;
         mJcVideoPlayerStandard.headData = new HashMap<>();

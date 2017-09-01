@@ -42,10 +42,10 @@ public class AutoTinyNormalActivity extends AppCompatActivity implements AbsList
         listView.addHeaderView(headerLayout);
 
         JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) headerLayout.findViewById(R.id.jc_video);
-        jcVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
+        jcVideoPlayerStandard.setUp(VideoConstant.videoUrlList[6]
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子坐这");
         Picasso.with(this)
-                .load("http://cos.myqcloud.com/1000264/qcloud_video_attachment/842646334/vod_cover/cover1458036374.jpg")
+                .load(VideoConstant.videoThumbList[6])
                 .into(jcVideoPlayerStandard.thumbImageView);
 
         Map<String, String> keyValuePair = new HashMap<>();
