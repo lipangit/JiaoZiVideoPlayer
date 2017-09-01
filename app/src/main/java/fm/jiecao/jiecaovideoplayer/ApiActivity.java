@@ -60,8 +60,8 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
 
         mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
         LinkedHashMap map = new LinkedHashMap();
-        map.put("高清", "http://jzvd.nathen.cn/c494b340ff704015bb6682ffde3cd302/64929c369124497593205a4190d7d128-5287d2089db37e62345123a1be272f8b.mp4");
-        map.put("标清", "http://jzvd.nathen.cn/f07fa9fddd1e45a6ae1570c7fe7967c1/c6db82685b894e25b523b1cb28d79f2e-5287d2089db37e62345123a1be272f8b.mp4");
+        map.put("高清", VideoConstant.videoUrlList[0]);
+        map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrls[0][4]);
         mJcVideoPlayerStandard.setUp(map, 2
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");

@@ -27,10 +27,10 @@ public class OrientationActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Orientation");
         setContentView(R.layout.activity_orientation);
         mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
-        mJcVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c494b340ff704015bb6682ffde3cd302/64929c369124497593205a4190d7d128-5287d2089db37e62345123a1be272f8b.mp4"
+        mJcVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
-                .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
+                .load(VideoConstant.videoThumbList[0])
                 .into(mJcVideoPlayerStandard.thumbImageView);
 
         JCVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
