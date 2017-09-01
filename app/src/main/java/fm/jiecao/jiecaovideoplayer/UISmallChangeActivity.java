@@ -58,14 +58,14 @@ public class UISmallChangeActivity extends AppCompatActivity {
                 .into(jcVideoPlayerStandardShowTextureViewAfterAutoComplete.thumbImageView);
 
         jcVideoPlayerStandardAutoCompleteAfterFullscreen = (JCVideoPlayerStandardAutoCompleteAfterFullscreen) findViewById(R.id.custom_videoplayer_standard_aoto_complete);
-        jcVideoPlayerStandardAutoCompleteAfterFullscreen.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
+        jcVideoPlayerStandardAutoCompleteAfterFullscreen.setUp(VideoConstant.videoUrls[0][1], JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子没来");
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
                 .into(jcVideoPlayerStandardAutoCompleteAfterFullscreen.thumbImageView);
 
         jcVideoPlayerStandard_1_1 = (JCVideoPlayerStandardAutoCompleteAfterFullscreen) findViewById(R.id.jc_videoplayer_1_1);
-        jcVideoPlayerStandard_1_1.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
+        jcVideoPlayerStandard_1_1.setUp(VideoConstant.videoUrls[0][1], JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子有事吗");
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
@@ -74,7 +74,7 @@ public class UISmallChangeActivity extends AppCompatActivity {
         jcVideoPlayerStandard_1_1.heightRatio = 1;
 
         jcVideoPlayerStandard_16_9 = (JCVideoPlayerStandardAutoCompleteAfterFullscreen) findViewById(R.id.jc_videoplayer_16_9);
-        jcVideoPlayerStandard_16_9.setUp("http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4", JCVideoPlayer.SCREEN_LAYOUT_NORMAL
+        jcVideoPlayerStandard_16_9.setUp(VideoConstant.videoUrls[0][1], JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子来不了");
         Picasso.with(this)
                 .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
