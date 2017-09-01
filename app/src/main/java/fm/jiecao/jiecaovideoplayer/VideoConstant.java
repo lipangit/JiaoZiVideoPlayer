@@ -12,9 +12,9 @@ public class VideoConstant {
                             "http://video.jiecao.fm/8/17/%E6%8A%AB%E8%90%A8.mp4",
                             "http://video.jiecao.fm/8/18/%E5%A4%A7%E5%AD%A6.mp4",
                             "http://video.jiecao.fm/8/16/%E8%B7%B3%E8%88%9E.mp4",
-                            "http://video.jiecao.fm/8/16/%E9%B8%AD%E5%AD%90.mp4",
+                            "http://jzvd.nathen.cn/f55530ba8a59403da0621cbf4faef15e/adae4f2e3ecf4ea780beb057e7bce84c-5287d2089db37e62345123a1be272f8b.mp4",
                             "http://video.jiecao.fm/8/16/%E9%A9%BC%E8%83%8C.mp4",
-                            "http://video.jiecao.fm/8/16/%E4%BF%AF%E5%8D%A7%E6%92%91.mp4",
+                            "http://jzvd.nathen.cn/f07fa9fddd1e45a6ae1570c7fe7967c1/c6db82685b894e25b523b1cb28d79f2e-5287d2089db37e62345123a1be272f8b.mp4",
                             "http://video.jiecao.fm/5/1/%E8%87%AA%E5%8F%96%E5%85%B6%E8%BE%B1.mp4",
                             "http://gslb.miaopai.com/stream/ed5HCfnhovu3tyIQAiv60Q__.mp4",
                             "http://video.jiecao.fm/11/23/xu/%E5%A6%B9%E5%A6%B9.mp4"

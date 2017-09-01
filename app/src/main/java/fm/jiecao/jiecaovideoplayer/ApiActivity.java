@@ -60,13 +60,13 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
 
         mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
         LinkedHashMap map = new LinkedHashMap();
-        map.put("高清", "http://video.jiecao.fm/11/23/xin/%E5%81%87%E4%BA%BA.mp4");
-        map.put("标清", "http://video.jiecao.fm/8/16/%E4%BF%AF%E5%8D%A7%E6%92%91.mp4");
-        map.put("普清", "http://video.jiecao.fm/8/16/%E9%B8%AD%E5%AD%90.mp4");
+        map.put("高清", "http://jzvd.nathen.cn/c494b340ff704015bb6682ffde3cd302/64929c369124497593205a4190d7d128-5287d2089db37e62345123a1be272f8b.mp4");
+        map.put("标清", "http://jzvd.nathen.cn/f07fa9fddd1e45a6ae1570c7fe7967c1/c6db82685b894e25b523b1cb28d79f2e-5287d2089db37e62345123a1be272f8b.mp4");
+        map.put("普清", "http://jzvd.nathen.cn/f55530ba8a59403da0621cbf4faef15e/adae4f2e3ecf4ea780beb057e7bce84c-5287d2089db37e62345123a1be272f8b.mp4");
         mJcVideoPlayerStandard.setUp(map, 2
                 , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
-                .load("http://img4.jiecaojingxuan.com/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
+                .load("http://img4.jiecaojingxuan.c1/2016/11/23/00b026e7-b830-4994-bc87-38f4033806a6.jpg@!640_360")
                 .into(mJcVideoPlayerStandard.thumbImageView);
         mJcVideoPlayerStandard.loop = true;
         mJcVideoPlayerStandard.headData = new HashMap<>();
