@@ -61,14 +61,14 @@ public class UISmallChangeActivity extends AppCompatActivity {
         jcVideoPlayerStandardAutoCompleteAfterFullscreen.setUp(VideoConstant.videoUrls[0][1], JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子没来");
         Picasso.with(this)
-                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
+                .load(VideoConstant.videoThumbs[0][1])
                 .into(jcVideoPlayerStandardAutoCompleteAfterFullscreen.thumbImageView);
 
         jcVideoPlayerStandard_1_1 = (JCVideoPlayerStandardAutoCompleteAfterFullscreen) findViewById(R.id.jc_videoplayer_1_1);
         jcVideoPlayerStandard_1_1.setUp(VideoConstant.videoUrls[0][1], JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子有事吗");
         Picasso.with(this)
-                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
+                .load(VideoConstant.videoThumbs[0][1])
                 .into(jcVideoPlayerStandard_1_1.thumbImageView);
         jcVideoPlayerStandard_1_1.widthRatio = 1;
         jcVideoPlayerStandard_1_1.heightRatio = 1;
@@ -77,7 +77,7 @@ public class UISmallChangeActivity extends AppCompatActivity {
         jcVideoPlayerStandard_16_9.setUp(VideoConstant.videoUrls[0][1], JCVideoPlayer.SCREEN_LAYOUT_NORMAL
                 , "嫂子来不了");
         Picasso.with(this)
-                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
+                .load(VideoConstant.videoThumbs[0][1])
                 .into(jcVideoPlayerStandard_16_9.thumbImageView);
         jcVideoPlayerStandard_16_9.widthRatio = 16;
         jcVideoPlayerStandard_16_9.heightRatio = 9;

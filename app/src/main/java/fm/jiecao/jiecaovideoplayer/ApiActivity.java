@@ -83,11 +83,11 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
 //                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
 
         /** ImageLoader **/
-//        ImageLoader.getInstance().displayImage("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg",
+//        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],
 //                videoController1.thumbImageView);
         /** Glide **/
 //        Glide.with(this)
-//                .load("http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg")
+//                .load(VideoConstant.videoThumbs[0][1])
 //                .into(videoController1.thumbImageView);
         /** volley omit **/
         /** Fresco omit **/

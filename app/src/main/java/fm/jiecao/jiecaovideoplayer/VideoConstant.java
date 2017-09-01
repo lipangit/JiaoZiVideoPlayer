@@ -36,28 +36,28 @@ public class VideoConstant {
     public static String[][] videoThumbs =
             {
                     {
-                            "http://img4.jiecaojingxuan.com/2016/8/17/bd7ffc84-8407-4037-a078-7d922ce0fb0f.jpg",
-                            "http://img4.jiecaojingxuan.com/2016/8/17/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg",
-                            "http://img4.jiecaojingxuan.com/2016/8/18/ccd86ca1-66c7-4331-9450-a3b7f765424a.png",
-                            "http://img4.jiecaojingxuan.com/2016/8/16/2adde364-9be1-4864-b4b9-0b0bcc81ef2e.jpg",
-                            "http://img4.jiecaojingxuan.com/2016/8/16/2a877211-4b68-4e3a-87be-6d2730faef27.png",
-                            "http://img4.jiecaojingxuan.com/2016/8/16/aaeb5da9-ac50-4712-a28d-863fe40f1fc6.png",
-                            "http://img4.jiecaojingxuan.com/2016/8/16/e565f9cc-eedc-45f0-99f8-5b0fa3aed567.jpg",
-                            "http://img4.jiecaojingxuan.com/2016/5/1/3430ec64-e6a7-4d8e-b044-9d408e075b7c.jpg",
-                            "http://img4.jiecaojingxuan.com/2016/3/14/2204a578-609b-440e-8af7-a0ee17ff3aee.jpg",
-                            "http://img4.jiecaojingxuan.com/2016/11/23/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png@!640_360"
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/bd7ffc84-8407-4037-a078-7d922ce0fb0f.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/f2dbd12e-b1cb-4daf-aff1-8c6be2f64d1a.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/ccd86ca1-66c7-4331-9450-a3b7f765424a.png",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/2adde364-9be1-4864-b4b9-0b0bcc81ef2e.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/2a877211-4b68-4e3a-87be-6d2730faef27.png",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/aaeb5da9-ac50-4712-a28d-863fe40f1fc6.png",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/e565f9cc-eedc-45f0-99f8-5b0fa3aed567%281%29.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/3430ec64-e6a7-4d8e-b044-9d408e075b7c.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/2204a578-609b-440e-8af7-a0ee17ff3aee.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png"
                     },
                     {
-                            "http://img4.jiecaojingxuan.com/2016/11/24/f18ee453-6aec-40a5-a046-3203111dd303.jpg@!640_360",
-                            "http://img4.jiecaojingxuan.com/2016/11/24/00f5a243-1e9f-426c-94f4-888971987edb.jpg@!640_360",
-                            "http://img4.jiecaojingxuan.com/2016/11/23/7df34ee9-1e4f-48f4-8acd-748c52368298.jpg@!640_360",
-                            "http://img4.jiecaojingxuan.com/2016/11/23/ef46e139-e378-4298-8441-144888294f1f.png@!640_360"
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/f18ee453-6aec-40a5-a046-3203111dd303.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/00f5a243-1e9f-426c-94f4-888971987edb.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/7df34ee9-1e4f-48f4-8acd-748c52368298.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/ef46e139-e378-4298-8441-144888294f1f.png"
                     },
                     {
-                            "http://img4.jiecaojingxuan.com/2016/11/23/0e58101d-5b47-4100-8fb3-0cce057fd622.jpg@!640_360",
-                            "http://img4.jiecaojingxuan.com/2016/11/24/d6d3a520-b183-4867-8746-5b6aba6c1724.png@!640_360",
-                            "http://img4.jiecaojingxuan.com/2016/11/26/caa3dade-5744-486d-a1b7-9780aebb9eb5.jpg@!640_360",
-                            "http://img4.jiecaojingxuan.com/2016/11/24/2c3e62bb-6a32-4fb0-a1d5-d1260ad436a4.png@!640_360"
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/0e58101d-5b47-4100-8fb3-0cce057fd622.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/d6d3a520-b183-4867-8746-5b6aba6c1724.png",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/caa3dade-5744-486d-a1b7-9780aebb9eb5.jpg",
+                            "http://jzvd-pic.nathen.cn/jzvd-pic/2c3e62bb-6a32-4fb0-a1d5-d1260ad436a4.png"
                     }
             };
 
