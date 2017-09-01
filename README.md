@@ -88,6 +88,7 @@ protected void onPause() {
 ## [Wiki](https://github.com/lipangit/JieCaoVideoPlayer/wiki)
 
 ## Reward
+
 ![Reward][2]
 
 ## License MIT
