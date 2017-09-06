@@ -30,7 +30,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
     public static String CURRENT_PLAYING_URL;
     public static boolean CURRENT_PLING_LOOP;
     public static Map<String, String> MAP_HEADER_DATA;
-    private static JZMediaManager JCMediaManager;
+    private static JZMediaManager JZMediaManager;
     public MediaPlayer mediaPlayer = new MediaPlayer();
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
@@ -46,10 +46,10 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
     }
 
     public static JZMediaManager instance() {
-        if (JCMediaManager == null) {
-            JCMediaManager = new JZMediaManager();
+        if (JZMediaManager == null) {
+            JZMediaManager = new JZMediaManager();
         }
-        return JCMediaManager;
+        return JZMediaManager;
     }
 
     public Point getVideoSize() {

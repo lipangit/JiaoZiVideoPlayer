@@ -91,7 +91,7 @@ public class JZUtils {
 
     public static void saveProgress(Context context, String url, int progress) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return;
-        SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
+        SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = spn.edit();
         editor.putInt(url, progress);
@@ -101,7 +101,7 @@ public class JZUtils {
     public static int getSavedProgress(Context context, String url) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return 0;
         SharedPreferences spn;
-        spn = context.getSharedPreferences("JCVD_PROGRESS",
+        spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
         return spn.getInt(url, 0);
     }
@@ -114,11 +114,11 @@ public class JZUtils {
      */
     public static void clearSavedProgress(Context context, String url) {
         if (TextUtils.isEmpty(url)) {
-            SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
+            SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                     Context.MODE_PRIVATE);
             spn.edit().clear().apply();
         } else {
-            SharedPreferences spn = context.getSharedPreferences("JCVD_PROGRESS",
+            SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                     Context.MODE_PRIVATE);
             spn.edit().putInt(url, 0).apply();
         }
