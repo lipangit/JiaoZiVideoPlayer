@@ -15,7 +15,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by Nathen on 2016/12/30.
  */
 public class OrientationActivity extends AppCompatActivity {
-    JZVideoPlayerStandard mJcVideoPlayerStandard;
+    JZVideoPlayerStandard mJzVideoPlayerStandard;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,12 +26,12 @@ public class OrientationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setTitle("Orientation");
         setContentView(R.layout.activity_orientation);
-        mJcVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jc_video);
-        mJcVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
+        mJzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jz_video);
+        mJzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
                 , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
-                .into(mJcVideoPlayerStandard.thumbImageView);
+                .into(mJzVideoPlayerStandard.thumbImageView);
 
         JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
         JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;

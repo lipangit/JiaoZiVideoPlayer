@@ -237,7 +237,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZUtils.clearSavedProgress(context, url);
     }
 
-    public static void setJcUserAction(JZUserAction jcUserEvent) {
+    public static void setJzUserAction(JZUserAction jcUserEvent) {
         JC_USER_EVENT = jcUserEvent;
     }
 
@@ -999,7 +999,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     }
 
-    public static class JCAutoFullscreenListener implements SensorEventListener {
+    public static class JZAutoFullscreenListener implements SensorEventListener {
         @Override
         public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
             final float x = event.values[SensorManager.DATA_X];

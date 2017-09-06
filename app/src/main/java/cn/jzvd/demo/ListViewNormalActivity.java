@@ -17,7 +17,7 @@ public class ListViewNormalActivity extends AppCompatActivity {
     ListView listView;
 
     SensorManager sensorManager;
-    JZVideoPlayer.JCAutoFullscreenListener sensorEventListener;
+    JZVideoPlayer.JZAutoFullscreenListener sensorEventListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class ListViewNormalActivity extends AppCompatActivity {
                 VideoConstant.videoThumbs[0]));
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorEventListener = new JZVideoPlayer.JCAutoFullscreenListener();
+        sensorEventListener = new JZVideoPlayer.JZAutoFullscreenListener();
     }
 
     @Override

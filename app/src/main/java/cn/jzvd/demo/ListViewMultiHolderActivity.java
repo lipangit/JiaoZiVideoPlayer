@@ -66,7 +66,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
     public class VideoListAdapter extends BaseAdapter {
 
-        int[] viewtype = {0, 0, 0, 1, 0, 0, 0, 1, 0, 0};//1 = jcvd, 0 = textView
+        int[] viewtype = {0, 0, 0, 1, 0, 0, 0, 1, 0, 0};//1 = jzvd, 0 = textView
 
         Context context;
         LayoutInflater mInflater;
@@ -95,7 +95,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             //This is the point
             if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoHolder) {
-                ((VideoHolder) convertView.getTag()).jcVideoPlayer.release();
+                ((VideoHolder) convertView.getTag()).jzVideoPlayer.release();
             }
             if (getItemViewType(position) == 1) {
                 VideoHolder viewHolder;
@@ -104,17 +104,17 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                 } else {
                     viewHolder = new VideoHolder();
                     convertView = mInflater.inflate(R.layout.item_videoview, null);
-                    viewHolder.jcVideoPlayer = (JZVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
+                    viewHolder.jzVideoPlayer = (JZVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
                     convertView.setTag(viewHolder);
                 }
 
-                viewHolder.jcVideoPlayer.setUp(
+                viewHolder.jzVideoPlayer.setUp(
                         VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
                         VideoConstant.videoTitles[0][position]);
 
                 Picasso.with(ListViewMultiHolderActivity.this)
                         .load(VideoConstant.videoThumbs[0][position])
-                        .into(viewHolder.jcVideoPlayer.thumbImageView);
+                        .into(viewHolder.jzVideoPlayer.thumbImageView);
             } else {
                 TextViewHolder textViewHolder;
                 if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof TextViewHolder) {
@@ -141,7 +141,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
         }
 
         class VideoHolder {
-            JZVideoPlayerStandard jcVideoPlayer;
+            JZVideoPlayerStandard jzVideoPlayer;
         }
 
         class TextViewHolder {

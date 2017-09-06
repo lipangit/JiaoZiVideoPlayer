@@ -33,8 +33,8 @@ public class WebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_webview);
         mWebView = (WebView) findViewById(R.id.webview);
         mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.addJavascriptInterface(new JCCallBack(), "jcvd");
-        mWebView.loadUrl("file:///android_asset/jcvd.html");
+        mWebView.addJavascriptInterface(new JZCallBack(), "jzvd");
+        mWebView.loadUrl("file:///android_asset/jzvd.html");
     }
 
     @Override
@@ -61,10 +61,10 @@ public class WebViewActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class JCCallBack {
+    public class JZCallBack {
 
         @JavascriptInterface
-        public void adViewJieCaoVideoPlayer(final int width, final int height, final int top, final int left, final int index) {
+        public void adViewJiaoZiVideoPlayer(final int width, final int height, final int top, final int left, final int index) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

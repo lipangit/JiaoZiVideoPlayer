@@ -41,12 +41,12 @@ public class AutoTinyNormalActivity extends AppCompatActivity implements AbsList
         headerLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.header_auto_tiny_normal, null);
         listView.addHeaderView(headerLayout);
 
-        JZVideoPlayerStandard jcVideoPlayerStandard = (JZVideoPlayerStandard) headerLayout.findViewById(R.id.jc_video);
-        jcVideoPlayerStandard.setUp(VideoConstant.videoUrlList[6]
+        JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) headerLayout.findViewById(R.id.jz_video);
+        jzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[6]
                 , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子坐这");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[6])
-                .into(jcVideoPlayerStandard.thumbImageView);
+                .into(jzVideoPlayerStandard.thumbImageView);
 
         Map<String, String> keyValuePair = new HashMap<>();
         keyValuePair.put("key", "list item");
@@ -93,6 +93,6 @@ public class AutoTinyNormalActivity extends AppCompatActivity implements AbsList
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//        JCVideoPlayer.onScroll(firstVisibleItem, visibleItemCount, totalItemCount);
+//        JZVideoPlayer.onScroll(firstVisibleItem, visibleItemCount, totalItemCount);
     }
 }

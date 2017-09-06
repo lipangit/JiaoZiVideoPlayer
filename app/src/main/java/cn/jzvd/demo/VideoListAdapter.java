@@ -59,17 +59,17 @@ public class VideoListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.jcVideoPlayer = (JZVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
-        viewHolder.jcVideoPlayer.setUp(
+        viewHolder.jzVideoPlayer = (JZVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
+        viewHolder.jzVideoPlayer.setUp(
                 videoUrls[position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
                 videoTitles[position]);
         Picasso.with(convertView.getContext())
                 .load(videoThumbs[position])
-                .into(viewHolder.jcVideoPlayer.thumbImageView);
+                .into(viewHolder.jzVideoPlayer.thumbImageView);
         return convertView;
     }
 
     class ViewHolder {
-        JZVideoPlayerStandard jcVideoPlayer;
+        JZVideoPlayerStandard jzVideoPlayer;
     }
 }

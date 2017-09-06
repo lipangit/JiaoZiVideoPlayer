@@ -21,7 +21,6 @@ public class UIBigChangeActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("BigChangeUI");
         setContentView(R.layout.activity_ui_big_change);
 
-
     }
 
     @Override

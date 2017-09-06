@@ -1,5 +1,6 @@
 package cn.jzvd.demo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,16 +31,17 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
         return holder;
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Log.i(TAG, "onBindViewHolder [" + holder.jcVideoPlayer.hashCode() + "] position=" + position);
+        Log.i(TAG, "onBindViewHolder [" + holder.jzVideoPlayer.hashCode() + "] position=" + position);
 
-        holder.jcVideoPlayer.setUp(
+        holder.jzVideoPlayer.setUp(
                 VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
                 VideoConstant.videoTitles[0][position]);
-        Picasso.with(holder.jcVideoPlayer.getContext())
+        Picasso.with(holder.jzVideoPlayer.getContext())
                 .load(VideoConstant.videoThumbs[0][position])
-                .into(holder.jcVideoPlayer.thumbImageView);
+                .into(holder.jzVideoPlayer.thumbImageView);
     }
 
     @Override
@@ -48,11 +50,11 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        JZVideoPlayerStandard jcVideoPlayer;
+        JZVideoPlayerStandard jzVideoPlayer;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            jcVideoPlayer = (JZVideoPlayerStandard) itemView.findViewById(R.id.videoplayer);
+            jzVideoPlayer = (JZVideoPlayerStandard) itemView.findViewById(R.id.videoplayer);
         }
     }
 

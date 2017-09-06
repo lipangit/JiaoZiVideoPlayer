@@ -16,7 +16,7 @@ public class DemoApplication extends Application {
         LeakCanary.install(this);
 
         //it is public static, you can set this everywhere
-        //JCVideoPlayer.TOOL_BAR_EXIST = false;
-        //JCVideoPlayer.ACTION_BAR_EXIST = false;
+        //JZVideoPlayer.TOOL_BAR_EXIST = false;
+        //JZVideoPlayer.ACTION_BAR_EXIST = false;
     }
 }

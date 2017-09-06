@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <cn.jzvd.JZVideoPlayerStandard
-        android:id="@+id/jc_video"
+        android:id="@+id/jz_video"
         android:layout_width="300dp"
         android:layout_height="300dp" />
 </LinearLayout>

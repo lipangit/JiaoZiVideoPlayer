@@ -30,9 +30,9 @@ import cn.jzvd.JZVideoPlayerStandard;
  */
 public class ApiActivity extends AppCompatActivity implements View.OnClickListener {
     Button mSmallChange, mBigChange, mOrientation;
-    JZVideoPlayerSimple mJcVideoPlayerSimple;
-    JZVideoPlayerStandard mJcVideoPlayerStandard;
-    JZVideoPlayer.JCAutoFullscreenListener mSensorEventListener;
+    JZVideoPlayerSimple mJzVideoPlayerSimple;
+    JZVideoPlayerStandard mJzVideoPlayerStandard;
+    JZVideoPlayer.JZAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
 
     @Override
@@ -53,34 +53,34 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         mBigChange.setOnClickListener(this);
         mOrientation.setOnClickListener(this);
 
-        mJcVideoPlayerSimple = (JZVideoPlayerSimple) findViewById(R.id.simple_demo);
-        mJcVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
+        mJzVideoPlayerSimple = (JZVideoPlayerSimple) findViewById(R.id.simple_demo);
+        mJzVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
                 , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子在家吗");
 
 
-        mJcVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jc_video);
+        mJzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jz_video);
         LinkedHashMap map = new LinkedHashMap();
         map.put("高清", VideoConstant.videoUrlList[0]);
         map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrls[0][4]);
-        mJcVideoPlayerStandard.setUp(map, 2
+        mJzVideoPlayerStandard.setUp(map, 2
                 , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
-                .into(mJcVideoPlayerStandard.thumbImageView);
-        mJcVideoPlayerStandard.loop = true;
-        mJcVideoPlayerStandard.headData = new HashMap<>();
-        mJcVideoPlayerStandard.headData.put("key", "value");
+                .into(mJzVideoPlayerStandard.thumbImageView);
+        mJzVideoPlayerStandard.loop = true;
+        mJzVideoPlayerStandard.headData = new HashMap<>();
+        mJzVideoPlayerStandard.headData.put("key", "value");
 
 
-//        JCVideoPlayer.SAVE_PROGRESS = false;
+//        JZVideoPlayer.SAVE_PROGRESS = false;
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
-//        mJcVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
-//                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+//        mJzVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
+//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         /** Play video in assert, but not work now **/
-//        mJcVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
-//                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+//        mJzVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
+//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
 
         /** ImageLoader **/
 //        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],
@@ -92,7 +92,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         /** volley omit **/
         /** Fresco omit **/
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mSensorEventListener = new JZVideoPlayer.JCAutoFullscreenListener();
+        mSensorEventListener = new JZVideoPlayer.JZAutoFullscreenListener();
     }
 
     @Override
