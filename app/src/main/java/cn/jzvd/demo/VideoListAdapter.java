@@ -17,7 +17,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  */
 public class VideoListAdapter extends BaseAdapter {
 
-    public static final String TAG = "JieCaoVideoPlayer";
+    public static final String TAG = "JiaoZiVideoPlayer";
 
     Context context;
 

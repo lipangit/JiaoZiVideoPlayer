@@ -24,7 +24,7 @@ import java.util.Map;
 public class JZMediaManager implements TextureView.SurfaceTextureListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
     public static final int HANDLER_PREPARE = 0;
     public static final int HANDLER_RELEASE = 2;
-    public static String TAG = "JieCaoVideoPlayer";
+    public static final String TAG = "JiaoZiVideoPlayer";
     public static JZResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
     public static String CURRENT_PLAYING_URL;

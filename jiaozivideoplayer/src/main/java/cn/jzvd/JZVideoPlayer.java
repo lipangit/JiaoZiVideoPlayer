@@ -39,7 +39,7 @@ import java.util.TimerTask;
  */
 public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
-    public static final String TAG = "JieCaoVideoPlayer";
+    public static final String TAG = "JiaoZiVideoPlayer";
     public static final int FULLSCREEN_ID = 33797;
     public static final int TINY_ID = 33798;
     public static final int THRESHOLD = 80;
