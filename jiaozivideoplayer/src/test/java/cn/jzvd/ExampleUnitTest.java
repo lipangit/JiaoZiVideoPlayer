@@ -1,4 +1,4 @@
-package fm.jiecao.jcvideoplayer_lib;
+package cn.jzvd;
 
 import org.junit.Test;
 
