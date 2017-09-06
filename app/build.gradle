@@ -26,7 +26,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile project(':jcvideoplayer-lib')
+    compile project(':jiaozivideoplayer')
     compile 'com.squareup.picasso:picasso:2.5.1'
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
