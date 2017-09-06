@@ -41,7 +41,7 @@ public class RecyclerViewNormalActivity extends AppCompatActivity {
             @Override
             public void onChildViewDetachedFromWindow(View view) {
 //                if (JZVideoPlayerManager.getCurrentJzvdOnFirtFloor() != null) {
-//                    JZVideoPlayer videoPlayer = (JZVideoPlayer) JZVideoPlayerManager.getCurrentJcvdOnFirtFloor();
+//                    JZVideoPlayer videoPlayer = (JZVideoPlayer) JZVideoPlayerManager.getCurrentJzvdOnFirtFloor();
 //                    if (((ViewGroup) view).indexOfChild(videoPlayer) != -1 && videoPlayer.currentState == JZVideoPlayer.CURRENT_STATE_PLAYING) {
 //                        JZVideoPlayer.releaseAllVideos();
 //                    }
