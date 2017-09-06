@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.JCVideoPlayerStandard;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by Nathen on 16/7/31.
@@ -41,7 +40,7 @@ public class PlayDirectlyActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fullscreen:
-                JCVideoPlayerStandard.startFullscreen(this, JCVideoPlayerStandard.class, VideoConstant.videoUrlList[6], "嫂子辛苦了");
+                JZVideoPlayerStandard.startFullscreen(this, JZVideoPlayerStandard.class, VideoConstant.videoUrlList[6], "嫂子辛苦了");
                 break;
             case R.id.tiny_window:
                 Toast.makeText(PlayDirectlyActivity.this, "Comming Soon", Toast.LENGTH_SHORT).show();
@@ -51,7 +50,7 @@ public class PlayDirectlyActivity extends AppCompatActivity implements View.OnCl
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -60,7 +59,7 @@ public class PlayDirectlyActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override

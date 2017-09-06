@@ -9,9 +9,8 @@ import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.JCVideoPlayerStandard;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
 public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewVideoAdapter.MyViewHolder> {
 
@@ -36,7 +35,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
         Log.i(TAG, "onBindViewHolder [" + holder.jcVideoPlayer.hashCode() + "] position=" + position);
 
         holder.jcVideoPlayer.setUp(
-                VideoConstant.videoUrls[0][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
                 VideoConstant.videoTitles[0][position]);
         Picasso.with(holder.jcVideoPlayer.getContext())
                 .load(VideoConstant.videoThumbs[0][position])
@@ -49,11 +48,11 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        JCVideoPlayerStandard jcVideoPlayer;
+        JZVideoPlayerStandard jcVideoPlayer;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            jcVideoPlayer = (JCVideoPlayerStandard) itemView.findViewById(R.id.videoplayer);
+            jcVideoPlayer = (JZVideoPlayerStandard) itemView.findViewById(R.id.videoplayer);
         }
     }
 

@@ -14,18 +14,18 @@ import android.view.TextureView;
  * Created by Nathen
  * On 2016/06/02 00:01
  */
-public class JCResizeTextureView extends TextureView {
+public class JZResizeTextureView extends TextureView {
     protected static final String TAG = "JCResizeTextureView";
 
     // x as width, y as height
     protected Point mVideoSize;
 
-    public JCResizeTextureView(Context context) {
+    public JZResizeTextureView(Context context) {
         super(context);
         init();
     }
 
-    public JCResizeTextureView(Context context, AttributeSet attrs) {
+    public JZResizeTextureView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }

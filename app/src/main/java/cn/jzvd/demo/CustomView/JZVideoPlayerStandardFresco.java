@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import cn.jzvd.JCVideoPlayerStandard;
+import cn.jzvd.JZVideoPlayerStandard;
 import cn.jzvd.demo.R;
 
 //import com.facebook.drawee.view.SimpleDraweeView;
@@ -17,14 +17,14 @@ import cn.jzvd.demo.R;
  * Created by Nathen
  * On 2016/05/01 22:59
  */
-public class JCVideoPlayerStandardFresco extends JCVideoPlayerStandard {
+public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
     //    public SimpleDraweeView thumbImageView;
 
-    public JCVideoPlayerStandardFresco(Context context) {
+    public JZVideoPlayerStandardFresco(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerStandardFresco(Context context, AttributeSet attrs) {
+    public JZVideoPlayerStandardFresco(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -50,11 +50,11 @@ public class JCVideoPlayerStandardFresco extends JCVideoPlayerStandard {
         if (objects.length == 0) return;
         titleTextView.setText(objects[0].toString());
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            fullscreenButton.setImageResource(R.drawable.jc_shrink);
+            fullscreenButton.setImageResource(R.drawable.jz_shrink);
             backButton.setVisibility(View.VISIBLE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
         } else if (currentScreen == SCREEN_LAYOUT_LIST) {
-            fullscreenButton.setImageResource(R.drawable.jc_enlarge);
+            fullscreenButton.setImageResource(R.drawable.jz_enlarge);
             backButton.setVisibility(View.GONE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
         } else if (currentScreen == SCREEN_WINDOW_TINY) {

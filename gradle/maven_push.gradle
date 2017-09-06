@@ -20,8 +20,8 @@ signing {
     sign configurations.archives
 }
 
-group = "fm.jiecao"
-archivesBaseName = "jiecaovideoplayer"
+group = "cn.jzvd"
+archivesBaseName = "jiaozivideoplayer"
 version = "5.8.1"
 
 uploadArchives {

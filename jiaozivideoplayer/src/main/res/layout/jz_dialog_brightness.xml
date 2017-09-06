@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/jc_dialog_progress_bg"
+    android:background="@drawable/jz_dialog_progress_bg"
     android:orientation="vertical">
 
     <LinearLayout
@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
-            android:src="@drawable/jc_brightness_video" />
+            android:src="@drawable/jz_brightness_video" />
 
         <TextView
             android:id="@+id/tv_brightness"
@@ -38,6 +38,6 @@
             android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
             android:max="100"
-            android:progressDrawable="@drawable/jc_dialog_progress" />
+            android:progressDrawable="@drawable/jz_dialog_progress" />
     </LinearLayout>
 </LinearLayout>

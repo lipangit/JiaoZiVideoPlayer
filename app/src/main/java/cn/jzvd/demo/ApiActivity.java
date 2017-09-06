@@ -21,19 +21,18 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.JCVideoPlayerSimple;
-import cn.jzvd.JCVideoPlayerStandard;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerSimple;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by Nathen on 16/7/31.
  */
 public class ApiActivity extends AppCompatActivity implements View.OnClickListener {
     Button mSmallChange, mBigChange, mOrientation;
-    JCVideoPlayerSimple mJcVideoPlayerSimple;
-    JCVideoPlayerStandard mJcVideoPlayerStandard;
-    JCVideoPlayer.JCAutoFullscreenListener mSensorEventListener;
+    JZVideoPlayerSimple mJcVideoPlayerSimple;
+    JZVideoPlayerStandard mJcVideoPlayerStandard;
+    JZVideoPlayer.JCAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
 
     @Override
@@ -54,18 +53,18 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         mBigChange.setOnClickListener(this);
         mOrientation.setOnClickListener(this);
 
-        mJcVideoPlayerSimple = (JCVideoPlayerSimple) findViewById(R.id.simple_demo);
+        mJcVideoPlayerSimple = (JZVideoPlayerSimple) findViewById(R.id.simple_demo);
         mJcVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子在家吗");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子在家吗");
 
 
-        mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
+        mJcVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jc_video);
         LinkedHashMap map = new LinkedHashMap();
         map.put("高清", VideoConstant.videoUrlList[0]);
         map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrls[0][4]);
         mJcVideoPlayerStandard.setUp(map, 2
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJcVideoPlayerStandard.thumbImageView);
@@ -93,7 +92,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         /** volley omit **/
         /** Fresco omit **/
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mSensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
+        mSensorEventListener = new JZVideoPlayer.JCAutoFullscreenListener();
     }
 
     @Override
@@ -123,14 +122,14 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
         mSensorManager.unregisterListener(mSensorEventListener);
-        JCVideoPlayer.clearSavedProgress(this, null);
+        JZVideoPlayer.clearSavedProgress(this, null);
     }
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();

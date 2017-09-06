@@ -55,8 +55,8 @@
             android:minHeight="4dp"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
-            android:progressDrawable="@drawable/jc_bottom_seek_progress"
-            android:thumb="@drawable/jc_bottom_seek_thumb" />
+            android:progressDrawable="@drawable/jz_bottom_seek_progress"
+            android:thumb="@drawable/jz_bottom_seek_thumb" />
 
         <TextView
             android:id="@+id/total"
@@ -72,7 +72,7 @@
             android:layout_height="fill_parent"
             android:paddingRight="16dp"
             android:scaleType="center"
-            android:src="@drawable/jc_enlarge" />
+            android:src="@drawable/jz_enlarge" />
     </LinearLayout>
 
     <ProgressBar
@@ -82,7 +82,7 @@
         android:layout_height="1.5dp"
         android:layout_alignParentBottom="true"
         android:max="100"
-        android:progressDrawable="@drawable/jc_bottom_progress" />
+        android:progressDrawable="@drawable/jz_bottom_progress" />
 
     <ImageView
         android:id="@+id/back_tiny"
@@ -90,14 +90,14 @@
         android:layout_height="24dp"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="6dp"
-        android:background="@drawable/jc_click_back_tiny_selector"
+        android:background="@drawable/jz_click_back_tiny_selector"
         android:visibility="visible" />
 
     <LinearLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/jc_title_bg"
+        android:background="@drawable/jz_title_bg"
         android:gravity="center_vertical">
 
         <ImageView
@@ -106,7 +106,7 @@
             android:layout_height="48dp"
             android:paddingLeft="10dp"
             android:scaleType="centerInside"
-            android:src="@drawable/jc_back_normal" />
+            android:src="@drawable/jz_back_normal" />
 
         <TextView
             android:id="@+id/title"
@@ -123,7 +123,7 @@
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:indeterminateDrawable="@drawable/jc_loading"
+        android:indeterminateDrawable="@drawable/jz_loading"
         android:visibility="invisible" />
 
     <ImageView
@@ -133,6 +133,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/jc_click_play_selector" />
+        android:src="@drawable/jz_click_play_selector" />
 
 </RelativeLayout>

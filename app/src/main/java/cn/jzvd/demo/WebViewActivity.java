@@ -11,10 +11,9 @@ import android.widget.AbsoluteLayout;
 
 import com.squareup.picasso.Picasso;
 
-import cn.jzvd.JCUtils;
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.JCVideoPlayerStandard;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZUtils;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by Nathen on 16/10/13.
@@ -40,7 +39,7 @@ public class WebViewActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -49,7 +48,7 @@ public class WebViewActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override
@@ -70,32 +69,32 @@ public class WebViewActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (index == 0) {
-                        JCVideoPlayerStandard webVieo = new JCVideoPlayerStandard(WebViewActivity.this);
+                        JZVideoPlayerStandard webVieo = new JZVideoPlayerStandard(WebViewActivity.this);
                         webVieo.setUp(VideoConstant.videoUrlList[1],
-                                JCVideoPlayer.SCREEN_LAYOUT_LIST, "嫂子骑大马");
+                                JZVideoPlayer.SCREEN_LAYOUT_LIST, "嫂子骑大马");
                         Picasso.with(WebViewActivity.this)
                                 .load(VideoConstant.videoThumbList[1])
                                 .into(webVieo.thumbImageView);
                         ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         AbsoluteLayout.LayoutParams layoutParams = new AbsoluteLayout.LayoutParams(ll);
-                        layoutParams.y = JCUtils.dip2px(WebViewActivity.this, top);
-                        layoutParams.x = JCUtils.dip2px(WebViewActivity.this, left);
-                        layoutParams.height = JCUtils.dip2px(WebViewActivity.this, height);
-                        layoutParams.width = JCUtils.dip2px(WebViewActivity.this, width);
+                        layoutParams.y = JZUtils.dip2px(WebViewActivity.this, top);
+                        layoutParams.x = JZUtils.dip2px(WebViewActivity.this, left);
+                        layoutParams.height = JZUtils.dip2px(WebViewActivity.this, height);
+                        layoutParams.width = JZUtils.dip2px(WebViewActivity.this, width);
                         mWebView.addView(webVieo, layoutParams);
                     } else {
-                        JCVideoPlayerStandard webVieo = new JCVideoPlayerStandard(WebViewActivity.this);
+                        JZVideoPlayerStandard webVieo = new JZVideoPlayerStandard(WebViewActivity.this);
                         webVieo.setUp(VideoConstant.videoUrlList[2],
-                                JCVideoPlayer.SCREEN_LAYOUT_LIST, "嫂子失态了");
+                                JZVideoPlayer.SCREEN_LAYOUT_LIST, "嫂子失态了");
                         Picasso.with(WebViewActivity.this)
                                 .load(VideoConstant.videoThumbList[2])
                                 .into(webVieo.thumbImageView);
                         ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         AbsoluteLayout.LayoutParams layoutParams = new AbsoluteLayout.LayoutParams(ll);
-                        layoutParams.y = JCUtils.dip2px(WebViewActivity.this, top);
-                        layoutParams.x = JCUtils.dip2px(WebViewActivity.this, left);
-                        layoutParams.height = JCUtils.dip2px(WebViewActivity.this, height);
-                        layoutParams.width = JCUtils.dip2px(WebViewActivity.this, width);
+                        layoutParams.y = JZUtils.dip2px(WebViewActivity.this, top);
+                        layoutParams.x = JZUtils.dip2px(WebViewActivity.this, left);
+                        layoutParams.height = JZUtils.dip2px(WebViewActivity.this, height);
+                        layoutParams.width = JZUtils.dip2px(WebViewActivity.this, width);
                         mWebView.addView(webVieo, layoutParams);
                     }
 

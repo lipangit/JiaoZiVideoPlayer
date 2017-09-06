@@ -10,12 +10,11 @@ import android.widget.Button;
 
 import com.squareup.picasso.Picasso;
 
-import cn.jzvd.JCUserAction;
-import cn.jzvd.JCUserActionStandard;
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.JCVideoPlayerStandard;
-import cn.jzvd.demo.CustomView.MyJCVideoPlayerStandard;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZUserAction;
+import cn.jzvd.JZUserActionStandard;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.demo.CustomView.MyJZVideoPlayerStandard;
 
 /**
  * Created by Nathen on 16/7/22.
@@ -23,7 +22,7 @@ import cn.jzvd.demo.R;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    MyJCVideoPlayerStandard myJCVideoPlayerStandard;
+    MyJZVideoPlayerStandard myJCVideoPlayerStandard;
 
     Button mTinyWindow, mAutoTinyWindow, mAboutListView, mPlayDirectly, mAboutApi, mAboutWebView;
 
@@ -46,25 +45,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAboutApi.setOnClickListener(this);
         mAboutWebView.setOnClickListener(this);
 
-        myJCVideoPlayerStandard = (MyJCVideoPlayerStandard) findViewById(R.id.jc_video);
+        myJCVideoPlayerStandard = (MyJZVideoPlayerStandard) findViewById(R.id.jc_video);
         myJCVideoPlayerStandard.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子快长大");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子快长大");
         Picasso.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
                 .into(myJCVideoPlayerStandard.thumbImageView);
 
-        JCVideoPlayer.setJcUserAction(new MyUserActionStandard());
+        JZVideoPlayer.setJcUserAction(new MyUserActionStandard());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -95,55 +94,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    class MyUserActionStandard implements JCUserActionStandard {
+    class MyUserActionStandard implements JZUserActionStandard {
 
         @Override
         public void onEvent(int type, String url, int screen, Object... objects) {
             switch (type) {
-                case JCUserAction.ON_CLICK_START_ICON:
+                case JZUserAction.ON_CLICK_START_ICON:
                     Log.i("USER_EVENT", "ON_CLICK_START_ICON" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_CLICK_START_ERROR:
+                case JZUserAction.ON_CLICK_START_ERROR:
                     Log.i("USER_EVENT", "ON_CLICK_START_ERROR" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_CLICK_START_AUTO_COMPLETE:
+                case JZUserAction.ON_CLICK_START_AUTO_COMPLETE:
                     Log.i("USER_EVENT", "ON_CLICK_START_AUTO_COMPLETE" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_CLICK_PAUSE:
+                case JZUserAction.ON_CLICK_PAUSE:
                     Log.i("USER_EVENT", "ON_CLICK_PAUSE" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_CLICK_RESUME:
+                case JZUserAction.ON_CLICK_RESUME:
                     Log.i("USER_EVENT", "ON_CLICK_RESUME" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_SEEK_POSITION:
+                case JZUserAction.ON_SEEK_POSITION:
                     Log.i("USER_EVENT", "ON_SEEK_POSITION" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_AUTO_COMPLETE:
+                case JZUserAction.ON_AUTO_COMPLETE:
                     Log.i("USER_EVENT", "ON_AUTO_COMPLETE" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_ENTER_FULLSCREEN:
+                case JZUserAction.ON_ENTER_FULLSCREEN:
                     Log.i("USER_EVENT", "ON_ENTER_FULLSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_QUIT_FULLSCREEN:
+                case JZUserAction.ON_QUIT_FULLSCREEN:
                     Log.i("USER_EVENT", "ON_QUIT_FULLSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_ENTER_TINYSCREEN:
+                case JZUserAction.ON_ENTER_TINYSCREEN:
                     Log.i("USER_EVENT", "ON_ENTER_TINYSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_QUIT_TINYSCREEN:
+                case JZUserAction.ON_QUIT_TINYSCREEN:
                     Log.i("USER_EVENT", "ON_QUIT_TINYSCREEN" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_TOUCH_SCREEN_SEEK_VOLUME:
+                case JZUserAction.ON_TOUCH_SCREEN_SEEK_VOLUME:
                     Log.i("USER_EVENT", "ON_TOUCH_SCREEN_SEEK_VOLUME" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserAction.ON_TOUCH_SCREEN_SEEK_POSITION:
+                case JZUserAction.ON_TOUCH_SCREEN_SEEK_POSITION:
                     Log.i("USER_EVENT", "ON_TOUCH_SCREEN_SEEK_POSITION" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
 
-                case JCUserActionStandard.ON_CLICK_START_THUMB:
+                case JZUserActionStandard.ON_CLICK_START_THUMB:
                     Log.i("USER_EVENT", "ON_CLICK_START_THUMB" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JCUserActionStandard.ON_CLICK_BLANK:
+                case JZUserActionStandard.ON_CLICK_BLANK:
                     Log.i("USER_EVENT", "ON_CLICK_BLANK" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
                 default:

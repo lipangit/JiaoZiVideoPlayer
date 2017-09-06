@@ -3,18 +3,18 @@ package cn.jzvd.demo.CustomView;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import cn.jzvd.JCVideoPlayerStandard;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by Nathen on 2016/11/26.
  */
 
-public class JCVideoPlayerStandardAutoCompleteAfterFullscreen extends JCVideoPlayerStandard {
-    public JCVideoPlayerStandardAutoCompleteAfterFullscreen(Context context) {
+public class JZVideoPlayerStandardAutoCompleteAfterFullscreen extends JZVideoPlayerStandard {
+    public JZVideoPlayerStandardAutoCompleteAfterFullscreen(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerStandardAutoCompleteAfterFullscreen(Context context, AttributeSet attrs) {
+    public JZVideoPlayerStandardAutoCompleteAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

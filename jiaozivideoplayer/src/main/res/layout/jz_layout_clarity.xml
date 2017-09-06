@@ -3,7 +3,7 @@
     android:id="@+id/video_quality_wrapper_area"
     android:layout_width="80dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/jc_clarity_popwindow_bg"
+    android:background="@drawable/jz_clarity_popwindow_bg"
     android:orientation="vertical"
     android:paddingBottom="16dp"
     android:paddingTop="10dp" />

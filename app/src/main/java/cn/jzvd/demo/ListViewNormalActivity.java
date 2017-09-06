@@ -8,8 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ListView;
 
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZVideoPlayer;
 
 /**
  * Created by Nathen on 16/7/31.
@@ -18,7 +17,7 @@ public class ListViewNormalActivity extends AppCompatActivity {
     ListView listView;
 
     SensorManager sensorManager;
-    JCVideoPlayer.JCAutoFullscreenListener sensorEventListener;
+    JZVideoPlayer.JCAutoFullscreenListener sensorEventListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,12 +36,12 @@ public class ListViewNormalActivity extends AppCompatActivity {
                 VideoConstant.videoThumbs[0]));
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorEventListener = new JCVideoPlayer.JCAutoFullscreenListener();
+        sensorEventListener = new JZVideoPlayer.JCAutoFullscreenListener();
     }
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -59,7 +58,7 @@ public class ListViewNormalActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(sensorEventListener);
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override

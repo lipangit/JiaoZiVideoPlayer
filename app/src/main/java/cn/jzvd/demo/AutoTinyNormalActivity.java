@@ -17,9 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.JCVideoPlayerStandard;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by Nathen on 16/8/23.
@@ -42,9 +41,9 @@ public class AutoTinyNormalActivity extends AppCompatActivity implements AbsList
         headerLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.header_auto_tiny_normal, null);
         listView.addHeaderView(headerLayout);
 
-        JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) headerLayout.findViewById(R.id.jc_video);
+        JZVideoPlayerStandard jcVideoPlayerStandard = (JZVideoPlayerStandard) headerLayout.findViewById(R.id.jc_video);
         jcVideoPlayerStandard.setUp(VideoConstant.videoUrlList[6]
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子坐这");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子坐这");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[6])
                 .into(jcVideoPlayerStandard.thumbImageView);
@@ -65,7 +64,7 @@ public class AutoTinyNormalActivity extends AppCompatActivity implements AbsList
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -74,7 +73,7 @@ public class AutoTinyNormalActivity extends AppCompatActivity implements AbsList
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override

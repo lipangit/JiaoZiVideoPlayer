@@ -40,8 +40,8 @@
             android:minHeight="4dp"
             android:paddingBottom="8dp"
             android:paddingTop="8dp"
-            android:progressDrawable="@drawable/jc_bottom_seek_progress"
-            android:thumb="@drawable/jc_bottom_seek_thumb" />
+            android:progressDrawable="@drawable/jz_bottom_seek_progress"
+            android:thumb="@drawable/jz_bottom_seek_thumb" />
 
         <TextView
             android:id="@+id/total"
@@ -57,14 +57,14 @@
             android:layout_height="fill_parent"
             android:paddingRight="16dp"
             android:scaleType="center"
-            android:src="@drawable/jc_enlarge" />
+            android:src="@drawable/jz_enlarge" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/jc_title_bg"
+        android:background="@drawable/jz_title_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -76,7 +76,7 @@
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:indeterminateDrawable="@drawable/jc_loading"
+        android:indeterminateDrawable="@drawable/jz_loading"
         android:visibility="invisible" />
 
     <ImageView
@@ -86,6 +86,6 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/jc_click_play_selector" />
+        android:src="@drawable/jz_click_play_selector" />
 
 </RelativeLayout>

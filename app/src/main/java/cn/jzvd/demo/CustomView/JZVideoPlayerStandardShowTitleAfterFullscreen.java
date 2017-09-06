@@ -4,18 +4,18 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import cn.jzvd.JCVideoPlayerStandard;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by Nathen
  * On 2016/04/27 10:49
  */
-public class JCVideoPlayerStandardShowTitleAfterFullscreen extends JCVideoPlayerStandard {
-    public JCVideoPlayerStandardShowTitleAfterFullscreen(Context context) {
+public class JZVideoPlayerStandardShowTitleAfterFullscreen extends JZVideoPlayerStandard {
+    public JZVideoPlayerStandardShowTitleAfterFullscreen(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerStandardShowTitleAfterFullscreen(Context context, AttributeSet attrs) {
+    public JZVideoPlayerStandardShowTitleAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

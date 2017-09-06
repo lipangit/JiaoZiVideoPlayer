@@ -36,7 +36,7 @@ import java.util.TimerTask;
  * Created by Nathen
  * On 2016/04/18 16:15
  */
-public class JCVideoPlayerStandard extends JCVideoPlayer {
+public class JZVideoPlayerStandard extends JZVideoPlayer {
 
     protected static Timer DISMISS_CONTROL_VIEW_TIMER;
 
@@ -74,17 +74,17 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                 int scale = intent.getIntExtra("scale", 100);
                 int percent = level * 100 / scale;
                 if (percent < 15) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_10);
+                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_10);
                 } else if (percent >= 15 && percent < 40) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_30);
+                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_30);
                 } else if (percent >= 40 && percent < 60) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_50);
+                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_50);
                 } else if (percent >= 60 && percent < 80) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_70);
+                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_70);
                 } else if (percent >= 80 && percent < 95) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_90);
+                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_90);
                 } else if (percent >= 95 && percent <= 100) {
-                    battery_level.setBackgroundResource(R.drawable.jc_battery_level_100);
+                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_100);
                 }
                 getContext().unregisterReceiver(battertReceiver);
                 brocasting = false;
@@ -92,11 +92,11 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         }
     };
 
-    public JCVideoPlayerStandard(Context context) {
+    public JZVideoPlayerStandard(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerStandard(Context context, AttributeSet attrs) {
+    public JZVideoPlayerStandard(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -128,23 +128,23 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         if (objects.length == 0) return;
         titleTextView.setText(objects[0].toString());
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            fullscreenButton.setImageResource(R.drawable.jc_shrink);
+            fullscreenButton.setImageResource(R.drawable.jz_shrink);
             backButton.setVisibility(View.VISIBLE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
             batteryTimeLayout.setVisibility(View.VISIBLE);
             if (urlMap.size() == 1) {
                 clarity.setVisibility(GONE);
             } else {
-                clarity.setText(JCUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
+                clarity.setText(JZUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
                 clarity.setVisibility(View.VISIBLE);
             }
-            changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_fullscreen));
+            changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_fullscreen));
         } else if (currentScreen == SCREEN_LAYOUT_NORMAL
                 || currentScreen == SCREEN_LAYOUT_LIST) {
-            fullscreenButton.setImageResource(R.drawable.jc_enlarge);
+            fullscreenButton.setImageResource(R.drawable.jz_enlarge);
             backButton.setVisibility(View.GONE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
-            changeStartButtonSize((int) getResources().getDimension(R.dimen.jc_start_button_w_h_normal));
+            changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_normal));
             batteryTimeLayout.setVisibility(View.GONE);
             clarity.setVisibility(View.GONE);
         } else if (currentScreen == SCREEN_WINDOW_TINY) {
@@ -169,7 +169,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     @Override
     public int getLayoutId() {
-        return R.layout.jc_layout_standard;
+        return R.layout.jz_layout_standard;
     }
 
     @Override
@@ -243,7 +243,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
                         bottomProgressBar.setProgress(progress);
                     }
                     if (!mChangePosition && !mChangeVolume) {
-                        onEvent(JCUserActionStandard.ON_CLICK_BLANK);
+                        onEvent(JZUserActionStandard.ON_CLICK_BLANK);
                         onClickUiToggle();
                     }
                     break;
@@ -266,18 +266,18 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.thumb) {
-            if (TextUtils.isEmpty(JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
+            if (TextUtils.isEmpty(JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
             if (currentState == CURRENT_STATE_NORMAL) {
-                if (!JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("file") &&
-                        !JCUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("/") &&
-                        !JCUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog(JCUserActionStandard.ON_CLICK_START_THUMB);
+                if (!JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("file") &&
+                        !JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("/") &&
+                        !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                    showWifiDialog(JZUserActionStandard.ON_CLICK_START_THUMB);
                     return;
                 }
-                onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
+                onEvent(JZUserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
@@ -291,13 +291,13 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         } else if (i == R.id.clarity) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.jc_layout_clarity, null);
+            final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.jz_layout_clarity, null);
 
             OnClickListener mQualityListener = new OnClickListener() {
                 public void onClick(View v) {
                     int index = (int) v.getTag();
                     onStatePreparingChangingUrl(index, getCurrentPositionWhenPlaying());
-                    clarity.setText(JCUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
+                    clarity.setText(JZUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
                     for (int j = 0; j < layout.getChildCount(); j++) {//设置点击之后的颜色
                         if (j == currentUrlMapIndex) {
                             ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#fff85959"));
@@ -312,8 +312,8 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             };
 
             for (int j = 0; j < urlMap.size(); j++) {
-                String key = JCUtils.getKeyFromLinkedMap(urlMap, j);
-                TextView clarityItem = (TextView) View.inflate(getContext(), R.layout.jc_layout_clarity_item, null);
+                String key = JZUtils.getKeyFromLinkedMap(urlMap, j);
+                TextView clarityItem = (TextView) View.inflate(getContext(), R.layout.jz_layout_clarity_item, null);
                 clarityItem.setText(key);
                 clarityItem.setTag(j);
                 layout.addView(clarityItem, j);
@@ -340,7 +340,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                onEvent(JCUserActionStandard.ON_CLICK_START_THUMB);
+                onEvent(JZUserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }
@@ -383,7 +383,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void onClickUiToggle() {
         if (bottomContainer.getVisibility() != View.VISIBLE) {
             setSystemTimeAndBattery();
-            clarity.setText(JCUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
+            clarity.setText(JZUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
         }
         if (currentState == CURRENT_STATE_PREPARING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
@@ -717,16 +717,16 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
 
     public void updateStartImage() {
         if (currentState == CURRENT_STATE_PLAYING) {
-            startButton.setImageResource(R.drawable.jc_click_pause_selector);
+            startButton.setImageResource(R.drawable.jz_click_pause_selector);
             retryTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_ERROR) {
-            startButton.setImageResource(R.drawable.jc_click_error_selector);
+            startButton.setImageResource(R.drawable.jz_click_error_selector);
             retryTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
-            startButton.setImageResource(R.drawable.jc_click_replay_selector);
+            startButton.setImageResource(R.drawable.jz_click_replay_selector);
             retryTextView.setVisibility(VISIBLE);
         } else {
-            startButton.setImageResource(R.drawable.jc_click_play_selector);
+            startButton.setImageResource(R.drawable.jz_click_play_selector);
             retryTextView.setVisibility(INVISIBLE);
         }
     }
@@ -735,7 +735,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
         super.showProgressDialog(deltaX, seekTime, seekTimePosition, totalTime, totalTimeDuration);
         if (mProgressDialog == null) {
-            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_progress, null);
+            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jz_dialog_progress, null);
             mDialogProgressBar = ((ProgressBar) localView.findViewById(R.id.duration_progressbar));
             mDialogSeekTime = ((TextView) localView.findViewById(R.id.tv_current));
             mDialogTotalTime = ((TextView) localView.findViewById(R.id.tv_duration));
@@ -750,9 +750,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
         mDialogTotalTime.setText(" / " + totalTime);
         mDialogProgressBar.setProgress(totalTimeDuration <= 0 ? 0 : (seekTimePosition * 100 / totalTimeDuration));
         if (deltaX > 0) {
-            mDialogIcon.setBackgroundResource(R.drawable.jc_forward_icon);
+            mDialogIcon.setBackgroundResource(R.drawable.jz_forward_icon);
         } else {
-            mDialogIcon.setBackgroundResource(R.drawable.jc_backward_icon);
+            mDialogIcon.setBackgroundResource(R.drawable.jz_backward_icon);
         }
         onCLickUiToggleToClear();
     }
@@ -769,7 +769,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void showVolumeDialog(float deltaY, int volumePercent) {
         super.showVolumeDialog(deltaY, volumePercent);
         if (mVolumeDialog == null) {
-            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_volume, null);
+            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jz_dialog_volume, null);
             mDialogVolumeImageView = ((ImageView) localView.findViewById(R.id.volume_image_tip));
             mDialogVolumeTextView = ((TextView) localView.findViewById(R.id.tv_volume));
             mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
@@ -779,9 +779,9 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
             mVolumeDialog.show();
         }
         if (volumePercent <= 0) {
-            mDialogVolumeImageView.setBackgroundResource(R.drawable.jc_close_volume);
+            mDialogVolumeImageView.setBackgroundResource(R.drawable.jz_close_volume);
         } else {
-            mDialogVolumeImageView.setBackgroundResource(R.drawable.jc_add_volume);
+            mDialogVolumeImageView.setBackgroundResource(R.drawable.jz_add_volume);
         }
         if (volumePercent > 100) {
             volumePercent = 100;
@@ -805,7 +805,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     public void showBrightnessDialog(int brightnessPercent) {
         super.showBrightnessDialog(brightnessPercent);
         if (mBrightnessDialog == null) {
-            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jc_dialog_brightness, null);
+            View localView = LayoutInflater.from(getContext()).inflate(R.layout.jz_dialog_brightness, null);
             mDialogBrightnessTextView = ((TextView) localView.findViewById(R.id.tv_brightness));
             mDialogBrightnessProgressBar = ((ProgressBar) localView.findViewById(R.id.brightness_progressbar));
             mBrightnessDialog = createDialogWithView(localView);
@@ -832,7 +832,7 @@ public class JCVideoPlayerStandard extends JCVideoPlayer {
     }
 
     public Dialog createDialogWithView(View localView) {
-        Dialog dialog = new Dialog(getContext(), R.style.jc_style_dialog_progress);
+        Dialog dialog = new Dialog(getContext(), R.style.jz_style_dialog_progress);
         dialog.setContentView(localView);
         Window window = dialog.getWindow();
         window.addFlags(Window.FEATURE_ACTION_BAR);

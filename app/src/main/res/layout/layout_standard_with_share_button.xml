@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/jc_bottom_bg"
+        android:background="@drawable/jz_bottom_bg"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:visibility="invisible">
@@ -56,8 +56,8 @@
             android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:paddingTop="8dp"
-            android:progressDrawable="@drawable/jc_bottom_seek_progress"
-            android:thumb="@drawable/jc_bottom_seek_thumb" />
+            android:progressDrawable="@drawable/jz_bottom_seek_progress"
+            android:thumb="@drawable/jz_bottom_seek_thumb" />
 
         <TextView
             android:id="@+id/total"
@@ -83,7 +83,7 @@
             android:paddingLeft="14dp"
             android:paddingRight="14dp"
             android:scaleType="centerInside"
-            android:src="@drawable/jc_enlarge" />
+            android:src="@drawable/jz_enlarge" />
     </LinearLayout>
 
     <ProgressBar
@@ -93,7 +93,7 @@
         android:layout_height="1.5dp"
         android:layout_alignParentBottom="true"
         android:max="100"
-        android:progressDrawable="@drawable/jc_bottom_progress" />
+        android:progressDrawable="@drawable/jz_bottom_progress" />
 
     <ImageView
         android:id="@+id/back_tiny"
@@ -101,7 +101,7 @@
         android:layout_height="24dp"
         android:layout_marginLeft="6dp"
         android:layout_marginTop="6dp"
-        android:background="@drawable/jc_click_back_tiny_selector"
+        android:background="@drawable/jz_click_back_tiny_selector"
         android:visibility="visible" />
 
     <RelativeLayout
@@ -111,7 +111,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/jc_title_bg"
+        android:background="@drawable/jz_title_bg"
         android:gravity="center_vertical">
 
         <ImageView
@@ -124,7 +124,7 @@
             android:paddingLeft="12dp"
             android:paddingStart="12dp"
             android:scaleType="centerInside"
-            android:src="@drawable/jc_click_back_selector" />
+            android:src="@drawable/jz_click_back_selector" />
 
         <TextView
             android:id="@+id/title"
@@ -171,7 +171,7 @@
                 android:layout_width="23dp"
                 android:layout_height="10dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/jc_battery_level_10" />
+                android:background="@drawable/jz_battery_level_10" />
 
             <TextView
                 android:id="@+id/video_current_time"
@@ -188,11 +188,11 @@
 
     <ProgressBar
         android:id="@+id/loading"
-        android:layout_width="@dimen/jc_start_button_w_h_normal"
-        android:layout_height="@dimen/jc_start_button_w_h_normal"
+        android:layout_width="@dimen/jz_start_button_w_h_normal"
+        android:layout_height="@dimen/jz_start_button_w_h_normal"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:indeterminateDrawable="@drawable/jc_loading"
+        android:indeterminateDrawable="@drawable/jz_loading"
         android:visibility="invisible" />
 
     <LinearLayout
@@ -205,9 +205,9 @@
 
         <ImageView
             android:id="@+id/start"
-            android:layout_width="@dimen/jc_start_button_w_h_normal"
-            android:layout_height="@dimen/jc_start_button_w_h_normal"
-            android:src="@drawable/jc_click_play_selector" />
+            android:layout_width="@dimen/jz_start_button_w_h_normal"
+            android:layout_height="@dimen/jz_start_button_w_h_normal"
+            android:src="@drawable/jz_click_play_selector" />
     </LinearLayout>
 
 

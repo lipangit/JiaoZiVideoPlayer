@@ -8,9 +8,8 @@ import android.widget.BaseAdapter;
 
 import com.squareup.picasso.Picasso;
 
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.JCVideoPlayerStandard;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by Nathen
@@ -60,9 +59,9 @@ public class VideoListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.jcVideoPlayer = (JCVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
+        viewHolder.jcVideoPlayer = (JZVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
         viewHolder.jcVideoPlayer.setUp(
-                videoUrls[position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                videoUrls[position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
                 videoTitles[position]);
         Picasso.with(convertView.getContext())
                 .load(videoThumbs[position])
@@ -71,6 +70,6 @@ public class VideoListAdapter extends BaseAdapter {
     }
 
     class ViewHolder {
-        JCVideoPlayerStandard jcVideoPlayer;
+        JZVideoPlayerStandard jcVideoPlayer;
     }
 }

@@ -5,19 +5,19 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import cn.jzvd.JCVideoPlayerStandard;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * 这里可以监听到视频播放的生命周期和播放状态
  * 所有关于视频的逻辑都应该写在这里
  * Created by Nathen on 2017/7/2.
  */
-public class MyJCVideoPlayerStandard extends JCVideoPlayerStandard {
-    public MyJCVideoPlayerStandard(Context context) {
+public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
+    public MyJZVideoPlayerStandard(Context context) {
         super(context);
     }
 
-    public MyJCVideoPlayerStandard(Context context, AttributeSet attrs) {
+    public MyJZVideoPlayerStandard(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

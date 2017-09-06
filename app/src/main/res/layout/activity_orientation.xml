@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <cn.jzvd.JCVideoPlayerStandard
+    <cn.jzvd.JZVideoPlayerStandard
         android:id="@+id/jc_video"
         android:layout_width="300dp"
         android:layout_height="300dp" />

@@ -13,9 +13,8 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.JCVideoPlayerStandard;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by Nathen
@@ -43,7 +42,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -52,7 +51,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override
@@ -105,12 +104,12 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                 } else {
                     viewHolder = new VideoHolder();
                     convertView = mInflater.inflate(R.layout.item_videoview, null);
-                    viewHolder.jcVideoPlayer = (JCVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
+                    viewHolder.jcVideoPlayer = (JZVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
                     convertView.setTag(viewHolder);
                 }
 
                 viewHolder.jcVideoPlayer.setUp(
-                        VideoConstant.videoUrls[0][position], JCVideoPlayer.SCREEN_LAYOUT_LIST,
+                        VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
                         VideoConstant.videoTitles[0][position]);
 
                 Picasso.with(ListViewMultiHolderActivity.this)
@@ -142,7 +141,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
         }
 
         class VideoHolder {
-            JCVideoPlayerStandard jcVideoPlayer;
+            JZVideoPlayerStandard jcVideoPlayer;
         }
 
         class TextViewHolder {

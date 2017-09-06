@@ -21,12 +21,12 @@
                 android:layout_marginTop="18dp"
                 android:text="Base simple ui example" />
 
-            <cn.jzvd.JCVideoPlayerSimple
+            <cn.jzvd.JZVideoPlayerSimple
                 android:id="@+id/simple_demo"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
-            <cn.jzvd.JCVideoPlayerStandard
+            <cn.jzvd.JZVideoPlayerStandard
                 android:id="@+id/jc_video"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"

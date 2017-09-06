@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/jc_dialog_progress_bg"
+    android:background="@drawable/jz_dialog_progress_bg"
     android:orientation="vertical">
 
     <LinearLayout
@@ -51,6 +51,6 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
             android:max="100"
-            android:progressDrawable="@drawable/jc_dialog_progress" />
+            android:progressDrawable="@drawable/jz_dialog_progress" />
     </LinearLayout>
 </LinearLayout>

@@ -8,15 +8,14 @@ import android.view.MenuItem;
 
 import com.squareup.picasso.Picasso;
 
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.JCVideoPlayerStandard;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by Nathen on 2016/12/30.
  */
 public class OrientationActivity extends AppCompatActivity {
-    JCVideoPlayerStandard mJcVideoPlayerStandard;
+    JZVideoPlayerStandard mJcVideoPlayerStandard;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,21 +26,21 @@ public class OrientationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setTitle("Orientation");
         setContentView(R.layout.activity_orientation);
-        mJcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.jc_video);
+        mJcVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jc_video);
         mJcVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
-                , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJcVideoPlayerStandard.thumbImageView);
 
-        JCVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-        JCVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
 
     }
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -50,7 +49,7 @@ public class OrientationActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override

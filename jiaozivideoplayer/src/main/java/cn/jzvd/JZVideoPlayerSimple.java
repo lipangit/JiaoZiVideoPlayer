@@ -6,26 +6,24 @@ import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
-import cn.jzvd.R;
-
 /**
  * Manage UI
  * Created by Nathen
  * On 2016/04/10 15:45
  */
-public class JCVideoPlayerSimple extends JCVideoPlayer {
+public class JZVideoPlayerSimple extends JZVideoPlayer {
 
-    public JCVideoPlayerSimple(Context context) {
+    public JZVideoPlayerSimple(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerSimple(Context context, AttributeSet attrs) {
+    public JZVideoPlayerSimple(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
     public int getLayoutId() {
-        return R.layout.jc_layout_base;
+        return R.layout.jz_layout_base;
     }
 
     @Override
@@ -58,19 +56,19 @@ public class JCVideoPlayerSimple extends JCVideoPlayer {
 
     private void updateStartImage() {
         if (currentState == CURRENT_STATE_PLAYING) {
-            startButton.setImageResource(R.drawable.jc_click_pause_selector);
+            startButton.setImageResource(R.drawable.jz_click_pause_selector);
         } else if (currentState == CURRENT_STATE_ERROR) {
-            startButton.setImageResource(R.drawable.jc_click_error_selector);
+            startButton.setImageResource(R.drawable.jz_click_error_selector);
         } else {
-            startButton.setImageResource(R.drawable.jc_click_play_selector);
+            startButton.setImageResource(R.drawable.jz_click_play_selector);
         }
     }
 
     public void updateFullscreenButton() {
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            fullscreenButton.setImageResource(R.drawable.jc_shrink);
+            fullscreenButton.setImageResource(R.drawable.jz_shrink);
         } else {
-            fullscreenButton.setImageResource(R.drawable.jc_enlarge);
+            fullscreenButton.setImageResource(R.drawable.jz_enlarge);
         }
     }
 

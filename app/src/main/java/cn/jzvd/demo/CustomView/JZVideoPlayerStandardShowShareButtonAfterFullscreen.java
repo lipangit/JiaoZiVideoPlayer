@@ -6,22 +6,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import cn.jzvd.JCVideoPlayerStandard;
+import cn.jzvd.JZVideoPlayerStandard;
 import cn.jzvd.demo.R;
 
 /**
  * Created by Nathen
  * On 2016/04/22 00:54
  */
-public class JCVideoPlayerStandardShowShareButtonAfterFullscreen extends JCVideoPlayerStandard {
+public class JZVideoPlayerStandardShowShareButtonAfterFullscreen extends JZVideoPlayerStandard {
 
     public ImageView shareButton;
 
-    public JCVideoPlayerStandardShowShareButtonAfterFullscreen(Context context) {
+    public JZVideoPlayerStandardShowShareButtonAfterFullscreen(Context context) {
         super(context);
     }
 
-    public JCVideoPlayerStandardShowShareButtonAfterFullscreen(Context context, AttributeSet attrs) {
+    public JZVideoPlayerStandardShowShareButtonAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

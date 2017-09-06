@@ -11,8 +11,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZVideoPlayer;
 
 /**
  * Created by Nathen
@@ -44,7 +43,7 @@ public class ListViewViewpagerActivity extends AppCompatActivity implements View
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override
@@ -54,7 +53,7 @@ public class ListViewViewpagerActivity extends AppCompatActivity implements View
 
     @Override
     public void onPageSelected(int position) {
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override
@@ -64,7 +63,7 @@ public class ListViewViewpagerActivity extends AppCompatActivity implements View
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();

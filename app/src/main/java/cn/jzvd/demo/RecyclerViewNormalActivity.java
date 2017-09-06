@@ -8,8 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 
-import cn.jzvd.JCVideoPlayer;
-import cn.jzvd.demo.R;
+import cn.jzvd.JZVideoPlayer;
 
 /**
  * Created by yujunkui on 16/8/29.
@@ -41,8 +40,8 @@ public class RecyclerViewNormalActivity extends AppCompatActivity {
 
             @Override
             public void onChildViewDetachedFromWindow(View view) {
-//                if (JCVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
-//                    JCVideoPlayer videoPlayer = (JCVideoPlayer) JCVideoPlayerManager.getCurrentJcvdOnFirtFloor();
+//                if (JZVideoPlayerManager.getCurrentJcvdOnFirtFloor() != null) {
+//                    JCVideoPlayer videoPlayer = (JCVideoPlayer) JZVideoPlayerManager.getCurrentJcvdOnFirtFloor();
 //                    if (((ViewGroup) view).indexOfChild(videoPlayer) != -1 && videoPlayer.currentState == JCVideoPlayer.CURRENT_STATE_PLAYING) {
 //                        JCVideoPlayer.releaseAllVideos();
 //                    }
@@ -53,7 +52,7 @@ public class RecyclerViewNormalActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (JCVideoPlayer.backPress()) {
+        if (JZVideoPlayer.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -62,7 +61,7 @@ public class RecyclerViewNormalActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JCVideoPlayer.releaseAllVideos();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override
