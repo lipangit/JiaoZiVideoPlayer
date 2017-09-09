@@ -25,7 +25,7 @@
 8. WebView嵌套本地视频控件
 9. [支持https和rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
 10. 小于 110kb
-11. Home键暂停，返回继续播放
+11. [Home键暂停，返回继续播放](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/app/src/main/java/cn/jzvd/demo/ApiActivity.java#L117)
 
 ## 效果
 
@@ -39,7 +39,7 @@
 
 1.添加类库
 ```gradle
-compile 'cn.jcvd:jiaozivideoplayer:5.8.2'
+compile 'cn.jcvd:jiaozivideoplayer:6.0.0'
 ```
 
 [或直接下载jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.0.0) 不建议

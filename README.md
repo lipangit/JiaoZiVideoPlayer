@@ -27,7 +27,7 @@ I think the final solution for play video in android is android.media.MediaPlaye
 8. WebView with local video control
 9. [Support https and rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
 10. Less than 110kb
-11. Press home button will pause vidoe, come back goon play 
+11. [Press home button will pause vidoe, come back goon play](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/app/src/main/java/cn/jzvd/demo/ApiActivity.java#L117)
 
 ## Effect
 
@@ -41,7 +41,7 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'cn.jcvd:jiaozivideoplayer:5.8.2'
+compile 'cn.jcvd:jiaozivideoplayer:6.0.0'
 ```
 
 [Or download lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.0.0) not recommended
