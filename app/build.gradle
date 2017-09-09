@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.1'
 
     defaultConfig {
-        applicationId "fm.jiecao.jiecaovideoplayer"
+        applicationId "cn.jzvd.demo"
         minSdkVersion 16
-        targetSdkVersion 25
-        versionCode 63
-        versionName "5.8.1"
+        targetSdkVersion 26
+        versionCode 65
+        versionName "6.0.0"
     }
     buildTypes {
         release {
@@ -25,7 +25,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile project(':jcvideoplayer-lib')
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile project(':jiaozivideoplayer')
     compile 'com.squareup.picasso:picasso:2.5.1'
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'

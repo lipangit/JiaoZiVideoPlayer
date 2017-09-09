@@ -20,7 +20,7 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui with share button, visible after fullscreen" />
 
-            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowShareButtonAfterFullscreen
+            <cn.jzvd.demo.CustomView.JZVideoPlayerStandardShowShareButtonAfterFullscreen
                 android:id="@+id/custom_videoplayer_standard_with_share_button"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
@@ -32,7 +32,7 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui show title after fullscreen" />
 
-            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTitleAfterFullscreen
+            <cn.jzvd.demo.CustomView.JZVideoPlayerStandardShowTitleAfterFullscreen
                 android:id="@+id/custom_videoplayer_standard_show_title_after_fullscreen"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
@@ -44,7 +44,7 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui show textureview after auto complete" />
 
-            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardShowTextureViewAfterAutoComplete
+            <cn.jzvd.demo.CustomView.JZVideoPlayerStandardShowTextureViewAfterAutoComplete
                 android:id="@+id/custom_videoplayer_standard_show_textureview_aoto_complete"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
@@ -56,7 +56,7 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui auto complete after fullscreen" />
 
-            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardAutoCompleteAfterFullscreen
+            <cn.jzvd.demo.CustomView.JZVideoPlayerStandardAutoCompleteAfterFullscreen
                 android:id="@+id/custom_videoplayer_standard_aoto_complete"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
@@ -68,8 +68,8 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui 1:1" />
 
-            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardAutoCompleteAfterFullscreen
-                android:id="@+id/jc_videoplayer_1_1"
+            <cn.jzvd.demo.CustomView.JZVideoPlayerStandardAutoCompleteAfterFullscreen
+                android:id="@+id/jz_videoplayer_1_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -80,8 +80,8 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui 16:9" />
 
-            <fm.jiecao.jiecaovideoplayer.CustomView.JCVideoPlayerStandardAutoCompleteAfterFullscreen
-                android:id="@+id/jc_videoplayer_16_9"
+            <cn.jzvd.demo.CustomView.JZVideoPlayerStandardAutoCompleteAfterFullscreen
+                android:id="@+id/jz_videoplayer_16_9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>

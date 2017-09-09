@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-        android:id="@+id/jc_video"
+    <cn.jzvd.JZVideoPlayerStandard
+        android:id="@+id/jz_video"
         android:layout_width="300dp"
         android:layout_height="300dp" />
 </LinearLayout>

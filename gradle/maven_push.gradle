@@ -12,7 +12,7 @@ apply plugin: 'signing'
 //}
 
 //artifacts {
-//    archives file('../downloads/jiecao-videoplayer-1.2preview.aar')
+//    archives file('../downloads/jiaozi-videoplayer-1.2preview.aar')
 //}
 
 signing {
@@ -20,9 +20,9 @@ signing {
     sign configurations.archives
 }
 
-group = "fm.jiecao"
-archivesBaseName = "jiecaovideoplayer"
-version = "5.8.1"
+group = "cn.jzvd"
+archivesBaseName = "jiaozivideoplayer"
+version = "6.0.0"
 
 uploadArchives {
     repositories {
@@ -40,16 +40,16 @@ uploadArchives {
             }
 
             pom.project {
-                name 'jiecaovideoplayer'
+                name 'jiaozivideoplayer'
                 packaging 'jar'
                 // optionally artifactId can be defined here
                 description 'android videoplayer videoview 安卓视频播放器 全屏 播放器列表全屏 仿今日头条UI'
-                url 'https://github.com/lipangit/jiecaovideoplayer'
+                url 'https://github.com/lipangit/jiaozivideoplayer'
 
                 scm {
-                    connection 'https://github.com/lipangit/jiecaovideoplayer'
-                    developerConnection 'https://github.com/lipangit/jiecaovideoplayer'
-                    url 'https://github.com/lipangit/jiecaovideoplayer'
+                    connection 'https://github.com/lipangit/jiaozivideoplayer'
+                    developerConnection 'https://github.com/lipangit/jiaozivideoplayer'
+                    url 'https://github.com/lipangit/jiaozivideoplayer'
                 }
 
                 licenses {
@@ -63,7 +63,7 @@ uploadArchives {
                     developer {
                         id 'Nathen'
                         name 'Nathen'
-                        email 'lipan@jiecao.fm'
+                        email '821537155@qq.com'
                     }
                 }
             }

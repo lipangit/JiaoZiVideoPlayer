@@ -21,13 +21,13 @@
                 android:layout_marginTop="18dp"
                 android:text="Base simple ui example" />
 
-            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerSimple
+            <cn.jzvd.JZVideoPlayerSimple
                 android:id="@+id/simple_demo"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
 
-            <fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
-                android:id="@+id/jc_video"
+            <cn.jzvd.JZVideoPlayerStandard
+                android:id="@+id/jz_video"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="18dp" />
