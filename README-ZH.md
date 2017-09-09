@@ -1,17 +1,17 @@
-<a href="https://github.com/lipangit/JieCaoVideoPlayer" target="_blank"><img src="https://user-images.githubusercontent.com/2038071/29994158-7e65546c-8ffb-11e7-80fd-c630e2a36135.png" style="max-width:100%;"></a>
+<a href="https://github.com/lipangit/JiaoZiVideoPlayer" target="_blank"><img src="https://user-images.githubusercontent.com/2038071/29994158-7e65546c-8ffb-11e7-80fd-c630e2a36135.png" style="max-width:100%;"></a>
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Cfm.jiecao%7Cjiecaovideoplayer%7C4.6.3%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.8.1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.8.1-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
-<a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiecaovideoplayer-green.svg?style=true"></a>
+<a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
 #### 立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
 
 目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
 
-[英文文档](https://github.com/lipangit/JieCaoVideoPlayer)           [工作计划](https://github.com/lipangit/JieCaoVideoPlayer/projects/2)
+[英文文档](https://github.com/lipangit/JiaoZiVideoPlayer)           [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2)
 
 ## 主要特点
 
@@ -24,11 +24,12 @@
 7. 重力感应自动全屏
 8. WebView嵌套本地视频控件
 9. [支持https和rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
-10. 小于 100kb
+10. 小于 110kb
+11. Home键暂停，返回继续播放
 
 ## 效果
 
-**[jiecaovideoplayer-5.8.1.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.8.1/jiecaovideoplayer-5.8.1.apk)**
+**[jiaozivideoplayer-5.8.1.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.8.1/jiaozivideoplayer-5.8.1.apk)**
 
 ![Demo Screenshot][1]
 
@@ -38,14 +39,14 @@
 
 1.添加类库
 ```gradle
-compile 'fm.jiecao:jiecaovideoplayer:5.8.1'
+compile 'cn.jcvd:jiaozivideoplayer:5.8.2'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JieCaoVideoPlayer/releases/tag/v5.8.1) 不建议
+[或直接下载jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v5.8.1) 不建议
 
 2.添加布局
 ```xml
-<fm.jiecao.jcvideoplayer_lib.JCVideoPlayerStandard
+<cn.jzvd.JZVideoPlayerStandard
     android:id="@+id/videoplayer"
     android:layout_width="match_parent"
     android:layout_height="200dp"/>
@@ -53,10 +54,10 @@ compile 'fm.jiecao:jiecaovideoplayer:5.8.1'
 
 3.设置视频地址、缩略图地址、标题
 ```java
-JCVideoPlayerStandard jcVideoPlayerStandard = (JCVideoPlayerStandard) findViewById(R.id.videoplayer);
-jcVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-                            , JCVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子闭眼睛");
-jcVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.videoplayer);
+jzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
+                            , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子闭眼睛");
+jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.在`Activity`中
@@ -83,7 +84,7 @@ protected void onPause() {
     android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
 ```
 
-## [Wiki](https://github.com/lipangit/JieCaoVideoPlayer/wiki)
+## [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)
 
 ## 打赏
 
