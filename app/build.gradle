@@ -8,8 +8,8 @@ android {
         applicationId "cn.jzvd.demo"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 63
-        versionName "5.8.1"
+        versionCode 65
+        versionName "6.0.0"
     }
     buildTypes {
         release {

@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-5.8.1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.0.0-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -29,7 +29,7 @@
 
 ## 效果
 
-**[jiaozivideoplayer-5.8.1.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v5.8.1/jiaozivideoplayer-5.8.1.apk)**
+**[jiaozivideoplayer-6.0.0.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v6.0.0/jiaozivideoplayer-6.0.0.apk)**
 
 ![Demo Screenshot][1]
 
@@ -42,7 +42,7 @@
 compile 'cn.jcvd:jiaozivideoplayer:5.8.2'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v5.8.1) 不建议
+[或直接下载jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.0.0) 不建议
 
 2.添加布局
 ```xml
