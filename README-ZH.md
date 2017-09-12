@@ -7,7 +7,7 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-#### 立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
+#### 立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jzvd
 
 目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
 
@@ -39,7 +39,7 @@
 
 1.添加类库
 ```gradle
-compile 'cn.jcvd:jiaozivideoplayer:6.0.0'
+compile 'cn.jzvd:jiaozivideoplayer:6.0.0'
 ```
 
 [或直接下载jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.0.0) 不建议
@@ -64,7 +64,7 @@ jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_
 ```java
 @Override
 public void onBackPressed() {
-    if (JCVideoPlayer.backPress()) {
+    if (JZVideoPlayer.backPress()) {
         return;
     }
     super.onBackPressed();
@@ -72,7 +72,7 @@ public void onBackPressed() {
 @Override
 protected void onPause() {
     super.onPause();
-    JCVideoPlayer.releaseAllVideos();
+    JZVideoPlayer.releaseAllVideos();
 }
 ```
 

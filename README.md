@@ -9,7 +9,7 @@
 
 * This project need translators, mother language is english, you can change everything edit readme, release note, formate variable and annotation.
 
-#### Ambition is become the most widely used video playback control. Q群:490442439 验证信息:jcvd
+#### Ambition is become the most widely used video playback control. Q群:490442439 验证信息:jzvd
 
 I think the final solution for play video in android is android.media.MediaPlayer, other player is not in the trend, even if the android.media.MediaPlayer have disavantages we should make concession, if android.media.MediaPlayer have defect we will think to change other player.
 
@@ -41,12 +41,12 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'cn.jcvd:jiaozivideoplayer:6.0.0'
+compile 'cn.jzvd:jiaozivideoplayer:6.0.0'
 ```
 
 [Or download lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.0.0) not recommended
 
-2.Add JCVideoPlayer in your layout
+2.Add JZVideoPlayer in your layout
 ```xml
 <cn.jzvd.JZVideoPlayerStandard
     android:id="@+id/videoplayer"
@@ -66,7 +66,7 @@ jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_
 ```java
 @Override
 public void onBackPressed() {
-    if (JCVideoPlayer.backPress()) {
+    if (JZVideoPlayer.backPress()) {
         return;
     }
     super.onBackPressed();
@@ -74,7 +74,7 @@ public void onBackPressed() {
 @Override
 protected void onPause() {
     super.onPause();
-    JCVideoPlayer.releaseAllVideos();
+    JZVideoPlayer.releaseAllVideos();
 }
 ```
 
