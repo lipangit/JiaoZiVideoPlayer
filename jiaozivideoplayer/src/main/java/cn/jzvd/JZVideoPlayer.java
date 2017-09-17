@@ -241,6 +241,24 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZ_USER_EVENT = jzUserEvent;
     }
 
+    public static void goOnPlayOnResume() {
+        if (JZVideoPlayerManager.getCurrentJzvd() != null) {
+            JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
+            if (jzvd.currentState == JZVideoPlayer.CURRENT_STATE_PAUSE) {
+                jzvd.onStatePlaying();
+                JZMediaManager.instance().mediaPlayer.start();
+            }
+        }
+    }
+
+    public static void goOnPlayOnPause() {
+        if (JZVideoPlayerManager.getCurrentJzvd() != null) {
+            JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
+            jzvd.onStatePause();
+            JZMediaManager.instance().mediaPlayer.pause();
+        }
+    }
+
     public abstract int getLayoutId();
 
     public void init(Context context) {

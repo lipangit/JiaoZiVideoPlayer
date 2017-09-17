@@ -21,9 +21,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerManager;
 import cn.jzvd.JZVideoPlayerSimple;
 import cn.jzvd.JZVideoPlayerStandard;
 
@@ -119,13 +117,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         Sensor accelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(mSensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
         //home back
-        if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-            JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
-            if (jzvd.currentState == JZVideoPlayer.CURRENT_STATE_PAUSE) {
-                jzvd.onStatePlaying();
-                JZMediaManager.instance().mediaPlayer.start();
-            }
-        }
+        JZVideoPlayer.goOnPlayOnResume();
     }
 
     @Override
@@ -134,11 +126,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         mSensorManager.unregisterListener(mSensorEventListener);
         JZVideoPlayer.clearSavedProgress(this, null);
         //home back
-        if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-            JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
-            jzvd.onStatePause();
-            JZMediaManager.instance().mediaPlayer.pause();
-        }
+        JZVideoPlayer.goOnPlayOnPause();
     }
 
     @Override
