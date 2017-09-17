@@ -104,9 +104,9 @@ protected void onPause() {
 [常见问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
 
 
-## [Job diversion](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E5%B7%A5%E4%BD%9C%E5%88%86%E6%B5%81) 
+## [工作分流](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E5%B7%A5%E4%BD%9C%E5%88%86%E6%B5%81) 
 
-This project is dedicated to small and medium-sized app integrated video playback, greatly reducing development costs, if you save a ton of time, the proposed retail price: reward 76 USD. (Not expensive you brothers, get two years of the project than the female anchor song song it)
+老臣精力能力有限，希望和志同道合的朋友一起把项目做好，感兴趣的同学随时和我报名
 
 * [群管理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E7%BE%A4%E7%AE%A1%E7%90%86)
 
@@ -130,7 +130,7 @@ This project is dedicated to small and medium-sized app integrated video playbac
 
 ## 打赏
 
-This project is dedicated to small and medium-sized app integrated video playback, greatly reducing development costs, if you save a ton of time, the proposed retail price: reward 76 USD. (Not expensive you brothers, get two years of the project than the female anchor song song it)
+这项目是专门给中小app集成视频播放的，极大降低开发成本，如果给您节省了成吨的时间，建议零售价:打赏500元。(不贵吧兄弟们，弄了两年的项目不比女主播唱首歌值钱吧)
 
 ![打赏][2]
 
