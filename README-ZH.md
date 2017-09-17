@@ -88,25 +88,25 @@ protected void onPause() {
 
 * 常规使用
 
-1. QuickStart
-2. 列表播放
-3. 小窗播放
-4. 直接全屏播放
-5. API
+1. [QuickStart](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/QuickStart)
+2. [列表播放](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%88%97%E8%A1%A8%E6%92%AD%E6%94%BE)
+3. [小窗播放](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%B0%8F%E7%AA%97%E6%92%AD%E6%94%BE)
+4. [直接全屏播放](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E7%9B%B4%E6%8E%A5%E5%85%A8%E5%B1%8F%E6%92%AD%E6%94%BE)
+5. [API](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/API%E7%9A%84%E4%BD%BF%E7%94%A8)
 
 * 自定义
 
-1. 自定义代码
-2. 自定义代码示例
-3. 自定义UI
-4. 自定义UI示例
+1. [自定义代码](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%A0%81)
+2. [自定义代码示例](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B)
+3. [自定义UI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
+4. [自定义UI示例](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI%E7%A4%BA%E4%BE%8B)
 
-常见问题
+[常见问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
 
 
-## 工作分流
+## 工作分流 随时和我报名
 
-* 群管理
+* [群管理]()
 
 [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
 
@@ -116,16 +116,19 @@ protected void onPause() {
 
 [张展硕]() QQ:229431468
 
-* 问题解答
+* [问题解答](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94)
 
-* wiki整理
+[熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
 
-* 发版
+* [wiki整理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#wiki%E6%95%B4%E7%90%86)
 
-4. [任务发布]()
+* [发版](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E5%8F%91%E7%89%88)
 
+4. [任务发布](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E4%BB%BB%E5%8A%A1%E5%8F%91%E5%B8%83)
 
 ## 打赏
+
+这项目是专门给中小app集成视频播放的，极大降低开发成本，如果给您节省了成吨的时间，建议零售价:打赏500元。(不贵吧兄弟们，弄了两年的项目不比女主播唱首歌值钱吧)
 
 ![打赏][2]
 
