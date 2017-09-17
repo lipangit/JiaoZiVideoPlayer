@@ -104,9 +104,11 @@ protected void onPause() {
 [常见问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
 
 
-## 工作分流 随时和我报名
+## [工作分流](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E5%B7%A5%E4%BD%9C%E5%88%86%E6%B5%81) 
 
-* [群管理]()
+老臣精力能力有限，希望和志同道合的朋友一起把项目做好，感兴趣的同学随时和我报名
+
+* [群管理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E7%BE%A4%E7%AE%A1%E7%90%86)
 
 [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
 
