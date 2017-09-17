@@ -7,7 +7,7 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-* This project need translators, mother language is english, you can change everything edit readme, release note, formate variable and annotation.
+* This project need translators, you can change everything edit readme, release note, formate variable and annotation.
 
 #### Ambition is become the most widely used video playback control. Q群:490442439 验证信息:jzvd
 
