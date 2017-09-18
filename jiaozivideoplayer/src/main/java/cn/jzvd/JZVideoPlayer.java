@@ -677,6 +677,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             backPress();
         }
+        JZMediaManager.instance().mediaPlayer.release();
         JZUtils.saveProgress(getContext(), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex), 0);
     }
 

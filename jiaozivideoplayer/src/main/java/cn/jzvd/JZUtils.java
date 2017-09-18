@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.TextUtils;
+import android.util.Log;
 
 import java.util.Formatter;
 import java.util.Iterator;
@@ -20,6 +21,7 @@ import java.util.Locale;
  * On 2016/02/21 12:25
  */
 public class JZUtils {
+    public static final String TAG = "JiaoZiVideoPlayer";
 
     public static String stringForTime(int timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
@@ -91,6 +93,7 @@ public class JZUtils {
 
     public static void saveProgress(Context context, String url, int progress) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return;
+        Log.i(TAG, "saveProgress: " + progress);
         SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = spn.edit();
