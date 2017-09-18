@@ -551,6 +551,16 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         currentState = CURRENT_STATE_NORMAL;
         cancelProgressTimer();
         if (isCurrentJzvd()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
+            //滑出屏幕记录位置
+            int position = 0;
+            try {
+                position = JZMediaManager.instance().mediaPlayer.getCurrentPosition();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            if (position != 0) {
+                JZUtils.saveProgress(getContext(), JZMediaManager.CURRENT_PLAYING_URL, position);
+            }
             JZMediaManager.instance().releaseMediaPlayer();
         }
     }
@@ -675,7 +685,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         //save position
         if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
             int position = getCurrentPositionWhenPlaying();
-//            int duration = getDuration();
             JZUtils.saveProgress(getContext(), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex), position);
         }
         cancelProgressTimer();
