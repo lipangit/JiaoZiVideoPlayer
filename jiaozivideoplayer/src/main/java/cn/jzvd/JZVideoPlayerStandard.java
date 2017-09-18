@@ -377,8 +377,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         super.onStopTrackingTouch(seekBar);
-//        startDismissControlViewTimer();
-        dissmissControlView();
+        if (currentState == CURRENT_STATE_PLAYING) {
+            dissmissControlView();
+        } else {
+            startDismissControlViewTimer();
+        }
     }
 
     public void onClickUiToggle() {
