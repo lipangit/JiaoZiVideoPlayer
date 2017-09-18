@@ -903,6 +903,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jzVideoPlayer.setAnimation(ra);
             onStateNormal();
+            jzVideoPlayer.progressBar.setSecondaryProgress(progressBar.getSecondaryProgress());
             jzVideoPlayer.startProgressTimer();
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
         } catch (Exception e) {
