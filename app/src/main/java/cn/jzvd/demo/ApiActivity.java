@@ -29,7 +29,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by Nathen on 16/7/31.
  */
 public class ApiActivity extends AppCompatActivity implements View.OnClickListener {
-    Button mSmallChange, mBigChange, mOrientation;
+    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity;
     JZVideoPlayerSimple mJzVideoPlayerSimple;
     JZVideoPlayerStandard mJzVideoPlayerStandard;
     JZVideoPlayer.JZAutoFullscreenListener mSensorEventListener;
@@ -48,10 +48,12 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         mSmallChange = (Button) findViewById(R.id.small_change);
         mBigChange = (Button) findViewById(R.id.big_change);
         mOrientation = (Button) findViewById(R.id.orientation);
+        mExtendsNormalActivity = (Button) findViewById(R.id.extends_normal_activity);
 
         mSmallChange.setOnClickListener(this);
         mBigChange.setOnClickListener(this);
         mOrientation.setOnClickListener(this);
+        mExtendsNormalActivity.setOnClickListener(this);
 
         mJzVideoPlayerSimple = (JZVideoPlayerSimple) findViewById(R.id.simple_demo);
         mJzVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
@@ -107,6 +109,9 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.orientation:
                 startActivity(new Intent(ApiActivity.this, OrientationActivity.class));
+                break;
+            case R.id.extends_normal_activity:
+                startActivity(new Intent(ApiActivity.this, ExtendsNormalActivity.class));
                 break;
         }
     }

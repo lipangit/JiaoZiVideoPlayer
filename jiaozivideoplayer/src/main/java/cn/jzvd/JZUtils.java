@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Window;
 
 import java.util.Formatter;
 import java.util.Iterator;
@@ -84,6 +85,24 @@ public class JZUtils {
             return getAppCompActivity(((ContextThemeWrapper) context).getBaseContext());
         }
         return null;
+    }
+
+    public static void setRequestedOrientation(Context context, int orientation) {
+        if (JZUtils.getAppCompActivity(context) != null) {
+            JZUtils.getAppCompActivity(context).setRequestedOrientation(
+                    orientation);
+        } else {
+            JZUtils.scanForActivity(context).setRequestedOrientation(
+                    orientation);
+        }
+    }
+
+    public static Window getWindow(Context context) {
+        if (JZUtils.getAppCompActivity(context) != null) {
+            return JZUtils.getAppCompActivity(context).getWindow();
+        } else {
+            return JZUtils.scanForActivity(context).getWindow();
+        }
     }
 
     public static int dip2px(Context context, float dpValue) {
