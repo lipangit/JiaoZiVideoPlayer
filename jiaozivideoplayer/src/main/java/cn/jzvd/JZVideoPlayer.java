@@ -495,6 +495,13 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZVideoPlayerManager.setFirstFloor(this);
     }
 
+
+    public void onPrepared() {
+        if (JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).toLowerCase().contains("mp3")) {
+            onVideoRendingStart();
+        }
+    }
+
     public void onVideoRendingStart() {
         Log.i(TAG, "onVideoRendingStart " + " [" + this.hashCode() + "] ");
         isVideoRendingStart = true;
