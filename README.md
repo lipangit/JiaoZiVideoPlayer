@@ -132,7 +132,7 @@ Need translator to make English native.
 
 Need translator to make English native.
 
-## Reward
+## [Reward](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E6%89%93%E8%B5%8F%E5%92%8C%E5%92%A8%E8%AF%A2)
 
 This project is dedicated to small and medium-sized app integrated video playback, greatly reducing development costs, if you save a ton of time, the proposed retail price: reward 76 USD. (Not expensive you brothers, get two years of the project than the female anchor song song it)
 
