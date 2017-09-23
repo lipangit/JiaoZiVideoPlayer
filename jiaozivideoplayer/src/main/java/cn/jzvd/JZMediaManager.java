@@ -102,6 +102,14 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
     @Override
     public void onPrepared(MediaPlayer mp) {
         mediaPlayer.start();
+        mainThreadHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
+                    JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                }
+            }
+        });
     }
 
     @Override

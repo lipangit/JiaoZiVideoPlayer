@@ -53,6 +53,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="Orientation" />
+
+            <Button
+                android:id="@+id/extends_normal_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:text="Extends Normal Activity" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

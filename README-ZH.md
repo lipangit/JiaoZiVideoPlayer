@@ -2,12 +2,12 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.0.0-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.0.1-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-#### 立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jcvd
+#### 立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jzvd
 
 目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
 
@@ -25,11 +25,11 @@
 8. WebView嵌套本地视频控件
 9. [支持https和rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
 10. 小于 110kb
-11. Home键暂停，返回继续播放
+11. [Home键暂停，返回继续播放](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/app/src/main/java/cn/jzvd/demo/ApiActivity.java#L117)
 
 ## 效果
 
-**[jiaozivideoplayer-6.0.0.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v6.0.0/jiaozivideoplayer-6.0.0.apk)**
+**[jiaozivideoplayer-6.0.1.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v6.0.1/jiaozivideoplayer-6.0.1.apk)**
 
 ![Demo Screenshot][1]
 
@@ -39,10 +39,10 @@
 
 1.添加类库
 ```gradle
-compile 'cn.jcvd:jiaozivideoplayer:5.8.2'
+compile 'cn.jzvd:jiaozivideoplayer:6.0.1'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.0.0) 不建议
+[或直接下载jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.0.1) 不建议
 
 2.添加布局
 ```xml
@@ -64,7 +64,7 @@ jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_
 ```java
 @Override
 public void onBackPressed() {
-    if (JCVideoPlayer.backPress()) {
+    if (JZVideoPlayer.backPress()) {
         return;
     }
     super.onBackPressed();
@@ -72,7 +72,7 @@ public void onBackPressed() {
 @Override
 protected void onPause() {
     super.onPause();
-    JCVideoPlayer.releaseAllVideos();
+    JZVideoPlayer.releaseAllVideos();
 }
 ```
 
@@ -86,7 +86,51 @@ protected void onPause() {
 
 ## [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)
 
-## 打赏
+* 常规使用
+
+1. [QuickStart](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/QuickStart)
+2. [列表播放](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%88%97%E8%A1%A8%E6%92%AD%E6%94%BE)
+3. [小窗播放](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%B0%8F%E7%AA%97%E6%92%AD%E6%94%BE)
+4. [直接全屏播放](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E7%9B%B4%E6%8E%A5%E5%85%A8%E5%B1%8F%E6%92%AD%E6%94%BE)
+5. [API](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/API%E7%9A%84%E4%BD%BF%E7%94%A8)
+
+* 自定义
+
+1. [自定义代码](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%A0%81)
+2. [自定义代码示例](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B)
+3. [自定义UI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
+4. [自定义UI示例](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI%E7%A4%BA%E4%BE%8B)
+
+[常见问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
+
+
+## [工作分流](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E5%B7%A5%E4%BD%9C%E5%88%86%E6%B5%81) 
+
+老臣精力能力有限，希望和志同道合的朋友一起把项目做好，感兴趣的同学随时和我报名
+
+* [群管理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E7%BE%A4%E7%AE%A1%E7%90%86)
+
+[熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
+
+[Lionet](https://github.com/Lionet6?tab=repositories) QQ:2950527715
+
+[montauk](https://github.com/hanmeimei888) QQ:958489121
+
+[张展硕]() QQ:229431468
+
+* [问题解答](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94)
+
+[熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
+
+* [wiki整理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#wiki%E6%95%B4%E7%90%86)
+
+* [发版](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E5%8F%91%E7%89%88)
+
+## [任务发布](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E4%BB%BB%E5%8A%A1%E5%8F%91%E5%B8%83)
+
+## [打赏](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E6%89%93%E8%B5%8F%E5%92%8C%E5%92%A8%E8%AF%A2)
+
+这项目是专门给中小app集成视频播放的，极大降低开发成本，如果给您节省了成吨的时间，建议零售价:打赏500元。(不贵吧兄弟们，弄了两年的项目不比女主播唱首歌值钱吧)
 
 ![打赏][2]
 

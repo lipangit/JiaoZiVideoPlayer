@@ -21,9 +21,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerManager;
 import cn.jzvd.JZVideoPlayerSimple;
 import cn.jzvd.JZVideoPlayerStandard;
 
@@ -31,7 +29,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by Nathen on 16/7/31.
  */
 public class ApiActivity extends AppCompatActivity implements View.OnClickListener {
-    Button mSmallChange, mBigChange, mOrientation;
+    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity;
     JZVideoPlayerSimple mJzVideoPlayerSimple;
     JZVideoPlayerStandard mJzVideoPlayerStandard;
     JZVideoPlayer.JZAutoFullscreenListener mSensorEventListener;
@@ -50,10 +48,12 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         mSmallChange = (Button) findViewById(R.id.small_change);
         mBigChange = (Button) findViewById(R.id.big_change);
         mOrientation = (Button) findViewById(R.id.orientation);
+        mExtendsNormalActivity = (Button) findViewById(R.id.extends_normal_activity);
 
         mSmallChange.setOnClickListener(this);
         mBigChange.setOnClickListener(this);
         mOrientation.setOnClickListener(this);
+        mExtendsNormalActivity.setOnClickListener(this);
 
         mJzVideoPlayerSimple = (JZVideoPlayerSimple) findViewById(R.id.simple_demo);
         mJzVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
@@ -110,6 +110,9 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
             case R.id.orientation:
                 startActivity(new Intent(ApiActivity.this, OrientationActivity.class));
                 break;
+            case R.id.extends_normal_activity:
+                startActivity(new Intent(ApiActivity.this, ExtendsNormalActivity.class));
+                break;
         }
     }
 
@@ -119,13 +122,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         Sensor accelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(mSensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
         //home back
-        if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-            JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
-            if (jzvd.currentState == JZVideoPlayer.CURRENT_STATE_PAUSE) {
-                jzvd.onStatePlaying();
-                JZMediaManager.instance().mediaPlayer.start();
-            }
-        }
+        JZVideoPlayer.goOnPlayOnResume();
     }
 
     @Override
@@ -134,11 +131,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         mSensorManager.unregisterListener(mSensorEventListener);
         JZVideoPlayer.clearSavedProgress(this, null);
         //home back
-        if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-            JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
-            jzvd.onStatePause();
-            JZMediaManager.instance().mediaPlayer.pause();
-        }
+        JZVideoPlayer.goOnPlayOnPause();
     }
 
     @Override

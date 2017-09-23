@@ -104,17 +104,17 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public void init(Context context) {
         super.init(context);
 
-        batteryTimeLayout = (LinearLayout) findViewById(R.id.battery_time_layout);
-        bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progress);
-        titleTextView = (TextView) findViewById(R.id.title);
-        backButton = (ImageView) findViewById(R.id.back);
-        thumbImageView = (ImageView) findViewById(R.id.thumb);
-        loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
-        tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
-        battery_level = (ImageView) findViewById(R.id.battery_level);
-        video_current_time = (TextView) findViewById(R.id.video_current_time);
-        retryTextView = (TextView) findViewById(R.id.retry_text);
-        clarity = (TextView) findViewById(R.id.clarity);
+        batteryTimeLayout = findViewById(R.id.battery_time_layout);
+        bottomProgressBar = findViewById(R.id.bottom_progress);
+        titleTextView = findViewById(R.id.title);
+        backButton = findViewById(R.id.back);
+        thumbImageView = findViewById(R.id.thumb);
+        loadingProgressBar = findViewById(R.id.loading);
+        tinyBackImageView = findViewById(R.id.back_tiny);
+        battery_level = findViewById(R.id.battery_level);
+        video_current_time = findViewById(R.id.video_current_time);
+        retryTextView = findViewById(R.id.retry_text);
+        clarity = findViewById(R.id.clarity);
 
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
@@ -377,7 +377,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         super.onStopTrackingTouch(seekBar);
-        startDismissControlViewTimer();
+        if (currentState == CURRENT_STATE_PLAYING) {
+            dissmissControlView();
+        } else {
+            startDismissControlViewTimer();
+        }
     }
 
     public void onClickUiToggle() {
@@ -736,10 +740,10 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         super.showProgressDialog(deltaX, seekTime, seekTimePosition, totalTime, totalTimeDuration);
         if (mProgressDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jz_dialog_progress, null);
-            mDialogProgressBar = ((ProgressBar) localView.findViewById(R.id.duration_progressbar));
-            mDialogSeekTime = ((TextView) localView.findViewById(R.id.tv_current));
-            mDialogTotalTime = ((TextView) localView.findViewById(R.id.tv_duration));
-            mDialogIcon = ((ImageView) localView.findViewById(R.id.duration_image_tip));
+            mDialogProgressBar = localView.findViewById(R.id.duration_progressbar);
+            mDialogSeekTime = localView.findViewById(R.id.tv_current);
+            mDialogTotalTime = localView.findViewById(R.id.tv_duration);
+            mDialogIcon = localView.findViewById(R.id.duration_image_tip);
             mProgressDialog = createDialogWithView(localView);
         }
         if (!mProgressDialog.isShowing()) {
@@ -770,9 +774,9 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         super.showVolumeDialog(deltaY, volumePercent);
         if (mVolumeDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jz_dialog_volume, null);
-            mDialogVolumeImageView = ((ImageView) localView.findViewById(R.id.volume_image_tip));
-            mDialogVolumeTextView = ((TextView) localView.findViewById(R.id.tv_volume));
-            mDialogVolumeProgressBar = ((ProgressBar) localView.findViewById(R.id.volume_progressbar));
+            mDialogVolumeImageView = localView.findViewById(R.id.volume_image_tip);
+            mDialogVolumeTextView = localView.findViewById(R.id.tv_volume);
+            mDialogVolumeProgressBar = localView.findViewById(R.id.volume_progressbar);
             mVolumeDialog = createDialogWithView(localView);
         }
         if (!mVolumeDialog.isShowing()) {
@@ -806,8 +810,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         super.showBrightnessDialog(brightnessPercent);
         if (mBrightnessDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jz_dialog_brightness, null);
-            mDialogBrightnessTextView = ((TextView) localView.findViewById(R.id.tv_brightness));
-            mDialogBrightnessProgressBar = ((ProgressBar) localView.findViewById(R.id.brightness_progressbar));
+            mDialogBrightnessTextView = localView.findViewById(R.id.tv_brightness);
+            mDialogBrightnessProgressBar = localView.findViewById(R.id.brightness_progressbar);
             mBrightnessDialog = createDialogWithView(localView);
         }
         if (!mBrightnessDialog.isShowing()) {
@@ -881,25 +885,29 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
 
         @Override
         public void run() {
-            if (currentState != CURRENT_STATE_NORMAL
-                    && currentState != CURRENT_STATE_ERROR
-                    && currentState != CURRENT_STATE_AUTO_COMPLETE) {
-                if (getContext() != null && getContext() instanceof Activity) {
-                    ((Activity) getContext()).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            bottomContainer.setVisibility(View.INVISIBLE);
-                            topContainer.setVisibility(View.INVISIBLE);
-                            startButton.setVisibility(View.INVISIBLE);
-                            if (clarityPopWindow != null) {
-                                clarityPopWindow.dismiss();
-                            }
-                            if (currentScreen != SCREEN_WINDOW_TINY) {
-                                bottomProgressBar.setVisibility(View.VISIBLE);
-                            }
+            dissmissControlView();
+        }
+    }
+
+    public void dissmissControlView() {
+        if (currentState != CURRENT_STATE_NORMAL
+                && currentState != CURRENT_STATE_ERROR
+                && currentState != CURRENT_STATE_AUTO_COMPLETE) {
+            if (getContext() != null && getContext() instanceof Activity) {
+                ((Activity) getContext()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        bottomContainer.setVisibility(View.INVISIBLE);
+                        topContainer.setVisibility(View.INVISIBLE);
+                        startButton.setVisibility(View.INVISIBLE);
+                        if (clarityPopWindow != null) {
+                            clarityPopWindow.dismiss();
                         }
-                    });
-                }
+                        if (currentScreen != SCREEN_WINDOW_TINY) {
+                            bottomProgressBar.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
             }
         }
     }

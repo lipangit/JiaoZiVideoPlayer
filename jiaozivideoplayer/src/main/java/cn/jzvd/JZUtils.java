@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Window;
 
 import java.util.Formatter;
 import java.util.Iterator;
@@ -20,6 +22,7 @@ import java.util.Locale;
  * On 2016/02/21 12:25
  */
 public class JZUtils {
+    public static final String TAG = "JiaoZiVideoPlayer";
 
     public static String stringForTime(int timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
@@ -84,6 +87,24 @@ public class JZUtils {
         return null;
     }
 
+    public static void setRequestedOrientation(Context context, int orientation) {
+        if (JZUtils.getAppCompActivity(context) != null) {
+            JZUtils.getAppCompActivity(context).setRequestedOrientation(
+                    orientation);
+        } else {
+            JZUtils.scanForActivity(context).setRequestedOrientation(
+                    orientation);
+        }
+    }
+
+    public static Window getWindow(Context context) {
+        if (JZUtils.getAppCompActivity(context) != null) {
+            return JZUtils.getAppCompActivity(context).getWindow();
+        } else {
+            return JZUtils.scanForActivity(context).getWindow();
+        }
+    }
+
     public static int dip2px(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
@@ -91,6 +112,7 @@ public class JZUtils {
 
     public static void saveProgress(Context context, String url, int progress) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return;
+        Log.i(TAG, "saveProgress: " + progress);
         SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = spn.edit();
