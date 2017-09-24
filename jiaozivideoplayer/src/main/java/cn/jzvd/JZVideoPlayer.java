@@ -495,6 +495,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
 
     public void onPrepared() {
+        Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
         if (JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).toLowerCase().contains("mp3")) {
             onVideoRendingStart();
         }
@@ -621,18 +622,18 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
+            Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
             if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) return;
             BACKUP_PLAYING_BUFFERING_STATE = currentState;
             onStatePlaybackBufferingStart();
-            Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
         } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
+            Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
             if (BACKUP_PLAYING_BUFFERING_STATE != -1) {
                 if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
                     setState(BACKUP_PLAYING_BUFFERING_STATE);
                 }
                 BACKUP_PLAYING_BUFFERING_STATE = -1;
             }
-            Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
         } else if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
             onVideoRendingStart();
         }
@@ -798,7 +799,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setProgressAndText(int progress, int position, int duration) {
-        Log.i(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
+        Log.d(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
         if (!mTouchingProgressBar) {
             if (progress != 0) progressBar.setProgress(progress);
         }
