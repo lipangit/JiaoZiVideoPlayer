@@ -46,8 +46,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public ImageView thumbImageView;
     public ImageView tinyBackImageView;
     public LinearLayout batteryTimeLayout;
-    public ImageView battery_level;
-    public TextView video_current_time;
+    public ImageView batteryLevel;
+    public TextView videoCurrentTime;
     public TextView retryTextView;
     public TextView clarity;
     public PopupWindow clarityPopWindow;
@@ -74,17 +74,17 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 int scale = intent.getIntExtra("scale", 100);
                 int percent = level * 100 / scale;
                 if (percent < 15) {
-                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_10);
+                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_10);
                 } else if (percent >= 15 && percent < 40) {
-                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_30);
+                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_30);
                 } else if (percent >= 40 && percent < 60) {
-                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_50);
+                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_50);
                 } else if (percent >= 60 && percent < 80) {
-                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_70);
+                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_70);
                 } else if (percent >= 80 && percent < 95) {
-                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_90);
+                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_90);
                 } else if (percent >= 95 && percent <= 100) {
-                    battery_level.setBackgroundResource(R.drawable.jz_battery_level_100);
+                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_100);
                 }
                 getContext().unregisterReceiver(battertReceiver);
                 brocasting = false;
@@ -111,8 +111,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         thumbImageView = findViewById(R.id.thumb);
         loadingProgressBar = findViewById(R.id.loading);
         tinyBackImageView = findViewById(R.id.back_tiny);
-        battery_level = findViewById(R.id.battery_level);
-        video_current_time = findViewById(R.id.video_current_time);
+        batteryLevel = findViewById(R.id.battery_level);
+        videoCurrentTime = findViewById(R.id.video_current_time);
         retryTextView = findViewById(R.id.retry_text);
         clarity = findViewById(R.id.clarity);
 
@@ -420,7 +420,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public void setSystemTimeAndBattery() {
         SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm");
         Date date = new Date();
-        video_current_time.setText(dateFormater.format(date));
+        videoCurrentTime.setText(dateFormater.format(date));
         if (!brocasting) {
             getContext().registerReceiver(
                     battertReceiver,
