@@ -31,12 +31,12 @@ public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
     @Override
     public void init(Context context) {
         super.init(context);
-        bottomProgressBar = (ProgressBar) findViewById(R.id.bottom_progress);
-        titleTextView = (TextView) findViewById(R.id.title);
-        backButton = (ImageView) findViewById(R.id.back);
-//        thumbImageView = (SimpleDraweeView) findViewById(R.id.thumb);
-        loadingProgressBar = (ProgressBar) findViewById(R.id.loading);
-        tinyBackImageView = (ImageView) findViewById(R.id.back_tiny);
+        bottomProgressBar = findViewById(R.id.bottom_progress);
+        titleTextView = findViewById(R.id.title);
+        backButton = findViewById(R.id.back);
+//        thumbImageView = findViewById(R.id.thumb);
+        loadingProgressBar = findViewById(R.id.loading);
+        tinyBackImageView = findViewById(R.id.back_tiny);
 
 //        thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
@@ -60,7 +60,7 @@ public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
         } else if (currentScreen == SCREEN_WINDOW_TINY) {
             tinyBackImageView.setVisibility(View.VISIBLE);
             setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
         }
     }
 
