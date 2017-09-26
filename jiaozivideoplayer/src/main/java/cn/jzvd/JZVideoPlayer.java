@@ -252,8 +252,13 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static void goOnPlayOnPause() {
         if (JZVideoPlayerManager.getCurrentJzvd() != null) {
             JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
-            jzvd.onStatePause();
-            JZMediaManager.instance().mediaPlayer.pause();
+            if (jzvd.currentState == JZVideoPlayer.CURRENT_STATE_AUTO_COMPLETE ||
+                    jzvd.currentState == JZVideoPlayer.CURRENT_STATE_NORMAL) {
+//                JZVideoPlayer.releaseAllVideos();
+            } else {
+                jzvd.onStatePause();
+                JZMediaManager.instance().mediaPlayer.pause();
+            }
         }
     }
 
