@@ -207,12 +207,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     }
 
     @Override
-    public void onStatePlaybackBufferingStart() {
-        super.onStatePlaybackBufferingStart();
-        changeUiToPlayingBufferingShow();
-    }
-
-    @Override
     public void onStateError() {
         super.onStateError();
         changeUiToError();
@@ -407,12 +401,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             } else {
                 changeUiToPauseShow();
             }
-        } else if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
-            if (bottomContainer.getVisibility() == View.VISIBLE) {
-                changeUiToPlayingBufferingClear();
-            } else {
-                changeUiToPlayingBufferingShow();
-            }
         }
     }
 
@@ -447,11 +435,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToComplete();
-            } else {
-            }
-        } else if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
-            if (bottomContainer.getVisibility() == View.VISIBLE) {
-                changeUiToPlayingBufferingClear();
             } else {
             }
         }
@@ -585,42 +568,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-                break;
-            case SCREEN_WINDOW_TINY:
-                break;
-        }
-
-    }
-
-    public void changeUiToPlayingBufferingShow() {
-        switch (currentScreen) {
-            case SCREEN_LAYOUT_NORMAL:
-            case SCREEN_LAYOUT_LIST:
-                setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-                break;
-            case SCREEN_WINDOW_FULLSCREEN:
-                setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-                break;
-            case SCREEN_WINDOW_TINY:
-                break;
-        }
-
-    }
-
-    public void changeUiToPlayingBufferingClear() {
-        switch (currentScreen) {
-            case SCREEN_LAYOUT_NORMAL:
-            case SCREEN_LAYOUT_LIST:
-                setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.VISIBLE);
-                updateStartImage();
-                break;
-            case SCREEN_WINDOW_FULLSCREEN:
-                setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.INVISIBLE, View.VISIBLE);
-                updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
