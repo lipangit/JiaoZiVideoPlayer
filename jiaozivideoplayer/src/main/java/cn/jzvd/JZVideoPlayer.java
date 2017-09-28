@@ -40,8 +40,6 @@ import java.util.TimerTask;
 public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
     public static final String TAG = "JiaoZiVideoPlayer";
-    public static final int FULLSCREEN_ID = 33797;
-    public static final int TINY_ID = 33798;
     public static final int THRESHOLD = 80;
     public static final int FULL_SCREEN_NORMAL_DELAY = 300;
     public static final int SCREEN_LAYOUT_NORMAL = 0;
@@ -157,14 +155,14 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
         ViewGroup vp = (JZUtils.scanForActivity(context))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        View old = vp.findViewById(JZVideoPlayer.FULLSCREEN_ID);
+        View old = vp.findViewById(R.id.jz_fullscreen_id);
         if (old != null) {
             vp.removeView(old);
         }
         try {
             Constructor<JZVideoPlayer> constructor = _class.getConstructor(Context.class);
             final JZVideoPlayer jzVideoPlayer = constructor.newInstance(context);
-            jzVideoPlayer.setId(JZVideoPlayer.FULLSCREEN_ID);
+            jzVideoPlayer.setId(R.id.jz_fullscreen_id);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jzVideoPlayer, lp);
@@ -754,8 +752,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void clearFullscreenLayout() {
         ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        View oldF = vp.findViewById(FULLSCREEN_ID);
-        View oldT = vp.findViewById(TINY_ID);
+        View oldF = vp.findViewById(R.id.jz_fullscreen_id);
+        View oldT = vp.findViewById(R.id.jz_tiny_id);
         if (oldF != null) {
             vp.removeView(oldF);
         }
@@ -887,7 +885,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
         ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        View old = vp.findViewById(FULLSCREEN_ID);
+        View old = vp.findViewById(R.id.jz_fullscreen_id);
         if (old != null) {
             vp.removeView(old);
         }
@@ -895,7 +893,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         try {
             Constructor<JZVideoPlayer> constructor = (Constructor<JZVideoPlayer>) JZVideoPlayer.this.getClass().getConstructor(Context.class);
             JZVideoPlayer jzVideoPlayer = constructor.newInstance(getContext());
-            jzVideoPlayer.setId(FULLSCREEN_ID);
+            jzVideoPlayer.setId(R.id.jz_fullscreen_id);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jzVideoPlayer, lp);
@@ -920,7 +918,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR) return;
         ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        View old = vp.findViewById(TINY_ID);
+        View old = vp.findViewById(R.id.jz_tiny_id);
         if (old != null) {
             vp.removeView(old);
         }
@@ -929,7 +927,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         try {
             Constructor<JZVideoPlayer> constructor = (Constructor<JZVideoPlayer>) JZVideoPlayer.this.getClass().getConstructor(Context.class);
             JZVideoPlayer jzVideoPlayer = constructor.newInstance(getContext());
-            jzVideoPlayer.setId(TINY_ID);
+            jzVideoPlayer.setId(R.id.jz_tiny_id);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(jzVideoPlayer, lp);
