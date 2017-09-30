@@ -18,7 +18,7 @@ I think the final solution for play video in android is android.media.MediaPlaye
 ## Features
 
 1. Video fullscreen and float tiny window
-2. Completely custom ui
+2. Completely custom ui and function
 3. In `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
 4. Gestrues to modify progress and volume
 5. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
