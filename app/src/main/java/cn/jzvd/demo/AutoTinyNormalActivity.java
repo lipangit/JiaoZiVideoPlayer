@@ -43,7 +43,7 @@ public class AutoTinyNormalActivity extends AppCompatActivity implements AbsList
 
         JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) headerLayout.findViewById(R.id.jz_video);
         jzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[6]
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子坐这");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子坐这");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[6])
                 .into(jzVideoPlayerStandard.thumbImageView);

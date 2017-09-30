@@ -20,7 +20,7 @@ public class ExtendsNormalActivity extends Activity {
         setContentView(R.layout.activity_extends_normal);
         JZVideoPlayerStandard jzVideoPlayerStandard = findViewById(R.id.videoplayer);
         jzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(jzVideoPlayerStandard.thumbImageView);
