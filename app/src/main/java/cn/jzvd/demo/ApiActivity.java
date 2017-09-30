@@ -62,9 +62,9 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
 
         mJzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jz_video);
         LinkedHashMap map = new LinkedHashMap();
-        map.put("高清", VideoConstant.videoUrlList[0]);
+        map.put("高清", VideoConstant.videoUrls[0][9]);
         map.put("标清", VideoConstant.videoUrls[0][6]);
-        map.put("普清", VideoConstant.videoUrls[0][4]);
+        map.put("普清", VideoConstant.videoUrlList[0]);
         mJzVideoPlayerStandard.setUp(map, 2
                 , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
         Picasso.with(this)
