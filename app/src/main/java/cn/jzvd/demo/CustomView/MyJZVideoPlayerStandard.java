@@ -78,11 +78,6 @@ public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
     }
 
     @Override
-    public void onStatePlaybackBufferingStart() {
-        super.onStatePlaybackBufferingStart();
-    }
-
-    @Override
     public void onStateError() {
         super.onStateError();
     }

@@ -40,8 +40,6 @@ import java.util.TimerTask;
 public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
     public static final String TAG = "JiaoZiVideoPlayer";
-    public static final int FULLSCREEN_ID = 33797;
-    public static final int TINY_ID = 33798;
     public static final int THRESHOLD = 80;
     public static final int FULL_SCREEN_NORMAL_DELAY = 300;
     public static final int SCREEN_LAYOUT_NORMAL = 0;
@@ -52,7 +50,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static final int CURRENT_STATE_PREPARING = 1;
     public static final int CURRENT_STATE_PREPARING_CHANGING_URL = 2;
     public static final int CURRENT_STATE_PLAYING = 3;
-    public static final int CURRENT_STATE_PLAYING_BUFFERING_START = 4;
     public static final int CURRENT_STATE_PAUSE = 5;
     public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
     public static final int CURRENT_STATE_ERROR = 7;
@@ -64,7 +61,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static boolean SAVE_PROGRESS = true;
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
     public static long CLICK_QUIT_FULLSCREEN_TIME = 0;
-    public static int BACKUP_PLAYING_BUFFERING_STATE = -1;
     public static long lastAutoFullscreenTime = 0;
     public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
@@ -157,14 +153,14 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
         ViewGroup vp = (JZUtils.scanForActivity(context))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        View old = vp.findViewById(JZVideoPlayer.FULLSCREEN_ID);
+        View old = vp.findViewById(R.id.jz_fullscreen_id);
         if (old != null) {
             vp.removeView(old);
         }
         try {
             Constructor<JZVideoPlayer> constructor = _class.getConstructor(Context.class);
             final JZVideoPlayer jzVideoPlayer = constructor.newInstance(context);
-            jzVideoPlayer.setId(JZVideoPlayer.FULLSCREEN_ID);
+            jzVideoPlayer.setId(R.id.jz_fullscreen_id);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jzVideoPlayer, lp);
@@ -254,8 +250,13 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static void goOnPlayOnPause() {
         if (JZVideoPlayerManager.getCurrentJzvd() != null) {
             JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
-            jzvd.onStatePause();
-            JZMediaManager.instance().mediaPlayer.pause();
+            if (jzvd.currentState == JZVideoPlayer.CURRENT_STATE_AUTO_COMPLETE ||
+                    jzvd.currentState == JZVideoPlayer.CURRENT_STATE_NORMAL) {
+//                JZVideoPlayer.releaseAllVideos();
+            } else {
+                jzvd.onStatePause();
+                JZMediaManager.instance().mediaPlayer.pause();
+            }
         }
     }
 
@@ -497,6 +498,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
 
     public void onPrepared() {
+        Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
         if (JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).toLowerCase().contains("mp3")) {
             onVideoRendingStart();
         }
@@ -505,7 +507,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onVideoRendingStart() {
         Log.i(TAG, "onVideoRendingStart " + " [" + this.hashCode() + "] ");
         isVideoRendingStart = true;
-        if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PREPARING_CHANGING_URL && currentState != CURRENT_STATE_PLAYING_BUFFERING_START)
+        if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PREPARING_CHANGING_URL)
             return;
         if (seekToInAdvance != 0) {
             JZMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
@@ -540,9 +542,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 break;
             case CURRENT_STATE_PAUSE:
                 onStatePause();
-                break;
-            case CURRENT_STATE_PLAYING_BUFFERING_START:
-                onStatePlaybackBufferingStart();
                 break;
             case CURRENT_STATE_ERROR:
                 onStateError();
@@ -600,12 +599,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         startProgressTimer();
     }
 
-    public void onStatePlaybackBufferingStart() {
-        Log.i(TAG, "onStatePlaybackBufferingStart " + " [" + this.hashCode() + "] ");
-        currentState = CURRENT_STATE_PLAYING_BUFFERING_START;
-        startProgressTimer();
-    }
-
     public void onStateError() {
         Log.i(TAG, "onStateError " + " [" + this.hashCode() + "] ");
         currentState = CURRENT_STATE_ERROR;
@@ -622,20 +615,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
-        if (what == MediaPlayer.MEDIA_INFO_BUFFERING_START) {
-            if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) return;
-            BACKUP_PLAYING_BUFFERING_STATE = currentState;
-            onStatePlaybackBufferingStart();
-            Log.d(TAG, "MEDIA_INFO_BUFFERING_START");
-        } else if (what == MediaPlayer.MEDIA_INFO_BUFFERING_END) {
-            if (BACKUP_PLAYING_BUFFERING_STATE != -1) {
-                if (currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
-                    setState(BACKUP_PLAYING_BUFFERING_STATE);
-                }
-                BACKUP_PLAYING_BUFFERING_STATE = -1;
-            }
-            Log.d(TAG, "MEDIA_INFO_BUFFERING_END");
-        } else if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+        if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
             onVideoRendingStart();
         }
     }
@@ -754,8 +734,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void clearFullscreenLayout() {
         ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        View oldF = vp.findViewById(FULLSCREEN_ID);
-        View oldT = vp.findViewById(TINY_ID);
+        View oldF = vp.findViewById(R.id.jz_fullscreen_id);
+        View oldT = vp.findViewById(R.id.jz_tiny_id);
         if (oldF != null) {
             vp.removeView(oldF);
         }
@@ -800,7 +780,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setProgressAndText(int progress, int position, int duration) {
-        Log.i(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
+        Log.d(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
         if (!mTouchingProgressBar) {
             if (progress != 0) progressBar.setProgress(progress);
         }
@@ -824,8 +804,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (JZMediaManager.instance().mediaPlayer == null)
             return position;//这行代码不应该在这，如果代码和逻辑万无一失的话，心头之恨呐
         if (currentState == CURRENT_STATE_PLAYING ||
-                currentState == CURRENT_STATE_PAUSE ||
-                currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
+                currentState == CURRENT_STATE_PAUSE) {
             try {
                 position = JZMediaManager.instance().mediaPlayer.getCurrentPosition();
             } catch (IllegalStateException e) {
@@ -887,7 +866,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
         ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        View old = vp.findViewById(FULLSCREEN_ID);
+        View old = vp.findViewById(R.id.jz_fullscreen_id);
         if (old != null) {
             vp.removeView(old);
         }
@@ -895,7 +874,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         try {
             Constructor<JZVideoPlayer> constructor = (Constructor<JZVideoPlayer>) JZVideoPlayer.this.getClass().getConstructor(Context.class);
             JZVideoPlayer jzVideoPlayer = constructor.newInstance(getContext());
-            jzVideoPlayer.setId(FULLSCREEN_ID);
+            jzVideoPlayer.setId(R.id.jz_fullscreen_id);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jzVideoPlayer, lp);
@@ -920,7 +899,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR) return;
         ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        View old = vp.findViewById(TINY_ID);
+        View old = vp.findViewById(R.id.jz_tiny_id);
         if (old != null) {
             vp.removeView(old);
         }
@@ -929,7 +908,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         try {
             Constructor<JZVideoPlayer> constructor = (Constructor<JZVideoPlayer>) JZVideoPlayer.this.getClass().getConstructor(Context.class);
             JZVideoPlayer jzVideoPlayer = constructor.newInstance(getContext());
-            jzVideoPlayer.setId(TINY_ID);
+            jzVideoPlayer.setId(R.id.jz_tiny_id);
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(jzVideoPlayer, lp);
@@ -1055,7 +1034,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public class ProgressTimerTask extends TimerTask {
         @Override
         public void run() {
-            if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE || currentState == CURRENT_STATE_PLAYING_BUFFERING_START) {
+            if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
 //                Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
                 mHandler.post(new Runnable() {
                     @Override

@@ -70,7 +70,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzVideoPlayerStandard.thumbImageView);
-        mJzVideoPlayerStandard.loop = true;
+//        mJzVideoPlayerStandard.loop = true;
         mJzVideoPlayerStandard.headData = new HashMap<>();
         mJzVideoPlayerStandard.headData.put("key", "value");
 
