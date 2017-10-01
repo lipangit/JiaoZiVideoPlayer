@@ -121,7 +121,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         tinyBackImageView.setOnClickListener(this);
         clarity.setOnClickListener(this);
 
-        setSystemTimeAndBattery();
     }
 
     public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
@@ -155,7 +154,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             batteryTimeLayout.setVisibility(View.GONE);
             clarity.setVisibility(View.GONE);
         }
-
+        setSystemTimeAndBattery();
     }
 
     public void changeStartButtonSize(int size) {
