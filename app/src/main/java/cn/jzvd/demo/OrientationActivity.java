@@ -50,6 +50,10 @@ public class OrientationActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         JZVideoPlayer.releaseAllVideos();
+
+        //Change these two variables back
+        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     }
 
     @Override
