@@ -27,6 +27,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
     public static final String TAG = "JiaoZiVideoPlayer";
     public static JZResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
+    public static Surface surface;
     public static String CURRENT_PLAYING_URL;
     public static boolean CURRENT_PLING_LOOP;
     public static Map<String, String> MAP_HEADER_DATA;
@@ -217,7 +218,11 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
                         Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
                         method.invoke(mediaPlayer, CURRENT_PLAYING_URL, MAP_HEADER_DATA);
                         mediaPlayer.prepareAsync();
-                        mediaPlayer.setSurface(new Surface(savedSurfaceTexture));
+                        if (surface != null) {
+                            surface.release();
+                        }
+                        surface = new Surface(savedSurfaceTexture);
+                        mediaPlayer.setSurface(surface);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
