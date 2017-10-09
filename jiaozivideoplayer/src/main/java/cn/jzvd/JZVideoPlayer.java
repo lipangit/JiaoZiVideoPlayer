@@ -327,7 +327,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 if (!JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("file") && !
                         JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("/") &&
                         !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog(JZUserActionStandard.ON_CLICK_START_ICON);
+                    showWifiDialog(JZUserAction.ON_CLICK_START_ICON);
                     return;
                 }
                 startVideo();
