@@ -121,8 +121,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     protected int mGestureDownVolume;
     protected float mGestureDownBrightness;
     protected int mSeekTimePosition;
-    LinkedHashMap urlMap;
-    int currentUrlMapIndex = 0;
+    protected LinkedHashMap urlMap;
+    protected int currentUrlMapIndex = 0;
 
     public JZVideoPlayer(Context context) {
         super(context);
