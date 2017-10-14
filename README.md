@@ -13,7 +13,7 @@
 
 I think the final solution for play video in android is android.media.MediaPlayer, other player is not in the trend, even if the android.media.MediaPlayer have disavantages we should make concession, if android.media.MediaPlayer have defect we will think to change other player.
 
-[中文文档](README-ZH.md)           [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2)
+[中文文档](README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [Video Tutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
 ## Features
 
