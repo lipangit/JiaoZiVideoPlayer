@@ -62,7 +62,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
     public static long CLICK_QUIT_FULLSCREEN_TIME = 0;
     public static long lastAutoFullscreenTime = 0;
-    public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
+    public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {//是否新建个class，代码更规矩，并且变量的位置也很尴尬
         @Override
         public void onAudioFocusChange(int focusChange) {
             switch (focusChange) {
@@ -286,7 +286,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         mHandler = new Handler();
 
         try {
-            if (isCurrentJzvd()) {
+            if (isCurrentPlay()) {
                 NORMAL_ORIENTATION = ((AppCompatActivity) context).getRequestedOrientation();
             }
         } catch (Exception e) {
@@ -304,6 +304,21 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (this.urlMap != null && !TextUtils.isEmpty(JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex)) &&
                 TextUtils.equals(JZUtils.getCurrentUrlFromMap(this.urlMap, currentUrlMapIndex), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
             return;
+        }
+        //对播放的操作
+        if (JZVideoPlayerManager.getCurrentJzvd() != null
+                && JZVideoPlayerManager.getCurrentJzvd() == this) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
+            //滑出屏幕记录位置
+            int position = 0;
+            try {
+                position = JZMediaManager.instance().mediaPlayer.getCurrentPosition();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            if (position != 0) {
+                JZUtils.saveProgress(getContext(), JZMediaManager.CURRENT_PLAYING_URL, position);
+            }
+            JZMediaManager.instance().releaseMediaPlayer();
         }
         this.urlMap = urlMap;
         this.currentUrlMapIndex = defaultUrlMapIndex;
@@ -556,19 +571,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         Log.i(TAG, "onStateNormal " + " [" + this.hashCode() + "] ");
         currentState = CURRENT_STATE_NORMAL;
         cancelProgressTimer();
-        if (isCurrentJzvd()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
-            //滑出屏幕记录位置
-            int position = 0;
-            try {
-                position = JZMediaManager.instance().mediaPlayer.getCurrentPosition();
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            }
-            if (position != 0) {
-                JZUtils.saveProgress(getContext(), JZMediaManager.CURRENT_PLAYING_URL, position);
-            }
-            JZMediaManager.instance().releaseMediaPlayer();
-        }
     }
 
     public void onStatePreparing() {
@@ -624,7 +626,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         Log.e(TAG, "onError " + what + " - " + extra + " [" + this.hashCode() + "] ");
         if (what != 38 && what != -38 && extra != -38) {
             onStateError();
-            if (isCurrentJzvd()) {
+            if (isCurrentPlay()) {
                 JZMediaManager.instance().releaseMediaPlayer();
             }
         }
@@ -924,10 +926,15 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    //isCurrentJzvd and isCurrenPlayUrl should be two logic methods,isCurrentJzvd is for different jzvd with same
+    //isCurrentPlay and isCurrenPlayUrl should be two logic methods,isCurrentPlay is for different jzvd with same
     //url when fullscreen or tiny screen. isCurrenPlayUrl is to find where is myself when back from tiny screen.
     //Sometimes they are overlap.
-    public boolean isCurrentJzvd() {//虽然看这个函数很不爽，但是干不掉
+    public boolean isCurrentPlay() {//虽然看这个函数很不爽，但是干不掉
+        return isCurrentJZVD()
+                && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL);//不仅正在播放的url不能一样，并且各个清晰度也不能一样
+    }
+
+    public boolean isCurrentJZVD() {//是否是当前实例
         return JZVideoPlayerManager.getCurrentJzvd() != null
                 && JZVideoPlayerManager.getCurrentJzvd() == this;
     }
@@ -946,7 +953,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     //重力感应的时候调用的函数，
     public void autoFullscreen(float x) {
-        if (isCurrentJzvd()
+        if (isCurrentPlay()
                 && currentState == CURRENT_STATE_PLAYING
                 && currentScreen != SCREEN_WINDOW_FULLSCREEN
                 && currentScreen != SCREEN_WINDOW_TINY) {
@@ -962,7 +969,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void autoQuitFullscreen() {
         if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
-                && isCurrentJzvd()
+                && isCurrentPlay()
                 && currentState == CURRENT_STATE_PLAYING
                 && currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             lastAutoFullscreenTime = System.currentTimeMillis();
@@ -971,7 +978,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void onEvent(int type) {
-        if (JZ_USER_EVENT != null && isCurrentJzvd() && urlMap != null) {
+        if (JZ_USER_EVENT != null && isCurrentPlay() && urlMap != null) {
             JZ_USER_EVENT.onEvent(type, JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex), currentScreen, objects);
         }
     }
