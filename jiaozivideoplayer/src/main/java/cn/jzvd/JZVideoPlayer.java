@@ -123,6 +123,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     protected int mSeekTimePosition;
     protected LinkedHashMap urlMap;
     protected int currentUrlMapIndex = 0;
+    public int positionInList = -1;
 
     public JZVideoPlayer(Context context) {
         super(context);
@@ -138,6 +139,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
             Log.d(TAG, "releaseAllVideos");
             JZVideoPlayerManager.completeAll();
+            JZMediaManager.instance().positionInList = -1;
             JZMediaManager.instance().releaseMediaPlayer();
         }
     }
@@ -305,9 +307,22 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 TextUtils.equals(JZUtils.getCurrentUrlFromMap(this.urlMap, currentUrlMapIndex), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
             return;
         }
+//        Log.e("jzvd", "setUp: ");
+        //setUp的几种情况
+        if (isCurrentJZVD() && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//即使也是
+
+        } else if (isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//是也不是
+            Log.e("jzvd", "setUp: 列表复用");//要么releaseAllVideos，要么进入小窗
+            JZVideoPlayer.releaseAllVideos();
+//            startWindowTiny();
+        } else if (!isCurrentJZVD() && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//不是也是
+
+        } else if (!isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//都不是
+
+        }
+
         //对播放的操作
-        if (JZVideoPlayerManager.getCurrentJzvd() != null
-                && JZVideoPlayerManager.getCurrentJzvd() == this) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
+        if (isCurrentJZVD()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
             //滑出屏幕记录位置
             int position = 0;
             try {
@@ -509,6 +524,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZMediaManager.MAP_HEADER_DATA = headData;
         onStatePreparing();
         JZVideoPlayerManager.setFirstFloor(this);
+        JZMediaManager.instance().positionInList = positionInList;
     }
 
 

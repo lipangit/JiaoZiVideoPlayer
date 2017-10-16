@@ -38,6 +38,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
     HandlerThread mMediaHandlerThread;
     MediaHandler mMediaHandler;
     Handler mainThreadHandler;
+    public int positionInList = -1;
 
     public JZMediaManager() {
         mMediaHandlerThread = new HandlerThread(TAG);

@@ -66,6 +66,7 @@ public class VideoListAdapter extends BaseAdapter {
         Picasso.with(convertView.getContext())
                 .load(videoThumbs[position])
                 .into(viewHolder.jzVideoPlayer.thumbImageView);
+        viewHolder.jzVideoPlayer.positionInList = position;
         return convertView;
     }
 
