@@ -123,6 +123,7 @@ Need translator to make English native.
 * [Questions and Answers](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94)
 
 [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
+[の伤也快乐](https://github.com/jmhjmh) QQ:466278626
 
 * [Wiki finishing](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#wiki%E6%95%B4%E7%90%86)
 
