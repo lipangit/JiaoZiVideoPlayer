@@ -54,14 +54,18 @@ public class ListViewNormalActivity extends AppCompatActivity {
                 if (currentPlayPosition >= 0) {
                     if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > lastVisibleItem)) {
                         //划出屏幕
-                        Log.e("jzvd", "onScroll: 划出屏幕");
                         //要么release 要么进入小窗
-                        JZVideoPlayer.releaseAllVideos();
-//                        JZVideoPlayerManager.getCurrentJzvd().startWindowTiny();
+//                        JZVideoPlayer.releaseAllVideos();
+                        if (JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
+                            Log.e("jzvd", "onScroll: 划出屏幕");
+                            JZVideoPlayerManager.getCurrentJzvd().startWindowTiny();
+                        }
                     } else {
                         //滑入屏幕，这个会频繁回调，判断是否在屏幕中
-                        Log.e("jzvd", "onScroll: 划入屏幕");
-
+                        if (JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
+                            Log.e("jzvd", "onScroll: 划入屏幕");
+                            JZVideoPlayer.backPress();
+                        }
                     }
                 }
             }

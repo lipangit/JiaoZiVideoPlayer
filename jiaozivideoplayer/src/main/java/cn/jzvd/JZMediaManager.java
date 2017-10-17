@@ -229,6 +229,9 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
                     }
                     break;
                 case HANDLER_RELEASE:
+//                    CURRENT_PLAYING_URL = null;
+//                    CURRENT_PLING_LOOP = false;
+//                    MAP_HEADER_DATA = null;
                     mediaPlayer.release();
                     break;
             }

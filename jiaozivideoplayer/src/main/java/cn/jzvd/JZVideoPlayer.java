@@ -42,10 +42,12 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static final String TAG = "JiaoZiVideoPlayer";
     public static final int THRESHOLD = 80;
     public static final int FULL_SCREEN_NORMAL_DELAY = 300;
+
     public static final int SCREEN_LAYOUT_NORMAL = 0;
     public static final int SCREEN_LAYOUT_LIST = 1;
     public static final int SCREEN_WINDOW_FULLSCREEN = 2;
     public static final int SCREEN_WINDOW_TINY = 3;
+
     public static final int CURRENT_STATE_NORMAL = 0;
     public static final int CURRENT_STATE_PREPARING = 1;
     public static final int CURRENT_STATE_PREPARING_CHANGING_URL = 2;
@@ -53,6 +55,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static final int CURRENT_STATE_PAUSE = 5;
     public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
     public static final int CURRENT_STATE_ERROR = 7;
+
     public static final String URL_KEY_DEFAULT = "URL_KEY_DEFAULT";
     public static boolean ACTION_BAR_EXIST = true;
     public static boolean TOOL_BAR_EXIST = true;
@@ -307,23 +310,9 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 TextUtils.equals(JZUtils.getCurrentUrlFromMap(this.urlMap, currentUrlMapIndex), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
             return;
         }
-//        Log.e("jzvd", "setUp: ");
         //setUp的几种情况
         if (isCurrentJZVD() && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//即使也是
-
-        } else if (isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//是也不是
-            Log.e("jzvd", "setUp: 列表复用");//要么releaseAllVideos，要么进入小窗
-            JZVideoPlayer.releaseAllVideos();
-//            startWindowTiny();
-        } else if (!isCurrentJZVD() && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//不是也是
-
-        } else if (!isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//都不是
-
-        }
-
-        //对播放的操作
-        if (isCurrentJZVD()) {//这个if是无法取代的，否则进入全屏的时候会releaseMediaPlayer
-            //滑出屏幕记录位置
+            //滑出屏幕记录位置 -- 这个应该在releaseAllVideos之前 是也不是的分类
             int position = 0;
             try {
                 position = JZMediaManager.instance().mediaPlayer.getCurrentPosition();
@@ -334,6 +323,20 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 JZUtils.saveProgress(getContext(), JZMediaManager.CURRENT_PLAYING_URL, position);
             }
             JZMediaManager.instance().releaseMediaPlayer();
+        } else if (isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//是也不是
+            Log.e("jzvd", "setUp: 列表复用");//要么releaseAllVideos，要么进入小窗
+//            JZVideoPlayer.releaseAllVideos();
+            startWindowTiny();
+        } else if (!isCurrentJZVD() && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//不是也是 进入全屏或者需要退出小窗
+            Log.e("jzvd", "setUp: 列表复用 不是也是");//进入小窗或者全屏了，但是下面的判断进不去
+            if (JZVideoPlayerManager.getCurrentJzvd() != null &&
+                    JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
+                //需要退出小窗退到我这里，我这里是第一层级
+                tmp_test_back = true;
+                Log.e("jzvd", "setUp: tmp_test_back=true");
+            }
+        } else if (!isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//都不是
+
         }
         this.urlMap = urlMap;
         this.currentUrlMapIndex = defaultUrlMapIndex;
@@ -342,7 +345,10 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         this.headData = null;
         isVideoRendingStart = false;
         onStateNormal();
+
     }
+
+    boolean tmp_test_back = false;
 
     @Override
     public void onClick(View v) {
@@ -963,6 +969,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         currentUrlMapIndex = JZVideoPlayerManager.getSecondFloor().currentUrlMapIndex;
         clearFloatScreen();
         //2.在本jzvd上播放
+        Log.e("jzvd", "jklf: " + currentState);
         setState(currentState);
         addTextureView();
     }
