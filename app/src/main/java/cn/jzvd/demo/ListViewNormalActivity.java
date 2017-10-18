@@ -52,7 +52,7 @@ public class ListViewNormalActivity extends AppCompatActivity {
                 int lastVisibleItem = firstVisibleItem + visibleItemCount;
                 int currentPlayPosition = JZMediaManager.instance().positionInList;
                 if (currentPlayPosition >= 0) {
-                    if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > lastVisibleItem)) {
+                    if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
                         //划出屏幕
                         //要么release 要么进入小窗
 //                        JZVideoPlayer.releaseAllVideos();
