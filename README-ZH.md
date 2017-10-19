@@ -121,7 +121,7 @@ protected void onPause() {
 * [问题解答](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94)
 
 [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
-[の伤也快乐](https://github.com/jmhjmh) QQ:466278626
+[の伤也快乐](https://github.com/jmhjmh) QQ:466278628
 
 * [wiki整理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#wiki%E6%95%B4%E7%90%86)
 
