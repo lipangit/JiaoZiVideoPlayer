@@ -5,10 +5,14 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
+import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerManager;
 
 /**
  * Created by Nathen on 16/7/31.
@@ -34,6 +38,38 @@ public class ListViewNormalActivity extends AppCompatActivity {
                 VideoConstant.videoUrls[0],
                 VideoConstant.videoTitles[0],
                 VideoConstant.videoThumbs[0]));
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                int lastVisibleItem = firstVisibleItem + visibleItemCount;
+                int currentPlayPosition = JZMediaManager.instance().positionInList;
+                if (currentPlayPosition >= 0) {
+                    if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
+                        //划出屏幕
+                        //要么release 要么进入小窗
+//                        JZVideoPlayer.releaseAllVideos();
+                        if (JZVideoPlayerManager.getCurrentJzvd() != null &&
+                                JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
+                            Log.e("jzvd", "onScroll: 划出屏幕");
+                            JZVideoPlayerManager.getCurrentJzvd().startWindowTiny();
+                        }
+                    } else {
+                        //滑入屏幕，这个会频繁回调，判断是否在屏幕中
+                        if (JZVideoPlayerManager.getCurrentJzvd() != null &&
+                                JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
+                            Log.e("jzvd", "onScroll: 划入屏幕");
+                            JZVideoPlayer.backPress();
+                        }
+                    }
+                }
+            }
+        });
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorEventListener = new JZVideoPlayer.JZAutoFullscreenListener();
