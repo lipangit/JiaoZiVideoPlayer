@@ -181,17 +181,29 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
+    public String getCurrentUrl() {
+        return JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex);
+    }
+
     public static boolean backPress() {
         Log.i(TAG, "backPress");
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
         if (JZVideoPlayerManager.getSecondFloor() != null) {
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
-            JZVideoPlayer jzVideoPlayer = JZVideoPlayerManager.getSecondFloor();
-            jzVideoPlayer.onEvent(jzVideoPlayer.currentScreen == JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
-                    JZUserAction.ON_QUIT_FULLSCREEN :
-                    JZUserAction.ON_QUIT_TINYSCREEN);
-            JZVideoPlayerManager.getFirstFloor().playOnThisJzvd();
+            if (JZVideoPlayerManager.getFirstFloor().getCurrentUrl().equals(JZMediaManager.CURRENT_PLAYING_URL)) {
+                JZVideoPlayer jzVideoPlayer = JZVideoPlayerManager.getSecondFloor();
+                jzVideoPlayer.onEvent(jzVideoPlayer.currentScreen == JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
+                        JZUserAction.ON_QUIT_FULLSCREEN :
+                        JZUserAction.ON_QUIT_TINYSCREEN);
+                JZVideoPlayerManager.getFirstFloor().playOnThisJzvd();
+            } else {
+                //直接退出全屏和小窗
+                JZVideoPlayerManager.getCurrentJzvd().currentState = CURRENT_STATE_NORMAL;
+                JZVideoPlayerManager.getFirstFloor().clearFloatScreen();
+                JZMediaManager.instance().releaseMediaPlayer();
+                JZVideoPlayerManager.setFirstFloor(null);
+            }
             return true;
         } else if (JZVideoPlayerManager.getFirstFloor() != null &&
                 (JZVideoPlayerManager.getFirstFloor().currentScreen == SCREEN_WINDOW_FULLSCREEN ||
