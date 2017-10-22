@@ -23,7 +23,7 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("About ListView");
+        getSupportActionBar().setTitle("ListView");
         setContentView(R.layout.activity_listview);
 
         mNormalList = (Button) findViewById(R.id.normal_list);

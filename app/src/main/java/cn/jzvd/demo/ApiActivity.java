@@ -42,7 +42,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("About Api");
+        getSupportActionBar().setTitle("Api");
         setContentView(R.layout.activity_api);
 
         mSmallChange = (Button) findViewById(R.id.small_change);
