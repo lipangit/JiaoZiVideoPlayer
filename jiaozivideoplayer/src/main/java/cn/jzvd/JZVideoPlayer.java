@@ -698,7 +698,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         cancelProgressTimer();
         onStateAutoComplete();
 
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN || currentScreen == SCREEN_WINDOW_TINY) {
             backPress();
         }
         JZMediaManager.instance().mediaPlayer.release();
