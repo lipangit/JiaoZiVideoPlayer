@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.0.2-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.1.0_preview-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -31,7 +31,7 @@ I think the final solution for play video in android is android.media.MediaPlaye
 
 ## Effect
 
-**[jiaozivideoplayer-6.0.2.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v6.0.2/jiaozivideoplayer-6.0.2.apk)**
+**[jiaozivideoplayer-6.1.0_preview.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v6.1.0_preview/jiaozivideoplayer-6.1.0_preview.apk)**
 
 ![Demo Screenshot][1]
 
@@ -41,10 +41,10 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.0.2'
+compile 'cn.jzvd:jiaozivideoplayer:6.1.0_preview'
 ```
 
-[Or download lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.0.2) not recommended
+[Or download lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.0_preview) not recommended
 
 2.Add JZVideoPlayer in your layout
 ```xml
