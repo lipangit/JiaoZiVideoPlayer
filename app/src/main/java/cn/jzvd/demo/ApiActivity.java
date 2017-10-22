@@ -42,7 +42,7 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("About Api");
+        getSupportActionBar().setTitle("Api");
         setContentView(R.layout.activity_api);
 
         mSmallChange = (Button) findViewById(R.id.small_change);
@@ -57,16 +57,16 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
 
         mJzVideoPlayerSimple = (JZVideoPlayerSimple) findViewById(R.id.simple_demo);
         mJzVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子在家吗");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子在家吗");
 
 
         mJzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jz_video);
         LinkedHashMap map = new LinkedHashMap();
-        map.put("高清", VideoConstant.videoUrlList[0]);
+        map.put("高清", VideoConstant.videoUrls[0][9]);
         map.put("标清", VideoConstant.videoUrls[0][6]);
-        map.put("普清", VideoConstant.videoUrls[0][4]);
+        map.put("普清", VideoConstant.videoUrlList[0]);
         mJzVideoPlayerStandard.setUp(map, 2
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzVideoPlayerStandard.thumbImageView);
@@ -79,10 +79,10 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
 //        mJzVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
-//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
         /** Play video in assert, but not work now **/
 //        mJzVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
-//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
 
         /** ImageLoader **/
 //        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],

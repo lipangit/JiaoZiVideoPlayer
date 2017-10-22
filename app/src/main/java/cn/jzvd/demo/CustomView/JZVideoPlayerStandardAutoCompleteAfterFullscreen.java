@@ -1,8 +1,13 @@
 package cn.jzvd.demo.CustomView;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.WindowManager;
 
+import cn.jzvd.JZMediaManager;
+import cn.jzvd.JZUtils;
 import cn.jzvd.JZVideoPlayerStandard;
 
 /**
@@ -16,6 +21,25 @@ public class JZVideoPlayerStandardAutoCompleteAfterFullscreen extends JZVideoPla
 
     public JZVideoPlayerStandardAutoCompleteAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
+    }
+
+    @Override
+    public void startVideo() {
+//        super.startVideo();
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
+            initTextureView();
+            addTextureView();
+            AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+            mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+            JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            JZMediaManager.CURRENT_PLAYING_URL = JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex);
+            JZMediaManager.CURRENT_PLING_LOOP = loop;
+            JZMediaManager.MAP_HEADER_DATA = headData;
+            onStatePreparing();
+        } else {
+            super.startVideo();
+        }
     }
 
     @Override

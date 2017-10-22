@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.0.2-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.1.0_preview-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -13,12 +13,12 @@
 
 I think the final solution for play video in android is android.media.MediaPlayer, other player is not in the trend, even if the android.media.MediaPlayer have disavantages we should make concession, if android.media.MediaPlayer have defect we will think to change other player.
 
-[中文文档](README-ZH.md)           [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2)
+[中文文档](README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [VideoTutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
 ## Features
 
 1. Video fullscreen and float tiny window
-2. Completely custom ui
+2. Completely custom ui and function
 3. In `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
 4. Gestrues to modify progress and volume
 5. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
@@ -31,7 +31,7 @@ I think the final solution for play video in android is android.media.MediaPlaye
 
 ## Effect
 
-**[jiaozivideoplayer-6.0.2.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v6.0.2/jiaozivideoplayer-6.0.2.apk)**
+**[jiaozivideoplayer-6.1.0_preview.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v6.1.0_preview/jiaozivideoplayer-6.1.0_preview.apk)**
 
 ![Demo Screenshot][1]
 
@@ -41,10 +41,10 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.0.2'
+compile 'cn.jzvd:jiaozivideoplayer:6.1.0_preview'
 ```
 
-[Or download lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.0.2) not recommended
+[Or download lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.0_preview) not recommended
 
 2.Add JZVideoPlayer in your layout
 ```xml
@@ -58,7 +58,7 @@ compile 'cn.jzvd:jiaozivideoplayer:6.0.2'
 ```java
 JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.videoplayer);
 jzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-                            , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子闭眼睛");
+                            , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子闭眼睛");
 jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
@@ -123,6 +123,7 @@ Need translator to make English native.
 * [Questions and Answers](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94)
 
 [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
+[の伤也快乐](https://github.com/jmhjmh) QQ:466278628
 
 * [Wiki finishing](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#wiki%E6%95%B4%E7%90%86)
 
@@ -148,5 +149,5 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: https://user-images.githubusercontent.com/2038071/29037042-7e4a1c6e-7bd4-11e7-8e25-5408d138abcd.jpg
+[1]: https://user-images.githubusercontent.com/2038071/31045150-a077cc8a-a5a2-11e7-8dc2-7a0e3a9f3e62.jpg
 [2]: https://user-images.githubusercontent.com/2038071/29978804-45c321ba-8f75-11e7-9040-776d3b6dca1f.jpg

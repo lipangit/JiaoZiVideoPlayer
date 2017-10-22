@@ -25,11 +25,4 @@ public class JZVideoPlayerStandardShowTextureViewAfterAutoComplete extends JZVid
         thumbImageView.setVisibility(View.GONE);
     }
 
-    @Override
-    public void onClickUiToggle() {
-        super.onClickUiToggle();
-        if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
-            thumbImageView.setVisibility(View.GONE);
-        }
-    }
 }

@@ -8,13 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import cn.jzvd.demo.R;
-
 /**
  * Created by Nathen on 16/7/31.
  */
 public class ListViewActivity extends AppCompatActivity implements View.OnClickListener {
-    Button mNormalList, mViewPagerList, mMultiHolderList, mRecyleView;
+    Button mNormal, mNormalAutoTiny, mViewPager, mMultiHolder, mRecyleView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,17 +21,19 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("About ListView");
+        getSupportActionBar().setTitle("ListView");
         setContentView(R.layout.activity_listview);
 
-        mNormalList = (Button) findViewById(R.id.normal_list);
-        mViewPagerList = (Button) findViewById(R.id.viewpayer_list);
-        mMultiHolderList = (Button) findViewById(R.id.multi_holder_list);
+        mNormal = (Button) findViewById(R.id.normal);
+        mNormalAutoTiny = (Button) findViewById(R.id.normal_auto_tiny);
+        mViewPager = (Button) findViewById(R.id.listview_fragment_viewpager);
+        mMultiHolder = (Button) findViewById(R.id.multiholder);
         mRecyleView = (Button) findViewById(R.id.recyleview);
 
-        mNormalList.setOnClickListener(this);
-        mViewPagerList.setOnClickListener(this);
-        mMultiHolderList.setOnClickListener(this);
+        mNormal.setOnClickListener(this);
+        mNormalAutoTiny.setOnClickListener(this);
+        mViewPager.setOnClickListener(this);
+        mMultiHolder.setOnClickListener(this);
         mRecyleView.setOnClickListener(this);
 
     }
@@ -41,13 +41,16 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.normal_list:
+            case R.id.normal:
                 startActivity(new Intent(ListViewActivity.this, ListViewNormalActivity.class));
                 break;
-            case R.id.viewpayer_list:
-                startActivity(new Intent(ListViewActivity.this, ListViewViewpagerActivity.class));
+            case R.id.normal_auto_tiny:
+                startActivity(new Intent(ListViewActivity.this, ListViewNormalAutoTinyActivity.class));
                 break;
-            case R.id.multi_holder_list:
+            case R.id.listview_fragment_viewpager:
+                startActivity(new Intent(ListViewActivity.this, ListViewFragmentViewpagerActivity.class));
+                break;
+            case R.id.multiholder:
                 startActivity(new Intent(ListViewActivity.this, ListViewMultiHolderActivity.class));
                 break;
             case R.id.recyleview:

@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <Button
-        android:id="@+id/normal_list"
+        android:id="@+id/normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -13,14 +13,22 @@
         android:text="Normal ListView" />
 
     <Button
-        android:id="@+id/viewpayer_list"
+        android:id="@+id/normal_auto_tiny"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="ViewPager And ListView" />
+        android:layout_marginTop="8dp"
+        android:text="Normal ListView Auto Tiny" />
 
     <Button
-        android:id="@+id/multi_holder_list"
+        android:id="@+id/listview_fragment_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="ListView Fragment ViewPager" />
+
+    <Button
+        android:id="@+id/multiholder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

@@ -28,7 +28,7 @@ public class OrientationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_orientation);
         mJzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jz_video);
         mJzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子不信");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzVideoPlayerStandard.thumbImageView);
@@ -50,6 +50,10 @@ public class OrientationActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         JZVideoPlayer.releaseAllVideos();
+
+        //Change these two variables back
+        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     }
 
     @Override

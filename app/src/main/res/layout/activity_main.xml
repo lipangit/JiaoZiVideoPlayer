@@ -25,49 +25,40 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="VideoPlayer above is playing click me to tiny window" />
+                android:text="Tiny Window" />
 
             <Button
-                android:id="@+id/auto_tiny_window"
+                android:id="@+id/direct_fullscreen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="Auto tiny window"
-                android:visibility="gone" />
+                android:text="Direct Fullscreen" />
 
             <Button
-                android:id="@+id/play_directly_without_layout"
+                android:id="@+id/listview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="Play Directly Without Layout" />
+                android:text="ListView" />
 
             <Button
-                android:id="@+id/about_listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="About ListView" />
-
-            <Button
-                android:id="@+id/about_api"
+                android:id="@+id/api"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                android:text="About Api" />
+                android:text="Api" />
 
             <Button
-                android:id="@+id/about_webview"
+                android:id="@+id/webview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:text="About WebView" />
+                android:text="WebView" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

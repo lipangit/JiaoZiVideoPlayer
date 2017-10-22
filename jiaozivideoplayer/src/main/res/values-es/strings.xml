@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tips_not_wifi">Estás conectado a una red móvil, el reproductor utilizará tus datos si continuas</string>
+    <string name="tips_not_wifi_confirm">Reproducir</string>
+    <string name="tips_not_wifi_cancel">Prar</string>
+    <string name="no_url">No hay vídeo</string>
+    <string name="replay">Volver a ver</string>
+</resources>

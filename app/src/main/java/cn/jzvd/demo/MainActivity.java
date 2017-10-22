@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     MyJZVideoPlayerStandard myJZVideoPlayerStandard;
 
-    Button mTinyWindow, mAutoTinyWindow, mAboutListView, mPlayDirectly, mAboutApi, mAboutWebView;
+    Button mTinyWindow, mListView, mDirectFullscreen, mApi, mWebView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,22 +32,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         mTinyWindow = (Button) findViewById(R.id.tiny_window);
-        mAutoTinyWindow = (Button) findViewById(R.id.auto_tiny_window);
-        mPlayDirectly = (Button) findViewById(R.id.play_directly_without_layout);
-        mAboutListView = (Button) findViewById(R.id.about_listview);
-        mAboutApi = (Button) findViewById(R.id.about_api);
-        mAboutWebView = (Button) findViewById(R.id.about_webview);
+        mDirectFullscreen = (Button) findViewById(R.id.direct_fullscreen);
+        mListView = (Button) findViewById(R.id.listview);
+        mApi = (Button) findViewById(R.id.api);
+        mWebView = (Button) findViewById(R.id.webview);
 
         mTinyWindow.setOnClickListener(this);
-        mAutoTinyWindow.setOnClickListener(this);
-        mAboutListView.setOnClickListener(this);
-        mPlayDirectly.setOnClickListener(this);
-        mAboutApi.setOnClickListener(this);
-        mAboutWebView.setOnClickListener(this);
+        mListView.setOnClickListener(this);
+        mDirectFullscreen.setOnClickListener(this);
+        mApi.setOnClickListener(this);
+        mWebView.setOnClickListener(this);
 
         myJZVideoPlayerStandard = (MyJZVideoPlayerStandard) findViewById(R.id.jz_video);
         myJZVideoPlayerStandard.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "嫂子快长大");
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子快长大");
         Picasso.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
                 .into(myJZVideoPlayerStandard.thumbImageView);
@@ -73,22 +71,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tiny_window:
-//                myJZVideoPlayerStandard.onStatePreparingChangingUrl(1, 0);
                 myJZVideoPlayerStandard.startWindowTiny();
                 break;
-            case R.id.auto_tiny_window:
-                startActivity(new Intent(MainActivity.this, AutoTinyActivity.class));
+            case R.id.direct_fullscreen:
+                startActivity(new Intent(MainActivity.this, DirectFullscreenActivity.class));
                 break;
-            case R.id.play_directly_without_layout:
-                startActivity(new Intent(MainActivity.this, PlayDirectlyActivity.class));
-                break;
-            case R.id.about_listview:
+            case R.id.listview:
                 startActivity(new Intent(MainActivity.this, ListViewActivity.class));
                 break;
-            case R.id.about_api:
+            case R.id.api:
                 startActivity(new Intent(MainActivity.this, ApiActivity.class));
                 break;
-            case R.id.about_webview:
+            case R.id.webview:
                 startActivity(new Intent(MainActivity.this, WebViewActivity.class));
                 break;
         }
