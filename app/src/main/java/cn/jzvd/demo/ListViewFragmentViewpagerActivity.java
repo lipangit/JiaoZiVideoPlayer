@@ -17,7 +17,7 @@ import cn.jzvd.JZVideoPlayer;
  * Created by Nathen
  * On 2016/02/07 01:01
  */
-public class ListViewViewpagerActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class ListViewFragmentViewpagerActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
     List<DemoFragment> fragmentList = new ArrayList<>();
 
     @Override

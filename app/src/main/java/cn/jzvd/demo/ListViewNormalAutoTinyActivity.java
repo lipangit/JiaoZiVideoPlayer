@@ -1,7 +1,5 @@
 package cn.jzvd.demo;
 
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -15,13 +13,12 @@ import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerManager;
 
 /**
- * Created by Nathen on 16/7/31.
+ * Created by Nathen on 2017/10/22.
  */
-public class ListViewNormalActivity extends AppCompatActivity {
-    ListView listView;
 
-    SensorManager sensorManager;
-    JZVideoPlayer.JZAutoFullscreenListener sensorEventListener;
+public class ListViewNormalAutoTinyActivity extends AppCompatActivity {
+
+    ListView listView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,8 +27,8 @@ public class ListViewNormalActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("NormalListView");
-        setContentView(R.layout.activity_listview_normal);
+        getSupportActionBar().setTitle("NormalListViewAutoTiny");
+        setContentView(R.layout.activity_listview_normal_auto_tiny);
 
         listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(new VideoListAdapter(this,
@@ -47,12 +44,9 @@ public class ListViewNormalActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                JZVideoPlayer.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                JZVideoPlayer.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
-
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorEventListener = new JZVideoPlayer.JZAutoFullscreenListener();
     }
 
     @Override
@@ -64,16 +58,8 @@ public class ListViewNormalActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        Sensor accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(sensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(sensorEventListener);
         JZVideoPlayer.releaseAllVideos();
     }
 

@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -1015,6 +1016,52 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onEvent(int type) {
         if (JZ_USER_EVENT != null && isCurrentPlay() && urlMap != null) {
             JZ_USER_EVENT.onEvent(type, JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex), currentScreen, objects);
+        }
+    }
+
+    public static void onScrollAutoTiny(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        int lastVisibleItem = firstVisibleItem + visibleItemCount;
+        int currentPlayPosition = JZMediaManager.instance().positionInList;
+        if (currentPlayPosition >= 0) {
+            if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
+                //划出屏幕 要么release 要么进入小窗
+                //JZVideoPlayer.releaseAllVideos();
+                if (JZVideoPlayerManager.getCurrentJzvd() != null &&
+                        JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
+                    Log.e("jzvd", "onScroll: 划出屏幕");
+                    JZVideoPlayerManager.getCurrentJzvd().startWindowTiny();
+                }
+            } else {
+                //滑入屏幕，这个会频繁回调，判断是否在屏幕中
+                if (JZVideoPlayerManager.getCurrentJzvd() != null &&
+                        JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
+                    Log.e("jzvd", "onScroll: 划入屏幕");
+                    JZVideoPlayer.backPress();
+                }
+            }
+        }
+    }
+
+    public static void onScrollReleaseAllVideos(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        int lastVisibleItem = firstVisibleItem + visibleItemCount;
+        int currentPlayPosition = JZMediaManager.instance().positionInList;
+        if (currentPlayPosition >= 0) {
+            if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
+                //划出屏幕 要么release 要么进入小窗
+                JZVideoPlayer.releaseAllVideos();
+//                if (JZVideoPlayerManager.getCurrentJzvd() != null &&
+//                        JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
+//                    Log.e("jzvd", "onScroll: 划出屏幕");
+//                    JZVideoPlayerManager.getCurrentJzvd().startWindowTiny();
+//                }
+            } else {
+                //滑入屏幕，这个会频繁回调，判断是否在屏幕中
+//                if (JZVideoPlayerManager.getCurrentJzvd() != null &&
+//                        JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
+//                    Log.e("jzvd", "onScroll: 划入屏幕");
+//                    JZVideoPlayer.backPress();
+//                }
+            }
         }
     }
 

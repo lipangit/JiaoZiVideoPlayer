@@ -27,7 +27,6 @@
             android:name=".DirectFullscreenActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ListViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -37,14 +36,17 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListViewViewpagerActivity"
+            android:name=".ListViewNormalAutoTinyActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ListViewFragmentViewpagerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ListViewMultiHolderActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ApiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
