@@ -14,7 +14,7 @@ import cn.jzvd.JZVideoPlayerStandard;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class PlayDirectlyActivity extends AppCompatActivity implements View.OnClickListener {
+public class DirectFullscreenActivity extends AppCompatActivity implements View.OnClickListener {
     Button mStartFullscreen, mStartTiny;
 
     @Override
@@ -43,7 +43,7 @@ public class PlayDirectlyActivity extends AppCompatActivity implements View.OnCl
                 JZVideoPlayerStandard.startFullscreen(this, JZVideoPlayerStandard.class, VideoConstant.videoUrlList[6], "饺子辛苦了");
                 break;
             case R.id.tiny_window:
-                Toast.makeText(PlayDirectlyActivity.this, "Comming Soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DirectFullscreenActivity.this, "Comming Soon", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

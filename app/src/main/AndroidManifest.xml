@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name=".PlayDirectlyActivity"
+            android:name=".DirectFullscreenActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
@@ -59,18 +59,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".RecyclerViewNormalActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AutoTinyActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AutoTinyListActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".AutoTinyNormalActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
