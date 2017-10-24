@@ -31,7 +31,7 @@ I think the final solution to video in android is `android.media.MediaPlayer`, o
 
 ## Effect
 
-**[jiaozivideoplayer-6.1.0_preview.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v6.1.0_preview/jiaozivideoplayer-6.1.0_preview.apk)**
+**[jiaozivideoplayer-6.1.0_preview.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/6.1.0_preview/jiaozivideoplayer-6.1.0_preview.apk)**
 
 ![Demo Screenshot][1]
 
