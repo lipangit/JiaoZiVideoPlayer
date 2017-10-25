@@ -104,7 +104,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     @Override
     public void init(Context context) {
         super.init(context);
-
         batteryTimeLayout = findViewById(R.id.battery_time_layout);
         bottomProgressBar = findViewById(R.id.bottom_progress);
         titleTextView = findViewById(R.id.title);
@@ -121,7 +120,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         backButton.setOnClickListener(this);
         tinyBackImageView.setOnClickListener(this);
         clarity.setOnClickListener(this);
-
     }
 
     public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
@@ -207,8 +205,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     @Override
     public void onStatePlaying() {
         super.onStatePlaying();
-        changeUiToPlayingShow();
-        startDismissControlViewTimer();
+        changeUiToPlayingClear();
     }
 
     @Override
@@ -505,14 +502,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 break;
         }
 
-    }
-
-    @Override
-    public void onVideoRendingStart() {
-        super.onVideoRendingStart();
-        setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
-        startDismissControlViewTimer();
     }
 
     public void changeUiToPlayingShow() {

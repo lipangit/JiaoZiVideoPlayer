@@ -49,14 +49,6 @@ public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
         super.startVideo();
     }
 
-    /**
-     * onPrepared
-     */
-    @Override
-    public void onVideoRendingStart() {
-        super.onVideoRendingStart();
-    }
-
     @Override
     public void onStateNormal() {
         super.onStateNormal();

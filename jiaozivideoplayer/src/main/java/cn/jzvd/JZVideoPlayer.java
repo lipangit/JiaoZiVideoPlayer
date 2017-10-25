@@ -550,26 +550,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onPrepared() {
         Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
         if (JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).toLowerCase().contains("mp3")) {
-            onVideoRendingStart();
+            onStatePlaying();
         }
-    }
-
-    public void onVideoRendingStart() {
-        Log.i(TAG, "onVideoRendingStart " + " [" + this.hashCode() + "] ");
-        isVideoRendingStart = true;
-        if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PREPARING_CHANGING_URL)
-            return;
-        if (seekToInAdvance != 0) {
-            JZMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
-            seekToInAdvance = 0;
-        } else {
-            int position = JZUtils.getSavedProgress(getContext(), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex));
-            if (position != 0) {
-                JZMediaManager.instance().mediaPlayer.seekTo(position);
-            }
-        }
-        startProgressTimer();
-        onStatePlaying();
     }
 
     public void setState(int state) {
@@ -625,8 +607,21 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void onStatePlaying() {
+        if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PREPARING_CHANGING_URL)
+            return;
+
         Log.i(TAG, "onStatePlaying " + " [" + this.hashCode() + "] ");
         currentState = CURRENT_STATE_PLAYING;
+        isVideoRendingStart = true;
+        if (seekToInAdvance != 0) {
+            JZMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
+            seekToInAdvance = 0;
+        } else {
+            int position = JZUtils.getSavedProgress(getContext(), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex));
+            if (position != 0) {
+                JZMediaManager.instance().mediaPlayer.seekTo(position);
+            }
+        }
         startProgressTimer();
     }
 
@@ -653,7 +648,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-            onVideoRendingStart();
+            onStatePlaying();
         }
     }
 
@@ -801,6 +796,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void startProgressTimer() {
+        Log.e(TAG, "startProgressTimer: ");
         cancelProgressTimer();
         UPDATE_PROGRESS_TIMER = new Timer();
         mProgressTimerTask = new ProgressTimerTask();
@@ -1124,7 +1120,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         @Override
         public void run() {
             if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
-//                Log.v(TAG, "onProgressUpdate " + position + "/" + duration + " [" + this.hashCode() + "] ");
+//                Log.v(TAG, "onProgressUpdate " + "[" + this.hashCode() + "] ");
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
