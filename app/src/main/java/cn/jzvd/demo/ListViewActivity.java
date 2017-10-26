@@ -48,7 +48,7 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(ListViewActivity.this, ListViewNormalAutoTinyActivity.class));
                 break;
             case R.id.listview_fragment_viewpager:
-                startActivity(new Intent(ListViewActivity.this, ListViewFragmentViewpagerActivity.class));
+                startActivity(new Intent(ListViewActivity.this, ListViewFragmentViewPagerActivity.class));
                 break;
             case R.id.multiholder:
                 startActivity(new Intent(ListViewActivity.this, ListViewMultiHolderActivity.class));
