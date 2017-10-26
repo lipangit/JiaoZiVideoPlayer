@@ -192,7 +192,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public void onStatePreparing() {
         super.onStatePreparing();
         changeUiToPreparing();
-        startDismissControlViewTimer();
+//        startDismissControlViewTimer();
     }
 
     @Override
@@ -491,11 +491,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         switch (currentScreen) {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
-                setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
+                setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
-                setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
+                setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:

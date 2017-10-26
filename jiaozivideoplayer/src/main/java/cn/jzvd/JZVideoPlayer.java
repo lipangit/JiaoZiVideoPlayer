@@ -550,6 +550,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onPrepared() {
         Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
         if (JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).toLowerCase().contains("mp3")) {
+            onStatePrepared();
             onStatePlaying();
         }
     }
@@ -606,12 +607,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZMediaManager.instance().prepare();
     }
 
-    public void onStatePlaying() {
-        if (currentState != CURRENT_STATE_PREPARING && currentState != CURRENT_STATE_PREPARING_CHANGING_URL)
-            return;
-
-        Log.i(TAG, "onStatePlaying " + " [" + this.hashCode() + "] ");
-        currentState = CURRENT_STATE_PLAYING;
+    public void onStatePrepared() {//因为这个紧接着就会进入播放状态
         isVideoRendingStart = true;
         if (seekToInAdvance != 0) {
             JZMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
@@ -622,6 +618,11 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 JZMediaManager.instance().mediaPlayer.seekTo(position);
             }
         }
+    }
+
+    public void onStatePlaying() {
+        Log.i(TAG, "onStatePlaying " + " [" + this.hashCode() + "] ");
+        currentState = CURRENT_STATE_PLAYING;
         startProgressTimer();
     }
 
@@ -648,6 +649,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+            onStatePrepared();
             onStatePlaying();
         }
     }
