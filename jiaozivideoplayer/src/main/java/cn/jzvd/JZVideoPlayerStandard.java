@@ -160,9 +160,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             tmp_test_back = false;
             //更新jzvd第一层，然后backpress
             JZVideoPlayerManager.setFirstFloor(this);
-            Log.e("jzvd", "setUp: tmp_test_back=true 启动线程");
             //等着setUp的子类setUp执行完毕
-            Log.e("jzvd", "setUp: tmp_test_back=true 执行backPress");
             isVideoRendingStart = true;//表示可以渲染图像
             backPress();
         }

@@ -323,9 +323,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 TextUtils.equals(JZUtils.getCurrentUrlFromMap(this.urlMap, currentUrlMapIndex), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
             return;
         }
-        //setUp的几种情况
-        if (isCurrentJZVD() && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//即使也是
-            //滑出屏幕记录位置 -- 这个应该在releaseAllVideos之前 是也不是的分类
+        if (isCurrentJZVD() && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {
             int position = 0;
             try {
                 position = JZMediaManager.instance().mediaPlayer.getCurrentPosition();
@@ -336,20 +334,15 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 JZUtils.saveProgress(getContext(), JZMediaManager.CURRENT_PLAYING_URL, position);
             }
             JZMediaManager.instance().releaseMediaPlayer();
-        } else if (isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//是也不是
-            Log.e("jzvd", "setUp: 列表复用");//要么releaseAllVideos，要么进入小窗
-//            JZVideoPlayer.releaseAllVideos();
+        } else if (isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {
             startWindowTiny();
-        } else if (!isCurrentJZVD() && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//不是也是 进入全屏或者需要退出小窗
-            Log.e("jzvd", "setUp: 列表复用 不是也是");//进入小窗或者全屏了，但是下面的判断进不去
+        } else if (!isCurrentJZVD() && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {
             if (JZVideoPlayerManager.getCurrentJzvd() != null &&
                     JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
                 //需要退出小窗退到我这里，我这里是第一层级
                 tmp_test_back = true;
-                Log.e("jzvd", "setUp: tmp_test_back=true");
             }
-        } else if (!isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {//都不是
-
+        } else if (!isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {
         }
         this.urlMap = urlMap;
         this.currentUrlMapIndex = defaultUrlMapIndex;
@@ -980,7 +973,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         currentUrlMapIndex = JZVideoPlayerManager.getSecondFloor().currentUrlMapIndex;
         clearFloatScreen();
         //2.在本jzvd上播放
-        Log.e("jzvd", "jklf: " + currentState);
         setState(currentState);
         addTextureView();
     }
@@ -1022,18 +1014,15 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         int currentPlayPosition = JZMediaManager.instance().positionInList;
         if (currentPlayPosition >= 0) {
             if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
-                //划出屏幕 要么release 要么进入小窗
-                //JZVideoPlayer.releaseAllVideos();
                 if (JZVideoPlayerManager.getCurrentJzvd() != null &&
                         JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
-                    Log.e("jzvd", "onScroll: 划出屏幕");
+                    Log.e(TAG, "onScroll: out screen");
                     JZVideoPlayerManager.getCurrentJzvd().startWindowTiny();
                 }
             } else {
-                //滑入屏幕，这个会频繁回调，判断是否在屏幕中
                 if (JZVideoPlayerManager.getCurrentJzvd() != null &&
                         JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
-                    Log.e("jzvd", "onScroll: 划入屏幕");
+                    Log.e(TAG, "onScroll: into screen");
                     JZVideoPlayer.backPress();
                 }
             }
@@ -1045,20 +1034,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         int currentPlayPosition = JZMediaManager.instance().positionInList;
         if (currentPlayPosition >= 0) {
             if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
-                //划出屏幕 要么release 要么进入小窗
                 JZVideoPlayer.releaseAllVideos();
-//                if (JZVideoPlayerManager.getCurrentJzvd() != null &&
-//                        JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
-//                    Log.e("jzvd", "onScroll: 划出屏幕");
-//                    JZVideoPlayerManager.getCurrentJzvd().startWindowTiny();
-//                }
-            } else {
-                //滑入屏幕，这个会频繁回调，判断是否在屏幕中
-//                if (JZVideoPlayerManager.getCurrentJzvd() != null &&
-//                        JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
-//                    Log.e("jzvd", "onScroll: 划入屏幕");
-//                    JZVideoPlayer.backPress();
-//                }
             }
         }
     }
