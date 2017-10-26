@@ -600,7 +600,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZMediaManager.instance().prepare();
     }
 
-    public void onStatePrepared() {//因为这个紧接着就会进入播放状态
+    public void onStatePrepared() {//因为这个紧接着就会进入播放状态，所以不设置state
         isVideoRendingStart = true;
         if (seekToInAdvance != 0) {
             JZMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
@@ -678,7 +678,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void onAutoCompletion() {
-        //加上这句，避免循环播放video的时候，内存不断飙升。
         Runtime.getRuntime().gc();
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
         onEvent(JZUserAction.ON_AUTO_COMPLETE);
@@ -697,14 +696,12 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onCompletion() {
         Log.i(TAG, "onCompletion " + " [" + this.hashCode() + "] ");
-        //save position
         if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
             int position = getCurrentPositionWhenPlaying();
             JZUtils.saveProgress(getContext(), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex), position);
         }
         cancelProgressTimer();
         onStateNormal();
-        // 清理缓存变量
         textureViewContainer.removeView(JZMediaManager.textureView);
         JZMediaManager.instance().currentVideoWidth = 0;
         JZMediaManager.instance().currentVideoHeight = 0;
@@ -952,15 +949,12 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    //isCurrentPlay and isCurrenPlayUrl should be two logic methods,isCurrentPlay is for different jzvd with same
-    //url when fullscreen or tiny screen. isCurrenPlayUrl is to find where is myself when back from tiny screen.
-    //Sometimes they are overlap.
-    public boolean isCurrentPlay() {//虽然看这个函数很不爽，但是干不掉
+    public boolean isCurrentPlay() {
         return isCurrentJZVD()
                 && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL);//不仅正在播放的url不能一样，并且各个清晰度也不能一样
     }
 
-    public boolean isCurrentJZVD() {//是否是当前实例
+    public boolean isCurrentJZVD() {
         return JZVideoPlayerManager.getCurrentJzvd() != null
                 && JZVideoPlayerManager.getCurrentJzvd() == this;
     }

@@ -158,10 +158,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
 
         if (tmp_test_back) {
             tmp_test_back = false;
-            //更新jzvd第一层，然后backpress
             JZVideoPlayerManager.setFirstFloor(this);
-            //等着setUp的子类setUp执行完毕
-            isVideoRendingStart = true;//表示可以渲染图像
+            isVideoRendingStart = true;
             backPress();
         }
     }
@@ -190,7 +188,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public void onStatePreparing() {
         super.onStatePreparing();
         changeUiToPreparing();
-//        startDismissControlViewTimer();
     }
 
     @Override
@@ -466,7 +463,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         bottomProgressBar.setSecondaryProgress(0);
     }
 
-    //Unified management Ui
     public void changeUiToNormal() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_NORMAL:
