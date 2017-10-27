@@ -9,3 +9,4 @@ gradle.properties
 /captures
 *.asc
 projectFilesBackup
+release
