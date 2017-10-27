@@ -39,8 +39,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
     compile 'com.android.support:recyclerview-v7:27.0.0'
 }
