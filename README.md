@@ -2,16 +2,16 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.1.0_preview-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.1.1-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-* This project need translators, you can change everything edit readme, release note, formate variable and annotation.
+* This project needs translators, you can change everything editing readme, release note, formate variable and annotation.
 
-#### Ambition is become the most widely used video playback control. Q群:490442439 验证信息:jzvd
+#### Ambition is becoming the most widely used video playback control. Q群:490442439 验证信息:jzvd
 
-I think the final solution for play video in android is android.media.MediaPlayer, other player is not in the trend, even if the android.media.MediaPlayer have disavantages we should make concession, if android.media.MediaPlayer have defect we will think to change other player.
+I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
 
 [中文文档](README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [VideoTutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
@@ -31,7 +31,7 @@ I think the final solution for play video in android is android.media.MediaPlaye
 
 ## Effect
 
-**[jiaozivideoplayer-6.1.0_preview.apk](https://github.com/lipangit/JieCaoVideoPlayer/releases/download/v6.1.0_preview/jiaozivideoplayer-6.1.0_preview.apk)**
+**[jiaozivideoplayer-6.1.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/6.1.1/jiaozivideoplayer-6.1.1.apk)**
 
 ![Demo Screenshot][1]
 
@@ -41,10 +41,10 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.1.0_preview'
+compile 'cn.jzvd:jiaozivideoplayer:6.1.1'
 ```
 
-[Or download lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.0_preview) not recommended
+[Or download lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.1) not recommended
 
 2.Add JZVideoPlayer in your layout
 ```xml

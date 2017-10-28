@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,6 +39,18 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listview);
         mAdapter = new VideoListAdapter(this);
         listView.setAdapter(mAdapter);
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                JZVideoPlayer.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
+            }
+        });
     }
 
     @Override
@@ -93,10 +106,6 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            //This is the point
-            if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoHolder) {
-                ((VideoHolder) convertView.getTag()).jzVideoPlayer.release();
-            }
             if (getItemViewType(position) == 1) {
                 VideoHolder viewHolder;
                 if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoHolder) {
@@ -111,7 +120,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                 viewHolder.jzVideoPlayer.setUp(
                         VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
                         VideoConstant.videoTitles[0][position]);
-
+                viewHolder.jzVideoPlayer.positionInList = position;
                 Picasso.with(ListViewMultiHolderActivity.this)
                         .load(VideoConstant.videoThumbs[0][position])
                         .into(viewHolder.jzVideoPlayer.thumbImageView);

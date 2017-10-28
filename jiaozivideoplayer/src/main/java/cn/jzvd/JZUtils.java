@@ -113,6 +113,9 @@ public class JZUtils {
     public static void saveProgress(Context context, String url, int progress) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return;
         Log.i(TAG, "saveProgress: " + progress);
+        if (progress < 6000) {
+            progress = 0;
+        }
         SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = spn.edit();

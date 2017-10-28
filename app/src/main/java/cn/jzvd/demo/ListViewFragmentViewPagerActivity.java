@@ -17,7 +17,7 @@ import cn.jzvd.JZVideoPlayer;
  * Created by Nathen
  * On 2016/02/07 01:01
  */
-public class ListViewFragmentViewpagerActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class ListViewFragmentViewPagerActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
     List<DemoFragment> fragmentList = new ArrayList<>();
 
     @Override
@@ -28,7 +28,7 @@ public class ListViewFragmentViewpagerActivity extends AppCompatActivity impleme
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("ViewPagerAndListView");
+        getSupportActionBar().setTitle("ListViewFragmentViewPagerActivity");
 
         fragmentList.add(new DemoFragment().setIndex(0));
         fragmentList.add(new DemoFragment().setIndex(1));

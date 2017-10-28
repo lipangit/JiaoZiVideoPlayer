@@ -5,7 +5,8 @@ gradle.properties
 /local.properties
 .idea
 .DS_Store
-/build
+build
 /captures
 *.asc
 projectFilesBackup
+release

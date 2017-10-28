@@ -42,7 +42,6 @@ public class RecyclerViewNormalActivity extends AppCompatActivity {
             @Override
             public void onChildViewAttachedToWindow(View view) {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null && JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
-                    Log.e("jzvd", "onChildViewAttachedToWindow: attached");
                     JZVideoPlayer videoPlayer = view.findViewById(R.id.videoplayer);
                     if (JZUtils.getCurrentUrlFromMap(videoPlayer.urlMap, videoPlayer.currentUrlMapIndex).equals(JZMediaManager.CURRENT_PLAYING_URL)) {
                         JZVideoPlayer.backPress();

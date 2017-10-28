@@ -6,8 +6,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.ListView;
 
+import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.demo.R;
 
 /**
@@ -36,6 +38,17 @@ public class DemoFragment extends Fragment {
                 VideoConstant.videoUrls[index],
                 VideoConstant.videoTitles[index],
                 VideoConstant.videoThumbs[index]));
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                JZVideoPlayer.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
+            }
+        });
         return listView;
     }
 }

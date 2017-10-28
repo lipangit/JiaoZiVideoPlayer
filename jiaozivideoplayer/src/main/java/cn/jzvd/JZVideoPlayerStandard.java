@@ -104,7 +104,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     @Override
     public void init(Context context) {
         super.init(context);
-
         batteryTimeLayout = findViewById(R.id.battery_time_layout);
         bottomProgressBar = findViewById(R.id.bottom_progress);
         titleTextView = findViewById(R.id.title);
@@ -121,7 +120,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         backButton.setOnClickListener(this);
         tinyBackImageView.setOnClickListener(this);
         clarity.setOnClickListener(this);
-
     }
 
     public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
@@ -160,12 +158,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
 
         if (tmp_test_back) {
             tmp_test_back = false;
-            //更新jzvd第一层，然后backpress
             JZVideoPlayerManager.setFirstFloor(this);
-            Log.e("jzvd", "setUp: tmp_test_back=true 启动线程");
-            //等着setUp的子类setUp执行完毕
-            Log.e("jzvd", "setUp: tmp_test_back=true 执行backPress");
-            isVideoRendingStart = true;//表示可以渲染图像
+            isVideoRendingStart = true;
             backPress();
         }
     }
@@ -194,7 +188,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public void onStatePreparing() {
         super.onStatePreparing();
         changeUiToPreparing();
-        startDismissControlViewTimer();
     }
 
     @Override
@@ -207,8 +200,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     @Override
     public void onStatePlaying() {
         super.onStatePlaying();
-        changeUiToPlayingShow();
-        startDismissControlViewTimer();
+        changeUiToPlayingClear();
     }
 
     @Override
@@ -471,7 +463,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         bottomProgressBar.setSecondaryProgress(0);
     }
 
-    //Unified management Ui
     public void changeUiToNormal() {
         switch (currentScreen) {
             case SCREEN_LAYOUT_NORMAL:
@@ -494,25 +485,17 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         switch (currentScreen) {
             case SCREEN_LAYOUT_NORMAL:
             case SCREEN_LAYOUT_LIST:
-                setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
+                setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
-                setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
+                setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
         }
 
-    }
-
-    @Override
-    public void onVideoRendingStart() {
-        super.onVideoRendingStart();
-        setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.INVISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
-        startDismissControlViewTimer();
     }
 
     public void changeUiToPlayingShow() {
