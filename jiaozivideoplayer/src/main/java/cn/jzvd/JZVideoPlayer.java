@@ -712,6 +712,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         clearFullscreenLayout();
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
 
+        if (JZMediaManager.surface != null) JZMediaManager.surface.release();
         JZMediaManager.textureView = null;
         JZMediaManager.savedSurfaceTexture = null;
         isVideoRendingStart = false;
