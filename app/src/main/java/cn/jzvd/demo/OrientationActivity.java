@@ -26,7 +26,7 @@ public class OrientationActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setTitle("Orientation");
         setContentView(R.layout.activity_orientation);
-        mJzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jz_video);
+        mJzVideoPlayerStandard = findViewById(R.id.jz_video);
         mJzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
                 , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
         Picasso.with(this)

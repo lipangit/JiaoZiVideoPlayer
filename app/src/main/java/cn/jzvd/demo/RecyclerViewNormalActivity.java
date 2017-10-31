@@ -33,7 +33,7 @@ public class RecyclerViewNormalActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("NormalRecyclerView");
         setContentView(R.layout.activity_recyclerview_content);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapterVideoList = new RecyclerViewVideoAdapter(this);

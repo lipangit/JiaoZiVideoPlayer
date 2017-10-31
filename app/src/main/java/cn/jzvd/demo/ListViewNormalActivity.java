@@ -33,7 +33,7 @@ public class ListViewNormalActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("NormalListView");
         setContentView(R.layout.activity_listview_normal);
 
-        listView = (ListView) findViewById(R.id.listview);
+        listView = findViewById(R.id.listview);
         listView.setAdapter(new VideoListAdapter(this,
                 VideoConstant.videoUrls[0],
                 VideoConstant.videoTitles[0],

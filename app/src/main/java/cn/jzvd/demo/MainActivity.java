@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTinyWindow = (Button) findViewById(R.id.tiny_window);
-        mDirectFullscreen = (Button) findViewById(R.id.direct_fullscreen);
-        mListView = (Button) findViewById(R.id.listview);
-        mApi = (Button) findViewById(R.id.api);
-        mWebView = (Button) findViewById(R.id.webview);
+        mTinyWindow = findViewById(R.id.tiny_window);
+        mDirectFullscreen = findViewById(R.id.direct_fullscreen);
+        mListView = findViewById(R.id.listview);
+        mApi = findViewById(R.id.api);
+        mWebView = findViewById(R.id.webview);
 
         mTinyWindow.setOnClickListener(this);
         mListView.setOnClickListener(this);
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mApi.setOnClickListener(this);
         mWebView.setOnClickListener(this);
 
-        myJZVideoPlayerStandard = (MyJZVideoPlayerStandard) findViewById(R.id.jz_video);
+        myJZVideoPlayerStandard = findViewById(R.id.jz_video);
         myJZVideoPlayerStandard.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
                 , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子快长大");
         Picasso.with(this)

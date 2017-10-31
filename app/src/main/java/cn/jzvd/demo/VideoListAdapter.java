@@ -59,7 +59,7 @@ public class VideoListAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.jzVideoPlayer = (JZVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
+        viewHolder.jzVideoPlayer = convertView.findViewById(R.id.videoplayer);
         viewHolder.jzVideoPlayer.setUp(
                 videoUrls[position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
                 videoTitles[position]);

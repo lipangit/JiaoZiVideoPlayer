@@ -25,7 +25,6 @@ public class JZVideoPlayerStandardAutoCompleteAfterFullscreen extends JZVideoPla
 
     @Override
     public void startVideo() {
-//        super.startVideo();
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
             initTextureView();

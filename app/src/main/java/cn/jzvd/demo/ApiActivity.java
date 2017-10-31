@@ -45,22 +45,22 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         getSupportActionBar().setTitle("Api");
         setContentView(R.layout.activity_api);
 
-        mSmallChange = (Button) findViewById(R.id.small_change);
-        mBigChange = (Button) findViewById(R.id.big_change);
-        mOrientation = (Button) findViewById(R.id.orientation);
-        mExtendsNormalActivity = (Button) findViewById(R.id.extends_normal_activity);
+        mSmallChange = findViewById(R.id.small_change);
+        mBigChange = findViewById(R.id.big_change);
+        mOrientation = findViewById(R.id.orientation);
+        mExtendsNormalActivity = findViewById(R.id.extends_normal_activity);
 
         mSmallChange.setOnClickListener(this);
         mBigChange.setOnClickListener(this);
         mOrientation.setOnClickListener(this);
         mExtendsNormalActivity.setOnClickListener(this);
 
-        mJzVideoPlayerSimple = (JZVideoPlayerSimple) findViewById(R.id.simple_demo);
+        mJzVideoPlayerSimple = findViewById(R.id.simple_demo);
         mJzVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
                 , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子在家吗");
 
 
-        mJzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jz_video);
+        mJzVideoPlayerStandard = findViewById(R.id.jz_video);
         LinkedHashMap map = new LinkedHashMap();
         map.put("高清", VideoConstant.videoUrls[0][9]);
         map.put("标清", VideoConstant.videoUrls[0][6]);

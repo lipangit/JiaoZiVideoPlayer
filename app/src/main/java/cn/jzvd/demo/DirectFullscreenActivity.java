@@ -28,8 +28,8 @@ public class DirectFullscreenActivity extends AppCompatActivity implements View.
         getSupportActionBar().setTitle("PlayDirectlyWithoutLayout");
         setContentView(R.layout.activity_directly_play);
 
-        mStartFullscreen = (Button) findViewById(R.id.fullscreen);
-        mStartTiny = (Button) findViewById(R.id.tiny_window);
+        mStartFullscreen = findViewById(R.id.fullscreen);
+        mStartTiny = findViewById(R.id.tiny_window);
 
         mStartFullscreen.setOnClickListener(this);
         mStartTiny.setOnClickListener(this);

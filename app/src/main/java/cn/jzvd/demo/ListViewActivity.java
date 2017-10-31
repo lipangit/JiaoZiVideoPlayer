@@ -24,11 +24,11 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setTitle("ListView");
         setContentView(R.layout.activity_listview);
 
-        mNormal = (Button) findViewById(R.id.normal);
-        mNormalAutoTiny = (Button) findViewById(R.id.normal_auto_tiny);
-        mViewPager = (Button) findViewById(R.id.listview_fragment_viewpager);
-        mMultiHolder = (Button) findViewById(R.id.multiholder);
-        mRecyleView = (Button) findViewById(R.id.recyleview);
+        mNormal = findViewById(R.id.normal);
+        mNormalAutoTiny = findViewById(R.id.normal_auto_tiny);
+        mViewPager = findViewById(R.id.listview_fragment_viewpager);
+        mMultiHolder = findViewById(R.id.multiholder);
+        mRecyleView = findViewById(R.id.recyleview);
 
         mNormal.setOnClickListener(this);
         mNormalAutoTiny.setOnClickListener(this);

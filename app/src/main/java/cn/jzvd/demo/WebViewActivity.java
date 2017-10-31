@@ -31,7 +31,7 @@ public class WebViewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setTitle("WebView");
         setContentView(R.layout.activity_webview);
-        mWebView = (WebView) findViewById(R.id.webview);
+        mWebView = findViewById(R.id.webview);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.addJavascriptInterface(new JZCallBack(), "jzvd");
         mWebView.loadUrl("file:///android_asset/jzvd.html");

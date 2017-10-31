@@ -35,7 +35,7 @@ public class ListViewFragmentViewPagerActivity extends AppCompatActivity impleme
         fragmentList.add(new DemoFragment().setIndex(2));
 
         MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager());
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(myAdapter);
         viewPager.setOnPageChangeListener(this);
     }

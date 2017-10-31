@@ -54,7 +54,7 @@ public class RecyclerViewVideoAdapter extends RecyclerView.Adapter<RecyclerViewV
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            jzVideoPlayer = (JZVideoPlayerStandard) itemView.findViewById(R.id.videoplayer);
+            jzVideoPlayer = itemView.findViewById(R.id.videoplayer);
         }
     }
 
