@@ -5,11 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 
 import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZUtils;
@@ -19,9 +17,9 @@ import cn.jzvd.JZVideoPlayerManager;
 /**
  * Created by yujunkui on 16/8/29.
  */
-public class RecyclerViewNormalActivity extends AppCompatActivity {
+public class ActivityListViewRecyclerView extends AppCompatActivity {
     RecyclerView recyclerView;
-    RecyclerViewVideoAdapter adapterVideoList;
+    AdapterRecyclerViewVideo adapterVideoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,13 +28,13 @@ public class RecyclerViewNormalActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("NormalRecyclerView");
+        getSupportActionBar().setTitle("RecyclerView");
         setContentView(R.layout.activity_recyclerview_content);
 
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapterVideoList = new RecyclerViewVideoAdapter(this);
+        adapterVideoList = new AdapterRecyclerViewVideo(this);
         recyclerView.setAdapter(adapterVideoList);
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override

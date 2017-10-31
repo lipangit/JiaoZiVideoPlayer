@@ -1,51 +1,41 @@
 package cn.jzvd.demo;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 
 /**
- * Created by Nathen on 16/7/31.
+ * Created by Nathen on 2016/12/30.
  */
-public class DirectFullscreenActivity extends AppCompatActivity implements View.OnClickListener {
-    Button mStartFullscreen, mStartTiny;
+public class ActivityApiOrientation extends AppCompatActivity {
+    JZVideoPlayerStandard mJzVideoPlayerStandard;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listview);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("PlayDirectlyWithoutLayout");
-        setContentView(R.layout.activity_directly_play);
+        getSupportActionBar().setTitle("Orientation");
+        setContentView(R.layout.activity_orientation);
+        mJzVideoPlayerStandard = findViewById(R.id.jz_video);
+        mJzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
+                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
+        Picasso.with(this)
+                .load(VideoConstant.videoThumbList[0])
+                .into(mJzVideoPlayerStandard.thumbImageView);
 
-        mStartFullscreen = findViewById(R.id.fullscreen);
-        mStartTiny = findViewById(R.id.tiny_window);
+        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
 
-        mStartFullscreen.setOnClickListener(this);
-        mStartTiny.setOnClickListener(this);
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.fullscreen:
-                JZVideoPlayerStandard.startFullscreen(this, JZVideoPlayerStandard.class, VideoConstant.videoUrlList[6], "饺子辛苦了");
-                break;
-            case R.id.tiny_window:
-                Toast.makeText(DirectFullscreenActivity.this, "Comming Soon", Toast.LENGTH_SHORT).show();
-                break;
-        }
     }
 
     @Override
@@ -60,6 +50,10 @@ public class DirectFullscreenActivity extends AppCompatActivity implements View.
     protected void onPause() {
         super.onPause();
         JZVideoPlayer.releaseAllVideos();
+
+        //Change these two variables back
+        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     }
 
     @Override
@@ -71,5 +65,4 @@ public class DirectFullscreenActivity extends AppCompatActivity implements View.
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

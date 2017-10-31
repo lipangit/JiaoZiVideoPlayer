@@ -17,7 +17,7 @@ import cn.jzvd.demo.CustomView.JZVideoPlayerStandardShowTitleAfterFullscreen;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class UISmallChangeActivity extends AppCompatActivity {
+public class ActivityApiUISmallChange extends AppCompatActivity {
     JZVideoPlayerStandardShowShareButtonAfterFullscreen jzVideoPlayerStandardWithShareButton;
     JZVideoPlayerStandardShowTitleAfterFullscreen jzVideoPlayerStandardShowTitleAfterFullscreen;
     JZVideoPlayerStandardShowTextureViewAfterAutoComplete jzVideoPlayerStandardShowTextureViewAfterAutoComplete;

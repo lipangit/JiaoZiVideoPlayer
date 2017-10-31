@@ -17,7 +17,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by Nathen on 2017/10/31.
  */
 
-public class TinyWindowActivity extends AppCompatActivity implements View.OnClickListener {
+public class ActivityTinyWindow extends AppCompatActivity implements View.OnClickListener {
 
     JZVideoPlayerStandard mJzVideoPlayerStandard;
     Button mBtnTinyWindow, mBtnAutoTinyListView;
@@ -53,7 +53,7 @@ public class TinyWindowActivity extends AppCompatActivity implements View.OnClic
                 mJzVideoPlayerStandard.startWindowTiny();
                 break;
             case R.id.auto_tiny_list_view:
-                startActivity(new Intent(this, ListViewNormalAutoTinyActivity.class));
+                startActivity(new Intent(this, ActivityTinyWindowListViewNormal.class));
                 break;
         }
     }

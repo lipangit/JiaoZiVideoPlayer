@@ -21,7 +21,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by Nathen
  * On 2016/05/23 21:34
  */
-public class ListViewMultiHolderActivity extends AppCompatActivity {
+public class ActivityListViewMultiHolder extends AppCompatActivity {
     ListView listView;
     VideoListAdapter mAdapter;
 
@@ -121,7 +121,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
                         VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
                         VideoConstant.videoTitles[0][position]);
                 viewHolder.jzVideoPlayer.positionInList = position;
-                Picasso.with(ListViewMultiHolderActivity.this)
+                Picasso.with(ActivityListViewMultiHolder.this)
                         .load(VideoConstant.videoThumbs[0][position])
                         .into(viewHolder.jzVideoPlayer.thumbImageView);
             } else {

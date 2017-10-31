@@ -7,13 +7,13 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
-        android:name=".DemoApplication"
+        android:name=".ApplicationDemo"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ActivityMain"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -24,59 +24,59 @@
         </activity>
 
         <activity
-            android:name=".DirectFullscreenActivity"
+            android:name=".ActivityDirectPlay"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListViewActivity"
+            android:name=".ActivityListView"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListViewNormalActivity"
+            android:name=".ActivityListViewNormal"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListViewNormalAutoTinyActivity"
+            android:name=".ActivityTinyWindowListViewNormal"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListViewFragmentViewPagerActivity"
+            android:name=".ActivityListViewFragmentViewPager"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ListViewMultiHolderActivity"
+            android:name=".ActivityListViewMultiHolder"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TinyWindowActivity"
+            android:name=".ActivityTinyWindow"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ApiActivity"
+            android:name=".ActivityApi"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UISmallChangeActivity"
+            android:name=".ActivityApiUISmallChange"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".UIBigChangeActivity"
+            android:name=".ActivityApiUIBigChange"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RecyclerViewNormalActivity"
+            android:name=".ActivityListViewRecyclerView"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".WebViewActivity"
+            android:name=".ActivityWebView"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrientationActivity"
+            android:name=".ActivityApiOrientation"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".ExtendsNormalActivity"
+            android:name=".ActivityApiExtendsNormal"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
     </application>

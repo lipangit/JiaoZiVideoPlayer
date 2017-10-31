@@ -28,7 +28,7 @@ import cn.jzvd.JZVideoPlayerStandard;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ApiActivity extends AppCompatActivity implements View.OnClickListener {
+public class ActivityApi extends AppCompatActivity implements View.OnClickListener {
     Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity;
     JZVideoPlayerSimple mJzVideoPlayerSimple;
     JZVideoPlayerStandard mJzVideoPlayerStandard;
@@ -101,17 +101,17 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.small_change:
-                startActivity(new Intent(ApiActivity.this, UISmallChangeActivity.class));
+                startActivity(new Intent(ActivityApi.this, ActivityApiUISmallChange.class));
                 break;
             case R.id.big_change:
-                Toast.makeText(ApiActivity.this, "Comming Soon", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(ApiActivity.this, UIBigChangeActivity.class));
+                Toast.makeText(ActivityApi.this, "Comming Soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(ActivityApi.this, ActivityApiUIBigChange.class));
                 break;
             case R.id.orientation:
-                startActivity(new Intent(ApiActivity.this, OrientationActivity.class));
+                startActivity(new Intent(ActivityApi.this, ActivityApiOrientation.class));
                 break;
             case R.id.extends_normal_activity:
-                startActivity(new Intent(ApiActivity.this, ExtendsNormalActivity.class));
+                startActivity(new Intent(ActivityApi.this, ActivityApiExtendsNormal.class));
                 break;
         }
     }

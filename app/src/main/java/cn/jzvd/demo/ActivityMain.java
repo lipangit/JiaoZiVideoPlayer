@@ -19,7 +19,7 @@ import cn.jzvd.demo.CustomView.MyJZVideoPlayerStandard;
 /**
  * Created by Nathen on 16/7/22.
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class ActivityMain extends AppCompatActivity implements View.OnClickListener {
 
 
     MyJZVideoPlayerStandard myJZVideoPlayerStandard;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         mTinyWindow = findViewById(R.id.tiny_window);
-        mDirectFullscreen = findViewById(R.id.direct_fullscreen);
+        mDirectFullscreen = findViewById(R.id.direct_play);
         mListView = findViewById(R.id.listview);
         mApi = findViewById(R.id.api);
         mWebView = findViewById(R.id.webview);
@@ -70,20 +70,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tiny_window:
-                startActivity(new Intent(MainActivity.this, TinyWindowActivity.class));
-                break;
-            case R.id.direct_fullscreen:
-                startActivity(new Intent(MainActivity.this, DirectFullscreenActivity.class));
+            case R.id.api:
+                startActivity(new Intent(ActivityMain.this, ActivityApi.class));
                 break;
             case R.id.listview:
-                startActivity(new Intent(MainActivity.this, ListViewActivity.class));
+                startActivity(new Intent(ActivityMain.this, ActivityListView.class));
                 break;
-            case R.id.api:
-                startActivity(new Intent(MainActivity.this, ApiActivity.class));
+            case R.id.tiny_window:
+                startActivity(new Intent(ActivityMain.this, ActivityTinyWindow.class));
+                break;
+            case R.id.direct_play:
+                startActivity(new Intent(ActivityMain.this, ActivityDirectPlay.class));
                 break;
             case R.id.webview:
-                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                startActivity(new Intent(ActivityMain.this, ActivityWebView.class));
                 break;
         }
     }

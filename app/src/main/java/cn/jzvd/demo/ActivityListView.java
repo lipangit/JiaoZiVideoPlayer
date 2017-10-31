@@ -11,7 +11,7 @@ import android.widget.Button;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ListViewActivity extends AppCompatActivity implements View.OnClickListener {
+public class ActivityListView extends AppCompatActivity implements View.OnClickListener {
     Button mNormal, mViewPager, mMultiHolder, mRecyleView;
 
     @Override
@@ -40,16 +40,16 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.normal:
-                startActivity(new Intent(ListViewActivity.this, ListViewNormalActivity.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewNormal.class));
                 break;
             case R.id.listview_fragment_viewpager:
-                startActivity(new Intent(ListViewActivity.this, ListViewFragmentViewPagerActivity.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewFragmentViewPager.class));
                 break;
             case R.id.multiholder:
-                startActivity(new Intent(ListViewActivity.this, ListViewMultiHolderActivity.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewMultiHolder.class));
                 break;
             case R.id.recyleview:
-                startActivity(new Intent(ListViewActivity.this, RecyclerViewNormalActivity.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewRecyclerView.class));
                 break;
         }
     }

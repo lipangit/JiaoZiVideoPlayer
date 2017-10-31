@@ -12,7 +12,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by Nathen on 2017/9/19.
  */
 
-public class ExtendsNormalActivity extends Activity {
+public class ActivityApiExtendsNormal extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
