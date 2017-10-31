@@ -52,6 +52,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ActivityTinyWindowListViewMultiHolder"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ActivityApi"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />

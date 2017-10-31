@@ -20,7 +20,7 @@ import cn.jzvd.JZVideoPlayerStandard;
 public class ActivityTinyWindow extends AppCompatActivity implements View.OnClickListener {
 
     JZVideoPlayerStandard mJzVideoPlayerStandard;
-    Button mBtnTinyWindow, mBtnAutoTinyListView;
+    Button mBtnTinyWindow, mBtnTinyWindowListView,mBtnTinyWindowListViewMultiHolder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,9 +40,11 @@ public class ActivityTinyWindow extends AppCompatActivity implements View.OnClic
                 .into(mJzVideoPlayerStandard.thumbImageView);
 
         mBtnTinyWindow = findViewById(R.id.tiny_window);
-        mBtnAutoTinyListView = findViewById(R.id.auto_tiny_list_view);
+        mBtnTinyWindowListView = findViewById(R.id.auto_tiny_list_view);
+        mBtnTinyWindowListViewMultiHolder = findViewById(R.id.auto_tiny_list_view_multi_holder);
         mBtnTinyWindow.setOnClickListener(this);
-        mBtnAutoTinyListView.setOnClickListener(this);
+        mBtnTinyWindowListView.setOnClickListener(this);
+        mBtnTinyWindowListViewMultiHolder.setOnClickListener(this);
 
     }
 
@@ -54,6 +56,9 @@ public class ActivityTinyWindow extends AppCompatActivity implements View.OnClic
                 break;
             case R.id.auto_tiny_list_view:
                 startActivity(new Intent(this, ActivityTinyWindowListViewNormal.class));
+                break;
+            case R.id.auto_tiny_list_view_multi_holder:
+                startActivity(new Intent(this, ActivityTinyWindowListViewMultiHolder.class));
                 break;
         }
     }
