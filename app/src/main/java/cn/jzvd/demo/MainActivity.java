@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tiny_window:
-                myJZVideoPlayerStandard.startWindowTiny();
+                startActivity(new Intent(MainActivity.this, TinyWindowActivity.class));
                 break;
             case R.id.direct_fullscreen:
                 startActivity(new Intent(MainActivity.this, DirectFullscreenActivity.class));
