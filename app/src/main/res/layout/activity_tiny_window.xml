@@ -25,15 +25,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="Tiny Window" />
+                android:text="Start Tiny Window" />
 
             <Button
-                android:id="@+id/direct_fullscreen"
+                android:id="@+id/auto_tiny_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="Direct Fullscreen" />
+                android:text="AutoTinyListView" />
 
         </LinearLayout>
     </ScrollView>

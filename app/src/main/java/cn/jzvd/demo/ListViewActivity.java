@@ -12,7 +12,7 @@ import android.widget.Button;
  * Created by Nathen on 16/7/31.
  */
 public class ListViewActivity extends AppCompatActivity implements View.OnClickListener {
-    Button mNormal, mNormalAutoTiny, mViewPager, mMultiHolder, mRecyleView;
+    Button mNormal, mViewPager, mMultiHolder, mRecyleView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -25,13 +25,11 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_listview);
 
         mNormal = findViewById(R.id.normal);
-        mNormalAutoTiny = findViewById(R.id.normal_auto_tiny);
         mViewPager = findViewById(R.id.listview_fragment_viewpager);
         mMultiHolder = findViewById(R.id.multiholder);
         mRecyleView = findViewById(R.id.recyleview);
 
         mNormal.setOnClickListener(this);
-        mNormalAutoTiny.setOnClickListener(this);
         mViewPager.setOnClickListener(this);
         mMultiHolder.setOnClickListener(this);
         mRecyleView.setOnClickListener(this);
@@ -43,9 +41,6 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.normal:
                 startActivity(new Intent(ListViewActivity.this, ListViewNormalActivity.class));
-                break;
-            case R.id.normal_auto_tiny:
-                startActivity(new Intent(ListViewActivity.this, ListViewNormalAutoTinyActivity.class));
                 break;
             case R.id.listview_fragment_viewpager:
                 startActivity(new Intent(ListViewActivity.this, ListViewFragmentViewPagerActivity.class));

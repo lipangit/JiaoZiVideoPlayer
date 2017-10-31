@@ -20,14 +20,6 @@
                 android:layout_height="200dp" />
 
             <Button
-                android:id="@+id/tiny_window"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="Tiny Window" />
-
-            <Button
                 android:id="@+id/direct_fullscreen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -48,15 +40,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:text="Api" />
+
+            <Button
+                android:id="@+id/tiny_window"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="Tiny Window" />
 
             <Button
                 android:id="@+id/webview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="WebView" />
         </LinearLayout>
