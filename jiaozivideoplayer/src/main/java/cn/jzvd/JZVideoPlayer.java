@@ -216,7 +216,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         return false;
     }
 
-    public static void quitFullscreenOrTinyWindow(){
+    public static void quitFullscreenOrTinyWindow() {
         //直接退出全屏和小窗
         JZVideoPlayerManager.getFirstFloor().clearFloatScreen();
         JZMediaManager.instance().releaseMediaPlayer();
@@ -795,7 +795,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void startProgressTimer() {
-        Log.e(TAG, "startProgressTimer: ");
+        Log.i(TAG, "startProgressTimer: " + " [" + this.hashCode() + "] ");
         cancelProgressTimer();
         UPDATE_PROGRESS_TIMER = new Timer();
         mProgressTimerTask = new ProgressTimerTask();
