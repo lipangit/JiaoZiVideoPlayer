@@ -15,9 +15,10 @@ import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerManager;
 
 /**
- * Created by yujunkui on 16/8/29.
+ * Created by Nathen on 2017/11/1.
  */
-public class ActivityListViewRecyclerView extends AppCompatActivity {
+
+public class ActivityTinyWindowRecycleView extends AppCompatActivity {
     RecyclerView recyclerView;
     AdapterRecyclerViewVideo adapterVideoList;
 
@@ -28,7 +29,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("RecyclerView");
+        getSupportActionBar().setTitle("RecyclerViewTinyWindow");
         setContentView(R.layout.activity_recyclerview_content);
 
         recyclerView = findViewById(R.id.recyclerview);
@@ -39,13 +40,25 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
+                if (JZVideoPlayerManager.getCurrentJzvd() != null && JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
+                    JZVideoPlayer videoPlayer = view.findViewById(R.id.videoplayer);
+                    if (JZUtils.getCurrentUrlFromMap(videoPlayer.urlMap, videoPlayer.currentUrlMapIndex).equals(JZMediaManager.CURRENT_PLAYING_URL)) {
+                        JZVideoPlayer.backPress();
+                    }
+                }
             }
 
             @Override
             public void onChildViewDetachedFromWindow(View view) {
-                JZVideoPlayer.releaseAllVideos();
+                if (JZVideoPlayerManager.getCurrentJzvd() != null && JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
+                    JZVideoPlayer videoPlayer = JZVideoPlayerManager.getCurrentJzvd();
+                    if (((ViewGroup) view).indexOfChild(videoPlayer) != -1 && videoPlayer.currentState == JZVideoPlayer.CURRENT_STATE_PLAYING) {
+                        videoPlayer.startWindowTiny();
+                    }
+                }
             }
         });
+
     }
 
     @Override

@@ -43,6 +43,14 @@
                 android:layout_marginTop="8dp"
                 android:text="MultiHolder ListView TinyWindow" />
 
+            <Button
+                android:id="@+id/auto_tiny_list_view_recycleview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="RecycleView TinyWindow" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

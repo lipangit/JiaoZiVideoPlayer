@@ -34,7 +34,7 @@ public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("MultiHolderListView");
+        getSupportActionBar().setTitle("MultiHolderListViewTinyWindow");
 
 
         listView = findViewById(R.id.listview);
