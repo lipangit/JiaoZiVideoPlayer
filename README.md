@@ -28,6 +28,7 @@ I think the final solution to video in android is `android.media.MediaPlayer`, o
 9. [Support https and rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
 10. Less than 110kb
 11. [Press home button will pause vidoe, come back goon play](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/app/src/main/java/cn/jzvd/demo/ApiActivity.java#L117)
+12. Perfect scroll in ListView, and automatic start tiny window
 
 ## Effect
 

@@ -7,11 +7,14 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-#### 立志成为Android平台使用最广泛的视频播放控件  Q群:490442439 验证信息:jzvd
+# [斗鱼直播](https://www.douyu.com/1667893)
 
-目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
+每天下午两点开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复
+
+Q群:490442439 验证信息:jzvd
 
 [英文文档](https://github.com/lipangit/JiaoZiVideoPlayer) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+
 
 ## 主要特点
 
@@ -26,6 +29,9 @@
 9. [支持https和rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
 10. 小于 110kb
 11. [Home键暂停，返回继续播放](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/app/src/main/java/cn/jzvd/demo/ApiActivity.java#L117)
+12. 完美的列表滑動的判斷，可以滑動進入小窗口
+
+目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
 
 ## 效果
 
