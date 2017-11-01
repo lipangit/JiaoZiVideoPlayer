@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerSimple;
 import cn.jzvd.JZVideoPlayerStandard;
 
 /**
@@ -30,7 +29,6 @@ import cn.jzvd.JZVideoPlayerStandard;
  */
 public class ActivityApi extends AppCompatActivity implements View.OnClickListener {
     Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity;
-    JZVideoPlayerSimple mJzVideoPlayerSimple;
     JZVideoPlayerStandard mJzVideoPlayerStandard;
     JZVideoPlayer.JZAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
@@ -54,10 +52,6 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         mBigChange.setOnClickListener(this);
         mOrientation.setOnClickListener(this);
         mExtendsNormalActivity.setOnClickListener(this);
-
-        mJzVideoPlayerSimple = findViewById(R.id.simple_demo);
-        mJzVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子在家吗");
 
 
         mJzVideoPlayerStandard = findViewById(R.id.jz_video);

@@ -1,5 +1,6 @@
 package cn.jzvd;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
@@ -197,6 +198,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 jzVideoPlayer.onEvent(jzVideoPlayer.currentScreen == JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                         JZUserAction.ON_QUIT_FULLSCREEN :
                         JZUserAction.ON_QUIT_TINYSCREEN);
+                //TODO JZVideoPlayerManager.getFirstFloor()是否在屏幕中
+
                 JZVideoPlayerManager.getFirstFloor().playOnThisJzvd();
             } else {
                 //直接退出全屏和小窗
@@ -220,6 +223,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         return false;
     }
 
+    @SuppressLint("RestrictedApi")
     public static void showSupportActionBar(Context context) {
         if (ACTION_BAR_EXIST && JZUtils.getAppCompActivity(context) != null) {
             ActionBar ab = JZUtils.getAppCompActivity(context).getSupportActionBar();
@@ -233,6 +237,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
+    @SuppressLint("RestrictedApi")
     public static void hideSupportActionBar(Context context) {
         if (ACTION_BAR_EXIST && JZUtils.getAppCompActivity(context) != null) {
             ActionBar ab = JZUtils.getAppCompActivity(context).getSupportActionBar();
