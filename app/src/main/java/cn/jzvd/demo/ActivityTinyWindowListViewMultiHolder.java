@@ -20,7 +20,6 @@ import cn.jzvd.JZVideoPlayerStandard;
 /**
  * Created by Nathen on 2017/10/31.
  */
-
 public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
 
     ListView listView;
@@ -49,7 +48,7 @@ public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                JZVideoPlayer.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                JZVideoPlayer.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
     }
@@ -109,7 +108,7 @@ public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             if (getItemViewType(position) == 1) {
                 VideoHolder viewHolder;
-                if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof ActivityListViewMultiHolder.VideoListAdapter.VideoHolder) {
+                if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoListAdapter.VideoHolder) {
                     viewHolder = (VideoHolder) convertView.getTag();
                 } else {
                     viewHolder = new VideoHolder();
@@ -127,7 +126,7 @@ public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
                         .into(viewHolder.jzVideoPlayer.thumbImageView);
             } else {
                 TextViewHolder textViewHolder;
-                if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof ActivityListViewMultiHolder.VideoListAdapter.TextViewHolder) {
+                if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoListAdapter.TextViewHolder) {
                     textViewHolder = (TextViewHolder) convertView.getTag();
                 } else {
                     textViewHolder = new TextViewHolder();
