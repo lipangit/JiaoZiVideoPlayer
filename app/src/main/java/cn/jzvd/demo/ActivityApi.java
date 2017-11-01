@@ -60,7 +60,7 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrlList[0]);
         mJzVideoPlayerStandard.setUp(map, 2
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
+                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzVideoPlayerStandard.thumbImageView);
@@ -73,10 +73,10 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
 //        mJzVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
-//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
+//                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
         /** Play video in assert, but not work now **/
 //        mJzVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
-//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
+//                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
 
         /** ImageLoader **/
 //        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],

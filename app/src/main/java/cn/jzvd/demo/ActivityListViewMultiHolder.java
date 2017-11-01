@@ -118,7 +118,7 @@ public class ActivityListViewMultiHolder extends AppCompatActivity {
                 }
 
                 viewHolder.jzVideoPlayer.setUp(
-                        VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
+                        VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST,
                         VideoConstant.videoTitles[0][position]);
                 viewHolder.jzVideoPlayer.positionInList = position;
                 Picasso.with(ActivityListViewMultiHolder.this)

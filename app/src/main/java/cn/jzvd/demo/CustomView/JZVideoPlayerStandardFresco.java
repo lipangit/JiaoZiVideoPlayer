@@ -3,9 +3,6 @@ package cn.jzvd.demo.CustomView;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import cn.jzvd.JZVideoPlayerStandard;
 import cn.jzvd.demo.R;
@@ -53,7 +50,7 @@ public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
             fullscreenButton.setImageResource(R.drawable.jz_shrink);
             backButton.setVisibility(View.VISIBLE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
-        } else if (currentScreen == SCREEN_LAYOUT_LIST) {
+        } else if (currentScreen == SCREEN_WINDOW_LIST) {
             fullscreenButton.setImageResource(R.drawable.jz_enlarge);
             backButton.setVisibility(View.GONE);
             tinyBackImageView.setVisibility(View.INVISIBLE);

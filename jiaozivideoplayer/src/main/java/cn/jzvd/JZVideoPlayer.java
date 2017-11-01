@@ -3,6 +3,8 @@ package cn.jzvd;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -45,8 +47,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static final int THRESHOLD = 80;
     public static final int FULL_SCREEN_NORMAL_DELAY = 300;
 
-    public static final int SCREEN_LAYOUT_NORMAL = 0;
-    public static final int SCREEN_LAYOUT_LIST = 1;
+    public static final int SCREEN_WINDOW_NORMAL = 0;
+    public static final int SCREEN_WINDOW_LIST = 1;
     public static final int SCREEN_WINDOW_FULLSCREEN = 2;
     public static final int SCREEN_WINDOW_TINY = 3;
 
@@ -191,6 +193,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         Log.i(TAG, "backPress");
         if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
             return false;
+
         if (JZVideoPlayerManager.getSecondFloor() != null) {
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             if (JZVideoPlayerManager.getFirstFloor().getCurrentUrl().equals(JZMediaManager.CURRENT_PLAYING_URL)) {
@@ -198,29 +201,27 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 jzVideoPlayer.onEvent(jzVideoPlayer.currentScreen == JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                         JZUserAction.ON_QUIT_FULLSCREEN :
                         JZUserAction.ON_QUIT_TINYSCREEN);
-                //TODO JZVideoPlayerManager.getFirstFloor()是否在屏幕中
-
                 JZVideoPlayerManager.getFirstFloor().playOnThisJzvd();
             } else {
-                //直接退出全屏和小窗
-                JZVideoPlayerManager.getCurrentJzvd().currentState = CURRENT_STATE_NORMAL;
-                JZVideoPlayerManager.getFirstFloor().clearFloatScreen();
-                JZMediaManager.instance().releaseMediaPlayer();
-                JZVideoPlayerManager.setFirstFloor(null);
+                quitFullscreenOrTinyWindow();
             }
             return true;
         } else if (JZVideoPlayerManager.getFirstFloor() != null &&
                 (JZVideoPlayerManager.getFirstFloor().currentScreen == SCREEN_WINDOW_FULLSCREEN ||
                         JZVideoPlayerManager.getFirstFloor().currentScreen == SCREEN_WINDOW_TINY)) {//以前我总想把这两个判断写到一起，这分明是两个独立是逻辑
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
-            //直接退出全屏和小窗
-            JZVideoPlayerManager.getCurrentJzvd().currentState = CURRENT_STATE_NORMAL;
-            JZVideoPlayerManager.getFirstFloor().clearFloatScreen();
-            JZMediaManager.instance().releaseMediaPlayer();
-            JZVideoPlayerManager.setFirstFloor(null);
+            quitFullscreenOrTinyWindow();
             return true;
         }
         return false;
+    }
+
+    public static void quitFullscreenOrTinyWindow(){
+        //直接退出全屏和小窗
+        JZVideoPlayerManager.getFirstFloor().clearFloatScreen();
+        JZMediaManager.instance().releaseMediaPlayer();
+        JZVideoPlayerManager.setFirstFloor(null);
+        JZVideoPlayerManager.setSecondFloor(null);
     }
 
     @SuppressLint("RestrictedApi")

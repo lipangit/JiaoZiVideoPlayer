@@ -61,7 +61,7 @@ public class AdapterVideoList extends BaseAdapter {
         }
         viewHolder.jzVideoPlayer = convertView.findViewById(R.id.videoplayer);
         viewHolder.jzVideoPlayer.setUp(
-                videoUrls[position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
+                videoUrls[position], JZVideoPlayer.SCREEN_WINDOW_LIST,
                 videoTitles[position]);
         Picasso.with(convertView.getContext())
                 .load(videoThumbs[position])

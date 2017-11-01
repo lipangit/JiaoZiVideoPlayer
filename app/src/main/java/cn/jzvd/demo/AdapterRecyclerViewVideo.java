@@ -37,7 +37,7 @@ public class AdapterRecyclerViewVideo extends RecyclerView.Adapter<AdapterRecycl
         Log.i(TAG, "onBindViewHolder [" + holder.jzVideoPlayer.hashCode() + "] position=" + position);
 
         holder.jzVideoPlayer.setUp(
-                VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
+                VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST,
                 VideoConstant.videoTitles[0][position]);
         Picasso.with(holder.jzVideoPlayer.getContext())
                 .load(VideoConstant.videoThumbs[0][position])

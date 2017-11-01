@@ -71,7 +71,7 @@ public class ActivityWebView extends AppCompatActivity {
                     if (index == 0) {
                         JZVideoPlayerStandard webVieo = new JZVideoPlayerStandard(ActivityWebView.this);
                         webVieo.setUp(VideoConstant.videoUrlList[1],
-                                JZVideoPlayer.SCREEN_LAYOUT_LIST, "饺子骑大马");
+                                JZVideoPlayer.SCREEN_WINDOW_LIST, "饺子骑大马");
                         Picasso.with(ActivityWebView.this)
                                 .load(VideoConstant.videoThumbList[1])
                                 .into(webVieo.thumbImageView);
@@ -85,7 +85,7 @@ public class ActivityWebView extends AppCompatActivity {
                     } else {
                         JZVideoPlayerStandard webVieo = new JZVideoPlayerStandard(ActivityWebView.this);
                         webVieo.setUp(VideoConstant.videoUrlList[2],
-                                JZVideoPlayer.SCREEN_LAYOUT_LIST, "饺子失态了");
+                                JZVideoPlayer.SCREEN_WINDOW_LIST, "饺子失态了");
                         Picasso.with(ActivityWebView.this)
                                 .load(VideoConstant.videoThumbList[2])
                                 .into(webVieo.thumbImageView);
