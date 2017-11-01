@@ -1043,6 +1043,24 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
+    public static void onChildViewAttachedToWindow(View view, int jzvdId) {
+        if (JZVideoPlayerManager.getCurrentJzvd() != null && JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
+            JZVideoPlayer videoPlayer = view.findViewById(jzvdId);
+            if (videoPlayer != null && JZUtils.getCurrentUrlFromMap(videoPlayer.urlMap, videoPlayer.currentUrlMapIndex).equals(JZMediaManager.CURRENT_PLAYING_URL)) {
+                JZVideoPlayer.backPress();
+            }
+        }
+    }
+
+    public static void onChildViewDetachedFromWindow(View view) {
+        if (JZVideoPlayerManager.getCurrentJzvd() != null && JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
+            JZVideoPlayer videoPlayer = JZVideoPlayerManager.getCurrentJzvd();
+            if (((ViewGroup) view).indexOfChild(videoPlayer) != -1) {
+                videoPlayer.startWindowTiny();
+            }
+        }
+    }
+
     //TODO 是否有用
     public void onSeekComplete() {
 
