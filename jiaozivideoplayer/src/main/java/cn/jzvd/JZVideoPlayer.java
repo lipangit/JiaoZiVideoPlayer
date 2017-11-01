@@ -112,7 +112,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public ViewGroup topContainer, bottomContainer;
     public int widthRatio = 0;
     public int heightRatio = 0;
-    protected boolean isVideoRendingStart = false;
     protected int mScreenWidth;
     protected int mScreenHeight;
     protected AudioManager mAudioManager;
@@ -355,7 +354,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         this.currentScreen = screen;
         this.objects = objects;
         this.headData = null;
-        isVideoRendingStart = false;
         onStateNormal();
 
     }
@@ -607,7 +605,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void onStatePrepared() {//因为这个紧接着就会进入播放状态，所以不设置state
-        isVideoRendingStart = true;
         if (seekToInAdvance != 0) {
             JZMediaManager.instance().mediaPlayer.seekTo(seekToInAdvance);
             seekToInAdvance = 0;
@@ -721,7 +718,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (JZMediaManager.surface != null) JZMediaManager.surface.release();
         JZMediaManager.textureView = null;
         JZMediaManager.savedSurfaceTexture = null;
-        isVideoRendingStart = false;
     }
 
     public void release() {
