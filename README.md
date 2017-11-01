@@ -7,11 +7,11 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-* This project needs translators, you can change everything editing readme, release note, formate variable and annotation.
+# [斗鱼直播](https://www.douyu.com/1667893)
 
-#### Ambition is becoming the most widely used video playback control. Q群:490442439 验证信息:jzvd
+每天下午两点开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复
 
-I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
+Q群:490442439 验证信息:jzvd
 
 [中文文档](README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [VideoTutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
@@ -29,6 +29,8 @@ I think the final solution to video in android is `android.media.MediaPlayer`, o
 10. Less than 110kb
 11. [Press home button will pause vidoe, come back goon play](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/app/src/main/java/cn/jzvd/demo/ApiActivity.java#L117)
 12. Perfect scroll in ListView, and automatic start tiny window
+
+I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
 
 ## Effect
 
