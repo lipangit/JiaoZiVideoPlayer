@@ -25,7 +25,7 @@ public class ActivityDirectPlay extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("DirectPlays");
+        getSupportActionBar().setTitle("DirectPlay");
         setContentView(R.layout.activity_directly_play);
 
         mStartFullscreen = findViewById(R.id.fullscreen);
