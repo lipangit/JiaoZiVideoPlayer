@@ -22,15 +22,11 @@ public class JZResizeTextureView extends TextureView {
 
     public JZResizeTextureView(Context context) {
         super(context);
-        init();
+        mVideoSize = new Point(0, 0);
     }
 
     public JZResizeTextureView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
-    }
-
-    private void init() {
         mVideoSize = new Point(0, 0);
     }
 
