@@ -130,6 +130,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public LinkedHashMap urlMap;
     public int currentUrlMapIndex = 0;
     public int positionInList = -1;
+    public int videoRotation = 0;
 
     public JZVideoPlayer(Context context) {
         super(context);
@@ -786,6 +787,9 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onVideoSizeChanged() {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
         if (JZMediaManager.textureView != null) {
+            if (videoRotation != 0) {
+                JZMediaManager.textureView.setRotation(videoRotation);
+            }
             JZMediaManager.textureView.setVideoSize(JZMediaManager.instance().getVideoSize());
         }
     }
