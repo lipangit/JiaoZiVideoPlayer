@@ -28,7 +28,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by Nathen on 16/7/31.
  */
 public class ActivityApi extends AppCompatActivity implements View.OnClickListener {
-    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity;
+    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity, mRationAndVideoSize;
     JZVideoPlayerStandard mJzVideoPlayerStandard;
     JZVideoPlayer.JZAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
@@ -47,11 +47,13 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         mBigChange = findViewById(R.id.big_change);
         mOrientation = findViewById(R.id.orientation);
         mExtendsNormalActivity = findViewById(R.id.extends_normal_activity);
+        mRationAndVideoSize = findViewById(R.id.rotation_and_videosize);
 
         mSmallChange.setOnClickListener(this);
         mBigChange.setOnClickListener(this);
         mOrientation.setOnClickListener(this);
         mExtendsNormalActivity.setOnClickListener(this);
+        mRationAndVideoSize.setOnClickListener(this);
 
 
         mJzVideoPlayerStandard = findViewById(R.id.jz_video);
@@ -106,6 +108,9 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.extends_normal_activity:
                 startActivity(new Intent(ActivityApi.this, ActivityApiExtendsNormal.class));
+                break;
+            case R.id.rotation_and_videosize:
+                startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
                 break;
         }
     }
