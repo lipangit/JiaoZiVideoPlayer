@@ -49,10 +49,14 @@ public class JZResizeTextureView extends TextureView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Log.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
         int viewRotation = (int) getRotation();
+
+        if(getMeasuredWidth()!=0) {
+            mVideoSize.y = mVideoSize.x * getMeasuredHeight() / getMeasuredWidth();
+        }
+
         int videoWidth = mVideoSize.x;
         int videoHeight = mVideoSize.y;
-        Log.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight);
-        Log.i(TAG, "viewRotation = " + viewRotation);
+        Log.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight + ",viewRotation = " + viewRotation);
 
         // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         if (viewRotation == 90 || viewRotation == 270) {
