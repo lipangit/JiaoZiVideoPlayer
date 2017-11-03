@@ -58,6 +58,11 @@ public class JZResizeTextureView extends TextureView {
         int parentWidth = ((View) getParent()).getMeasuredWidth();
         if (parentWidth != 0 && parentHeight != 0 && videoWidth != 0 && videoHeight != 0) {
             if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT) {
+                if (viewRotation == 90 || viewRotation == 270) {
+                    int tempSize = parentWidth;
+                    parentWidth = parentHeight;
+                    parentHeight = tempSize;
+                }
                 /**强制充满**/
                 videoHeight = videoWidth * parentHeight / parentWidth;
             }
@@ -134,6 +139,11 @@ public class JZResizeTextureView extends TextureView {
                 height = videoHeight;
                 width = videoWidth;
             } else if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP) {
+                if (viewRotation == 90 || viewRotation == 270) {
+                    int tempSize = parentWidth;
+                    parentWidth = parentHeight;
+                    parentHeight = tempSize;
+                }
                 /**充满剪切**/
                 if (videoHeight / videoWidth > parentHeight / parentWidth) {
                     height = parentWidth / width * height;
