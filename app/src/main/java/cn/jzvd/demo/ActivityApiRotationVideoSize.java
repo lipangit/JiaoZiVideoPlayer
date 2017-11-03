@@ -39,7 +39,6 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity implements V
                 .load(VideoConstant.videoThumbs[0][7])
                 .into(myJZVideoPlayerStandard.thumbImageView);
         // The Point IS
-        //
         myJZVideoPlayerStandard.videoRotation = 180;
 
         mBtnRotation = findViewById(R.id.rotation_to_90);

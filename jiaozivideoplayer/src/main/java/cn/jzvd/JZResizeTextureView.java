@@ -53,6 +53,16 @@ public class JZResizeTextureView extends TextureView {
         int videoWidth = mVideoSize.x;
         int videoHeight = mVideoSize.y;
 
+
+        int parentHeight = ((View) getParent()).getMeasuredHeight();
+        int parentWidth = ((View) getParent()).getMeasuredWidth();
+        if (parentWidth != 0 && parentHeight != 0 && videoWidth != 0 && videoHeight != 0) {
+            if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT) {
+                /**强制充满**/
+                videoHeight = videoWidth * parentHeight / parentWidth;
+            }
+        }
+
         // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         if (viewRotation == 90 || viewRotation == 270) {
             int tempMeasureSpec = widthMeasureSpec;
@@ -118,14 +128,8 @@ public class JZResizeTextureView extends TextureView {
         } else {
             // no size yet, just adopt the given spec sizes
         }
-
-        int parentHeight = ((View) getParent()).getMeasuredHeight();
-        int parentWidth = ((View) getParent()).getMeasuredWidth();
         if (parentWidth != 0 && parentHeight != 0 && videoWidth != 0 && videoHeight != 0) {
-            if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT) {
-                /**强制充满**/
-                height = width * parentHeight / parentWidth;
-            } else if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL) {
+            if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL) {
                 /**原图**/
                 height = mVideoSize.y;
                 width = mVideoSize.x;
