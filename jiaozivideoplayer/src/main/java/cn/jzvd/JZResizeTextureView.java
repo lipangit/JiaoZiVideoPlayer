@@ -119,26 +119,26 @@ public class JZResizeTextureView extends TextureView {
             // no size yet, just adopt the given spec sizes
         }
 
-        //铺满屏幕
         int parentHeight = ((View) getParent()).getMeasuredHeight();
         int parentWidth = ((View) getParent()).getMeasuredWidth();
-
         if (parentWidth != 0 && parentHeight != 0 && videoWidth != 0 && videoHeight != 0) {
-//            height = width * parentHeight / parentWidth;//强制充满
-
-
-
-            //如果 視頻的高度/視頻的寬度 > 屏幕的高度/屏幕的寬度   說明先拉伸寬度，隱藏上下的圖像
-            //如果 視頻的高度/視頻的寬度 > 屏幕的高度/屏幕的寬度   說明先拉伸高度，隱藏左右的圖像
-
-//            if (videoHeight / videoWidth > parentHeight / parentWidth) {
-//                height = parentWidth / width * height;
-//                width = parentWidth;
-//
-//            } else if (videoHeight / videoWidth < parentHeight / parentWidth) {
-//                width = parentHeight / height * width;
-//                height = parentHeight;
-//            }
+            if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT) {
+                /**强制充满**/
+                height = width * parentHeight / parentWidth;
+            } else if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL) {
+                /**原图**/
+                height = mVideoSize.y;
+                width = mVideoSize.x;
+            } else if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP) {
+                /**充满剪切**/
+                if (videoHeight / videoWidth > parentHeight / parentWidth) {
+                    height = parentWidth / width * height;
+                    width = parentWidth;
+                } else if (videoHeight / videoWidth < parentHeight / parentWidth) {
+                    width = parentHeight / height * width;
+                    height = parentHeight;
+                }
+            }
         }
         setMeasuredDimension(width, height);
     }

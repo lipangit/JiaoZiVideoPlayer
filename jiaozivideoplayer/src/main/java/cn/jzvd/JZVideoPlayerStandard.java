@@ -552,7 +552,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_TINY:
                 break;
         }
-
     }
 
     public void changeUiToPauseClear() {
@@ -560,11 +559,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
