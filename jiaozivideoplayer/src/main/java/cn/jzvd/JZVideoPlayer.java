@@ -68,7 +68,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static boolean SAVE_PROGRESS = true;
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
 
-    public static int VIDEO_IMAGE_DISPLAY_TYPE = -1;
+    public static int VIDEO_IMAGE_DISPLAY_TYPE = 0;
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER = 0;//default
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT = 1;
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP = 2;
@@ -1065,6 +1065,19 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             if (((ViewGroup) view).indexOfChild(videoPlayer) != -1) {
                 videoPlayer.startWindowTiny();
             }
+        }
+    }
+
+    public static void setTextureViewRotation(int rotation) {
+        if (JZMediaManager.textureView != null) {
+            JZMediaManager.textureView.setRotation(rotation);
+        }
+    }
+
+    public static void setVideoImageDisplayType(int type) {
+        JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE = type;
+        if (JZMediaManager.textureView != null) {
+            JZMediaManager.textureView.requestLayout();
         }
     }
 

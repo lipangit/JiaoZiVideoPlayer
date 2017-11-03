@@ -11,12 +11,35 @@
         android:layout_marginTop="18dp" />
 
     <Button
-        android:id="@+id/rotation_to_180"
+        android:id="@+id/rotation_to_90"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:text="Click to rotation to 180" />
 
+    <Button
+        android:id="@+id/video_image_display_fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="18dp"
+        android:text="Video Image Fill Parent" />
+
+    <Button
+        android:id="@+id/video_image_display_fill_crop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="Video Image Fill Crop" />
+
+    <Button
+        android:id="@+id/video_image_diaplay_original"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="Video Image Original" />
 
 </LinearLayout>
