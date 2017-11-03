@@ -131,8 +131,8 @@ public class JZResizeTextureView extends TextureView {
         if (parentWidth != 0 && parentHeight != 0 && videoWidth != 0 && videoHeight != 0) {
             if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL) {
                 /**原图**/
-                height = mVideoSize.y;
-                width = mVideoSize.x;
+                height = videoHeight;
+                width = videoWidth;
             } else if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP) {
                 /**充满剪切**/
                 if (videoHeight / videoWidth > parentHeight / parentWidth) {
