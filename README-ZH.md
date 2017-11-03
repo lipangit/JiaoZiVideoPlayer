@@ -35,7 +35,7 @@ Q群:490442439 验证信息:jzvd
 
 ## 效果
 
-**[jiaozivideoplayer-6.1.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/6.1.1/jiaozivideoplayer-6.1.1.apk)**
+**[jiaozivideoplayer-6.1.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.1.1/jiaozivideoplayer-6.1.1.apk)**
 
 ![Demo Screenshot][1]
 
