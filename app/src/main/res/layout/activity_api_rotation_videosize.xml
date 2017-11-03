@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:text="Click to rotation to 180" />
+        android:text="Click to rotation to 90" />
 
     <Button
         android:id="@+id/video_image_display_fill_parent"
