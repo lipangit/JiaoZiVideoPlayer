@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.TextureView;
+import android.view.View;
 
 /**
  * <p>参照Android系统的VideoView的onMeasure方法
@@ -50,9 +51,11 @@ public class JZResizeTextureView extends TextureView {
         Log.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
         int viewRotation = (int) getRotation();
 
-        if(getMeasuredWidth()!=0) {
-            mVideoSize.y = mVideoSize.x * getMeasuredHeight() / getMeasuredWidth();
-        }
+        //铺满屏幕
+//        View parent = ((View) getParent());
+//        if (parent.getMeasuredWidth() != 0) {
+//            mVideoSize.y = mVideoSize.x * parent.getMeasuredHeight() / parent.getMeasuredWidth();
+//        }
 
         int videoWidth = mVideoSize.x;
         int videoHeight = mVideoSize.y;
