@@ -50,16 +50,8 @@ public class JZResizeTextureView extends TextureView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Log.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
         int viewRotation = (int) getRotation();
-
-        //铺满屏幕
-//        View parent = ((View) getParent());
-//        if (parent.getMeasuredWidth() != 0) {
-//            mVideoSize.y = mVideoSize.x * parent.getMeasuredHeight() / parent.getMeasuredWidth();
-//        }
-
         int videoWidth = mVideoSize.x;
         int videoHeight = mVideoSize.y;
-        Log.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight + ",viewRotation = " + viewRotation);
 
         // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         if (viewRotation == 90 || viewRotation == 270) {
@@ -125,6 +117,28 @@ public class JZResizeTextureView extends TextureView {
             }
         } else {
             // no size yet, just adopt the given spec sizes
+        }
+
+        //铺满屏幕
+        int parentHeight = ((View) getParent()).getMeasuredHeight();
+        int parentWidth = ((View) getParent()).getMeasuredWidth();
+
+        if (parentWidth != 0 && parentHeight != 0 && videoWidth != 0 && videoHeight != 0) {
+//            height = width * parentHeight / parentWidth;//强制充满
+
+
+
+            //如果 視頻的高度/視頻的寬度 > 屏幕的高度/屏幕的寬度   說明先拉伸寬度，隱藏上下的圖像
+            //如果 視頻的高度/視頻的寬度 > 屏幕的高度/屏幕的寬度   說明先拉伸高度，隱藏左右的圖像
+
+//            if (videoHeight / videoWidth > parentHeight / parentWidth) {
+//                height = parentWidth / width * height;
+//                width = parentWidth;
+//
+//            } else if (videoHeight / videoWidth < parentHeight / parentWidth) {
+//                width = parentHeight / height * width;
+//                height = parentHeight;
+//            }
         }
         setMeasuredDimension(width, height);
     }
