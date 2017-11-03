@@ -67,6 +67,13 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     public static boolean SAVE_PROGRESS = true;
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
+
+    public static int VIDEO_IMAGE_DISPLAY_TYPE = 0;
+    public static final int VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER = 0;//default
+    public static final int VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT = 1;
+    public static final int VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP = 2;
+    public static final int VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL = 3;
+
     public static long CLICK_QUIT_FULLSCREEN_TIME = 0;
     public static long lastAutoFullscreenTime = 0;
     public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {//是否新建个class，代码更规矩，并且变量的位置也很尴尬
@@ -130,6 +137,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public LinkedHashMap urlMap;
     public int currentUrlMapIndex = 0;
     public int positionInList = -1;
+    public int videoRotation = 0;
 
     public JZVideoPlayer(Context context) {
         super(context);
@@ -786,6 +794,9 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onVideoSizeChanged() {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
         if (JZMediaManager.textureView != null) {
+            if (videoRotation != 0) {
+                JZMediaManager.textureView.setRotation(videoRotation);
+            }
             JZMediaManager.textureView.setVideoSize(JZMediaManager.instance().getVideoSize());
         }
     }
@@ -1054,6 +1065,19 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             if (((ViewGroup) view).indexOfChild(videoPlayer) != -1) {
                 videoPlayer.startWindowTiny();
             }
+        }
+    }
+
+    public static void setTextureViewRotation(int rotation) {
+        if (JZMediaManager.textureView != null) {
+            JZMediaManager.textureView.setRotation(rotation);
+        }
+    }
+
+    public static void setVideoImageDisplayType(int type) {
+        JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE = type;
+        if (JZMediaManager.textureView != null) {
+            JZMediaManager.textureView.requestLayout();
         }
     }
 

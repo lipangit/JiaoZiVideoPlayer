@@ -49,6 +49,14 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:text="Extends Normal Activity" />
+
+            <Button
+                android:id="@+id/rotation_and_videosize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:text="Video And VideoSize" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
