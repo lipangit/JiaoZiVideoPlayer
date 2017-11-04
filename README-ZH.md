@@ -38,6 +38,8 @@ Q群:490442439 验证信息:jzvd
 
 ![Demo Screenshot][1]
 
+[列表滑动自动进入小窗的效果](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701)
+
 ## 使用
 
 即便是自定义UI，或者对Library有过修改，也是这五步骤来使用播放器。

@@ -38,6 +38,8 @@ I think the final solution to video in android is `android.media.MediaPlayer`, o
 
 ![Demo Screenshot][1]
 
+[List sliding automatically into the small window effect](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701)
+
 ## Usage
 
 Even the custom UI, or has changed to the Library, is also the five steps to use the player.
