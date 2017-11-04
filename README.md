@@ -49,7 +49,7 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 compile 'cn.jzvd:jiaozivideoplayer:6.1.1'
 ```
 
-[Or download lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.1) not recommended
+Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.1) (not recommended)
 
 2.Add JZVideoPlayer in your layout
 ```xml

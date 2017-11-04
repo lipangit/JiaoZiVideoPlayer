@@ -49,7 +49,7 @@ Q群:490442439 验证信息:jzvd
 compile 'cn.jzvd:jiaozivideoplayer:6.1.1'
 ```
 
-[或直接下载jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.1) 不建议
+或直接下载[jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.1) (不建议)
 
 2.添加布局
 ```xml
