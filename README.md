@@ -17,18 +17,18 @@ Q群:490442439 验证信息:jzvd
 
 ## Features
 
-1. Video fullscreen and float tiny window
-2. Completely custom ui and function
-3. In `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
-4. Gestrues to modify progress and volume
-5. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
-6. It will not disturb or change the playing state when entering or exiting fullscreen
-7. Gravity sensor auto fullscreen
-8. WebView with local video control
-9. [Support https and rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
-10. Less than 110kb
-11. [Press home button will pause video, come back goon play](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/app/src/main/java/cn/jzvd/demo/ApiActivity.java#L117)
-12. Perfect scroll in ListView, and automatic start tiny window
+1. You can completely customize the UI and any function
+2. Support https and rtsp agreement, more agreement please click [here] (https://developer.android.com/guide/topics/media/media-formats.html)
+Less than 110kb
+4. Can achieve full-screen playback, small window playback
+5. The perfect list of sliding judgment
+6. Full-screen work in multiple nested modes like ListView, ViewPager and ListView, ViewPager and Fragment
+7. Can load, pause, play and other normal state into the full screen and exit full screen
+8. A variety of video adaptation screen mode, can be covered full screen, you can cut full screen
+9. Gravity sensing automatically enter full screen
+10. Full screen gestures to modify the progress and volume
+11. Home key to exit the interface to suspend the playback, return to the interface to continue playing
+12. WebView Nested Local Video Controls
 
 I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
 

@@ -15,21 +15,20 @@ Q群:490442439 验证信息:jzvd
 
 [英文文档](https://github.com/lipangit/JiaoZiVideoPlayer) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
-
 ## 主要特点
 
-1. 视频全屏播放和浮层小窗播放
-2. 可以完全自定义UI和功能
-3. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
-4. 手势修改进度和音量
-5. 视频大小的屏幕适配，宽或长至少有两个对边是充满屏幕的，另外两个方向居中
-6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
-7. 重力感应自动全屏
-8. WebView嵌套本地视频控件
-9. [支持https和rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
-10. 小于 110kb
-11. [Home键暂停，返回继续播放](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/app/src/main/java/cn/jzvd/demo/ApiActivity.java#L117)
-12. 完美的列表滑動的判斷，可以滑動進入小窗口
+1. 可以完全自定义UI和任何功能
+2. 支持https和rtsp协议，更多协议请点[这里](https://developer.android.com/guide/topics/media/media-formats.html)
+3. 小于 110kb
+4. 可实现全屏播放，小窗播放
+5. 完美的列表滑动的判断
+6. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
+7. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
+8. 多种视频适配屏幕的方式，可铺满全屏，可以全屏剪裁
+9. 重力感应自动进入全屏
+10. 全屏后手势修改进度和音量
+11. Home键退出界面暂停播放，返回界面继续播放
+12. WebView嵌套本地视频控件
 
 目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
 
