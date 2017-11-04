@@ -4,13 +4,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.AbsListView;
+import android.widget.ListView;
 
 import cn.jzvd.JZVideoPlayer;
 
 /**
- * Created by Nathen on 16/7/31.
+ * Created by Nathen on 2017/10/22.
  */
-public class UIBigChangeActivity extends AppCompatActivity {
+
+public class ActivityTinyWindowListViewNormal extends AppCompatActivity {
+
+    ListView listView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,9 +24,26 @@ public class UIBigChangeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("BigChangeUI");
-        setContentView(R.layout.activity_ui_big_change);
+        getSupportActionBar().setTitle("NormalListViewTinyWindow");
+        setContentView(R.layout.activity_listview_normal_auto_tiny);
 
+        listView = findViewById(R.id.listview);
+        listView.setAdapter(new AdapterVideoList(this,
+                VideoConstant.videoUrls[0],
+                VideoConstant.videoTitles[0],
+                VideoConstant.videoThumbs[0]));
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                JZVideoPlayer.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
+            }
+        });
     }
 
     @Override

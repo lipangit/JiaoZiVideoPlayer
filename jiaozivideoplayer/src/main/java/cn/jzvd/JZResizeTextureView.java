@@ -5,6 +5,7 @@ import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.TextureView;
+import android.view.View;
 
 /**
  * <p>参照Android系统的VideoView的onMeasure方法
@@ -22,15 +23,11 @@ public class JZResizeTextureView extends TextureView {
 
     public JZResizeTextureView(Context context) {
         super(context);
-        init();
+        mVideoSize = new Point(0, 0);
     }
 
     public JZResizeTextureView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
-    }
-
-    private void init() {
         mVideoSize = new Point(0, 0);
     }
 
@@ -55,8 +52,21 @@ public class JZResizeTextureView extends TextureView {
         int viewRotation = (int) getRotation();
         int videoWidth = mVideoSize.x;
         int videoHeight = mVideoSize.y;
-        Log.i(TAG, "videoWidth = " + videoWidth + ", " + "videoHeight = " + videoHeight);
-        Log.i(TAG, "viewRotation = " + viewRotation);
+
+
+        int parentHeight = ((View) getParent()).getMeasuredHeight();
+        int parentWidth = ((View) getParent()).getMeasuredWidth();
+        if (parentWidth != 0 && parentHeight != 0 && videoWidth != 0 && videoHeight != 0) {
+            if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT) {
+                if (viewRotation == 90 || viewRotation == 270) {
+                    int tempSize = parentWidth;
+                    parentWidth = parentHeight;
+                    parentHeight = tempSize;
+                }
+                /**强制充满**/
+                videoHeight = videoWidth * parentHeight / parentWidth;
+            }
+        }
 
         // 如果判断成立，则说明显示的TextureView和本身的位置是有90度的旋转的，所以需要交换宽高参数。
         if (viewRotation == 90 || viewRotation == 270) {
@@ -122,6 +132,27 @@ public class JZResizeTextureView extends TextureView {
             }
         } else {
             // no size yet, just adopt the given spec sizes
+        }
+        if (parentWidth != 0 && parentHeight != 0 && videoWidth != 0 && videoHeight != 0) {
+            if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL) {
+                /**原图**/
+                height = videoHeight;
+                width = videoWidth;
+            } else if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP) {
+                if (viewRotation == 90 || viewRotation == 270) {
+                    int tempSize = parentWidth;
+                    parentWidth = parentHeight;
+                    parentHeight = tempSize;
+                }
+                /**充满剪切**/
+                if (videoHeight / videoWidth > parentHeight / parentWidth) {
+                    height = parentWidth / width * height;
+                    width = parentWidth;
+                } else if (videoHeight / videoWidth < parentHeight / parentWidth) {
+                    width = parentHeight / height * width;
+                    height = parentHeight;
+                }
+            }
         }
         setMeasuredDimension(width, height);
     }

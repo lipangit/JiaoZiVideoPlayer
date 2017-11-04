@@ -14,26 +14,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <cn.jzvd.demo.CustomView.MyJZVideoPlayerStandard
+            <cn.jzvd.JZVideoPlayerStandard
                 android:id="@+id/jz_video"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
-
-            <Button
-                android:id="@+id/api"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="Api" />
-
-            <Button
-                android:id="@+id/listview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="ListView" />
 
             <Button
                 android:id="@+id/tiny_window"
@@ -41,24 +25,40 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="Tiny Window" />
+                android:text="Start Tiny Window" />
 
             <Button
-                android:id="@+id/direct_play"
+                android:id="@+id/auto_tiny_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:text="Direct Play" />
+                android:text="Normal ListView TinyWindow" />
 
             <Button
-                android:id="@+id/webview"
+                android:id="@+id/auto_tiny_list_view_multi_holder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                android:text="WebView" />
+                android:text="MultiHolder ListView TinyWindow" />
+
+            <Button
+                android:id="@+id/auto_tiny_list_view_recycleview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="RecycleView TinyWindow" />
+
+            <Button
+                android:id="@+id/auto_tiny_list_view_recycleview_multiholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="RecycleView MultiHolder TinyWindow" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

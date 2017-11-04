@@ -8,8 +8,8 @@ android {
         applicationId "cn.jzvd.demo"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 69
-        versionName "6.1.1"
+        versionCode 70
+        versionName "6.1.2"
     }
     signingConfigs {
         releaseConfig {
@@ -32,15 +32,15 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:27.0.0'
-    compile project(':jiaozivideoplayer')
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.android.support:appcompat-v7:27.0.0'
+    implementation project(':jiaozivideoplayer')
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 
-    compile 'com.android.support:recyclerview-v7:27.0.0'
+    implementation 'com.android.support:recyclerview-v7:27.0.0'
 }

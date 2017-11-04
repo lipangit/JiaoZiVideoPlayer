@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 69
-        versionName "6.1.1"
+        versionCode 70
+        versionName "6.1.2"
     }
     buildTypes {
         release {
@@ -22,7 +22,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     provided 'com.android.support:appcompat-v7:27.0.0'
 }

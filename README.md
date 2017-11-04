@@ -2,38 +2,43 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.1.1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.1.2-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-* This project needs translators, you can change everything editing readme, release note, formate variable and annotation.
+# [斗鱼直播](https://www.douyu.com/1667893)
 
-#### Ambition is becoming the most widely used video playback control. Q群:490442439 验证信息:jzvd
+每天下午两点开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复，关注数到100的时候抽奖100元(两个50)
 
-I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
+Q群:490442439 验证信息:jzvd
 
 [中文文档](README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [VideoTutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
 ## Features
 
-1. Video fullscreen and float tiny window
-2. Completely custom ui and function
-3. In `ListView`、`ViewPager` and `ListView`、`ViewPager` and `Fragment` and other nested fragments and views situation, it works well
-4. Gestrues to modify progress and volume
-5. Adaptive to the screen size, where at least the width or length of the video is adaptive while the other  is centered on the screen
-6. It will not disturb or change the playing state when entering or exiting fullscreen
-7. Gravity sensor auto fullscreen
-8. WebView with local video control
-9. [Support https and rtsp](https://developer.android.com/guide/topics/media/media-formats.html)
-10. Less than 110kb
-11. [Press home button will pause vidoe, come back goon play](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/app/src/main/java/cn/jzvd/demo/ApiActivity.java#L117)
+1. You can completely customize the UI and any function
+2. Support https and rtsp agreement, more agreement please click [here](https://developer.android.com/guide/topics/media/media-formats.html)
+3. Less than 110kb
+4. Can achieve full-screen playback, small window playback
+5. The perfect list of sliding judgment
+6. Full-screen work in multiple nested modes like ListView, ViewPager and ListView, ViewPager and Fragment
+7. Can load, pause, play and other normal state into the full screen and exit full screen
+8. A variety of video adaptation screen mode, can be covered full screen, you can cut full screen
+9. Gravity sensing automatically enter full screen
+10. Full screen gestures to modify the progress and volume
+11. Home key to exit the interface to suspend the playback, return to the interface to continue playing
+12. WebView Nested Local Video Controls
+
+I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
 
 ## Effect
 
-**[jiaozivideoplayer-6.1.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/6.1.1/jiaozivideoplayer-6.1.1.apk)**
+**[jiaozivideoplayer-6.1.2.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.1.2/jiaozivideoplayer-6.1.2.apk)**
 
 ![Demo Screenshot][1]
+
+[List sliding automatically into the small window effect](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701)
 
 ## Usage
 
@@ -41,10 +46,10 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.1.1'
+compile 'cn.jzvd:jiaozivideoplayer:6.1.2'
 ```
 
-[Or download lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.1) not recommended
+Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.2) (not recommended)
 
 2.Add JZVideoPlayer in your layout
 ```xml
@@ -112,18 +117,15 @@ Need translator to make English native.
 
 * [Group management](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E7%BE%A4%E7%AE%A1%E7%90%86)
 
-[熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
-
-[Lionet](https://github.com/Lionet6?tab=repositories) QQ:2950527715
-
-[montauk](https://github.com/hanmeimei888) QQ:958489121
-
-[张展硕]() QQ:229431468
+1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
+2. [Lionet](https://github.com/Lionet6?tab=repositories) QQ:2950527715
+3. [montauk](https://github.com/hanmeimei888) QQ:958489121
+4. [张展硕]() QQ:229431468
 
 * [Questions and Answers](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94)
 
-[熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
-[の伤也快乐](https://github.com/jmhjmh) QQ:466278628
+1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
+2. [の伤也快乐](https://github.com/jmhjmh) QQ:466278628
 
 * [Wiki finishing](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#wiki%E6%95%B4%E7%90%86)
 

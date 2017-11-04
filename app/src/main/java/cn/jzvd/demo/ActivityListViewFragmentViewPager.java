@@ -17,8 +17,8 @@ import cn.jzvd.JZVideoPlayer;
  * Created by Nathen
  * On 2016/02/07 01:01
  */
-public class ListViewFragmentViewPagerActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
-    List<DemoFragment> fragmentList = new ArrayList<>();
+public class ActivityListViewFragmentViewPager extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+    List<FragmentDemo> fragmentList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,14 +28,14 @@ public class ListViewFragmentViewPagerActivity extends AppCompatActivity impleme
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("ListViewFragmentViewPagerActivity");
+        getSupportActionBar().setTitle("ActivityListViewFragmentViewPager");
 
-        fragmentList.add(new DemoFragment().setIndex(0));
-        fragmentList.add(new DemoFragment().setIndex(1));
-        fragmentList.add(new DemoFragment().setIndex(2));
+        fragmentList.add(new FragmentDemo().setIndex(0));
+        fragmentList.add(new FragmentDemo().setIndex(1));
+        fragmentList.add(new FragmentDemo().setIndex(2));
 
         MyAdapter myAdapter = new MyAdapter(getSupportFragmentManager());
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        ViewPager viewPager = findViewById(R.id.viewPager);
         viewPager.setAdapter(myAdapter);
         viewPager.setOnPageChangeListener(this);
     }

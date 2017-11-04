@@ -18,10 +18,10 @@ import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 
 /**
- * Created by Nathen
- * On 2016/05/23 21:34
+ * Created by Nathen on 2017/10/31.
  */
-public class ListViewMultiHolderActivity extends AppCompatActivity {
+public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
+
     ListView listView;
     VideoListAdapter mAdapter;
 
@@ -33,10 +33,10 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("MultiHolderListView");
+        getSupportActionBar().setTitle("MultiHolderListViewTinyWindow");
 
 
-        listView = (ListView) findViewById(R.id.listview);
+        listView = findViewById(R.id.listview);
         mAdapter = new VideoListAdapter(this);
         listView.setAdapter(mAdapter);
 
@@ -48,7 +48,7 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                JZVideoPlayer.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                JZVideoPlayer.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
     }
@@ -108,31 +108,31 @@ public class ListViewMultiHolderActivity extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             if (getItemViewType(position) == 1) {
                 VideoHolder viewHolder;
-                if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoHolder) {
+                if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoListAdapter.VideoHolder) {
                     viewHolder = (VideoHolder) convertView.getTag();
                 } else {
                     viewHolder = new VideoHolder();
                     convertView = mInflater.inflate(R.layout.item_videoview, null);
-                    viewHolder.jzVideoPlayer = (JZVideoPlayerStandard) convertView.findViewById(R.id.videoplayer);
+                    viewHolder.jzVideoPlayer = convertView.findViewById(R.id.videoplayer);
                     convertView.setTag(viewHolder);
                 }
 
                 viewHolder.jzVideoPlayer.setUp(
-                        VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_LAYOUT_LIST,
+                        VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST,
                         VideoConstant.videoTitles[0][position]);
                 viewHolder.jzVideoPlayer.positionInList = position;
-                Picasso.with(ListViewMultiHolderActivity.this)
+                Picasso.with(ActivityTinyWindowListViewMultiHolder.this)
                         .load(VideoConstant.videoThumbs[0][position])
                         .into(viewHolder.jzVideoPlayer.thumbImageView);
             } else {
                 TextViewHolder textViewHolder;
-                if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof TextViewHolder) {
+                if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoListAdapter.TextViewHolder) {
                     textViewHolder = (TextViewHolder) convertView.getTag();
                 } else {
                     textViewHolder = new TextViewHolder();
                     LayoutInflater mInflater = LayoutInflater.from(context);
                     convertView = mInflater.inflate(R.layout.item_textview, null);
-                    textViewHolder.textView = (TextView) convertView.findViewById(R.id.textview);
+                    textViewHolder.textView = convertView.findViewById(R.id.textview);
                     convertView.setTag(textViewHolder);
                 }
             }

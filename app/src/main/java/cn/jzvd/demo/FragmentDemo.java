@@ -10,17 +10,16 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.demo.R;
 
 /**
  * Created by Nathen on 2017/6/9.
  */
-public class DemoFragment extends Fragment {
+public class FragmentDemo extends Fragment {
 
     ListView listView;
     int index;
 
-    public DemoFragment setIndex(int index) {
+    public FragmentDemo setIndex(int index) {
         this.index = index;
         return this;
     }
@@ -34,7 +33,7 @@ public class DemoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInastanceState) {
         listView = (ListView) inflater.inflate(R.layout.layout_list, container, false);
-        listView.setAdapter(new VideoListAdapter(getActivity(),
+        listView.setAdapter(new AdapterVideoList(getActivity(),
                 VideoConstant.videoUrls[index],
                 VideoConstant.videoTitles[index],
                 VideoConstant.videoThumbs[index]));
@@ -46,7 +45,7 @@ public class DemoFragment extends Fragment {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                JZVideoPlayer.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                JZVideoPlayer.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
         return listView;

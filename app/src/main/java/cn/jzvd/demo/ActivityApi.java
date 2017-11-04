@@ -22,15 +22,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerSimple;
 import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ApiActivity extends AppCompatActivity implements View.OnClickListener {
-    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity;
-    JZVideoPlayerSimple mJzVideoPlayerSimple;
+public class ActivityApi extends AppCompatActivity implements View.OnClickListener {
+    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity, mRationAndVideoSize;
     JZVideoPlayerStandard mJzVideoPlayerStandard;
     JZVideoPlayer.JZAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
@@ -45,28 +43,26 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         getSupportActionBar().setTitle("Api");
         setContentView(R.layout.activity_api);
 
-        mSmallChange = (Button) findViewById(R.id.small_change);
-        mBigChange = (Button) findViewById(R.id.big_change);
-        mOrientation = (Button) findViewById(R.id.orientation);
-        mExtendsNormalActivity = (Button) findViewById(R.id.extends_normal_activity);
+        mSmallChange = findViewById(R.id.small_change);
+        mBigChange = findViewById(R.id.big_change);
+        mOrientation = findViewById(R.id.orientation);
+        mExtendsNormalActivity = findViewById(R.id.extends_normal_activity);
+        mRationAndVideoSize = findViewById(R.id.rotation_and_videosize);
 
         mSmallChange.setOnClickListener(this);
         mBigChange.setOnClickListener(this);
         mOrientation.setOnClickListener(this);
         mExtendsNormalActivity.setOnClickListener(this);
-
-        mJzVideoPlayerSimple = (JZVideoPlayerSimple) findViewById(R.id.simple_demo);
-        mJzVideoPlayerSimple.setUp("http://devimages.apple.com/iphone/samples/bipbop/gear1/prog_index.m3u8"
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子在家吗");
+        mRationAndVideoSize.setOnClickListener(this);
 
 
-        mJzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.jz_video);
+        mJzVideoPlayerStandard = findViewById(R.id.jz_video);
         LinkedHashMap map = new LinkedHashMap();
         map.put("高清", VideoConstant.videoUrls[0][9]);
         map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrlList[0]);
         mJzVideoPlayerStandard.setUp(map, 2
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
+                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzVideoPlayerStandard.thumbImageView);
@@ -79,10 +75,10 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
 //        mJzVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
-//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
+//                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
         /** Play video in assert, but not work now **/
 //        mJzVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
-//                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子不信");
+//                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
 
         /** ImageLoader **/
 //        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],
@@ -101,17 +97,20 @@ public class ApiActivity extends AppCompatActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.small_change:
-                startActivity(new Intent(ApiActivity.this, UISmallChangeActivity.class));
+                startActivity(new Intent(ActivityApi.this, ActivityApiUISmallChange.class));
                 break;
             case R.id.big_change:
-                Toast.makeText(ApiActivity.this, "Comming Soon", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(ApiActivity.this, UIBigChangeActivity.class));
+                Toast.makeText(ActivityApi.this, "Comming Soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(ActivityApi.this, ActivityApiUIBigChange.class));
                 break;
             case R.id.orientation:
-                startActivity(new Intent(ApiActivity.this, OrientationActivity.class));
+                startActivity(new Intent(ActivityApi.this, ActivityApiOrientation.class));
                 break;
             case R.id.extends_normal_activity:
-                startActivity(new Intent(ApiActivity.this, ExtendsNormalActivity.class));
+                startActivity(new Intent(ActivityApi.this, ActivityApiExtendsNormal.class));
+                break;
+            case R.id.rotation_and_videosize:
+                startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
                 break;
         }
     }

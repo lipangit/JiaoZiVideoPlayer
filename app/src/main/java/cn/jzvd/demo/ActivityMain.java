@@ -19,7 +19,7 @@ import cn.jzvd.demo.CustomView.MyJZVideoPlayerStandard;
 /**
  * Created by Nathen on 16/7/22.
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class ActivityMain extends AppCompatActivity implements View.OnClickListener {
 
 
     MyJZVideoPlayerStandard myJZVideoPlayerStandard;
@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mTinyWindow = (Button) findViewById(R.id.tiny_window);
-        mDirectFullscreen = (Button) findViewById(R.id.direct_fullscreen);
-        mListView = (Button) findViewById(R.id.listview);
-        mApi = (Button) findViewById(R.id.api);
-        mWebView = (Button) findViewById(R.id.webview);
+        mTinyWindow = findViewById(R.id.tiny_window);
+        mDirectFullscreen = findViewById(R.id.direct_play);
+        mListView = findViewById(R.id.listview);
+        mApi = findViewById(R.id.api);
+        mWebView = findViewById(R.id.webview);
 
         mTinyWindow.setOnClickListener(this);
         mListView.setOnClickListener(this);
@@ -43,9 +43,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mApi.setOnClickListener(this);
         mWebView.setOnClickListener(this);
 
-        myJZVideoPlayerStandard = (MyJZVideoPlayerStandard) findViewById(R.id.jz_video);
+        myJZVideoPlayerStandard = findViewById(R.id.jz_video);
         myJZVideoPlayerStandard.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
-                , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子快长大");
+                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子快长大");
         Picasso.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
                 .into(myJZVideoPlayerStandard.thumbImageView);
@@ -70,20 +70,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tiny_window:
-                myJZVideoPlayerStandard.startWindowTiny();
-                break;
-            case R.id.direct_fullscreen:
-                startActivity(new Intent(MainActivity.this, DirectFullscreenActivity.class));
+            case R.id.api:
+                startActivity(new Intent(ActivityMain.this, ActivityApi.class));
                 break;
             case R.id.listview:
-                startActivity(new Intent(MainActivity.this, ListViewActivity.class));
+                startActivity(new Intent(ActivityMain.this, ActivityListView.class));
                 break;
-            case R.id.api:
-                startActivity(new Intent(MainActivity.this, ApiActivity.class));
+            case R.id.tiny_window:
+                startActivity(new Intent(ActivityMain.this, ActivityTinyWindow.class));
+                break;
+            case R.id.direct_play:
+                startActivity(new Intent(ActivityMain.this, ActivityDirectPlay.class));
                 break;
             case R.id.webview:
-                startActivity(new Intent(MainActivity.this, WebViewActivity.class));
+                startActivity(new Intent(ActivityMain.this, ActivityWebView.class));
                 break;
         }
     }

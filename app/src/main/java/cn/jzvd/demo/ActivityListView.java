@@ -11,8 +11,8 @@ import android.widget.Button;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ListViewActivity extends AppCompatActivity implements View.OnClickListener {
-    Button mNormal, mNormalAutoTiny, mViewPager, mMultiHolder, mRecyleView;
+public class ActivityListView extends AppCompatActivity implements View.OnClickListener {
+    Button mNormal, mViewPager, mMultiHolder, mRecyleView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,14 +24,12 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
         getSupportActionBar().setTitle("ListView");
         setContentView(R.layout.activity_listview);
 
-        mNormal = (Button) findViewById(R.id.normal);
-        mNormalAutoTiny = (Button) findViewById(R.id.normal_auto_tiny);
-        mViewPager = (Button) findViewById(R.id.listview_fragment_viewpager);
-        mMultiHolder = (Button) findViewById(R.id.multiholder);
-        mRecyleView = (Button) findViewById(R.id.recyleview);
+        mNormal = findViewById(R.id.normal);
+        mViewPager = findViewById(R.id.listview_fragment_viewpager);
+        mMultiHolder = findViewById(R.id.multiholder);
+        mRecyleView = findViewById(R.id.recyleview);
 
         mNormal.setOnClickListener(this);
-        mNormalAutoTiny.setOnClickListener(this);
         mViewPager.setOnClickListener(this);
         mMultiHolder.setOnClickListener(this);
         mRecyleView.setOnClickListener(this);
@@ -42,19 +40,16 @@ public class ListViewActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.normal:
-                startActivity(new Intent(ListViewActivity.this, ListViewNormalActivity.class));
-                break;
-            case R.id.normal_auto_tiny:
-                startActivity(new Intent(ListViewActivity.this, ListViewNormalAutoTinyActivity.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewNormal.class));
                 break;
             case R.id.listview_fragment_viewpager:
-                startActivity(new Intent(ListViewActivity.this, ListViewFragmentViewPagerActivity.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewFragmentViewPager.class));
                 break;
             case R.id.multiholder:
-                startActivity(new Intent(ListViewActivity.this, ListViewMultiHolderActivity.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewMultiHolder.class));
                 break;
             case R.id.recyleview:
-                startActivity(new Intent(ListViewActivity.this, RecyclerViewNormalActivity.class));
+                startActivity(new Intent(ActivityListView.this, ActivityListViewRecyclerView.class));
                 break;
         }
     }
