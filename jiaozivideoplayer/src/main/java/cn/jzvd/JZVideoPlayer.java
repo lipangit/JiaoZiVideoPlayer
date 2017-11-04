@@ -1027,8 +1027,12 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null &&
                         JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
-                    Log.e(TAG, "onScroll: out screen");
-                    JZVideoPlayerManager.getCurrentJzvd().startWindowTiny();
+                    if (JZVideoPlayerManager.getCurrentJzvd().currentState == JZVideoPlayer.CURRENT_STATE_PAUSE) {
+                        JZVideoPlayer.releaseAllVideos();
+                    } else {
+                        Log.e(TAG, "onScroll: out screen");
+                        JZVideoPlayerManager.getCurrentJzvd().startWindowTiny();
+                    }
                 }
             } else {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null &&
@@ -1063,7 +1067,11 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (JZVideoPlayerManager.getCurrentJzvd() != null && JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
             JZVideoPlayer videoPlayer = JZVideoPlayerManager.getCurrentJzvd();
             if (((ViewGroup) view).indexOfChild(videoPlayer) != -1) {
-                videoPlayer.startWindowTiny();
+                if (videoPlayer.currentState == JZVideoPlayer.CURRENT_STATE_PAUSE) {
+                    JZVideoPlayer.releaseAllVideos();
+                } else {
+                    videoPlayer.startWindowTiny();
+                }
             }
         }
     }
