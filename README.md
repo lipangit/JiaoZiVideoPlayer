@@ -18,7 +18,7 @@ Q群:490442439 验证信息:jzvd
 ## Features
 
 1. You can completely customize the UI and any function
-2. Support https and rtsp agreement, more agreement please click [here] (https://developer.android.com/guide/topics/media/media-formats.html)
+2. Support https and rtsp agreement, more agreement please click [here](https://developer.android.com/guide/topics/media/media-formats.html)
 3. Less than 110kb
 4. Can achieve full-screen playback, small window playback
 5. The perfect list of sliding judgment
