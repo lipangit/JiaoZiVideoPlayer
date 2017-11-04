@@ -19,7 +19,7 @@ Q群:490442439 验证信息:jzvd
 
 1. You can completely customize the UI and any function
 2. Support https and rtsp agreement, more agreement please click [here] (https://developer.android.com/guide/topics/media/media-formats.html)
-Less than 110kb
+3. Less than 110kb
 4. Can achieve full-screen playback, small window playback
 5. The perfect list of sliding judgment
 6. Full-screen work in multiple nested modes like ListView, ViewPager and ListView, ViewPager and Fragment
