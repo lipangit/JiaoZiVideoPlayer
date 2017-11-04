@@ -115,18 +115,15 @@ protected void onPause() {
 
 * [群管理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E7%BE%A4%E7%AE%A1%E7%90%86)
 
-[熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
-
-[Lionet](https://github.com/Lionet6?tab=repositories) QQ:2950527715
-
-[montauk](https://github.com/hanmeimei888) QQ:958489121
-
-[张展硕]() QQ:229431468
+1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
+2. [Lionet](https://github.com/Lionet6?tab=repositories) QQ:2950527715
+3. [montauk](https://github.com/hanmeimei888) QQ:958489121
+4. [张展硕]() QQ:229431468
 
 * [问题解答](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94)
 
-[熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
-[の伤也快乐](https://github.com/jmhjmh) QQ:466278628
+1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
+2. [の伤也快乐](https://github.com/jmhjmh) QQ:466278628
 
 * [wiki整理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#wiki%E6%95%B4%E7%90%86)
 
