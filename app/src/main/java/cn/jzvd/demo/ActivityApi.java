@@ -66,12 +66,12 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzVideoPlayerStandard.thumbImageView);
-//        mJzVideoPlayerStandard.loop = true;
+        //mJzVideoPlayerStandard.loop = true;
+        //JZVideoPlayer.SAVE_PROGRESS = false;
         mJzVideoPlayerStandard.headData = new HashMap<>();
         mJzVideoPlayerStandard.headData.put("key", "value");
 
 
-//        JZVideoPlayer.SAVE_PROGRESS = false;
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
 //        mJzVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
