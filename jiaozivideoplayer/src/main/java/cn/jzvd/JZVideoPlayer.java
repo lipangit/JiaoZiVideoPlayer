@@ -546,9 +546,9 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZMediaManager.CURRENT_PLAYING_URL = JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex);
         JZMediaManager.CURRENT_PLING_LOOP = loop;
         JZMediaManager.MAP_HEADER_DATA = headData;
+        JZMediaManager.instance().positionInList = positionInList;
         onStatePreparing();
         JZVideoPlayerManager.setFirstFloor(this);
-        JZMediaManager.instance().positionInList = positionInList;
     }
 
 
@@ -701,7 +701,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN || currentScreen == SCREEN_WINDOW_TINY) {
             backPress();
         }
-        JZMediaManager.instance().mediaPlayer.release();
+        JZMediaManager.instance().releaseMediaPlayer();
         JZUtils.saveProgress(getContext(), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex), 0);
     }
 

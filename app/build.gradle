@@ -38,9 +38,9 @@ dependencies {
     implementation project(':jiaozivideoplayer')
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
     implementation 'com.android.support:recyclerview-v7:27.0.0'
 }

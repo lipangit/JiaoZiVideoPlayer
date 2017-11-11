@@ -31,6 +31,8 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
     public static String CURRENT_PLAYING_URL;
     public static boolean CURRENT_PLING_LOOP;
     public static Map<String, String> MAP_HEADER_DATA;
+    public int positionInList = -1;
+
     private static JZMediaManager JZMediaManager;
     public MediaPlayer mediaPlayer = new MediaPlayer();
     public int currentVideoWidth = 0;
@@ -38,7 +40,6 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
     HandlerThread mMediaHandlerThread;
     MediaHandler mMediaHandler;
     Handler mainThreadHandler;
-    public int positionInList = -1;
 
     public JZMediaManager() {
         mMediaHandlerThread = new HandlerThread(TAG);
