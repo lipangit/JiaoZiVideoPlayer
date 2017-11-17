@@ -149,6 +149,31 @@ public class JZUtils {
         }
     }
 
+    public static Object getCurrentFromDataSource(Object[] dataSourceObjects, int index) {
+        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
+        if (map != null && map.size() > 0) {
+            return getValueFromLinkedMap1(map, index);
+        }
+        return null;
+    }
+
+    public static Object getValueFromLinkedMap1(LinkedHashMap<String, Object> map, int index) {
+        int currentIndex = 0;
+        for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
+            Object key = it.next();
+            if (currentIndex == index) {
+                return map.get(key);
+            }
+            currentIndex++;
+        }
+        return null;
+    }
+
+    public static boolean dataSourceObjectsContainsUri() {
+
+        return false;
+    }
+
     public static String getCurrentUrlFromMap(LinkedHashMap<String, String> map, int index) {
         if (map.size() == 1) {
             return getValueFromLinkedMap(map, index);

@@ -34,7 +34,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:27.0.0'
+    implementation 'com.android.support:appcompat-v7:27.0.1'
     implementation project(':jiaozivideoplayer')
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
@@ -42,5 +42,5 @@ dependencies {
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 
-    implementation 'com.android.support:recyclerview-v7:27.0.0'
+    implementation 'com.android.support:recyclerview-v7:27.0.1'
 }

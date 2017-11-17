@@ -134,7 +134,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     protected int mGestureDownVolume;
     protected float mGestureDownBrightness;
     protected int mSeekTimePosition;
-    public LinkedHashMap urlMap;
+    public Object[] dataSourceObjects;//这个参数原封不动直接通过JZMeidaManager传给JZMediaInterface。
+    // 取得当前url，取得urlmap，这个要从jzMediaManager中取得
     public int currentUrlMapIndex = 0;
     public int positionInList = -1;
     public int videoRotation = 0;
@@ -328,12 +329,14 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void setUp(String url, int screen, Object... objects) {
         LinkedHashMap map = new LinkedHashMap();
         map.put(URL_KEY_DEFAULT, url);
-        setUp(map, 0, screen, objects);
+        Object[] dataSourceObjects = new Object[1];
+        dataSourceObjects[0] = map;
+        setUp(dataSourceObjects, 0, screen, objects);
     }
 
-    public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
-        if (this.urlMap != null && !TextUtils.isEmpty(JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex)) &&
-                TextUtils.equals(JZUtils.getCurrentUrlFromMap(this.urlMap, currentUrlMapIndex), JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
+    public void setUp(Object[] dataSourceObjects, int defaultUrlMapIndex, int screen, Object... objects) {
+        if (this.dataSourceObjects[0] != null && JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex) != null &&
+                JZUtils.getCurrentFromDataSource(this.dataSourceObjects, currentUrlMapIndex).equals(JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex))) {
             return;
         }
         if (isCurrentJZVD() && urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {
@@ -357,11 +360,10 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             }
         } else if (!isCurrentJZVD() && !urlMap.containsValue(JZMediaManager.CURRENT_PLAYING_URL)) {
         }
-        this.urlMap = urlMap;
+        this.dataSourceObjects = dataSourceObjects;
         this.currentUrlMapIndex = defaultUrlMapIndex;
         this.currentScreen = screen;
         this.objects = objects;
-        this.headData = null;
         onStateNormal();
 
     }

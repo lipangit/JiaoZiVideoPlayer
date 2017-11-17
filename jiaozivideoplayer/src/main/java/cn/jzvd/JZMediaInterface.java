@@ -11,33 +11,28 @@ import java.util.Map;
  */
 public abstract class JZMediaInterface {
 
-    public static JZResizeTextureView textureView;
-    public static SurfaceTexture savedSurfaceTexture;
-    public static Surface surface;
 
-    public static String CURRENT_PLAYING_URL;
-    public static boolean CURRENT_PLING_LOOP;
-    public static Map<String, String> MAP_HEADER_DATA;
-    public static int positionInList = -1;
+    public abstract void setDataSource(Object[] dataSourceObjects);
 
+    public abstract void getCurrentDataSource(Object[] dataSourceObjects, int currentUrlMapIndex);
 
-    abstract void setDataSource();
+    public abstract Object[] getDataSource();
 
-    abstract void start();
+    public abstract void start();
 
-    abstract void prepare();
+    public abstract void prepare();
 
-    abstract void pause();
+    public abstract void pause();
 
-    abstract void isPlaying();
+    public abstract void isPlaying();
 
-    abstract void seekTo();
+    public abstract void seekTo();
 
-    abstract void release();
+    public abstract void release();
 
-    abstract void getCurrentPosition();
+    public abstract void getCurrentPosition();
 
-    abstract void getDuration();
+    public abstract void getDuration();
 
 
 }

@@ -1,11 +1,12 @@
-package cn.jzvd;
+package cn.jzvd.demo.CustomMediaPlayer;
+
+import cn.jzvd.JZMediaInterface;
 
 /**
- * Created by Nathen on 2017/11/8.
- * 实现系统的播放引擎
+ * Created by Nathen on 2017/11/18.
  */
-public class JZMediaSystem extends JZMediaInterface {
 
+public class JZMediaIjkplayer extends JZMediaInterface {
     @Override
     public void setDataSource(Object[] dataSourceObjects) {
 
