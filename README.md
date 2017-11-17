@@ -30,7 +30,7 @@ Q群:490442439 验证信息:jzvd
 11. Home key to exit the interface to suspend the playback, return to the interface to continue playing
 12. WebView Nested Local Video Controls
 
-I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
+For small and medium-sized companies, I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
 
 ## Effect
 
