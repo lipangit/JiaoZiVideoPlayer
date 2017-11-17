@@ -32,7 +32,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
     public static boolean CURRENT_PLING_LOOP;
     public static Map<String, String> MAP_HEADER_DATA;
     private static JZMediaManager JZMediaManager;
-    public MediaPlayer mediaPlayer = new MediaPlayer();
+    public MediaPlayer mediaPlayer;
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
     HandlerThread mMediaHandlerThread;
@@ -203,7 +203,6 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
                     try {
                         currentVideoWidth = 0;
                         currentVideoHeight = 0;
-                        mediaPlayer.release();
                         mediaPlayer = new MediaPlayer();
                         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                         mediaPlayer.setLooping(CURRENT_PLING_LOOP);
@@ -232,7 +231,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
 //                    CURRENT_PLAYING_URL = null;
 //                    CURRENT_PLING_LOOP = false;
 //                    MAP_HEADER_DATA = null;
-                    mediaPlayer.release();
+                    if (mediaPlayer != null) mediaPlayer.release();
                     break;
             }
         }
