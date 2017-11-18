@@ -24,6 +24,6 @@ public interface JZUserAction {
     int ON_TOUCH_SCREEN_SEEK_VOLUME = 11;
     int ON_TOUCH_SCREEN_SEEK_POSITION = 12;
 
-    void onEvent(int type, String url, int screen, Object... objects);
+    void onEvent(int type, Object url, int screen, Object... objects);
 
 }

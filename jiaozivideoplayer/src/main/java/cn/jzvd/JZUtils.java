@@ -169,32 +169,37 @@ public class JZUtils {
         return null;
     }
 
-    public static boolean dataSourceObjectsContainsUri() {
-
+    public static boolean dataSourceObjectsContainsUri(Object[] dataSourceObjects, Object object) {
+        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
+        if (map != null) {
+            return map.containsValue(object);
+        }
         return false;
     }
 
-    public static String getCurrentUrlFromMap(LinkedHashMap<String, String> map, int index) {
-        if (map.size() == 1) {
-            return getValueFromLinkedMap(map, index);
-        } else {
-            return getValueFromLinkedMap(map, index);
-        }
-    }
+    //------------old------------
+//    public static String getCurrentUrlFromMap(LinkedHashMap<String, String> map, int index) {
+//        if (map.size() == 1) {
+//            return getValueFromLinkedMap(map, index);
+//        } else {
+//            return getValueFromLinkedMap(map, index);
+//        }
+//    }
 
-    public static String getValueFromLinkedMap(LinkedHashMap<String, String> map, int index) {
-        int currentIndex = 0;
-        for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
-            Object key = it.next();
-            if (currentIndex == index) {
-                return map.get(key);
-            }
-            currentIndex++;
-        }
-        return null;
-    }
+//    public static String getValueFromLinkedMap(LinkedHashMap<String, String> map, int index) {
+//        int currentIndex = 0;
+//        for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
+//            Object key = it.next();
+//            if (currentIndex == index) {
+//                return map.get(key);
+//            }
+//            currentIndex++;
+//        }
+//        return null;
+//    }
 
-    public static String getKeyFromLinkedMap(LinkedHashMap<String, String> map, int index) {
+    public static String getKeyFromDataSource(Object[] dataSourceObjects, int index) {
+        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
         int currentIndex = 0;
         for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
             Object key = it.next();

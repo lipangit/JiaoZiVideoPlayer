@@ -7,11 +7,6 @@ package cn.jzvd;
 public class JZMediaSystem extends JZMediaInterface {
 
     @Override
-    public void setDataSource(Object[] dataSourceObjects) {
-
-    }
-
-    @Override
     public void start() {
 
     }

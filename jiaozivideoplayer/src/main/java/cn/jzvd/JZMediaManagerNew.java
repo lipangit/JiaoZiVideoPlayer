@@ -14,21 +14,33 @@ public class JZMediaManagerNew {
     public static JZResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
     public static Surface surface;
+    public int positionInList = -1;
+    public JZMediaInterface jzMediaInterface;
 
-    public static JZMediaInterface jzMediaInterface;
+    public static JZMediaManagerNew jzMediaManagerNew;
+
+    public static JZMediaManagerNew instance() {
+        if (jzMediaManagerNew == null) {
+            jzMediaManagerNew = new JZMediaManagerNew();
+        }
+        return jzMediaManagerNew;
+    }
 
     public static void setDataSource(Object[] dataSourceObjects) {
-        jzMediaInterface.setDataSource(dataSourceObjects);
+        instance().jzMediaInterface.dataSourceObjects = dataSourceObjects;
     }
 
     public static Object[] getDataSource() {
-        return jzMediaInterface.getDataSource();
+        return instance().jzMediaInterface.dataSourceObjects;
+    }
+
+    public static void setCurrentDataSource(Object currentDataSource) {
+        instance().jzMediaInterface.currentDataSource = currentDataSource;
     }
 
     //正在播放的url或者uri
     public static Object getCurrentDataSource() {
-
-        return null;
+        return instance().jzMediaInterface.currentDataSource;
     }
 
 }

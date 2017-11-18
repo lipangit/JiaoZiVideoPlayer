@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -121,8 +120,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         clarity.setOnClickListener(this);
     }
 
-    public void setUp(LinkedHashMap urlMap, int defaultUrlMapIndex, int screen, Object... objects) {
-        super.setUp(urlMap, defaultUrlMapIndex, screen, objects);
+    public void setUp(Object[] dataSourceObjects, int defaultUrlMapIndex, int screen, Object... objects) {
+        super.setUp(dataSourceObjects, defaultUrlMapIndex, screen, objects);
         if (objects.length == 0) return;
         titleTextView.setText(objects[0].toString());
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
@@ -130,10 +129,10 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             backButton.setVisibility(View.VISIBLE);
             tinyBackImageView.setVisibility(View.INVISIBLE);
             batteryTimeLayout.setVisibility(View.VISIBLE);
-            if (urlMap.size() == 1) {
+            if (((LinkedHashMap) dataSourceObjects[0]).size() == 1) {
                 clarity.setVisibility(GONE);
             } else {
-                clarity.setText(JZUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
+                clarity.setText(JZUtils.getKeyFromDataSource(dataSourceObjects, currentUrlMapIndex));
                 clarity.setVisibility(View.VISIBLE);
             }
             changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_fullscreen));
@@ -262,13 +261,13 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.thumb) {
-            if (urlMap == null || TextUtils.isEmpty(JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex))) {
+            if (dataSourceObjects == null || JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex) != null) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
             if (currentState == CURRENT_STATE_NORMAL) {
-                if (!JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("file") &&
-                        !JZUtils.getCurrentUrlFromMap(urlMap, currentUrlMapIndex).startsWith("/") &&
+                if (!JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("file") &&
+                        !JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("/") &&
                         !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog(JZUserActionStandard.ON_CLICK_START_THUMB);
                     return;
@@ -283,9 +282,9 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         } else if (i == R.id.back) {
             backPress();
         } else if (i == R.id.back_tiny) {
-            if(JZVideoPlayerManager.getFirstFloor().currentScreen==JZVideoPlayer.SCREEN_WINDOW_LIST){
+            if (JZVideoPlayerManager.getFirstFloor().currentScreen == JZVideoPlayer.SCREEN_WINDOW_LIST) {
                 quitFullscreenOrTinyWindow();
-            }else {
+            } else {
                 backPress();
             }
         } else if (i == R.id.clarity) {
@@ -297,7 +296,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 public void onClick(View v) {
                     int index = (int) v.getTag();
                     onStatePreparingChangingUrl(index, getCurrentPositionWhenPlaying());
-                    clarity.setText(JZUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
+                    clarity.setText(JZUtils.getKeyFromDataSource(dataSourceObjects, currentUrlMapIndex));
                     for (int j = 0; j < layout.getChildCount(); j++) {//设置点击之后的颜色
                         if (j == currentUrlMapIndex) {
                             ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#fff85959"));
@@ -311,8 +310,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 }
             };
 
-            for (int j = 0; j < urlMap.size(); j++) {
-                String key = JZUtils.getKeyFromLinkedMap(urlMap, j);
+            for (int j = 0; j < ((LinkedHashMap) dataSourceObjects[0]).size(); j++) {
+                String key = JZUtils.getKeyFromDataSource(dataSourceObjects, j);
                 TextView clarityItem = (TextView) View.inflate(getContext(), R.layout.jz_layout_clarity_item, null);
                 clarityItem.setText(key);
                 clarityItem.setTag(j);
@@ -387,7 +386,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public void onClickUiToggle() {
         if (bottomContainer.getVisibility() != View.VISIBLE) {
             setSystemTimeAndBattery();
-            clarity.setText(JZUtils.getKeyFromLinkedMap(urlMap, currentUrlMapIndex));
+            clarity.setText(JZUtils.getKeyFromDataSource(dataSourceObjects, currentUrlMapIndex));
         }
         if (currentState == CURRENT_STATE_PREPARING) {
             changeUiToPreparing();

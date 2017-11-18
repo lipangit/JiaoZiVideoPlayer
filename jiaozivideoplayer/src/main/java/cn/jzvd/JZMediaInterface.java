@@ -11,12 +11,8 @@ import java.util.Map;
  */
 public abstract class JZMediaInterface {
 
-
-    public abstract void setDataSource(Object[] dataSourceObjects);
-
-    public abstract void getCurrentDataSource(Object[] dataSourceObjects, int currentUrlMapIndex);
-
-    public abstract Object[] getDataSource();
+    public Object currentDataSource;//正在播放的当前url或uri
+    public Object[] dataSourceObjects;//包含了地址的map（多分辨率用），context，loop，header等
 
     public abstract void start();
 
