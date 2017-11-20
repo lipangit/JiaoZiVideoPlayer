@@ -10,10 +10,12 @@ import android.widget.Button;
 
 import com.squareup.picasso.Picasso;
 
+import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZUserAction;
 import cn.jzvd.JZUserActionStandard;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.demo.CustomMediaPlayer.JZMediaIjkplayer;
 import cn.jzvd.demo.CustomView.MyJZVideoPlayerStandard;
 
 /**
@@ -42,6 +44,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         mDirectFullscreen.setOnClickListener(this);
         mApi.setOnClickListener(this);
         mWebView.setOnClickListener(this);
+
+        JZMediaManager.instance().jzMediaInterface = new JZMediaIjkplayer();
+
 
         myJZVideoPlayerStandard = findViewById(R.id.jz_video);
         myJZVideoPlayerStandard.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
@@ -91,7 +96,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     class MyUserActionStandard implements JZUserActionStandard {
 
         @Override
-        public void onEvent(int type, String url, int screen, Object... objects) {
+        public void onEvent(int type, Object url, int screen, Object... objects) {
             switch (type) {
                 case JZUserAction.ON_CLICK_START_ICON:
                     Log.i("USER_EVENT", "ON_CLICK_START_ICON" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
