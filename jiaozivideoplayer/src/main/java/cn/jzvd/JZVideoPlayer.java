@@ -100,9 +100,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     protected static Timer UPDATE_PROGRESS_TIMER;
     public int currentState = -1;
     public int currentScreen = -1;
-    public boolean loop = false;
     public Map<String, String> headData;
-    //    public String url = "";
     public Object[] objects = null;
     public int seekToInAdvance = 0;
     public ImageView startButton;
@@ -114,7 +112,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public int widthRatio = 0;
     public int heightRatio = 0;
     public Object[] dataSourceObjects;//这个参数原封不动直接通过JZMeidaManager传给JZMediaInterface。
-    // 取得当前url，取得urlmap，这个要从jzMediaManager中取得
     public int currentUrlMapIndex = 0;
     public int positionInList = -1;
     public int videoRotation = 0;
