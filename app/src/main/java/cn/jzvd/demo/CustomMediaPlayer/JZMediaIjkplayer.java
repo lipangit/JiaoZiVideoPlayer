@@ -22,7 +22,7 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
 
     @Override
     public void start() {
-
+        ijkMediaPlayer.start();
     }
 
     @Override
