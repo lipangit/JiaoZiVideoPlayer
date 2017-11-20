@@ -38,6 +38,9 @@ dependencies {
     implementation project(':jiaozivideoplayer')
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
+
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
