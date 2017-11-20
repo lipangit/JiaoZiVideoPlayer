@@ -61,7 +61,9 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         map.put("高清", VideoConstant.videoUrls[0][9]);
         map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrlList[0]);
-        mJzVideoPlayerStandard.setUp(map, 2
+        Object[] objects = new Object[1];
+        objects[0] = map;
+        mJzVideoPlayerStandard.setUp(objects, 2
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])

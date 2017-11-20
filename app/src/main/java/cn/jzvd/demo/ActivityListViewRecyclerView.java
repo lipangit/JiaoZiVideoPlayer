@@ -7,13 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
-import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZMediaManagerNew;
-import cn.jzvd.JZUtils;
 import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerManager;
 
 /**
  * Created by yujunkui on 16/8/29.

@@ -1,5 +1,7 @@
 package cn.jzvd.demo.CustomMediaPlayer;
 
+import android.view.Surface;
+
 import cn.jzvd.JZMediaInterface;
 
 /**
@@ -7,10 +9,6 @@ import cn.jzvd.JZMediaInterface;
  */
 
 public class JZMediaIjkplayer extends JZMediaInterface {
-    @Override
-    public void setDataSource(Object[] dataSourceObjects) {
-
-    }
 
     @Override
     public void start() {
@@ -28,12 +26,12 @@ public class JZMediaIjkplayer extends JZMediaInterface {
     }
 
     @Override
-    public void isPlaying() {
-
+    public boolean isPlaying() {
+        return false;
     }
 
     @Override
-    public void seekTo() {
+    public void seekTo(int time) {
 
     }
 
@@ -43,12 +41,17 @@ public class JZMediaIjkplayer extends JZMediaInterface {
     }
 
     @Override
-    public void getCurrentPosition() {
-
+    public int getCurrentPosition() {
+        return 0;
     }
 
     @Override
-    public void getDuration() {
+    public int getDuration() {
+        return 0;
+    }
+
+    @Override
+    public void setSurface(Surface surface) {
 
     }
 }

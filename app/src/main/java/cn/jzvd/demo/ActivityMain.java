@@ -91,7 +91,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     class MyUserActionStandard implements JZUserActionStandard {
 
         @Override
-        public void onEvent(int type, String url, int screen, Object... objects) {
+        public void onEvent(int type, Object url, int screen, Object... objects) {
             switch (type) {
                 case JZUserAction.ON_CLICK_START_ICON:
                     Log.i("USER_EVENT", "ON_CLICK_START_ICON" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
