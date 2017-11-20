@@ -194,7 +194,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
         if (JZVideoPlayerManager.getSecondFloor() != null) {
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
-            if (JZVideoPlayerManager.getFirstFloor().getCurrentUrl().equals(JZMediaManager.getCurrentDataSource())) {
+            if (JZUtils.dataSourceObjectsContainsUri(JZVideoPlayerManager.getFirstFloor().dataSourceObjects,JZMediaManager.getCurrentDataSource())) {
                 JZVideoPlayer jzVideoPlayer = JZVideoPlayerManager.getSecondFloor();
                 jzVideoPlayer.onEvent(jzVideoPlayer.currentScreen == JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                         JZUserAction.ON_QUIT_FULLSCREEN :
@@ -218,8 +218,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         //直接退出全屏和小窗
         JZVideoPlayerManager.getFirstFloor().clearFloatScreen();
         JZMediaManager.instance().releaseMediaPlayer();
-        JZVideoPlayerManager.setFirstFloor(null);
-        JZVideoPlayerManager.setSecondFloor(null);
+        JZVideoPlayerManager.completeAll();
     }
 
     @SuppressLint("RestrictedApi")
