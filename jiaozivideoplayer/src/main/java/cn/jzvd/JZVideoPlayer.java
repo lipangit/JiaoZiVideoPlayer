@@ -377,7 +377,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         int i = v.getId();
         if (i == R.id.start) {
             Log.i(TAG, "onClick start [" + this.hashCode() + "] ");
-            if (dataSourceObjects == null || JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex) != null) {
+            if (dataSourceObjects == null || JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex) == null) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -558,10 +558,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onPrepared() {
         Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
-        if (JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().toLowerCase().contains("mp3")) {
-            onStatePrepared();
-            onStatePlaying();
-        }
+        onStatePrepared();
+        onStatePlaying();
     }
 
     public void setState(int state) {
@@ -655,10 +653,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
-        if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-            onStatePrepared();
-            onStatePlaying();
-        }
     }
 
     public void onError(int what, int extra) {

@@ -62,7 +62,8 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void release() {
-        mediaPlayer.release();
+        if (mediaPlayer != null)
+            mediaPlayer.release();
     }
 
     @Override
@@ -77,20 +78,22 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void setSurface(Surface surface) {
-
+        mediaPlayer.setSurface(surface);
     }
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
-        JZMediaManagerNew.instance().mainThreadHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+        if (currentDataSource.toString().toLowerCase().contains("mp3")) {
+            JZMediaManagerNew.instance().mainThreadHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (JZVideoPlayerManager.getCurrentJzvd() != null) {
+                        JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     @Override
@@ -148,7 +151,11 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
             @Override
             public void run() {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onInfo(what, extra);
+                    if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+                        JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                    } else {
+                        JZVideoPlayerManager.getCurrentJzvd().onInfo(what, extra);
+                    }
                 }
             }
         });
