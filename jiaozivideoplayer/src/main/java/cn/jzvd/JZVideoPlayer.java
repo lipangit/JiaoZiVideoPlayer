@@ -348,7 +348,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 e.printStackTrace();
             }
             if (position != 0) {
-                JZUtils.saveProgress(getContext(), JZMediaManager.getCurrentDataSource().toString(), position);
+                JZUtils.saveProgress(getContext(), JZMediaManager.getCurrentDataSource(), position);
             }
             JZMediaManager.instance().releaseMediaPlayer();
         } else if (isCurrentJZVD() && !JZUtils.dataSourceObjectsContainsUri(dataSourceObjects, JZMediaManager.getCurrentDataSource())) {
@@ -698,14 +698,14 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             backPress();
         }
         JZMediaManager.instance().releaseMediaPlayer();
-        JZUtils.saveProgress(getContext(), JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString(), 0);
+        JZUtils.saveProgress(getContext(), JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex), 0);
     }
 
     public void onCompletion() {
         Log.i(TAG, "onCompletion " + " [" + this.hashCode() + "] ");
         if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
             int position = getCurrentPositionWhenPlaying();
-            JZUtils.saveProgress(getContext(), JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString(), position);
+            JZUtils.saveProgress(getContext(), JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex), position);
         }
         cancelProgressTimer();
         onStateNormal();
