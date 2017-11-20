@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import cn.jzvd.JZMediaManager;
+import cn.jzvd.JZMediaManagerNew;
 import cn.jzvd.JZUtils;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerManager;
@@ -44,7 +45,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
             @Override
             public void onChildViewDetachedFromWindow(View view) {
                 JZVideoPlayer jzvd = view.findViewById(R.id.videoplayer);
-                if (jzvd != null && jzvd.getCurrentUrl().equals(JZMediaManager.CURRENT_PLAYING_URL)) {
+                if (jzvd != null && jzvd.getCurrentUrl().equals(JZMediaManagerNew.getCurrentDataSource())) {
                     JZVideoPlayer.releaseAllVideos();
                 }
             }

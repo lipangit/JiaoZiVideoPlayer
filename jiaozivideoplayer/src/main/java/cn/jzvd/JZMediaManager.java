@@ -25,13 +25,13 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
     public static final int HANDLER_PREPARE = 0;
     public static final int HANDLER_RELEASE = 2;
     public static final String TAG = "JiaoZiVideoPlayer";
-    public static JZResizeTextureView textureView;
-    public static SurfaceTexture savedSurfaceTexture;
-    public static Surface surface;
+//    public static JZResizeTextureView textureView;
+//    public static SurfaceTexture savedSurfaceTexture;
+//    public static Surface surface;
     public static String CURRENT_PLAYING_URL;
     public static boolean CURRENT_PLING_LOOP;
-    public static Map<String, String> MAP_HEADER_DATA;
-    public int positionInList = -1;
+//    public static Map<String, String> MAP_HEADER_DATA;
+//    public int positionInList = -1;
 
     private static JZMediaManager JZMediaManager;
     public MediaPlayer mediaPlayer = new MediaPlayer();
@@ -55,13 +55,13 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener, Media
         return JZMediaManager;
     }
 
-    public Point getVideoSize() {
-        if (currentVideoWidth != 0 && currentVideoHeight != 0) {
-            return new Point(currentVideoWidth, currentVideoHeight);
-        } else {
-            return null;
-        }
-    }
+//    public Point getVideoSize() {
+//        if (currentVideoWidth != 0 && currentVideoHeight != 0) {
+//            return new Point(currentVideoWidth, currentVideoHeight);
+//        } else {
+//            return null;
+//        }
+//    }
 
     public void prepare() {
         releaseMediaPlayer();

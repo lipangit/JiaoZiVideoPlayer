@@ -18,22 +18,25 @@ import android.view.View;
 public class JZResizeTextureView extends TextureView {
     protected static final String TAG = "JZResizeTextureView";
 
-    // x as width, y as height
-    protected Point mVideoSize;
+    public int currentVideoWidth = 0;
+    public int currentVideoHeight = 0;
 
     public JZResizeTextureView(Context context) {
         super(context);
-        mVideoSize = new Point(0, 0);
+        currentVideoWidth = 0;
+        currentVideoHeight = 0;
     }
 
     public JZResizeTextureView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mVideoSize = new Point(0, 0);
+        currentVideoWidth = 0;
+        currentVideoHeight = 0;
     }
 
-    public void setVideoSize(Point videoSize) {
-        if (videoSize != null && !mVideoSize.equals(videoSize)) {
-            this.mVideoSize = videoSize;
+    public void setVideoSize(int currentVideoWidth, int currentVideoHeight) {
+        if (this.currentVideoWidth != currentVideoWidth || this.currentVideoHeight != currentVideoHeight) {
+            this.currentVideoWidth = currentVideoWidth;
+            this.currentVideoHeight = currentVideoHeight;
             requestLayout();
         }
     }
@@ -50,8 +53,8 @@ public class JZResizeTextureView extends TextureView {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         Log.i(TAG, "onMeasure " + " [" + this.hashCode() + "] ");
         int viewRotation = (int) getRotation();
-        int videoWidth = mVideoSize.x;
-        int videoHeight = mVideoSize.y;
+        int videoWidth = currentVideoWidth;
+        int videoHeight = currentVideoHeight;
 
 
         int parentHeight = ((View) getParent()).getMeasuredHeight();
