@@ -679,7 +679,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             JZMediaManager.seekTo(seekToInAdvance);
             seekToInAdvance = 0;
         } else {
-            int position = JZUtils.getSavedProgress(getContext(), JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString());
+            int position = JZUtils.getSavedProgress(getContext(), JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex));
             if (position != 0) {
                 JZMediaManager.seekTo(position);
             }
