@@ -780,14 +780,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         }
     }
 
-    public class DismissControlViewTimerTask extends TimerTask {
-
-        @Override
-        public void run() {
-            dissmissControlView();
-        }
-    }
-
     public void dissmissControlView() {
         if (currentState != CURRENT_STATE_NORMAL
                 && currentState != CURRENT_STATE_ERROR
@@ -808,6 +800,14 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                     }
                 });
             }
+        }
+    }
+
+    public class DismissControlViewTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            dissmissControlView();
         }
     }
 }

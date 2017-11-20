@@ -22,9 +22,9 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
     public static JZResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
     public static Surface surface;
+    public static JZMediaManager jzMediaManager;
     public int positionInList = -1;
     public JZMediaInterface jzMediaInterface;
-    public static JZMediaManager jzMediaManager;
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
 
@@ -46,22 +46,22 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
         return jzMediaManager;
     }
 
+    public static Object[] getDataSource() {
+        return instance().jzMediaInterface.dataSourceObjects;
+    }
+
     //这几个方法是不是多余了，为了不让其他地方动MediaInterface的方法
     public static void setDataSource(Object[] dataSourceObjects) {
         instance().jzMediaInterface.dataSourceObjects = dataSourceObjects;
     }
 
-    public static Object[] getDataSource() {
-        return instance().jzMediaInterface.dataSourceObjects;
+    //正在播放的url或者uri
+    public static Object getCurrentDataSource() {
+        return instance().jzMediaInterface.currentDataSource;
     }
 
     public static void setCurrentDataSource(Object currentDataSource) {
         instance().jzMediaInterface.currentDataSource = currentDataSource;
-    }
-
-    //正在播放的url或者uri
-    public static Object getCurrentDataSource() {
-        return instance().jzMediaInterface.currentDataSource;
     }
 
     public static int getCurrentPosition() {
@@ -84,6 +84,10 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
         instance().jzMediaInterface.start();
     }
 
+    public static boolean isPlaying() {
+        return instance().jzMediaInterface.isPlaying();
+    }
+
     public void releaseMediaPlayer() {
         Message msg = new Message();
         msg.what = HANDLER_RELEASE;
@@ -95,10 +99,6 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
         Message msg = new Message();
         msg.what = HANDLER_PREPARE;
         mMediaHandler.sendMessage(msg);
-    }
-
-    public static boolean isPlaying() {
-        return instance().jzMediaInterface.isPlaying();
     }
 
     @Override
