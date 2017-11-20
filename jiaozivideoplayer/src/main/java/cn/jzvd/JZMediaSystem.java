@@ -85,7 +85,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
         if (currentDataSource.toString().toLowerCase().contains("mp3")) {
-            JZMediaManagerNew.instance().mainThreadHandler.post(new Runnable() {
+            JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     if (JZVideoPlayerManager.getCurrentJzvd() != null) {
@@ -98,7 +98,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        JZMediaManagerNew.instance().mainThreadHandler.post(new Runnable() {
+        JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null) {
@@ -110,7 +110,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onBufferingUpdate(MediaPlayer mediaPlayer, final int percent) {
-        JZMediaManagerNew.instance().mainThreadHandler.post(new Runnable() {
+        JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null) {
@@ -122,7 +122,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onSeekComplete(MediaPlayer mediaPlayer) {
-        JZMediaManagerNew.instance().mainThreadHandler.post(new Runnable() {
+        JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null) {
@@ -134,7 +134,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public boolean onError(MediaPlayer mediaPlayer, final int what, final int extra) {
-        JZMediaManagerNew.instance().mainThreadHandler.post(new Runnable() {
+        JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null) {
@@ -147,7 +147,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public boolean onInfo(MediaPlayer mediaPlayer, final int what, final int extra) {
-        JZMediaManagerNew.instance().mainThreadHandler.post(new Runnable() {
+        JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null) {
@@ -164,9 +164,9 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onVideoSizeChanged(MediaPlayer mediaPlayer, int width, int height) {
-        JZMediaManagerNew.instance().currentVideoWidth = width;
-        JZMediaManagerNew.instance().currentVideoHeight = height;
-        JZMediaManagerNew.instance().mainThreadHandler.post(new Runnable() {
+        JZMediaManager.instance().currentVideoWidth = width;
+        JZMediaManager.instance().currentVideoHeight = height;
+        JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null) {

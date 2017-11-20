@@ -13,7 +13,7 @@ import android.view.TextureView;
  * 这个类用来和jzvd互相调用，当jzvd需要调用Media的时候调用这个类，当MediaPlayer有回调的时候，通过这个类回调JZVD
  * Created by Nathen on 2017/11/18.
  */
-public class JZMediaManagerNew implements TextureView.SurfaceTextureListener {
+public class JZMediaManager implements TextureView.SurfaceTextureListener {
 
     public static final String TAG = "JiaoZiVideoPlayer";
     public static final int HANDLER_PREPARE = 0;
@@ -24,7 +24,7 @@ public class JZMediaManagerNew implements TextureView.SurfaceTextureListener {
     public static Surface surface;
     public int positionInList = -1;
     public JZMediaInterface jzMediaInterface;
-    public static JZMediaManagerNew jzMediaManagerNew;
+    public static JZMediaManager jzMediaManager;
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
 
@@ -32,18 +32,18 @@ public class JZMediaManagerNew implements TextureView.SurfaceTextureListener {
     MediaHandler mMediaHandler;
     Handler mainThreadHandler;
 
-    public JZMediaManagerNew() {
+    public JZMediaManager() {
         mMediaHandlerThread = new HandlerThread(TAG);
         mMediaHandlerThread.start();
         mMediaHandler = new MediaHandler(mMediaHandlerThread.getLooper());
         mainThreadHandler = new Handler();
     }
 
-    public static JZMediaManagerNew instance() {
-        if (jzMediaManagerNew == null) {
-            jzMediaManagerNew = new JZMediaManagerNew();
+    public static JZMediaManager instance() {
+        if (jzMediaManager == null) {
+            jzMediaManager = new JZMediaManager();
         }
-        return jzMediaManagerNew;
+        return jzMediaManager;
     }
 
     //这几个方法是不是多余了，为了不让其他地方动MediaInterface的方法

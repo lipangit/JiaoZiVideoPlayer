@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 
-import cn.jzvd.JZMediaManagerNew;
+import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZVideoPlayer;
 
 /**
@@ -41,7 +41,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
             @Override
             public void onChildViewDetachedFromWindow(View view) {
                 JZVideoPlayer jzvd = view.findViewById(R.id.videoplayer);
-                if (jzvd != null && jzvd.getCurrentUrl().equals(JZMediaManagerNew.getCurrentDataSource())) {
+                if (jzvd != null && jzvd.getCurrentUrl().equals(JZMediaManager.getCurrentDataSource())) {
                     JZVideoPlayer.releaseAllVideos();
                 }
             }
