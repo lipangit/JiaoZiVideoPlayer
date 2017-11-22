@@ -876,7 +876,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setProgressAndText(int progress, int position, int duration) {
-        Log.d(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
+//        Log.d(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
         if (!mTouchingProgressBar) {
             if (progress != 0) progressBar.setProgress(progress);
         }
