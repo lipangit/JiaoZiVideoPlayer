@@ -100,7 +100,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     protected static Timer UPDATE_PROGRESS_TIMER;
     public int currentState = -1;
     public int currentScreen = -1;
-    public Map<String, String> headData;
     public Object[] objects = null;
     public int seekToInAdvance = 0;
     public ImageView startButton;

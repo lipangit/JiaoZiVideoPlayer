@@ -68,17 +68,17 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         map.put("高清", VideoConstant.videoUrls[0][9]);
         map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrlList[0]);
-        Object[] objects = new Object[1];
+        Object[] objects = new Object[3];
         objects[0] = map;
+        objects[1] = true;
+        objects[2] = new HashMap<>();
+        ((HashMap) objects[2]).put("key", "value");
         mJzVideoPlayerStandard.setUp(objects, 2
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzVideoPlayerStandard.thumbImageView);
         //JZVideoPlayer.SAVE_PROGRESS = false;
-        mJzVideoPlayerStandard.headData = new HashMap<>();
-        mJzVideoPlayerStandard.headData.put("key", "value");
-
 
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
