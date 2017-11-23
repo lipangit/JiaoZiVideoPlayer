@@ -30,7 +30,6 @@ import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -780,7 +779,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
 
         if (JZMediaManager.surface != null) JZMediaManager.surface.release();
-        if (JZMediaManager.savedSurfaceTexture != null) JZMediaManager.savedSurfaceTexture.release();
+        if (JZMediaManager.savedSurfaceTexture != null)
+            JZMediaManager.savedSurfaceTexture.release();
         JZMediaManager.textureView = null;
         JZMediaManager.savedSurfaceTexture = null;
     }
@@ -1077,6 +1077,10 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (JZ_USER_EVENT != null && isCurrentPlay() && dataSourceObjects != null) {
             JZ_USER_EVENT.onEvent(type, JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex), currentScreen, objects);
         }
+    }
+
+    public static void setMediaInterface(JZMediaInterface mediaInterface) {
+        JZMediaManager.instance().jzMediaInterface = mediaInterface;
     }
 
     //TODO 是否有用

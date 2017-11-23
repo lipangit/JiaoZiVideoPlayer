@@ -21,17 +21,14 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-import cn.jzvd.JZMediaManager;
-import cn.jzvd.JZMediaSystem;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
-import cn.jzvd.demo.CustomMediaPlayer.JZMediaIjkplayer;
 
 /**
  * Created by Nathen on 16/7/31.
  */
 public class ActivityApi extends AppCompatActivity implements View.OnClickListener {
-    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity, mRationAndVideoSize, mChangeToIjk, mChangeToSystemMediaPlayer;
+    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity, mRationAndVideoSize, mCustomMediaPlayer;
     JZVideoPlayerStandard mJzVideoPlayerStandard;
     JZVideoPlayer.JZAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
@@ -51,16 +48,14 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         mOrientation = findViewById(R.id.orientation);
         mExtendsNormalActivity = findViewById(R.id.extends_normal_activity);
         mRationAndVideoSize = findViewById(R.id.rotation_and_videosize);
-        mChangeToIjk = findViewById(R.id.change_to_ijkplayer);
-        mChangeToSystemMediaPlayer = findViewById(R.id.change_to_system_mediaplayer);
+        mCustomMediaPlayer = findViewById(R.id.custom_mediaplayer);
 
         mSmallChange.setOnClickListener(this);
         mBigChange.setOnClickListener(this);
         mOrientation.setOnClickListener(this);
         mExtendsNormalActivity.setOnClickListener(this);
         mRationAndVideoSize.setOnClickListener(this);
-        mChangeToIjk.setOnClickListener(this);
-        mChangeToSystemMediaPlayer.setOnClickListener(this);
+        mCustomMediaPlayer.setOnClickListener(this);
 
 
         mJzVideoPlayerStandard = findViewById(R.id.jz_video);
@@ -120,13 +115,8 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
             case R.id.rotation_and_videosize:
                 startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
                 break;
-            case R.id.change_to_ijkplayer:
-                JZMediaManager.instance().jzMediaInterface = new JZMediaIjkplayer();
-                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.change_to_system_mediaplayer:
-                JZMediaManager.instance().jzMediaInterface = new JZMediaSystem();
-                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+            case R.id.custom_mediaplayer:
+                startActivity(new Intent(ActivityApi.this, ActivityApiCustomMediaPlayer.class));
                 break;
         }
     }
