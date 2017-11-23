@@ -11,6 +11,8 @@
 
 周一到周六每天上午9:30开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复，关注数到100的时候抽奖100元(两个50)
 
+完美的列表滑动的检测(已完成)，自定义播放引擎可以将系统的播放器换成Ijkplayer Exoplayer Vitamio等(测试版本)
+
 Q群:490442439 验证信息:jzvd
 
 [英文文档](https://github.com/lipangit/JiaoZiVideoPlayer) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
