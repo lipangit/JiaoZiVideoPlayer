@@ -140,7 +140,6 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
                 case HANDLER_PREPARE:
                     currentVideoWidth = 0;
                     currentVideoHeight = 0;
-                    jzMediaInterface.release();
                     jzMediaInterface.prepare();
                     if (surface != null) {
                         surface.release();

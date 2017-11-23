@@ -194,7 +194,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
         if (JZVideoPlayerManager.getSecondFloor() != null) {
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
-            if (JZUtils.dataSourceObjectsContainsUri(JZVideoPlayerManager.getFirstFloor().dataSourceObjects,JZMediaManager.getCurrentDataSource())) {
+            if (JZUtils.dataSourceObjectsContainsUri(JZVideoPlayerManager.getFirstFloor().dataSourceObjects, JZMediaManager.getCurrentDataSource())) {
                 JZVideoPlayer jzVideoPlayer = JZVideoPlayerManager.getSecondFloor();
                 jzVideoPlayer.onEvent(jzVideoPlayer.currentScreen == JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN ?
                         JZUserAction.ON_QUIT_FULLSCREEN :
@@ -781,6 +781,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
 
         if (JZMediaManager.surface != null) JZMediaManager.surface.release();
+        if (JZMediaManager.savedSurfaceTexture != null) JZMediaManager.savedSurfaceTexture.release();
         JZMediaManager.textureView = null;
         JZMediaManager.savedSurfaceTexture = null;
     }
