@@ -38,7 +38,11 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
             mediaPlayer.setOnVideoSizeChangedListener(JZMediaSystem.this);
             Class<MediaPlayer> clazz = MediaPlayer.class;
             Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
-            method.invoke(mediaPlayer, currentDataSource.toString(), null);
+            if (dataSourceObjects.length > 2) {
+                method.invoke(mediaPlayer, currentDataSource.toString(), dataSourceObjects[2]);
+            } else {
+                method.invoke(mediaPlayer, currentDataSource.toString(), null);
+            }
             mediaPlayer.prepareAsync();
         } catch (Exception e) {
             e.printStackTrace();
