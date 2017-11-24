@@ -440,7 +440,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR) {
+            if (currentState == CURRENT_STATE_NORMAL) {
                 if (!JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("file") && !
                         JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("/") &&
                         !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
@@ -448,7 +448,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                     return;
                 }
                 startVideo();
-                onEvent(currentState != CURRENT_STATE_ERROR ? JZUserAction.ON_CLICK_START_ICON : JZUserAction.ON_CLICK_START_ERROR);
+                onEvent(JZUserAction.ON_CLICK_START_ICON);
             } else if (currentState == CURRENT_STATE_PLAYING) {
                 onEvent(JZUserAction.ON_CLICK_PAUSE);
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");

@@ -17,11 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:background="#000000"
         android:scaleType="fitCenter" />
 
@@ -201,7 +198,7 @@
 
 
     <TextView
-        android:id="@+id/retry_text"
+        android:id="@+id/replay_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/start_layout"
@@ -211,4 +208,28 @@
         android:textColor="#ffffff"
         android:textSize="12sp"
         android:visibility="invisible" />
+
+    <LinearLayout
+        android:id="@+id/retry_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="视频加载失败"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/retry_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="点击重试"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 </RelativeLayout>

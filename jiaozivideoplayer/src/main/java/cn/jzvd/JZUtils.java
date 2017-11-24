@@ -152,12 +152,12 @@ public class JZUtils {
     public static Object getCurrentFromDataSource(Object[] dataSourceObjects, int index) {
         LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
         if (map != null && map.size() > 0) {
-            return getValueFromLinkedMap1(map, index);
+            return getValueFromLinkedMap(map, index);
         }
         return null;
     }
 
-    public static Object getValueFromLinkedMap1(LinkedHashMap<String, Object> map, int index) {
+    public static Object getValueFromLinkedMap(LinkedHashMap<String, Object> map, int index) {
         int currentIndex = 0;
         for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
             Object key = it.next();
@@ -176,27 +176,6 @@ public class JZUtils {
         }
         return false;
     }
-
-    //------------old------------
-//    public static String getCurrentUrlFromMap(LinkedHashMap<String, String> map, int index) {
-//        if (map.size() == 1) {
-//            return getValueFromLinkedMap(map, index);
-//        } else {
-//            return getValueFromLinkedMap(map, index);
-//        }
-//    }
-
-//    public static String getValueFromLinkedMap(LinkedHashMap<String, String> map, int index) {
-//        int currentIndex = 0;
-//        for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
-//            Object key = it.next();
-//            if (currentIndex == index) {
-//                return map.get(key);
-//            }
-//            currentIndex++;
-//        }
-//        return null;
-//    }
 
     public static String getKeyFromDataSource(Object[] dataSourceObjects, int index) {
         LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];

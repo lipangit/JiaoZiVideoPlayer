@@ -47,9 +47,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     public LinearLayout batteryTimeLayout;
     public ImageView batteryLevel;
     public TextView videoCurrentTime;
-    public TextView retryTextView;
+    public TextView replayTextView;
     public TextView clarity;
     public PopupWindow clarityPopWindow;
+    public TextView mRetryBtn;
+    public LinearLayout mRetryLayout;
 
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
     protected Dialog mProgressDialog;
@@ -111,13 +113,16 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         tinyBackImageView = findViewById(R.id.back_tiny);
         batteryLevel = findViewById(R.id.battery_level);
         videoCurrentTime = findViewById(R.id.video_current_time);
-        retryTextView = findViewById(R.id.retry_text);
+        replayTextView = findViewById(R.id.replay_text);
         clarity = findViewById(R.id.clarity);
+        mRetryBtn = findViewById(R.id.retry_btn);
+        mRetryLayout = findViewById(R.id.retry_layout);
 
         thumbImageView.setOnClickListener(this);
         backButton.setOnClickListener(this);
         tinyBackImageView.setOnClickListener(this);
         clarity.setOnClickListener(this);
+        mRetryBtn.setOnClickListener(this);
     }
 
     public void setUp(Object[] dataSourceObjects, int defaultUrlMapIndex, int screen, Object... objects) {
@@ -146,7 +151,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         } else if (currentScreen == SCREEN_WINDOW_TINY) {
             tinyBackImageView.setVisibility(View.VISIBLE);
             setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
             batteryTimeLayout.setVisibility(View.GONE);
             clarity.setVisibility(View.GONE);
         }
@@ -326,6 +331,15 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             clarityPopWindow.showAsDropDown(clarity);
             layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             clarityPopWindow.update(clarity, -40, 46, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
+        } else if (i == R.id.retry_btn) {
+            if (!JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("file") && !
+                    JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("/") &&
+                    !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                showWifiDialog(JZUserAction.ON_CLICK_START_ICON);
+                return;
+            }
+            startVideo();
+            onEvent(JZUserAction.ON_CLICK_START_ERROR);
         }
     }
 
@@ -468,12 +482,12 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -486,11 +500,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.VISIBLE, View.INVISIBLE);
+                        View.VISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.VISIBLE, View.INVISIBLE);
+                        View.VISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -503,12 +517,12 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -522,11 +536,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -539,12 +553,12 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -557,11 +571,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -574,12 +588,12 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -593,12 +607,12 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
-                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+                        View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
@@ -608,28 +622,29 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     }
 
     public void setAllControlsVisiblity(int topCon, int bottomCon, int startBtn, int loadingPro,
-                                        int thumbImg, int bottomPro) {
+                                        int thumbImg, int bottomPro, int retryLayout) {
         topContainer.setVisibility(topCon);
         bottomContainer.setVisibility(bottomCon);
         startButton.setVisibility(startBtn);
         loadingProgressBar.setVisibility(loadingPro);
         thumbImageView.setVisibility(thumbImg);
         bottomProgressBar.setVisibility(bottomPro);
+        mRetryLayout.setVisibility(retryLayout);
     }
 
     public void updateStartImage() {
         if (currentState == CURRENT_STATE_PLAYING) {
             startButton.setImageResource(R.drawable.jz_click_pause_selector);
-            retryTextView.setVisibility(INVISIBLE);
+            replayTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_ERROR) {
-            startButton.setImageResource(R.drawable.jz_click_error_selector);
-            retryTextView.setVisibility(INVISIBLE);
+            startButton.setVisibility(View.INVISIBLE);
+            replayTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
             startButton.setImageResource(R.drawable.jz_click_replay_selector);
-            retryTextView.setVisibility(VISIBLE);
+            replayTextView.setVisibility(VISIBLE);
         } else {
             startButton.setImageResource(R.drawable.jz_click_play_selector);
-            retryTextView.setVisibility(INVISIBLE);
+            replayTextView.setVisibility(INVISIBLE);
         }
     }
 
