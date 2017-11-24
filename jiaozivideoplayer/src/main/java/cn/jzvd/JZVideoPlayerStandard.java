@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -338,7 +339,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 showWifiDialog(JZUserAction.ON_CLICK_START_ICON);
                 return;
             }
-            startVideo();
+            initTextureView();//和开始播放的代码重复
+            addTextureView();
+            JZMediaManager.setDataSource(dataSourceObjects);
+            JZMediaManager.setCurrentDataSource(JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex));
+            onStatePreparing();
             onEvent(JZUserAction.ON_CLICK_START_ERROR);
         }
     }
@@ -361,20 +366,12 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-                    dialog.dismiss();
-                    clearFullscreenLayout();
-                }
             }
         });
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
                 dialog.dismiss();
-                if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-                    dialog.dismiss();
-                    clearFullscreenLayout();
-                }
             }
         });
         builder.create().show();

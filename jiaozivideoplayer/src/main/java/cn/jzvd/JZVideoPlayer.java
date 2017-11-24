@@ -473,9 +473,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 onEvent(JZUserAction.ON_ENTER_FULLSCREEN);
                 startWindowFullscreen();
             }
-        } else if (i == R.id.surface_container && currentState == CURRENT_STATE_ERROR) {
-            Log.i(TAG, "onClick surfaceContainer State=Error [" + this.hashCode() + "] ");
-            startVideo();
         }
     }
 
