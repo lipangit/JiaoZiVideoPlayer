@@ -80,6 +80,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".ActivityApiCustomMediaPlayer"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ActivityListViewRecyclerView"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />

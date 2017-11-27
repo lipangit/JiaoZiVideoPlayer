@@ -7,12 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZUtils;
 import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerManager;
 
 /**
  * Created by yujunkui on 16/8/29.
@@ -44,7 +42,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
             @Override
             public void onChildViewDetachedFromWindow(View view) {
                 JZVideoPlayer jzvd = view.findViewById(R.id.videoplayer);
-                if (jzvd != null && jzvd.getCurrentUrl().equals(JZMediaManager.CURRENT_PLAYING_URL)) {
+                if (jzvd != null && JZUtils.dataSourceObjectsContainsUri(jzvd.dataSourceObjects, JZMediaManager.getCurrentDataSource())) {
                     JZVideoPlayer.releaseAllVideos();
                 }
             }

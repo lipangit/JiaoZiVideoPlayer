@@ -110,25 +110,25 @@ public class JZUtils {
         return (int) (dpValue * scale + 0.5f);
     }
 
-    public static void saveProgress(Context context, String url, int progress) {
+    public static void saveProgress(Context context, Object url, int progress) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return;
         Log.i(TAG, "saveProgress: " + progress);
-        if (progress < 6000) {
+        if (progress < 5000) {
             progress = 0;
         }
         SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = spn.edit();
-        editor.putInt(url, progress);
+        editor.putInt(url.toString(), progress);
         editor.apply();
     }
 
-    public static int getSavedProgress(Context context, String url) {
+    public static int getSavedProgress(Context context, Object url) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return 0;
         SharedPreferences spn;
         spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
-        return spn.getInt(url, 0);
+        return spn.getInt(url.toString(), 0);
     }
 
     /**
@@ -149,15 +149,15 @@ public class JZUtils {
         }
     }
 
-    public static String getCurrentUrlFromMap(LinkedHashMap<String, String> map, int index) {
-        if (map.size() == 1) {
-            return getValueFromLinkedMap(map, index);
-        } else {
+    public static Object getCurrentFromDataSource(Object[] dataSourceObjects, int index) {
+        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
+        if (map != null && map.size() > 0) {
             return getValueFromLinkedMap(map, index);
         }
+        return null;
     }
 
-    public static String getValueFromLinkedMap(LinkedHashMap<String, String> map, int index) {
+    public static Object getValueFromLinkedMap(LinkedHashMap<String, Object> map, int index) {
         int currentIndex = 0;
         for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
             Object key = it.next();
@@ -169,7 +169,16 @@ public class JZUtils {
         return null;
     }
 
-    public static String getKeyFromLinkedMap(LinkedHashMap<String, String> map, int index) {
+    public static boolean dataSourceObjectsContainsUri(Object[] dataSourceObjects, Object object) {
+        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
+        if (map != null) {
+            return map.containsValue(object);
+        }
+        return false;
+    }
+
+    public static String getKeyFromDataSource(Object[] dataSourceObjects, int index) {
+        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
         int currentIndex = 0;
         for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
             Object key = it.next();

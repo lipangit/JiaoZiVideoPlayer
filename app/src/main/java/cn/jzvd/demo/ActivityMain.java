@@ -10,10 +10,12 @@ import android.widget.Button;
 
 import com.squareup.picasso.Picasso;
 
+import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZUserAction;
 import cn.jzvd.JZUserActionStandard;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.demo.CustomMediaPlayer.JZMediaIjkplayer;
 import cn.jzvd.demo.CustomView.MyJZVideoPlayerStandard;
 
 /**
@@ -91,7 +93,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     class MyUserActionStandard implements JZUserActionStandard {
 
         @Override
-        public void onEvent(int type, String url, int screen, Object... objects) {
+        public void onEvent(int type, Object url, int screen, Object... objects) {
             switch (type) {
                 case JZUserAction.ON_CLICK_START_ICON:
                     Log.i("USER_EVENT", "ON_CLICK_START_ICON" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);

@@ -2,18 +2,21 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.1.2-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.0_preview-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
+
 # [斗鱼直播](https://www.douyu.com/1667893)
 
-每天下午两点开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复，关注数到100的时候抽奖100元(两个50)
+周一到周六每天上午9:30开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复
+
+完美的列表滑动的检测(已完成)，自定义播放引擎可以将系统的播放器换成Ijkplayer Exoplayer Vitamio等(测试版本)
 
 Q群:490442439 验证信息:jzvd
 
-[中文文档](README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [VideoTutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+[英文文档](https://github.com/lipangit/JiaoZiVideoPlayer) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
 ## Features
 
@@ -30,11 +33,11 @@ Q群:490442439 验证信息:jzvd
 11. Home key to exit the interface to suspend the playback, return to the interface to continue playing
 12. WebView Nested Local Video Controls
 
-I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
+For small and medium-sized companies, I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
 
 ## Effect
 
-**[jiaozivideoplayer-6.1.2.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.1.2/jiaozivideoplayer-6.1.2.apk)**
+**[jiaozivideoplayer-6.2.0_preview.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.0_preview/jiaozivideoplayer-6.2.0_preview.apk)**
 
 ![Demo Screenshot][1]
 
@@ -46,10 +49,10 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.1.2'
+compile 'cn.jzvd:jiaozivideoplayer:6.2.0_preview'
 ```
 
-Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.2) (not recommended)
+Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.0_preview) (not recommended)
 
 2.Add JZVideoPlayer in your layout
 ```xml
@@ -63,7 +66,7 @@ Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.
 ```java
 JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.videoplayer);
 jzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-                            , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子闭眼睛");
+                            , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子闭眼睛");
 jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 

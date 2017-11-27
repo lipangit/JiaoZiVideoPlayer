@@ -54,6 +54,30 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JZVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (JZVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public class AdapterRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         @Override
@@ -114,29 +138,5 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
                 textView = itemView.findViewById(R.id.textview);
             }
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        JZVideoPlayer.releaseAllVideos();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }

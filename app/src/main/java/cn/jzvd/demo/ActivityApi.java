@@ -28,7 +28,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * Created by Nathen on 16/7/31.
  */
 public class ActivityApi extends AppCompatActivity implements View.OnClickListener {
-    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity, mRationAndVideoSize;
+    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity, mRationAndVideoSize, mCustomMediaPlayer;
     JZVideoPlayerStandard mJzVideoPlayerStandard;
     JZVideoPlayer.JZAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
@@ -48,12 +48,14 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         mOrientation = findViewById(R.id.orientation);
         mExtendsNormalActivity = findViewById(R.id.extends_normal_activity);
         mRationAndVideoSize = findViewById(R.id.rotation_and_videosize);
+        mCustomMediaPlayer = findViewById(R.id.custom_mediaplayer);
 
         mSmallChange.setOnClickListener(this);
         mBigChange.setOnClickListener(this);
         mOrientation.setOnClickListener(this);
         mExtendsNormalActivity.setOnClickListener(this);
         mRationAndVideoSize.setOnClickListener(this);
+        mCustomMediaPlayer.setOnClickListener(this);
 
 
         mJzVideoPlayerStandard = findViewById(R.id.jz_video);
@@ -61,17 +63,18 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         map.put("高清", VideoConstant.videoUrls[0][9]);
         map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrlList[0]);
-        mJzVideoPlayerStandard.setUp(map, 2
+        Object[] objects = new Object[3];
+        objects[0] = map;
+        objects[1] = true;
+        objects[2] = new HashMap<>();
+        ((HashMap) objects[2]).put("key", "value");
+        mJzVideoPlayerStandard.setUp(objects, 2
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzVideoPlayerStandard.thumbImageView);
-//        mJzVideoPlayerStandard.loop = true;
-        mJzVideoPlayerStandard.headData = new HashMap<>();
-        mJzVideoPlayerStandard.headData.put("key", "value");
+        //JZVideoPlayer.SAVE_PROGRESS = false;
 
-
-//        JZVideoPlayer.SAVE_PROGRESS = false;
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
 //        mJzVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
@@ -111,6 +114,9 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
                 break;
             case R.id.rotation_and_videosize:
                 startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
+                break;
+            case R.id.custom_mediaplayer:
+                startActivity(new Intent(ActivityApi.this, ActivityApiCustomMediaPlayer.class));
                 break;
         }
     }

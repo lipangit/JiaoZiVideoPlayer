@@ -2,18 +2,10 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.1.2-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.0_preview-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
-
-# [斗鱼直播](https://www.douyu.com/1667893)
-
-每天下午两点开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复，关注数到100的时候抽奖100元(两个50)
-
-Q群:490442439 验证信息:jzvd
-
-[英文文档](https://github.com/lipangit/JiaoZiVideoPlayer) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
 ## 主要特点
 
@@ -30,11 +22,11 @@ Q群:490442439 验证信息:jzvd
 11. Home键退出界面暂停播放，返回界面继续播放
 12. WebView嵌套本地视频控件
 
-目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
+对于中小公司而言，目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
 
 ## 效果
 
-**[jiaozivideoplayer-6.1.2.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.1.2/jiaozivideoplayer-6.1.2.apk)**
+**[jiaozivideoplayer-6.2.0_preview.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.0_preview/jiaozivideoplayer-6.2.0_preview.apk)**
 
 ![Demo Screenshot][1]
 
@@ -46,10 +38,10 @@ Q群:490442439 验证信息:jzvd
 
 1.添加类库
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.1.2'
+compile 'cn.jzvd:jiaozivideoplayer:6.2.0_preview'
 ```
 
-或直接下载[jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.1.2) (不建议)
+或直接下载[jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.0_preview) (不建议)
 
 2.添加布局
 ```xml
@@ -63,7 +55,7 @@ compile 'cn.jzvd:jiaozivideoplayer:6.1.2'
 ```java
 JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.videoplayer);
 jzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-                            , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子闭眼睛");
+                            , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子闭眼睛");
 jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
