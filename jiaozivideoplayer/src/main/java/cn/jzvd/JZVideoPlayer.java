@@ -712,7 +712,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onError(int what, int extra) {
         Log.e(TAG, "onError " + what + " - " + extra + " [" + this.hashCode() + "] ");
-        if (what != 38 && what != -38 && extra != -38) {
+        if (what != 38 && extra != -38 && what != -38 && extra != 38 && extra != -19) {
             onStateError();
             if (isCurrentPlay()) {
                 JZMediaManager.instance().releaseMediaPlayer();
