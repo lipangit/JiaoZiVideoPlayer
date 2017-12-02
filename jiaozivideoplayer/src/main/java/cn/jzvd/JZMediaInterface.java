@@ -25,13 +25,13 @@ public abstract class JZMediaInterface {
 
     public abstract boolean isPlaying();
 
-    public abstract void seekTo(int time);
+    public abstract void seekTo(long time);
 
     public abstract void release();
 
-    public abstract int getCurrentPosition();
+    public abstract long getCurrentPosition();
 
-    public abstract int getDuration();
+    public abstract long getDuration();
 
     public abstract void setSurface(Surface surface);
 }

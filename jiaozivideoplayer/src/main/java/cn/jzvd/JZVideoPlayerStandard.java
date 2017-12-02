@@ -193,7 +193,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     }
 
     @Override
-    public void onStatePreparingChangingUrl(int urlMapIndex, int seekToInAdvance) {
+    public void onStatePreparingChangingUrl(int urlMapIndex, long seekToInAdvance) {
         super.onStatePreparingChangingUrl(urlMapIndex, seekToInAdvance);
         loadingProgressBar.setVisibility(VISIBLE);
         startButton.setVisibility(INVISIBLE);
@@ -238,8 +238,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 case MotionEvent.ACTION_UP:
                     startDismissControlViewTimer();
                     if (mChangePosition) {
-                        int duration = getDuration();
-                        int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
+                        long duration = getDuration();
+                        int progress = (int) (mSeekTimePosition * 100 / (duration == 0 ? 1 : duration));
                         bottomProgressBar.setProgress(progress);
                     }
                     if (!mChangePosition && !mChangeVolume) {
@@ -456,7 +456,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     }
 
     @Override
-    public void setProgressAndText(int progress, int position, int duration) {
+    public void setProgressAndText(int progress, long position, long duration) {
         super.setProgressAndText(progress, position, duration);
         if (progress != 0) bottomProgressBar.setProgress(progress);
     }
@@ -646,7 +646,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     }
 
     @Override
-    public void showProgressDialog(float deltaX, String seekTime, int seekTimePosition, String totalTime, int totalTimeDuration) {
+    public void showProgressDialog(float deltaX, String seekTime, long seekTimePosition, String totalTime, long totalTimeDuration) {
         super.showProgressDialog(deltaX, seekTime, seekTimePosition, totalTime, totalTimeDuration);
         if (mProgressDialog == null) {
             View localView = LayoutInflater.from(getContext()).inflate(R.layout.jz_dialog_progress, null);
@@ -662,7 +662,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
 
         mDialogSeekTime.setText(seekTime);
         mDialogTotalTime.setText(" / " + totalTime);
-        mDialogProgressBar.setProgress(totalTimeDuration <= 0 ? 0 : (seekTimePosition * 100 / totalTimeDuration));
+        mDialogProgressBar.setProgress(totalTimeDuration <= 0 ? 0 : (int) (seekTimePosition * 100 / totalTimeDuration));
         if (deltaX > 0) {
             mDialogIcon.setBackgroundResource(R.drawable.jz_forward_icon);
         } else {
