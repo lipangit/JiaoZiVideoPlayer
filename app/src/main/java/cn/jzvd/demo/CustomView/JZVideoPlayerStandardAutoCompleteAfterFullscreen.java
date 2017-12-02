@@ -12,7 +12,7 @@ import cn.jzvd.JZVideoPlayerManager;
 import cn.jzvd.JZVideoPlayerStandard;
 
 /**
- *
+ * 全屏状态播放完成，不退出全屏
  * Created by Nathen on 2016/11/26.
  */
 public class JZVideoPlayerStandardAutoCompleteAfterFullscreen extends JZVideoPlayerStandard {
