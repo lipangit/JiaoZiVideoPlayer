@@ -498,10 +498,12 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
+                updateStartImage();
                 break;
             case SCREEN_WINDOW_TINY:
                 break;
@@ -634,7 +636,6 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             startButton.setImageResource(R.drawable.jz_click_pause_selector);
             replayTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_ERROR) {
-            startButton.setVisibility(View.INVISIBLE);
             replayTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
             startButton.setImageResource(R.drawable.jz_click_replay_selector);
