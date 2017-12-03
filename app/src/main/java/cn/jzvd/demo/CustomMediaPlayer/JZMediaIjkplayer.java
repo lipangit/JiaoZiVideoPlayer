@@ -66,7 +66,7 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
     }
 
     @Override
-    public void seekTo(int time) {
+    public void seekTo(long time) {
         ijkMediaPlayer.seekTo(time);
     }
 
@@ -77,13 +77,13 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
     }
 
     @Override
-    public int getCurrentPosition() {
-        return (int) ijkMediaPlayer.getCurrentPosition();
+    public long getCurrentPosition() {
+        return ijkMediaPlayer.getCurrentPosition();
     }
 
     @Override
-    public int getDuration() {
-        return (int) ijkMediaPlayer.getDuration();
+    public long getDuration() {
+        return ijkMediaPlayer.getDuration();
     }
 
     @Override

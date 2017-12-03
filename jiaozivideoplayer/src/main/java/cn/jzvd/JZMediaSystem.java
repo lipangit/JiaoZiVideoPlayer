@@ -60,8 +60,8 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     }
 
     @Override
-    public void seekTo(int time) {
-        mediaPlayer.seekTo(time);
+    public void seekTo(long time) {
+        mediaPlayer.seekTo((int) time);
     }
 
     @Override
@@ -71,12 +71,12 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     }
 
     @Override
-    public int getCurrentPosition() {
+    public long getCurrentPosition() {
         return mediaPlayer.getCurrentPosition();
     }
 
     @Override
-    public int getDuration() {
+    public long getDuration() {
         return mediaPlayer.getDuration();
     }
 

@@ -100,7 +100,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public int currentState = -1;
     public int currentScreen = -1;
     public Object[] objects = null;
-    public int seekToInAdvance = 0;
+    public long seekToInAdvance = 0;
     public ImageView startButton;
     public SeekBar progressBar;
     public ImageView fullscreenButton;
@@ -124,10 +124,10 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     protected boolean mChangeVolume;
     protected boolean mChangePosition;
     protected boolean mChangeBrightness;
-    protected int mGestureDownPosition;
+    protected long mGestureDownPosition;
     protected int mGestureDownVolume;
     protected float mGestureDownBrightness;
-    protected int mSeekTimePosition;
+    protected long mSeekTimePosition;
     boolean tmp_test_back = false;
 
     public JZVideoPlayer(Context context) {
@@ -395,15 +395,12 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setUp(Object[] dataSourceObjects, int defaultUrlMapIndex, int screen, Object... objects) {
-        if (JZMediaManager.instance().jzMediaInterface == null)
-            JZMediaManager.instance().jzMediaInterface = new JZMediaSystem();
-
         if (this.dataSourceObjects != null && JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex) != null &&
                 JZUtils.getCurrentFromDataSource(this.dataSourceObjects, currentUrlMapIndex).equals(JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex))) {
             return;
         }
         if (isCurrentJZVD() && JZUtils.dataSourceObjectsContainsUri(dataSourceObjects, JZMediaManager.getCurrentDataSource())) {
-            int position = 0;
+            long position = 0;
             try {
                 position = JZMediaManager.getCurrentPosition();
             } catch (IllegalStateException e) {
@@ -535,7 +532,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                         }
                     }
                     if (mChangePosition) {
-                        int totalTimeDuration = getDuration();
+                        long totalTimeDuration = getDuration();
                         mSeekTimePosition = (int) (mGestureDownPosition + deltaX * totalTimeDuration / mScreenWidth);
                         if (mSeekTimePosition > totalTimeDuration)
                             mSeekTimePosition = totalTimeDuration;
@@ -581,8 +578,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                     if (mChangePosition) {
                         onEvent(JZUserAction.ON_TOUCH_SCREEN_SEEK_POSITION);
                         JZMediaManager.seekTo(mSeekTimePosition);
-                        int duration = getDuration();
-                        int progress = mSeekTimePosition * 100 / (duration == 0 ? 1 : duration);
+                        long duration = getDuration();
+                        int progress = (int) (mSeekTimePosition * 100 / (duration == 0 ? 1 : duration));
                         progressBar.setProgress(progress);
                     }
                     if (mChangeVolume) {
@@ -659,7 +656,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         resetProgressAndTime();
     }
 
-    public void onStatePreparingChangingUrl(int urlMapIndex, int seekToInAdvance) {
+    public void onStatePreparingChangingUrl(int urlMapIndex, long seekToInAdvance) {
         currentState = CURRENT_STATE_PREPARING_CHANGING_URL;
         this.currentUrlMapIndex = urlMapIndex;
         this.seekToInAdvance = seekToInAdvance;
@@ -673,7 +670,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             JZMediaManager.seekTo(seekToInAdvance);
             seekToInAdvance = 0;
         } else {
-            int position = JZUtils.getSavedProgress(getContext(), JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex));
+            long position = JZUtils.getSavedProgress(getContext(), JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex));
             if (position != 0) {
                 JZMediaManager.seekTo(position);
             }
@@ -760,7 +757,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void onCompletion() {
         Log.i(TAG, "onCompletion " + " [" + this.hashCode() + "] ");
         if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
-            int position = getCurrentPositionWhenPlaying();
+            long position = getCurrentPositionWhenPlaying();
             JZUtils.saveProgress(getContext(), JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex), position);
         }
         cancelProgressTimer();
@@ -872,7 +869,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    public void setProgressAndText(int progress, int position, int duration) {
+    public void setProgressAndText(int progress, long position, long duration) {
 //        Log.d(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
         if (!mTouchingProgressBar) {
             if (progress != 0) progressBar.setProgress(progress);
@@ -892,8 +889,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         totalTimeTextView.setText(JZUtils.stringForTime(0));
     }
 
-    public int getCurrentPositionWhenPlaying() {
-        int position = 0;
+    public long getCurrentPositionWhenPlaying() {
+        long position = 0;
         //TODO 这块的判断应该根据MediaPlayer来
 //        if (JZMediaManager.instance().mediaPlayer == null)
 //            return position;//这行代码不应该在这，如果代码和逻辑万无一失的话，心头之恨呐
@@ -909,8 +906,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         return position;
     }
 
-    public int getDuration() {
-        int duration = 0;
+    public long getDuration() {
+        long duration = 0;
         //TODO MediaPlayer 判空的问题
 //        if (JZMediaManager.instance().mediaPlayer == null) return duration;
         try {
@@ -945,7 +942,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
         if (currentState != CURRENT_STATE_PLAYING &&
                 currentState != CURRENT_STATE_PAUSE) return;
-        int time = seekBar.getProgress() * getDuration() / 100;
+        long time = seekBar.getProgress() * getDuration() / 100;
         JZMediaManager.seekTo(time);
         Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
     }
@@ -1089,8 +1086,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void showProgressDialog(float deltaX,
-                                   String seekTime, int seekTimePosition,
-                                   String totalTime, int totalTimeDuration) {
+                                   String seekTime, long seekTimePosition,
+                                   String totalTime, long totalTimeDuration) {
     }
 
     public void dismissProgressDialog() {
@@ -1143,9 +1140,9 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        int position = getCurrentPositionWhenPlaying();
-                        int duration = getDuration();
-                        int progress = position * 100 / (duration == 0 ? 1 : duration);
+                        long position = getCurrentPositionWhenPlaying();
+                        long duration = getDuration();
+                        int progress = (int) (position * 100 / (duration == 0 ? 1 : duration));
                         setProgressAndText(progress, position, duration);
                     }
                 });

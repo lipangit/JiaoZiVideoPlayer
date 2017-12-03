@@ -37,6 +37,8 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
         mMediaHandlerThread.start();
         mMediaHandler = new MediaHandler(mMediaHandlerThread.getLooper());
         mainThreadHandler = new Handler();
+        if (jzMediaInterface == null)
+            jzMediaInterface = new JZMediaSystem();
     }
 
     public static JZMediaManager instance() {
@@ -64,15 +66,15 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
         instance().jzMediaInterface.currentDataSource = currentDataSource;
     }
 
-    public static int getCurrentPosition() {
+    public static long getCurrentPosition() {
         return instance().jzMediaInterface.getCurrentPosition();
     }
 
-    public static int getDuration() {
+    public static long getDuration() {
         return instance().jzMediaInterface.getDuration();
     }
 
-    public static void seekTo(int time) {
+    public static void seekTo(long time) {
         instance().jzMediaInterface.seekTo(time);
     }
 
