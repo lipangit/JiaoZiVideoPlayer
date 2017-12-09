@@ -16,7 +16,7 @@
 
 Q群:490442439 验证信息:jzvd
 
-[英文文档](https://github.com/lipangit/JiaoZiVideoPlayer) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+[中文文档](https://github.com/lipangit/JiaoZiVideoPlayer) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
 ## Features
 
