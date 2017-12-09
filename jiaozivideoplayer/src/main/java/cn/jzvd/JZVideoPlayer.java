@@ -306,9 +306,13 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static void onScrollReleaseAllVideos(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         int lastVisibleItem = firstVisibleItem + visibleItemCount;
         int currentPlayPosition = JZMediaManager.instance().positionInList;
+        Log.e(TAG, "onScrollReleaseAllVideos: " +
+                currentPlayPosition + " " + firstVisibleItem + " " + currentPlayPosition + " " + lastVisibleItem);
         if (currentPlayPosition >= 0) {
             if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
-                JZVideoPlayer.releaseAllVideos();
+                if (JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN) {
+                    JZVideoPlayer.releaseAllVideos();//为什么最后一个视频横屏会调用这个，其他地方不会
+                }
             }
         }
     }
