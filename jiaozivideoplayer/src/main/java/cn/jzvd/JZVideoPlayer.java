@@ -81,8 +81,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                     try {
-                        if (//JZMediaManager.instance().mediaPlayer != null &&
-                                JZMediaManager.isPlaying()) {
+                        if (JZMediaManager.isPlaying()) {
                             JZMediaManager.pause();
                         }
                     } catch (IllegalStateException e) {
@@ -270,7 +269,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (JZVideoPlayerManager.getCurrentJzvd() != null) {
             JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
             if (jzvd.currentState == JZVideoPlayer.CURRENT_STATE_AUTO_COMPLETE ||
-                    jzvd.currentState == JZVideoPlayer.CURRENT_STATE_NORMAL) {
+                    jzvd.currentState == JZVideoPlayer.CURRENT_STATE_NORMAL ||
+                    jzvd.currentState == JZVideoPlayer.CURRENT_STATE_ERROR) {
 //                JZVideoPlayer.releaseAllVideos();
             } else {
                 jzvd.onStatePause();
