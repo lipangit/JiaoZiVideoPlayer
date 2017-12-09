@@ -633,11 +633,14 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
 
     public void updateStartImage() {
         if (currentState == CURRENT_STATE_PLAYING) {
+            startButton.setVisibility(VISIBLE);
             startButton.setImageResource(R.drawable.jz_click_pause_selector);
             replayTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_ERROR) {
+            startButton.setVisibility(INVISIBLE);
             replayTextView.setVisibility(INVISIBLE);
         } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+            startButton.setVisibility(VISIBLE);
             startButton.setImageResource(R.drawable.jz_click_replay_selector);
             replayTextView.setVisibility(VISIBLE);
         } else {

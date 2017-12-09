@@ -81,8 +81,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                     try {
-                        if (//JZMediaManager.instance().mediaPlayer != null &&
-                                JZMediaManager.isPlaying()) {
+                        if (JZMediaManager.isPlaying()) {
                             JZMediaManager.pause();
                         }
                     } catch (IllegalStateException e) {
@@ -270,7 +269,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (JZVideoPlayerManager.getCurrentJzvd() != null) {
             JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
             if (jzvd.currentState == JZVideoPlayer.CURRENT_STATE_AUTO_COMPLETE ||
-                    jzvd.currentState == JZVideoPlayer.CURRENT_STATE_NORMAL) {
+                    jzvd.currentState == JZVideoPlayer.CURRENT_STATE_NORMAL ||
+                    jzvd.currentState == JZVideoPlayer.CURRENT_STATE_ERROR) {
 //                JZVideoPlayer.releaseAllVideos();
             } else {
                 jzvd.onStatePause();
@@ -285,7 +285,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (currentPlayPosition >= 0) {
             if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null &&
-                        JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
+                        JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY &&
+                        JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN) {
                     if (JZVideoPlayerManager.getCurrentJzvd().currentState == JZVideoPlayer.CURRENT_STATE_PAUSE) {
                         JZVideoPlayer.releaseAllVideos();
                     } else {
@@ -306,9 +307,13 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public static void onScrollReleaseAllVideos(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         int lastVisibleItem = firstVisibleItem + visibleItemCount;
         int currentPlayPosition = JZMediaManager.instance().positionInList;
+        Log.e(TAG, "onScrollReleaseAllVideos: " +
+                currentPlayPosition + " " + firstVisibleItem + " " + currentPlayPosition + " " + lastVisibleItem);
         if (currentPlayPosition >= 0) {
             if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
-                JZVideoPlayer.releaseAllVideos();
+                if (JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN) {
+                    JZVideoPlayer.releaseAllVideos();//为什么最后一个视频横屏会调用这个，其他地方不会
+                }
             }
         }
     }
