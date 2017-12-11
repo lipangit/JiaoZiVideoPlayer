@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.2-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -10,13 +10,13 @@
 
 # [斗鱼直播](https://www.douyu.com/1667893)
 
-周一到周六每天上午10:00开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复
+周一到周三每天上午10:00开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复
 
 完美的列表滑动的检测，一行代码将系统的播放器换成Ijkplayer Exoplayer Vitamio等
 
 Q群:490442439 验证信息:jzvd
 
-[英文文档](https://github.com/lipangit/JiaoZiVideoPlayer) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+[中文文档](https://github.com/lipangit/JiaoZiVideoPlayer) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
 ## Features
 
@@ -37,7 +37,7 @@ For small and medium-sized companies, I think the final solution to video in and
 
 ## Effect
 
-**[jiaozivideoplayer-6.2.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.1/jiaozivideoplayer-6.2.1.apk)**
+**[jiaozivideoplayer-6.2.2.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.2/jiaozivideoplayer-6.2.2.apk)**
 
 ![Demo Screenshot][1]
 
@@ -49,10 +49,10 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.2.1'
+compile 'cn.jzvd:jiaozivideoplayer:6.2.2'
 ```
 
-Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.1) (not recommended)
+Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.2) (not recommended)
 
 2.Add JZVideoPlayer in your layout
 ```xml
