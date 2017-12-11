@@ -749,7 +749,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         dismissVolumeDialog();
         dismissProgressDialog();
         dismissBrightnessDialog();
-        cancelProgressTimer();
         onStateAutoComplete();
 
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN || currentScreen == SCREEN_WINDOW_TINY) {
