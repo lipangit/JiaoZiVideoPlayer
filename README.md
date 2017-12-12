@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.2-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.3-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -34,7 +34,7 @@ Q群:490442439 验证信息:jzvd
 
 ## Effect
 
-**[jiaozivideoplayer-6.2.2.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.2/jiaozivideoplayer-6.2.2.apk)**
+**[jiaozivideoplayer-6.2.3.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.3/jiaozivideoplayer-6.2.3.apk)**
 
 ![Demo Screenshot][1]
 
@@ -46,10 +46,10 @@ Even the custom UI, or has changed to the Library, is also the five steps to use
 
 1.Import library
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.2.2'
+compile 'cn.jzvd:jiaozivideoplayer:6.2.3'
 ```
 
-Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.2) (not recommended)
+Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.3) (not recommended)
 
 2.Add JZVideoPlayer in your layout
 ```xml
