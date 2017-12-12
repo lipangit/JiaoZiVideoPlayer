@@ -38,7 +38,7 @@
 compile 'cn.jzvd:jiaozivideoplayer:6.2.2'
 ```
 
-或直接下载[jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.2) (不建议)
+或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.2) (不建议)
 
 2.添加布局
 ```xml
