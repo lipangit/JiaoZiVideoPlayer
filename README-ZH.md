@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.2-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.3-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -10,23 +10,20 @@
 ## 主要特点
 
 1. 可以完全自定义UI和任何功能
-2. 支持https和rtsp协议，更多协议请点[这里](https://developer.android.com/guide/topics/media/media-formats.html)
-3. 小于 110kb
+2. 一行代码切换播放引擎，支持的视频格式和协议取决于播放引擎，[android.media.MediaPlayer](https://developer.android.com/guide/topics/media/media-formats.html) [ijkplayer](https://github.com/Bilibili/ijkplayer)
+3. 完美检测列表滑动
 4. 可实现全屏播放，小窗播放
-5. 完美的列表滑动的判断
-6. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
-7. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
-8. 多种视频适配屏幕的方式，可铺满全屏，可以全屏剪裁
-9. 重力感应自动进入全屏
-10. 全屏后手势修改进度和音量
-11. Home键退出界面暂停播放，返回界面继续播放
-12. WebView嵌套本地视频控件
-
-对于中小公司而言，目前认为安卓中视频点播的终极状态是系统的MediaPlayer，其他的播放引擎并不是未来的趋势，虽然系统的MediaPlayer也有缺点我认为我们应该做出一些让步，如果系统的MediaPlayer没有重大缺陷将不会考虑替换它。
+5. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
+6. 可以在加载、暂停、播放等各种状态中正常进入全屏和退出全屏
+7. 多种视频适配屏幕的方式，可铺满全屏，可以全屏剪裁
+8. 重力感应自动进入全屏
+9. 全屏后手势修改进度和音量
+10. Home键退出界面暂停播放，返回界面继续播放
+11. WebView嵌套本地视频控件
 
 ## 效果
 
-**[jiaozivideoplayer-6.2.2.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.2/jiaozivideoplayer-6.2.2.apk)**
+**[jiaozivideoplayer-6.2.3.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.3/jiaozivideoplayer-6.2.3.apk)**
 
 ![Demo Screenshot][1]
 
@@ -38,10 +35,10 @@
 
 1.添加类库
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.2.2'
+compile 'cn.jzvd:jiaozivideoplayer:6.2.3'
 ```
 
-或直接下载[jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.2) (不建议)
+或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.3) (不建议)
 
 2.添加布局
 ```xml

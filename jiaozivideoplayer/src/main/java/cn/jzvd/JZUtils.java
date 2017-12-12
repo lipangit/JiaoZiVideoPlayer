@@ -119,16 +119,15 @@ public class JZUtils {
         SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = spn.edit();
-        editor.putLong(url.toString(), progress);
+        editor.putLong("newVersion:" + url.toString(), progress);
         editor.apply();
     }
 
     public static long getSavedProgress(Context context, Object url) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return 0;
-        SharedPreferences spn;
-        spn = context.getSharedPreferences("JZVD_PROGRESS",
+        SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
-        return spn.getLong(url.toString(), 0);
+        return spn.getLong("newVersion:" + url.toString(), 0);
     }
 
     /**
