@@ -125,8 +125,7 @@ public class JZUtils {
 
     public static long getSavedProgress(Context context, Object url) {
         if (!JZVideoPlayer.SAVE_PROGRESS) return 0;
-        SharedPreferences spn;
-        spn = context.getSharedPreferences("JZVD_PROGRESS",
+        SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
         return spn.getLong("newVersion:" + url.toString(), 0);
     }

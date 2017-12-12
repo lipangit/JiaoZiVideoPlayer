@@ -16,13 +16,13 @@
 
 Q群:490442439 验证信息:jzvd
 
-[中文文档](https://github.com/lipangit/JiaoZiVideoPlayer) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+[中文文档](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
 ## Features
 
 1. You can completely customize the UI and any function
-2. Support https and rtsp agreement, more agreement please click [here](https://developer.android.com/guide/topics/media/media-formats.html)
-3. Less than 110kb
+2. One line of code to switch the playback engine, supported video formats and protocols depends on the playback engine,[android.media.MediaPlayer](https://developer.android.com/guide/topics/media/media-formats.html) [ijkplayer](https://github.com/Bilibili/ijkplayer)
+3. Perfect detection list sliding
 4. Can achieve full-screen playback, small window playback
 5. The perfect list of sliding judgment
 6. Full-screen work in multiple nested modes like ListView, ViewPager and ListView, ViewPager and Fragment

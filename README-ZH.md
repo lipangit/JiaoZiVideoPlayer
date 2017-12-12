@@ -10,8 +10,8 @@
 ## 主要特点
 
 1. 可以完全自定义UI和任何功能
-2. 支持https和rtsp协议，更多协议请点[这里](https://developer.android.com/guide/topics/media/media-formats.html)
-3. 小于 110kb
+2. 一行代码切换播放引擎，支持的视频格式和协议取决于播放引擎，[android.media.MediaPlayer](https://developer.android.com/guide/topics/media/media-formats.html) [ijkplayer](https://github.com/Bilibili/ijkplayer)
+3. 完美检测列表滑动
 4. 可实现全屏播放，小窗播放
 5. 完美的列表滑动的判断
 6. 能在`ListView`、`ViewPager`和`ListView`、`ViewPager`和`Fragment`等多重嵌套模式下全屏工作
