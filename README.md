@@ -7,32 +7,36 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-# [斗鱼直播](https://www.douyu.com/1667893)
+# [Live broadcast](https://www.douyu.com/1667893)
 
-每天下午两点开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复，关注数到100的时候抽奖100元(两个50)
+Live broadcast everyday at 2pm
+Everyones' questions about use will be answered
+Please proceed to ask questions once you enter the studio
+Live typing is no longer manual
+A lottery will also be running
 
-Q群:490442439 验证信息:jzvd
 
-[中文文档](README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [VideoTutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+
+[Chinese Documentation](README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [VideoTutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
 ## Features
 
 1. You can completely customize the UI and any function
-2. Support https and rtsp agreement, more agreement please click [here](https://developer.android.com/guide/topics/media/media-formats.html)
-3. Less than 110kb
-4. Can achieve full-screen playback, small window playback
+2. Support https and rtsp agreement. For more agreements please click [here](https://developer.android.com/guide/topics/media/media-formats.html)
+3. Lightweight-Less than 110kb
+4. Full screen and small window option available
 5. The perfect list of sliding judgment
-6. Full-screen work in multiple nested modes like ListView, ViewPager and ListView, ViewPager and Fragment
+6. Full-screen works in multiple nested modes like ListView, ViewPager and ListView, ViewPager and Fragment
 7. Can load, pause, play and other normal state into the full screen and exit full screen
 8. A variety of video adaptation screen mode, can be covered full screen, you can cut full screen
-9. Gravity sensing automatically enter full screen
-10. Full screen gestures to modify the progress and volume
+9. Ability to enter full-screen automatically using gravity sensing
+10. Change progress and volume right from full screen mode.
 11. Home key to exit the interface to suspend the playback, return to the interface to continue playing
 12. WebView Nested Local Video Controls
 
-I think the final solution to video in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has disavantages we should make concession, if `android.media.MediaPlayer` has defect we will consider to change other player.
+I think the final solution to video playing in android is `android.media.MediaPlayer`, other players are not in the trend, even if the `android.media.MediaPlayer` has bugs disavantages we should make concession. If `android.media.MediaPlayer` has serious issues and bugs we will consider a change to another player.
 
-## Effect
+## A demo showing available effects
 
 **[jiaozivideoplayer-6.1.2.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.1.2/jiaozivideoplayer-6.1.2.apk)**
 
@@ -42,9 +46,9 @@ I think the final solution to video in android is `android.media.MediaPlayer`, o
 
 ## Usage
 
-Even the custom UI, or has changed to the Library, is also the five steps to use the player.
+Only five steps to use the player.
 
-1.Import library
+1.Import library(recommended)
 ```gradle
 compile 'cn.jzvd:jiaozivideoplayer:6.1.2'
 ```
@@ -63,7 +67,7 @@ Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.
 ```java
 JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.videoplayer);
 jzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-                            , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "饺子闭眼睛");
+                            , JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL, "Video Title");
 jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
