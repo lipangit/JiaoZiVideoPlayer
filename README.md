@@ -16,23 +16,23 @@
 
 Q群:490442439 验证信息:jzvd
 
-[中文文档](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md) [工作计划](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+[中文文档](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
 ## Features
 
 1. You can completely customize the UI and any function
 2. One line of code to switch the playback engine, supported video formats and protocols depends on the playback engine,[android.media.MediaPlayer](https://developer.android.com/guide/topics/media/media-formats.html) [ijkplayer](https://github.com/Bilibili/ijkplayer)
 3. Perfect detection list sliding
-4. Can achieve full-screen playback, small window playback
-5. Full-screen work in multiple nested modes like ListView, ViewPager and ListView, ViewPager and Fragment
+4. Full screen and small window option available
+5. Full-screen works in multiple nested modes like ListView, ViewPager and ListView, ViewPager and Fragment
 6. Can load, pause, play and other normal state into the full screen and exit full screen
 7. A variety of video adaptation screen mode, can be covered full screen, you can cut full screen
-8. Gravity sensing automatically enter full screen
-9. Full screen gestures to modify the progress and volume
+8. Ability to enter full-screen automatically using gravity sensing
+9. Change progress and volume right from full screen mode
 10. Home key to exit the interface to suspend the playback, return to the interface to continue playing
 11. WebView Nested Local Video Controls
 
-## Effect
+## A demo showing available effects
 
 **[jiaozivideoplayer-6.2.3.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.3/jiaozivideoplayer-6.2.3.apk)**
 
@@ -42,7 +42,7 @@ Q群:490442439 验证信息:jzvd
 
 ## Usage
 
-Even the custom UI, or has changed to the Library, is also the five steps to use the player.
+Only five steps to use the player.
 
 1.Import library
 ```gradle
