@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.media.AudioManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -274,7 +273,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 if (!JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("file") &&
                         !JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("/") &&
                         !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog(JZUserActionStandard.ON_CLICK_START_THUMB);
+                    showWifiDialog(currentState == CURRENT_STATE_ERROR ? JZUserActionStandard.ON_CLICK_START_ERROR : JZUserActionStandard.ON_CLICK_START_ICON);
                     return;
                 }
                 onEvent(JZUserActionStandard.ON_CLICK_START_THUMB);
