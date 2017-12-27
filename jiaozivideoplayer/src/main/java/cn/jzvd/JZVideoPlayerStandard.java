@@ -798,22 +798,20 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         if (currentState != CURRENT_STATE_NORMAL
                 && currentState != CURRENT_STATE_ERROR
                 && currentState != CURRENT_STATE_AUTO_COMPLETE) {
-            if (getContext() != null && getContext() instanceof Activity) {
-                ((Activity) getContext()).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        bottomContainer.setVisibility(View.INVISIBLE);
-                        topContainer.setVisibility(View.INVISIBLE);
-                        startButton.setVisibility(View.INVISIBLE);
-                        if (clarityPopWindow != null) {
-                            clarityPopWindow.dismiss();
-                        }
-                        if (currentScreen != SCREEN_WINDOW_TINY) {
-                            bottomProgressBar.setVisibility(View.VISIBLE);
-                        }
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    bottomContainer.setVisibility(View.INVISIBLE);
+                    topContainer.setVisibility(View.INVISIBLE);
+                    startButton.setVisibility(View.INVISIBLE);
+                    if (clarityPopWindow != null) {
+                        clarityPopWindow.dismiss();
                     }
-                });
-            }
+                    if (currentScreen != SCREEN_WINDOW_TINY) {
+                        bottomProgressBar.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
         }
     }
 

@@ -115,7 +115,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     protected int mScreenWidth;
     protected int mScreenHeight;
     protected AudioManager mAudioManager;
-    protected Handler mHandler;
     protected ProgressTimerTask mProgressTimerTask;
     protected boolean mTouchingProgressBar;
     protected float mDownX;
@@ -380,7 +379,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         mScreenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-        mHandler = new Handler();
 
         try {
             if (isCurrentPlay()) {
@@ -1141,7 +1139,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         public void run() {
             if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
 //                Log.v(TAG, "onProgressUpdate " + "[" + this.hashCode() + "] ");
-                mHandler.post(new Runnable() {
+                post(new Runnable() {
                     @Override
                     public void run() {
                         long position = getCurrentPositionWhenPlaying();
