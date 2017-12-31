@@ -273,7 +273,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 if (!JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("file") &&
                         !JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("/") &&
                         !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog(currentState == CURRENT_STATE_ERROR ? JZUserActionStandard.ON_CLICK_START_ERROR : JZUserActionStandard.ON_CLICK_START_ICON);
+                    showWifiDialog();
                     return;
                 }
                 onEvent(JZUserActionStandard.ON_CLICK_START_THUMB);
@@ -335,7 +335,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             if (!JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("file") && !
                     JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("/") &&
                     !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                showWifiDialog(JZUserAction.ON_CLICK_START_ICON);
+                showWifiDialog();
                 return;
             }
             initTextureView();//和开始播放的代码重复
@@ -348,15 +348,15 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     }
 
     @Override
-    public void showWifiDialog(int action) {
-        super.showWifiDialog(action);
+    public void showWifiDialog() {
+        super.showWifiDialog();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(getResources().getString(R.string.tips_not_wifi));
         builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                onEvent(JZUserActionStandard.ON_CLICK_START_THUMB);
+                onEvent(JZUserActionStandard.ON_CLICK_START_WIFIDIALOG);
                 startVideo();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }

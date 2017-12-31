@@ -444,7 +444,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 if (!JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("file") && !
                         JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("/") &&
                         !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog(JZUserAction.ON_CLICK_START_ICON);
+                    showWifiDialog();
                     return;
                 }
                 startVideo();
@@ -1084,7 +1084,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     }
 
-    public void showWifiDialog(int event) {
+    public void showWifiDialog() {
     }
 
     public void showProgressDialog(float deltaX,
