@@ -836,11 +836,14 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void clearFloatScreen() {
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
         showSupportActionBar(getContext());
-        JZVideoPlayer currJzvd = JZVideoPlayerManager.getCurrentJzvd();
-        currJzvd.textureViewContainer.removeView(JZMediaManager.textureView);
         ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        vp.removeView(currJzvd);
+        JZVideoPlayer floatJzvd = vp.findViewById(R.id.jz_fullscreen_id);
+        if (floatJzvd != null) {
+            vp.removeView(floatJzvd);
+            if (floatJzvd.textureViewContainer != null)
+                floatJzvd.textureViewContainer.removeView(JZMediaManager.textureView);
+        }
         JZVideoPlayerManager.setSecondFloor(null);
     }
 

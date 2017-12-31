@@ -365,6 +365,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                clearFloatScreen();
             }
         });
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
