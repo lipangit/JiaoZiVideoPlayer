@@ -838,11 +838,18 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         showSupportActionBar(getContext());
         ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
-        JZVideoPlayer floatJzvd = vp.findViewById(R.id.jz_fullscreen_id);
-        if (floatJzvd != null) {
-            vp.removeView(floatJzvd);
-            if (floatJzvd.textureViewContainer != null)
-                floatJzvd.textureViewContainer.removeView(JZMediaManager.textureView);
+        JZVideoPlayer fullJzvd = vp.findViewById(R.id.jz_fullscreen_id);
+        JZVideoPlayer tinyJzvd = vp.findViewById(R.id.jz_tiny_id);
+
+        if (fullJzvd != null) {
+            vp.removeView(fullJzvd);
+            if (fullJzvd.textureViewContainer != null)
+                fullJzvd.textureViewContainer.removeView(JZMediaManager.textureView);
+        }
+        if (tinyJzvd != null) {
+            vp.removeView(tinyJzvd);
+            if (tinyJzvd.textureViewContainer != null)
+                tinyJzvd.textureViewContainer.removeView(JZMediaManager.textureView);
         }
         JZVideoPlayerManager.setSecondFloor(null);
     }
@@ -1043,6 +1050,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         clearFloatScreen();
         //2.在本jzvd上播放
         setState(currentState);
+//        removeTextureView();
         addTextureView();
     }
 
