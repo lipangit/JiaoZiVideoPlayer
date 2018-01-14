@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.media.AudioManager;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -274,7 +273,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 if (!JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("file") &&
                         !JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("/") &&
                         !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                    showWifiDialog(JZUserActionStandard.ON_CLICK_START_THUMB);
+                    showWifiDialog();
                     return;
                 }
                 onEvent(JZUserActionStandard.ON_CLICK_START_THUMB);
@@ -336,7 +335,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             if (!JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("file") && !
                     JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("/") &&
                     !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
-                showWifiDialog(JZUserAction.ON_CLICK_START_ICON);
+                showWifiDialog();
                 return;
             }
             initTextureView();//和开始播放的代码重复
@@ -349,15 +348,15 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     }
 
     @Override
-    public void showWifiDialog(int action) {
-        super.showWifiDialog(action);
+    public void showWifiDialog() {
+        super.showWifiDialog();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(getResources().getString(R.string.tips_not_wifi));
         builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                onEvent(JZUserActionStandard.ON_CLICK_START_THUMB);
+                onEvent(JZUserActionStandard.ON_CLICK_START_WIFIDIALOG);
                 startVideo();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }
@@ -366,6 +365,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                clearFloatScreen();
             }
         });
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -610,7 +610,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 updateStartImage();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
-                setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
+                setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
@@ -799,22 +799,20 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         if (currentState != CURRENT_STATE_NORMAL
                 && currentState != CURRENT_STATE_ERROR
                 && currentState != CURRENT_STATE_AUTO_COMPLETE) {
-            if (getContext() != null && getContext() instanceof Activity) {
-                ((Activity) getContext()).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        bottomContainer.setVisibility(View.INVISIBLE);
-                        topContainer.setVisibility(View.INVISIBLE);
-                        startButton.setVisibility(View.INVISIBLE);
-                        if (clarityPopWindow != null) {
-                            clarityPopWindow.dismiss();
-                        }
-                        if (currentScreen != SCREEN_WINDOW_TINY) {
-                            bottomProgressBar.setVisibility(View.VISIBLE);
-                        }
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    bottomContainer.setVisibility(View.INVISIBLE);
+                    topContainer.setVisibility(View.INVISIBLE);
+                    startButton.setVisibility(View.INVISIBLE);
+                    if (clarityPopWindow != null) {
+                        clarityPopWindow.dismiss();
                     }
-                });
-            }
+                    if (currentScreen != SCREEN_WINDOW_TINY) {
+                        bottomProgressBar.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
         }
     }
 

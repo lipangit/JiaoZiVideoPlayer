@@ -65,7 +65,7 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         map.put("普清", VideoConstant.videoUrlList[0]);
         Object[] objects = new Object[3];
         objects[0] = map;
-        objects[1] = false;
+        objects[1] = false;//looping
         objects[2] = new HashMap<>();
         ((HashMap) objects[2]).put("key", "value");
         mJzVideoPlayerStandard.setUp(objects, 2

@@ -143,11 +143,14 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
                     currentVideoWidth = 0;
                     currentVideoHeight = 0;
                     jzMediaInterface.prepare();
-                    if (surface != null) {
-                        surface.release();
+
+                    if (savedSurfaceTexture != null) {
+                        if (surface != null) {
+                            surface.release();
+                        }
+                        surface = new Surface(savedSurfaceTexture);
+                        jzMediaInterface.setSurface(surface);
                     }
-                    surface = new Surface(savedSurfaceTexture);
-                    jzMediaInterface.setSurface(surface);
                     break;
                 case HANDLER_RELEASE:
                     jzMediaInterface.release();

@@ -6,6 +6,6 @@
 
     <cn.jzvd.JZVideoPlayerStandard
         android:id="@+id/jz_video"
-        android:layout_width="300dp"
-        android:layout_height="300dp" />
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 </LinearLayout>
