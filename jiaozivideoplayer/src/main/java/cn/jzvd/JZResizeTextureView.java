@@ -147,11 +147,11 @@ public class JZResizeTextureView extends TextureView {
                     parentHeight = tempSize;
                 }
                 /**充满剪切**/
-                if (videoHeight / videoWidth > parentHeight / parentWidth) {
-                    height = parentWidth / width * height;
+                if (((double) videoHeight / videoWidth) > ((double) parentHeight / parentWidth)) {
+                    height = (int) (((double) parentWidth / (double) width * (double) height));
                     width = parentWidth;
-                } else if (videoHeight / videoWidth < parentHeight / parentWidth) {
-                    width = parentHeight / height * width;
+                } else if (((double) videoHeight / videoWidth) < ((double) parentHeight / parentWidth)) {
+                    width = (int) (((double) parentHeight / (double) height * (double) width));
                     height = parentHeight;
                 }
             }
