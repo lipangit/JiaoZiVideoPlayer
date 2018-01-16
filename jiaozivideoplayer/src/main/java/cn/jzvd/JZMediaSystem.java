@@ -86,6 +86,11 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     }
 
     @Override
+    public void setVolume(float leftVolume, float rightVolume) {
+        mediaPlayer.setVolume(leftVolume, rightVolume);
+    }
+
+    @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
         if (currentDataSource.toString().toLowerCase().contains("mp3")) {
