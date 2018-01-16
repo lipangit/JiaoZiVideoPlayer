@@ -85,7 +85,7 @@ public class ActivityApiUISmallChange extends AppCompatActivity {
         jzVideoPlayerStandard_16_9.heightRatio = 9;
 
         jzVideoPlayerStandardVolumeAfterFullscreen = findViewById(R.id.jz_videoplayer_volume);
-        jzVideoPlayerStandardVolumeAfterFullscreen.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4", JZVideoPlayer.SCREEN_WINDOW_NORMAL
+        jzVideoPlayerStandardVolumeAfterFullscreen.setUp(VideoConstant.videoUrls[0][1], JZVideoPlayer.SCREEN_WINDOW_NORMAL
                 , "饺子摇摆");
         Picasso.with(this)
                 .load(VideoConstant.videoThumbs[0][1])
