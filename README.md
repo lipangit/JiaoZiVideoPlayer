@@ -31,6 +31,7 @@ Q群:490442439 验证信息:jzvd
 9. Change progress and volume right from full screen mode
 10. Home key to exit the interface to suspend the playback, return to the interface to continue playing
 11. WebView Nested Local Video Controls
+12. VideoCache in dem,o
 
 ## A demo showing available effects
 
