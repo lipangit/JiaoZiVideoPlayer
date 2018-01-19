@@ -424,9 +424,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                     battertReceiver,
                     new IntentFilter(Intent.ACTION_BATTERY_CHANGED)
             );
-            Log.e(TAG, "setSystemTimeAndBattery: broadcast");
         } else {
-            Log.e(TAG, "setSystemTimeAndBattery: no broadcast");
             setBatteryLevel();
         }
     }
