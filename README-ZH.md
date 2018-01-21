@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.4-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.5-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -20,10 +20,11 @@
 9. 全屏后手势修改进度和音量
 10. Home键退出界面暂停播放，返回界面继续播放
 11. WebView嵌套本地视频控件
+12. demo中添加视频缓存的例子
 
 ## 效果
 
-**[jiaozivideoplayer-6.2.4.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.4/jiaozivideoplayer-6.2.4.apk)**
+**[jiaozivideoplayer-6.2.5.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.5/jiaozivideoplayer-6.2.5.apk)**
 
 ![Demo Screenshot][1]
 
@@ -35,10 +36,10 @@
 
 1.添加类库
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.2.4'
+compile 'cn.jzvd:jiaozivideoplayer:6.2.5'
 ```
 
-或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.4) (不建议)
+或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.5) (不建议)
 
 2.添加布局
 ```xml

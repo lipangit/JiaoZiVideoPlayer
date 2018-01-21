@@ -8,7 +8,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
-import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;

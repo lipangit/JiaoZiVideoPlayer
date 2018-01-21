@@ -84,6 +84,18 @@
                 android:id="@+id/jz_videoplayer_16_9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="Volume after fullscreen" />
+
+            <cn.jzvd.demo.CustomView.JZVideoPlayerStandardVolumeAfterFullscreen
+                android:id="@+id/jz_videoplayer_volume"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

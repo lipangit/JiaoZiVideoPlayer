@@ -92,6 +92,11 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
     }
 
     @Override
+    public void setVolume(float leftVolume, float rightVolume) {
+        ijkMediaPlayer.setVolume(leftVolume, rightVolume);
+    }
+
+    @Override
     public void onPrepared(IMediaPlayer iMediaPlayer) {
         ijkMediaPlayer.start();
         if (currentDataSource.toString().toLowerCase().contains("mp3")) {

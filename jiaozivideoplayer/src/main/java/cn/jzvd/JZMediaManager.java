@@ -91,6 +91,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
     }
 
     public void releaseMediaPlayer() {
+        mMediaHandler.removeCallbacksAndMessages(null);
         Message msg = new Message();
         msg.what = HANDLER_RELEASE;
         mMediaHandler.sendMessage(msg);

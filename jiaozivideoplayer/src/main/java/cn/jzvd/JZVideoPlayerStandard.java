@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -66,7 +67,9 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     protected Dialog mBrightnessDialog;
     protected ProgressBar mDialogBrightnessProgressBar;
     protected TextView mDialogBrightnessTextView;
-    private boolean brocasting = false;
+    public static long LAST_GET_BATTERYLEVEL_TIME = 0;
+    public static int LAST_GET_BATTERYLEVEL_PERCENT = 70;
+
     private BroadcastReceiver battertReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -74,21 +77,9 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                 int level = intent.getIntExtra("level", 0);
                 int scale = intent.getIntExtra("scale", 100);
                 int percent = level * 100 / scale;
-                if (percent < 15) {
-                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_10);
-                } else if (percent >= 15 && percent < 40) {
-                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_30);
-                } else if (percent >= 40 && percent < 60) {
-                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_50);
-                } else if (percent >= 60 && percent < 80) {
-                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_70);
-                } else if (percent >= 80 && percent < 95) {
-                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_90);
-                } else if (percent >= 95 && percent <= 100) {
-                    batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_100);
-                }
+                LAST_GET_BATTERYLEVEL_PERCENT = percent;
+                setBatteryLevel();
                 getContext().unregisterReceiver(battertReceiver);
-                brocasting = false;
             }
         }
     };
@@ -332,6 +323,10 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             clarityPopWindow.update(clarity, -40, 46, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
         } else if (i == R.id.retry_btn) {
+            if (dataSourceObjects == null || JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex) == null) {
+                Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
+                return;
+            }
             if (!JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("file") && !
                     JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex).toString().startsWith("/") &&
                     !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
@@ -423,11 +418,31 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         SimpleDateFormat dateFormater = new SimpleDateFormat("HH:mm");
         Date date = new Date();
         videoCurrentTime.setText(dateFormater.format(date));
-        if (!brocasting) {
+        if ((System.currentTimeMillis() - LAST_GET_BATTERYLEVEL_TIME) > 30000) {
+            LAST_GET_BATTERYLEVEL_TIME = System.currentTimeMillis();
             getContext().registerReceiver(
                     battertReceiver,
                     new IntentFilter(Intent.ACTION_BATTERY_CHANGED)
             );
+        } else {
+            setBatteryLevel();
+        }
+    }
+
+    public void setBatteryLevel() {
+        int percent = LAST_GET_BATTERYLEVEL_PERCENT;
+        if (percent < 15) {
+            batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_10);
+        } else if (percent >= 15 && percent < 40) {
+            batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_30);
+        } else if (percent >= 40 && percent < 60) {
+            batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_50);
+        } else if (percent >= 60 && percent < 80) {
+            batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_70);
+        } else if (percent >= 80 && percent < 95) {
+            batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_90);
+        } else if (percent >= 95 && percent <= 100) {
+            batteryLevel.setBackgroundResource(R.drawable.jz_battery_level_100);
         }
     }
 
