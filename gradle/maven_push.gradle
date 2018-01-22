@@ -22,7 +22,7 @@ signing {
 
 group = "cn.jzvd"
 archivesBaseName = "jiaozivideoplayer"
-version = "6.2.5"
+version = "6.2.7"
 
 uploadArchives {
     repositories {
@@ -30,18 +30,18 @@ uploadArchives {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: hasProperty('ossrhUsername') ? ossrhUsername : "",
-                        password: hasProperty('ossrhPassword') ? ossrhPassword : "")
+                authentication(userName: getProperty('ossrhUsername'),
+                                 password: getProperty('ossrhPassword'))
             }
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: hasProperty('ossrhUsername') ? ossrhUsername : "",
-                        password: hasProperty('ossrhPassword') ? ossrhPassword : "")
-            }
+//            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+//                authentication(userName: getProperty('ossrhUsername'),
+//                        password: getProperty('ossrhPassword'))
+//            }
 
             pom.project {
                 name 'jiaozivideoplayer'
-                packaging 'jar'
+                packaging 'aar'
                 // optionally artifactId can be defined here
                 description 'android videoplayer videoview 安卓视频播放器 全屏 播放器列表全屏 仿今日头条UI'
                 url 'https://github.com/lipangit/jiaozivideoplayer'
