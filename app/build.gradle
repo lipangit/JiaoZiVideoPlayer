@@ -8,8 +8,8 @@ android {
         applicationId "cn.jzvd.demo"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 76
-        versionName "6.2.5"
+        versionCode 77
+        versionName "6.2.7"
     }
     signingConfigs {
         releaseConfig {

@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.5-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.7-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -24,7 +24,7 @@
 
 ## 效果
 
-**[jiaozivideoplayer-6.2.5.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.5/jiaozivideoplayer-6.2.5.apk)**
+**[jiaozivideoplayer-6.2.7.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.7/jiaozivideoplayer-6.2.7.apk)**
 
 ![Demo Screenshot][1]
 
@@ -36,10 +36,10 @@
 
 1.添加类库
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.2.5'
+compile 'cn.jzvd:jiaozivideoplayer:6.2.7'
 ```
 
-或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.5) (不建议)
+或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.7) (不建议)
 
 2.添加布局
 ```xml
@@ -131,7 +131,7 @@ protected void onPause() {
 
 ## License MIT
 
-Copyright (c) 2015-2016 李盼 Nathen
+Copyright (c) 2015-2018 李盼 Nathen
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
