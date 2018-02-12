@@ -965,7 +965,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void startWindowFullscreen() {
         Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
         hideSupportActionBar(getContext());
-        JZUtils.setRequestedOrientation(getContext(), FULLSCREEN_ORIENTATION);
 
         ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
@@ -989,6 +988,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             JZVideoPlayerManager.setSecondFloor(jzVideoPlayer);
 //            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
 //            jzVideoPlayer.setAnimation(ra);
+            JZUtils.setRequestedOrientation(getContext(), FULLSCREEN_ORIENTATION);
+
             onStateNormal();
             jzVideoPlayer.progressBar.setSecondaryProgress(progressBar.getSecondaryProgress());
             jzVideoPlayer.startProgressTimer();
@@ -996,6 +997,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public void startWindowTiny() {
