@@ -5,4 +5,6 @@
     <string name="tips_not_wifi_cancel">Parar</string>
     <string name="no_url">Sem vídeo</string>
     <string name="replay">Replay</string>
+    <string name="click_to_restart">Clique para tentar novamente</string>
+    <string name="video_loading_faild">O carregamento de vídeo falhou</string>
 </resources>

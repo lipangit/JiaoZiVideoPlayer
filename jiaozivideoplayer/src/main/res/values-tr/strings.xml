@@ -5,4 +5,6 @@
     <string name="tips_not_wifi_cancel">Durdur</string>
     <string name="no_url">URL Bulunamadı</string>
     <string name="replay">Tekrar</string>
+    <string name="click_to_restart">Tekrar denemek için tıklayın</string>
+    <string name="video_loading_faild">Video yüklenemedi</string>
 </resources>
