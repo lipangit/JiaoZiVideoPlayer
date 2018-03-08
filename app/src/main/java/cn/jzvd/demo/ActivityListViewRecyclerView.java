@@ -7,10 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZUtils;
 import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerManager;
 
 /**
  * Created by yujunkui on 16/8/29.
@@ -37,13 +39,16 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
+
             }
 
             @Override
             public void onChildViewDetachedFromWindow(View view) {
                 JZVideoPlayer jzvd = view.findViewById(R.id.videoplayer);
                 if (jzvd != null && JZUtils.dataSourceObjectsContainsUri(jzvd.dataSourceObjects, JZMediaManager.getCurrentDataSource())) {
-                    JZVideoPlayer.releaseAllVideos();
+                    if(JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN){
+                        JZVideoPlayer.releaseAllVideos();
+                    }
                 }
             }
         });

@@ -5,4 +5,6 @@
     <string name="tips_not_wifi_cancel">停止播放</string>
     <string name="no_url">播放地址无效</string>
     <string name="replay">重播</string>
+    <string name="click_to_restart">点击重试</string>
+    <string name="video_loading_faild">视频加载失败</string>
 </resources>

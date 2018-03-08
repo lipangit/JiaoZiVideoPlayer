@@ -22,7 +22,7 @@ signing {
 
 group = "cn.jzvd"
 archivesBaseName = "jiaozivideoplayer"
-version = "6.2.7"
+version = "6.2.8"
 
 uploadArchives {
     repositories {
@@ -30,14 +30,9 @@ uploadArchives {
             beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: getProperty('ossrhUsername'),
-                                 password: getProperty('ossrhPassword'))
+                authentication(userName: hasProperty('ossrhUsername') ? ossrhUsername : "",
+                                 password: hasProperty('ossrhPassword') ? ossrhPassword : "")
             }
-
-//            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-//                authentication(userName: getProperty('ossrhUsername'),
-//                        password: getProperty('ossrhPassword'))
-//            }
 
             pom.project {
                 name 'jiaozivideoplayer'

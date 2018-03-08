@@ -40,6 +40,11 @@ public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
     }
 
     @Override
+    public int getLayoutId() {
+        return cn.jzvd.R.layout.jz_layout_standard;
+    }
+
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         return super.onTouch(v, event);
     }

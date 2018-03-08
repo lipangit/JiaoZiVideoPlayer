@@ -61,7 +61,11 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void seekTo(long time) {
-        mediaPlayer.seekTo((int) time);
+        try {
+            mediaPlayer.seekTo((int) time);
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -221,7 +221,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="视频加载失败"
+            android:text="@string/video_loading_faild"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
@@ -235,7 +235,7 @@
             android:paddingLeft="9dp"
             android:paddingRight="9dp"
             android:paddingTop="4dp"
-            android:text="点击重试"
+            android:text="@string/click_to_restart"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
     </LinearLayout>
