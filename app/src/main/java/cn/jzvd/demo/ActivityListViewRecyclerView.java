@@ -119,11 +119,12 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
                     case RecyclerView.SCROLL_STATE_IDLE:
                         autoPlayVideo(recyclerView, VideoTagEnum.TAG_AUTO_PLAY_VIDEO);
                     default:
-                        autoPlayVideo(recyclerView, VideoTagEnum.TAG_PAUSE_VIDEO);
+                      // 滑动时暂停视频
+                     //  autoPlayVideo(recyclerView, VideoTagEnum.TAG_PAUSE_VIDEO);
                         break;
                 }
 //            } else {
-//                JZVideoPlayer.releaseAllVideos();
+//              // do some ....
 //            }
         }
 
