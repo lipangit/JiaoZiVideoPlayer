@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZUtils;
@@ -48,7 +47,19 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
             public void onChildViewDetachedFromWindow(View view) {
                 JZVideoPlayer jzvd = view.findViewById(R.id.videoplayer);
                 if (jzvd != null && JZUtils.dataSourceObjectsContainsUri(jzvd.dataSourceObjects, JZMediaManager.getCurrentDataSource())) {
-                    if(JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN){
+/*
+
+                     在使用过程中发现，在快速滑动RecycleView 时，
+                     JZVideoPlayerManager.getCurrentJzvd().currentScreen  这句 会报NullPointerException
+                        java.lang.NullPointerException: Attempt to read from field 'int cn.jzvd.JZVideoPlayer.currentScreen' on a null object reference
+                        详见 https://github.com/lipangit/JiaoZiVideoPlayer/issues/1681
+
+                    if (JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN) {
+                        JZVideoPlayer.releaseAllVideos();
+                    }
+*/
+
+                    if (jzvd.currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN) {
                         JZVideoPlayer.releaseAllVideos();
                     }
                 }
@@ -108,21 +119,20 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
         }
 
 
-
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
 
             // TODO 这可以加上 wifi 下自动播放视频开关
 //            if (wifiTag) {
-                switch (newState) {
-                    case RecyclerView.SCROLL_STATE_IDLE:
-                        autoPlayVideo(recyclerView, VideoTagEnum.TAG_AUTO_PLAY_VIDEO);
-                    default:
-                      // 滑动时暂停视频
-                     //  autoPlayVideo(recyclerView, VideoTagEnum.TAG_PAUSE_VIDEO);
-                        break;
-                }
+            switch (newState) {
+                case RecyclerView.SCROLL_STATE_IDLE:
+                    autoPlayVideo(recyclerView, VideoTagEnum.TAG_AUTO_PLAY_VIDEO);
+                default:
+                    // 滑动时暂停视频
+                    //  autoPlayVideo(recyclerView, VideoTagEnum.TAG_PAUSE_VIDEO);
+                    break;
+            }
 //            } else {
 //              // do some ....
 //            }
@@ -167,7 +177,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
                     if (rect.top == 0 && rect.bottom == videoheight) {
                         handleVideo(handleVideoTag, homeGSYVideoPlayer);
                         // 借助跳出循环，达到只处理可见区域内的第一个播放器
-                        break ;
+                        break;
                     }
                 }
             }
@@ -176,7 +186,8 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
 
         /**
          * 视频状态处理
-         * @param handleVideoTag 视频需要进行状态
+         *
+         * @param handleVideoTag     视频需要进行状态
          * @param homeGSYVideoPlayer JZVideoPlayer播放器
          */
         private void handleVideo(VideoTagEnum handleVideoTag, JZVideoPlayerStandard homeGSYVideoPlayer) {
