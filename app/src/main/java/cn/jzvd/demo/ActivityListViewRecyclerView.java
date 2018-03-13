@@ -47,19 +47,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
             public void onChildViewDetachedFromWindow(View view) {
                 JZVideoPlayer jzvd = view.findViewById(R.id.videoplayer);
                 if (jzvd != null && JZUtils.dataSourceObjectsContainsUri(jzvd.dataSourceObjects, JZMediaManager.getCurrentDataSource())) {
-/*
-
-                     在使用过程中发现，在快速滑动RecycleView 时，
-                     JZVideoPlayerManager.getCurrentJzvd().currentScreen  这句 会报NullPointerException
-                        java.lang.NullPointerException: Attempt to read from field 'int cn.jzvd.JZVideoPlayer.currentScreen' on a null object reference
-                        详见 https://github.com/lipangit/JiaoZiVideoPlayer/issues/1681
-
                     if (JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN) {
-                        JZVideoPlayer.releaseAllVideos();
-                    }
-*/
-
-                    if (jzvd.currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN) {
                         JZVideoPlayer.releaseAllVideos();
                     }
                 }
