@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
@@ -29,7 +29,7 @@ public class ActivityApiOrientation extends AppCompatActivity {
         mJzVideoPlayerStandard = findViewById(R.id.jz_video);
         mJzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
-        Picasso.with(this)
+        Glide.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzVideoPlayerStandard.thumbImageView);
 

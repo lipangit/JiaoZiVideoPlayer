@@ -12,7 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
@@ -121,9 +121,7 @@ public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
                         VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST,
                         VideoConstant.videoTitles[0][position]);
                 viewHolder.jzVideoPlayer.positionInList = position;
-                Picasso.with(ActivityTinyWindowListViewMultiHolder.this)
-                        .load(VideoConstant.videoThumbs[0][position])
-                        .into(viewHolder.jzVideoPlayer.thumbImageView);
+                Glide.with(ActivityTinyWindowListViewMultiHolder.this).load(VideoConstant.videoThumbs[0][position]).into(viewHolder.jzVideoPlayer.thumbImageView);
             } else {
                 TextViewHolder textViewHolder;
                 if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof VideoListAdapter.TextViewHolder) {

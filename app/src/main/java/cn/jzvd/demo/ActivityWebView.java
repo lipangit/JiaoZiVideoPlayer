@@ -9,7 +9,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.AbsoluteLayout;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import cn.jzvd.JZUtils;
 import cn.jzvd.JZVideoPlayer;
@@ -72,7 +72,7 @@ public class ActivityWebView extends AppCompatActivity {
                         JZVideoPlayerStandard webVieo = new JZVideoPlayerStandard(ActivityWebView.this);
                         webVieo.setUp(VideoConstant.videoUrlList[1],
                                 JZVideoPlayer.SCREEN_WINDOW_LIST, "饺子骑大马");
-                        Picasso.with(ActivityWebView.this)
+                        Glide.with(ActivityWebView.this)
                                 .load(VideoConstant.videoThumbList[1])
                                 .into(webVieo.thumbImageView);
                         ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -86,7 +86,7 @@ public class ActivityWebView extends AppCompatActivity {
                         JZVideoPlayerStandard webVieo = new JZVideoPlayerStandard(ActivityWebView.this);
                         webVieo.setUp(VideoConstant.videoUrlList[2],
                                 JZVideoPlayer.SCREEN_WINDOW_LIST, "饺子失态了");
-                        Picasso.with(ActivityWebView.this)
+                        Glide.with(ActivityWebView.this)
                                 .load(VideoConstant.videoThumbList[2])
                                 .into(webVieo.thumbImageView);
                         ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);

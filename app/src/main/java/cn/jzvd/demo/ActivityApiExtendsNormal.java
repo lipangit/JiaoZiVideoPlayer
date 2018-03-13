@@ -3,7 +3,7 @@ package cn.jzvd.demo;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
@@ -21,7 +21,7 @@ public class ActivityApiExtendsNormal extends Activity {
         JZVideoPlayerStandard jzVideoPlayerStandard = findViewById(R.id.videoplayer);
         jzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
-        Picasso.with(this)
+        Glide.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(jzVideoPlayerStandard.thumbImageView);
     }

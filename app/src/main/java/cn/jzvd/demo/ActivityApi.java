@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -73,9 +73,8 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         ((HashMap) objects[2]).put("key", "value");
         mJzVideoPlayerStandard.setUp(objects, 2
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
-        Picasso.with(this)
-                .load(VideoConstant.videoThumbList[0])
-                .into(mJzVideoPlayerStandard.thumbImageView);
+        Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzVideoPlayerStandard.thumbImageView);
+
         //JZVideoPlayer.SAVE_PROGRESS = false;
 
         /** Play video in local path, eg:record by system camera **/
