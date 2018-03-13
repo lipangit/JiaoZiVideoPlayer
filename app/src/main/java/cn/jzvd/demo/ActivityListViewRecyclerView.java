@@ -1,5 +1,6 @@
 package cn.jzvd.demo;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZUtils;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerManager;
+import cn.jzvd.JZVideoPlayerStandard;
 
 /**
  * Created by yujunkui on 16/8/29.
@@ -45,7 +47,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
             public void onChildViewDetachedFromWindow(View view) {
                 JZVideoPlayer jzvd = view.findViewById(R.id.videoplayer);
                 if (jzvd != null && JZUtils.dataSourceObjectsContainsUri(jzvd.dataSourceObjects, JZMediaManager.getCurrentDataSource())) {
-                    if(JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN){
+                    if (jzvd.currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN ) {
                         JZVideoPlayer.releaseAllVideos();
                     }
                 }
