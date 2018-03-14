@@ -70,7 +70,7 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         objects[0] = map;
         objects[1] = false;//looping
         objects[2] = new HashMap<>();
-        ((HashMap) objects[2]).put("key", "value");
+        ((HashMap) objects[2]).put("key", "value");//header
         mJzVideoPlayerStandard.setUp(objects, 2
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
         Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzVideoPlayerStandard.thumbImageView);
