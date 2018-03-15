@@ -30,6 +30,7 @@ public class ActivityWebView extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setTitle("WebView");
+        getWindow().setBackgroundDrawable(null);
         setContentView(R.layout.activity_webview);
         mWebView = findViewById(R.id.webview);
         mWebView.getSettings().setJavaScriptEnabled(true);
