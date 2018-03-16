@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Window;
 
 import java.util.Formatter;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 
@@ -178,7 +177,7 @@ public class JZUtils {
         int currentIndex = 0;
         for (String key : map.keySet()) {
             if (currentIndex == index) {
-                return key.toString();
+                return key;
             }
             currentIndex++;
         }
