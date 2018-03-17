@@ -1131,7 +1131,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             float y = event.values[SensorManager.DATA_Y];
             float z = event.values[SensorManager.DATA_Z];
             //过滤掉用力过猛会有一个反向的大数值
-            if ( x < -12 || x > 12) {
+            if (x < -12 || x > 12) {
                 if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000) {
                     if (JZVideoPlayerManager.getCurrentJzvd() != null) {
                         JZVideoPlayerManager.getCurrentJzvd().autoFullscreen(x);

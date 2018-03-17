@@ -1,6 +1,7 @@
 package cn.jzvd.demo;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import cn.jzvd.demo.CustomMediaPlayer.JZMediaIjkplayer;
 public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements View.OnClickListener {
     Button mChangeToIjk, mChangeToSystemMediaPlayer;
     JZVideoPlayerStandard jzVideoPlayerStandard;
+    Handler handler = new Handler();//这里其实并不需要handler，为了防止播放中切换播放器引擎导致的崩溃，实际使用时一般不会遇到，可以随时调用JZVideoPlayer.setMediaInterface();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,26 +59,36 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
         Glide.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
                 .into(jzVideoPlayerStandard.thumbImageView);
+
+        JZVideoPlayer.setMediaInterface(new CustomMediaPlayerAssertFolder());//进入此页面修改MediaInterface，让此页面的jzvd正常工作
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.change_to_ijkplayer:
-                JZVideoPlayer.setMediaInterface(new JZMediaIjkplayer());
-                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+                JZVideoPlayer.releaseAllVideos();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        JZVideoPlayer.setMediaInterface(new JZMediaIjkplayer());
+                    }
+                }, 1000);
+                Toast.makeText(ActivityApiCustomMediaPlayer.this, "Change to Ijkplayer", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
             case R.id.change_to_system_mediaplayer:
-                JZVideoPlayer.setMediaInterface(new JZMediaSystem());
-                Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+                JZVideoPlayer.releaseAllVideos();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        JZVideoPlayer.setMediaInterface(new JZMediaSystem());
+                    }
+                }, 1000);
+                Toast.makeText(this, "Change to MediaPlayer", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        JZVideoPlayer.setMediaInterface(new CustomMediaPlayerAssertFolder());//进入此页面修改MediaInterface，让此页面的jzvd正常工作
     }
 
     @Override
@@ -84,6 +96,13 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
         if (JZVideoPlayer.backPress()) {
             return;
         }
+        JZVideoPlayer.releaseAllVideos();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                JZVideoPlayer.setMediaInterface(new JZMediaSystem());
+            }
+        }, 1000);
         super.onBackPressed();
     }
 
@@ -91,13 +110,19 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
     protected void onPause() {
         super.onPause();
         JZVideoPlayer.releaseAllVideos();
-        JZVideoPlayer.setMediaInterface(new JZMediaSystem());
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                JZVideoPlayer.releaseAllVideos();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        JZVideoPlayer.setMediaInterface(new JZMediaSystem());
+                    }
+                }, 1000);
                 finish();
                 break;
         }
