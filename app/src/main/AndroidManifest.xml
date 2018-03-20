@@ -88,6 +88,10 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".mute.ActivityListViewRecyclerViewMute"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".ActivityWebView"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />

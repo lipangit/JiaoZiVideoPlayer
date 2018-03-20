@@ -8,11 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import cn.jzvd.demo.mute.ActivityListViewRecyclerViewMute;
+
 /**
  * Created by Nathen on 16/7/31.
  */
 public class ActivityListView extends AppCompatActivity implements View.OnClickListener {
-    Button mNormal, mViewPager, mMultiHolder, mRecyleView;
+    Button mNormal, mViewPager, mMultiHolder, mRecyleView, mute_recyleview;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,11 +30,13 @@ public class ActivityListView extends AppCompatActivity implements View.OnClickL
         mViewPager = findViewById(R.id.listview_fragment_viewpager);
         mMultiHolder = findViewById(R.id.multiholder);
         mRecyleView = findViewById(R.id.recyleview);
+        mute_recyleview = findViewById(R.id.mute_recyleview);
 
         mNormal.setOnClickListener(this);
         mViewPager.setOnClickListener(this);
         mMultiHolder.setOnClickListener(this);
         mRecyleView.setOnClickListener(this);
+        mute_recyleview.setOnClickListener(this);
 
     }
 
@@ -50,6 +54,11 @@ public class ActivityListView extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.recyleview:
                 startActivity(new Intent(ActivityListView.this, ActivityListViewRecyclerView.class));
+                break;
+            case R.id.mute_recyleview:
+                startActivity(new Intent(ActivityListView.this, ActivityListViewRecyclerViewMute.class));
+                break;
+            default:
                 break;
         }
     }

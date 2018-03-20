@@ -32,4 +32,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="Recyleview" />
+
+
+    <Button
+        android:id="@+id/mute_recyleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="静音播放Recyleview" />
+
 </LinearLayout>

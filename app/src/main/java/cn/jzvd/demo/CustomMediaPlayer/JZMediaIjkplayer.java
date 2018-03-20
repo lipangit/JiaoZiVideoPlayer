@@ -18,7 +18,7 @@ import tv.danmaku.ijk.media.player.IjkTimedText;
  */
 
 public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
-    IjkMediaPlayer ijkMediaPlayer;
+    protected IjkMediaPlayer ijkMediaPlayer;// 便于子类使用 改成了 protected
 
     @Override
     public void start() {
