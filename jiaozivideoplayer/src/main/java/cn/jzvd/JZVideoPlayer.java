@@ -903,8 +903,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public long getCurrentPositionWhenPlaying() {
         long position = 0;
         //TODO 这块的判断应该根据MediaPlayer来
-//        if (JZMediaManager.instance().mediaPlayer == null)
-//            return position;//这行代码不应该在这，如果代码和逻辑万无一失的话，心头之恨呐
         if (currentState == CURRENT_STATE_PLAYING ||
                 currentState == CURRENT_STATE_PAUSE) {
             try {
