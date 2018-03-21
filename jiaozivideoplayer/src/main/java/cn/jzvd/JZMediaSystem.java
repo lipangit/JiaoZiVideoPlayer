@@ -173,7 +173,9 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
             public void run() {
                 if (JZVideoPlayerManager.getCurrentJzvd() != null) {
                     if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                        JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                        if (JZVideoPlayerManager.getCurrentJzvd().currentState == JZVideoPlayer.CURRENT_STATE_PREPARING) {
+                            JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                        }
                     } else {
                         JZVideoPlayerManager.getCurrentJzvd().onInfo(what, extra);
                     }
