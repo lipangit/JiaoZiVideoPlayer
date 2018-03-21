@@ -81,17 +81,9 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
 //        cpAssertVideoToLocalPath();
 //        mJzVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
 //                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
-        /** Play video in assert, but not work now **/
-//        mJzVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
-//                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
-
         /** ImageLoader **/
 //        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],
 //                videoController1.thumbImageView);
-        /** Glide **/
-//        Glide.with(this)
-//                .load(VideoConstant.videoThumbs[0][1])
-//                .into(videoController1.thumbImageView);
         /** volley omit **/
         /** Fresco omit **/
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
