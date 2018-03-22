@@ -958,6 +958,11 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        if (fromUser) {
+            //设置这个progres对应的时间，给textview
+            long duration = getDuration();
+            currentTimeTextView.setText(JZUtils.stringForTime(progress * duration / 100));
+        }
     }
 
     public void startWindowFullscreen() {
