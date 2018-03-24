@@ -8,8 +8,8 @@ android {
         applicationId "cn.jzvd.demo"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 78
-        versionName "6.2.8"
+        versionCode 79
+        versionName "6.2.9"
     }
     signingConfigs {
         releaseConfig {
@@ -34,17 +34,14 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation project(':jiaozivideoplayer')
-    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
     implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
 
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-
-    implementation 'com.android.support:recyclerview-v7:27.0.2'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
     implementation 'com.danikula:videocache:2.7.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.6.1'
 }

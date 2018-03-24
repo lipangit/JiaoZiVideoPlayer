@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
@@ -34,7 +34,7 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity implements V
         myJZVideoPlayerStandard = findViewById(R.id.jz_video);
         myJZVideoPlayerStandard.setUp(VideoConstant.videoUrls[0][7]
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, VideoConstant.videoTitles[0][7]);
-        Picasso.with(this)
+        Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][7])
                 .into(myJZVideoPlayerStandard.thumbImageView);
         // The Point IS

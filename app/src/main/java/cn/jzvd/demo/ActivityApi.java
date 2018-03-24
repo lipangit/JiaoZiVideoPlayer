@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -70,29 +70,20 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         objects[0] = map;
         objects[1] = false;//looping
         objects[2] = new HashMap<>();
-        ((HashMap) objects[2]).put("key", "value");
+        ((HashMap) objects[2]).put("key", "value");//header
         mJzVideoPlayerStandard.setUp(objects, 2
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
-        Picasso.with(this)
-                .load(VideoConstant.videoThumbList[0])
-                .into(mJzVideoPlayerStandard.thumbImageView);
+        Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzVideoPlayerStandard.thumbImageView);
+
         //JZVideoPlayer.SAVE_PROGRESS = false;
 
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
 //        mJzVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
 //                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
-        /** Play video in assert, but not work now **/
-//        mJzVideoPlayerStandard.setUp("file:///android_asset/local_video.mp4"
-//                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
-
         /** ImageLoader **/
 //        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],
 //                videoController1.thumbImageView);
-        /** Glide **/
-//        Glide.with(this)
-//                .load(VideoConstant.videoThumbs[0][1])
-//                .into(videoController1.thumbImageView);
         /** volley omit **/
         /** Fresco omit **/
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);

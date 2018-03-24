@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Window;
 
 import java.util.Formatter;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 
@@ -156,8 +155,7 @@ public class JZUtils {
 
     public static Object getValueFromLinkedMap(LinkedHashMap<String, Object> map, int index) {
         int currentIndex = 0;
-        for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
-            Object key = it.next();
+        for (String key : map.keySet()) {
             if (currentIndex == index) {
                 return map.get(key);
             }
@@ -177,10 +175,9 @@ public class JZUtils {
     public static String getKeyFromDataSource(Object[] dataSourceObjects, int index) {
         LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
         int currentIndex = 0;
-        for (Iterator it = map.keySet().iterator(); it.hasNext(); ) {
-            Object key = it.next();
+        for (String key : map.keySet()) {
             if (currentIndex == index) {
-                return key.toString();
+                return key;
             }
             currentIndex++;
         }

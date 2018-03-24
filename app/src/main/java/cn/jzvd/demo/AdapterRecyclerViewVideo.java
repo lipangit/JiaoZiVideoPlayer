@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
@@ -39,9 +39,7 @@ public class AdapterRecyclerViewVideo extends RecyclerView.Adapter<AdapterRecycl
         holder.jzVideoPlayer.setUp(
                 VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST,
                 VideoConstant.videoTitles[0][position]);
-        Picasso.with(holder.jzVideoPlayer.getContext())
-                .load(VideoConstant.videoThumbs[0][position])
-                .into(holder.jzVideoPlayer.thumbImageView);
+        Glide.with(holder.jzVideoPlayer.getContext()).load(VideoConstant.videoThumbs[0][position]).into(holder.jzVideoPlayer.thumbImageView);
     }
 
     @Override

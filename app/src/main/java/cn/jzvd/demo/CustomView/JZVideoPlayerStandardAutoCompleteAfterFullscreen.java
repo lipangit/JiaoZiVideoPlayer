@@ -8,7 +8,6 @@ import android.view.WindowManager;
 
 import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZUtils;
-import cn.jzvd.JZVideoPlayerManager;
 import cn.jzvd.JZVideoPlayerStandard;
 
 /**

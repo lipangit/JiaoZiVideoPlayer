@@ -903,8 +903,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public long getCurrentPositionWhenPlaying() {
         long position = 0;
         //TODO 这块的判断应该根据MediaPlayer来
-//        if (JZMediaManager.instance().mediaPlayer == null)
-//            return position;//这行代码不应该在这，如果代码和逻辑万无一失的话，心头之恨呐
         if (currentState == CURRENT_STATE_PLAYING ||
                 currentState == CURRENT_STATE_PAUSE) {
             try {
@@ -960,6 +958,11 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        if (fromUser) {
+            //设置这个progres对应的时间，给textview
+            long duration = getDuration();
+            currentTimeTextView.setText(JZUtils.stringForTime(progress * duration / 100));
+        }
     }
 
     public void startWindowFullscreen() {
@@ -1131,7 +1134,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             float y = event.values[SensorManager.DATA_Y];
             float z = event.values[SensorManager.DATA_Z];
             //过滤掉用力过猛会有一个反向的大数值
-            if ( x < -12 || x > 12) {
+            if (x < -12 || x > 12) {
                 if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000) {
                     if (JZVideoPlayerManager.getCurrentJzvd() != null) {
                         JZVideoPlayerManager.getCurrentJzvd().autoFullscreen(x);

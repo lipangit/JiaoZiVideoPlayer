@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 78
-        versionName "6.2.8"
+        versionCode 79
+        versionName "6.2.9"
     }
     buildTypes {
         release {
@@ -24,7 +24,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    provided 'com.android.support:appcompat-v7:27.0.2'
+    provided 'com.android.support:appcompat-v7:27.1.0'
 }
 
 apply from: '../gradle/maven_push.gradle'
