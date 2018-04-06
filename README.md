@@ -7,11 +7,6 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-
-# [斗鱼直播](https://www.douyu.com/1667893)
-
-周一到周三每天上午10:00开始直播写代码，回答大家的使用问题，请大家进入直播间后提问，直播期间不再手动打字回复
-
 完美的列表滑动的检测，一行代码将系统的播放器换成Ijkplayer Exoplayer Vitamio等
 
 Q群:490442439 验证信息:jzvd
