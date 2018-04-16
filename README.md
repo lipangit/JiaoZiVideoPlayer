@@ -9,7 +9,7 @@
 
 完美的列表滑动的检测，一行代码将系统的播放器换成Ijkplayer Exoplayer Vitamio等
 
-Q群:490442439(1群) 761899104(2群)验证信息:jzvd
+Q群:490442439(1群 满) 761899104(2群)验证信息:jzvd
 
 [中文文档](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
 
