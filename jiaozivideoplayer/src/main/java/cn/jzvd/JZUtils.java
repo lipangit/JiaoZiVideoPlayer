@@ -21,6 +21,7 @@ import java.util.Locale;
  */
 public class JZUtils {
     public static final String TAG = "JiaoZiVideoPlayer";
+    public static Context currentContext = null;
 
     public static String stringForTime(long timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
@@ -182,5 +183,13 @@ public class JZUtils {
             currentIndex++;
         }
         return null;
+    }
+
+    public static Context getCurrentContext() {
+        return currentContext;
+    }
+
+    public static void setCurrentContext(Context currentContext) {
+        JZUtils.currentContext = currentContext;
     }
 }
