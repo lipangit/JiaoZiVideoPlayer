@@ -112,6 +112,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         tinyBackImageView.setOnClickListener(this);
         clarity.setOnClickListener(this);
         mRetryBtn.setOnClickListener(this);
+
+        JZUtils.setCurrentContext(context);
     }
 
     public void setUp(Object[] dataSourceObjects, int defaultUrlMapIndex, int screen, Object... objects) {

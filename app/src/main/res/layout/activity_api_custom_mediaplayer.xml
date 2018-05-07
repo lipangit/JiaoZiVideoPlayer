@@ -24,4 +24,12 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="8dp"
         android:text="Change to android.media.MediaPlayer" />
+
+    <Button
+        android:id="@+id/change_to_exo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="8dp"
+        android:text="Change to Exoplayer" />
 </LinearLayout>
