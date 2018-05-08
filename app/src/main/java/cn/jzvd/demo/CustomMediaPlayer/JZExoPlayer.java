@@ -61,7 +61,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
     public void prepare() {
         Log.e(TAG, "prepare");
         mainHandler = new Handler();
-        Context context = JZUtils.getCurrentContext();
+        Context context = JZVideoPlayerManager.getCurrentJzvd().getContext();
 
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory =
