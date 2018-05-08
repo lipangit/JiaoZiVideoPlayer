@@ -18,6 +18,7 @@ import cn.jzvd.JZMediaSystem;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 import cn.jzvd.demo.CustomMediaPlayer.CustomMediaPlayerAssertFolder;
+import cn.jzvd.demo.CustomMediaPlayer.JZExoPlayer;
 import cn.jzvd.demo.CustomMediaPlayer.JZMediaIjkplayer;
 
 /**
@@ -25,7 +26,7 @@ import cn.jzvd.demo.CustomMediaPlayer.JZMediaIjkplayer;
  */
 
 public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements View.OnClickListener {
-    Button mChangeToIjk, mChangeToSystemMediaPlayer;
+    Button mChangeToIjk, mChangeToSystemMediaPlayer, mChangeToExo;
     JZVideoPlayerStandard jzVideoPlayerStandard;
     Handler handler = new Handler();//这里其实并不需要handler，为了防止播放中切换播放器引擎导致的崩溃，实际使用时一般不会遇到，可以随时调用JZVideoPlayer.setMediaInterface();
 
@@ -42,9 +43,11 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
         jzVideoPlayerStandard = findViewById(R.id.videoplayer);
         mChangeToIjk = findViewById(R.id.change_to_ijkplayer);
         mChangeToSystemMediaPlayer = findViewById(R.id.change_to_system_mediaplayer);
+        mChangeToExo = findViewById(R.id.change_to_exo);
 
         mChangeToIjk.setOnClickListener(this);
         mChangeToSystemMediaPlayer.setOnClickListener(this);
+        mChangeToExo.setOnClickListener(this);
 
         LinkedHashMap map = new LinkedHashMap();
         try {
@@ -86,6 +89,17 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
                     }
                 }, 1000);
                 Toast.makeText(this, "Change to MediaPlayer", Toast.LENGTH_SHORT).show();
+                finish();
+                break;
+            case R.id.change_to_exo:
+                JZVideoPlayer.releaseAllVideos();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        JZVideoPlayer.setMediaInterface(new JZExoPlayer());
+                    }
+                }, 1000);
+                Toast.makeText(this, "Change to ExoPlayer", Toast.LENGTH_SHORT).show();
                 finish();
                 break;
         }

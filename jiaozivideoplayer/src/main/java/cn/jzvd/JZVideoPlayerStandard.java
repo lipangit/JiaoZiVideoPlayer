@@ -319,7 +319,9 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             clarityPopWindow.setContentView(layout);
             clarityPopWindow.showAsDropDown(clarity);
             layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-            clarityPopWindow.update(clarity, -40, 46, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
+            int offsetX = clarity.getMeasuredWidth() / 3;
+            int offsetY = clarity.getMeasuredHeight() / 3;
+            clarityPopWindow.update(clarity, - offsetX, - offsetY, Math.round(layout.getMeasuredWidth() * 2), layout.getMeasuredHeight());
         } else if (i == R.id.retry_btn) {
             if (dataSourceObjects == null || JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex) == null) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();

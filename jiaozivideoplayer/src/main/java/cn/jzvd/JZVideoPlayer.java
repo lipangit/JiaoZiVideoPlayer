@@ -762,6 +762,9 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             JZUtils.saveProgress(getContext(), JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex), position);
         }
         cancelProgressTimer();
+        dismissBrightnessDialog();
+        dismissProgressDialog();
+        dismissVolumeDialog();
         onStateNormal();
         textureViewContainer.removeView(JZMediaManager.textureView);
         JZMediaManager.instance().currentVideoWidth = 0;
