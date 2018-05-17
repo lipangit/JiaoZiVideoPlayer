@@ -1064,7 +1064,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     //重力感应的时候调用的函数，
     public void autoFullscreen(float x) {
         if (isCurrentPlay()
-                && currentState == CURRENT_STATE_PLAYING
+                && (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE)
                 && currentScreen != SCREEN_WINDOW_FULLSCREEN
                 && currentScreen != SCREEN_WINDOW_TINY) {
             if (x > 0) {
