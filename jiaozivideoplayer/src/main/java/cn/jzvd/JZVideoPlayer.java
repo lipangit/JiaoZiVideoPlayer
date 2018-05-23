@@ -80,8 +80,9 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                     try {
-                        if (JZVideoPlayerManager.getCurrentJzvd().currentState == JZVideoPlayer.CURRENT_STATE_PLAYING) {
-                            JZVideoPlayerManager.getCurrentJzvd().startButton.performClick();
+                        JZVideoPlayer player = JZVideoPlayerManager.getCurrentJzvd();
+                        if (player != null && player.currentState == JZVideoPlayer.CURRENT_STATE_PLAYING) {
+                            player.startButton.performClick();
                         }
                     } catch (IllegalStateException e) {
                         e.printStackTrace();
