@@ -105,16 +105,14 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
-        if (currentDataSource.toString().toLowerCase().contains("mp3")) {
-            JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                        JZVideoPlayerManager.getCurrentJzvd().onPrepared();
-                    }
+        JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
+                    JZVideoPlayerManager.getCurrentJzvd().onPrepared();
                 }
-            });
-        }
+            }
+        });
     }
 
     @Override
