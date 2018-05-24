@@ -100,7 +100,6 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
         simpleExoPlayer.prepare(videoSource);
         simpleExoPlayer.setPlayWhenReady(true);
         callback = new onBufferingUpdate();
-        mainHandler.post(callback);
     }
 
     @Override
@@ -134,6 +133,11 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
                     }
                 }
             });
+            if(percent < 100) {
+                mainHandler.postDelayed(callback, 300);
+            } else {
+                mainHandler.removeCallbacks(callback);
+            }
         }
     }
 
@@ -228,6 +232,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
                         }
                         break;
                         case Player.STATE_BUFFERING: {
+                            mainHandler.post(callback);
                         }
                         break;
                         case Player.STATE_READY: {
