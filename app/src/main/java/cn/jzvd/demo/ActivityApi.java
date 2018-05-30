@@ -21,6 +21,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
+import cn.jzvd.JZDataSource;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 
@@ -59,19 +60,22 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
 
 
         mJzVideoPlayerStandard = findViewById(R.id.jz_video);
-        LinkedHashMap map = new LinkedHashMap();
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
 
         String proxyUrl = ApplicationDemo.getProxy(this).getProxyUrl(VideoConstant.videoUrls[0][9]);
 
         map.put("高清", proxyUrl);
         map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrlList[0]);
-        Object[] objects = new Object[3];
-        objects[0] = map;
-        objects[1] = false;//looping
-        objects[2] = new HashMap<>();
-        ((HashMap) objects[2]).put("key", "value");//header
-        mJzVideoPlayerStandard.setUp(objects, 2
+
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("key", "value");
+
+        JZDataSource dataSource = new JZDataSource(map);
+        dataSource.setLoop(false);
+        dataSource.setHeaders(headers);
+
+        mJzVideoPlayerStandard.setUp(dataSource, 2
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
         Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzVideoPlayerStandard.thumbImageView);
 

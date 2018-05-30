@@ -25,9 +25,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         try {
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            if (dataSourceObjects.length > 1) {
-                mediaPlayer.setLooping((boolean) dataSourceObjects[1]);
-            }
+            mediaPlayer.setLooping(dataSource.isLooping());
             mediaPlayer.setOnPreparedListener(JZMediaSystem.this);
             mediaPlayer.setOnCompletionListener(JZMediaSystem.this);
             mediaPlayer.setOnBufferingUpdateListener(JZMediaSystem.this);
@@ -38,11 +36,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
             mediaPlayer.setOnVideoSizeChangedListener(JZMediaSystem.this);
             Class<MediaPlayer> clazz = MediaPlayer.class;
             Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
-            if (dataSourceObjects.length > 2) {
-                method.invoke(mediaPlayer, currentDataSource.toString(), dataSourceObjects[2]);
-            } else {
-                method.invoke(mediaPlayer, currentDataSource.toString(), null);
-            }
+            method.invoke(mediaPlayer, currentPath.toString(), dataSource.getHeaders());
             mediaPlayer.prepareAsync();
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,7 +99,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
-        if (currentDataSource.toString().toLowerCase().contains("mp3")) {
+        if (currentPath.toString().contains(".mp3")) {
             JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {

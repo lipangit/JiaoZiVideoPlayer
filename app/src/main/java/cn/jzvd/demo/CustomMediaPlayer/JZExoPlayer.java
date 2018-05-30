@@ -36,7 +36,6 @@ import com.google.android.exoplayer2.video.VideoListener;
 
 import cn.jzvd.JZMediaInterface;
 import cn.jzvd.JZMediaManager;
-import cn.jzvd.JZUtils;
 import cn.jzvd.JZVideoPlayerManager;
 import cn.jzvd.demo.R;
 
@@ -83,17 +82,17 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
                 Util.getUserAgent(context, context.getResources().getString(R.string.app_name)));
 
-        String currUrl = currentDataSource.toString();
-        if (currUrl.contains(".m3u8")) {
+        String currentUrl = currentPath.toString();
+        if (currentUrl.contains(".m3u8")) {
             videoSource = new HlsMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(currUrl), mainHandler, null);
+                    .createMediaSource(Uri.parse(currentUrl), mainHandler, null);
         } else {
             videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
-                    .createMediaSource(Uri.parse(currUrl));
+                    .createMediaSource(Uri.parse(currentUrl));
         }
         simpleExoPlayer.addVideoListener(this);
 
-        Log.e(TAG, "URL Link = " + currUrl);
+        Log.e(TAG, "URL Link = " + currentUrl);
 
         simpleExoPlayer.addListener(this);
 

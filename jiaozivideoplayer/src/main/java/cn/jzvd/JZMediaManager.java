@@ -48,22 +48,24 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
         return jzMediaManager;
     }
 
-    public static Object[] getDataSource() {
-        return instance().jzMediaInterface.dataSourceObjects;
+    public static JZDataSource getDataSource() {
+        return instance().jzMediaInterface.dataSource;
     }
 
-    //这几个方法是不是多余了，为了不让其他地方动MediaInterface的方法
-    public static void setDataSource(Object[] dataSourceObjects) {
-        instance().jzMediaInterface.dataSourceObjects = dataSourceObjects;
+    //Extracted to avoid code replication
+    public static void setDataSource(JZDataSource dataSource) {
+        instance().jzMediaInterface.dataSource = dataSource;
     }
 
-    //正在播放的url或者uri
-    public static Object getCurrentDataSource() {
-        return instance().jzMediaInterface.currentDataSource;
+    /**
+     * @return The URI, URL or AssetFileDescriptor being played
+     */
+    public static Object getCurrentPath() {
+        return instance().jzMediaInterface.currentPath;
     }
 
-    public static void setCurrentDataSource(Object currentDataSource) {
-        instance().jzMediaInterface.currentDataSource = currentDataSource;
+    public static void setCurrentPath(Object currentPath) {
+        instance().jzMediaInterface.currentPath = currentPath;
     }
 
     public static long getCurrentPosition() {

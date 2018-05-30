@@ -1,5 +1,6 @@
 package cn.jzvd.demo;
 
+import android.content.res.AssetFileDescriptor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import com.bumptech.glide.Glide;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
+import cn.jzvd.JZDataSource;
 import cn.jzvd.JZMediaSystem;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
@@ -49,16 +51,15 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
         mChangeToSystemMediaPlayer.setOnClickListener(this);
         mChangeToExo.setOnClickListener(this);
 
-        LinkedHashMap map = new LinkedHashMap();
+        LinkedHashMap<String, Object> map = new LinkedHashMap<>();
         try {
             map.put(JZVideoPlayer.URL_KEY_DEFAULT, getAssets().openFd("local_video.mp4"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Object[] dataSourceObjects = new Object[2];
-        dataSourceObjects[0] = map;
-        dataSourceObjects[1] = this;
-        jzVideoPlayerStandard.setUp(dataSourceObjects, 0, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子快长大");
+        JZDataSource dataSource = new JZDataSource(map);
+
+        jzVideoPlayerStandard.setUp(dataSource, 0, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子快长大");
         Glide.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
                 .into(jzVideoPlayerStandard.thumbImageView);
