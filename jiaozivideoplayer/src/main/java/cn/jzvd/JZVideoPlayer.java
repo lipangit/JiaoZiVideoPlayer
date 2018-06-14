@@ -127,6 +127,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     protected float mGestureDownBrightness;
     protected long mSeekTimePosition;
     boolean tmp_test_back = false;
+    private LayoutParams windowTinyLayoutParams;
 
     public JZVideoPlayer(Context context) {
         super(context);
@@ -1024,9 +1025,11 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             Constructor<JZVideoPlayer> constructor = (Constructor<JZVideoPlayer>) JZVideoPlayer.this.getClass().getConstructor(Context.class);
             JZVideoPlayer jzVideoPlayer = constructor.newInstance(getContext());
             jzVideoPlayer.setId(R.id.jz_tiny_id);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
-            lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
-            vp.addView(jzVideoPlayer, lp);
+            if (windowTinyLayoutParams == null) {
+                windowTinyLayoutParams = new FrameLayout.LayoutParams(400, 400);
+                windowTinyLayoutParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;
+            }
+            vp.addView(jzVideoPlayer, windowTinyLayoutParams);
             jzVideoPlayer.setUp(dataSourceObjects, currentUrlMapIndex, JZVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
             jzVideoPlayer.setState(currentState);
             jzVideoPlayer.addTextureView();
@@ -1038,6 +1041,15 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             e.printStackTrace();
         }
     }
+
+    public void setWindowTinyLayoutParams(LayoutParams layoutParams) {
+        this.windowTinyLayoutParams = layoutParams;
+    }
+
+    public LayoutParams setWindowTinyLayoutParans() {
+        return windowTinyLayoutParams;
+    }
+
 
     public boolean isCurrentPlay() {
         return isCurrentJZVD()
