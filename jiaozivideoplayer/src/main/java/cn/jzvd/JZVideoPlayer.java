@@ -326,6 +326,37 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             }
         }
     }
+    public static void onChildViewAttachedToWindow(JZVideoPlayer videoPlayer) {
+        if (JZVideoPlayerManager.getCurrentJzvd() != null && JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
+            if (videoPlayer != null && JZUtils.getCurrentFromDataSource(videoPlayer.dataSourceObjects, videoPlayer.currentUrlMapIndex).equals(JZMediaManager.getCurrentDataSource())) {
+                JZVideoPlayer.backPress();
+            }
+        }
+    }
+
+    public static void onChildViewAttachedToWindow(View view) {
+        JZVideoPlayer jzVideoPlayer = findJzVideoPlayer(view);
+        if (jzVideoPlayer != null) {
+            onChildViewAttachedToWindow(jzVideoPlayer);
+        }
+    }
+
+    private static JZVideoPlayer findJzVideoPlayer(View view) {
+        if (view instanceof JZVideoPlayer) {
+            return (JZVideoPlayer) view;
+        }
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            int childCount = viewGroup.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                JZVideoPlayer videoPlayer = findJzVideoPlayer(viewGroup.getChildAt(i));
+                if (videoPlayer != null) {
+                    return videoPlayer;
+                }
+            }
+        }
+        return null;
+    }
 
     public static void onChildViewDetachedFromWindow(View view) {
         if (JZVideoPlayerManager.getCurrentJzvd() != null && JZVideoPlayerManager.getCurrentJzvd().currentScreen != JZVideoPlayer.SCREEN_WINDOW_TINY) {
