@@ -3,10 +3,14 @@ package cn.jzvd.demo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.bumptech.glide.Glide;
 
@@ -49,7 +53,39 @@ public class ActivityTinyWindow extends AppCompatActivity implements View.OnClic
         mBtnTinyWindowListViewMultiHolder.setOnClickListener(this);
         mBtnTinyWindowRecycle.setOnClickListener(this);
         mBtnTinyWindowRecycleMultiHolder.setOnClickListener(this);
+        makeTinyWindowInScrollView();
+    }
 
+    private void makeTinyWindowInScrollView() {
+        setWindowTinyLayoutParams();
+        NestedScrollView scrollView = findViewById(R.id.scrollView);
+        NestedScrollView.OnScrollChangeListener listener = new NestedScrollView.OnScrollChangeListener() {
+            boolean videoIsShown;
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                boolean display = scrollY >= mJzVideoPlayerStandard.getHeight();
+                if (this.videoIsShown ^ display) {
+                    this.videoIsShown = display;
+                    if (display) {
+                        JZVideoPlayer.onChildViewDetachedFromWindow((View) mJzVideoPlayerStandard.getParent());
+                    } else {
+                        JZVideoPlayer.onChildViewAttachedToWindow(mJzVideoPlayerStandard);
+                    }
+                }
+            }
+        };
+        scrollView.setOnScrollChangeListener(listener);
+    }
+
+    private void setWindowTinyLayoutParams() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int screenWidth = metrics.widthPixels;
+        int height = screenWidth * 9 / 16;
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(screenWidth >> 1, height >> 1);
+        layoutParams.gravity = Gravity.CENTER_VERTICAL | Gravity.END;
+        layoutParams.rightMargin = 20;
+        mJzVideoPlayerStandard.setWindowTinyLayoutParams(layoutParams);
     }
 
     @Override
