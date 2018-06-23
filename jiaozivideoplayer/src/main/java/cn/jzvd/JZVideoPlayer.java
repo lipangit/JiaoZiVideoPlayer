@@ -447,8 +447,8 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                     showWifiDialog();
                     return;
                 }
-                onEvent(JZUserAction.ON_CLICK_START_ICON);
                 startVideo();
+                onEvent(JZUserAction.ON_CLICK_START_ICON);//开始的事件应该在播放之后，此处特殊
             } else if (currentState == CURRENT_STATE_PLAYING) {
                 onEvent(JZUserAction.ON_CLICK_PAUSE);
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");

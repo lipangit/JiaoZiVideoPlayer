@@ -265,8 +265,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                     showWifiDialog();
                     return;
                 }
-                onEvent(JZUserActionStandard.ON_CLICK_START_THUMB);
                 startVideo();
+                onEvent(JZUserActionStandard.ON_CLICK_START_THUMB);//开始的事件应该在播放之后，此处特殊
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
             }
