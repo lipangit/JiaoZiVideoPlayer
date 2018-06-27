@@ -18,7 +18,6 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
     public static final String TAG = "JiaoZiVideoPlayer";
     public static final int HANDLER_PREPARE = 0;
     public static final int HANDLER_RELEASE = 2;
-    public static final int HANDLER_RELEASE_SURFACE = 3;
 
     public static JZResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
@@ -98,12 +97,6 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
         mMediaHandler.sendMessage(msg);
     }
 
-    public void releaseSurface() {
-        Message msg = new Message();
-        msg.what = HANDLER_RELEASE_SURFACE;
-        mMediaHandler.sendMessage(msg);
-    }
-
     public void prepare() {
         releaseMediaPlayer();
         Message msg = new Message();
@@ -162,13 +155,6 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
                     break;
                 case HANDLER_RELEASE:
                     jzMediaInterface.release();
-                    break;
-                case HANDLER_RELEASE_SURFACE:
-                    if (surface != null) surface.release();
-                    if (savedSurfaceTexture != null)
-                        savedSurfaceTexture.release();
-                    textureView = null;
-                    savedSurfaceTexture = null;
                     break;
             }
         }
