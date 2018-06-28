@@ -1,4 +1,4 @@
-<a href="https://github.com/lipangit/JiaoZiVideoPlayer" target="_blank"><img src="https://user-images.githubusercontent.com/2038071/29994158-7e65546c-8ffb-11e7-80fd-c630e2a36135.png" style="max-width:100%;"></a>
+<a href="https://github.com/lipangit/JiaoZiVideoPlayer" target="_blank"><img src="https://user-images.githubusercontent.com/2038071/42032336-d86e4d96-7b0b-11e8-885f-d1fe387a83d9.png" style="max-width:100%;"></a>
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>

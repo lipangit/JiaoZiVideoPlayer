@@ -1,4 +1,4 @@
-<p align="center"><img src="JiaoZiVideoPlayer/One colour horizontol.png" alt="JiaoZiVideoPlayer" height="200px"></p>
+<p align="center"><img src="https://user-images.githubusercontent.com/2038071/42032336-d86e4d96-7b0b-11e8-885f-d1fe387a83d9.png" alt="JiaoZiVideoPlayer" height="200px"></p>
 
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
