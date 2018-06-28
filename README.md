@@ -11,7 +11,7 @@ Perfect list sliding detection, one line of code to replace the system player wi
 
 Group Q: 490442439 (group 1 full) 761899104 (group 2) authentication information: jzvd
 
-[Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)  
+[Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)  [EnglishWiki](https://github.com/felipetorres/VideoPlayer-Wiki)
 [Chinese README](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md)  
 [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2)  
 [Video tutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)  
