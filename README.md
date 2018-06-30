@@ -1,53 +1,55 @@
-<a href="https://github.com/lipangit/JiaoZiVideoPlayer" target="_blank"><img src="https://user-images.githubusercontent.com/2038071/29994158-7e65546c-8ffb-11e7-80fd-c630e2a36135.png" style="max-width:100%;"></a>
+<a href="https://github.com/lipangit/JiaoZiVideoPlayer" target="_blank"><p align="center"><img src="https://user-images.githubusercontent.com/2038071/42033014-0bf1c0b0-7b0e-11e8-811d-7639bcd294eb.png" alt="JiaoZiVideoPlayer" height="150px"></p></a>
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.10-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.11-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-完美的列表滑动的检测，一行代码将系统的播放器换成Ijkplayer Exoplayer Vitamio等
+Perfect list sliding detection, one line of code to replace the system player with IJKplayer, ExoPlayer, Vitamio, etc.
 
-Q群:490442439(1群 满) 761899104(2群)验证信息:jzvd
+Group Q: 490442439 (group 1 full) 761899104 (group 2) authentication information: jzvd
 
-[中文文档](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md) [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2) [微博](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1) [视频教程](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)
+[Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)  [EnglishWiki](https://github.com/felipetorres/VideoPlayer-Wiki)  
+[Chinese README](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md)  
+[WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2)  
+[Video tutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)  
+[Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1)  
 
 ## Features
 
-1. You can completely customize the UI and any function
-2. One line of code to switch the playback engine, supported video formats and protocols depends on the playback engine,[android.media.MediaPlayer](https://developer.android.com/guide/topics/media/media-formats.html) [ijkplayer](https://github.com/Bilibili/ijkplayer)
-3. Perfect detection list sliding
-4. Full screen and small window option available
-5. Full-screen works in multiple nested modes like ListView, ViewPager and ListView, ViewPager and Fragment
-6. Can load, pause, play and other normal state into the full screen and exit full screen
-7. A variety of video adaptation screen mode, can be covered full screen, you can cut full screen
-8. Ability to enter full-screen automatically using gravity sensing
-9. Change progress and volume right from full screen mode
+1. You can completely customize the UI and any method
+2. One line of code to switch the playback engine, supported video formats and protocols depends on the playback engine like:  [android.media.MediaPlayer](https://developer.android.com/guide/topics/media/media-formats.html), [IJKplayer](https://github.com/Bilibili/ijkplayer), [ExoPlayer](http://google.github.io/ExoPlayer/supported-formats.html).
+3. Perfect detection of list sliding
+4. Fullscreen and small window option available
+5. Fullscreen works in multiple nested modes like ListView, ViewPager and ListView, ViewPager and Fragment
+6. Can load, pause, play and other normal state into the fullscreen and exit fullscreen
+7. A variety of video screen modes: full screen, you can cut full screen
+8. Use of gravity sensors to automatically enter fullscreen
+9. Gestures to control progress, volume and brightness in fullscreen mode
 10. Home key to exit the interface to suspend the playback, return to the interface to continue playing
 11. WebView Nested Local Video Controls
-12. VideoCache in dem,o
+12. VideoCache in demo
 
-## A demo showing available effects
+## Demo apk 
 
-**[jiaozivideoplayer-6.2.10.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.10/jiaozivideoplayer-6.2.10.apk)**
+A demo apk [jiaozivideoplayer-6.2.11.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.11/jiaozivideoplayer-6.2.11.apk) is available on Google Play showing all available features like this [small window effect on list sliding](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701).
 
-![Demo Screenshot][1]
-
-[List sliding automatically into the small window effect](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701)
+![Demo screenshot][1]
 
 ## Usage
 
-Only five steps to use the player.
+Only five steps to use the player:
 
-1.Import library
+1.Import library:
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.2.10'
+compile 'cn.jzvd:jiaozivideoplayer:6.2.11'
 ```
 
-Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.10) (not recommended)
+Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.11) (not recommended).
 
-2.Add JZVideoPlayer in your layout
+2.Add `JZVideoPlayer` in your layout:
 ```xml
 <cn.jzvd.JZVideoPlayerStandard
     android:id="@+id/videoplayer"
@@ -55,15 +57,16 @@ Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.
     android:layout_height="200dp"/>
 ```
 
-3.Set the video uri, video thumb url and video title
+3.Set the video uri, video thumb url and video title:
 ```java
 JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.videoplayer);
-jzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-                            , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子闭眼睛");
+jzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4", 
+                            JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, 
+                            "饺子闭眼睛");
 jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
-4.In `Activity`
+4.In `Activity`:
 ```java
 @Override
 public void onBackPressed() {
@@ -79,61 +82,36 @@ protected void onPause() {
 }
 ```
 
-5.In AndroidManifest.xml
-```
+5.In `AndroidManifest.xml`:
+```xml
 <activity
     android:name=".MainActivity"
     android:configChanges="orientation|screenSize|keyboardHidden"
-    android:screenOrientation="portrait" /> <!-- or android:screenOrientation="landscape"-->
+    android:screenOrientation="portrait" />
+    <!-- or android:screenOrientation="landscape"-->
 ```
 
-## [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)
+## Details about UI and code customization
 
-* Simple use
+[See our Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki).
 
-1. [QuickStart](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/QuickStart)
-2. [In ListView](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%88%97%E8%A1%A8%E6%92%AD%E6%94%BE)
-3. [Tiny window](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%B0%8F%E7%AA%97%E6%92%AD%E6%94%BE)
-4. [Directly fullscreen](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E7%9B%B4%E6%8E%A5%E5%85%A8%E5%B1%8F%E6%92%AD%E6%94%BE)
-5. [API](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/API%E7%9A%84%E4%BD%BF%E7%94%A8)
+## Community
 
-* Customize
-
-1. [Custom code](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%A0%81)
-2. [Custom code sample](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B)
-3. [Custom UI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI)
-4. [Custom UI sample](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%87%AA%E5%AE%9A%E4%B9%89UI%E7%A4%BA%E4%BE%8B)
-
-[Common problem](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98)
-
-
-## [Job diversion](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E5%B7%A5%E4%BD%9C%E5%88%86%E6%B5%81) 
-
-Need translator to make English native.
-
-* [Group management](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E7%BE%A4%E7%AE%A1%E7%90%86)
+#### Group management
 
 1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
 2. [Lionet](https://github.com/Lionet6?tab=repositories) QQ:2950527715
 3. [montauk](https://github.com/hanmeimei888) QQ:958489121
 4. [张展硕]() QQ:229431468
 
-* [Questions and Answers](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E9%97%AE%E9%A2%98%E8%A7%A3%E7%AD%94)
+#### Questions and Answers
 
 1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
 2. [の伤也快乐](https://github.com/jmhjmh) QQ:466278628
 
-* [Wiki finishing](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#wiki%E6%95%B4%E7%90%86)
+## Reward
 
-* [Release version](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E5%8F%91%E7%89%88)
-
-## [Task release](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E4%BB%BB%E5%8A%A1%E5%8F%91%E5%B8%83)
-
-Need translator to make English native.
-
-## [Reward](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E6%89%93%E8%B5%8F%E5%92%8C%E5%92%A8%E8%AF%A2)
-
-This project is dedicated to small and medium-sized app integrated video playback, greatly reducing development costs, if you save a ton of time, the proposed retail price: reward 76 USD. (Not expensive you brothers, get two years of the project than the female anchor song song it)
+This project is dedicated to the integration of small and medium video playback app, greatly reducing the cost of development. If you save tons of time, we suggest a retail price of 76 USD. (It's not expensive, get a two-year project worth more than that)
 
 ![Reward][2]
 

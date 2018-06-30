@@ -74,7 +74,7 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         mJzVideoPlayerStandard.setUp(objects, 2
                 , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
         Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzVideoPlayerStandard.thumbImageView);
-
+        mJzVideoPlayerStandard.seekToInAdvance = 20000;
         //JZVideoPlayer.SAVE_PROGRESS = false;
 
         /** Play video in local path, eg:record by system camera **/
@@ -84,8 +84,7 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         /** ImageLoader **/
 //        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],
 //                videoController1.thumbImageView);
-        /** volley omit **/
-        /** Fresco omit **/
+        /** volley Fresco omit **/
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorEventListener = new JZVideoPlayer.JZAutoFullscreenListener();
     }
