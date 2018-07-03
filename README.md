@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.11-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.12-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -34,7 +34,7 @@ Group Q: 490442439 (group 1 full) 761899104 (group 2) authentication information
 
 ## Demo apk 
 
-A demo apk [jiaozivideoplayer-6.2.11.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.11/jiaozivideoplayer-6.2.11.apk) is available on Google Play showing all available features like this [small window effect on list sliding](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701).
+A demo apk [jiaozivideoplayer-6.2.12.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.12/jiaozivideoplayer-6.2.12.apk) is available on Google Play showing all available features like this [small window effect on list sliding](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701).
 
 ![Demo screenshot][1]
 
@@ -44,10 +44,10 @@ Only five steps to use the player:
 
 1.Import library:
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.2.11'
+compile 'cn.jzvd:jiaozivideoplayer:6.2.12'
 ```
 
-Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.11) (not recommended).
+Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.12) (not recommended).
 
 2.Add `JZVideoPlayer` in your layout:
 ```xml
