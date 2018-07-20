@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 import cn.jzvd.demo.CustomView.JZVideoPlayerStandardAutoCompleteAfterFullscreen;
+import cn.jzvd.demo.CustomView.JZVideoPlayerStandardMp3;
 import cn.jzvd.demo.CustomView.JZVideoPlayerStandardShowShareButtonAfterFullscreen;
 import cn.jzvd.demo.CustomView.JZVideoPlayerStandardShowTextureViewAfterAutoComplete;
 import cn.jzvd.demo.CustomView.JZVideoPlayerStandardShowTitleAfterFullscreen;
@@ -24,6 +25,7 @@ public class ActivityApiUISmallChange extends AppCompatActivity {
     JZVideoPlayerStandardShowTextureViewAfterAutoComplete jzVideoPlayerStandardShowTextureViewAfterAutoComplete;
     JZVideoPlayerStandardAutoCompleteAfterFullscreen jzVideoPlayerStandardAutoCompleteAfterFullscreen;
     JZVideoPlayerStandardVolumeAfterFullscreen jzVideoPlayerStandardVolumeAfterFullscreen;
+    JZVideoPlayerStandardMp3 jzVideoPlayerStandardMp3;
 
     JZVideoPlayerStandard jzVideoPlayerStandard_1_1, jzVideoPlayerStandard_16_9;
 
@@ -90,6 +92,14 @@ public class ActivityApiUISmallChange extends AppCompatActivity {
         Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][1])
                 .into(jzVideoPlayerStandardVolumeAfterFullscreen.thumbImageView);
+
+        jzVideoPlayerStandardMp3 = findViewById(R.id.jz_videoplayer_mp3);
+        jzVideoPlayerStandardMp3.setUp("https://in-20170815011809382-q34ludd68h.oss-cn-shanghai.aliyuncs.com/video/401edae1-16431aa8156-0007-1823-c86-de200.mp3?Expires=1532102862&OSSAccessKeyId=LTAIPZHZDaUNpnca&Signature=apruidffjNeN0O584VJiz8q1mJ4%3D", JZVideoPlayer.SCREEN_WINDOW_NORMAL
+                , "饺子摇摆");
+        Glide.with(this)
+                .load(VideoConstant.videoThumbs[0][1])
+                .into(jzVideoPlayerStandardMp3.thumbImageView);
+
 
     }
 

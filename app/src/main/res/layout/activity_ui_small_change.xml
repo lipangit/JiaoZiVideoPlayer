@@ -96,6 +96,18 @@
                 android:id="@+id/jz_videoplayer_volume"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="18dp"
+                android:text="Play Mp3" />
+
+            <cn.jzvd.demo.CustomView.JZVideoPlayerStandardMp3
+                android:id="@+id/jz_videoplayer_mp3"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

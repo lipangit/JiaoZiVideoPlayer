@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.demo.R;
 
 /**
  * 这里可以监听到视频播放的生命周期和播放状态
@@ -41,7 +42,7 @@ public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
 
     @Override
     public int getLayoutId() {
-        return cn.jzvd.R.layout.jz_layout_standard;
+        return R.layout.jz_layout_standard;
     }
 
     @Override
@@ -54,6 +55,7 @@ public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
         super.startVideo();
     }
 
+    //onState 代表了播放器引擎的回调，播放视频各个过程的状态的回调
     @Override
     public void onStateNormal() {
         super.onStateNormal();
@@ -82,6 +84,47 @@ public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
     @Override
     public void onStateAutoComplete() {
         super.onStateAutoComplete();
+    }
+
+    //changeUiTo 真能能修改ui的方法
+    @Override
+    public void changeUiToNormal() {
+        super.changeUiToNormal();
+    }
+
+    @Override
+    public void changeUiToPreparing() {
+        super.changeUiToPreparing();
+    }
+
+    @Override
+    public void changeUiToPlayingShow() {
+        super.changeUiToPlayingShow();
+    }
+
+    @Override
+    public void changeUiToPlayingClear() {
+        super.changeUiToPlayingClear();
+    }
+
+    @Override
+    public void changeUiToPauseShow() {
+        super.changeUiToPauseShow();
+    }
+
+    @Override
+    public void changeUiToPauseClear() {
+        super.changeUiToPauseClear();
+    }
+
+    @Override
+    public void changeUiToComplete() {
+        super.changeUiToComplete();
+    }
+
+    @Override
+    public void changeUiToError() {
+        super.changeUiToError();
     }
 
     @Override
