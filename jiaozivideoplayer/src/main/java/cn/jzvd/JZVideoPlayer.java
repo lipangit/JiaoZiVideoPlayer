@@ -378,7 +378,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
         mScreenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
-        mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
 
         try {
             if (isCurrentPlay()) {
@@ -600,7 +600,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
         initTextureView();
         addTextureView();
-        AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -771,7 +771,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         JZMediaManager.instance().currentVideoWidth = 0;
         JZMediaManager.instance().currentVideoHeight = 0;
 
-        AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         JZUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         clearFullscreenLayout();
@@ -1096,6 +1096,17 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public static void setMediaInterface(JZMediaInterface mediaInterface) {
         JZMediaManager.instance().jzMediaInterface = mediaInterface;
+    }
+    
+    public Context getApplicationContext() {
+        Context context = getContext();
+        if (context != null) {
+            Context applicationContext = context.getApplicationContext();
+            if (applicationContext != null) {
+                return applicationContext;
+            }
+        }
+        return context;
     }
 
     //TODO 是否有用
