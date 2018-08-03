@@ -24,7 +24,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
     MyJZVideoPlayerStandard myJZVideoPlayerStandard;
 
-    Button mTinyWindow, mListView, mDirectFullscreen, mApi, mWebView;
+    Button mTinyWindow, mListView, mDirectFullscreen, mApi, mWebView, mBgPlay;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,12 +36,14 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         mListView = findViewById(R.id.listview);
         mApi = findViewById(R.id.api);
         mWebView = findViewById(R.id.webview);
+        mBgPlay = findViewById(R.id.background_play);
 
         mTinyWindow.setOnClickListener(this);
         mListView.setOnClickListener(this);
         mDirectFullscreen.setOnClickListener(this);
         mApi.setOnClickListener(this);
         mWebView.setOnClickListener(this);
+        mBgPlay.setOnClickListener(this);
 
         myJZVideoPlayerStandard = findViewById(R.id.jz_video);
         myJZVideoPlayerStandard.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
@@ -82,6 +84,10 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
             case R.id.webview:
                 startActivity(new Intent(ActivityMain.this, ActivityWebView.class));
                 break;
+            case R.id.background_play:
+                startActivity(new Intent(ActivityMain.this, ActivityBackgroundPlay.class));
+                break;
+            default:
         }
     }
 
