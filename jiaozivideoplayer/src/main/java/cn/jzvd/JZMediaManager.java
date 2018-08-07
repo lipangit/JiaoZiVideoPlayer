@@ -18,6 +18,8 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
     public static final String TAG = "JiaoZiVideoPlayer";
     public static final int HANDLER_PREPARE = 0;
     public static final int HANDLER_RELEASE = 2;
+    public static final int HANDLER_PREPARE_SURFACE = 3;
+    public static final int HANDLER_PREPARE_PLAYER = 4;
 
     public static JZResizeTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
@@ -104,13 +106,34 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
         mMediaHandler.sendMessage(msg);
     }
 
+    /**
+     * 用来更新TextureView，更新视频输出画面
+     */
+    public void prepareSurface() {
+        Message msg = new Message();
+        msg.what = HANDLER_PREPARE_SURFACE;
+        mMediaHandler.sendMessage(msg);
+    }
+
+    /**
+     * 用来更新视频输出源，该方法与上面的方法共同作用
+     * 将更新视频源输出与更新视频画面输出分离
+     * 修复视频在后台播放时，由于视频源更新与画面更新绑定在一起导致的不能即时播放新视频的问题
+     */
+    public void preparePlayer() {
+        releaseMediaPlayer();
+        Message msg = new Message();
+        msg.what = HANDLER_PREPARE_PLAYER;
+        mMediaHandler.sendMessage(msg);
+    }
+
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
         if(JZVideoPlayerManager.getCurrentJzvd() == null) return;
         Log.i(TAG, "onSurfaceTextureAvailable [" + JZVideoPlayerManager.getCurrentJzvd().hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
-            prepare();
+            prepareSurface();
         } else {
             textureView.setSurfaceTexture(savedSurfaceTexture);
         }
@@ -157,6 +180,18 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
                 case HANDLER_RELEASE:
                     jzMediaInterface.release();
                     break;
+                case HANDLER_PREPARE_SURFACE:
+                    if (savedSurfaceTexture != null) {
+                        if (surface != null) {
+                            surface.release();
+                        }
+                        surface = new Surface(savedSurfaceTexture);
+                        jzMediaInterface.setSurface(surface);
+                    }
+                    break;
+                case HANDLER_PREPARE_PLAYER:
+                    jzMediaInterface.prepare();
+                default:
             }
         }
     }
