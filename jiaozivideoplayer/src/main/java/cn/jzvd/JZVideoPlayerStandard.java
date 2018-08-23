@@ -181,8 +181,8 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
     }
 
     @Override
-    public void onStatePreparingChangingUrl(int urlMapIndex, long seekToInAdvance) {
-        super.onStatePreparingChangingUrl(urlMapIndex, seekToInAdvance);
+    public void changeUrl(int urlMapIndex, long seekToInAdvance) {
+        super.changeUrl(urlMapIndex, seekToInAdvance);
         loadingProgressBar.setVisibility(VISIBLE);
         startButton.setVisibility(INVISIBLE);
     }
@@ -288,7 +288,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             OnClickListener mQualityListener = new OnClickListener() {
                 public void onClick(View v) {
                     int index = (int) v.getTag();
-                    onStatePreparingChangingUrl(index, getCurrentPositionWhenPlaying());
+                    changeUrl(index, getCurrentPositionWhenPlaying());
                     clarity.setText(JZUtils.getKeyFromDataSource(dataSourceObjects, currentUrlMapIndex));
                     for (int j = 0; j < layout.getChildCount(); j++) {//设置点击之后的颜色
                         if (j == currentUrlMapIndex) {

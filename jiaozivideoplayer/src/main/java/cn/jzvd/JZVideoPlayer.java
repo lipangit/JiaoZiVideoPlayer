@@ -630,7 +630,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 onStatePreparing();
                 break;
             case CURRENT_STATE_PREPARING_CHANGING_URL:
-                onStatePreparingChangingUrl(urlMapIndex, seekToInAdvance);
+                changeUrl(urlMapIndex, seekToInAdvance);
                 break;
             case CURRENT_STATE_PLAYING:
                 onStatePlaying();
@@ -659,7 +659,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         resetProgressAndTime();
     }
 
-    public void onStatePreparingChangingUrl(int urlMapIndex, long seekToInAdvance) {
+    public void changeUrl(int urlMapIndex, long seekToInAdvance) {
         currentState = CURRENT_STATE_PREPARING_CHANGING_URL;
         this.currentUrlMapIndex = urlMapIndex;
         this.seekToInAdvance = seekToInAdvance;
