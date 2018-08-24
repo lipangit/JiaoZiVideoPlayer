@@ -35,7 +35,7 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
             mediaPlayer.setOnInfoListener(CustomMediaPlayerAssertFolder.this);
             mediaPlayer.setOnVideoSizeChangedListener(CustomMediaPlayerAssertFolder.this);
 
-            AssetFileDescriptor assetFileDescriptor = (AssetFileDescriptor) currentDataSource;
+            AssetFileDescriptor assetFileDescriptor = (AssetFileDescriptor) jzDataSource.getCurrentUrl();
             mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
 
             mediaPlayer.prepareAsync();
@@ -96,7 +96,7 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
-        if (currentDataSource.toString().toLowerCase().contains("mp3")) {
+        if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3")) {
             JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {

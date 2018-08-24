@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 
+import cn.jzvd.JZDataSource;
 import cn.jzvd.JZMediaSystem;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
@@ -50,15 +51,16 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
         mChangeToExo.setOnClickListener(this);
 
         LinkedHashMap map = new LinkedHashMap();
+        JZDataSource jzDataSource = null;
         try {
-            map.put(JZVideoPlayer.URL_KEY_DEFAULT, getAssets().openFd("local_video.mp4"));
+            jzDataSource = new JZDataSource(getAssets().openFd("local_video.mp4"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         Object[] dataSourceObjects = new Object[2];
         dataSourceObjects[0] = map;
         dataSourceObjects[1] = this;
-        jzVideoPlayerStandard.setUp(dataSourceObjects, 0, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子快长大");
+        jzVideoPlayerStandard.setUp(jzDataSource, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子快长大");
         Glide.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
                 .into(jzVideoPlayerStandard.thumbImageView);

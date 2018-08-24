@@ -44,7 +44,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
             @Override
             public void onChildViewDetachedFromWindow(View view) {
                 JZVideoPlayer jzvd = view.findViewById(R.id.videoplayer);
-                if (jzvd != null && JZUtils.dataSourceObjectsContainsUri(jzvd.dataSourceObjects, JZMediaManager.getCurrentDataSource())) {
+                if (jzvd != null && jzvd.jzDataSource.containsTheUrl(JZMediaManager.getCurrentUrl())) {
                     JZVideoPlayer currentJzvd = JZVideoPlayerManager.getCurrentJzvd();
                     if (currentJzvd != null && currentJzvd.currentScreen != JZVideoPlayer.SCREEN_WINDOW_FULLSCREEN) {
                         JZVideoPlayer.releaseAllVideos();
