@@ -383,7 +383,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     }
 
     public void setUp(String url, int screen, Object... objects) {
-        setUp(new JZDataSource(url), 0, screen, objects);
+        setUp(new JZDataSource(url), screen, objects);
     }
 
     public void setUp(JZDataSource jzDataSource, int screen, Object... objects) {
