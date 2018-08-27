@@ -388,7 +388,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void setUp(JZDataSource jzDataSource, int screen, Object... objects) {
         if (this.jzDataSource != null && jzDataSource.getCurrentUrl() != null &&
-                jzDataSource.containsTheUrl(jzDataSource.getCurrentUrl())) {
+                this.jzDataSource.containsTheUrl(jzDataSource.getCurrentUrl())) {
             return;
         }
         if (isCurrentJZVD() && jzDataSource.containsTheUrl(JZMediaManager.getCurrentUrl())) {
