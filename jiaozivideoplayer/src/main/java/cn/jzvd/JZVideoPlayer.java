@@ -127,6 +127,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     protected float mGestureDownBrightness;
     protected long mSeekTimePosition;
     boolean tmp_test_back = false;
+    private LayoutParams windowTinyLayoutParams;
 
     public JZVideoPlayer(Context context) {
         super(context);
@@ -324,6 +325,37 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 JZVideoPlayer.backPress();
             }
         }
+    }
+    public static void onChildViewAttachedToWindow(JZVideoPlayer videoPlayer) {
+        if (JZVideoPlayerManager.getCurrentJzvd() != null && JZVideoPlayerManager.getCurrentJzvd().currentScreen == JZVideoPlayer.SCREEN_WINDOW_TINY) {
+            if (videoPlayer != null && JZUtils.getCurrentFromDataSource(videoPlayer.dataSourceObjects, videoPlayer.currentUrlMapIndex).equals(JZMediaManager.getCurrentDataSource())) {
+                JZVideoPlayer.backPress();
+            }
+        }
+    }
+
+    public static void onChildViewAttachedToWindow(View view) {
+        JZVideoPlayer jzVideoPlayer = findJzVideoPlayer(view);
+        if (jzVideoPlayer != null) {
+            onChildViewAttachedToWindow(jzVideoPlayer);
+        }
+    }
+
+    private static JZVideoPlayer findJzVideoPlayer(View view) {
+        if (view instanceof JZVideoPlayer) {
+            return (JZVideoPlayer) view;
+        }
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            int childCount = viewGroup.getChildCount();
+            for (int i = 0; i < childCount; i++) {
+                JZVideoPlayer videoPlayer = findJzVideoPlayer(viewGroup.getChildAt(i));
+                if (videoPlayer != null) {
+                    return videoPlayer;
+                }
+            }
+        }
+        return null;
     }
 
     public static void onChildViewDetachedFromWindow(View view) {
@@ -839,10 +871,10 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     public void clearFloatScreen() {
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
         showSupportActionBar(getContext());
-        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+        final ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
                 .findViewById(Window.ID_ANDROID_CONTENT);
         JZVideoPlayer fullJzvd = vp.findViewById(R.id.jz_fullscreen_id);
-        JZVideoPlayer tinyJzvd = vp.findViewById(R.id.jz_tiny_id);
+        final JZVideoPlayer tinyJzvd = vp.findViewById(R.id.jz_tiny_id);
 
         if (fullJzvd != null) {
             vp.removeView(fullJzvd);
@@ -850,7 +882,12 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                 fullJzvd.textureViewContainer.removeView(JZMediaManager.textureView);
         }
         if (tinyJzvd != null) {
-            vp.removeView(tinyJzvd);
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    vp.removeView(tinyJzvd);
+                }
+            });
             if (tinyJzvd.textureViewContainer != null)
                 tinyJzvd.textureViewContainer.removeView(JZMediaManager.textureView);
         }
@@ -1024,9 +1061,11 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             Constructor<JZVideoPlayer> constructor = (Constructor<JZVideoPlayer>) JZVideoPlayer.this.getClass().getConstructor(Context.class);
             JZVideoPlayer jzVideoPlayer = constructor.newInstance(getContext());
             jzVideoPlayer.setId(R.id.jz_tiny_id);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
-            lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
-            vp.addView(jzVideoPlayer, lp);
+            if (windowTinyLayoutParams == null) {
+                windowTinyLayoutParams = new FrameLayout.LayoutParams(400, 400);
+                windowTinyLayoutParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;
+            }
+            vp.addView(jzVideoPlayer, windowTinyLayoutParams);
             jzVideoPlayer.setUp(dataSourceObjects, currentUrlMapIndex, JZVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
             jzVideoPlayer.setState(currentState);
             jzVideoPlayer.addTextureView();
@@ -1038,6 +1077,15 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             e.printStackTrace();
         }
     }
+
+    public void setWindowTinyLayoutParams(LayoutParams layoutParams) {
+        this.windowTinyLayoutParams = layoutParams;
+    }
+
+    public LayoutParams setWindowTinyLayoutParans() {
+        return windowTinyLayoutParams;
+    }
+
 
     public boolean isCurrentPlay() {
         return isCurrentJZVD()
