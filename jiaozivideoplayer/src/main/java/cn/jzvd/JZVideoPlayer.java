@@ -96,7 +96,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
     protected static Timer UPDATE_PROGRESS_TIMER;
     public int currentState = -1;
     public int currentScreen = -1;
-    public Object[] objects = null;
     public long seekToInAdvance = 0;
     public ImageView startButton;
     public SeekBar progressBar;
@@ -144,11 +143,11 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    public static void startFullscreen(Context context, Class _class, String url, Object... objects) {
-        startFullscreen(context, _class, new JZDataSource(url), 0, objects);
+    public static void startFullscreen(Context context, Class _class, String url, String title) {
+        startFullscreen(context, _class, new JZDataSource(url, title));
     }
 
-    public static void startFullscreen(Context context, Class _class, JZDataSource jzDataSource, int defaultUrlMapIndex, Object... objects) {
+    public static void startFullscreen(Context context, Class _class, JZDataSource jzDataSource) {
         hideSupportActionBar(context);
         JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
         ViewGroup vp = (JZUtils.scanForActivity(context))//.getWindow().getDecorView();
@@ -166,7 +165,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             vp.addView(jzVideoPlayer, lp);
 //            final Animation ra = AnimationUtils.loadAnimation(context, R.anim.start_fullscreen);
 //            jzVideoPlayer.setAnimation(ra);
-            jzVideoPlayer.setUp(jzDataSource, defaultUrlMapIndex, JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
+            jzVideoPlayer.setUp(jzDataSource, JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN);
             CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
             jzVideoPlayer.startButton.performClick();
         } catch (InstantiationException e) {
@@ -382,11 +381,11 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
     }
 
-    public void setUp(String url, int screen, Object... objects) {
-        setUp(new JZDataSource(url), screen, objects);
+    public void setUp(String url, String title, int screen) {
+        setUp(new JZDataSource(url, title), screen);
     }
 
-    public void setUp(JZDataSource jzDataSource, int screen, Object... objects) {
+    public void setUp(JZDataSource jzDataSource, int screen) {
         if (this.jzDataSource != null && jzDataSource.getCurrentUrl() != null &&
                 this.jzDataSource.containsTheUrl(jzDataSource.getCurrentUrl())) {
             return;
@@ -414,7 +413,6 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         }
         this.jzDataSource = jzDataSource;
         this.currentScreen = screen;
-        this.objects = objects;
         onStateNormal();
 
     }
@@ -975,7 +973,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             vp.addView(jzVideoPlayer, lp);
             jzVideoPlayer.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN);
-            jzVideoPlayer.setUp(jzDataSource, JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN, objects);
+            jzVideoPlayer.setUp(jzDataSource, JZVideoPlayerStandard.SCREEN_WINDOW_FULLSCREEN);
             jzVideoPlayer.setState(currentState);
             jzVideoPlayer.addTextureView();
             JZVideoPlayerManager.setSecondFloor(jzVideoPlayer);
@@ -1013,7 +1011,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
             FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
             lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
             vp.addView(jzVideoPlayer, lp);
-            jzVideoPlayer.setUp(jzDataSource, JZVideoPlayerStandard.SCREEN_WINDOW_TINY, objects);
+            jzVideoPlayer.setUp(jzDataSource, JZVideoPlayerStandard.SCREEN_WINDOW_TINY);
             jzVideoPlayer.setState(currentState);
             jzVideoPlayer.addTextureView();
             JZVideoPlayerManager.setSecondFloor(jzVideoPlayer);
@@ -1075,7 +1073,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
 
     public void onEvent(int type) {
         if (JZ_USER_EVENT != null && isCurrentPlay() && !jzDataSource.urlsMap.isEmpty()) {
-            JZ_USER_EVENT.onEvent(type, jzDataSource.getCurrentUrl(), currentScreen, objects);
+            JZ_USER_EVENT.onEvent(type, jzDataSource.getCurrentUrl(), currentScreen);
         }
     }
 

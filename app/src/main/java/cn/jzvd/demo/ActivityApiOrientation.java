@@ -27,8 +27,8 @@ public class ActivityApiOrientation extends AppCompatActivity {
         getSupportActionBar().setTitle("Orientation");
         setContentView(R.layout.activity_orientation);
         mJzVideoPlayerStandard = findViewById(R.id.jz_video);
-        mJzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
-                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
+        mJzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0], "饺子不信"
+                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzVideoPlayerStandard.thumbImageView);

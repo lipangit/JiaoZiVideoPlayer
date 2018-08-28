@@ -118,8 +118,8 @@ public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
                 }
 
                 viewHolder.jzVideoPlayer.setUp(
-                        VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST,
-                        VideoConstant.videoTitles[0][position]);
+                        VideoConstant.videoUrls[0][position],
+                        VideoConstant.videoTitles[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST);
                 viewHolder.jzVideoPlayer.positionInList = position;
                 Glide.with(ActivityTinyWindowListViewMultiHolder.this).load(VideoConstant.videoThumbs[0][position]).into(viewHolder.jzVideoPlayer.thumbImageView);
             } else {

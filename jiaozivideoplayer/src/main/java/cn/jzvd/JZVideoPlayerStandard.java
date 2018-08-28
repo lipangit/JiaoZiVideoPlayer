@@ -26,7 +26,6 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -114,9 +113,9 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         mRetryBtn.setOnClickListener(this);
     }
 
-    public void setUp(JZDataSource jzDataSource, int screen, Object... objects) {
-        super.setUp(jzDataSource, screen, objects);
-        if (objects.length != 0) titleTextView.setText(objects[0].toString());
+    public void setUp(JZDataSource jzDataSource, int screen) {
+        super.setUp(jzDataSource, screen);
+        titleTextView.setText(jzDataSource.title);
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             fullscreenButton.setImageResource(R.drawable.jz_shrink);
             backButton.setVisibility(View.VISIBLE);

@@ -37,8 +37,8 @@ public class AdapterRecyclerViewVideo extends RecyclerView.Adapter<AdapterRecycl
         Log.i(TAG, "onBindViewHolder [" + holder.jzVideoPlayer.hashCode() + "] position=" + position);
 
         holder.jzVideoPlayer.setUp(
-                VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST,
-                VideoConstant.videoTitles[0][position]);
+                VideoConstant.videoUrls[0][position],
+                VideoConstant.videoTitles[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST);
         Glide.with(holder.jzVideoPlayer.getContext()).load(VideoConstant.videoThumbs[0][position]).into(holder.jzVideoPlayer.thumbImageView);
     }
 

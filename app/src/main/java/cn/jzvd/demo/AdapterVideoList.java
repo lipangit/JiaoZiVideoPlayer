@@ -61,8 +61,8 @@ public class AdapterVideoList extends BaseAdapter {
         }
         viewHolder.jzVideoPlayer = convertView.findViewById(R.id.videoplayer);
         viewHolder.jzVideoPlayer.setUp(
-                videoUrls[position], JZVideoPlayer.SCREEN_WINDOW_LIST,
-                videoTitles[position]);
+                videoUrls[position],
+                videoTitles[position], JZVideoPlayer.SCREEN_WINDOW_LIST);
         Glide.with(convertView.getContext())
                 .load(videoThumbs[position])
                 .into(viewHolder.jzVideoPlayer.thumbImageView);

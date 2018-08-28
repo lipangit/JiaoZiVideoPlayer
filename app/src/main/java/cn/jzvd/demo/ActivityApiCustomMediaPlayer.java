@@ -50,17 +50,14 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
         mChangeToSystemMediaPlayer.setOnClickListener(this);
         mChangeToExo.setOnClickListener(this);
 
-        LinkedHashMap map = new LinkedHashMap();
         JZDataSource jzDataSource = null;
         try {
             jzDataSource = new JZDataSource(getAssets().openFd("local_video.mp4"));
+            jzDataSource.title = "饺子快长大";
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Object[] dataSourceObjects = new Object[2];
-        dataSourceObjects[0] = map;
-        dataSourceObjects[1] = this;
-        jzVideoPlayerStandard.setUp(jzDataSource, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子快长大");
+        jzVideoPlayerStandard.setUp(jzDataSource, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL);
         Glide.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
                 .into(jzVideoPlayerStandard.thumbImageView);

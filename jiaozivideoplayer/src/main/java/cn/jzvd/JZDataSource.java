@@ -9,12 +9,19 @@ public class JZDataSource {
 
     public int currentUrlIndex;
     public LinkedHashMap urlsMap = new LinkedHashMap();
+    public String title = "";
     public HashMap headerMap = new HashMap();
     public boolean looping = false;
-    public Object[] otherObjects;
+    public Object[] objects;
 
     public JZDataSource(String url) {
         urlsMap.put(URL_KEY_DEFAULT, url);
+        currentUrlIndex = 0;
+    }
+
+    public JZDataSource(String url, String title) {
+        urlsMap.put(URL_KEY_DEFAULT, url);
+        this.title = title;
         currentUrlIndex = 0;
     }
 
@@ -26,6 +33,13 @@ public class JZDataSource {
     public JZDataSource(LinkedHashMap urlsMap) {
         this.urlsMap.clear();
         this.urlsMap.putAll(urlsMap);
+        currentUrlIndex = 0;
+    }
+
+    public JZDataSource(LinkedHashMap urlsMap, String title) {
+        this.urlsMap.clear();
+        this.urlsMap.putAll(urlsMap);
+        this.title = title;
         currentUrlIndex = 0;
     }
 
