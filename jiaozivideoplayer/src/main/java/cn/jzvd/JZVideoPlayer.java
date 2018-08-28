@@ -250,11 +250,19 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
         if (JZVideoPlayerManager.getCurrentJzvd() != null) {
             JZVideoPlayer jzvd = JZVideoPlayerManager.getCurrentJzvd();
             if (jzvd.currentState == JZVideoPlayer.CURRENT_STATE_PAUSE) {
-                jzvd.onStatePlaying();
-                JZMediaManager.start();
+                if (ON_PLAY_PAUSE_TMP_STATE == CURRENT_STATE_PAUSE) {
+                    jzvd.onStatePause();
+                    JZMediaManager.pause();
+                } else {
+                    jzvd.onStatePlaying();
+                    JZMediaManager.start();
+                }
+                ON_PLAY_PAUSE_TMP_STATE = 0;
             }
         }
     }
+
+    public static int ON_PLAY_PAUSE_TMP_STATE = 0;
 
     public static void goOnPlayOnPause() {
         if (JZVideoPlayerManager.getCurrentJzvd() != null) {
@@ -264,6 +272,7 @@ public abstract class JZVideoPlayer extends FrameLayout implements View.OnClickL
                     jzvd.currentState == JZVideoPlayer.CURRENT_STATE_ERROR) {
 //                JZVideoPlayer.releaseAllVideos();
             } else {
+                ON_PLAY_PAUSE_TMP_STATE = jzvd.currentState;
                 jzvd.onStatePause();
                 JZMediaManager.pause();
             }
