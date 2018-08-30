@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
+import cn.jzvd.JZDataSource;
 import cn.jzvd.JZVideoPlayerStandard;
 import cn.jzvd.demo.R;
 
@@ -42,10 +43,9 @@ public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
     }
 
     @Override
-    public void setUp(String url, int screen, Object... objects) {
-        super.setUp(url, screen, objects);
-        if (objects.length == 0) return;
-        titleTextView.setText(objects[0].toString());
+    public void setUp(JZDataSource jzDataSource, int screen) {
+        super.setUp(jzDataSource, screen);
+        titleTextView.setText(jzDataSource.title);
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             fullscreenButton.setImageResource(R.drawable.jz_shrink);
             backButton.setVisibility(View.VISIBLE);
@@ -57,7 +57,7 @@ public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
         } else if (currentScreen == SCREEN_WINDOW_TINY) {
             tinyBackImageView.setVisibility(View.VISIBLE);
             setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,View.INVISIBLE);
+                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
         }
     }
 

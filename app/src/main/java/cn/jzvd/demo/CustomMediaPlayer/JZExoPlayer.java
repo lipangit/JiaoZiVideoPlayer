@@ -83,7 +83,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
                 Util.getUserAgent(context, context.getResources().getString(R.string.app_name)));
 
-        String currUrl = currentDataSource.toString();
+        String currUrl = jzDataSource.getCurrentUrl().toString();
         if (currUrl.contains(".m3u8")) {
             videoSource = new HlsMediaSource.Factory(dataSourceFactory)
                     .createMediaSource(Uri.parse(currUrl), mainHandler, null);
@@ -133,7 +133,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
                     }
                 }
             });
-            if(percent < 100) {
+            if (percent < 100) {
                 mainHandler.postDelayed(callback, 300);
             } else {
                 mainHandler.removeCallbacks(callback);
@@ -153,7 +153,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
 
     @Override
     public void seekTo(long time) {
-        if(time != previousSeek) {
+        if (time != previousSeek) {
             simpleExoPlayer.seekTo(time);
             previousSeek = time;
             JZVideoPlayerManager.getCurrentJzvd().seekToInAdvance = time;

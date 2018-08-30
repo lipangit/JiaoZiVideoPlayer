@@ -33,8 +33,7 @@ public class JZVideoPlayerStandardAutoCompleteAfterFullscreen extends JZVideoPla
             mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
             JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-            JZMediaManager.setDataSource(dataSourceObjects);
-            JZMediaManager.setCurrentDataSource(JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex));
+            JZMediaManager.setDataSource(jzDataSource);
             JZMediaManager.instance().positionInList = positionInList;
             onStatePreparing();
         } else {

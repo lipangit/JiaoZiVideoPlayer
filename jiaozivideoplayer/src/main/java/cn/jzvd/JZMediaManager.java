@@ -48,23 +48,24 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
         return jzMediaManager;
     }
 
-    public static Object[] getDataSource() {
-        return instance().jzMediaInterface.dataSourceObjects;
-    }
-
     //这几个方法是不是多余了，为了不让其他地方动MediaInterface的方法
-    public static void setDataSource(Object[] dataSourceObjects) {
-        instance().jzMediaInterface.dataSourceObjects = dataSourceObjects;
+    public static void setDataSource(JZDataSource jzDataSource) {
+        instance().jzMediaInterface.jzDataSource = jzDataSource;
     }
 
-    //正在播放的url或者uri
-    public static Object getCurrentDataSource() {
-        return instance().jzMediaInterface.currentDataSource;
+    public static JZDataSource getDataSource() {
+        return instance().jzMediaInterface.jzDataSource;
     }
 
-    public static void setCurrentDataSource(Object currentDataSource) {
-        instance().jzMediaInterface.currentDataSource = currentDataSource;
+
+    //    //正在播放的url或者uri
+    public static Object getCurrentUrl() {
+        return instance().jzMediaInterface.jzDataSource == null ? null : instance().jzMediaInterface.jzDataSource.getCurrentUrl();
     }
+//
+//    public static void setCurrentDataSource(JZDataSource jzDataSource) {
+//        instance().jzMediaInterface.jzDataSource = jzDataSource;
+//    }
 
     public static long getCurrentPosition() {
         return instance().jzMediaInterface.getCurrentPosition();
@@ -106,7 +107,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-        if(JZVideoPlayerManager.getCurrentJzvd() == null) return;
+        if (JZVideoPlayerManager.getCurrentJzvd() == null) return;
         Log.i(TAG, "onSurfaceTextureAvailable [" + JZVideoPlayerManager.getCurrentJzvd().hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
