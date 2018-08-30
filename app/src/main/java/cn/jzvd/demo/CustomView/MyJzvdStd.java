@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.R;
 
 /**
@@ -13,12 +13,12 @@ import cn.jzvd.demo.R;
  * 所有关于视频的逻辑都应该写在这里
  * Created by Nathen on 2017/7/2.
  */
-public class MyJZVideoPlayerStandard extends JZVideoPlayerStandard {
-    public MyJZVideoPlayerStandard(Context context) {
+public class MyJzvdStd extends JzvdStd {
+    public MyJzvdStd(Context context) {
         super(context);
     }
 
-    public MyJZVideoPlayerStandard(Context context, AttributeSet attrs) {
+    public MyJzvdStd(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

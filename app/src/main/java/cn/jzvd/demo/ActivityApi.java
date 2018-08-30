@@ -21,16 +21,16 @@ import java.io.OutputStream;
 import java.util.LinkedHashMap;
 
 import cn.jzvd.JZDataSource;
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by Nathen on 16/7/31.
  */
 public class ActivityApi extends AppCompatActivity implements View.OnClickListener {
     Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity, mRationAndVideoSize, mCustomMediaPlayer;
-    JZVideoPlayerStandard mJzVideoPlayerStandard;
-    JZVideoPlayer.JZAutoFullscreenListener mSensorEventListener;
+    JzvdStd mJzvdStd;
+    Jzvd.JZAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
 
     @Override
@@ -58,7 +58,7 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         mCustomMediaPlayer.setOnClickListener(this);
 
 
-        mJzVideoPlayerStandard = findViewById(R.id.jz_video);
+        mJzvdStd = findViewById(R.id.jz_video);
         LinkedHashMap map = new LinkedHashMap();
 
         String proxyUrl = ApplicationDemo.getProxy(this).getProxyUrl(VideoConstant.videoUrls[0][9]);
@@ -70,10 +70,10 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         jzDataSource.looping = true;
         jzDataSource.currentUrlIndex = 2;
         jzDataSource.headerMap.put("key", "value");//header
-        mJzVideoPlayerStandard.setUp(jzDataSource
-                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL);
-        Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzVideoPlayerStandard.thumbImageView);
-        mJzVideoPlayerStandard.seekToInAdvance = 20000;
+        mJzvdStd.setUp(jzDataSource
+                , JzvdStd.SCREEN_WINDOW_NORMAL);
+        Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzvdStd.thumbImageView);
+        mJzvdStd.seekToInAdvance = 20000;
         //JZVideoPlayer.SAVE_PROGRESS = false;
 
         /** Play video in local path, eg:record by system camera **/
@@ -85,7 +85,7 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
 //                videoController1.thumbImageView);
         /** volley Fresco omit **/
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mSensorEventListener = new JZVideoPlayer.JZAutoFullscreenListener();
+        mSensorEventListener = new Jzvd.JZAutoFullscreenListener();
     }
 
     @Override
@@ -119,21 +119,21 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         Sensor accelerometerSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSensorManager.registerListener(mSensorEventListener, accelerometerSensor, SensorManager.SENSOR_DELAY_NORMAL);
         //home back
-        JZVideoPlayer.goOnPlayOnResume();
+        Jzvd.goOnPlayOnResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mSensorManager.unregisterListener(mSensorEventListener);
-        JZVideoPlayer.clearSavedProgress(this, null);
+        Jzvd.clearSavedProgress(this, null);
         //home back
-        JZVideoPlayer.goOnPlayOnPause();
+        Jzvd.goOnPlayOnPause();
     }
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();

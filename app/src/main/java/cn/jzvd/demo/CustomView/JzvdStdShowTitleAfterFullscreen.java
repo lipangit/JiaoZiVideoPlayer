@@ -5,18 +5,18 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import cn.jzvd.JZDataSource;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by Nathen
  * On 2016/04/27 10:49
  */
-public class JZVideoPlayerStandardShowTitleAfterFullscreen extends JZVideoPlayerStandard {
-    public JZVideoPlayerStandardShowTitleAfterFullscreen(Context context) {
+public class JzvdStdShowTitleAfterFullscreen extends JzvdStd {
+    public JzvdStdShowTitleAfterFullscreen(Context context) {
         super(context);
     }
 
-    public JZVideoPlayerStandardShowTitleAfterFullscreen(Context context, AttributeSet attrs) {
+    public JzvdStdShowTitleAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 
-import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.Jzvd;
 
 /**
  * Created by Nathen on 2017/11/1.
@@ -36,12 +36,12 @@ public class ActivityTinyWindowRecycleView extends AppCompatActivity {
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
-                JZVideoPlayer.onChildViewAttachedToWindow(view, R.id.videoplayer);
+                Jzvd.onChildViewAttachedToWindow(view, R.id.videoplayer);
             }
 
             @Override
             public void onChildViewDetachedFromWindow(View view) {
-                JZVideoPlayer.onChildViewDetachedFromWindow(view);
+                Jzvd.onChildViewDetachedFromWindow(view);
             }
         });
 
@@ -49,7 +49,7 @@ public class ActivityTinyWindowRecycleView extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -58,7 +58,7 @@ public class ActivityTinyWindowRecycleView extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override

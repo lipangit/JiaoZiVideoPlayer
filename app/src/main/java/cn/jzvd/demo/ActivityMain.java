@@ -11,10 +11,10 @@ import android.widget.Button;
 import com.bumptech.glide.Glide;
 
 import cn.jzvd.JZUserAction;
-import cn.jzvd.JZUserActionStandard;
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
-import cn.jzvd.demo.CustomView.MyJZVideoPlayerStandard;
+import cn.jzvd.JZUserActionStd;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
+import cn.jzvd.demo.CustomView.MyJzvdStd;
 
 /**
  * Created by Nathen on 16/7/22.
@@ -22,7 +22,7 @@ import cn.jzvd.demo.CustomView.MyJZVideoPlayerStandard;
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener {
 
 
-    MyJZVideoPlayerStandard myJZVideoPlayerStandard;
+    MyJzvdStd myJZVideoPlayerStandard;
 
     Button mTinyWindow, mListView, mDirectFullscreen, mApi, mWebView;
 
@@ -45,20 +45,20 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
 
         myJZVideoPlayerStandard = findViewById(R.id.jz_video);
         myJZVideoPlayerStandard.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
-                , "饺子快长大", JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL);
+                , "饺子快长大", JzvdStd.SCREEN_WINDOW_NORMAL);
         Glide.with(this).load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(myJZVideoPlayerStandard.thumbImageView);
-        JZVideoPlayer.setJzUserAction(new MyUserActionStandard());
+        Jzvd.setJzUserAction(new MyUserActionStd());
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -88,7 +88,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     /**
      * 这只是给埋点统计用户数据用的，不能写和播放相关的逻辑，监听事件请参考MyJZVideoPlayerStandard，复写函数取得相应事件
      */
-    class MyUserActionStandard implements JZUserActionStandard {
+    class MyUserActionStd implements JZUserActionStd {
 
         @Override
         public void onEvent(int type, Object url, int screen, Object... objects) {
@@ -133,10 +133,10 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                     Log.i("USER_EVENT", "ON_TOUCH_SCREEN_SEEK_POSITION" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
 
-                case JZUserActionStandard.ON_CLICK_START_THUMB:
+                case JZUserActionStd.ON_CLICK_START_THUMB:
                     Log.i("USER_EVENT", "ON_CLICK_START_THUMB" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
-                case JZUserActionStandard.ON_CLICK_BLANK:
+                case JZUserActionStd.ON_CLICK_BLANK:
                     Log.i("USER_EVENT", "ON_CLICK_BLANK" + " title is : " + (objects.length == 0 ? "" : objects[0]) + " url is : " + url + " screen is : " + screen);
                     break;
                 default:

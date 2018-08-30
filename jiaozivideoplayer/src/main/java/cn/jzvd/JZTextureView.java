@@ -14,19 +14,19 @@ import android.view.View;
  * Created by Nathen
  * On 2016/06/02 00:01
  */
-public class JZResizeTextureView extends TextureView {
+public class JZTextureView extends TextureView {
     protected static final String TAG = "JZResizeTextureView";
 
     public int currentVideoWidth = 0;
     public int currentVideoHeight = 0;
 
-    public JZResizeTextureView(Context context) {
+    public JZTextureView(Context context) {
         super(context);
         currentVideoWidth = 0;
         currentVideoHeight = 0;
     }
 
-    public JZResizeTextureView(Context context, AttributeSet attrs) {
+    public JZTextureView(Context context, AttributeSet attrs) {
         super(context, attrs);
         currentVideoWidth = 0;
         currentVideoHeight = 0;
@@ -59,7 +59,7 @@ public class JZResizeTextureView extends TextureView {
         int parentHeight = ((View) getParent()).getMeasuredHeight();
         int parentWidth = ((View) getParent()).getMeasuredWidth();
         if (parentWidth != 0 && parentHeight != 0 && videoWidth != 0 && videoHeight != 0) {
-            if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT) {
+            if (Jzvd.VIDEO_IMAGE_DISPLAY_TYPE == Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT) {
                 if (viewRotation == 90 || viewRotation == 270) {
                     int tempSize = parentWidth;
                     parentWidth = parentHeight;
@@ -136,11 +136,11 @@ public class JZResizeTextureView extends TextureView {
             // no size yet, just adopt the given spec sizes
         }
         if (parentWidth != 0 && parentHeight != 0 && videoWidth != 0 && videoHeight != 0) {
-            if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL) {
+            if (Jzvd.VIDEO_IMAGE_DISPLAY_TYPE == Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL) {
                 /**原图**/
                 height = videoHeight;
                 width = videoWidth;
-            } else if (JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE == JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP) {
+            } else if (Jzvd.VIDEO_IMAGE_DISPLAY_TYPE == Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP) {
                 if (viewRotation == 90 || viewRotation == 270) {
                     int tempSize = parentWidth;
                     parentWidth = parentHeight;

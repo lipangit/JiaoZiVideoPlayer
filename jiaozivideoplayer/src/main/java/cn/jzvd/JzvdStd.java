@@ -33,7 +33,7 @@ import java.util.TimerTask;
  * Created by Nathen
  * On 2016/04/18 16:15
  */
-public class JZVideoPlayerStandard extends JZVideoPlayer {
+public class JzvdStd extends Jzvd {
 
     protected static Timer DISMISS_CONTROL_VIEW_TIMER;
 
@@ -81,11 +81,11 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         }
     };
 
-    public JZVideoPlayerStandard(Context context) {
+    public JzvdStd(Context context) {
         super(context);
     }
 
-    public JZVideoPlayerStandard(Context context, AttributeSet attrs) {
+    public JzvdStd(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -148,7 +148,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
 
         if (tmp_test_back) {
             tmp_test_back = false;
-            JZVideoPlayerManager.setFirstFloor(this);
+            JzvdMgr.setFirstFloor(this);
             backPress();
         }
     }
@@ -230,7 +230,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                         bottomProgressBar.setProgress(progress);
                     }
                     if (!mChangePosition && !mChangeVolume) {
-                        onEvent(JZUserActionStandard.ON_CLICK_BLANK);
+                        onEvent(JZUserActionStd.ON_CLICK_BLANK);
                         onClickUiToggle();
                     }
                     break;
@@ -265,7 +265,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
                     return;
                 }
                 startVideo();
-                onEvent(JZUserActionStandard.ON_CLICK_START_THUMB);//开始的事件应该在播放之后，此处特殊
+                onEvent(JZUserActionStd.ON_CLICK_START_THUMB);//开始的事件应该在播放之后，此处特殊
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
             }
@@ -274,7 +274,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
         } else if (i == R.id.back) {
             backPress();
         } else if (i == R.id.back_tiny) {
-            if (JZVideoPlayerManager.getFirstFloor().currentScreen == JZVideoPlayer.SCREEN_WINDOW_LIST) {
+            if (JzvdMgr.getFirstFloor().currentScreen == Jzvd.SCREEN_WINDOW_LIST) {
                 quitFullscreenOrTinyWindow();
             } else {
                 backPress();
@@ -349,7 +349,7 @@ public class JZVideoPlayerStandard extends JZVideoPlayer {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                onEvent(JZUserActionStandard.ON_CLICK_START_WIFIDIALOG);
+                onEvent(JZUserActionStd.ON_CLICK_START_WIFIDIALOG);
                 startVideo();
                 WIFI_TIP_DIALOG_SHOWED = true;
             }

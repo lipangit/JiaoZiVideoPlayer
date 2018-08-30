@@ -36,8 +36,7 @@ import com.google.android.exoplayer2.video.VideoListener;
 
 import cn.jzvd.JZMediaInterface;
 import cn.jzvd.JZMediaManager;
-import cn.jzvd.JZUtils;
-import cn.jzvd.JZVideoPlayerManager;
+import cn.jzvd.JzvdMgr;
 import cn.jzvd.demo.R;
 
 /**
@@ -62,7 +61,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
     public void prepare() {
         Log.e(TAG, "prepare");
         mainHandler = new Handler();
-        Context context = JZVideoPlayerManager.getCurrentJzvd().getContext();
+        Context context = JzvdMgr.getCurrentJzvd().getContext();
 
         BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
         TrackSelection.Factory videoTrackSelectionFactory =
@@ -109,8 +108,8 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onVideoSizeChanged();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onVideoSizeChanged();
                 }
             }
         });
@@ -128,8 +127,8 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
             JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                        JZVideoPlayerManager.getCurrentJzvd().setBufferProgress(percent);
+                    if (JzvdMgr.getCurrentJzvd() != null) {
+                        JzvdMgr.getCurrentJzvd().setBufferProgress(percent);
                     }
                 }
             });
@@ -156,7 +155,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
         if (time != previousSeek) {
             simpleExoPlayer.seekTo(time);
             previousSeek = time;
-            JZVideoPlayerManager.getCurrentJzvd().seekToInAdvance = time;
+            JzvdMgr.getCurrentJzvd().seekToInAdvance = time;
         }
     }
 
@@ -204,7 +203,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
 //            public void run() {
 //                if (reason == 0) {
 //
-//                    JZVideoPlayerManager.getCurrentJzvd().onInfo(reason, timeline.getPeriodCount());
+//                    JzvdMgr.getCurrentJzvd().onInfo(reason, timeline.getPeriodCount());
 //                }
 //            }
 //        });
@@ -226,7 +225,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
+                if (JzvdMgr.getCurrentJzvd() != null) {
                     switch (playbackState) {
                         case Player.STATE_IDLE: {
                         }
@@ -237,13 +236,13 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
                         break;
                         case Player.STATE_READY: {
                             if (playWhenReady) {
-                                JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                                JzvdMgr.getCurrentJzvd().onPrepared();
                             } else {
                             }
                         }
                         break;
                         case Player.STATE_ENDED: {
-                            JZVideoPlayerManager.getCurrentJzvd().onAutoCompletion();
+                            JzvdMgr.getCurrentJzvd().onAutoCompletion();
                         }
                         break;
                     }
@@ -268,8 +267,8 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onError(1000, 1000);
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onError(1000, 1000);
                 }
             }
         });
@@ -290,8 +289,8 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onSeekComplete();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onSeekComplete();
                 }
             }
         });

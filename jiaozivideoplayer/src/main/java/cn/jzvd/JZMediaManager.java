@@ -19,7 +19,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
     public static final int HANDLER_PREPARE = 0;
     public static final int HANDLER_RELEASE = 2;
 
-    public static JZResizeTextureView textureView;
+    public static JZTextureView textureView;
     public static SurfaceTexture savedSurfaceTexture;
     public static Surface surface;
     public static JZMediaManager jzMediaManager;
@@ -107,8 +107,8 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
-        if (JZVideoPlayerManager.getCurrentJzvd() == null) return;
-        Log.i(TAG, "onSurfaceTextureAvailable [" + JZVideoPlayerManager.getCurrentJzvd().hashCode() + "] ");
+        if (JzvdMgr.getCurrentJzvd() == null) return;
+        Log.i(TAG, "onSurfaceTextureAvailable [" + JzvdMgr.getCurrentJzvd().hashCode() + "] ");
         if (savedSurfaceTexture == null) {
             savedSurfaceTexture = surfaceTexture;
             prepare();

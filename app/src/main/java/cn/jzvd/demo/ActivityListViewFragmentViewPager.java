@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.Jzvd;
 
 /**
  * Created by Nathen
@@ -43,7 +43,7 @@ public class ActivityListViewFragmentViewPager extends AppCompatActivity impleme
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ActivityListViewFragmentViewPager extends AppCompatActivity impleme
 
     @Override
     public void onPageSelected(int position) {
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override
@@ -63,7 +63,7 @@ public class ActivityListViewFragmentViewPager extends AppCompatActivity impleme
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();

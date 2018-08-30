@@ -7,22 +7,22 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import cn.jzvd.JZDataSource;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.R;
 
 /**
  * Created by Nathen
  * On 2016/04/22 00:54
  */
-public class JZVideoPlayerStandardShowShareButtonAfterFullscreen extends JZVideoPlayerStandard {
+public class JzvdStdShowShareButtonAfterFullscreen extends JzvdStd {
 
     public ImageView shareButton;
 
-    public JZVideoPlayerStandardShowShareButtonAfterFullscreen(Context context) {
+    public JzvdStdShowShareButtonAfterFullscreen(Context context) {
         super(context);
     }
 
-    public JZVideoPlayerStandardShowShareButtonAfterFullscreen(Context context, AttributeSet attrs) {
+    public JzvdStdShowShareButtonAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

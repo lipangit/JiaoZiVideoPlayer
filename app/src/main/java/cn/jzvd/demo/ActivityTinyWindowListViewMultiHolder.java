@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by Nathen on 2017/10/31.
@@ -48,14 +48,14 @@ public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                JZVideoPlayer.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                Jzvd.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
     }
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -64,7 +64,7 @@ public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override
@@ -119,7 +119,7 @@ public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
 
                 viewHolder.jzVideoPlayer.setUp(
                         VideoConstant.videoUrls[0][position],
-                        VideoConstant.videoTitles[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST);
+                        VideoConstant.videoTitles[0][position], Jzvd.SCREEN_WINDOW_LIST);
                 viewHolder.jzVideoPlayer.positionInList = position;
                 Glide.with(ActivityTinyWindowListViewMultiHolder.this).load(VideoConstant.videoThumbs[0][position]).into(viewHolder.jzVideoPlayer.thumbImageView);
             } else {
@@ -148,7 +148,7 @@ public class ActivityTinyWindowListViewMultiHolder extends AppCompatActivity {
         }
 
         class VideoHolder {
-            JZVideoPlayerStandard jzVideoPlayer;
+            JzvdStd jzVideoPlayer;
         }
 
         class TextViewHolder {

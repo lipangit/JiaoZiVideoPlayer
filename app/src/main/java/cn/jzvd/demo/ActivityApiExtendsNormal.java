@@ -5,8 +5,8 @@ import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by Nathen on 2017/9/19.
@@ -18,17 +18,17 @@ public class ActivityApiExtendsNormal extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extends_normal);
-        JZVideoPlayerStandard jzVideoPlayerStandard = findViewById(R.id.videoplayer);
-        jzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0], "饺子不信"
-                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL);
+        JzvdStd jzvdStd = findViewById(R.id.videoplayer);
+        jzvdStd.setUp(VideoConstant.videoUrlList[0], "饺子不信"
+                , JzvdStd.SCREEN_WINDOW_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbList[0])
-                .into(jzVideoPlayerStandard.thumbImageView);
+                .into(jzvdStd.thumbImageView);
     }
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -37,6 +37,6 @@ public class ActivityApiExtendsNormal extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 }

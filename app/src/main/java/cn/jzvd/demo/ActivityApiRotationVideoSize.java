@@ -9,8 +9,8 @@ import android.widget.Button;
 
 import com.bumptech.glide.Glide;
 
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by Nathen on 2017/11/2.
@@ -18,7 +18,7 @@ import cn.jzvd.JZVideoPlayerStandard;
 
 public class ActivityApiRotationVideoSize extends AppCompatActivity implements View.OnClickListener {
 
-    JZVideoPlayerStandard myJZVideoPlayerStandard;
+    JzvdStd myJzvdStd;
     Button mBtnRotation, mBtnFillParent, mBtnFillCrop, mBtnOriginal;
 
     @Override
@@ -31,14 +31,14 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity implements V
         getSupportActionBar().setTitle("RotationAndVideoSize");
         setContentView(R.layout.activity_api_rotation_videosize);
 
-        myJZVideoPlayerStandard = findViewById(R.id.jz_video);
-        myJZVideoPlayerStandard.setUp(VideoConstant.videoUrls[0][7], VideoConstant.videoTitles[0][7]
-                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL);
+        myJzvdStd = findViewById(R.id.jz_video);
+        myJzvdStd.setUp(VideoConstant.videoUrls[0][7], VideoConstant.videoTitles[0][7]
+                , JzvdStd.SCREEN_WINDOW_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][7])
-                .into(myJZVideoPlayerStandard.thumbImageView);
+                .into(myJzvdStd.thumbImageView);
         // The Point IS
-        myJZVideoPlayerStandard.videoRotation = 180;
+        myJzvdStd.videoRotation = 180;
 
         mBtnRotation = findViewById(R.id.rotation_to_90);
         mBtnFillParent = findViewById(R.id.video_image_display_fill_parent);
@@ -54,19 +54,19 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity implements V
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rotation_to_90:
-                JZVideoPlayer.setTextureViewRotation(90);
+                Jzvd.setTextureViewRotation(90);
 
                 break;
             case R.id.video_image_display_fill_parent:
-                JZVideoPlayer.setVideoImageDisplayType(JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
+                Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
 
                 break;
             case R.id.video_image_display_fill_crop:
-                JZVideoPlayer.setVideoImageDisplayType(JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);
+                Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);
 
                 break;
             case R.id.video_image_diaplay_original:
-                JZVideoPlayer.setVideoImageDisplayType(JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL);
+                Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL);
 
                 break;
         }
@@ -75,13 +75,13 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity implements V
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
-        JZVideoPlayer.setVideoImageDisplayType(JZVideoPlayer.VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER);
+        Jzvd.releaseAllVideos();
+        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER);
     }
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
