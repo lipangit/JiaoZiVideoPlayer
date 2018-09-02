@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.2.12-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.3_preview-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -24,7 +24,7 @@
 
 ## 效果
 
-**[jiaozivideoplayer-6.2.12.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.2.12/jiaozivideoplayer-6.2.12.apk)**
+**[jiaozivideoplayer-6.3_preview.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.3_preview/jiaozivideoplayer-6.3_preview.apk)**
 
 ![Demo Screenshot][1]
 
@@ -36,10 +36,10 @@
 
 1.添加类库
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.2.12'
+compile 'cn.jzvd:jiaozivideoplayer:6.3_preview'
 ```
 
-或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.2.12) (不建议)
+或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.3_preview) (不建议)
 
 2.添加布局
 ```xml
