@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.Jzvd;
 
 /**
  * Created by Nathen on 16/7/31.
@@ -18,7 +18,7 @@ public class ActivityListViewNormal extends AppCompatActivity {
     ListView listView;
 
     SensorManager sensorManager;
-    JZVideoPlayer.JZAutoFullscreenListener sensorEventListener;
+    Jzvd.JZAutoFullscreenListener sensorEventListener;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,17 +44,17 @@ public class ActivityListViewNormal extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                JZVideoPlayer.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                Jzvd.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensorEventListener = new JZVideoPlayer.JZAutoFullscreenListener();
+        sensorEventListener = new Jzvd.JZAutoFullscreenListener();
     }
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -71,7 +71,7 @@ public class ActivityListViewNormal extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(sensorEventListener);
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override

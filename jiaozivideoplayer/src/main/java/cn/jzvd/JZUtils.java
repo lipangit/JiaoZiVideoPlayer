@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Window;
 
 import java.util.Formatter;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 
 /**
@@ -109,7 +108,7 @@ public class JZUtils {
     }
 
     public static void saveProgress(Context context, Object url, long progress) {
-        if (!JZVideoPlayer.SAVE_PROGRESS) return;
+        if (!Jzvd.SAVE_PROGRESS) return;
         Log.i(TAG, "saveProgress: " + progress);
         if (progress < 5000) {
             progress = 0;
@@ -121,7 +120,7 @@ public class JZUtils {
     }
 
     public static long getSavedProgress(Context context, Object url) {
-        if (!JZVideoPlayer.SAVE_PROGRESS) return 0;
+        if (!Jzvd.SAVE_PROGRESS) return 0;
         SharedPreferences spn = context.getSharedPreferences("JZVD_PROGRESS",
                 Context.MODE_PRIVATE);
         return spn.getLong("newVersion:" + url.toString(), 0);
@@ -145,43 +144,35 @@ public class JZUtils {
         }
     }
 
-    public static Object getCurrentFromDataSource(Object[] dataSourceObjects, int index) {
-        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
-        if (map != null && map.size() > 0) {
-            return getValueFromLinkedMap(map, index);
-        }
-        return null;
-    }
-
-    public static Object getValueFromLinkedMap(LinkedHashMap<String, Object> map, int index) {
-        int currentIndex = 0;
-        for (String key : map.keySet()) {
-            if (currentIndex == index) {
-                return map.get(key);
-            }
-            currentIndex++;
-        }
-        return null;
-    }
-
-    public static boolean dataSourceObjectsContainsUri(Object[] dataSourceObjects, Object object) {
-        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
-        if (map != null && object != null) {
-            return map.containsValue(object);
-        }
-        return false;
-    }
-
-    public static String getKeyFromDataSource(Object[] dataSourceObjects, int index) {
-        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
-        int currentIndex = 0;
-        for (String key : map.keySet()) {
-            if (currentIndex == index) {
-                return key;
-            }
-            currentIndex++;
-        }
-        return null;
-    }
+//    public static Object getCurrentFromDataSource(Object[] dataSourceObjects, int index) {
+//        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
+//        if (map != null && map.size() > 0) {
+//            return getValueFromLinkedMap(map, index);
+//        }
+//        return null;
+//    }
+//
+//    public static Object getValueFromLinkedMap(LinkedHashMap<String, Object> map, int index) {
+//        int currentIndex = 0;
+//        for (String key : map.keySet()) {
+//            if (currentIndex == index) {
+//                return map.get(key);
+//            }
+//            currentIndex++;
+//        }
+//        return null;
+//    }
+//
+//    public static String getKeyFromDataSource(Object[] dataSourceObjects, int index) {
+//        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
+//        int currentIndex = 0;
+//        for (String key : map.keySet()) {
+//            if (currentIndex == index) {
+//                return key;
+//            }
+//            currentIndex++;
+//        }
+//        return null;
+//    }
 
 }

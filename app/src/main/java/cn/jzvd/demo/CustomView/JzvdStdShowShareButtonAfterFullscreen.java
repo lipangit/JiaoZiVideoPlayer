@@ -6,22 +6,23 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.JZDataSource;
+import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.R;
 
 /**
  * Created by Nathen
  * On 2016/04/22 00:54
  */
-public class JZVideoPlayerStandardShowShareButtonAfterFullscreen extends JZVideoPlayerStandard {
+public class JzvdStdShowShareButtonAfterFullscreen extends JzvdStd {
 
     public ImageView shareButton;
 
-    public JZVideoPlayerStandardShowShareButtonAfterFullscreen(Context context) {
+    public JzvdStdShowShareButtonAfterFullscreen(Context context) {
         super(context);
     }
 
-    public JZVideoPlayerStandardShowShareButtonAfterFullscreen(Context context, AttributeSet attrs) {
+    public JzvdStdShowShareButtonAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -47,8 +48,8 @@ public class JZVideoPlayerStandardShowShareButtonAfterFullscreen extends JZVideo
     }
 
     @Override
-    public void setUp(String url, int screen, Object... objects) {
-        super.setUp(url, screen, objects);
+    public void setUp(JZDataSource jzDataSource, int screen) {
+        super.setUp(jzDataSource, screen);
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             shareButton.setVisibility(View.VISIBLE);
         } else {

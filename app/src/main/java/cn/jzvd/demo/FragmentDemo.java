@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.Jzvd;
 
 /**
  * Created by Nathen on 2017/6/9.
@@ -45,7 +45,7 @@ public class FragmentDemo extends Fragment {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                JZVideoPlayer.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                Jzvd.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
         return listView;

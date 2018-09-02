@@ -25,9 +25,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         try {
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            if (dataSourceObjects.length > 1) {
-                mediaPlayer.setLooping((boolean) dataSourceObjects[1]);
-            }
+            mediaPlayer.setLooping(jzDataSource.looping);
             mediaPlayer.setOnPreparedListener(JZMediaSystem.this);
             mediaPlayer.setOnCompletionListener(JZMediaSystem.this);
             mediaPlayer.setOnBufferingUpdateListener(JZMediaSystem.this);
@@ -38,11 +36,11 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
             mediaPlayer.setOnVideoSizeChangedListener(JZMediaSystem.this);
             Class<MediaPlayer> clazz = MediaPlayer.class;
             Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
-            if (dataSourceObjects.length > 2) {
-                method.invoke(mediaPlayer, currentDataSource.toString(), dataSourceObjects[2]);
-            } else {
-                method.invoke(mediaPlayer, currentDataSource.toString(), null);
-            }
+//            if (dataSourceObjects.length > 2) {
+            method.invoke(mediaPlayer, jzDataSource.getCurrentUrl().toString(), jzDataSource.headerMap);
+//            } else {
+//                method.invoke(mediaPlayer, currentDataSource.toString(), null);
+//            }
             mediaPlayer.prepareAsync();
         } catch (Exception e) {
             e.printStackTrace();
@@ -105,13 +103,13 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
-        if (currentDataSource.toString().toLowerCase().contains("mp3") ||
-                currentDataSource.toString().toLowerCase().contains("wav")) {
+        if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
+                jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
             JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                        JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                    if (JzvdMgr.getCurrentJzvd() != null) {
+                        JzvdMgr.getCurrentJzvd().onPrepared();
                     }
                 }
             });
@@ -123,8 +121,8 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onAutoCompletion();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onAutoCompletion();
                 }
             }
         });
@@ -135,8 +133,8 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().setBufferProgress(percent);
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().setBufferProgress(percent);
                 }
             }
         });
@@ -147,8 +145,8 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onSeekComplete();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onSeekComplete();
                 }
             }
         });
@@ -159,8 +157,8 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onError(what, extra);
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onError(what, extra);
                 }
             }
         });
@@ -172,14 +170,14 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
+                if (JzvdMgr.getCurrentJzvd() != null) {
                     if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                        if (JZVideoPlayerManager.getCurrentJzvd().currentState == JZVideoPlayer.CURRENT_STATE_PREPARING
-                                || JZVideoPlayerManager.getCurrentJzvd().currentState == JZVideoPlayer.CURRENT_STATE_PREPARING_CHANGING_URL) {
-                            JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                        if (JzvdMgr.getCurrentJzvd().currentState == Jzvd.CURRENT_STATE_PREPARING
+                                || JzvdMgr.getCurrentJzvd().currentState == Jzvd.CURRENT_STATE_PREPARING_CHANGING_URL) {
+                            JzvdMgr.getCurrentJzvd().onPrepared();
                         }
                     } else {
-                        JZVideoPlayerManager.getCurrentJzvd().onInfo(what, extra);
+                        JzvdMgr.getCurrentJzvd().onInfo(what, extra);
                     }
                 }
             }
@@ -194,8 +192,8 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onVideoSizeChanged();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onVideoSizeChanged();
                 }
             }
         });

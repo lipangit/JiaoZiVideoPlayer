@@ -4,18 +4,18 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import cn.jzvd.JZMediaManager;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by pc on 2018/1/17.
  */
 
-public class JZVideoPlayerStandardVolumeAfterFullscreen extends JZVideoPlayerStandard {
-    public JZVideoPlayerStandardVolumeAfterFullscreen(Context context) {
+public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
+    public JzvdStdVolumeAfterFullscreen(Context context) {
         super(context);
     }
 
-    public JZVideoPlayerStandardVolumeAfterFullscreen(Context context, AttributeSet attrs) {
+    public JzvdStdVolumeAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

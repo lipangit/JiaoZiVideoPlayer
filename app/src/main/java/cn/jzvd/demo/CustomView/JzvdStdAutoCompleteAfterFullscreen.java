@@ -8,18 +8,18 @@ import android.view.WindowManager;
 
 import cn.jzvd.JZMediaManager;
 import cn.jzvd.JZUtils;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.JzvdStd;
 
 /**
  * 全屏状态播放完成，不退出全屏
  * Created by Nathen on 2016/11/26.
  */
-public class JZVideoPlayerStandardAutoCompleteAfterFullscreen extends JZVideoPlayerStandard {
-    public JZVideoPlayerStandardAutoCompleteAfterFullscreen(Context context) {
+public class JzvdStdAutoCompleteAfterFullscreen extends JzvdStd {
+    public JzvdStdAutoCompleteAfterFullscreen(Context context) {
         super(context);
     }
 
-    public JZVideoPlayerStandardAutoCompleteAfterFullscreen(Context context, AttributeSet attrs) {
+    public JzvdStdAutoCompleteAfterFullscreen(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -33,8 +33,7 @@ public class JZVideoPlayerStandardAutoCompleteAfterFullscreen extends JZVideoPla
             mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
             JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-            JZMediaManager.setDataSource(dataSourceObjects);
-            JZMediaManager.setCurrentDataSource(JZUtils.getCurrentFromDataSource(dataSourceObjects, currentUrlMapIndex));
+            JZMediaManager.setDataSource(jzDataSource);
             JZMediaManager.instance().positionInList = positionInList;
             onStatePreparing();
         } else {

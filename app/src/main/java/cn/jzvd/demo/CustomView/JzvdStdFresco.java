@@ -4,7 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.JZDataSource;
+import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.R;
 
 //import com.facebook.drawee.view.SimpleDraweeView;
@@ -14,14 +15,14 @@ import cn.jzvd.demo.R;
  * Created by Nathen
  * On 2016/05/01 22:59
  */
-public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
+public class JzvdStdFresco extends JzvdStd {
     //    public SimpleDraweeView thumbImageView;
 
-    public JZVideoPlayerStandardFresco(Context context) {
+    public JzvdStdFresco(Context context) {
         super(context);
     }
 
-    public JZVideoPlayerStandardFresco(Context context, AttributeSet attrs) {
+    public JzvdStdFresco(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -42,10 +43,9 @@ public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
     }
 
     @Override
-    public void setUp(String url, int screen, Object... objects) {
-        super.setUp(url, screen, objects);
-        if (objects.length == 0) return;
-        titleTextView.setText(objects[0].toString());
+    public void setUp(JZDataSource jzDataSource, int screen) {
+        super.setUp(jzDataSource, screen);
+        titleTextView.setText(jzDataSource.title);
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             fullscreenButton.setImageResource(R.drawable.jz_shrink);
             backButton.setVisibility(View.VISIBLE);
@@ -57,7 +57,7 @@ public class JZVideoPlayerStandardFresco extends JZVideoPlayerStandard {
         } else if (currentScreen == SCREEN_WINDOW_TINY) {
             tinyBackImageView.setVisibility(View.VISIBLE);
             setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,View.INVISIBLE);
+                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
         }
     }
 

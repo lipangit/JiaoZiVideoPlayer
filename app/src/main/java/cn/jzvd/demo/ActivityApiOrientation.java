@@ -8,14 +8,14 @@ import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
 
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by Nathen on 2016/12/30.
  */
 public class ActivityApiOrientation extends AppCompatActivity {
-    JZVideoPlayerStandard mJzVideoPlayerStandard;
+    JzvdStd mJzvdStd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,21 +26,21 @@ public class ActivityApiOrientation extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setTitle("Orientation");
         setContentView(R.layout.activity_orientation);
-        mJzVideoPlayerStandard = findViewById(R.id.jz_video);
-        mJzVideoPlayerStandard.setUp(VideoConstant.videoUrlList[0]
-                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
+        mJzvdStd = findViewById(R.id.jz_video);
+        mJzvdStd.setUp(VideoConstant.videoUrlList[0], "饺子不信"
+                , JzvdStd.SCREEN_WINDOW_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbList[0])
-                .into(mJzVideoPlayerStandard.thumbImageView);
+                .into(mJzvdStd.thumbImageView);
 
-        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        Jzvd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
 
     }
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -49,11 +49,11 @@ public class ActivityApiOrientation extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
 
         //Change these two variables back
-        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
-        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+        Jzvd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     }
 
     @Override

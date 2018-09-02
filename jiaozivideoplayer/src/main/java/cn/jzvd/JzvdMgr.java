@@ -5,28 +5,28 @@ package cn.jzvd;
  * From a JZVideoPlayer to another JZVideoPlayer
  * Created by Nathen on 16/7/26.
  */
-public class JZVideoPlayerManager {
+public class JzvdMgr {
 
-    public static JZVideoPlayer FIRST_FLOOR_JZVD;
-    public static JZVideoPlayer SECOND_FLOOR_JZVD;
+    public static Jzvd FIRST_FLOOR_JZVD;
+    public static Jzvd SECOND_FLOOR_JZVD;
 
-    public static JZVideoPlayer getFirstFloor() {
+    public static Jzvd getFirstFloor() {
         return FIRST_FLOOR_JZVD;
     }
 
-    public static void setFirstFloor(JZVideoPlayer jzVideoPlayer) {
-        FIRST_FLOOR_JZVD = jzVideoPlayer;
+    public static void setFirstFloor(Jzvd jzvd) {
+        FIRST_FLOOR_JZVD = jzvd;
     }
 
-    public static JZVideoPlayer getSecondFloor() {
+    public static Jzvd getSecondFloor() {
         return SECOND_FLOOR_JZVD;
     }
 
-    public static void setSecondFloor(JZVideoPlayer jzVideoPlayer) {
-        SECOND_FLOOR_JZVD = jzVideoPlayer;
+    public static void setSecondFloor(Jzvd jzvd) {
+        SECOND_FLOOR_JZVD = jzvd;
     }
 
-    public static JZVideoPlayer getCurrentJzvd() {
+    public static Jzvd getCurrentJzvd() {
         if (getSecondFloor() != null) {
             return getSecondFloor();
         }

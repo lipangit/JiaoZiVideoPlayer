@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import cn.jzvd.JZMediaInterface;
 import cn.jzvd.JZMediaManager;
-import cn.jzvd.JZVideoPlayerManager;
+import cn.jzvd.JzvdMgr;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
@@ -47,7 +47,7 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
         ijkMediaPlayer.setOnTimedTextListener(JZMediaIjkplayer.this);
 
         try {
-            ijkMediaPlayer.setDataSource(currentDataSource.toString());
+            ijkMediaPlayer.setDataSource(jzDataSource.getCurrentUrl().toString());
             ijkMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             ijkMediaPlayer.setScreenOnWhilePlaying(true);
             ijkMediaPlayer.prepareAsync();
@@ -100,12 +100,12 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
     @Override
     public void onPrepared(IMediaPlayer iMediaPlayer) {
         ijkMediaPlayer.start();
-        if (currentDataSource.toString().toLowerCase().contains("mp3")) {
+        if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3")) {
             JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                        JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                    if (JzvdMgr.getCurrentJzvd() != null) {
+                        JzvdMgr.getCurrentJzvd().onPrepared();
                     }
                 }
             });
@@ -119,8 +119,8 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onVideoSizeChanged();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onVideoSizeChanged();
                 }
             }
         });
@@ -131,8 +131,8 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onAutoCompletion();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onAutoCompletion();
                 }
             }
         });
@@ -143,8 +143,8 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onError(what, extra);
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onError(what, extra);
                 }
             }
         });
@@ -156,11 +156,11 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
+                if (JzvdMgr.getCurrentJzvd() != null) {
                     if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                        JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                        JzvdMgr.getCurrentJzvd().onPrepared();
                     } else {
-                        JZVideoPlayerManager.getCurrentJzvd().onInfo(what, extra);
+                        JzvdMgr.getCurrentJzvd().onInfo(what, extra);
                     }
                 }
             }
@@ -173,8 +173,8 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().setBufferProgress(percent);
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().setBufferProgress(percent);
                 }
             }
         });
@@ -185,8 +185,8 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onSeekComplete();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onSeekComplete();
                 }
             }
         });

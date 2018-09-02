@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by Nathen on 2017/11/1.
@@ -43,12 +43,12 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
-                JZVideoPlayer.onChildViewAttachedToWindow(view, R.id.videoplayer);
+                Jzvd.onChildViewAttachedToWindow(view, R.id.videoplayer);
             }
 
             @Override
             public void onChildViewDetachedFromWindow(View view) {
-                JZVideoPlayer.onChildViewDetachedFromWindow(view);
+                Jzvd.onChildViewDetachedFromWindow(view);
             }
         });
 
@@ -57,12 +57,12 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -107,8 +107,8 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
             } else {
                 VideoHolder videoHolder = (VideoHolder) holder;
                 videoHolder.jzVideoPlayer.setUp(
-                        VideoConstant.videoUrls[0][position], JZVideoPlayer.SCREEN_WINDOW_LIST,
-                        VideoConstant.videoTitles[0][position]);
+                        VideoConstant.videoUrls[0][position],
+                        VideoConstant.videoTitles[0][position], Jzvd.SCREEN_WINDOW_LIST);
                 videoHolder.jzVideoPlayer.positionInList = position;
                 Glide.with(ActivityTinyWindowRecycleViewMultiHolder.this).load(VideoConstant.videoThumbs[0][position]).into(videoHolder.jzVideoPlayer.thumbImageView);
             }
@@ -120,7 +120,7 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
         }
 
         class VideoHolder extends RecyclerView.ViewHolder {
-            JZVideoPlayerStandard jzVideoPlayer;
+            JzvdStd jzVideoPlayer;
 
             public VideoHolder(View itemView) {
                 super(itemView);

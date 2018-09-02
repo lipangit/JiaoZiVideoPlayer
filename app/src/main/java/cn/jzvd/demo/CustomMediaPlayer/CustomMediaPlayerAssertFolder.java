@@ -7,7 +7,7 @@ import android.view.Surface;
 
 import cn.jzvd.JZMediaInterface;
 import cn.jzvd.JZMediaManager;
-import cn.jzvd.JZVideoPlayerManager;
+import cn.jzvd.JzvdMgr;
 
 /**
  * Created by Nathen on 2017/11/23.
@@ -35,7 +35,7 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
             mediaPlayer.setOnInfoListener(CustomMediaPlayerAssertFolder.this);
             mediaPlayer.setOnVideoSizeChangedListener(CustomMediaPlayerAssertFolder.this);
 
-            AssetFileDescriptor assetFileDescriptor = (AssetFileDescriptor) currentDataSource;
+            AssetFileDescriptor assetFileDescriptor = (AssetFileDescriptor) jzDataSource.getCurrentUrl();
             mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
 
             mediaPlayer.prepareAsync();
@@ -96,12 +96,12 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
-        if (currentDataSource.toString().toLowerCase().contains("mp3")) {
+        if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3")) {
             JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                        JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                    if (JzvdMgr.getCurrentJzvd() != null) {
+                        JzvdMgr.getCurrentJzvd().onPrepared();
                     }
                 }
             });
@@ -113,8 +113,8 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onAutoCompletion();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onAutoCompletion();
                 }
             }
         });
@@ -125,8 +125,8 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().setBufferProgress(percent);
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().setBufferProgress(percent);
                 }
             }
         });
@@ -137,8 +137,8 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onSeekComplete();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onSeekComplete();
                 }
             }
         });
@@ -149,8 +149,8 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onError(what, extra);
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onError(what, extra);
                 }
             }
         });
@@ -162,11 +162,11 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
+                if (JzvdMgr.getCurrentJzvd() != null) {
                     if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                        JZVideoPlayerManager.getCurrentJzvd().onPrepared();
+                        JzvdMgr.getCurrentJzvd().onPrepared();
                     } else {
-                        JZVideoPlayerManager.getCurrentJzvd().onInfo(what, extra);
+                        JzvdMgr.getCurrentJzvd().onInfo(what, extra);
                     }
                 }
             }
@@ -181,8 +181,8 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
         JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
             @Override
             public void run() {
-                if (JZVideoPlayerManager.getCurrentJzvd() != null) {
-                    JZVideoPlayerManager.getCurrentJzvd().onVideoSizeChanged();
+                if (JzvdMgr.getCurrentJzvd() != null) {
+                    JzvdMgr.getCurrentJzvd().onVideoSizeChanged();
                 }
             }
         });

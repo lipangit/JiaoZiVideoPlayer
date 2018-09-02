@@ -10,8 +10,8 @@ import android.widget.Button;
 
 import com.bumptech.glide.Glide;
 
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by Nathen on 2017/10/31.
@@ -19,7 +19,7 @@ import cn.jzvd.JZVideoPlayerStandard;
 
 public class ActivityTinyWindow extends AppCompatActivity implements View.OnClickListener {
 
-    JZVideoPlayerStandard mJzVideoPlayerStandard;
+    JzvdStd mJzvdStd;
     Button mBtnTinyWindow, mBtnTinyWindowListView, mBtnTinyWindowListViewMultiHolder, mBtnTinyWindowRecycle, mBtnTinyWindowRecycleMultiHolder;
 
     @Override
@@ -32,12 +32,12 @@ public class ActivityTinyWindow extends AppCompatActivity implements View.OnClic
         getSupportActionBar().setTitle("TinyWindow");
         setContentView(R.layout.activity_tiny_window);
 
-        mJzVideoPlayerStandard = findViewById(R.id.jz_video);
-        mJzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
-                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子快长大");
+        mJzvdStd = findViewById(R.id.jz_video);
+        mJzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4", "饺子快长大"
+                , JzvdStd.SCREEN_WINDOW_NORMAL);
         Glide.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
-                .into(mJzVideoPlayerStandard.thumbImageView);
+                .into(mJzvdStd.thumbImageView);
 
         mBtnTinyWindow = findViewById(R.id.tiny_window);
         mBtnTinyWindowListView = findViewById(R.id.auto_tiny_list_view);
@@ -56,7 +56,7 @@ public class ActivityTinyWindow extends AppCompatActivity implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tiny_window:
-                mJzVideoPlayerStandard.startWindowTiny();
+                mJzvdStd.startWindowTiny();
                 break;
             case R.id.auto_tiny_list_view:
                 startActivity(new Intent(this, ActivityTinyWindowListViewNormal.class));
@@ -76,12 +76,12 @@ public class ActivityTinyWindow extends AppCompatActivity implements View.OnClic
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();

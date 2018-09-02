@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.Jzvd;
 
 /**
  * Created by Nathen on 2017/10/22.
@@ -41,14 +41,14 @@ public class ActivityTinyWindowListViewNormal extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                JZVideoPlayer.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                Jzvd.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
     }
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -57,7 +57,7 @@ public class ActivityTinyWindowListViewNormal extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override

@@ -12,8 +12,8 @@ import android.widget.AbsoluteLayout;
 import com.bumptech.glide.Glide;
 
 import cn.jzvd.JZUtils;
-import cn.jzvd.JZVideoPlayer;
-import cn.jzvd.JZVideoPlayerStandard;
+import cn.jzvd.Jzvd;
+import cn.jzvd.JzvdStd;
 
 /**
  * Created by Nathen on 16/10/13.
@@ -40,7 +40,7 @@ public class ActivityWebView extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -49,7 +49,7 @@ public class ActivityWebView extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override
@@ -70,9 +70,9 @@ public class ActivityWebView extends AppCompatActivity {
                 @Override
                 public void run() {
                     if (index == 0) {
-                        JZVideoPlayerStandard webVieo = new JZVideoPlayerStandard(ActivityWebView.this);
-                        webVieo.setUp(VideoConstant.videoUrlList[1],
-                                JZVideoPlayer.SCREEN_WINDOW_LIST, "饺子骑大马");
+                        JzvdStd webVieo = new JzvdStd(ActivityWebView.this);
+                        webVieo.setUp(VideoConstant.videoUrlList[1], "饺子骑大马",
+                                Jzvd.SCREEN_WINDOW_LIST);
                         Glide.with(ActivityWebView.this)
                                 .load(VideoConstant.videoThumbList[1])
                                 .into(webVieo.thumbImageView);
@@ -84,9 +84,9 @@ public class ActivityWebView extends AppCompatActivity {
                         layoutParams.width = JZUtils.dip2px(ActivityWebView.this, width);
                         mWebView.addView(webVieo, layoutParams);
                     } else {
-                        JZVideoPlayerStandard webVieo = new JZVideoPlayerStandard(ActivityWebView.this);
-                        webVieo.setUp(VideoConstant.videoUrlList[2],
-                                JZVideoPlayer.SCREEN_WINDOW_LIST, "饺子失态了");
+                        JzvdStd webVieo = new JzvdStd(ActivityWebView.this);
+                        webVieo.setUp(VideoConstant.videoUrlList[2], "饺子失态了",
+                                Jzvd.SCREEN_WINDOW_LIST);
                         Glide.with(ActivityWebView.this)
                                 .load(VideoConstant.videoThumbList[2])
                                 .into(webVieo.thumbImageView);

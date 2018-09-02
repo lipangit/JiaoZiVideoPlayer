@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.Jzvd;
 
 /**
  * Created by Nathen on 16/7/31.
@@ -25,7 +25,7 @@ public class ActivityApiUIBigChange extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
+        if (Jzvd.backPress()) {
             return;
         }
         super.onBackPressed();
@@ -34,7 +34,7 @@ public class ActivityApiUIBigChange extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        JZVideoPlayer.releaseAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override
