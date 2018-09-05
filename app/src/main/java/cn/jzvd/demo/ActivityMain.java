@@ -22,7 +22,7 @@ import cn.jzvd.demo.CustomView.MyJzvdStd;
 public class ActivityMain extends AppCompatActivity implements View.OnClickListener {
 
 
-    MyJzvdStd myJZVideoPlayerStandard;
+    MyJzvdStd myJzvdStd;
 
     Button mTinyWindow, mListView, mDirectFullscreen, mApi, mWebView;
 
@@ -43,10 +43,10 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         mApi.setOnClickListener(this);
         mWebView.setOnClickListener(this);
 
-        myJZVideoPlayerStandard = findViewById(R.id.jz_video);
-        myJZVideoPlayerStandard.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
+        myJzvdStd = findViewById(R.id.jz_video);
+        myJzvdStd.setUp("http://jzvdStd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
                 , "饺子快长大", JzvdStd.SCREEN_WINDOW_NORMAL);
-        Glide.with(this).load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(myJZVideoPlayerStandard.thumbImageView);
+        Glide.with(this).load("http://jzvdStd-pic.nathen.cn/jzvdStd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(myJzvdStd.thumbImageView);
         Jzvd.setJzUserAction(new MyUserActionStd());
     }
 
@@ -86,7 +86,7 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     * 这只是给埋点统计用户数据用的，不能写和播放相关的逻辑，监听事件请参考MyJZVideoPlayerStandard，复写函数取得相应事件
+     * 这只是给埋点统计用户数据用的，不能写和播放相关的逻辑，监听事件请参考MyJzvdStd，复写函数取得相应事件
      */
     class MyUserActionStd implements JZUserActionStd {
 

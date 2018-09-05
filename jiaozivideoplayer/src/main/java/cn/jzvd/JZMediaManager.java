@@ -15,7 +15,7 @@ import android.view.TextureView;
  */
 public class JZMediaManager implements TextureView.SurfaceTextureListener {
 
-    public static final String TAG = "JiaoZiVideoPlayer";
+    public static final String TAG = "JZVD";
     public static final int HANDLER_PREPARE = 0;
     public static final int HANDLER_RELEASE = 2;
 

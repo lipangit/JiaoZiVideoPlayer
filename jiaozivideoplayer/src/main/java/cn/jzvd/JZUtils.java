@@ -19,7 +19,7 @@ import java.util.Locale;
  * On 2016/02/21 12:25
  */
 public class JZUtils {
-    public static final String TAG = "JiaoZiVideoPlayer";
+    public static final String TAG = "JZVD";
 
     public static String stringForTime(long timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {

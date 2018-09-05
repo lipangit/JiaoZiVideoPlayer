@@ -106,11 +106,11 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
                 TextHolder textHolder = (TextHolder) holder;
             } else {
                 VideoHolder videoHolder = (VideoHolder) holder;
-                videoHolder.jzVideoPlayer.setUp(
+                videoHolder.jzvdStd.setUp(
                         VideoConstant.videoUrls[0][position],
                         VideoConstant.videoTitles[0][position], Jzvd.SCREEN_WINDOW_LIST);
-                videoHolder.jzVideoPlayer.positionInList = position;
-                Glide.with(ActivityTinyWindowRecycleViewMultiHolder.this).load(VideoConstant.videoThumbs[0][position]).into(videoHolder.jzVideoPlayer.thumbImageView);
+                videoHolder.jzvdStd.positionInList = position;
+                Glide.with(ActivityTinyWindowRecycleViewMultiHolder.this).load(VideoConstant.videoThumbs[0][position]).into(videoHolder.jzvdStd.thumbImageView);
             }
         }
 
@@ -120,11 +120,11 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
         }
 
         class VideoHolder extends RecyclerView.ViewHolder {
-            JzvdStd jzVideoPlayer;
+            JzvdStd jzvdStd;
 
             public VideoHolder(View itemView) {
                 super(itemView);
-                jzVideoPlayer = itemView.findViewById(R.id.videoplayer);
+                jzvdStd = itemView.findViewById(R.id.videoplayer);
             }
         }
 

@@ -34,12 +34,12 @@ public class AdapterRecyclerViewVideo extends RecyclerView.Adapter<AdapterRecycl
     @SuppressLint("LongLogTag")
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        Log.i(TAG, "onBindViewHolder [" + holder.jzVideoPlayer.hashCode() + "] position=" + position);
+        Log.i(TAG, "onBindViewHolder [" + holder.jzvdStd.hashCode() + "] position=" + position);
 
-        holder.jzVideoPlayer.setUp(
+        holder.jzvdStd.setUp(
                 VideoConstant.videoUrls[0][position],
                 VideoConstant.videoTitles[0][position], Jzvd.SCREEN_WINDOW_LIST);
-        Glide.with(holder.jzVideoPlayer.getContext()).load(VideoConstant.videoThumbs[0][position]).into(holder.jzVideoPlayer.thumbImageView);
+        Glide.with(holder.jzvdStd.getContext()).load(VideoConstant.videoThumbs[0][position]).into(holder.jzvdStd.thumbImageView);
     }
 
     @Override
@@ -48,11 +48,11 @@ public class AdapterRecyclerViewVideo extends RecyclerView.Adapter<AdapterRecycl
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        JzvdStd jzVideoPlayer;
+        JzvdStd jzvdStd;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            jzVideoPlayer = itemView.findViewById(R.id.videoplayer);
+            jzvdStd = itemView.findViewById(R.id.videoplayer);
         }
     }
 
