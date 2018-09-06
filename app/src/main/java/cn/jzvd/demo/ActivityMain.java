@@ -44,10 +44,11 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         mWebView.setOnClickListener(this);
 
         myJzvdStd = findViewById(R.id.jz_video);
-        myJzvdStd.setUp("http://jzvdStd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
+        myJzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
                 , "饺子快长大", JzvdStd.SCREEN_WINDOW_NORMAL);
-        Glide.with(this).load("http://jzvdStd-pic.nathen.cn/jzvdStd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(myJzvdStd.thumbImageView);
+        Glide.with(this).load("http://jzvd-pic.nathen.cn/jzvdStd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png").into(myJzvdStd.thumbImageView);
         Jzvd.setJzUserAction(new MyUserActionStd());
+
     }
 
     @Override
@@ -68,7 +69,9 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.api:
-                startActivity(new Intent(ActivityMain.this, ActivityApi.class));
+                myJzvdStd.changeUrl(VideoConstant.videoUrls[0][3], "fdsfdsfdsa", 0);
+
+//                startActivity(new Intent(ActivityMain.this, ActivityApi.class));
                 break;
             case R.id.listview:
                 startActivity(new Intent(ActivityMain.this, ActivityListView.class));
