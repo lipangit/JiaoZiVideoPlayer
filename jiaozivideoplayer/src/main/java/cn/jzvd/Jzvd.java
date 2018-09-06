@@ -661,6 +661,21 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         JZMediaManager.instance().prepare();
     }
 
+    public void changeUrl(JZDataSource jzDataSource, long seekToInAdvance) {
+        currentState = CURRENT_STATE_PREPARING_CHANGING_URL;
+        this.seekToInAdvance = seekToInAdvance;
+        this.jzDataSource = jzDataSource;
+        if (JzvdMgr.getSecondFloor() != null && JzvdMgr.getFirstFloor() != null) {
+            JzvdMgr.getFirstFloor().jzDataSource = jzDataSource;
+        }
+        JZMediaManager.setDataSource(jzDataSource);
+        JZMediaManager.instance().prepare();
+    }
+
+    public void changeUrl(String url, String title, long seekToInAdvance) {
+        changeUrl(new JZDataSource(url, title), seekToInAdvance);
+    }
+
     public void onStatePrepared() {//因为这个紧接着就会进入播放状态，所以不设置state
         if (seekToInAdvance != 0) {
             JZMediaManager.seekTo(seekToInAdvance);

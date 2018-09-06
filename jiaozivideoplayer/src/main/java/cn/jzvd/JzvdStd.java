@@ -187,6 +187,14 @@ public class JzvdStd extends Jzvd {
     }
 
     @Override
+    public void changeUrl(JZDataSource jzDataSource, long seekToInAdvance) {
+        super.changeUrl(jzDataSource, seekToInAdvance);
+        titleTextView.setText(jzDataSource.title);
+        loadingProgressBar.setVisibility(VISIBLE);
+        startButton.setVisibility(INVISIBLE);
+    }
+
+    @Override
     public void onStatePlaying() {
         super.onStatePlaying();
         changeUiToPlayingClear();
