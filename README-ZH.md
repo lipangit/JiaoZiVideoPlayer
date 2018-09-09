@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.3_preview-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.3.1-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -24,7 +24,7 @@
 
 ## 效果
 
-**[jiaozivideoplayer-6.3_preview.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.3_preview/jiaozivideoplayer-6.3_preview.apk)**
+**[jiaozivideoplayer-6.3.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.3.1/jiaozivideoplayer-6.3.1.apk)**
 
 ![Demo Screenshot][1]
 
@@ -36,14 +36,14 @@
 
 1.添加类库
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.3_preview'
+compile 'cn.jzvd:jiaozivideoplayer:6.3.1'
 ```
 
-或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.3_preview) (不建议)
+或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.3.1) (不建议)
 
 2.添加布局
 ```xml
-<cn.jzvd.JZVideoPlayerStandard
+<cn.jzvd.JzvdStd
     android:id="@+id/videoplayer"
     android:layout_width="match_parent"
     android:layout_height="200dp"/>
@@ -51,17 +51,17 @@ compile 'cn.jzvd:jiaozivideoplayer:6.3_preview'
 
 3.设置视频地址、缩略图地址、标题
 ```java
-JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.videoplayer);
-jzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-                            , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子闭眼睛");
-jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+JzvdStd jzvdStd = (JzvdStd) findViewById(R.id.videoplayer);
+jzvdStd.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
+                            , Jzvd.SCREEN_WINDOW_NORMAL, "饺子闭眼睛");
+jzvdStd.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.在`Activity`中
 ```java
 @Override
 public void onBackPressed() {
-    if (JZVideoPlayer.backPress()) {
+    if (Jzvd.backPress()) {
         return;
     }
     super.onBackPressed();
@@ -69,7 +69,7 @@ public void onBackPressed() {
 @Override
 protected void onPause() {
     super.onPause();
-    JZVideoPlayer.releaseAllVideos();
+    Jzvd.releaseAllVideos();
 }
 ```
 

@@ -79,7 +79,7 @@ public class ActivityListViewMultiHolder extends AppCompatActivity {
 
     public class VideoListAdapter extends BaseAdapter {
 
-        int[] viewtype = {0, 0, 0, 1, 0, 0, 0, 1, 0, 0};//1 = jzvd, 0 = textView
+        int[] viewtype = {0, 0, 0, 1, 0, 0, 0, 1, 0, 0};//1 = jzvdStd, 0 = textView
 
         Context context;
         LayoutInflater mInflater;
@@ -113,17 +113,17 @@ public class ActivityListViewMultiHolder extends AppCompatActivity {
                 } else {
                     viewHolder = new VideoHolder();
                     convertView = mInflater.inflate(R.layout.item_videoview, null);
-                    viewHolder.jzVideoPlayer = convertView.findViewById(R.id.videoplayer);
+                    viewHolder.jzvdStd = convertView.findViewById(R.id.videoplayer);
                     convertView.setTag(viewHolder);
                 }
 
-                viewHolder.jzVideoPlayer.setUp(
+                viewHolder.jzvdStd.setUp(
                         VideoConstant.videoUrls[0][position],
                         VideoConstant.videoTitles[0][position], Jzvd.SCREEN_WINDOW_LIST);
-                viewHolder.jzVideoPlayer.positionInList = position;
+                viewHolder.jzvdStd.positionInList = position;
                 Glide.with(ActivityListViewMultiHolder.this)
                         .load(VideoConstant.videoThumbs[0][position])
-                        .into(viewHolder.jzVideoPlayer.thumbImageView);
+                        .into(viewHolder.jzvdStd.thumbImageView);
             } else {
                 TextViewHolder textViewHolder;
                 if (convertView != null && convertView.getTag() != null && convertView.getTag() instanceof TextViewHolder) {
@@ -150,7 +150,7 @@ public class ActivityListViewMultiHolder extends AppCompatActivity {
         }
 
         class VideoHolder {
-            JzvdStd jzVideoPlayer;
+            JzvdStd jzvdStd;
         }
 
         class TextViewHolder {

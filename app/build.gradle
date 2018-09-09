@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "cn.jzvd.demo"
         minSdkVersion 16
-        targetSdkVersion 27
-        versionCode 83
-        versionName "6.3_preview"
+        targetSdkVersion 28
+        versionCode 84
+        versionName "6.3.1"
     }
     signingConfigs {
         releaseConfig {
@@ -34,11 +33,11 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0-rc02'
     implementation project(':jiaozivideoplayer')
     implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
     implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
-    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0-rc02'
     implementation 'com.danikula:videocache:2.7.0'
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     implementation 'com.google.android.exoplayer:exoplayer:2.7.1'

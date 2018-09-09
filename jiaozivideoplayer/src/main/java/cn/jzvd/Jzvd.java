@@ -36,7 +36,7 @@ import java.util.TimerTask;
  */
 public abstract class Jzvd extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
-    public static final String TAG = "JiaoZiVideoPlayer";
+    public static final String TAG = "JZVD";
     public static final int THRESHOLD = 80;
     public static final int FULL_SCREEN_NORMAL_DELAY = 300;
 
@@ -320,8 +320,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public static void onChildViewAttachedToWindow(View view, int jzvdId) {
         if (JzvdMgr.getCurrentJzvd() != null && JzvdMgr.getCurrentJzvd().currentScreen == Jzvd.SCREEN_WINDOW_TINY) {
-            Jzvd videoPlayer = view.findViewById(jzvdId);
-            if (videoPlayer != null && videoPlayer.jzDataSource.containsTheUrl(JZMediaManager.getCurrentUrl())) {
+            Jzvd jzvd = view.findViewById(jzvdId);
+            if (jzvd != null && jzvd.jzDataSource.containsTheUrl(JZMediaManager.getCurrentUrl())) {
                 Jzvd.backPress();
             }
         }
@@ -329,12 +329,12 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public static void onChildViewDetachedFromWindow(View view) {
         if (JzvdMgr.getCurrentJzvd() != null && JzvdMgr.getCurrentJzvd().currentScreen != Jzvd.SCREEN_WINDOW_TINY) {
-            Jzvd videoPlayer = JzvdMgr.getCurrentJzvd();
-            if (((ViewGroup) view).indexOfChild(videoPlayer) != -1) {
-                if (videoPlayer.currentState == Jzvd.CURRENT_STATE_PAUSE) {
+            Jzvd jzvd = JzvdMgr.getCurrentJzvd();
+            if (((ViewGroup) view).indexOfChild(jzvd) != -1) {
+                if (jzvd.currentState == Jzvd.CURRENT_STATE_PAUSE) {
                     Jzvd.releaseAllVideos();
                 } else {
-                    videoPlayer.startWindowTiny();
+                    jzvd.startWindowTiny();
                 }
             }
         }
@@ -659,6 +659,21 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         jzDataSource.currentUrlIndex = urlMapIndex;
         JZMediaManager.setDataSource(jzDataSource);
         JZMediaManager.instance().prepare();
+    }
+
+    public void changeUrl(JZDataSource jzDataSource, long seekToInAdvance) {
+        currentState = CURRENT_STATE_PREPARING_CHANGING_URL;
+        this.seekToInAdvance = seekToInAdvance;
+        this.jzDataSource = jzDataSource;
+        if (JzvdMgr.getSecondFloor() != null && JzvdMgr.getFirstFloor() != null) {
+            JzvdMgr.getFirstFloor().jzDataSource = jzDataSource;
+        }
+        JZMediaManager.setDataSource(jzDataSource);
+        JZMediaManager.instance().prepare();
+    }
+
+    public void changeUrl(String url, String title, long seekToInAdvance) {
+        changeUrl(new JZDataSource(url, title), seekToInAdvance);
     }
 
     public void onStatePrepared() {//因为这个紧接着就会进入播放状态，所以不设置state

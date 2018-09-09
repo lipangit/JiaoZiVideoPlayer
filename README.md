@@ -2,14 +2,14 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.3_preview-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.3.1-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
 Perfect list sliding detection, one line of code to replace the system player with IJKplayer, ExoPlayer, Vitamio, etc.
 
-Group Q: 490442439 (group 1 full) 761899104 (group 2) authentication information: jzvd
+Q群: 490442439 2群: 761899104 authentication information: jzvd
 
 [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)  [EnglishWiki](https://github.com/felipetorres/VideoPlayer-Wiki)  
 [Chinese README](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md)  
@@ -34,7 +34,7 @@ Group Q: 490442439 (group 1 full) 761899104 (group 2) authentication information
 
 ## Demo apk 
 
-A demo apk [jiaozivideoplayer-6.3_preview.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.3_preview/jiaozivideoplayer-6.3_preview.apk) is available on Google Play showing all available features like this [small window effect on list sliding](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701).
+A demo apk [jiaozivideoplayer-6.3.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.3.1/jiaozivideoplayer-6.3.1.apk) is available on Google Play showing all available features like this [small window effect on list sliding](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701).
 
 ![Demo screenshot][1]
 
@@ -44,14 +44,14 @@ Only five steps to use the player:
 
 1.Import library:
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.3_preview'
+compile 'cn.jzvd:jiaozivideoplayer:6.3.1'
 ```
 
-Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.3_preview) (not recommended).
+Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.3.1) (not recommended).
 
 2.Add `JZVideoPlayer` in your layout:
 ```xml
-<cn.jzvd.JZVideoPlayerStandard
+<cn.jzvd.JzvdStd
     android:id="@+id/videoplayer"
     android:layout_width="match_parent"
     android:layout_height="200dp"/>
@@ -59,18 +59,18 @@ Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.
 
 3.Set the video uri, video thumb url and video title:
 ```java
-JZVideoPlayerStandard jzVideoPlayerStandard = (JZVideoPlayerStandard) findViewById(R.id.videoplayer);
-jzVideoPlayerStandard.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4", 
-                            JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, 
+JzvdStd jzvdStd = (JzvdStd) findViewById(R.id.videoplayer);
+jzvdStd.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4", 
+                            Jzvd.SCREEN_WINDOW_NORMAL, 
                             "饺子闭眼睛");
-jzVideoPlayerStandard.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
+jzvdStd.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
 4.In `Activity`:
 ```java
 @Override
 public void onBackPressed() {
-    if (JZVideoPlayer.backPress()) {
+    if (Jzvd.backPress()) {
         return;
     }
     super.onBackPressed();
@@ -78,7 +78,7 @@ public void onBackPressed() {
 @Override
 protected void onPause() {
     super.onPause();
-    JZVideoPlayer.releaseAllVideos();
+    Jzvd.releaseAllVideos();
 }
 ```
 

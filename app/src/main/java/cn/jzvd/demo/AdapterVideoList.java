@@ -17,7 +17,7 @@ import cn.jzvd.JzvdStd;
  */
 public class AdapterVideoList extends BaseAdapter {
 
-    public static final String TAG = "JiaoZiVideoPlayer";
+    public static final String TAG = "JZVD";
 
     Context context;
 
@@ -59,18 +59,18 @@ public class AdapterVideoList extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.jzVideoPlayer = convertView.findViewById(R.id.videoplayer);
-        viewHolder.jzVideoPlayer.setUp(
+        viewHolder.jzvdStd = convertView.findViewById(R.id.videoplayer);
+        viewHolder.jzvdStd.setUp(
                 videoUrls[position],
                 videoTitles[position], Jzvd.SCREEN_WINDOW_LIST);
         Glide.with(convertView.getContext())
                 .load(videoThumbs[position])
-                .into(viewHolder.jzVideoPlayer.thumbImageView);
-        viewHolder.jzVideoPlayer.positionInList = position;
+                .into(viewHolder.jzvdStd.thumbImageView);
+        viewHolder.jzvdStd.positionInList = position;
         return convertView;
     }
 
     class ViewHolder {
-        JzvdStd jzVideoPlayer;
+        JzvdStd jzvdStd;
     }
 }
