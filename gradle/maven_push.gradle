@@ -22,7 +22,7 @@ signing {
 
 group = "cn.jzvd"
 archivesBaseName = "jiaozivideoplayer"
-version = "6.3_preview"
+version = "6.3.1"
 
 uploadArchives {
     repositories {
