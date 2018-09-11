@@ -895,7 +895,21 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void setProgressAndText(int progress, long position, long duration) {
 //        Log.d(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
         if (!mTouchingProgressBar) {
-            if (progress != 0) progressBar.setProgress(progress);
+//            if (progress != 0) progressBar.setProgress(progress);
+//            Log.e(TAG, "setProgressAndText: " + seekToManulPosition + " : " + progress);
+
+            if (seekToManulPosition != -1) {
+                if (seekToManulPosition > progress) {
+                    Log.e(TAG, "setProgressAndText: " + seekToManulPosition + " return " + progress);
+                    return;
+                } else {
+                    Log.e(TAG, "setProgressAndText: " + seekToManulPosition + " : " + progress);
+                    seekToManulPosition = -1;
+                }
+            } else {
+                Log.e(TAG, "setProgressAndText: " + progress);
+                if (progress != 0) progressBar.setProgress(progress);
+            }
         }
         if (position != 0) currentTimeTextView.setText(JZUtils.stringForTime(position));
         totalTimeTextView.setText(JZUtils.stringForTime(duration));
@@ -964,9 +978,12 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         if (currentState != CURRENT_STATE_PLAYING &&
                 currentState != CURRENT_STATE_PAUSE) return;
         long time = seekBar.getProgress() * getDuration() / 100;
+        seekToManulPosition = seekBar.getProgress();
         JZMediaManager.seekTo(time);
         Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
     }
+
+    public int seekToManulPosition = -1;
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
