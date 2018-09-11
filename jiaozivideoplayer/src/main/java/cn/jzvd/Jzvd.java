@@ -895,12 +895,9 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void setProgressAndText(int progress, long position, long duration) {
 //        Log.d(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
         if (!mTouchingProgressBar) {
-//            if (progress != 0) progressBar.setProgress(progress);
-//            Log.e(TAG, "setProgressAndText: " + seekToManulPosition + " : " + progress);
-
             if (seekToManulPosition != -1) {
                 if (seekToManulPosition > progress) {
-                    Log.e(TAG, "setProgressAndText: " + seekToManulPosition + " return " + progress);
+                    Log.e(TAG, "setProgressAndText: ");
                     return;
                 } else {
                     Log.e(TAG, "setProgressAndText: " + seekToManulPosition + " : " + progress);

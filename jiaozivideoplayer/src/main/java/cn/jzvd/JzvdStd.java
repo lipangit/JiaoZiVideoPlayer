@@ -387,11 +387,7 @@ public class JzvdStd extends Jzvd {
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         super.onStopTrackingTouch(seekBar);
-//        if (currentState == CURRENT_STATE_PLAYING) {
-//            dissmissControlView();
-//        } else {
-            startDismissControlViewTimer();
-//        }
+        startDismissControlViewTimer();
     }
 
     public void onClickUiToggle() {
