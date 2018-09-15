@@ -473,8 +473,8 @@ public class JzvdStd extends Jzvd {
     }
 
     @Override
-    public void setProgressAndText(int progress, long position, long duration) {
-        super.setProgressAndText(progress, position, duration);
+    public void onProgress(int progress, long position, long duration) {
+        super.onProgress(progress, position, duration);
         if (progress != 0) bottomProgressBar.setProgress(progress);
     }
 

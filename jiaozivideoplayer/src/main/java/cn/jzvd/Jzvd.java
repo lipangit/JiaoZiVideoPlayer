@@ -892,19 +892,16 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    public void setProgressAndText(int progress, long position, long duration) {
-//        Log.d(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
+    public void onProgress(int progress, long position, long duration) {
+//        Log.d(TAG, "onProgress: progress=" + progress + " position=" + position + " duration=" + duration);
         if (!mTouchingProgressBar) {
             if (seekToManulPosition != -1) {
                 if (seekToManulPosition > progress) {
-                    Log.e(TAG, "setProgressAndText: ");
                     return;
                 } else {
-                    Log.e(TAG, "setProgressAndText: " + seekToManulPosition + " : " + progress);
                     seekToManulPosition = -1;
                 }
             } else {
-                Log.e(TAG, "setProgressAndText: " + progress);
                 if (progress != 0) progressBar.setProgress(progress);
             }
         }
@@ -1185,7 +1182,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                         long position = getCurrentPositionWhenPlaying();
                         long duration = getDuration();
                         int progress = (int) (position * 100 / (duration == 0 ? 1 : duration));
-                        setProgressAndText(progress, position, duration);
+                        onProgress(progress, position, duration);
                     }
                 });
             }
