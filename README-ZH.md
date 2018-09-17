@@ -7,6 +7,10 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
+高度自定义的安卓视频播放器
+
+Q群: 490442439 2群: 761899104 验证信息:jzvd
+
 ## 主要特点
 
 1. 可以完全自定义UI和任何功能

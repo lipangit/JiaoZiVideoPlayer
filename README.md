@@ -7,9 +7,9 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-Perfect list sliding detection, one line of code to replace the system player with IJKplayer, ExoPlayer, Vitamio, etc.
+Highly customizable Android video player
 
-Q群: 490442439 2群: 761899104 authentication information: jzvd
+Q群: 490442439 2群: 761899104 验证信息:jzvd
 
 [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)  [EnglishWiki](https://github.com/felipetorres/VideoPlayer-Wiki)  
 [Chinese README](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md)  
