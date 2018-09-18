@@ -13,9 +13,8 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 
 [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)  [EnglishWiki](https://github.com/felipetorres/VideoPlayer-Wiki)  
 [Chinese README](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md)  
-[WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2)
+[WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2)  
 [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1)  
-
 
 ## 使用步骤
 
