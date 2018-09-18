@@ -45,6 +45,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static final int SCREEN_WINDOW_FULLSCREEN = 2;
     public static final int SCREEN_WINDOW_TINY = 3;
 
+    public static final int CURRENT_STATE_IDLE = -1;
     public static final int CURRENT_STATE_NORMAL = 0;
     public static final int CURRENT_STATE_PREPARING = 1;
     public static final int CURRENT_STATE_PREPARING_CHANGING_URL = 2;
