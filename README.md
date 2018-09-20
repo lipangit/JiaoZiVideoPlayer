@@ -16,13 +16,6 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2)  
 [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1)  
 
-## 使用步骤
-
-1. 通读ReadMe
-2. 下载安装demo，各个页面都进入一次，各个按钮点一次
-3. 下载调试develop分支，有针对性的通过效果找到实现的源码
-4. 看[自定义相关的WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，实现自己的需求
-
 ## Features
 
 1. You can completely customize the UI and any method
@@ -38,11 +31,19 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 11. WebView Nested Local Video Controls
 12. VideoCache in demo
 
-## Demo apk 
+## Steps for usage
 
-A demo apk [jiaozivideoplayer-6.3.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.3.1/jiaozivideoplayer-6.3.1.apk) is available on Google Play showing all available features like this [small window effect on list sliding](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701).
+1. Read through ReadMe
+2. Download and install the demo apk[jiaozivideoplayer-6.3.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.3.1/jiaozivideoplayer-6.3.1.apk), each page enters once, each button clicks once
+3. Download and debug the develop branch, and find the source code through the effect
+4. See [custom-related WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，Realize your own needs
+[Getting Started Document 1](https://www.jianshu.com/p/4c187a09b838)[Getting Started Document 2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
+
+## Screenshot 
 
 ![Demo screenshot][1]
+
+[small window effect on list sliding](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701).
 
 ## Usage
 
