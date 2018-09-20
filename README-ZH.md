@@ -33,7 +33,7 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 3. 下载调试develop分支，有针对性的通过效果找到实现的源码
 4. 看[自定义相关的WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，实现自己的需求
 
-[入门文档1](https://www.jianshu.com/p/4c187a09b838)[入门文档2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
+[入门文档1](https://www.jianshu.com/p/4c187a09b838) [入门文档2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
 
 ## 效果
 

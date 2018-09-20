@@ -38,7 +38,7 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 3. Download and debug the develop branch, and find the source code through the effect
 4. See [custom-related WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，Realize your own needs
 
-[Getting Started Document 1](https://www.jianshu.com/p/4c187a09b838)[Getting Started Document 2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
+[Getting Started Document1](https://www.jianshu.com/p/4c187a09b838) [Getting Started Document2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
 
 ## Screenshot 
 
