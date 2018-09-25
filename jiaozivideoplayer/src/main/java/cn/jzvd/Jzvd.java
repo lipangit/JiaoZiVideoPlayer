@@ -94,7 +94,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     };
     protected static JZUserAction JZ_USER_EVENT;
-    protected static Timer UPDATE_PROGRESS_TIMER;
+    protected Timer UPDATE_PROGRESS_TIMER;
     public int currentState = -1;
     public int currentScreen = -1;
     public long seekToInAdvance = 0;
