@@ -10,3 +10,4 @@ build
 *.asc
 projectFilesBackup
 release
+_build
