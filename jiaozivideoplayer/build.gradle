@@ -23,7 +23,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
-    compileOnly 'com.android.support:appcompat-v7:28.0.0-rc02'
+    compileOnly 'com.android.support:appcompat-v7:28.0.0'
 }
 
 apply from: '../gradle/maven_push.gradle'
