@@ -53,7 +53,7 @@ Only five steps to use the player:
 
 1.Import library:
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.3.1'
+implementation 'cn.jzvd:jiaozivideoplayer:6.3.1'
 ```
 
 Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.3.1) (not recommended).
