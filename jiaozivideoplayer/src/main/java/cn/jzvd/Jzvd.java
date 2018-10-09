@@ -445,7 +445,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 }
                 startVideo();
                 onEvent(JZUserAction.ON_CLICK_START_ICON);//开始的事件应该在播放之后，此处特殊
-            } else if (currentState == CURRENT_STATE_PLAYING) {
+            } else if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PREPARING) {
                 onEvent(JZUserAction.ON_CLICK_PAUSE);
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 JZMediaManager.pause();
