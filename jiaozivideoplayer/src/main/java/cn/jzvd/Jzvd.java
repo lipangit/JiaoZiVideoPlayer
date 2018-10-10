@@ -437,14 +437,13 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 return;
             }
             if (currentState == CURRENT_STATE_NORMAL) {
-                if (!jzDataSource.getCurrentUrl().toString().startsWith("file") && !
-                        jzDataSource.getCurrentUrl().toString().startsWith("/") &&
-                        !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                if (!JZUtils.isWifiConnected(getContext()) && !isCached() && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog();
                     return;
                 }
                 startVideo();
-                onEvent(JZUserAction.ON_CLICK_START_ICON);//开始的事件应该在播放之后，此处特殊
+                //开始的事件应该在播放之后，此处特殊
+                onEvent(JZUserAction.ON_CLICK_START_ICON);
             } else if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PREPARING) {
                 onEvent(JZUserAction.ON_CLICK_PAUSE);
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
@@ -470,6 +469,10 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 startWindowFullscreen();
             }
         }
+    }
+
+    public boolean isCached() {
+        return jzDataSource.getCurrentUrl().toString().startsWith("file") || jzDataSource.getCurrentUrl().toString().startsWith("/");
     }
 
     @Override

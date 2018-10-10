@@ -266,14 +266,13 @@ public class JzvdStd extends Jzvd {
                 return;
             }
             if (currentState == CURRENT_STATE_NORMAL) {
-                if (!jzDataSource.getCurrentUrl().toString().startsWith("file") &&
-                        !jzDataSource.getCurrentUrl().toString().startsWith("/") &&
-                        !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+                if (!JZUtils.isWifiConnected(getContext()) && !isCached() && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog();
                     return;
                 }
                 startVideo();
-                onEvent(JZUserActionStd.ON_CLICK_START_THUMB);//开始的事件应该在播放之后，此处特殊
+                //开始的事件应该在播放之后，此处特殊
+                onEvent(JZUserActionStd.ON_CLICK_START_THUMB);
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
             }
@@ -334,9 +333,7 @@ public class JzvdStd extends Jzvd {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (!jzDataSource.getCurrentUrl().toString().startsWith("file") && !
-                    jzDataSource.getCurrentUrl().toString().startsWith("/") &&
-                    !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
+            if (!JZUtils.isWifiConnected(getContext()) && !isCached() && !WIFI_TIP_DIALOG_SHOWED) {
                 showWifiDialog();
                 return;
             }
