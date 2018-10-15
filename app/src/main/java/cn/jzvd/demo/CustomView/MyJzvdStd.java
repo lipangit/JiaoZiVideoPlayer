@@ -42,7 +42,7 @@ public class MyJzvdStd extends JzvdStd {
 
     @Override
     public int getLayoutId() {
-        return R.layout.jz_layout_standard;
+        return R.layout.jz_layout_std;
     }
 
     @Override

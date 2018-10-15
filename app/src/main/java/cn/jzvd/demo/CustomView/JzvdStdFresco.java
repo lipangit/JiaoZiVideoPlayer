@@ -63,7 +63,7 @@ public class JzvdStdFresco extends JzvdStd {
 
     @Override
     public int getLayoutId() {
-        return R.layout.layout_standard_fresco;
+        return R.layout.layout_std_fresco;
     }
 
 
