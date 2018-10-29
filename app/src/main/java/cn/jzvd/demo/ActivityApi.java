@@ -83,7 +83,6 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         /** ImageLoader **/
 //        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],
 //                videoController1.thumbImageView);
-        /** volley Fresco omit **/
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorEventListener = new Jzvd.JZAutoFullscreenListener();
     }
