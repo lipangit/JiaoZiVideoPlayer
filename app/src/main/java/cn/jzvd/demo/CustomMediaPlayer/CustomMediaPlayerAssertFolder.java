@@ -3,6 +3,9 @@ package cn.jzvd.demo.CustomMediaPlayer;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.PlaybackParams;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.view.Surface;
 
 import cn.jzvd.JZMediaInterface;
@@ -91,6 +94,14 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
     @Override
     public void setVolume(float leftVolume, float rightVolume) {
         mediaPlayer.setVolume(leftVolume, rightVolume);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void setSpeed(float speed) {
+        PlaybackParams pp = mediaPlayer.getPlaybackParams();
+        pp.setSpeed(speed);
+        mediaPlayer.setPlaybackParams(pp);
     }
 
     @Override

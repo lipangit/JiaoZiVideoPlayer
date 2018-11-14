@@ -195,6 +195,12 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
     }
 
     @Override
+    public void setSpeed(float speed) {
+        PlaybackParameters playbackParameters = new PlaybackParameters(speed, 1.0F);
+        simpleExoPlayer.setPlaybackParameters(playbackParameters);
+    }
+
+    @Override
     public void onTimelineChanged(final Timeline timeline, Object manifest, final int reason) {
         Log.e(TAG, "onTimelineChanged");
 //        JZMediaManager.instance().mainThreadHandler.post(new Runnable() {
