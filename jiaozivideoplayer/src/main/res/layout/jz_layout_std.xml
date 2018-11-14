@@ -105,12 +105,13 @@
     <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:paddingLeft="10dp"
         android:background="@drawable/jz_title_bg"
-        android:gravity="center_vertical">
+        android:paddingStart="10dp">
 
         <ImageView
             android:id="@+id/back"
@@ -119,9 +120,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="10dp"
             android:padding="3dp"
             android:scaleType="centerInside"
             android:src="@drawable/jz_click_back_selector" />
