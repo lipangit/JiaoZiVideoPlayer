@@ -29,4 +29,6 @@ public abstract class JZMediaInterface {
     public abstract void setSurface(Surface surface);
 
     public abstract void setVolume(float leftVolume, float rightVolume);
+
+    public abstract void setSpeed(float speed);
 }

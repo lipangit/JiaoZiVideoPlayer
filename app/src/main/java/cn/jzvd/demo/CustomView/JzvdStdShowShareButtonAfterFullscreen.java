@@ -36,7 +36,7 @@ public class JzvdStdShowShareButtonAfterFullscreen extends JzvdStd {
 
     @Override
     public int getLayoutId() {
-        return R.layout.layout_standard_with_share_button;
+        return R.layout.layout_std_with_share_button;
     }
 
     @Override

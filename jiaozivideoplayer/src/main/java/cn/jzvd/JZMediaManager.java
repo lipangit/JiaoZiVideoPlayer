@@ -91,6 +91,10 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
         return instance().jzMediaInterface.isPlaying();
     }
 
+    public static void setSpeed(float speed) {
+        instance().jzMediaInterface.setSpeed(speed);
+    }
+
     public void releaseMediaPlayer() {
         mMediaHandler.removeCallbacksAndMessages(null);
         Message msg = new Message();

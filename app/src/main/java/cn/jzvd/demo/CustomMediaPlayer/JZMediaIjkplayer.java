@@ -98,6 +98,11 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
     }
 
     @Override
+    public void setSpeed(float speed) {
+        ijkMediaPlayer.setSpeed(speed);
+    }
+
+    @Override
     public void onPrepared(IMediaPlayer iMediaPlayer) {
         ijkMediaPlayer.start();
         if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3")) {
