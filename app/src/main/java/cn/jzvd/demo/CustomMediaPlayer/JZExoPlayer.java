@@ -77,7 +77,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
         // 2. Create the player
 
         RenderersFactory renderersFactory = new DefaultRenderersFactory(context);
-        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(renderersFactory, trackSelector, loadControl);
+        simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(JzvdMgr.getCurrentJzvd().getContext(), renderersFactory, trackSelector, loadControl);
         // Produces DataSource instances through which media data is loaded.
         DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(context,
                 Util.getUserAgent(context, context.getResources().getString(R.string.app_name)));
