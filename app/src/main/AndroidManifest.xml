@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:name=".ApplicationDemo"
         android:allowBackup="false"
@@ -21,7 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ActivityDirectPlay"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -98,7 +98,7 @@
             android:name=".ActivityApiExtendsNormal"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".ActivityRecyclerViewAutoPlay"></activity>
     </application>
 
 </manifest>

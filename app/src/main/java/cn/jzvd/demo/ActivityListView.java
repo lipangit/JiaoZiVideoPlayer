@@ -12,7 +12,7 @@ import android.widget.Button;
  * Created by Nathen on 16/7/31.
  */
 public class ActivityListView extends AppCompatActivity implements View.OnClickListener {
-    Button mNormal, mViewPager, mMultiHolder, mRecyleView;
+    Button mNormal, mViewPager, mMultiHolder, mRecyleView,mAutoPlayVieo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,11 +28,13 @@ public class ActivityListView extends AppCompatActivity implements View.OnClickL
         mViewPager = findViewById(R.id.listview_fragment_viewpager);
         mMultiHolder = findViewById(R.id.multiholder);
         mRecyleView = findViewById(R.id.recyleview);
+        mAutoPlayVieo = findViewById(R.id.autoplayvideo);
 
         mNormal.setOnClickListener(this);
         mViewPager.setOnClickListener(this);
         mMultiHolder.setOnClickListener(this);
         mRecyleView.setOnClickListener(this);
+        mAutoPlayVieo.setOnClickListener(this);
 
     }
 
@@ -50,6 +52,9 @@ public class ActivityListView extends AppCompatActivity implements View.OnClickL
                 break;
             case R.id.recyleview:
                 startActivity(new Intent(ActivityListView.this, ActivityListViewRecyclerView.class));
+                break;
+            case R.id.autoplayvideo:
+                startActivity(new Intent(ActivityListView.this, ActivityRecyclerViewAutoPlay.class));
                 break;
         }
     }
