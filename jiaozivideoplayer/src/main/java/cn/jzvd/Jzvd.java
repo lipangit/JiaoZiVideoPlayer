@@ -810,7 +810,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public void initTextureView() {
         removeTextureView();
-        JZMediaManager.textureView = new JZTextureView(getContext());
+        JZMediaManager.textureView = new JZTextureView(getContext().getApplicationContext());
         JZMediaManager.textureView.setSurfaceTextureListener(JZMediaManager.instance());
     }
 
