@@ -1177,14 +1177,11 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         public void run() {
             if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
 //                Log.v(TAG, "onProgressUpdate " + "[" + this.hashCode() + "] ");
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        long position = getCurrentPositionWhenPlaying();
-                        long duration = getDuration();
-                        int progress = (int) (position * 100 / (duration == 0 ? 1 : duration));
-                        onProgress(progress, position, duration);
-                    }
+                post(() -> {
+                    long position = getCurrentPositionWhenPlaying();
+                    long duration = getDuration();
+                    int progress = (int) (position * 100 / (duration == 0 ? 1 : duration));
+                    onProgress(progress, position, duration);
                 });
             }
         }
