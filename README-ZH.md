@@ -2,10 +2,14 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.3.1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.4.0-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
+
+高度自定义的安卓视频播放器
+
+Q群: 490442439 2群: 761899104 验证信息:jzvd
 
 ## 主要特点
 
@@ -22,9 +26,17 @@
 11. WebView嵌套本地视频控件
 12. demo中添加视频缓存的例子
 
-## 效果
+## 使用步骤
 
-**[jiaozivideoplayer-6.3.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.3.1/jiaozivideoplayer-6.3.1.apk)**
+1. 通读ReadMe
+2. 下载安装demo apk [jiaozivideoplayer-6.4.0.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.4.0/jiaozivideoplayer-6.4.0.apk)，各个页面都进入一次，各个按钮点一次
+3. 下载调试develop分支，有针对性的通过效果找到实现的源码
+4. 看[自定义相关的WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，实现自己的需求
+
+* [入门文档 1](https://www.jianshu.com/p/4c187a09b838)
+* [入门文档 2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
+
+## 效果
 
 ![Demo Screenshot][1]
 
@@ -36,10 +48,10 @@
 
 1.添加类库
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.3.1'
+compile 'cn.jzvd:jiaozivideoplayer:6.4.0'
 ```
 
-或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.3.1) (不建议)
+或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.0) (不建议)
 
 2.添加布局
 ```xml
@@ -53,7 +65,7 @@ compile 'cn.jzvd:jiaozivideoplayer:6.3.1'
 ```java
 JzvdStd jzvdStd = (JzvdStd) findViewById(R.id.videoplayer);
 jzvdStd.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-                            , Jzvd.SCREEN_WINDOW_NORMAL, "饺子闭眼睛");
+                            , "饺子闭眼睛", Jzvd.SCREEN_WINDOW_NORMAL);
 jzvdStd.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 

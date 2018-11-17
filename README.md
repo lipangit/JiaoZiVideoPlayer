@@ -2,19 +2,18 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.3.1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.4.0-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-Perfect list sliding detection, one line of code to replace the system player with IJKplayer, ExoPlayer, Vitamio, etc.
+Highly customizable Android video player
 
-Q群: 490442439 2群: 761899104 authentication information: jzvd
+Q群: 490442439 2群: 761899104 验证信息:jzvd
 
 [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)  [EnglishWiki](https://github.com/felipetorres/VideoPlayer-Wiki)  
-[Chinese README](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md)  
+[中文ReadMe](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md)  
 [WorkPlan](https://github.com/lipangit/JiaoZiVideoPlayer/projects/2)  
-[Video tutorial](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B)  
 [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1)  
 
 ## Features
@@ -32,11 +31,21 @@ Q群: 490442439 2群: 761899104 authentication information: jzvd
 11. WebView Nested Local Video Controls
 12. VideoCache in demo
 
-## Demo apk 
+## Steps for usage
 
-A demo apk [jiaozivideoplayer-6.3.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.3.1/jiaozivideoplayer-6.3.1.apk) is available on Google Play showing all available features like this [small window effect on list sliding](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701).
+1. Read through ReadMe
+2. Download and install the demo apk[jiaozivideoplayer-6.4.0.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.4.0/jiaozivideoplayer-6.4.0.apk), each page enters once, each button clicks once
+3. Download and debug the develop branch, and find the source code through the effect
+4. See [custom-related WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，Realize your own needs
+
+* [Getting Started Document 1](https://www.jianshu.com/p/4c187a09b838)
+* [Getting Started Document 2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
+
+## Screenshot 
 
 ![Demo screenshot][1]
+
+[small window effect on list sliding](http://weibo.com/tv/v/FtxpWgqmg?fid=1034:5cda6fc7f394b403d592bd9b1d5a9701).
 
 ## Usage
 
@@ -44,10 +53,10 @@ Only five steps to use the player:
 
 1.Import library:
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.3.1'
+implementation 'cn.jzvd:jiaozivideoplayer:6.4.0'
 ```
 
-Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.3.1) (not recommended).
+Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.0) (not recommended).
 
 2.Add `JZVideoPlayer` in your layout:
 ```xml
@@ -60,9 +69,8 @@ Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.
 3.Set the video uri, video thumb url and video title:
 ```java
 JzvdStd jzvdStd = (JzvdStd) findViewById(R.id.videoplayer);
-jzvdStd.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4", 
-                            Jzvd.SCREEN_WINDOW_NORMAL, 
-                            "饺子闭眼睛");
+jzvdStd.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
+                            , "饺子闭眼睛" , Jzvd.SCREEN_WINDOW_NORMAL);
 jzvdStd.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 

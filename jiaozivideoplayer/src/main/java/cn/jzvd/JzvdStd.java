@@ -164,7 +164,7 @@ public class JzvdStd extends Jzvd {
 
     @Override
     public int getLayoutId() {
-        return R.layout.jz_layout_standard;
+        return R.layout.jz_layout_std;
     }
 
     @Override
@@ -387,11 +387,7 @@ public class JzvdStd extends Jzvd {
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         super.onStopTrackingTouch(seekBar);
-        if (currentState == CURRENT_STATE_PLAYING) {
-            dissmissControlView();
-        } else {
-            startDismissControlViewTimer();
-        }
+        startDismissControlViewTimer();
     }
 
     public void onClickUiToggle() {
@@ -477,8 +473,8 @@ public class JzvdStd extends Jzvd {
     }
 
     @Override
-    public void setProgressAndText(int progress, long position, long duration) {
-        super.setProgressAndText(progress, position, duration);
+    public void onProgress(int progress, long position, long duration) {
+        super.onProgress(progress, position, duration);
         if (progress != 0) bottomProgressBar.setProgress(progress);
     }
 
@@ -820,18 +816,15 @@ public class JzvdStd extends Jzvd {
         if (currentState != CURRENT_STATE_NORMAL
                 && currentState != CURRENT_STATE_ERROR
                 && currentState != CURRENT_STATE_AUTO_COMPLETE) {
-            post(new Runnable() {
-                @Override
-                public void run() {
-                    bottomContainer.setVisibility(View.INVISIBLE);
-                    topContainer.setVisibility(View.INVISIBLE);
-                    startButton.setVisibility(View.INVISIBLE);
-                    if (clarityPopWindow != null) {
-                        clarityPopWindow.dismiss();
-                    }
-                    if (currentScreen != SCREEN_WINDOW_TINY) {
-                        bottomProgressBar.setVisibility(View.VISIBLE);
-                    }
+            post(() -> {
+                bottomContainer.setVisibility(View.INVISIBLE);
+                topContainer.setVisibility(View.INVISIBLE);
+                startButton.setVisibility(View.INVISIBLE);
+                if (clarityPopWindow != null) {
+                    clarityPopWindow.dismiss();
+                }
+                if (currentScreen != SCREEN_WINDOW_TINY) {
+                    bottomProgressBar.setVisibility(View.VISIBLE);
                 }
             });
         }

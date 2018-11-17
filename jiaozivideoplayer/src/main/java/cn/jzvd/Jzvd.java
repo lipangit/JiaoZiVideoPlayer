@@ -45,6 +45,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static final int SCREEN_WINDOW_FULLSCREEN = 2;
     public static final int SCREEN_WINDOW_TINY = 3;
 
+    public static final int CURRENT_STATE_IDLE = -1;
     public static final int CURRENT_STATE_NORMAL = 0;
     public static final int CURRENT_STATE_PREPARING = 1;
     public static final int CURRENT_STATE_PREPARING_CHANGING_URL = 2;
@@ -93,7 +94,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     };
     protected static JZUserAction JZ_USER_EVENT;
-    protected static Timer UPDATE_PROGRESS_TIMER;
+    protected Timer UPDATE_PROGRESS_TIMER;
     public int currentState = -1;
     public int currentScreen = -1;
     public long seekToInAdvance = 0;
@@ -431,7 +432,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         int i = v.getId();
         if (i == R.id.start) {
             Log.i(TAG, "onClick start [" + this.hashCode() + "] ");
-            if (jzDataSource.urlsMap.isEmpty() || jzDataSource.getCurrentUrl() == null) {
+            if (jzDataSource == null || jzDataSource.urlsMap.isEmpty() || jzDataSource.getCurrentUrl() == null) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -595,7 +596,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
         initTextureView();
         addTextureView();
-        AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -779,7 +780,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         JZMediaManager.instance().currentVideoWidth = 0;
         JZMediaManager.instance().currentVideoHeight = 0;
 
-        AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
+        AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         JZUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         clearFullscreenLayout();
@@ -809,7 +810,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public void initTextureView() {
         removeTextureView();
-        JZMediaManager.textureView = new JZTextureView(getContext());
+        JZMediaManager.textureView = new JZTextureView(getContext().getApplicationContext());
         JZMediaManager.textureView.setSurfaceTextureListener(JZMediaManager.instance());
     }
 
@@ -892,10 +893,18 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    public void setProgressAndText(int progress, long position, long duration) {
-//        Log.d(TAG, "setProgressAndText: progress=" + progress + " position=" + position + " duration=" + duration);
+    public void onProgress(int progress, long position, long duration) {
+//        Log.d(TAG, "onProgress: progress=" + progress + " position=" + position + " duration=" + duration);
         if (!mTouchingProgressBar) {
-            if (progress != 0) progressBar.setProgress(progress);
+            if (seekToManulPosition != -1) {
+                if (seekToManulPosition > progress) {
+                    return;
+                } else {
+                    seekToManulPosition = -1;
+                }
+            } else {
+                if (progress != 0) progressBar.setProgress(progress);
+            }
         }
         if (position != 0) currentTimeTextView.setText(JZUtils.stringForTime(position));
         totalTimeTextView.setText(JZUtils.stringForTime(duration));
@@ -964,9 +973,12 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         if (currentState != CURRENT_STATE_PLAYING &&
                 currentState != CURRENT_STATE_PAUSE) return;
         long time = seekBar.getProgress() * getDuration() / 100;
+        seekToManulPosition = seekBar.getProgress();
         JZMediaManager.seekTo(time);
         Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
     }
+
+    public int seekToManulPosition = -1;
 
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -1165,17 +1177,24 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         public void run() {
             if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
 //                Log.v(TAG, "onProgressUpdate " + "[" + this.hashCode() + "] ");
-                post(new Runnable() {
-                    @Override
-                    public void run() {
-                        long position = getCurrentPositionWhenPlaying();
-                        long duration = getDuration();
-                        int progress = (int) (position * 100 / (duration == 0 ? 1 : duration));
-                        setProgressAndText(progress, position, duration);
-                    }
+                post(() -> {
+                    long position = getCurrentPositionWhenPlaying();
+                    long duration = getDuration();
+                    int progress = (int) (position * 100 / (duration == 0 ? 1 : duration));
+                    onProgress(progress, position, duration);
                 });
             }
         }
     }
 
+    public Context getApplicationContext() {
+        Context context = getContext();
+        if (context != null) {
+            Context applicationContext = context.getApplicationContext();
+            if (applicationContext != null) {
+                return applicationContext;
+            }
+        }
+        return context;
+    }
 }
