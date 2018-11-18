@@ -30,6 +30,7 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 10. Home key to exit the interface to suspend the playback, return to the interface to continue playing
 11. WebView Nested Local Video Controls
 12. VideoCache in demo
+13. PlayBack speed
 
 ## Steps for usage
 
