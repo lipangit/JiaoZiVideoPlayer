@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tips_not_wifi">あなたは現在、モバイルネットワークを使用しています</string>
+    <string name="tips_not_wifi_confirm">ビデオを再開する</string>
+    <string name="tips_not_wifi_cancel">ビデオを止める</string>
+    <string name="no_url">URLエラー</string>
+    <string name="replay">リプレイ</string>
+    <string name="click_to_restart">再度試してください</string>
+    <string name="video_loading_failed">エラーが発生しました</string>
+</resources>
