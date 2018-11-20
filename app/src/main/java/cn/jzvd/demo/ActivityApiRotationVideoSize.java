@@ -16,10 +16,9 @@ import cn.jzvd.JzvdStd;
  * Created by Nathen on 2017/11/2.
  */
 
-public class ActivityApiRotationVideoSize extends AppCompatActivity implements View.OnClickListener {
+public class ActivityApiRotationVideoSize extends AppCompatActivity {
 
     JzvdStd myJzvdStd;
-    Button mBtnRotation, mBtnFillParent, mBtnFillCrop, mBtnOriginal;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,38 +38,8 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity implements V
                 .into(myJzvdStd.thumbImageView);
         // The Point IS
         myJzvdStd.videoRotation = 180;
-
-        mBtnRotation = findViewById(R.id.rotation_to_90);
-        mBtnFillParent = findViewById(R.id.video_image_display_fill_parent);
-        mBtnFillCrop = findViewById(R.id.video_image_display_fill_crop);
-        mBtnOriginal = findViewById(R.id.video_image_diaplay_original);
-        mBtnRotation.setOnClickListener(this);
-        mBtnFillParent.setOnClickListener(this);
-        mBtnFillCrop.setOnClickListener(this);
-        mBtnOriginal.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.rotation_to_90:
-                Jzvd.setTextureViewRotation(90);
-
-                break;
-            case R.id.video_image_display_fill_parent:
-                Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
-
-                break;
-            case R.id.video_image_display_fill_crop:
-                Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);
-
-                break;
-            case R.id.video_image_diaplay_original:
-                Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL);
-
-                break;
-        }
-    }
 
     @Override
     protected void onPause() {
@@ -97,4 +66,19 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity implements V
         return super.onOptionsItemSelected(item);
     }
 
+    public void clickVideoSizeAcRotationButton(View view) {
+        Jzvd.setTextureViewRotation(90);
+    }
+
+    public void clickVideoSizeAcFillParentButton(View view) {
+        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
+    }
+
+    public void clickVideoSizeAcFillCropButton(View view) {
+        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);
+    }
+
+    public void clickVideoSizeAcOriginalButton(View view) {
+        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL);
+    }
 }

@@ -26,6 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:onClick="clickApiAcSmallChangeButton"
                 android:text="Small change Ui" />
 
             <Button
@@ -33,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:onClick="clickApiAcBigChangeButton"
                 android:text="Big change Ui" />
 
             <Button
@@ -40,6 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:onClick="clickApiAcOrientationButton"
                 android:text="Orientation" />
 
             <Button
@@ -48,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
+                android:onClick="clickApiAcExtendsNormalButton"
                 android:text="Extends Normal Activity" />
 
             <Button
@@ -56,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
+                android:onClick="clickApiAcRotationAndVideoSizeButton"
                 android:text="Video And VideoSize" />
 
             <Button
@@ -64,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
+                android:onClick="clickApiAcCustomMediaPlayerButton"
                 android:text="Custom MediaPlayer" />
 
         </LinearLayout>

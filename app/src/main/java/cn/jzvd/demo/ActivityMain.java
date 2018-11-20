@@ -19,29 +19,16 @@ import cn.jzvd.demo.CustomView.MyJzvdStd;
 /**
  * Created by Nathen on 16/7/22.
  */
-public class ActivityMain extends AppCompatActivity implements View.OnClickListener {
+public class ActivityMain extends AppCompatActivity {
 
 
     MyJzvdStd myJzvdStd;
 
-    Button mTinyWindow, mListView, mDirectFullscreen, mApi, mWebView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mTinyWindow = findViewById(R.id.tiny_window);
-        mDirectFullscreen = findViewById(R.id.direct_play);
-        mListView = findViewById(R.id.listview);
-        mApi = findViewById(R.id.api);
-        mWebView = findViewById(R.id.webview);
-
-        mTinyWindow.setOnClickListener(this);
-        mListView.setOnClickListener(this);
-        mDirectFullscreen.setOnClickListener(this);
-        mApi.setOnClickListener(this);
-        mWebView.setOnClickListener(this);
 
         myJzvdStd = findViewById(R.id.jz_video);
         myJzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
@@ -65,26 +52,6 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
         super.onBackPressed();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.api:
-                startActivity(new Intent(ActivityMain.this, ActivityApi.class));
-                break;
-            case R.id.listview:
-                startActivity(new Intent(ActivityMain.this, ActivityListView.class));
-                break;
-            case R.id.tiny_window:
-                startActivity(new Intent(ActivityMain.this, ActivityTinyWindow.class));
-                break;
-            case R.id.direct_play:
-                startActivity(new Intent(ActivityMain.this, ActivityDirectPlay.class));
-                break;
-            case R.id.webview:
-                startActivity(new Intent(ActivityMain.this, ActivityWebView.class));
-                break;
-        }
-    }
 
     /**
      * 这只是给埋点统计用户数据用的，不能写和播放相关的逻辑，监听事件请参考MyJzvdStd，复写函数取得相应事件
@@ -145,6 +112,26 @@ public class ActivityMain extends AppCompatActivity implements View.OnClickListe
                     break;
             }
         }
+    }
+
+    public void clickApiButton(View view) {
+        startActivity(new Intent(ActivityMain.this, ActivityApi.class));
+    }
+
+    public void clickListViewButton(View view) {
+        startActivity(new Intent(ActivityMain.this, ActivityListView.class));
+    }
+
+    public void clickTinyWindowButton(View view) {
+        startActivity(new Intent(ActivityMain.this, ActivityTinyWindow.class));
+    }
+
+    public void clickDirectPlayButton(View view) {
+        startActivity(new Intent(ActivityMain.this, ActivityDirectPlay.class));
+    }
+
+    public void clickWebViewButton(View view) {
+        startActivity(new Intent(ActivityMain.this, ActivityWebView.class));
     }
 
 }

@@ -21,6 +21,7 @@
 
             <Button
                 android:id="@+id/api"
+                android:onClick="clickApiButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -29,6 +30,7 @@
 
             <Button
                 android:id="@+id/listview"
+                android:onClick="clickListViewButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -37,6 +39,8 @@
 
             <Button
                 android:id="@+id/tiny_window"
+
+                android:onClick="clickTinyWindowButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -44,6 +48,7 @@
                 android:text="Tiny Window" />
 
             <Button
+                android:onClick="clickDirectPlayButton"
                 android:id="@+id/direct_play"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,6 +57,7 @@
                 android:text="Direct Play" />
 
             <Button
+                android:onClick="clickWebViewButton"
                 android:id="@+id/webview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
