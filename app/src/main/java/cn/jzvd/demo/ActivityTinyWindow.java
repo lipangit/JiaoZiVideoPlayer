@@ -17,10 +17,9 @@ import cn.jzvd.JzvdStd;
  * Created by Nathen on 2017/10/31.
  */
 
-public class ActivityTinyWindow extends AppCompatActivity implements View.OnClickListener {
+public class ActivityTinyWindow extends AppCompatActivity {
 
     JzvdStd mJzvdStd;
-    Button mBtnTinyWindow, mBtnTinyWindowListView, mBtnTinyWindowListViewMultiHolder, mBtnTinyWindowRecycle, mBtnTinyWindowRecycleMultiHolder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,39 +38,8 @@ public class ActivityTinyWindow extends AppCompatActivity implements View.OnClic
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
                 .into(mJzvdStd.thumbImageView);
 
-        mBtnTinyWindow = findViewById(R.id.tiny_window);
-        mBtnTinyWindowListView = findViewById(R.id.auto_tiny_list_view);
-        mBtnTinyWindowListViewMultiHolder = findViewById(R.id.auto_tiny_list_view_multi_holder);
-        mBtnTinyWindowRecycle = findViewById(R.id.auto_tiny_list_view_recycleview);
-        mBtnTinyWindowRecycleMultiHolder = findViewById(R.id.auto_tiny_list_view_recycleview_multiholder);
-        mBtnTinyWindow.setOnClickListener(this);
-        mBtnTinyWindowListView.setOnClickListener(this);
-        mBtnTinyWindowListViewMultiHolder.setOnClickListener(this);
-        mBtnTinyWindowRecycle.setOnClickListener(this);
-        mBtnTinyWindowRecycleMultiHolder.setOnClickListener(this);
-
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.tiny_window:
-                mJzvdStd.startWindowTiny();
-                break;
-            case R.id.auto_tiny_list_view:
-                startActivity(new Intent(this, ActivityTinyWindowListViewNormal.class));
-                break;
-            case R.id.auto_tiny_list_view_multi_holder:
-                startActivity(new Intent(this, ActivityTinyWindowListViewMultiHolder.class));
-                break;
-            case R.id.auto_tiny_list_view_recycleview:
-                startActivity(new Intent(this, ActivityTinyWindowRecycleView.class));
-                break;
-            case R.id.auto_tiny_list_view_recycleview_multiholder:
-                startActivity(new Intent(this, ActivityTinyWindowRecycleViewMultiHolder.class));
-                break;
-        }
-    }
 
     @Override
     protected void onPause() {
@@ -95,5 +63,26 @@ public class ActivityTinyWindow extends AppCompatActivity implements View.OnClic
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    public void clickTinyWindow(View view) {
+        mJzvdStd.startWindowTiny();
+    }
+
+    public void clickAutoTinyListView(View view) {
+        startActivity(new Intent(this, ActivityTinyWindowListViewNormal.class));
+    }
+
+    public void clickAutoTinyListViewMultiHolder(View view) {
+        startActivity(new Intent(this, ActivityTinyWindowListViewMultiHolder.class));
+    }
+
+    public void clickAutoTinyListViewRecyclerView(View view) {
+        startActivity(new Intent(this, ActivityTinyWindowRecycleView.class));
+    }
+
+    public void clickAutoTinyListViewRecyclerViewMultiHolder(View view) {
+        startActivity(new Intent(this, ActivityTinyWindowRecycleViewMultiHolder.class));
     }
 }

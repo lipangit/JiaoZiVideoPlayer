@@ -25,12 +25,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:onClick="clickTinyWindow"
                 android:text="Start Tiny Window" />
 
             <Button
                 android:id="@+id/auto_tiny_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="clickAutoTinyListView"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:text="Normal ListView TinyWindow" />
@@ -38,6 +40,7 @@
             <Button
                 android:id="@+id/auto_tiny_list_view_multi_holder"
                 android:layout_width="match_parent"
+                android:onClick="clickAutoTinyListViewMultiHolder"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
@@ -47,6 +50,7 @@
                 android:id="@+id/auto_tiny_list_view_recycleview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="clickAutoTinyListViewRecyclerView"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:text="RecycleView TinyWindow" />
@@ -55,6 +59,7 @@
                 android:id="@+id/auto_tiny_list_view_recycleview_multiholder"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="clickAutoTinyListViewRecyclerViewMultiHolder"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
                 android:text="RecycleView MultiHolder TinyWindow" />
