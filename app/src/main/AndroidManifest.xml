@@ -9,7 +9,7 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/jz_network_security_config_allow_cleartext"
+        android:networkSecurityConfig="@xml/jz_network_security_config"
         android:theme="@style/AppTheme">
         <activity
             android:name=".ActivityMain"
