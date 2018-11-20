@@ -66,23 +66,23 @@ public class ActivityTinyWindow extends AppCompatActivity {
     }
 
 
-    public void clickTinyAcTinyWindowButton(View view) {
+    public void clickTinyWindow(View view) {
         mJzvdStd.startWindowTiny();
     }
 
-    public void clickTinyAcAutoListViewButton(View view) {
+    public void clickAutoTinyListView(View view) {
         startActivity(new Intent(this, ActivityTinyWindowListViewNormal.class));
     }
 
-    public void clickTinyAcAutoMultiHolderButton(View view) {
+    public void clickAutoTinyListViewMultiHolder(View view) {
         startActivity(new Intent(this, ActivityTinyWindowListViewMultiHolder.class));
     }
 
-    public void clickTinyAcAutoRecyclerViewButton(View view) {
+    public void clickAutoTinyListViewRecyclerView(View view) {
         startActivity(new Intent(this, ActivityTinyWindowRecycleView.class));
     }
 
-    public void clickTinyAcAutoRecyclerViewMultiHolderButton(View view) {
+    public void clickAutoTinyListViewRecyclerViewMultiHolder(View view) {
         startActivity(new Intent(this, ActivityTinyWindowRecycleViewMultiHolder.class));
     }
 }

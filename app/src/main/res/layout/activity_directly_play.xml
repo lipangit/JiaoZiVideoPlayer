@@ -6,7 +6,7 @@
 
     <Button
         android:id="@+id/fullscreen"
-        android:onClick="clickDirectAcFullScreenButton"
+        android:onClick="clickFullScreen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -15,7 +15,7 @@
 
     <Button
         android:id="@+id/tiny_window"
-        android:onClick="clickDirectAcTinyWindowButton"
+        android:onClick="clickTinyWindow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

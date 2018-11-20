@@ -21,49 +21,49 @@
 
             <Button
                 android:id="@+id/api"
-                android:onClick="clickApiButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:onClick="clickApi"
                 android:text="Api" />
 
             <Button
                 android:id="@+id/listview"
-                android:onClick="clickListViewButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:onClick="clickListView"
                 android:text="ListView" />
 
             <Button
                 android:id="@+id/tiny_window"
 
-                android:onClick="clickTinyWindowButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:onClick="clickTinyWindow"
                 android:text="Tiny Window" />
 
             <Button
-                android:onClick="clickDirectPlayButton"
                 android:id="@+id/direct_play"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:onClick="clickDirectPlay"
                 android:text="Direct Play" />
 
             <Button
-                android:onClick="clickWebViewButton"
                 android:id="@+id/webview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:onClick="clickWebView"
                 android:text="WebView" />
         </LinearLayout>
     </ScrollView>

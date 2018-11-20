@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:onClick="clickApiAcSmallChangeButton"
+                android:onClick="clickSmallChange"
                 android:text="Small change Ui" />
 
             <Button
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:onClick="clickApiAcBigChangeButton"
+                android:onClick="clickBigChange"
                 android:text="Big change Ui" />
 
             <Button
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:onClick="clickApiAcOrientationButton"
+                android:onClick="clickOrientation"
                 android:text="Orientation" />
 
             <Button
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:onClick="clickApiAcExtendsNormalButton"
+                android:onClick="clickExtendsNormalActivity"
                 android:text="Extends Normal Activity" />
 
             <Button
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:onClick="clickApiAcRotationAndVideoSizeButton"
+                android:onClick="clickRotationAndVideoSize"
                 android:text="Video And VideoSize" />
 
             <Button
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:onClick="clickApiAcCustomMediaPlayerButton"
+                android:onClick="clickCustomMediaPlayer"
                 android:text="Custom MediaPlayer" />
 
         </LinearLayout>

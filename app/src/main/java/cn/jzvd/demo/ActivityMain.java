@@ -114,23 +114,23 @@ public class ActivityMain extends AppCompatActivity {
         }
     }
 
-    public void clickApiButton(View view) {
+    public void clickApi(View view) {
         startActivity(new Intent(ActivityMain.this, ActivityApi.class));
     }
 
-    public void clickListViewButton(View view) {
+    public void clickListView(View view) {
         startActivity(new Intent(ActivityMain.this, ActivityListView.class));
     }
 
-    public void clickTinyWindowButton(View view) {
+    public void clickTinyWindow(View view) {
         startActivity(new Intent(ActivityMain.this, ActivityTinyWindow.class));
     }
 
-    public void clickDirectPlayButton(View view) {
+    public void clickDirectPlay(View view) {
         startActivity(new Intent(ActivityMain.this, ActivityDirectPlay.class));
     }
 
-    public void clickWebViewButton(View view) {
+    public void clickWebView(View view) {
         startActivity(new Intent(ActivityMain.this, ActivityWebView.class));
     }
 

@@ -66,19 +66,19 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void clickVideoSizeAcRotationButton(View view) {
+    public void clickRotationToNinety(View view) {
         Jzvd.setTextureViewRotation(90);
     }
 
-    public void clickVideoSizeAcFillParentButton(View view) {
+    public void clickVideoImageDisplayFillParent(View view) {
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT);
     }
 
-    public void clickVideoSizeAcFillCropButton(View view) {
+    public void clickVideoImageDisplayFillCrop(View view) {
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP);
     }
 
-    public void clickVideoSizeAcOriginalButton(View view) {
+    public void clickVideoImageDiaplayOriginal(View view) {
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL);
     }
 }

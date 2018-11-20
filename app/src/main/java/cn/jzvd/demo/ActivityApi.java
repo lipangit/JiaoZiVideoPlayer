@@ -128,29 +128,29 @@ public class ActivityApi extends AppCompatActivity {
         }
     }
 
-    public void clickApiAcSmallChangeButton(View view) {
+    public void clickSmallChange(View view) {
         startActivity(new Intent(ActivityApi.this, ActivityApiUISmallChange.class));
     }
 
-    public void clickApiAcBigChangeButton(View view) {
+    public void clickBigChange(View view) {
         Toast.makeText(ActivityApi.this, "Comming Soon", Toast.LENGTH_SHORT).show();
 //                startActivity(new Intent(ActivityApi.this, ActivityApiUIBigChange.class));
     }
 
-    public void clickApiAcOrientationButton(View view) {
+    public void clickOrientation(View view) {
         startActivity(new Intent(ActivityApi.this, ActivityApiOrientation.class));
 
     }
 
-    public void clickApiAcExtendsNormalButton(View view) {
+    public void clickExtendsNormalActivity(View view) {
         startActivity(new Intent(ActivityApi.this, ActivityApiExtendsNormal.class));
     }
 
-    public void clickApiAcRotationAndVideoSizeButton(View view) {
+    public void clickRotationAndVideoSize(View view) {
         startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
     }
 
-    public void clickApiAcCustomMediaPlayerButton(View view) {
+    public void clickCustomMediaPlayer(View view) {
         startActivity(new Intent(ActivityApi.this, ActivityApiCustomMediaPlayer.class));
     }
 }

@@ -86,21 +86,21 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
     }
 
 
-    public void clickMediaAcIjkplayerButton(View view) {
+    public void clickChangeToIjkplayer(View view) {
         Jzvd.releaseAllVideos();
         handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaIjkplayer()), 1000);
         Toast.makeText(ActivityApiCustomMediaPlayer.this, "Change to Ijkplayer", Toast.LENGTH_SHORT).show();
         finish();
     }
 
-    public void clickMediaAcSystemMediaPlayerButton(View view) {
+    public void clickChangeToSystemMediaPlayer(View view) {
         Jzvd.releaseAllVideos();
         handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaSystem()), 1000);
         Toast.makeText(this, "Change to MediaPlayer", Toast.LENGTH_SHORT).show();
         finish();
     }
 
-    public void clickMediaAcExoButton(View view) {
+    public void clickChangeToExo(View view) {
         Jzvd.releaseAllVideos();
         handler.postDelayed(() -> Jzvd.setMediaInterface(new JZExoPlayer()), 1000);
         Toast.makeText(this, "Change to ExoPlayer", Toast.LENGTH_SHORT).show();

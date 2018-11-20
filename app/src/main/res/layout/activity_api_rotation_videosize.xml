@@ -12,7 +12,7 @@
 
     <Button
         android:id="@+id/rotation_to_90"
-        android:onClick="clickVideoSizeAcRotationButton"
+        android:onClick="clickRotationToNinety"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -22,7 +22,7 @@
     <Button
         android:id="@+id/video_image_display_fill_parent"
         android:layout_width="match_parent"
-        android:onClick="clickVideoSizeAcFillParentButton"
+        android:onClick="clickVideoImageDisplayFillParent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="18dp"
@@ -32,7 +32,7 @@
         android:id="@+id/video_image_display_fill_crop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="clickVideoSizeAcFillCropButton"
+        android:onClick="clickVideoImageDisplayFillCrop"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="3dp"
         android:text="Video Image Fill Crop" />
@@ -40,7 +40,7 @@
     <Button
         android:id="@+id/video_image_diaplay_original"
         android:layout_width="match_parent"
-        android:onClick="clickVideoSizeAcOriginalButton"
+        android:onClick="clickVideoImageDiaplayOriginal"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="3dp"

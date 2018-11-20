@@ -33,22 +33,22 @@ public class ActivityListView extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void clickListAcNormalButton(View view) {
+    public void clickNormal(View view) {
         startActivity(new Intent(ActivityListView.this, ActivityListViewNormal.class));
 
     }
 
-    public void clickListAcViewPagerButton(View view) {
+    public void clickListViewFragmentViewpager(View view) {
         startActivity(new Intent(ActivityListView.this, ActivityListViewFragmentViewPager.class));
 
     }
 
-    public void clickListAcMultiholderButton(View view) {
+    public void clickMultiHolder(View view) {
         startActivity(new Intent(ActivityListView.this, ActivityListViewMultiHolder.class));
 
     }
 
-    public void clickListAcRecyclerViewButton(View view) {
+    public void clickRecyclerView(View view) {
         startActivity(new Intent(ActivityListView.this, ActivityListViewRecyclerView.class));
     }
 }

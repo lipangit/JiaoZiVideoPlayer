@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
-        android:onClick="clickListAcNormalButton"
+        android:onClick="clickNormal"
         android:text="Normal ListView" />
 
     <Button
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:onClick="clickListAcViewPagerButton"
+        android:onClick="clickListViewFragmentViewpager"
         android:text="ListView Fragment ViewPager" />
 
     <Button
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:onClick="clickListAcMultiholderButton"
+        android:onClick="clickMultiHolder"
         android:text="Multi Holder ListView" />
 
     <Button
@@ -34,6 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:onClick="clickListAcRecyclerViewButton"
+        android:onClick="clickRecyclerView"
         android:text="Recyleview" />
 </LinearLayout>

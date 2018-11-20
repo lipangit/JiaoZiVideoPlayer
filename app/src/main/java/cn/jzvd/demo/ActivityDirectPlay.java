@@ -52,11 +52,11 @@ public class ActivityDirectPlay extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void clickDirectAcFullScreenButton(View view) {
+    public void clickFullScreen(View view) {
         JzvdStd.startFullscreen(this, JzvdStd.class, VideoConstant.videoUrlList[6], "饺子辛苦了");
     }
 
-    public void clickDirectAcTinyWindowButton(View view) {
+    public void clickTinyWindow(View view) {
         Toast.makeText(ActivityDirectPlay.this, "Comming Soon", Toast.LENGTH_SHORT).show();
     }
 
