@@ -6,5 +6,5 @@
     <string name="no_url">No hay vídeo</string>
     <string name="replay">Volver a ver</string>
     <string name="click_to_restart">Haga clic para volver a intentarlo</string>
-    <string name="video_loading_faild">Error de carga de video</string>
+    <string name="video_loading_failed">Error de carga de video</string>
 </resources>
