@@ -57,7 +57,7 @@ Only five steps to use the player:
 implementation 'cn.jzvd:jiaozivideoplayer:6.4.0'
 ```
 
-Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.0) (not recommended).
+Or download [aar](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.0) (not recommended).
 
 2.Add `JZVideoPlayer` in your layout:
 ```xml
