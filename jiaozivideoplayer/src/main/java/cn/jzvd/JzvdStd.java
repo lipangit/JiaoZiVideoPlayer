@@ -363,7 +363,7 @@ public class JzvdStd extends Jzvd {
             dialog.dismiss();
             clearFloatScreen();
         });
-        builder.setOnCancelListener(dialog -> dialog.dismiss());
+        builder.setOnCancelListener(DialogInterface::dismiss);
         builder.create().show();
     }
 
