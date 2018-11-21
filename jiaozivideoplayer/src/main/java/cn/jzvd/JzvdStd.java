@@ -182,16 +182,16 @@ public class JzvdStd extends Jzvd {
     @Override
     public void changeUrl(int urlMapIndex, long seekToInAdvance) {
         super.changeUrl(urlMapIndex, seekToInAdvance);
-        loadingProgressBar.setVisibility(VISIBLE);
         startButton.setVisibility(INVISIBLE);
+        replayTextView.setVisibility(View.GONE);
     }
 
     @Override
     public void changeUrl(JZDataSource jzDataSource, long seekToInAdvance) {
         super.changeUrl(jzDataSource, seekToInAdvance);
         titleTextView.setText(jzDataSource.title);
-        loadingProgressBar.setVisibility(VISIBLE);
         startButton.setVisibility(INVISIBLE);
+        replayTextView.setVisibility(View.GONE);
     }
 
     @Override
@@ -513,10 +513,6 @@ public class JzvdStd extends Jzvd {
         switch (currentScreen) {
             case SCREEN_WINDOW_NORMAL:
             case SCREEN_WINDOW_LIST:
-                setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-                updateStartImage();
-                break;
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -652,17 +648,17 @@ public class JzvdStd extends Jzvd {
         if (currentState == CURRENT_STATE_PLAYING) {
             startButton.setVisibility(VISIBLE);
             startButton.setImageResource(R.drawable.jz_click_pause_selector);
-            replayTextView.setVisibility(INVISIBLE);
+            replayTextView.setVisibility(GONE);
         } else if (currentState == CURRENT_STATE_ERROR) {
             startButton.setVisibility(INVISIBLE);
-            replayTextView.setVisibility(INVISIBLE);
+            replayTextView.setVisibility(GONE);
         } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
             startButton.setVisibility(VISIBLE);
             startButton.setImageResource(R.drawable.jz_click_replay_selector);
             replayTextView.setVisibility(VISIBLE);
         } else {
             startButton.setImageResource(R.drawable.jz_click_play_selector);
-            replayTextView.setVisibility(INVISIBLE);
+            replayTextView.setVisibility(GONE);
         }
     }
 
