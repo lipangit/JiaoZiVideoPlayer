@@ -381,7 +381,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         mScreenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
-
+        jzDataSource = new JZDataSource("");
         try {
             if (isCurrentPlay()) {
                 NORMAL_ORIENTATION = ((AppCompatActivity) context).getRequestedOrientation();
