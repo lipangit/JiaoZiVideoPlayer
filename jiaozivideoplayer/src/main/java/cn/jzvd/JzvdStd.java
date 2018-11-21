@@ -353,28 +353,17 @@ public class JzvdStd extends Jzvd {
         super.showWifiDialog();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(getResources().getString(R.string.tips_not_wifi));
-        builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                onEvent(JZUserActionStd.ON_CLICK_START_WIFIDIALOG);
-                startVideo();
-                WIFI_TIP_DIALOG_SHOWED = true;
-            }
+        builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), (dialog, which) -> {
+            dialog.dismiss();
+            onEvent(JZUserActionStd.ON_CLICK_START_WIFIDIALOG);
+            startVideo();
+            WIFI_TIP_DIALOG_SHOWED = true;
         });
-        builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                clearFloatScreen();
-            }
+        builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), (dialog, which) -> {
+            dialog.dismiss();
+            clearFloatScreen();
         });
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                dialog.dismiss();
-            }
-        });
+        builder.setOnCancelListener(dialog -> dialog.dismiss());
         builder.create().show();
     }
 
