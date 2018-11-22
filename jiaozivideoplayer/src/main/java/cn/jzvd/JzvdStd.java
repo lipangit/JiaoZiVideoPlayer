@@ -184,6 +184,7 @@ public class JzvdStd extends Jzvd {
         super.changeUrl(urlMapIndex, seekToInAdvance);
         startButton.setVisibility(INVISIBLE);
         replayTextView.setVisibility(View.GONE);
+        mRetryLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -192,6 +193,7 @@ public class JzvdStd extends Jzvd {
         titleTextView.setText(jzDataSource.title);
         startButton.setVisibility(INVISIBLE);
         replayTextView.setVisibility(View.GONE);
+        mRetryLayout.setVisibility(View.GONE);
     }
 
     @Override
