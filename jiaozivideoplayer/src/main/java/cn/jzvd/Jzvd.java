@@ -594,14 +594,17 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void startVideo() {
         JzvdMgr.completeAll();
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
+        // 从下面移上来，不然会导致NPE
+        JZMediaManager.setDataSource(jzDataSource);
+        JZMediaManager.instance().positionInList = positionInList;
+        JZMediaManager.instance().preparePlayer();
+
         initTextureView();
         addTextureView();
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
         JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        JZMediaManager.setDataSource(jzDataSource);
-        JZMediaManager.instance().positionInList = positionInList;
         onStatePreparing();
         JzvdMgr.setFirstFloor(this);
     }

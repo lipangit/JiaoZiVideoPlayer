@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:orientation="horizontal"
+    tools:background="#FFFFFF"
+    >
+
+    <ImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginLeft="18dp"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.Compat.Notification.Title"
+            android:textSize="20sp"
+            tools:text="JZJZZJZJZJZJZJZJZJ"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="8dp"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_btn_previous"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="center"
+                app:srcCompat="@drawable/app_ic_previous_video"/>
+
+            <ImageView
+                android:id="@+id/iv_btn_play"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:scaleType="center"
+                app:srcCompat="@drawable/app_ic_play"/>
+
+            <ImageView
+                android:id="@+id/iv_btn_next"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="center"
+                app:srcCompat="@drawable/app_ic_next_video"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
