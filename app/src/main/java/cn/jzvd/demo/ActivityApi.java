@@ -27,8 +27,7 @@ import cn.jzvd.JzvdStd;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityApi extends AppCompatActivity implements View.OnClickListener {
-    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity, mRationAndVideoSize, mCustomMediaPlayer;
+public class ActivityApi extends AppCompatActivity {
     JzvdStd mJzvdStd;
     Jzvd.JZAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
@@ -42,21 +41,6 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         getSupportActionBar().setDisplayUseLogoEnabled(false);
         getSupportActionBar().setTitle("Api");
         setContentView(R.layout.activity_api);
-
-        mSmallChange = findViewById(R.id.small_change);
-        mBigChange = findViewById(R.id.big_change);
-        mOrientation = findViewById(R.id.orientation);
-        mExtendsNormalActivity = findViewById(R.id.extends_normal_activity);
-        mRationAndVideoSize = findViewById(R.id.rotation_and_videosize);
-        mCustomMediaPlayer = findViewById(R.id.custom_mediaplayer);
-
-        mSmallChange.setOnClickListener(this);
-        mBigChange.setOnClickListener(this);
-        mOrientation.setOnClickListener(this);
-        mExtendsNormalActivity.setOnClickListener(this);
-        mRationAndVideoSize.setOnClickListener(this);
-        mCustomMediaPlayer.setOnClickListener(this);
-
 
         mJzvdStd = findViewById(R.id.jz_video);
         LinkedHashMap map = new LinkedHashMap();
@@ -87,30 +71,6 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         mSensorEventListener = new Jzvd.JZAutoFullscreenListener();
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.small_change:
-                startActivity(new Intent(ActivityApi.this, ActivityApiUISmallChange.class));
-                break;
-            case R.id.big_change:
-                Toast.makeText(ActivityApi.this, "Comming Soon", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(ActivityApi.this, ActivityApiUIBigChange.class));
-                break;
-            case R.id.orientation:
-                startActivity(new Intent(ActivityApi.this, ActivityApiOrientation.class));
-                break;
-            case R.id.extends_normal_activity:
-                startActivity(new Intent(ActivityApi.this, ActivityApiExtendsNormal.class));
-                break;
-            case R.id.rotation_and_videosize:
-                startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
-                break;
-            case R.id.custom_mediaplayer:
-                startActivity(new Intent(ActivityApi.this, ActivityApiCustomMediaPlayer.class));
-                break;
-        }
-    }
 
     @Override
     protected void onResume() {
@@ -166,5 +126,31 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void clickSmallChange(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityApiUISmallChange.class));
+    }
+
+    public void clickBigChange(View view) {
+        Toast.makeText(ActivityApi.this, "Comming Soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(ActivityApi.this, ActivityApiUIBigChange.class));
+    }
+
+    public void clickOrientation(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityApiOrientation.class));
+
+    }
+
+    public void clickExtendsNormalActivity(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityApiExtendsNormal.class));
+    }
+
+    public void clickRotationAndVideoSize(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
+    }
+
+    public void clickCustomMediaPlayer(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityApiCustomMediaPlayer.class));
     }
 }

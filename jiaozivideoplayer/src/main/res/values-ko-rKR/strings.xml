@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tips_not_wifi">현재 모바일 네트워크를 사용 중이면 계속 플레이어가 트래픽을 소비합니다</string>
+    <string name="tips_not_wifi_confirm">재생 다시 시작</string>
+    <string name="tips_not_wifi_cancel">재생을 중지</string>
+    <string name="no_url">재생 주소 없음</string>
+    <string name="replay">재생 다시 시작</string>
+    <string name="click_to_restart">다시 시도 하십시오</string>
+    <string name="video_loading_failed">버퍼링 실패</string>
+</resources>

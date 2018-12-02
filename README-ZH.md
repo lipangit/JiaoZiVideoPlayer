@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.4.0-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.4.1-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -25,11 +25,12 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 10. Home键退出界面暂停播放，返回界面继续播放
 11. WebView嵌套本地视频控件
 12. demo中添加视频缓存的例子
+13. 倍速播放
 
 ## 使用步骤
 
 1. 通读ReadMe
-2. 下载安装demo apk [jiaozivideoplayer-6.4.0.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.4.0/jiaozivideoplayer-6.4.0.apk)，各个页面都进入一次，各个按钮点一次
+2. 下载安装demo apk [jiaozivideoplayer-6.4.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.4.1/jiaozivideoplayer-6.4.1.apk)，各个页面都进入一次，各个按钮点一次
 3. 下载调试develop分支，有针对性的通过效果找到实现的源码
 4. 看[自定义相关的WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，实现自己的需求
 
@@ -48,10 +49,10 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 
 1.添加类库
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:6.4.0'
+compile 'cn.jzvd:jiaozivideoplayer:6.4.1'
 ```
 
-或直接下载 [jar包](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.0) (不建议)
+或直接下载 [aar](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.1) (不建议)
 
 2.添加布局
 ```xml
@@ -136,8 +137,6 @@ protected void onPause() {
 ## [任务发布](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E4%BB%BB%E5%8A%A1%E5%8F%91%E5%B8%83)
 
 ## [打赏](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E6%89%93%E8%B5%8F%E5%92%8C%E5%92%A8%E8%AF%A2)
-
-这项目是专门给中小app集成视频播放的，极大降低开发成本，如果给您节省了成吨的时间，建议零售价:打赏500元
 
 ![打赏][2]
 

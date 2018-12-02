@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.4.0-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-6.4.1-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -30,11 +30,12 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 10. Home key to exit the interface to suspend the playback, return to the interface to continue playing
 11. WebView Nested Local Video Controls
 12. VideoCache in demo
+13. PlayBack speed
 
 ## Steps for usage
 
 1. Read through ReadMe
-2. Download and install the demo apk[jiaozivideoplayer-6.4.0.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.4.0/jiaozivideoplayer-6.4.0.apk), each page enters once, each button clicks once
+2. Download and install the demo apk[jiaozivideoplayer-6.4.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.4.1/jiaozivideoplayer-6.4.1.apk), each page enters once, each button clicks once
 3. Download and debug the develop branch, and find the source code through the effect
 4. See [custom-related WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，Realize your own needs
 
@@ -53,10 +54,10 @@ Only five steps to use the player:
 
 1.Import library:
 ```gradle
-implementation 'cn.jzvd:jiaozivideoplayer:6.4.0'
+implementation 'cn.jzvd:jiaozivideoplayer:6.4.1'
 ```
 
-Or download [lib](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.0) (not recommended).
+Or download [aar](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.1) (not recommended).
 
 2.Add `JZVideoPlayer` in your layout:
 ```xml
@@ -118,8 +119,6 @@ protected void onPause() {
 2. [の伤也快乐](https://github.com/jmhjmh) QQ:466278628
 
 ## Reward
-
-This project is dedicated to the integration of small and medium video playback app, greatly reducing the cost of development. If you save tons of time, we suggest a retail price of 76 USD. (It's not expensive, get a two-year project worth more than that)
 
 ![Reward][2]
 

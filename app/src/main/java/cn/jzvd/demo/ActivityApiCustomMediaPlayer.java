@@ -25,8 +25,7 @@ import cn.jzvd.demo.CustomMediaPlayer.JZMediaIjkplayer;
  * Created by Nathen on 2017/11/23.
  */
 
-public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements View.OnClickListener {
-    Button mChangeToIjk, mChangeToSystemMediaPlayer, mChangeToExo;
+public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
     JzvdStd jzvdStd;
     Handler handler = new Handler();//这里其实并不需要handler，为了防止播放中切换播放器引擎导致的崩溃，实际使用时一般不会遇到，可以随时调用JZVideoPlayer.setMediaInterface();
 
@@ -41,13 +40,6 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
         setContentView(R.layout.activity_api_custom_mediaplayer);
 
         jzvdStd = findViewById(R.id.videoplayer);
-        mChangeToIjk = findViewById(R.id.change_to_ijkplayer);
-        mChangeToSystemMediaPlayer = findViewById(R.id.change_to_system_mediaplayer);
-        mChangeToExo = findViewById(R.id.change_to_exo);
-
-        mChangeToIjk.setOnClickListener(this);
-        mChangeToSystemMediaPlayer.setOnClickListener(this);
-        mChangeToExo.setOnClickListener(this);
 
         JZDataSource jzDataSource = null;
         try {
@@ -64,29 +56,6 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
         Jzvd.setMediaInterface(new CustomMediaPlayerAssertFolder());//进入此页面修改MediaInterface，让此页面的jzvd正常工作
     }
 
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.change_to_ijkplayer:
-                Jzvd.releaseAllVideos();
-                handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaIjkplayer()), 1000);
-                Toast.makeText(ActivityApiCustomMediaPlayer.this, "Change to Ijkplayer", Toast.LENGTH_SHORT).show();
-                finish();
-                break;
-            case R.id.change_to_system_mediaplayer:
-                Jzvd.releaseAllVideos();
-                handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaSystem()), 1000);
-                Toast.makeText(this, "Change to MediaPlayer", Toast.LENGTH_SHORT).show();
-                finish();
-                break;
-            case R.id.change_to_exo:
-                Jzvd.releaseAllVideos();
-                handler.postDelayed(() -> Jzvd.setMediaInterface(new JZExoPlayer()), 1000);
-                Toast.makeText(this, "Change to ExoPlayer", Toast.LENGTH_SHORT).show();
-                finish();
-                break;
-        }
-    }
 
     @Override
     public void onBackPressed() {
@@ -116,4 +85,25 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity implements V
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void clickChangeToIjkplayer(View view) {
+        Jzvd.releaseAllVideos();
+        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaIjkplayer()), 1000);
+        Toast.makeText(ActivityApiCustomMediaPlayer.this, "Change to Ijkplayer", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    public void clickChangeToSystemMediaPlayer(View view) {
+        Jzvd.releaseAllVideos();
+        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaSystem()), 1000);
+        Toast.makeText(this, "Change to MediaPlayer", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    public void clickChangeToExo(View view) {
+        Jzvd.releaseAllVideos();
+        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZExoPlayer()), 1000);
+        Toast.makeText(this, "Change to ExoPlayer", Toast.LENGTH_SHORT).show();
+        finish();
+    }
 }

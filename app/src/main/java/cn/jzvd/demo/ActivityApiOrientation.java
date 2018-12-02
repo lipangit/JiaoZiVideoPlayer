@@ -32,10 +32,13 @@ public class ActivityApiOrientation extends AppCompatActivity {
         Glide.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzvdStd.thumbImageView);
+    }
 
-        Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         Jzvd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-
     }
 
     @Override
@@ -52,7 +55,7 @@ public class ActivityApiOrientation extends AppCompatActivity {
         Jzvd.releaseAllVideos();
 
         //Change these two variables back
-        Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR;
+        Jzvd.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
         Jzvd.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     }
 
