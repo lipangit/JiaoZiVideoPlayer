@@ -138,8 +138,6 @@ protected void onPause() {
 
 ## [打赏](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#%E6%89%93%E8%B5%8F%E5%92%8C%E5%92%A8%E8%AF%A2)
 
-这项目是专门给中小app集成视频播放的，极大降低开发成本，如果给您节省了成吨的时间，建议零售价:打赏500元
-
 ![打赏][2]
 
 ## License MIT

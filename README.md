@@ -120,8 +120,6 @@ protected void onPause() {
 
 ## Reward
 
-This project is dedicated to the integration of small and medium video playback app, greatly reducing the cost of development. If you save tons of time, we suggest a retail price of 76 USD. (It's not expensive, get a two-year project worth more than that)
-
 ![Reward][2]
 
 ## License MIT
