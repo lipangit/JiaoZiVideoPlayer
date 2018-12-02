@@ -762,6 +762,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             backPress();
         }
         JZMediaManager.instance().releaseMediaPlayer();
+        JZUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JZUtils.saveProgress(getContext(), jzDataSource.getCurrentUrl(), 0);
     }
 
