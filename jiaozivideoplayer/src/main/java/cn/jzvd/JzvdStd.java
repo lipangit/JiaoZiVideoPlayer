@@ -263,7 +263,7 @@ public class JzvdStd extends Jzvd {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.thumb) {
-            if (jzDataSource.urlsMap.isEmpty() || jzDataSource.getCurrentUrl() == null) {
+            if (jzDataSource == null ||jzDataSource.urlsMap.isEmpty() || jzDataSource.getCurrentUrl() == null) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
