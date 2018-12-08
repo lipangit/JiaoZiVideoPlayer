@@ -109,9 +109,10 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:paddingLeft="10dp"
         android:background="@drawable/jz_title_bg"
-        android:paddingStart="10dp">
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/back"
@@ -150,7 +151,8 @@
             android:layout_marginEnd="14dp"
             android:layout_marginRight="14dp"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="invisible">
 
             <ImageView
                 android:id="@+id/battery_level"
@@ -215,7 +217,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <TextView
             android:layout_width="wrap_content"
