@@ -32,7 +32,8 @@ public class JzvdStdSpeed extends JzvdStd {
     @Override
     public void setUp(JZDataSource jzDataSource, int screen) {
         super.setUp(jzDataSource, screen);
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+        if (currentScreen == SCREEN_WINDOW_FULLSCREEN &&
+                android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             tvSpeed.setVisibility(View.VISIBLE);
         } else {
             tvSpeed.setVisibility(View.GONE);
