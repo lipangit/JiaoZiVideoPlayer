@@ -150,8 +150,7 @@
             android:layout_marginEnd="14dp"
             android:layout_marginRight="14dp"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:visibility="invisible">
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/battery_level"
@@ -187,8 +186,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_gravity="center_vertical"
-        android:visibility="invisible">
+        android:layout_gravity="center_vertical">
 
         <ImageView
             android:id="@+id/start"
@@ -217,8 +215,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:visibility="invisible">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
