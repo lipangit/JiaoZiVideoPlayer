@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="afterDescendants">
 
     <FrameLayout
         android:id="@+id/surface_container"
@@ -241,4 +241,10 @@
             android:textColor="@android:color/white"
             android:textSize="14sp" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/et"
+
+        android:layout_width="200dp"
+        android:layout_height="40dp" />
 </RelativeLayout>
