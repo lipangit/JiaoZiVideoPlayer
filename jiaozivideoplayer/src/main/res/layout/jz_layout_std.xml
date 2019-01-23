@@ -241,10 +241,4 @@
             android:textColor="@android:color/white"
             android:textSize="14sp" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/et"
-
-        android:layout_width="200dp"
-        android:layout_height="40dp" />
 </RelativeLayout>
