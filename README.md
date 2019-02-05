@@ -35,7 +35,7 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 ## Steps for usage
 
 1. Read through ReadMe
-2. Download and install the demo apk[jiaozivideoplayer-6.4.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.4.1/jiaozivideoplayer-6.4.1.apk), each page enters once, each button clicks once
+2. Download and install the demo apk[jiaozivideoplayer-6.4.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.4.2/jiaozivideoplayer-6.4.1.apk), each page enters once, each button clicks once
 3. Download and debug the develop branch, and find the source code through the effect
 4. See [custom-related WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，Realize your own needs
 
@@ -57,7 +57,7 @@ Only five steps to use the player:
 implementation 'cn.jzvd:jiaozivideoplayer:6.4.1'
 ```
 
-Or download [aar](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.1) (not recommended).
+Or download [aar](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.2) (not recommended).
 
 2.Add `JZVideoPlayer` in your layout:
 ```xml
