@@ -72,6 +72,15 @@
                 android:onClick="clickCustomMediaPlayer"
                 android:text="Custom MediaPlayer" />
 
+            <Button
+                android:id="@+id/background_play"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:onClick="clickBackGroundPlayer"
+                android:text="Background Play" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

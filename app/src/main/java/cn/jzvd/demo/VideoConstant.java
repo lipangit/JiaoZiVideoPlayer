@@ -83,6 +83,17 @@ public class VideoConstant {
                     }
             };
 
+    public static String[] videoTitleList =
+            {
+                    "第一集",
+                    "第二集",
+                    "第三集",
+                    "第四集",
+                    "第五集",
+                    "第六集",
+                    "第七集"
+            };
+
     public static String[][] videoTitles =
             {
                     {
