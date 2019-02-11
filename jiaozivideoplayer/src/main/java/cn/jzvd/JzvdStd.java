@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -231,10 +232,25 @@ public class JzvdStd extends Jzvd {
     public boolean onTouch(View v, MotionEvent event) {
         int id = v.getId();
         if (id == R.id.surface_container) {
+            float x = event.getX();
+            float y = event.getY();
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     break;
                 case MotionEvent.ACTION_MOVE:
+                    if (JzvdMgr.getCurrentJzvd() != null &&
+                            JzvdMgr.getCurrentJzvd().currentScreen == Jzvd.SCREEN_WINDOW_TINY) {
+                        Log.e("拖动", "x:" + event.getRawX() + ",y:" + event.getRawY());
+                        // 计算偏移量
+                        int offsetX = (int) (event.getX() - mDownX);
+                        int offsetY = (int) (event.getY() - mDownY);
+                        // 在当前left、top、right、bottom的基础上加上偏移量
+
+                        layout(getLeft() + offsetX,
+                                getTop() + offsetY,
+                                getRight() + offsetX,
+                                getBottom() + offsetY);
+                    }
                     break;
                 case MotionEvent.ACTION_UP:
                     startDismissControlViewTimer();
@@ -243,7 +259,10 @@ public class JzvdStd extends Jzvd {
                         int progress = (int) (mSeekTimePosition * 100 / (duration == 0 ? 1 : duration));
                         bottomProgressBar.setProgress(progress);
                     }
-                    if (!mChangePosition && !mChangeVolume) {
+                    float offsetX = Math.abs(x - mDownX);
+                    float offsetY = Math.abs(y - mDownY);
+                    Log.e(TAG, "onTouch: offsetX->" + offsetX + ",offsetY->" + offsetY);
+                    if (!mChangePosition && !mChangeVolume && offsetX <= 0 && offsetY <= 0) {
                         onEvent(JZUserActionStd.ON_CLICK_BLANK);
                         onClickUiToggle();
                     }
