@@ -753,9 +753,10 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         Runtime.getRuntime().gc();
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
         onEvent(JZUserAction.ON_AUTO_COMPLETE);
-        dismissVolumeDialog();
-        dismissProgressDialog();
+        cancelProgressTimer();
         dismissBrightnessDialog();
+        dismissProgressDialog();
+        dismissVolumeDialog();
         onStateAutoComplete();
 
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN || currentScreen == SCREEN_WINDOW_TINY) {
