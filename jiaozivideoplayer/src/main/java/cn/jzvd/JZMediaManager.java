@@ -19,9 +19,6 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
     public static final int HANDLER_PREPARE = 0;
     public static final int HANDLER_RELEASE = 2;
 
-    public static JZTextureView textureView;
-    public static SurfaceTexture savedSurfaceTexture;
-    public static Surface surface;
     public static JZMediaManager jzMediaManager;
     public int positionInList = -1;
     public JZMediaInterface jzMediaInterface;
@@ -113,12 +110,12 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
     public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
         if (JzvdMgr.getCurrentJzvd() == null) return;
         Log.i(TAG, "onSurfaceTextureAvailable [" + JzvdMgr.getCurrentJzvd().hashCode() + "] ");
-        if (savedSurfaceTexture == null) {
-            savedSurfaceTexture = surfaceTexture;
-            prepare();
-        } else {
-            textureView.setSurfaceTexture(savedSurfaceTexture);
-        }
+//        if (savedSurfaceTexture == null) {
+//            savedSurfaceTexture = surfaceTexture;
+        prepare();
+//        } else {
+//            textureView.setSurfaceTexture(savedSurfaceTexture);
+//        }
     }
 
     @Override
@@ -128,7 +125,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
 
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
-        return savedSurfaceTexture == null;
+        return true;
     }
 
     @Override
@@ -151,13 +148,13 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
                     currentVideoHeight = 0;
                     jzMediaInterface.prepare();
 
-                    if (savedSurfaceTexture != null) {
-                        if (surface != null) {
-                            surface.release();
-                        }
-                        surface = new Surface(savedSurfaceTexture);
-                        jzMediaInterface.setSurface(surface);
-                    }
+//                    if (savedSurfaceTexture != null) {
+//                        if (surface != null) {
+//                            surface.release();
+//                        }
+//                        surface = new Surface(savedSurfaceTexture);
+//                        jzMediaInterface.setSurface(surface);
+//                    }
                     break;
                 case HANDLER_RELEASE:
                     jzMediaInterface.release();

@@ -45,6 +45,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 //                method.invoke(mediaPlayer, currentDataSource.toString(), null);
 //            }
             mediaPlayer.prepareAsync();
+            mediaPlayer.setSurface(new Surface(JzvdMgr.getCurrentJzvd().textureView.getSurfaceTexture()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,7 +96,6 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void setSurface(Surface surface) {
-        mediaPlayer.setSurface(surface);
     }
 
     @Override

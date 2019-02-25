@@ -342,15 +342,15 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public static void setTextureViewRotation(int rotation) {
-        if (JZMediaManager.textureView != null) {
-            JZMediaManager.textureView.setRotation(rotation);
+        if (JzvdMgr.getCurrentJzvd() != null && JzvdMgr.getCurrentJzvd().textureView != null) {
+            JzvdMgr.getCurrentJzvd().textureView.setRotation(rotation);
         }
     }
 
     public static void setVideoImageDisplayType(int type) {
         Jzvd.VIDEO_IMAGE_DISPLAY_TYPE = type;
-        if (JZMediaManager.textureView != null) {
-            JZMediaManager.textureView.requestLayout();
+        if (JzvdMgr.getCurrentJzvd() != null && JzvdMgr.getCurrentJzvd().textureView != null) {
+            JzvdMgr.getCurrentJzvd().textureView.requestLayout();
         }
     }
 
@@ -778,7 +778,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         dismissProgressDialog();
         dismissVolumeDialog();
         onStateNormal();
-        textureViewContainer.removeView(JZMediaManager.textureView);
+        if (textureView != null) textureViewContainer.removeView(textureView);
         JZMediaManager.instance().currentVideoWidth = 0;
         JZMediaManager.instance().currentVideoHeight = 0;
 
@@ -788,11 +788,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         clearFullscreenLayout();
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
 
-        if (JZMediaManager.surface != null) JZMediaManager.surface.release();
-        if (JZMediaManager.savedSurfaceTexture != null)
-            JZMediaManager.savedSurfaceTexture.release();
-        JZMediaManager.textureView = null;
-        JZMediaManager.savedSurfaceTexture = null;
     }
 
     public void release() {
@@ -810,10 +805,12 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    JZTextureView textureView;
+
     public void initTextureView() {
-        removeTextureView();
-        JZMediaManager.textureView = new JZTextureView(getContext().getApplicationContext());
-        JZMediaManager.textureView.setSurfaceTextureListener(JZMediaManager.instance());
+        if (textureView != null) textureViewContainer.removeView(textureView);
+        textureView = new JZTextureView(getContext().getApplicationContext());
+        textureView.setSurfaceTextureListener(JZMediaManager.instance());
     }
 
     public void addTextureView() {
@@ -823,14 +820,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         Gravity.CENTER);
-        textureViewContainer.addView(JZMediaManager.textureView, layoutParams);
-    }
-
-    public void removeTextureView() {
-        JZMediaManager.savedSurfaceTexture = null;
-        if (JZMediaManager.textureView != null && JZMediaManager.textureView.getParent() != null) {
-            ((ViewGroup) JZMediaManager.textureView.getParent()).removeView(JZMediaManager.textureView);
-        }
+        textureViewContainer.addView(textureView, layoutParams);
     }
 
     public void clearFullscreenLayout() {
@@ -857,24 +847,20 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
         if (fullJzvd != null) {
             vp.removeView(fullJzvd);
-            if (fullJzvd.textureViewContainer != null)
-                fullJzvd.textureViewContainer.removeView(JZMediaManager.textureView);
         }
         if (tinyJzvd != null) {
             vp.removeView(tinyJzvd);
-            if (tinyJzvd.textureViewContainer != null)
-                tinyJzvd.textureViewContainer.removeView(JZMediaManager.textureView);
         }
         JzvdMgr.setSecondFloor(null);
     }
 
     public void onVideoSizeChanged() {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
-        if (JZMediaManager.textureView != null) {
+        if (textureView != null) {
             if (videoRotation != 0) {
-                JZMediaManager.textureView.setRotation(videoRotation);
+                textureView.setRotation(videoRotation);
             }
-            JZMediaManager.textureView.setVideoSize(JZMediaManager.instance().currentVideoWidth, JZMediaManager.instance().currentVideoHeight);
+            textureView.setVideoSize(JZMediaManager.instance().currentVideoWidth, JZMediaManager.instance().currentVideoHeight);
         }
     }
 
@@ -1001,7 +987,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         if (old != null) {
             vp.removeView(old);
         }
-        textureViewContainer.removeView(JZMediaManager.textureView);
+//        textureViewContainer.removeView(JZMediaManager.textureView);
         try {
             Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
             Jzvd jzvd = constructor.newInstance(getContext());
@@ -1040,7 +1026,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         if (old != null) {
             vp.removeView(old);
         }
-        textureViewContainer.removeView(JZMediaManager.textureView);
+//        textureViewContainer.removeView(JZMediaManager.textureView);
 
         try {
             Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
