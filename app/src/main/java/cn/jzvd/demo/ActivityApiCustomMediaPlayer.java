@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -17,9 +16,9 @@ import cn.jzvd.JZDataSource;
 import cn.jzvd.JZMediaSystem;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-import cn.jzvd.demo.CustomMediaPlayer.CustomMediaPlayerAssertFolder;
-import cn.jzvd.demo.CustomMediaPlayer.JZExoPlayer;
-import cn.jzvd.demo.CustomMediaPlayer.JZMediaIjkplayer;
+import cn.jzvd.demo.CustomPlayer.CustomMediaPlayerAssertFolder;
+import cn.jzvd.demo.CustomPlayer.JZExoPlayer;
+import cn.jzvd.demo.CustomPlayer.JZMediaIjkplayer;
 
 /**
  * Created by Nathen on 2017/11/23.

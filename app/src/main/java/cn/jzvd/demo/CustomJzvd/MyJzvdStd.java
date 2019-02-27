@@ -1,4 +1,4 @@
-package cn.jzvd.demo.CustomView;
+package cn.jzvd.demo.CustomJzvd;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -137,14 +137,14 @@ public class MyJzvdStd extends JzvdStd {
         super.onError(what, extra);
     }
 
-    @Override
-    public void startWindowFullscreen() {
-        super.startWindowFullscreen();
-    }
-
-    @Override
-    public void startWindowTiny() {
-        super.startWindowTiny();
-    }
+//    @Override
+//    public void startWindowFullscreen() {
+//        super.startWindowFullscreen();
+//    }
+//
+//    @Override
+//    public void startWindowTiny() {
+//        super.startWindowTiny();
+//    }
 
 }

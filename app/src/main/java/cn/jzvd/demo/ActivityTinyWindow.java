@@ -67,7 +67,7 @@ public class ActivityTinyWindow extends AppCompatActivity {
 
 
     public void clickTinyWindow(View view) {
-        mJzvdStd.startWindowTiny();
+//        mJzvdStd.startWindowTiny();
     }
 
     public void clickAutoTinyListView(View view) {

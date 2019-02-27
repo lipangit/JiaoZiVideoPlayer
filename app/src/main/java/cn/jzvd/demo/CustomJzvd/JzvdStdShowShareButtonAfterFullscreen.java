@@ -1,4 +1,4 @@
-package cn.jzvd.demo.CustomView;
+package cn.jzvd.demo.CustomJzvd;
 
 import android.content.Context;
 import android.util.AttributeSet;

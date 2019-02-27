@@ -148,13 +148,6 @@ public class JzvdStd extends Jzvd {
             clarity.setVisibility(View.GONE);
         }
         setSystemTimeAndBattery();
-
-
-        if (tmp_test_back) {
-            tmp_test_back = false;
-            JzvdMgr.setFirstFloor(this);
-            backPress();
-        }
     }
 
     public void changeStartButtonSize(int size) {
@@ -288,11 +281,11 @@ public class JzvdStd extends Jzvd {
         } else if (i == R.id.back) {
             backPress();
         } else if (i == R.id.back_tiny) {
-            if (JzvdMgr.getFirstFloor().currentScreen == Jzvd.SCREEN_WINDOW_LIST) {
-                quitFullscreenOrTinyWindow();
-            } else {
-                backPress();
-            }
+//            if (JzvdMgr.getFirstFloor().currentScreen == Jzvd.SCREEN_WINDOW_LIST) {
+//                quitFullscreenOrTinyWindow();
+//            } else {
+//                backPress();
+//            }
         } else if (i == R.id.clarity) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

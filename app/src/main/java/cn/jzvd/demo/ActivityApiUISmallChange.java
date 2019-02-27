@@ -9,13 +9,13 @@ import com.bumptech.glide.Glide;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-import cn.jzvd.demo.CustomView.JzvdStdAutoCompleteAfterFullscreen;
-import cn.jzvd.demo.CustomView.JzvdStdMp3;
-import cn.jzvd.demo.CustomView.JzvdStdShowShareButtonAfterFullscreen;
-import cn.jzvd.demo.CustomView.JzvdStdShowTextureViewAfterAutoComplete;
-import cn.jzvd.demo.CustomView.JzvdStdShowTitleAfterFullscreen;
-import cn.jzvd.demo.CustomView.JzvdStdSpeed;
-import cn.jzvd.demo.CustomView.JzvdStdVolumeAfterFullscreen;
+import cn.jzvd.demo.CustomJzvd.JzvdStdAutoCompleteAfterFullscreen;
+import cn.jzvd.demo.CustomJzvd.JzvdStdMp3;
+import cn.jzvd.demo.CustomJzvd.JzvdStdShowShareButtonAfterFullscreen;
+import cn.jzvd.demo.CustomJzvd.JzvdStdShowTextureViewAfterAutoComplete;
+import cn.jzvd.demo.CustomJzvd.JzvdStdShowTitleAfterFullscreen;
+import cn.jzvd.demo.CustomJzvd.JzvdStdSpeed;
+import cn.jzvd.demo.CustomJzvd.JzvdStdVolumeAfterFullscreen;
 
 /**
  * Created by Nathen on 16/7/31.

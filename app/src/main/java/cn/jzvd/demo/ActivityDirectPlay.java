@@ -53,7 +53,7 @@ public class ActivityDirectPlay extends AppCompatActivity {
     }
 
     public void clickFullScreen(View view) {
-        JzvdStd.startFullscreen(this, JzvdStd.class, VideoConstant.videoUrlList[6], "饺子辛苦了");
+//        JzvdStd.startFullscreen(this, JzvdStd.class, VideoConstant.videoUrlList[6], "饺子辛苦了");
     }
 
     public void clickTinyWindow(View view) {

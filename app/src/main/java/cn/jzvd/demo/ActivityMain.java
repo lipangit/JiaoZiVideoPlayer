@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import com.bumptech.glide.Glide;
 
@@ -14,7 +13,7 @@ import cn.jzvd.JZUserAction;
 import cn.jzvd.JZUserActionStd;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-import cn.jzvd.demo.CustomView.MyJzvdStd;
+import cn.jzvd.demo.CustomJzvd.MyJzvdStd;
 
 /**
  * Created by Nathen on 16/7/22.

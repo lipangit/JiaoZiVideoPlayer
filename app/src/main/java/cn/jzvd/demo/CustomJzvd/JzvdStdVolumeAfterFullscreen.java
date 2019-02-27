@@ -1,4 +1,4 @@
-package cn.jzvd.demo.CustomView;
+package cn.jzvd.demo.CustomJzvd;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -29,21 +29,21 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
         }
     }
 
-    /**
-     * 进入全屏模式的时候关闭静音模式
-     */
-    @Override
-    public void startWindowFullscreen() {
-        super.startWindowFullscreen();
-        JZMediaManager.instance().jzMediaInterface.setVolume(1f, 1f);
-    }
-
-    /**
-     * 退出全屏模式的时候开启静音模式
-     */
-    @Override
-    public void playOnThisJzvd() {
-        super.playOnThisJzvd();
-        JZMediaManager.instance().jzMediaInterface.setVolume(0f, 0f);
-    }
+//    /**
+//     * 进入全屏模式的时候关闭静音模式
+//     */
+//    @Override
+//    public void startWindowFullscreen() {
+//        super.startWindowFullscreen();
+//        JZMediaManager.instance().jzMediaInterface.setVolume(1f, 1f);
+//    }
+//
+//    /**
+//     * 退出全屏模式的时候开启静音模式
+//     */
+//    @Override
+//    public void playOnThisJzvd() {
+//        super.playOnThisJzvd();
+//        JZMediaManager.instance().jzMediaInterface.setVolume(0f, 0f);
+//    }
 }

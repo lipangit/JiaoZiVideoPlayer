@@ -1,4 +1,4 @@
-package cn.jzvd.demo.CustomMediaPlayer;
+package cn.jzvd.demo.CustomPlayer;
 
 import android.content.Context;
 import android.net.Uri;
