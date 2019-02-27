@@ -22,8 +22,6 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
     public static JZMediaManager jzMediaManager;
     public int positionInList = -1;
     public JZMediaInterface jzMediaInterface;
-    public int currentVideoWidth = 0;
-    public int currentVideoHeight = 0;
 
     public HandlerThread mMediaHandlerThread;
     public MediaHandler mMediaHandler;
@@ -144,17 +142,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
             super.handleMessage(msg);
             switch (msg.what) {
                 case HANDLER_PREPARE:
-                    currentVideoWidth = 0;
-                    currentVideoHeight = 0;
                     jzMediaInterface.prepare();
-
-//                    if (savedSurfaceTexture != null) {
-//                        if (surface != null) {
-//                            surface.release();
-//                        }
-//                        surface = new Surface(savedSurfaceTexture);
-//                        jzMediaInterface.setSurface(surface);
-//                    }
                     break;
                 case HANDLER_RELEASE:
                     jzMediaInterface.release();

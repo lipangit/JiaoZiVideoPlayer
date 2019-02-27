@@ -746,8 +746,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         dismissVolumeDialog();
         onStateNormal();
         if (textureView != null) textureViewContainer.removeView(textureView);
-        JZMediaManager.instance().currentVideoWidth = 0;
-        JZMediaManager.instance().currentVideoHeight = 0;
 
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
@@ -821,13 +819,13 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //        JzvdMgr.setSecondFloor(null);
     }
 
-    public void onVideoSizeChanged() {
+    public void onVideoSizeChanged(int width, int height) {
         Log.i(TAG, "onVideoSizeChanged " + " [" + this.hashCode() + "] ");
         if (textureView != null) {
             if (videoRotation != 0) {
                 textureView.setRotation(videoRotation);
             }
-            textureView.setVideoSize(JZMediaManager.instance().currentVideoWidth, JZMediaManager.instance().currentVideoHeight);
+            textureView.setVideoSize(width, height);
         }
     }
 
