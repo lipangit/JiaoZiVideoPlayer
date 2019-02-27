@@ -116,7 +116,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         mediaPlayer.start();
         if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
                 jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
-            JZMediaManager.instance().mainThreadHandler.post(() -> {
+            JZMediaPlayer.instance().mainThreadHandler.post(() -> {
                 if (JzvdMgr.getCurrentJzvd() != null) {
                     JzvdMgr.getCurrentJzvd().onPrepared();
                 }
@@ -126,7 +126,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onAutoCompletion();
             }
@@ -135,7 +135,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onBufferingUpdate(MediaPlayer mediaPlayer, final int percent) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().setBufferProgress(percent);
             }
@@ -144,7 +144,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onSeekComplete(MediaPlayer mediaPlayer) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onSeekComplete();
             }
@@ -153,7 +153,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public boolean onError(MediaPlayer mediaPlayer, final int what, final int extra) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onError(what, extra);
             }
@@ -163,7 +163,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public boolean onInfo(MediaPlayer mediaPlayer, final int what, final int extra) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
                     if (JzvdMgr.getCurrentJzvd().currentState == Jzvd.CURRENT_STATE_PREPARING
@@ -180,7 +180,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onVideoSizeChanged(MediaPlayer mediaPlayer, int width, int height) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onVideoSizeChanged(width, height);
             }

@@ -7,7 +7,7 @@ import android.view.Surface;
 import java.io.IOException;
 
 import cn.jzvd.JZMediaInterface;
-import cn.jzvd.JZMediaManager;
+import cn.jzvd.JZMediaPlayer;
 import cn.jzvd.JzvdMgr;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
@@ -106,7 +106,7 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
     public void onPrepared(IMediaPlayer iMediaPlayer) {
         ijkMediaPlayer.start();
         if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3")) {
-            JZMediaManager.instance().mainThreadHandler.post(() -> {
+            JZMediaPlayer.instance().mainThreadHandler.post(() -> {
                 if (JzvdMgr.getCurrentJzvd() != null) {
                     JzvdMgr.getCurrentJzvd().onPrepared();
                 }
@@ -116,7 +116,7 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
 
     @Override
     public void onVideoSizeChanged(IMediaPlayer iMediaPlayer, int i, int i1, int i2, int i3) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onVideoSizeChanged(iMediaPlayer.getVideoWidth(), iMediaPlayer.getVideoHeight());
             }
@@ -125,7 +125,7 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
 
     @Override
     public void onCompletion(IMediaPlayer iMediaPlayer) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onAutoCompletion();
             }
@@ -134,7 +134,7 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
 
     @Override
     public boolean onError(IMediaPlayer iMediaPlayer, final int what, final int extra) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onError(what, extra);
             }
@@ -144,7 +144,7 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
 
     @Override
     public boolean onInfo(IMediaPlayer iMediaPlayer, final int what, final int extra) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
                     JzvdMgr.getCurrentJzvd().onPrepared();
@@ -158,7 +158,7 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
 
     @Override
     public void onBufferingUpdate(IMediaPlayer iMediaPlayer, final int percent) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().setBufferProgress(percent);
             }
@@ -167,7 +167,7 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
 
     @Override
     public void onSeekComplete(IMediaPlayer iMediaPlayer) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onSeekComplete();
             }

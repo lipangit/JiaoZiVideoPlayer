@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 
-import cn.jzvd.JZMediaManager;
+import cn.jzvd.JZMediaPlayer;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdMgr;
 
@@ -43,7 +43,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
             @Override
             public void onChildViewDetachedFromWindow(View view) {
                 Jzvd jzvd = view.findViewById(R.id.videoplayer);
-                if (jzvd != null && jzvd.jzDataSource.containsTheUrl(JZMediaManager.getCurrentUrl())) {
+                if (jzvd != null && jzvd.jzDataSource.containsTheUrl(JZMediaPlayer.getCurrentUrl())) {
                     Jzvd currentJzvd = JzvdMgr.getCurrentJzvd();
                     if (currentJzvd != null && currentJzvd.currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
                         Jzvd.releaseAllVideos();

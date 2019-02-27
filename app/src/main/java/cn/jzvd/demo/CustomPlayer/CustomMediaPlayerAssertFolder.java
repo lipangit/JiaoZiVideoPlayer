@@ -9,7 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.view.Surface;
 
 import cn.jzvd.JZMediaInterface;
-import cn.jzvd.JZMediaManager;
+import cn.jzvd.JZMediaPlayer;
 import cn.jzvd.JzvdMgr;
 
 /**
@@ -108,7 +108,7 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
         if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3")) {
-            JZMediaManager.instance().mainThreadHandler.post(() -> {
+            JZMediaPlayer.instance().mainThreadHandler.post(() -> {
                 if (JzvdMgr.getCurrentJzvd() != null) {
                     JzvdMgr.getCurrentJzvd().onPrepared();
                 }
@@ -118,7 +118,7 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onAutoCompletion();
             }
@@ -127,7 +127,7 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
 
     @Override
     public void onBufferingUpdate(MediaPlayer mediaPlayer, final int percent) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().setBufferProgress(percent);
             }
@@ -136,7 +136,7 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
 
     @Override
     public void onSeekComplete(MediaPlayer mediaPlayer) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onSeekComplete();
             }
@@ -145,7 +145,7 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
 
     @Override
     public boolean onError(MediaPlayer mediaPlayer, final int what, final int extra) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onError(what, extra);
             }
@@ -155,7 +155,7 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
 
     @Override
     public boolean onInfo(MediaPlayer mediaPlayer, final int what, final int extra) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
                     JzvdMgr.getCurrentJzvd().onPrepared();
@@ -169,7 +169,7 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
 
     @Override
     public void onVideoSizeChanged(MediaPlayer mediaPlayer, int width, int height) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onVideoSizeChanged(width, height);
             }

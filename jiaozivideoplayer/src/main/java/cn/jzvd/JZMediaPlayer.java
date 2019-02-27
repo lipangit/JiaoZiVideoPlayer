@@ -6,20 +6,19 @@ import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.view.Surface;
 import android.view.TextureView;
 
 /**
  * 这个类用来和jzvd互相调用，当jzvd需要调用Media的时候调用这个类，当MediaPlayer有回调的时候，通过这个类回调JZVD
  * Created by Nathen on 2017/11/18.
  */
-public class JZMediaManager implements TextureView.SurfaceTextureListener {
+public class JZMediaPlayer implements TextureView.SurfaceTextureListener {
 
     public static final String TAG = "JZVD";
     public static final int HANDLER_PREPARE = 0;
     public static final int HANDLER_RELEASE = 2;
 
-    public static JZMediaManager jzMediaManager;
+    public static JZMediaPlayer jzMediaPlayer;
     public int positionInList = -1;
     public JZMediaInterface jzMediaInterface;
 
@@ -27,7 +26,7 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
     public MediaHandler mMediaHandler;
     public Handler mainThreadHandler;
 
-    public JZMediaManager() {
+    public JZMediaPlayer() {
         mMediaHandlerThread = new HandlerThread(TAG);
         mMediaHandlerThread.start();
         mMediaHandler = new MediaHandler(mMediaHandlerThread.getLooper());
@@ -36,11 +35,11 @@ public class JZMediaManager implements TextureView.SurfaceTextureListener {
             jzMediaInterface = new JZMediaSystem();
     }
 
-    public static JZMediaManager instance() {
-        if (jzMediaManager == null) {
-            jzMediaManager = new JZMediaManager();
+    public static JZMediaPlayer instance() {
+        if (jzMediaPlayer == null) {
+            jzMediaPlayer = new JZMediaPlayer();
         }
-        return jzMediaManager;
+        return jzMediaPlayer;
     }
 
     //这几个方法是不是多余了，为了不让其他地方动MediaInterface的方法

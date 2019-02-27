@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.WindowManager;
 
-import cn.jzvd.JZMediaManager;
+import cn.jzvd.JZMediaPlayer;
 import cn.jzvd.JZUtils;
 import cn.jzvd.JzvdStd;
 
@@ -33,8 +33,8 @@ public class JzvdStdAutoCompleteAfterFullscreen extends JzvdStd {
             mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
             JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-            JZMediaManager.setDataSource(jzDataSource);
-            JZMediaManager.instance().positionInList = positionInList;
+            JZMediaPlayer.setDataSource(jzDataSource);
+            JZMediaPlayer.instance().positionInList = positionInList;
             onStatePreparing();
         } else {
             super.startVideo();

@@ -3,7 +3,7 @@ package cn.jzvd.demo.CustomJzvd;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import cn.jzvd.JZMediaManager;
+import cn.jzvd.JZMediaPlayer;
 import cn.jzvd.JzvdStd;
 
 /**
@@ -23,9 +23,9 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
     public void onPrepared() {
         super.onPrepared();
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            JZMediaManager.instance().jzMediaInterface.setVolume(1f, 1f);
+            JZMediaPlayer.instance().jzMediaInterface.setVolume(1f, 1f);
         } else {
-            JZMediaManager.instance().jzMediaInterface.setVolume(0f, 0f);
+            JZMediaPlayer.instance().jzMediaInterface.setVolume(0f, 0f);
         }
     }
 
@@ -35,7 +35,7 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
 //    @Override
 //    public void startWindowFullscreen() {
 //        super.startWindowFullscreen();
-//        JZMediaManager.instance().jzMediaInterface.setVolume(1f, 1f);
+//        JZMediaPlayer.instance().jzMediaInterface.setVolume(1f, 1f);
 //    }
 //
 //    /**
@@ -44,6 +44,6 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
 //    @Override
 //    public void playOnThisJzvd() {
 //        super.playOnThisJzvd();
-//        JZMediaManager.instance().jzMediaInterface.setVolume(0f, 0f);
+//        JZMediaPlayer.instance().jzMediaInterface.setVolume(0f, 0f);
 //    }
 }

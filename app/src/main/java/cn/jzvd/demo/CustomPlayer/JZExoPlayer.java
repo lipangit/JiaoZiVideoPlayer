@@ -35,7 +35,7 @@ import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoListener;
 
 import cn.jzvd.JZMediaInterface;
-import cn.jzvd.JZMediaManager;
+import cn.jzvd.JZMediaPlayer;
 import cn.jzvd.JzvdMgr;
 import cn.jzvd.demo.R;
 
@@ -103,7 +103,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
 
     @Override
     public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees, float pixelWidthHeightRatio) {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onVideoSizeChanged(width, height);
             }
@@ -119,7 +119,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
         @Override
         public void run() {
             final int percent = simpleExoPlayer.getBufferedPercentage();
-            JZMediaManager.instance().mainThreadHandler.post(() -> {
+            JZMediaPlayer.instance().mainThreadHandler.post(() -> {
                 if (JzvdMgr.getCurrentJzvd() != null) {
                     JzvdMgr.getCurrentJzvd().setBufferProgress(percent);
                 }
@@ -195,7 +195,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
     @Override
     public void onTimelineChanged(final Timeline timeline, Object manifest, final int reason) {
         Log.e(TAG, "onTimelineChanged");
-//        JZMediaManager.instance().mainThreadHandler.post(() -> {
+//        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
 //                if (reason == 0) {
 //
 //                    JzvdMgr.getCurrentJzvd().onInfo(reason, timeline.getPeriodCount());
@@ -216,7 +216,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
     @Override
     public void onPlayerStateChanged(final boolean playWhenReady, final int playbackState) {
         Log.e(TAG, "onPlayerStateChanged" + playbackState + "/ready=" + String.valueOf(playWhenReady));
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 switch (playbackState) {
                     case Player.STATE_IDLE: {
@@ -255,7 +255,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
     @Override
     public void onPlayerError(ExoPlaybackException error) {
         Log.e(TAG, "onPlayerError" + error.toString());
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onError(1000, 1000);
             }
@@ -274,7 +274,7 @@ public class JZExoPlayer extends JZMediaInterface implements Player.EventListene
 
     @Override
     public void onSeekProcessed() {
-        JZMediaManager.instance().mainThreadHandler.post(() -> {
+        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
             if (JzvdMgr.getCurrentJzvd() != null) {
                 JzvdMgr.getCurrentJzvd().onSeekComplete();
             }

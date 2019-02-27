@@ -341,7 +341,7 @@ public class JzvdStd extends Jzvd {
             }
             initTextureView();//和开始播放的代码重复
             addTextureView();
-            JZMediaManager.setDataSource(jzDataSource);
+            JZMediaPlayer.setDataSource(jzDataSource);
             onStatePreparing();
             onEvent(JZUserAction.ON_CLICK_START_ERROR);
         }
