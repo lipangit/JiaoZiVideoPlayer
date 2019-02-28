@@ -1,9 +1,12 @@
 package cn.jzvd;
 
+import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.PlaybackParams;
 import android.os.Build;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.RequiresApi;
 import android.view.Surface;
 
@@ -18,42 +21,49 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     public MediaPlayer mediaPlayer;
 
+    public JZMediaSystem(Jzvd jzvd) {
+        super(jzvd);
+    }
+
+    @Override
+    public void prepare() {
+        mMediaHandlerThread = new HandlerThread("JZVD");
+        mMediaHandlerThread.start();
+        mMediaHandler = new Handler(mMediaHandlerThread.getLooper());
+        handler = new Handler();
+
+        mMediaHandler.post(() -> {
+            try {
+                mediaPlayer = new MediaPlayer();
+                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer.setLooping(jzvd.jzDataSource.looping);
+                mediaPlayer.setOnPreparedListener(JZMediaSystem.this);
+                mediaPlayer.setOnCompletionListener(JZMediaSystem.this);
+                mediaPlayer.setOnBufferingUpdateListener(JZMediaSystem.this);
+                mediaPlayer.setScreenOnWhilePlaying(true);
+                mediaPlayer.setOnSeekCompleteListener(JZMediaSystem.this);
+                mediaPlayer.setOnErrorListener(JZMediaSystem.this);
+                mediaPlayer.setOnInfoListener(JZMediaSystem.this);
+                mediaPlayer.setOnVideoSizeChangedListener(JZMediaSystem.this);
+                Class<MediaPlayer> clazz = MediaPlayer.class;
+                Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
+                method.invoke(mediaPlayer, jzvd.jzDataSource.getCurrentUrl().toString(), jzvd.jzDataSource.headerMap);
+                mediaPlayer.prepareAsync();
+                mediaPlayer.setSurface(new Surface(jzvd.textureView.getSurfaceTexture()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     @Override
     public void start() {
         mediaPlayer.start();
     }
 
     @Override
-    public void prepare() {
-        try {
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.setLooping(jzDataSource.looping);
-            mediaPlayer.setOnPreparedListener(JZMediaSystem.this);
-            mediaPlayer.setOnCompletionListener(JZMediaSystem.this);
-            mediaPlayer.setOnBufferingUpdateListener(JZMediaSystem.this);
-            mediaPlayer.setScreenOnWhilePlaying(true);
-            mediaPlayer.setOnSeekCompleteListener(JZMediaSystem.this);
-            mediaPlayer.setOnErrorListener(JZMediaSystem.this);
-            mediaPlayer.setOnInfoListener(JZMediaSystem.this);
-            mediaPlayer.setOnVideoSizeChangedListener(JZMediaSystem.this);
-            Class<MediaPlayer> clazz = MediaPlayer.class;
-            Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
-//            if (dataSourceObjects.length > 2) {
-            method.invoke(mediaPlayer, jzDataSource.getCurrentUrl().toString(), jzDataSource.headerMap);
-//            } else {
-//                method.invoke(mediaPlayer, currentDataSource.toString(), null);
-//            }
-            mediaPlayer.prepareAsync();
-            mediaPlayer.setSurface(new Surface(JzvdMgr.getCurrentJzvd().textureView.getSurfaceTexture()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public void pause() {
-        mediaPlayer.pause();
+        mMediaHandler.post(() -> mediaPlayer.pause());
     }
 
     @Override
@@ -72,10 +82,16 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void release() {
-        if (mediaPlayer != null)
-            mediaPlayer.release();
+        mMediaHandler.post(() -> {
+            if (mediaPlayer != null)
+                mediaPlayer.release();
+        });
+        mMediaHandler.removeCallbacksAndMessages(null);
+        handler.removeCallbacksAndMessages(null);
+        mMediaHandlerThread.quit();
     }
 
+    //TODO 测试这种问题是否在threadHandler中是否正常，所有的操作mediaplayer是否不需要thread，挨个测试，是否有问题
     @Override
     public long getCurrentPosition() {
         if (mediaPlayer != null) {
@@ -95,10 +111,6 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     }
 
     @Override
-    public void setSurface(Surface surface) {
-    }
-
-    @Override
     public void setVolume(float leftVolume, float rightVolume) {
         mediaPlayer.setVolume(leftVolume, rightVolume);
     }
@@ -114,65 +126,51 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
         mediaPlayer.start();
-        if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
-                jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
-            JZMediaPlayer.instance().mainThreadHandler.post(() -> {
-                if (JzvdMgr.getCurrentJzvd() != null) {
-                    JzvdMgr.getCurrentJzvd().onPrepared();
-                }
+        if (jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
+                jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
+            handler.post(() -> {
+                jzvd.onPrepared();
             });
         }
     }
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
-            if (JzvdMgr.getCurrentJzvd() != null) {
-                JzvdMgr.getCurrentJzvd().onAutoCompletion();
-            }
+        handler.post(() -> {
+            jzvd.onAutoCompletion();
         });
     }
 
     @Override
     public void onBufferingUpdate(MediaPlayer mediaPlayer, final int percent) {
-        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
-            if (JzvdMgr.getCurrentJzvd() != null) {
-                JzvdMgr.getCurrentJzvd().setBufferProgress(percent);
-            }
-        });
+        handler.post(() -> jzvd.setBufferProgress(percent));
     }
 
     @Override
     public void onSeekComplete(MediaPlayer mediaPlayer) {
-        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
-            if (JzvdMgr.getCurrentJzvd() != null) {
-                JzvdMgr.getCurrentJzvd().onSeekComplete();
-            }
+        handler.post(() -> {
+            jzvd.onSeekComplete();
         });
     }
 
     @Override
     public boolean onError(MediaPlayer mediaPlayer, final int what, final int extra) {
-        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
-            if (JzvdMgr.getCurrentJzvd() != null) {
-                JzvdMgr.getCurrentJzvd().onError(what, extra);
-            }
+        handler.post(() -> {
+            jzvd.onError(what, extra);
         });
         return true;
     }
 
     @Override
     public boolean onInfo(MediaPlayer mediaPlayer, final int what, final int extra) {
-        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
-            if (JzvdMgr.getCurrentJzvd() != null) {
-                if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                    if (JzvdMgr.getCurrentJzvd().currentState == Jzvd.CURRENT_STATE_PREPARING
-                            || JzvdMgr.getCurrentJzvd().currentState == Jzvd.CURRENT_STATE_PREPARING_CHANGING_URL) {
-                        JzvdMgr.getCurrentJzvd().onPrepared();
-                    }
-                } else {
-                    JzvdMgr.getCurrentJzvd().onInfo(what, extra);
+        handler.post(() -> {
+            if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+                if (jzvd.currentState == Jzvd.CURRENT_STATE_PREPARING
+                        || jzvd.currentState == Jzvd.CURRENT_STATE_PREPARING_CHANGING_URL) {
+                    jzvd.onPrepared();
                 }
+            } else {
+                jzvd.onInfo(what, extra);
             }
         });
         return false;
@@ -180,10 +178,26 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onVideoSizeChanged(MediaPlayer mediaPlayer, int width, int height) {
-        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
-            if (JzvdMgr.getCurrentJzvd() != null) {
-                JzvdMgr.getCurrentJzvd().onVideoSizeChanged(width, height);
-            }
-        });
+        handler.post(() -> jzvd.onVideoSizeChanged(width, height));
+    }
+
+    @Override
+    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
+        prepare();
+    }
+
+    @Override
+    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
+    }
+
+    @Override
+    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+        return false;
+    }
+
+    @Override
+    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+
     }
 }

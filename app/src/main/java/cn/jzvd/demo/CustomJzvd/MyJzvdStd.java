@@ -137,14 +137,4 @@ public class MyJzvdStd extends JzvdStd {
         super.onError(what, extra);
     }
 
-//    @Override
-//    public void startWindowFullscreen() {
-//        super.startWindowFullscreen();
-//    }
-//
-//    @Override
-//    public void startWindowTiny() {
-//        super.startWindowTiny();
-//    }
-
 }

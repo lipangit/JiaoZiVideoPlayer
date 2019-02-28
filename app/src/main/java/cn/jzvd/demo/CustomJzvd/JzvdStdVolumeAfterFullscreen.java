@@ -3,7 +3,6 @@ package cn.jzvd.demo.CustomJzvd;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import cn.jzvd.JZMediaPlayer;
 import cn.jzvd.JzvdStd;
 
 /**
@@ -23,9 +22,9 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
     public void onPrepared() {
         super.onPrepared();
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            JZMediaPlayer.instance().jzMediaInterface.setVolume(1f, 1f);
+            mediaInterface.setVolume(1f, 1f);
         } else {
-            JZMediaPlayer.instance().jzMediaInterface.setVolume(0f, 0f);
+            mediaInterface.setVolume(0f, 0f);
         }
     }
 

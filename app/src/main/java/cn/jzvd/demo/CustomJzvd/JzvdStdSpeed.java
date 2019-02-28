@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import cn.jzvd.JZDataSource;
-import cn.jzvd.JZMediaPlayer;
 import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.R;
 
@@ -61,7 +60,7 @@ public class JzvdStdSpeed extends JzvdStd {
             } else {
                 currentSpeedIndex += 1;
             }
-            JZMediaPlayer.setSpeed(getSpeedFromIndex(currentSpeedIndex));
+            mediaInterface.setSpeed(getSpeedFromIndex(currentSpeedIndex));
             tvSpeed.setText(getSpeedFromIndex(currentSpeedIndex) + "X");
             jzDataSource.objects[0] = currentSpeedIndex;
         }
