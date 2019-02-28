@@ -29,7 +29,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     public void prepare() {
         mMediaHandlerThread = new HandlerThread("JZVD");
         mMediaHandlerThread.start();
-        mMediaHandler = new Handler(mMediaHandlerThread.getLooper());
+        mMediaHandler = new Handler(mMediaHandlerThread.getLooper());//主线程还是非主线程，就在这里
         handler = new Handler();
 
         mMediaHandler.post(() -> {
@@ -58,7 +58,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void start() {
-        mediaPlayer.start();
+        mMediaHandler.post(() -> mediaPlayer.start());
     }
 
     @Override
@@ -73,11 +73,13 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void seekTo(long time) {
-        try {
-            mediaPlayer.seekTo((int) time);
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
+        mMediaHandler.post(() -> {
+            try {
+                mediaPlayer.seekTo((int) time);
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
@@ -112,7 +114,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void setVolume(float leftVolume, float rightVolume) {
-        mediaPlayer.setVolume(leftVolume, rightVolume);
+        mMediaHandler.post(() -> mediaPlayer.setVolume(leftVolume, rightVolume));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
