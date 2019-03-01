@@ -92,6 +92,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
                 tmpMediaPlayer.release();//release就不能放到主线程里，界面会卡顿
                 tmpHandlerThread.quit();
             });
+            mediaPlayer = null;
         }
     }
 
@@ -185,9 +186,17 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         handler.post(() -> jzvd.onVideoSizeChanged(width, height));
     }
 
+    public static SurfaceTexture savedSurfaces;
+
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
-        prepare();
+        if (savedSurfaces == null) {
+            savedSurfaces = surface;
+            prepare();
+        } else {
+            jzvd.textureView.setSurfaceTexture(savedSurfaces);
+        }
+        System.out.println(surface.hashCode() + "    fdsfdsf");
     }
 
     @Override
