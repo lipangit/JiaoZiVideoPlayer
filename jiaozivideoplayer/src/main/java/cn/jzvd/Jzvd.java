@@ -15,7 +15,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -53,7 +52,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT = 1;
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP = 2;
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL = 3;
-    public static boolean ACTION_BAR_EXIST = true;
     public static boolean TOOL_BAR_EXIST = true;
     public static int FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
     public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
@@ -150,7 +148,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //    }
 //
 //    public static void startFullscreen(Context context, Class _class, JZDataSource jzDataSource) {
-//        hideSupportActionBar(context);
+//        hideStatusBar(context);
 //        JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
 //        ViewGroup vp = (JZUtils.scanForActivity(context))//.getWindow().getDecorView();
 //                .findViewById(Window.ID_ANDROID_CONTENT);
@@ -204,41 +202,14 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         return false;
     }
 
-//    public static void quitFullscreenOrTinyWindow() {
+    //    public static void quitFullscreenOrTinyWindow() {
 //        //直接退出全屏和小窗
 //        JzvdMgr.getFirstFloor().clearFloatScreen();
 //        JZMediaPlayer.instance().releaseMediaPlayer();
 //        JzvdMgr.completeAll();
 //    }
 //
-//    @SuppressLint("RestrictedApi")
-//    public static void showSupportActionBar(Context context) {
-//        if (ACTION_BAR_EXIST && JZUtils.getAppCompActivity(context) != null) {
-//            ActionBar ab = JZUtils.getAppCompActivity(context).getSupportActionBar();
-//            if (ab != null) {
-//                ab.setShowHideAnimationEnabled(false);
-//                ab.show();
-//            }
-//        }
-//        if (TOOL_BAR_EXIST) {
-//            JZUtils.getWindow(context).clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        }
-//    }
-//
-//    @SuppressLint("RestrictedApi")
-//    public static void hideSupportActionBar(Context context) {
-//        if (ACTION_BAR_EXIST && JZUtils.getAppCompActivity(context) != null) {
-//            ActionBar ab = JZUtils.getAppCompActivity(context).getSupportActionBar();
-//            if (ab != null) {
-//                ab.setShowHideAnimationEnabled(false);
-//                ab.hide();
-//            }
-//        }
-//        if (TOOL_BAR_EXIST) {
-//            JZUtils.getWindow(context).setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//        }
-//    }
+
 
     public static void clearSavedProgress(Context context, String url) {
         JZUtils.clearSavedProgress(context, url);
@@ -445,7 +416,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             } else {
                 Log.d(TAG, "toFullscreenActivity [" + this.hashCode() + "] ");
                 onEvent(JZUserAction.ON_ENTER_FULLSCREEN);
-//                startWindowFullscreen();
+                startWindowFullscreen();
             }
         }
     }
@@ -795,33 +766,33 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public void clearFullscreenLayout() {
-        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
-                .findViewById(Window.ID_ANDROID_CONTENT);
-        View oldF = vp.findViewById(R.id.jz_fullscreen_id);
-        View oldT = vp.findViewById(R.id.jz_tiny_id);
-        if (oldF != null) {
-            vp.removeView(oldF);
-        }
-        if (oldT != null) {
-            vp.removeView(oldT);
-        }
-//        showSupportActionBar(getContext());
+//        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+//                .findViewById(Window.ID_ANDROID_CONTENT);
+//        View oldF = vp.findViewById(R.id.jz_fullscreen_id);
+//        View oldT = vp.findViewById(R.id.jz_tiny_id);
+//        if (oldF != null) {
+//            vp.removeView(oldF);
+//        }
+//        if (oldT != null) {
+//            vp.removeView(oldT);
+//        }
+//        showStatusBar(getContext());
     }
 
     public void clearFloatScreen() {
-        JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
-//        showSupportActionBar(getContext());
-        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
-                .findViewById(Window.ID_ANDROID_CONTENT);
-        Jzvd fullJzvd = vp.findViewById(R.id.jz_fullscreen_id);
-        Jzvd tinyJzvd = vp.findViewById(R.id.jz_tiny_id);
-
-        if (fullJzvd != null) {
-            vp.removeView(fullJzvd);
-        }
-        if (tinyJzvd != null) {
-            vp.removeView(tinyJzvd);
-        }
+//        JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
+////        showStatusBar(getContext());
+//        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
+//                .findViewById(Window.ID_ANDROID_CONTENT);
+//        Jzvd fullJzvd = vp.findViewById(R.id.jz_fullscreen_id);
+//        Jzvd tinyJzvd = vp.findViewById(R.id.jz_tiny_id);
+//
+//        if (fullJzvd != null) {
+//            vp.removeView(fullJzvd);
+//        }
+//        if (tinyJzvd != null) {
+//            vp.removeView(tinyJzvd);
+//        }
 //        JzvdMgr.setSecondFloor(null);
     }
 
@@ -948,16 +919,26 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    public void startWindowFullscreen() {
+        //1.启动浮层。2.attach过去
+        //new jzvd替换原来的jzvd，然后把这个jzvd attach到别的地方。。为啥不行？是new出来的jzvd布局什么样，宽高什么样不一定
+
+//        JZUtils.hideStatusBar(getContext());//可能不需要这个
+        ViewGroup vp = (ViewGroup) CURRENT_JZVD.getParent();
+        vp.removeView(CURRENT_JZVD);
+
+        ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
+        vg.addView(CURRENT_JZVD, new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        CURRENT_JZVD.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
+                View.SYSTEM_UI_FLAG_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
+    }
+
+
 //    public void startWindowFullscreen() {
 //        Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
-//        hideSupportActionBar(getContext());
-//
-//        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
-//                .findViewById(Window.ID_ANDROID_CONTENT);
-//        View old = vp.findViewById(R.id.jz_fullscreen_id);
-//        if (old != null) {
-//            vp.removeView(old);
-//        }
+
 ////        textureViewContainer.removeView(JZMediaPlayer.textureView);
 //        try {
 //            Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);

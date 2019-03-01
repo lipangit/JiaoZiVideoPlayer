@@ -14,10 +14,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <cn.jzvd.demo.CustomJzvd.MyJzvdStd
-                android:id="@+id/jz_video"
+            <LinearLayout
+                android:id="@+id/jzvd_container"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp"
+                android:orientation="vertical">
+
+                <cn.jzvd.demo.CustomJzvd.MyJzvdStd
+                    android:id="@+id/jz_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/api"

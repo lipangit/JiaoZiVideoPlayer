@@ -1,5 +1,6 @@
 package cn.jzvd;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.Window;
+import android.view.WindowManager;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -144,4 +146,18 @@ public class JZUtils {
         }
     }
 
+    @SuppressLint("RestrictedApi")
+    public static void showStatusBar(Context context) {
+        if (Jzvd.TOOL_BAR_EXIST) {
+            JZUtils.getWindow(context).clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
+
+    //如果是沉浸式的，全屏前就没有状态栏
+    @SuppressLint("RestrictedApi")
+    public static void hideStatusBar(Context context) {
+        if (Jzvd.TOOL_BAR_EXIST) {
+            JZUtils.getWindow(context).setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
 }
