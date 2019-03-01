@@ -786,8 +786,8 @@ public class JzvdStd extends Jzvd {
     }
 
     @Override
-    public void onCompletion() {
-        super.onCompletion();
+    public void reset() {
+        super.reset();
         cancelDismissControlViewTimer();
         if (clarityPopWindow != null) {
             clarityPopWindow.dismiss();

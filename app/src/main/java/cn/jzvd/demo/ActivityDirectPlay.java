@@ -5,11 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import cn.jzvd.Jzvd;
-import cn.jzvd.JzvdStd;
 
 /**
  * Created by Nathen on 16/7/31.
@@ -39,7 +37,7 @@ public class ActivityDirectPlay extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Jzvd.releaseAllVideos();
+        Jzvd.resetAllVideos();
     }
 
     @Override

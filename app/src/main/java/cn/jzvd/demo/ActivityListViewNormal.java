@@ -71,7 +71,7 @@ public class ActivityListViewNormal extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(sensorEventListener);
-        Jzvd.releaseAllVideos();
+        Jzvd.resetAllVideos();
     }
 
     @Override

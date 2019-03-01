@@ -44,7 +44,7 @@
 //    @Override
 //    protected void onPause() {
 //        super.onPause();
-//        Jzvd.releaseAllVideos();
+//        Jzvd.resetAllVideos();
 //        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER);
 //    }
 //

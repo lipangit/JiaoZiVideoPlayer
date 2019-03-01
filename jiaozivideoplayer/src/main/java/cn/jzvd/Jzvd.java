@@ -23,6 +23,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,7 +34,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public static final String TAG = "JZVD";
     public static final int THRESHOLD = 80;
-    public static final int FULL_SCREEN_NORMAL_DELAY = 300;
 
     public static final int SCREEN_WINDOW_NORMAL = 0;
     public static final int SCREEN_WINDOW_LIST = 1;
@@ -60,7 +60,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static boolean SAVE_PROGRESS = true;
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
     public static int VIDEO_IMAGE_DISPLAY_TYPE = 0;
-    public static long CLICK_QUIT_FULLSCREEN_TIME = 0;
     public static long lastAutoFullscreenTime = 0;
     public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {//是否新建个class，代码更规矩，并且变量的位置也很尴尬
         @Override
@@ -69,7 +68,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 case AudioManager.AUDIOFOCUS_GAIN:
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS:
-                    releaseAllVideos();
+                    resetAllVideos();
                     Log.d(TAG, "AUDIOFOCUS_LOSS [" + this.hashCode() + "]");
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
@@ -121,6 +120,9 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public JZMediaInterface mediaInterface;
 
+    public static Jzvd CURRENT_JZVD;
+    public static LinkedList CONTAINER_LIST = new LinkedList();
+
     public Jzvd(Context context) {
         super(context);
         init(context);
@@ -135,12 +137,11 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         this.mediaInterface = mediaInterface;
     }
 
-    public static void releaseAllVideos() {
-        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) > FULL_SCREEN_NORMAL_DELAY) {
-            Log.d(TAG, "releaseAllVideos");
-//            JzvdMgr.completeAll();
-//            JZMediaPlayer.instance().positionInList = -1;
-//            JZMediaPlayer.instance().releaseMediaPlayer();
+    public static void resetAllVideos() {
+        Log.d(TAG, "resetAllVideos");
+        if (Jzvd.CURRENT_JZVD != null) {
+            Jzvd.CURRENT_JZVD.reset();
+            CURRENT_JZVD = null;
         }
     }
 //
@@ -271,7 +272,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //            if (jzvd.currentState == Jzvd.CURRENT_STATE_AUTO_COMPLETE ||
 //                    jzvd.currentState == Jzvd.CURRENT_STATE_NORMAL ||
 //                    jzvd.currentState == Jzvd.CURRENT_STATE_ERROR) {
-////                JZVideoPlayer.releaseAllVideos();
+////                JZVideoPlayer.resetAllVideos();
 //            } else {
 //                ON_PLAY_PAUSE_TMP_STATE = jzvd.currentState;
 //                jzvd.onStatePause();
@@ -289,7 +290,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //                        JzvdMgr.getCurrentJzvd().currentScreen != Jzvd.SCREEN_WINDOW_TINY &&
 //                        JzvdMgr.getCurrentJzvd().currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
 //                    if (JzvdMgr.getCurrentJzvd().currentState == Jzvd.CURRENT_STATE_PAUSE) {
-//                        Jzvd.releaseAllVideos();
+//                        Jzvd.resetAllVideos();
 //                    } else {
 //                        Log.e(TAG, "onScroll: out screen");
 //                        JzvdMgr.getCurrentJzvd().startWindowTiny();
@@ -313,7 +314,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //        if (currentPlayPosition >= 0) {
 //            if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
 //                if (JzvdMgr.getCurrentJzvd().currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
-//                    Jzvd.releaseAllVideos();//为什么最后一个视频横屏会调用这个，其他地方不会
+//                    Jzvd.resetAllVideos();//为什么最后一个视频横屏会调用这个，其他地方不会
 //                }
 //            }
 //        }
@@ -333,7 +334,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //            Jzvd jzvd = JzvdMgr.getCurrentJzvd();
 //            if (((ViewGroup) view).indexOfChild(jzvd) != -1) {
 //                if (jzvd.currentState == Jzvd.CURRENT_STATE_PAUSE) {
-//                    Jzvd.releaseAllVideos();
+//                    Jzvd.resetAllVideos();
 //                } else {
 //                    jzvd.startWindowTiny();
 //                }
@@ -568,8 +569,14 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         return false;
     }
 
+    public static void setCurrentJzvd(Jzvd jzvd) {
+        if (CURRENT_JZVD != null) CURRENT_JZVD.reset();
+        CURRENT_JZVD = jzvd;
+    }
+
     public void startVideo() {
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
+        setCurrentJzvd(this);
         addTextureView();
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
@@ -735,8 +742,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         JZUtils.saveProgress(getContext(), jzDataSource.getCurrentUrl(), 0);
     }
 
-    public void onCompletion() {
-        Log.i(TAG, "onCompletion " + " [" + this.hashCode() + "] ");
+    public void reset() {
+        Log.i(TAG, "reset " + " [" + this.hashCode() + "] ");
         if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
             long position = getCurrentPositionWhenPlaying();
             JZUtils.saveProgress(getContext(), jzDataSource.getCurrentUrl(), position);
@@ -753,7 +760,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         JZUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         clearFullscreenLayout();
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
-
+        mediaInterface.release();
     }
 
 //    public void release() {
@@ -766,7 +773,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //                    JzvdMgr.getFirstFloor().currentScreen == SCREEN_WINDOW_FULLSCREEN) {//直接全屏
 //            } else {
 //                Log.d(TAG, "releaseMediaPlayer [" + this.hashCode() + "]");
-//                releaseAllVideos();
+//                resetAllVideos();
 //            }
 //        }
 //    }

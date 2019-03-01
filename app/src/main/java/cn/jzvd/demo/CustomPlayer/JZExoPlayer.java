@@ -94,7 +94,12 @@
 //        Log.e(TAG, "URL Link = " + currUrl);
 //
 //        simpleExoPlayer.addListener(this);
-//
+//Boolean isLoop = jzDataSource.looping;
+//if (isLoop){
+//simpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_ONE);
+//}else{
+//simpleExoPlayer.setRepeatMode(Player.REPEAT_MODE_OFF);
+//}
 //        simpleExoPlayer.prepare(videoSource);
 //        simpleExoPlayer.setPlayWhenReady(true);
 //        callback = new onBufferingUpdate();

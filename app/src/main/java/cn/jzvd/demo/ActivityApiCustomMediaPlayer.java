@@ -61,7 +61,7 @@
 //        if (Jzvd.backPress()) {
 //            return;
 //        }
-//        Jzvd.releaseAllVideos();
+//        Jzvd.resetAllVideos();
 //        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaSystem()), 1000);
 //        super.onBackPressed();
 //    }
@@ -69,14 +69,14 @@
 //    @Override
 //    protected void onPause() {
 //        super.onPause();
-//        Jzvd.releaseAllVideos();
+//        Jzvd.resetAllVideos();
 //    }
 //
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
 //        switch (item.getItemId()) {
 //            case android.R.id.home:
-//                Jzvd.releaseAllVideos();
+//                Jzvd.resetAllVideos();
 //                handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaSystem()), 1000);
 //                finish();
 //                break;
@@ -86,21 +86,21 @@
 //
 //
 //    public void clickChangeToIjkplayer(View view) {
-//        Jzvd.releaseAllVideos();
+//        Jzvd.resetAllVideos();
 //        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaIjkplayer()), 1000);
 //        Toast.makeText(ActivityApiCustomMediaPlayer.this, "Change to Ijkplayer", Toast.LENGTH_SHORT).show();
 //        finish();
 //    }
 //
 //    public void clickChangeToSystemMediaPlayer(View view) {
-//        Jzvd.releaseAllVideos();
+//        Jzvd.resetAllVideos();
 //        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaSystem()), 1000);
 //        Toast.makeText(this, "Change to MediaPlayer", Toast.LENGTH_SHORT).show();
 //        finish();
 //    }
 //
 //    public void clickChangeToExo(View view) {
-//        Jzvd.releaseAllVideos();
+//        Jzvd.resetAllVideos();
 //        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZExoPlayer()), 1000);
 //        Toast.makeText(this, "Change to ExoPlayer", Toast.LENGTH_SHORT).show();
 //        finish();

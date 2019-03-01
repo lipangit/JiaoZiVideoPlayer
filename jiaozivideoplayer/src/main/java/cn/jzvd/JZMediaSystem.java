@@ -27,6 +27,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void prepare() {
+        release();
         mMediaHandlerThread = new HandlerThread("JZVD");
         mMediaHandlerThread.start();
         mMediaHandler = new Handler(mMediaHandlerThread.getLooper());//主线程还是非主线程，就在这里
@@ -84,13 +85,14 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void release() {
-        mMediaHandler.post(() -> {
-            if (mediaPlayer != null)
-                mediaPlayer.release();
-        });
-        mMediaHandler.removeCallbacksAndMessages(null);
-        handler.removeCallbacksAndMessages(null);
-        mMediaHandlerThread.quit();
+        if (mMediaHandler != null && mMediaHandlerThread != null && mediaPlayer != null) {//不知道有没有妖孽
+            HandlerThread tmpHandlerThread = mMediaHandlerThread;
+            MediaPlayer tmpMediaPlayer = mediaPlayer;
+            mMediaHandler.post(() -> {
+                tmpMediaPlayer.release();//release就不能放到主线程里，界面会卡顿
+                tmpHandlerThread.quit();
+            });
+        }
     }
 
     //TODO 测试这种问题是否在threadHandler中是否正常，所有的操作mediaplayer是否不需要thread，挨个测试，是否有问题

@@ -116,7 +116,7 @@
 //    }
 //
 //    @Override
-//    public void onCompletion(MediaPlayer mediaPlayer) {
+//    public void reset(MediaPlayer mediaPlayer) {
 //        JZMediaPlayer.instance().mainThreadHandler.post(() -> {
 //            if (JzvdMgr.getCurrentJzvd() != null) {
 //                JzvdMgr.getCurrentJzvd().onAutoCompletion();

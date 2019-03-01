@@ -57,7 +57,7 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
     @Override
     protected void onPause() {
         super.onPause();
-        Jzvd.releaseAllVideos();
+        Jzvd.resetAllVideos();
     }
 
     @Override

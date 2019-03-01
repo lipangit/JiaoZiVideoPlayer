@@ -40,7 +40,7 @@ public class ActivityMain extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Jzvd.releaseAllVideos();
+        Jzvd.resetAllVideos();
     }
 
     @Override

@@ -45,7 +45,7 @@
 //                if (jzvd != null && jzvd.jzDataSource.containsTheUrl(JZMediaPlayer.getCurrentUrl())) {
 //                    Jzvd currentJzvd = JzvdMgr.getCurrentJzvd();
 //                    if (currentJzvd != null && currentJzvd.currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
-//                        Jzvd.releaseAllVideos();
+//                        Jzvd.resetAllVideos();
 //                    }
 //                }
 //            }
@@ -63,7 +63,7 @@
 //    @Override
 //    protected void onPause() {
 //        super.onPause();
-//        Jzvd.releaseAllVideos();
+//        Jzvd.resetAllVideos();
 //    }
 //
 //    @Override
