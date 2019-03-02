@@ -54,7 +54,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL = 3;
     public static boolean TOOL_BAR_EXIST = true;
     public static int FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
-    public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+    public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;//过一遍demo
     public static boolean SAVE_PROGRESS = true;
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
     public static int VIDEO_IMAGE_DISPLAY_TYPE = 0;
@@ -175,11 +175,25 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //        }
 //    }
 
+    public void clearDecorView() {
+        ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
+        vg.removeView(CURRENT_JZVD);
+    }
+
     public static boolean backPress() {
         Log.i(TAG, "backPress");
 //        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-//            return false;
+//            return false; 这些东西遇到了再改，最后过代码的时候删除残留
 //
+
+        if (CONTAINER_LIST.size() != 0) {
+            CURRENT_JZVD.clearDecorView();
+            //测试一下layoutparam的不同属性有什么区别
+            ((ViewGroup) CONTAINER_LIST.getLast()).addView(CURRENT_JZVD);
+            JZUtils.getWindow(CURRENT_JZVD.getContext()).clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            CONTAINER_LIST.pop();
+            return true;
+        }
 //        if (JzvdMgr.getSecondFloor() != null) {
 //            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
 //            if (JzvdMgr.getFirstFloor().jzDataSource.containsTheUrl(JZMediaPlayer.getDataSource().getCurrentUrl())) {
@@ -919,13 +933,11 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    public void startWindowFullscreen() {
-        //1.启动浮层。2.attach过去
-        //new jzvd替换原来的jzvd，然后把这个jzvd attach到别的地方。。为啥不行？是new出来的jzvd布局什么样，宽高什么样不一定
 
-//        JZUtils.hideStatusBar(getContext());//可能不需要这个
+    public void startWindowFullscreen() {
         ViewGroup vp = (ViewGroup) CURRENT_JZVD.getParent();
         vp.removeView(CURRENT_JZVD);
+        CONTAINER_LIST.add(vp);
 
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
         vg.addView(CURRENT_JZVD, new FrameLayout.LayoutParams(

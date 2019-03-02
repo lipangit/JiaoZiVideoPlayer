@@ -21,9 +21,7 @@ import cn.jzvd.demo.CustomJzvd.MyJzvdStd;
  */
 public class ActivityMain extends AppCompatActivity {
 
-
     MyJzvdStd myJzvdStd;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,20 +35,20 @@ public class ActivityMain extends AppCompatActivity {
 //        Jzvd.setJzUserAction(new MyUserActionStd());
 
     }
-//
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        Jzvd.resetAllVideos();
-//    }
-//
-//    @Override
-//    public void onBackPressed() {
-//        if (Jzvd.backPress()) {
-//            return;
-//        }
-//        super.onBackPressed();
-//    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Jzvd.resetAllVideos();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (Jzvd.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
 
     public void clickApi(View view) {
 //        startActivity(new Intent(ActivityMain.this, ActivityApi.class));
