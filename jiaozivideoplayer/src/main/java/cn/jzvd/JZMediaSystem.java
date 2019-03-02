@@ -196,7 +196,6 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         } else {
             jzvd.textureView.setSurfaceTexture(savedSurfaces);
         }
-        System.out.println(surface.hashCode() + "    fdsfdsf");
     }
 
     @Override
