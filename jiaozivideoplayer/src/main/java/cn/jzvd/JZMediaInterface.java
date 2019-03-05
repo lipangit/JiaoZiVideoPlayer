@@ -1,5 +1,6 @@
 package cn.jzvd;
 
+import android.graphics.SurfaceTexture;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.TextureView;
@@ -14,6 +15,8 @@ public abstract class JZMediaInterface implements TextureView.SurfaceTextureList
     public Handler mMediaHandler;
     public Handler handler;
     public Jzvd jzvd;
+    public static SurfaceTexture SAVED_SURFACE;
+
 
     public JZMediaInterface(Jzvd jzvd) {
         this.jzvd = jzvd;

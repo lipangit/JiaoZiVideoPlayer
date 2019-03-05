@@ -184,35 +184,19 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         Log.i(TAG, "backPress");
 //        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
 //            return false; 这些东西遇到了再改，最后过代码的时候删除残留
-//
-
         if (CONTAINER_LIST.size() != 0) {
             CURRENT_JZVD.clearDecorView();
             //测试一下layoutparam的不同属性有什么区别
             ((ViewGroup) CONTAINER_LIST.getLast()).addView(CURRENT_JZVD);
-            JZUtils.getWindow(CURRENT_JZVD.getContext()).clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            JZUtils.showStatusBar(CURRENT_JZVD.getContext());
+//            CURRENT_JZVD.setSystemUiVisibility(
+//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
+//            showSystemUI((JZUtils.scanForActivity(CURRENT_JZVD.getContext())).getWindow().getDecorView());
             CONTAINER_LIST.pop();
             return true;
         }
-//        if (JzvdMgr.getSecondFloor() != null) {
-//            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
-//            if (JzvdMgr.getFirstFloor().jzDataSource.containsTheUrl(JZMediaPlayer.getDataSource().getCurrentUrl())) {
-//                Jzvd jzvd = JzvdMgr.getSecondFloor();
-//                jzvd.onEvent(jzvd.currentScreen == JzvdStd.SCREEN_WINDOW_FULLSCREEN ?
-//                        JZUserAction.ON_QUIT_FULLSCREEN :
-//                        JZUserAction.ON_QUIT_TINYSCREEN);
-//                JzvdMgr.getFirstFloor().playOnThisJzvd();
-//            } else {
-//                quitFullscreenOrTinyWindow();
-//            }
-//            return true;
-//        } else if (JzvdMgr.getFirstFloor() != null &&
-//                (JzvdMgr.getFirstFloor().currentScreen == SCREEN_WINDOW_FULLSCREEN ||
-//                        JzvdMgr.getFirstFloor().currentScreen == SCREEN_WINDOW_TINY)) {//以前我总想把这两个判断写到一起，这分明是两个独立是逻辑
-//            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
-//            quitFullscreenOrTinyWindow();
-//            return true;
-//        }
         return false;
     }
 
@@ -739,11 +723,11 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         dismissVolumeDialog();
         onStateNormal();
         textureViewContainer.removeAllViews();
+        JZMediaInterface.SAVED_SURFACE = null;
 
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         JZUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        clearFullscreenLayout();
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
         mediaInterface.release();
     }
@@ -777,20 +761,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         Gravity.CENTER);
         textureViewContainer.addView(textureView, layoutParams);
-    }
-
-    public void clearFullscreenLayout() {
-//        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
-//                .findViewById(Window.ID_ANDROID_CONTENT);
-//        View oldF = vp.findViewById(R.id.jz_fullscreen_id);
-//        View oldT = vp.findViewById(R.id.jz_tiny_id);
-//        if (oldF != null) {
-//            vp.removeView(oldF);
-//        }
-//        if (oldT != null) {
-//            vp.removeView(oldT);
-//        }
-//        showStatusBar(getContext());
     }
 
     public void clearFloatScreen() {
@@ -942,9 +912,10 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
         vg.addView(CURRENT_JZVD, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        JZUtils.hideStatusBar(getContext());
+//        hideSystemUI((JZUtils.scanForActivity(getContext())).getWindow().getDecorView());
+//            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
 
-        CURRENT_JZVD.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY |
-                View.SYSTEM_UI_FLAG_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
     }
 
 
