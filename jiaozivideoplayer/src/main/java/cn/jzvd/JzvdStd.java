@@ -376,7 +376,7 @@ public class JzvdStd extends Jzvd {
         startDismissControlViewTimer();
     }
 
-    public void onClickUiToggle() {
+    public void onClickUiToggle() {//这是事件
         if (bottomContainer.getVisibility() != View.VISIBLE) {
             setSystemTimeAndBattery();
             clarity.setText(jzDataSource.getCurrentKey().toString());

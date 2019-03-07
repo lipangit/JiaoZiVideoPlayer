@@ -918,6 +918,19 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     }
 
+    public void setScreenFullscreen() {
+        //进入全屏模式，设置全屏的ui
+
+
+    }
+
+    public void setModeNormal() {
+
+    }
+
+    public void setModeTinyScreen() {
+
+    }
 
 //    public void startWindowFullscreen() {
 //        Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
@@ -980,16 +993,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//    }
-
-//    public boolean isCurrentPlay() {
-//        return isCurrentJZVD()
-//                && jzDataSource.containsTheUrl(JZMediaPlayer.getCurrentUrl());//不仅正在播放的url不能一样，并且各个清晰度也不能一样
-//    }
-//
-//    public boolean isCurrentJZVD() {
-//        return JzvdMgr.getCurrentJzvd() != null
-//                && JzvdMgr.getCurrentJzvd() == this;
 //    }
 
 //    //退出全屏和小窗的方法
