@@ -918,96 +918,23 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     }
 
+    public void setScreenNormal() {
+
+    }
+
     public void setScreenFullscreen() {
-        //进入全屏模式，设置全屏的ui
-
 
     }
 
-    public void setModeNormal() {
+    public void setScreenTiny() {
 
     }
 
-    public void setModeTinyScreen() {
+    //下面还有onStete...  从MediaPlayer回调过来的
 
-    }
 
-//    public void startWindowFullscreen() {
-//        Log.i(TAG, "startWindowFullscreen " + " [" + this.hashCode() + "] ");
 
-////        textureViewContainer.removeView(JZMediaPlayer.textureView);
-//        try {
-//            Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
-//            Jzvd jzvd = constructor.newInstance(getContext());
-//            jzvd.setId(R.id.jz_fullscreen_id);
-//            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-//                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//            vp.addView(jzvd, lp);
-//            jzvd.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-//                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN);
-//            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);
-//            jzvd.setState(currentState);
-//            jzvd.addTextureView();
-//            JzvdMgr.setSecondFloor(jzvd);
-////            final Animation ra = AnimationUtils.loadAnimation(getContext(), R.anim.start_fullscreen);
-////            jzVideoPlayer.setAnimation(ra);
-//            JZUtils.setRequestedOrientation(getContext(), FULLSCREEN_ORIENTATION);
-//
-//            onStateNormal();
-//            jzvd.progressBar.setSecondaryProgress(progressBar.getSecondaryProgress());
-//            jzvd.startProgressTimer();
-//            CLICK_QUIT_FULLSCREEN_TIME = System.currentTimeMillis();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//    public void startWindowTiny() {
-//        Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
-//        onEvent(JZUserAction.ON_ENTER_TINYSCREEN);
-//        if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR || currentState == CURRENT_STATE_AUTO_COMPLETE)
-//            return;
-//        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
-//                .findViewById(Window.ID_ANDROID_CONTENT);
-//        View old = vp.findViewById(R.id.jz_tiny_id);
-//        if (old != null) {
-//            vp.removeView(old);
-//        }
-////        textureViewContainer.removeView(JZMediaPlayer.textureView);
-//
-//        try {
-//            Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
-//            Jzvd jzvd = constructor.newInstance(getContext());
-//            jzvd.setId(R.id.jz_tiny_id);
-//            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
-//            lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
-//            vp.addView(jzvd, lp);
-//            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_TINY);
-//            jzvd.setState(currentState);
-//            jzvd.addTextureView();
-//            JzvdMgr.setSecondFloor(jzvd);
-//            onStateNormal();
-//        } catch (InstantiationException e) {
-//            e.printStackTrace();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    //退出全屏和小窗的方法
-//    public void playOnThisJzvd() {
-//        Log.i(TAG, "playOnThisJzvd " + " [" + this.hashCode() + "] ");
-//        //1.清空全屏和小窗的jzvd
-//        currentState = JzvdMgr.getSecondFloor().currentState;
-//        clearFloatScreen();
-//        //2.在本jzvd上播放
-//        setState(currentState);
-////        removeTextureView();
-//        addTextureView();
-//    }
-//
-//    //重力感应的时候调用的函数，
+//    //重力感应的时候调用的函数，、、这里有重力感应的参数，暂时不能删除
 //    public void autoFullscreen(float x) {
 //        if (isCurrentPlay()
 //                && (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE)

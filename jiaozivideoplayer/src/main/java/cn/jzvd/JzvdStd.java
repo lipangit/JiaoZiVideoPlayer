@@ -220,6 +220,39 @@ public class JzvdStd extends Jzvd {
         bottomProgressBar.setProgress(100);
     }
 
+    public void setUiByScreenAndState() {
+        switch (currentState) {
+            case CURRENT_STATE_NORMAL:
+                switch (currentScreen) {
+                    case SCREEN_WINDOW_NORMAL:
+                        break;
+                    case SCREEN_WINDOW_FULLSCREEN:
+                        break;
+                    case SCREEN_WINDOW_TINY:
+                        break;
+                }
+                break;
+            case CURRENT_STATE_PREPARING:
+
+                break;
+            case CURRENT_STATE_PLAYING:
+
+                break;
+            case CURRENT_STATE_PAUSE:
+
+                break;
+            case CURRENT_STATE_PREPARING_CHANGING_URL:
+
+                break;
+            case CURRENT_STATE_ERROR:
+
+                break;
+            case CURRENT_STATE_AUTO_COMPLETE:
+
+                break;
+        }
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         int id = v.getId();
@@ -457,6 +490,7 @@ public class JzvdStd extends Jzvd {
             }
         }
     }
+
 
     @Override
     public void onProgress(int progress, long position, long duration) {
