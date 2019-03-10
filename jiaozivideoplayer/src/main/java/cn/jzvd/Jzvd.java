@@ -564,7 +564,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         setState(state, 0, 0);
     }
 
-    public void setState(int state, int urlMapIndex, int seekToInAdvance) {
+    public void setState(int state, int urlMapIndex, int seekToInAdvance) {//后面两个参数干嘛的
         switch (state) {
             case CURRENT_STATE_NORMAL:
                 onStateNormal();
@@ -586,6 +586,20 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 break;
             case CURRENT_STATE_AUTO_COMPLETE:
                 onStateAutoComplete();
+                break;
+        }
+    }
+
+    public void setScreen(int screen) {//特殊的个别的进入全屏的按钮在这里设置  只有setup的时候能用上
+        switch (screen) {
+            case SCREEN_WINDOW_NORMAL:
+                setScreenNormal();
+                break;
+            case SCREEN_WINDOW_FULLSCREEN:
+                setScreenFullscreen();
+                break;
+            case SCREEN_WINDOW_TINY:
+                setScreenTiny();
                 break;
         }
     }
@@ -913,25 +927,26 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         vg.addView(CURRENT_JZVD, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         JZUtils.hideStatusBar(getContext());
+
+        setScreenFullscreen();
 //        hideSystemUI((JZUtils.scanForActivity(getContext())).getWindow().getDecorView());
 //            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
 
     }
 
     public void setScreenNormal() {
-
+        currentScreen = SCREEN_WINDOW_NORMAL;
     }
 
     public void setScreenFullscreen() {
-
+        currentScreen = SCREEN_WINDOW_FULLSCREEN;
     }
 
     public void setScreenTiny() {
-
+        currentScreen = SCREEN_WINDOW_TINY;
     }
 
     //下面还有onStete...  从MediaPlayer回调过来的
-
 
 
 //    //重力感应的时候调用的函数，、、这里有重力感应的参数，暂时不能删除

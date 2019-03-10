@@ -120,34 +120,7 @@ public class JzvdStd extends Jzvd {
     public void setUp(JZDataSource jzDataSource, int screen) {
         super.setUp(jzDataSource, screen);
         titleTextView.setText(jzDataSource.title);
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            fullscreenButton.setImageResource(R.drawable.jz_shrink);
-            backButton.setVisibility(View.VISIBLE);
-            tinyBackImageView.setVisibility(View.INVISIBLE);
-            batteryTimeLayout.setVisibility(View.VISIBLE);
-            if (jzDataSource.urlsMap.size() == 1) {
-                clarity.setVisibility(GONE);
-            } else {
-                clarity.setText(jzDataSource.getCurrentKey().toString());
-                clarity.setVisibility(View.VISIBLE);
-            }
-            changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_fullscreen));
-        } else if (currentScreen == SCREEN_WINDOW_NORMAL
-                || currentScreen == SCREEN_WINDOW_LIST) {
-            fullscreenButton.setImageResource(R.drawable.jz_enlarge);
-            backButton.setVisibility(View.GONE);
-            tinyBackImageView.setVisibility(View.INVISIBLE);
-            changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_normal));
-            batteryTimeLayout.setVisibility(View.GONE);
-            clarity.setVisibility(View.GONE);
-        } else if (currentScreen == SCREEN_WINDOW_TINY) {
-            tinyBackImageView.setVisibility(View.VISIBLE);
-            setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-            batteryTimeLayout.setVisibility(View.GONE);
-            clarity.setVisibility(View.GONE);
-        }
-        setSystemTimeAndBattery();
+        setScreen(screen);
     }
 
     public void changeStartButtonSize(int size) {
@@ -162,6 +135,47 @@ public class JzvdStd extends Jzvd {
     @Override
     public int getLayoutId() {
         return R.layout.jz_layout_std;
+    }
+
+
+    @Override
+    public void setScreenNormal() {
+        super.setScreenNormal();
+        fullscreenButton.setImageResource(R.drawable.jz_enlarge);
+        backButton.setVisibility(View.GONE);
+        tinyBackImageView.setVisibility(View.INVISIBLE);
+        changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_normal));
+        batteryTimeLayout.setVisibility(View.GONE);
+        clarity.setVisibility(View.GONE);
+    }
+
+
+    @Override
+    public void setScreenFullscreen() {
+        super.setScreenFullscreen();
+        //进入全屏之后要保证原来的播放状态和ui状态不变，改变个别的ui
+        fullscreenButton.setImageResource(R.drawable.jz_shrink);
+        backButton.setVisibility(View.VISIBLE);
+        tinyBackImageView.setVisibility(View.INVISIBLE);
+        batteryTimeLayout.setVisibility(View.VISIBLE);
+        if (jzDataSource.urlsMap.size() == 1) {
+            clarity.setVisibility(GONE);
+        } else {
+            clarity.setText(jzDataSource.getCurrentKey().toString());
+            clarity.setVisibility(View.VISIBLE);
+        }
+        changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_fullscreen));
+        setSystemTimeAndBattery();
+    }
+
+    @Override
+    public void setScreenTiny() {
+        super.setScreenTiny();
+        tinyBackImageView.setVisibility(View.VISIBLE);
+        setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+        batteryTimeLayout.setVisibility(View.GONE);
+        clarity.setVisibility(View.GONE);
     }
 
     @Override
@@ -218,39 +232,6 @@ public class JzvdStd extends Jzvd {
         changeUiToComplete();
         cancelDismissControlViewTimer();
         bottomProgressBar.setProgress(100);
-    }
-
-    public void setUiByScreenAndState() {
-        switch (currentState) {
-            case CURRENT_STATE_NORMAL:
-                switch (currentScreen) {
-                    case SCREEN_WINDOW_NORMAL:
-                        break;
-                    case SCREEN_WINDOW_FULLSCREEN:
-                        break;
-                    case SCREEN_WINDOW_TINY:
-                        break;
-                }
-                break;
-            case CURRENT_STATE_PREPARING:
-
-                break;
-            case CURRENT_STATE_PLAYING:
-
-                break;
-            case CURRENT_STATE_PAUSE:
-
-                break;
-            case CURRENT_STATE_PREPARING_CHANGING_URL:
-
-                break;
-            case CURRENT_STATE_ERROR:
-
-                break;
-            case CURRENT_STATE_AUTO_COMPLETE:
-
-                break;
-        }
     }
 
     @Override
