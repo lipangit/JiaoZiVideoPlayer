@@ -189,6 +189,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             //测试一下layoutparam的不同属性有什么区别
             ((ViewGroup) CONTAINER_LIST.getLast()).addView(CURRENT_JZVD);
             JZUtils.showStatusBar(CURRENT_JZVD.getContext());
+            CURRENT_JZVD.setScreenNormal();//这块可以放到jzvd中
 //            CURRENT_JZVD.setSystemUiVisibility(
 //                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 //                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
