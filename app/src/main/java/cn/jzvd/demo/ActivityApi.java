@@ -124,7 +124,7 @@ public class ActivityApi extends AppCompatActivity {
     }
 
     public void clickSmallChange(View view) {
-//        startActivity(new Intent(ActivityApi.this, ActivityApiUISmallChange.class));
+        startActivity(new Intent(ActivityApi.this, ActivityApiUISmallChange.class));
     }
 
     public void clickBigChange(View view) {

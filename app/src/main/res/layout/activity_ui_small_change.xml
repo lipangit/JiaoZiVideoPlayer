@@ -20,10 +20,16 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui with share button, visible after fullscreen" />
 
-            <cn.jzvd.demo.CustomJzvd.JzvdStdShowShareButtonAfterFullscreen
-                android:id="@+id/custom_videoplayer_standard_with_share_button"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp">
+
+                <cn.jzvd.demo.CustomJzvd.JzvdStdShowShareButtonAfterFullscreen
+                    android:id="@+id/custom_videoplayer_standard_with_share_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -32,10 +38,16 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui show title after fullscreen" />
 
-            <cn.jzvd.demo.CustomJzvd.JzvdStdShowTitleAfterFullscreen
-                android:id="@+id/custom_videoplayer_standard_show_title_after_fullscreen"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp">
+
+                <cn.jzvd.demo.CustomJzvd.JzvdStdShowTitleAfterFullscreen
+                    android:id="@+id/custom_videoplayer_standard_show_title_after_fullscreen"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -44,10 +56,16 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui show textureview after auto complete" />
 
-            <cn.jzvd.demo.CustomJzvd.JzvdStdShowTextureViewAfterAutoComplete
-                android:id="@+id/custom_videoplayer_standard_show_textureview_aoto_complete"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp">
+
+                <cn.jzvd.demo.CustomJzvd.JzvdStdShowTextureViewAfterAutoComplete
+                    android:id="@+id/custom_videoplayer_standard_show_textureview_aoto_complete"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -56,10 +74,16 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui auto complete after fullscreen" />
 
-            <cn.jzvd.demo.CustomJzvd.JzvdStdAutoCompleteAfterFullscreen
-                android:id="@+id/custom_videoplayer_standard_aoto_complete"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp">
+
+                <cn.jzvd.demo.CustomJzvd.JzvdStdAutoCompleteAfterFullscreen
+                    android:id="@+id/custom_videoplayer_standard_aoto_complete"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -68,10 +92,16 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui 1:1" />
 
-            <cn.jzvd.demo.CustomJzvd.JzvdStdAutoCompleteAfterFullscreen
-                android:id="@+id/jz_videoplayer_1_1"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+                <cn.jzvd.demo.CustomJzvd.JzvdStdAutoCompleteAfterFullscreen
+                    android:id="@+id/jz_videoplayer_1_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -80,10 +110,16 @@
                 android:layout_marginTop="18dp"
                 android:text="Standard ui 16:9" />
 
-            <cn.jzvd.demo.CustomJzvd.JzvdStdAutoCompleteAfterFullscreen
-                android:id="@+id/jz_videoplayer_16_9"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="200dp">
+
+                <cn.jzvd.demo.CustomJzvd.JzvdStdAutoCompleteAfterFullscreen
+                    android:id="@+id/jz_videoplayer_16_9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -92,10 +128,16 @@
                 android:layout_marginTop="18dp"
                 android:text="Volume after fullscreen" />
 
-            <cn.jzvd.demo.CustomJzvd.JzvdStdVolumeAfterFullscreen
-                android:id="@+id/jz_videoplayer_volume"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp">
+
+                <cn.jzvd.demo.CustomJzvd.JzvdStdVolumeAfterFullscreen
+                    android:id="@+id/jz_videoplayer_volume"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -104,10 +146,16 @@
                 android:layout_marginTop="18dp"
                 android:text="Play Mp3" />
 
-            <cn.jzvd.demo.CustomJzvd.JzvdStdMp3
-                android:id="@+id/jz_videoplayer_mp3"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp">
+
+                <cn.jzvd.demo.CustomJzvd.JzvdStdMp3
+                    android:id="@+id/jz_videoplayer_mp3"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -116,10 +164,16 @@
                 android:layout_marginTop="18dp"
                 android:text="Play Speed" />
 
-            <cn.jzvd.demo.CustomJzvd.JzvdStdSpeed
-                android:id="@+id/jz_videoplayer_speed"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp">
+
+                <cn.jzvd.demo.CustomJzvd.JzvdStdSpeed
+                    android:id="@+id/jz_videoplayer_speed"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

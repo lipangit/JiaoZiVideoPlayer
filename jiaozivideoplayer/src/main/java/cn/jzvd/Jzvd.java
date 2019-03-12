@@ -148,6 +148,11 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         vg.removeView(CURRENT_JZVD);
     }
 
+    //只是网上走一层，或者是退出全屏，或者是退出小窗，或者是
+    public void goBack() {
+
+    }
+
     public static boolean backPress() {
         Log.i(TAG, "backPress");
 //        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
@@ -668,10 +673,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         dismissProgressDialog();
         dismissVolumeDialog();
         onStateAutoComplete();
-
-//        if (currentScreen == SCREEN_WINDOW_FULLSCREEN || currentScreen == SCREEN_WINDOW_TINY) {//全屏播放完毕怎么办
-//            backPress();
-//        }
         mediaInterface.release();
         JZUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         JZUtils.saveProgress(getContext(), jzDataSource.getCurrentUrl(), 0);

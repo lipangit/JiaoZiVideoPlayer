@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import cn.jzvd.JZDataSource;
 import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.R;
 
@@ -48,12 +47,14 @@ public class JzvdStdShowShareButtonAfterFullscreen extends JzvdStd {
     }
 
     @Override
-    public void setUp(JZDataSource jzDataSource, int screen) {
-        super.setUp(jzDataSource, screen);
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            shareButton.setVisibility(View.VISIBLE);
-        } else {
-            shareButton.setVisibility(View.INVISIBLE);
-        }
+    public void setScreenNormal() {
+        super.setScreenNormal();
+        shareButton.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void setScreenFullscreen() {
+        super.setScreenFullscreen();
+        shareButton.setVisibility(View.VISIBLE);
     }
 }

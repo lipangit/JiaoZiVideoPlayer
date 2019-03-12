@@ -15,7 +15,6 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/jzvd_container"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="18dp">

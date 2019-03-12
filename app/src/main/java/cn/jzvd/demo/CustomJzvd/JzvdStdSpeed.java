@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import cn.jzvd.JZDataSource;
 import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.R;
 
@@ -28,15 +27,17 @@ public class JzvdStdSpeed extends JzvdStd {
         tvSpeed.setOnClickListener(this);
     }
 
+    public void setScreenNormal() {
+        super.setScreenNormal();
+        tvSpeed.setVisibility(View.GONE);
+    }
+
     @Override
-    public void setUp(JZDataSource jzDataSource, int screen) {
-        super.setUp(jzDataSource, screen);
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN &&
-                android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+    public void setScreenFullscreen() {
+        super.setScreenFullscreen();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
             tvSpeed.setVisibility(View.VISIBLE);
-        } else {
-            tvSpeed.setVisibility(View.GONE);
-        }
+
         if (jzDataSource.objects == null) {
             Object[] object = {2};
             jzDataSource.objects = object;
@@ -50,6 +51,7 @@ public class JzvdStdSpeed extends JzvdStd {
             tvSpeed.setText(getSpeedFromIndex(currentSpeedIndex) + "X");
         }
     }
+
 
     @Override
     public void onClick(View v) {
