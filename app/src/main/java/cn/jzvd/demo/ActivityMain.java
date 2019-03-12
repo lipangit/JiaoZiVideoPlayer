@@ -51,7 +51,7 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     public void clickApi(View view) {
-//        startActivity(new Intent(ActivityMain.this, ActivityApi.class));
+        startActivity(new Intent(ActivityMain.this, ActivityApi.class));
     }
 
     public void clickListView(View view) {

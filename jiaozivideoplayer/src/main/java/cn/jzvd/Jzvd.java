@@ -137,8 +137,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public static void resetAllVideos() {
         Log.d(TAG, "resetAllVideos");
-        if (Jzvd.CURRENT_JZVD != null) {
-            Jzvd.CURRENT_JZVD.reset();
+        if (CURRENT_JZVD != null) {
+            CURRENT_JZVD.reset();
             CURRENT_JZVD = null;
         }
     }
@@ -174,42 +174,40 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         JZUtils.clearSavedProgress(context, url);
     }
 
-    public static void setJzUserAction(JZUserAction jzUserEvent) {
+    public static void setJzUserAction(JZUserAction jzUserEvent) {//这个等到过函数，写新类的时候删除event
         JZ_USER_EVENT = jzUserEvent;
     }
 
-//    public static void goOnPlayOnResume() {
-//        if (JzvdMgr.getCurrentJzvd() != null) {
-//            Jzvd jzvd = JzvdMgr.getCurrentJzvd();
-//            if (jzvd.currentState == Jzvd.CURRENT_STATE_PAUSE) {
-//                if (ON_PLAY_PAUSE_TMP_STATE == CURRENT_STATE_PAUSE) {
-//                    jzvd.onStatePause();
-//                    JZMediaPlayer.pause();
-//                } else {
-//                    jzvd.onStatePlaying();
-//                    JZMediaPlayer.start();
-//                }
-//                ON_PLAY_PAUSE_TMP_STATE = 0;
-//            }
-//        }
-//    }
-//
-//    public static int ON_PLAY_PAUSE_TMP_STATE = 0;
-//
-//    public static void goOnPlayOnPause() {
-//        if (JzvdMgr.getCurrentJzvd() != null) {
-//            Jzvd jzvd = JzvdMgr.getCurrentJzvd();
-//            if (jzvd.currentState == Jzvd.CURRENT_STATE_AUTO_COMPLETE ||
-//                    jzvd.currentState == Jzvd.CURRENT_STATE_NORMAL ||
-//                    jzvd.currentState == Jzvd.CURRENT_STATE_ERROR) {
-////                JZVideoPlayer.resetAllVideos();
-//            } else {
-//                ON_PLAY_PAUSE_TMP_STATE = jzvd.currentState;
-//                jzvd.onStatePause();
-//                JZMediaPlayer.pause();
-//            }
-//        }
-//    }
+    public static void goOnPlayOnResume() {
+        if (CURRENT_JZVD != null) {
+            if (CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_PAUSE) {
+                if (ON_PLAY_PAUSE_TMP_STATE == CURRENT_STATE_PAUSE) {
+                    CURRENT_JZVD.onStatePause();
+                    CURRENT_JZVD.mediaInterface.pause();
+                } else {
+                    CURRENT_JZVD.onStatePlaying();
+                    CURRENT_JZVD.mediaInterface.start();
+                }
+                ON_PLAY_PAUSE_TMP_STATE = 0;
+            }
+        }
+    }
+
+    public static int ON_PLAY_PAUSE_TMP_STATE = 0;
+
+    public static void goOnPlayOnPause() {
+        if (CURRENT_JZVD != null) {
+            if (CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_AUTO_COMPLETE ||
+                    CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_NORMAL ||
+                    CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_ERROR) {
+                Jzvd.resetAllVideos();
+            } else {
+                ON_PLAY_PAUSE_TMP_STATE = CURRENT_JZVD.currentState;
+                CURRENT_JZVD.onStatePause();
+                CURRENT_JZVD.mediaInterface.pause();
+            }
+        }
+    }
 
 //    public static void onScrollAutoTiny(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 //        int lastVisibleItem = firstVisibleItem + visibleItemCount;
@@ -309,7 +307,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
 
-
+        currentState = CURRENT_STATE_IDLE;
     }
 
     public void setUp(String url, String title, int screen) {
@@ -767,7 +765,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 if (seekToManulPosition > progress) {
                     return;
                 } else {
-                    seekToManulPosition = -1;
+                    seekToManulPosition = -1;//这个关键帧有没有必要做
                 }
             } else {
                 if (progress != 0) progressBar.setProgress(progress);

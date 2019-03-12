@@ -5,8 +5,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
@@ -178,5 +180,19 @@ public class JZUtils {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+    
+    public static void verifyStoragePermissions(Activity activity) {
+        try {
+            int permission = ActivityCompat.checkSelfPermission(activity,
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(activity, new String[]{
+                        "android.permission.READ_EXTERNAL_STORAGE",
+                        "android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

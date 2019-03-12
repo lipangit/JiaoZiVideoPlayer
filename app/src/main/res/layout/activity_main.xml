@@ -17,8 +17,7 @@
             <LinearLayout
                 android:id="@+id/jzvd_container"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:orientation="vertical">
+                android:layout_height="200dp">
 
                 <cn.jzvd.demo.CustomJzvd.MyJzvdStd
                     android:id="@+id/jz_video"
