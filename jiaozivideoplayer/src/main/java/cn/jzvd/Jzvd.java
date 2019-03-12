@@ -887,31 +887,31 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     //下面还有onStete...  从MediaPlayer回调过来的
 
 
-//    //重力感应的时候调用的函数，、、这里有重力感应的参数，暂时不能删除
-//    public void autoFullscreen(float x) {
-//        if (isCurrentPlay()
-//                && (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE)
-//                && currentScreen != SCREEN_WINDOW_FULLSCREEN
-//                && currentScreen != SCREEN_WINDOW_TINY) {
-//            if (x > 0) {
-//                JZUtils.setRequestedOrientation(getContext(), ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-//            } else {
-//                JZUtils.setRequestedOrientation(getContext(), ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
-//            }
-//            onEvent(JZUserAction.ON_ENTER_FULLSCREEN);
-//            startWindowFullscreen();
-//        }
-//    }
-//
-//    public void autoQuitFullscreen() {
-//        if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
-//                && isCurrentPlay()
-//                && currentState == CURRENT_STATE_PLAYING
-//                && currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-//            lastAutoFullscreenTime = System.currentTimeMillis();
-//            backPress();
-//        }
-//    }
+    //    //重力感应的时候调用的函数，、、这里有重力感应的参数，暂时不能删除
+    public void autoFullscreen(float x) {
+        if (CURRENT_JZVD != null
+                && (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE)
+                && currentScreen != SCREEN_WINDOW_FULLSCREEN
+                && currentScreen != SCREEN_WINDOW_TINY) {
+            if (x > 0) {
+                JZUtils.setRequestedOrientation(getContext(), ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            } else {
+                JZUtils.setRequestedOrientation(getContext(), ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+            }
+            onEvent(JZUserAction.ON_ENTER_FULLSCREEN);
+            startWindowFullscreen();
+        }
+    }
+
+    public void autoQuitFullscreen() {
+        if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
+//                && CURRENT_JZVD != null
+                && currentState == CURRENT_STATE_PLAYING
+                && currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            lastAutoFullscreenTime = System.currentTimeMillis();
+            backPress();
+        }
+    }
 
     public void onEvent(int type) {
         if (JZ_USER_EVENT != null && !jzDataSource.urlsMap.isEmpty()) {
@@ -961,7 +961,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             //过滤掉用力过猛会有一个反向的大数值
             if (x < -12 || x > 12) {
                 if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000) {
-//                  JzvdMgr.getCurrentJzvd().autoFullscreen(x);
+                    if (Jzvd.CURRENT_JZVD != null) Jzvd.CURRENT_JZVD.autoFullscreen(x);
                     lastAutoFullscreenTime = System.currentTimeMillis();
                 }
             }
@@ -987,7 +987,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    public Context getApplicationContext() {
+    public Context getApplicationContext() {//这个函数必要吗
         Context context = getContext();
         if (context != null) {
             Context applicationContext = context.getApplicationContext();
