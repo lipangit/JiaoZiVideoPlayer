@@ -142,7 +142,7 @@ public class ActivityApi extends AppCompatActivity {
     }
 
     public void clickRotationAndVideoSize(View view) {
-//        startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
+        startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
     }
 
     public void clickCustomMediaPlayer(View view) {

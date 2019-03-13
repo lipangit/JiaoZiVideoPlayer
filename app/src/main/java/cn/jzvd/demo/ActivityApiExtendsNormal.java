@@ -9,9 +9,9 @@ import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
 /**
+ * 适配了普通的Activity，如果不适配并且不继承AppCompatActivity的话会出现Context空指针的情况
  * Created by Nathen on 2017/9/19.
  */
-
 public class ActivityApiExtendsNormal extends Activity {
 
     @Override

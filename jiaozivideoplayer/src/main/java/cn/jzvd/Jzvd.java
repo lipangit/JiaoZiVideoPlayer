@@ -243,18 +243,18 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //        }
 //    }
 
-//    public static void setTextureViewRotation(int rotation) {
-//        if (JzvdMgr.getCurrentJzvd() != null && JzvdMgr.getCurrentJzvd().textureView != null) {
-//            JzvdMgr.getCurrentJzvd().textureView.setRotation(rotation);
-//        }
-//    }
-//
-//    public static void setVideoImageDisplayType(int type) {
-//        Jzvd.VIDEO_IMAGE_DISPLAY_TYPE = type;
-//        if (JzvdMgr.getCurrentJzvd() != null && JzvdMgr.getCurrentJzvd().textureView != null) {
-//            JzvdMgr.getCurrentJzvd().textureView.requestLayout();
-//        }
-//    }
+    public static void setTextureViewRotation(int rotation) {
+        if (CURRENT_JZVD != null && CURRENT_JZVD.textureView != null) {
+            CURRENT_JZVD.textureView.setRotation(rotation);
+        }
+    }
+
+    public static void setVideoImageDisplayType(int type) {
+        Jzvd.VIDEO_IMAGE_DISPLAY_TYPE = type;
+        if (CURRENT_JZVD != null && CURRENT_JZVD.textureView != null) {
+            CURRENT_JZVD.textureView.requestLayout();
+        }
+    }
 
     public abstract int getLayoutId();
 
