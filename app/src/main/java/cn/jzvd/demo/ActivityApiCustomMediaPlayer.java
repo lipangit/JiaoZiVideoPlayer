@@ -51,8 +51,6 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
 
 
 //        jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
-//                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZExoPlayer(jzvdStd));
-//        jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
 //                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZMediaIjkplayer(jzvdStd));
 
         Glide.with(this)
@@ -62,13 +60,37 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
     }
 
 
+    public void clickChangeToIjkplayer(View view) {
+        Jzvd.resetAllVideos();
+
+        jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
+                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZMediaIjkplayer(jzvdStd));
+        jzvdStd.startVideo();
+        Toast.makeText(this, "Change to Ijkplayer", Toast.LENGTH_SHORT).show();
+    }
+
+    public void clickChangeToSystem(View view) {
+        Jzvd.resetAllVideos();
+        jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
+                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZMediaSystem(jzvdStd));
+        jzvdStd.startVideo();
+        Toast.makeText(this, "Change to MediaPlayer", Toast.LENGTH_SHORT).show();
+    }
+
+    public void clickChangeToExo(View view) {
+        Jzvd.resetAllVideos();
+        jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
+                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZExoPlayer(jzvdStd));
+        jzvdStd.startVideo();
+        Toast.makeText(this, "Change to ExoPlayer", Toast.LENGTH_SHORT).show();
+    }
+
+
     @Override
     public void onBackPressed() {
         if (Jzvd.backPress()) {
             return;
         }
-        Jzvd.resetAllVideos();
-        handler.postDelayed(() -> jzvdStd.setMediaInterface(new JZMediaSystem(jzvdStd)), 1000);
         super.onBackPressed();
     }
 
@@ -82,33 +104,10 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Jzvd.resetAllVideos();
-                handler.postDelayed(() -> jzvdStd.setMediaInterface(new JZMediaSystem(jzvdStd)), 1000);
                 finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-
-    public void clickChangeToIjkplayer(View view) {
-        Jzvd.resetAllVideos();
-        handler.postDelayed(() -> jzvdStd.setMediaInterface(new JZMediaIjkplayer(jzvdStd)), 1000);
-        Toast.makeText(ActivityApiCustomMediaPlayer.this, "Change to Ijkplayer", Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
-    public void clickChangeToSystemMediaPlayer(View view) {
-        Jzvd.resetAllVideos();
-        handler.postDelayed(() -> jzvdStd.setMediaInterface(new JZMediaSystem(jzvdStd)), 1000);
-        Toast.makeText(this, "Change to MediaPlayer", Toast.LENGTH_SHORT).show();
-        finish();
-    }
-
-    public void clickChangeToExo(View view) {
-        Jzvd.resetAllVideos();
-        handler.postDelayed(() -> jzvdStd.setMediaInterface(new JZExoPlayer(jzvdStd)), 1000);
-        Toast.makeText(this, "Change to ExoPlayer", Toast.LENGTH_SHORT).show();
-        finish();
-    }
 }
