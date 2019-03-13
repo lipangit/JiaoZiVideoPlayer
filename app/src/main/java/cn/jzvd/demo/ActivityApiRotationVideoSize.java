@@ -31,7 +31,7 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity {
 
         myJzvdStd = findViewById(R.id.jz_video);
         myJzvdStd.setUp(VideoConstant.videoUrls[0][7], VideoConstant.videoTitles[0][7]
-                , JzvdStd.SCREEN_WINDOW_NORMAL);
+                , JzvdStd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][7])
                 .into(myJzvdStd.thumbImageView);

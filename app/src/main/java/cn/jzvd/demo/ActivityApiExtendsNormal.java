@@ -20,7 +20,7 @@ public class ActivityApiExtendsNormal extends Activity {
         setContentView(R.layout.activity_extends_normal);
         JzvdStd jzvdStd = findViewById(R.id.videoplayer);
         jzvdStd.setUp(VideoConstant.videoUrlList[0], "饺子不信"
-                , JzvdStd.SCREEN_WINDOW_NORMAL);
+                , JzvdStd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(jzvdStd.thumbImageView);

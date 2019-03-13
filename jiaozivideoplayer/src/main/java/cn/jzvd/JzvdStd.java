@@ -117,8 +117,8 @@ public class JzvdStd extends Jzvd {
         mRetryBtn.setOnClickListener(this);
     }
 
-    public void setUp(JZDataSource jzDataSource, int screen) {
-        super.setUp(jzDataSource, screen);
+    public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
+        super.setUp(jzDataSource, screen, jzMediaInterface);
         titleTextView.setText(jzDataSource.title);
         setScreen(screen);
     }
@@ -494,7 +494,7 @@ public class JzvdStd extends Jzvd {
 
     public void changeUiToNormal() {
         switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
+            case SCREEN_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -512,7 +512,7 @@ public class JzvdStd extends Jzvd {
 
     public void changeUiToPreparing() {
         switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
+            case SCREEN_NORMAL:
             case SCREEN_WINDOW_LIST:
             case SCREEN_WINDOW_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
@@ -527,7 +527,7 @@ public class JzvdStd extends Jzvd {
 
     public void changeUiToPlayingShow() {
         switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
+            case SCREEN_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -546,7 +546,7 @@ public class JzvdStd extends Jzvd {
 
     public void changeUiToPlayingClear() {
         switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
+            case SCREEN_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
@@ -563,7 +563,7 @@ public class JzvdStd extends Jzvd {
 
     public void changeUiToPauseShow() {
         switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
+            case SCREEN_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -581,7 +581,7 @@ public class JzvdStd extends Jzvd {
 
     public void changeUiToPauseClear() {
         switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
+            case SCREEN_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
@@ -598,7 +598,7 @@ public class JzvdStd extends Jzvd {
 
     public void changeUiToComplete() {
         switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
+            case SCREEN_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
@@ -617,7 +617,7 @@ public class JzvdStd extends Jzvd {
 
     public void changeUiToError() {
         switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
+            case SCREEN_NORMAL:
             case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);

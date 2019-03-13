@@ -42,32 +42,32 @@ public class ActivityApiUISmallChange extends AppCompatActivity {
         setContentView(R.layout.activity_ui_small_change);
 
         jzvdStdWithShareButton = findViewById(R.id.custom_videoplayer_standard_with_share_button);
-        jzvdStdWithShareButton.setUp(VideoConstant.videoUrlList[3], "饺子想呼吸", Jzvd.SCREEN_WINDOW_NORMAL);
+        jzvdStdWithShareButton.setUp(VideoConstant.videoUrlList[3], "饺子想呼吸", Jzvd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbList[3])
                 .into(jzvdStdWithShareButton.thumbImageView);
 
 
         jzvdStdShowTitleAfterFullscreen = findViewById(R.id.custom_videoplayer_standard_show_title_after_fullscreen);
-        jzvdStdShowTitleAfterFullscreen.setUp(VideoConstant.videoUrlList[4], "饺子想摇头", Jzvd.SCREEN_WINDOW_NORMAL);
+        jzvdStdShowTitleAfterFullscreen.setUp(VideoConstant.videoUrlList[4], "饺子想摇头", Jzvd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbList[4])
                 .into(jzvdStdShowTitleAfterFullscreen.thumbImageView);
 
         jzvdStdShowTextureViewAfterAutoComplete = findViewById(R.id.custom_videoplayer_standard_show_textureview_aoto_complete);
-        jzvdStdShowTextureViewAfterAutoComplete.setUp(VideoConstant.videoUrlList[5], "饺子想旅行", Jzvd.SCREEN_WINDOW_NORMAL);
+        jzvdStdShowTextureViewAfterAutoComplete.setUp(VideoConstant.videoUrlList[5], "饺子想旅行", Jzvd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbList[5])
                 .into(jzvdStdShowTextureViewAfterAutoComplete.thumbImageView);
 
         jzvdStdAutoCompleteAfterFullscreen = findViewById(R.id.custom_videoplayer_standard_aoto_complete);
-        jzvdStdAutoCompleteAfterFullscreen.setUp(VideoConstant.videoUrls[0][1], "饺子没来", Jzvd.SCREEN_WINDOW_NORMAL);
+        jzvdStdAutoCompleteAfterFullscreen.setUp(VideoConstant.videoUrls[0][1], "饺子没来", Jzvd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][1])
                 .into(jzvdStdAutoCompleteAfterFullscreen.thumbImageView);
 
         jzvdStd_1_1 = findViewById(R.id.jz_videoplayer_1_1);
-        jzvdStd_1_1.setUp(VideoConstant.videoUrls[0][1], "饺子有事吗", Jzvd.SCREEN_WINDOW_NORMAL);
+        jzvdStd_1_1.setUp(VideoConstant.videoUrls[0][1], "饺子有事吗", Jzvd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][1])
                 .into(jzvdStd_1_1.thumbImageView);
@@ -75,7 +75,7 @@ public class ActivityApiUISmallChange extends AppCompatActivity {
         jzvdStd_1_1.heightRatio = 1;
 
         jzvdStd_16_9 = findViewById(R.id.jz_videoplayer_16_9);
-        jzvdStd_16_9.setUp(VideoConstant.videoUrls[0][1], "饺子来不了", Jzvd.SCREEN_WINDOW_NORMAL);
+        jzvdStd_16_9.setUp(VideoConstant.videoUrls[0][1], "饺子来不了", Jzvd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][1])
                 .into(jzvdStd_16_9.thumbImageView);
@@ -83,21 +83,21 @@ public class ActivityApiUISmallChange extends AppCompatActivity {
         jzvdStd_16_9.heightRatio = 9;
 
         jzvdStdVolumeAfterFullscreen = findViewById(R.id.jz_videoplayer_volume);
-        jzvdStdVolumeAfterFullscreen.setUp(VideoConstant.videoUrls[0][1], "饺子摇摆", Jzvd.SCREEN_WINDOW_NORMAL);
+        jzvdStdVolumeAfterFullscreen.setUp(VideoConstant.videoUrls[0][1], "饺子摇摆", Jzvd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][1])
                 .into(jzvdStdVolumeAfterFullscreen.thumbImageView);
 
         jzvdStdMp3 = findViewById(R.id.jz_videoplayer_mp3);
         jzvdStdMp3.setUp(VideoConstant.videoUrls[0][1],
-                "饺子你听", Jzvd.SCREEN_WINDOW_NORMAL);
+                "饺子你听", Jzvd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][1])
                 .into(jzvdStdMp3.thumbImageView);
 
         jzvdStdSpeed = findViewById(R.id.jz_videoplayer_speed);
         jzvdStdSpeed.setUp(VideoConstant.videoUrls[0][1],
-                "饺子快点", Jzvd.SCREEN_WINDOW_NORMAL);
+                "饺子快点", Jzvd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][1])
                 .into(jzvdStdSpeed.thumbImageView);

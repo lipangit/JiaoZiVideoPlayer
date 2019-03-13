@@ -34,12 +34,12 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static final String TAG = "JZVD";
     public static final int THRESHOLD = 80;
 
-    public static final int SCREEN_WINDOW_NORMAL = 0;
+    public static final int SCREEN_NORMAL = 0;
     public static final int SCREEN_WINDOW_LIST = 1;
     public static final int SCREEN_WINDOW_FULLSCREEN = 2;
     public static final int SCREEN_WINDOW_TINY = 3;
 
-    public static final int CURRENT_STATE_IDLE = -1;
+    public static final int STATE_IDLE = -1;
     public static final int CURRENT_STATE_NORMAL = 0;
     public static final int CURRENT_STATE_PREPARING = 1;
     public static final int CURRENT_STATE_PREPARING_CHANGING_URL = 2;
@@ -48,7 +48,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
     public static final int CURRENT_STATE_ERROR = 7;
 
-    public static final int VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER = 0;//default
+    public static final int VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER = 0;//DEFAULT
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT = 1;
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_FILL_SCROP = 2;
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL = 3;
@@ -280,14 +280,22 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
         mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
 
-        currentState = CURRENT_STATE_IDLE;
+        currentState = STATE_IDLE;
     }
 
     public void setUp(String url, String title, int screen) {
         setUp(new JZDataSource(url, title), screen);
     }
 
+    public void setUp(String url, String title, int screen, JZMediaInterface jzMediaInterface) {
+        setUp(new JZDataSource(url, title), screen, jzMediaInterface);
+    }
+
     public void setUp(JZDataSource jzDataSource, int screen) {
+        setUp(jzDataSource, screen, new JZMediaSystem(this));
+    }
+
+    public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
         if (this.jzDataSource != null && jzDataSource.getCurrentUrl() != null &&
                 this.jzDataSource.containsTheUrl(jzDataSource.getCurrentUrl())) {
             return;
@@ -296,7 +304,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         this.currentScreen = screen;
         onStateNormal();
 
-        mediaInterface = new JZMediaSystem(this);//这个位置可能需要调整
+        mediaInterface = jzMediaInterface;//这个位置可能需要调整
     }
 
     @Override
@@ -517,7 +525,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public void setScreen(int screen) {//特殊的个别的进入全屏的按钮在这里设置  只有setup的时候能用上
         switch (screen) {
-            case SCREEN_WINDOW_NORMAL:
+            case SCREEN_NORMAL:
                 setScreenNormal();
                 break;
             case SCREEN_WINDOW_FULLSCREEN:
@@ -666,7 +674,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         mediaInterface.release();
     }
 
-    JZTextureView textureView;
+    public JZTextureView textureView;
 
     public void addTextureView() {
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
@@ -872,7 +880,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public void setScreenNormal() {
-        currentScreen = SCREEN_WINDOW_NORMAL;
+        currentScreen = SCREEN_NORMAL;
     }
 
     public void setScreenFullscreen() {

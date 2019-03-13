@@ -47,12 +47,18 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        jzvdStd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_NORMAL);
+        jzvdStd.setUp(jzDataSource, JzvdStd.SCREEN_NORMAL, new CustomMediaPlayerAssertFolder(jzvdStd));
+
+
+//        jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
+//                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZExoPlayer(jzvdStd));
+//        jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
+//                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZMediaIjkplayer(jzvdStd));
+
         Glide.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
                 .into(jzvdStd.thumbImageView);
 
-        Jzvd.setMediaInterface(new CustomMediaPlayerAssertFolder());//进入此页面修改MediaInterface，让此页面的jzvd正常工作
     }
 
 
@@ -62,7 +68,7 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
             return;
         }
         Jzvd.resetAllVideos();
-        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaSystem()), 1000);
+        handler.postDelayed(() -> jzvdStd.setMediaInterface(new JZMediaSystem(jzvdStd)), 1000);
         super.onBackPressed();
     }
 
@@ -77,7 +83,7 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 Jzvd.resetAllVideos();
-                handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaSystem()), 1000);
+                handler.postDelayed(() -> jzvdStd.setMediaInterface(new JZMediaSystem(jzvdStd)), 1000);
                 finish();
                 break;
         }
@@ -87,21 +93,21 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
 
     public void clickChangeToIjkplayer(View view) {
         Jzvd.resetAllVideos();
-        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaIjkplayer()), 1000);
+        handler.postDelayed(() -> jzvdStd.setMediaInterface(new JZMediaIjkplayer(jzvdStd)), 1000);
         Toast.makeText(ActivityApiCustomMediaPlayer.this, "Change to Ijkplayer", Toast.LENGTH_SHORT).show();
         finish();
     }
 
     public void clickChangeToSystemMediaPlayer(View view) {
         Jzvd.resetAllVideos();
-        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZMediaSystem()), 1000);
+        handler.postDelayed(() -> jzvdStd.setMediaInterface(new JZMediaSystem(jzvdStd)), 1000);
         Toast.makeText(this, "Change to MediaPlayer", Toast.LENGTH_SHORT).show();
         finish();
     }
 
     public void clickChangeToExo(View view) {
         Jzvd.resetAllVideos();
-        handler.postDelayed(() -> Jzvd.setMediaInterface(new JZExoPlayer()), 1000);
+        handler.postDelayed(() -> jzvdStd.setMediaInterface(new JZExoPlayer(jzvdStd)), 1000);
         Toast.makeText(this, "Change to ExoPlayer", Toast.LENGTH_SHORT).show();
         finish();
     }

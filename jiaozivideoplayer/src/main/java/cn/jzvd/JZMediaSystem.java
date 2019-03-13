@@ -136,17 +136,13 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         mediaPlayer.start();
         if (jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
                 jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
-            handler.post(() -> {
-                jzvd.onPrepared();
-            });
+            handler.post(() -> jzvd.onPrepared());
         }
     }
 
     @Override
     public void onCompletion(MediaPlayer mediaPlayer) {
-        handler.post(() -> {
-            jzvd.onAutoCompletion();
-        });
+        handler.post(() -> jzvd.onAutoCompletion());
     }
 
     @Override
@@ -156,16 +152,12 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onSeekComplete(MediaPlayer mediaPlayer) {
-        handler.post(() -> {
-            jzvd.onSeekComplete();
-        });
+        handler.post(() -> jzvd.onSeekComplete());
     }
 
     @Override
     public boolean onError(MediaPlayer mediaPlayer, final int what, final int extra) {
-        handler.post(() -> {
-            jzvd.onError(what, extra);
-        });
+        handler.post(() -> jzvd.onError(what, extra));
         return true;
     }
 

@@ -28,7 +28,7 @@ public class ActivityApiOrientation extends AppCompatActivity {
         setContentView(R.layout.activity_orientation);
         mJzvdStd = findViewById(R.id.jz_video);
         mJzvdStd.setUp(VideoConstant.videoUrlList[0], "饺子不信"
-                , JzvdStd.SCREEN_WINDOW_NORMAL);
+                , JzvdStd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbList[0])
                 .into(mJzvdStd.thumbImageView);

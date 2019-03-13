@@ -53,7 +53,7 @@ public class ActivityApi extends AppCompatActivity {
         jzDataSource.currentUrlIndex = 2;
         jzDataSource.headerMap.put("key", "value");//header
         mJzvdStd.setUp(jzDataSource
-                , JzvdStd.SCREEN_WINDOW_NORMAL);
+                , JzvdStd.SCREEN_NORMAL);
         Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzvdStd.thumbImageView);
 //        mJzvdStd.seekToInAdvance = 20000;
         //JZVideoPlayer.SAVE_PROGRESS = false;
@@ -61,7 +61,7 @@ public class ActivityApi extends AppCompatActivity {
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
 //        mJzvdStd.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
-//                , "饺子不信", Jzvd.SCREEN_WINDOW_NORMAL);
+//                , "饺子不信", Jzvd.SCREEN_NORMAL);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorEventListener = new Jzvd.JZAutoFullscreenListener();
     }
@@ -146,7 +146,7 @@ public class ActivityApi extends AppCompatActivity {
     }
 
     public void clickCustomMediaPlayer(View view) {
-//        startActivity(new Intent(ActivityApi.this, ActivityApiCustomMediaPlayer.class));
+        startActivity(new Intent(ActivityApi.this, ActivityApiCustomMediaPlayer.class));
     }
 
 }

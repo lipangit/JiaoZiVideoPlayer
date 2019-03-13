@@ -71,7 +71,7 @@ public class ActivityWebView extends AppCompatActivity {
                 if (index == 0) {
                     JzvdStd jzvdStd = new JzvdStd(ActivityWebView.this);
                     jzvdStd.setUp(VideoConstant.videoUrlList[1], "饺子骑大马",
-                            Jzvd.SCREEN_WINDOW_NORMAL);
+                            Jzvd.SCREEN_NORMAL);
                     Glide.with(ActivityWebView.this)
                             .load(VideoConstant.videoThumbList[1])
                             .into(jzvdStd.thumbImageView);
@@ -88,7 +88,7 @@ public class ActivityWebView extends AppCompatActivity {
                 } else {
                     JzvdStd jzvdStd = new JzvdStd(ActivityWebView.this);
                     jzvdStd.setUp(VideoConstant.videoUrlList[2], "饺子失态了",
-                            Jzvd.SCREEN_WINDOW_NORMAL);
+                            Jzvd.SCREEN_NORMAL);
                     Glide.with(ActivityWebView.this)
                             .load(VideoConstant.videoThumbList[2])
                             .into(jzvdStd.thumbImageView);
