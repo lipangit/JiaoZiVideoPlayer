@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.widget.AbsoluteLayout;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 
@@ -68,33 +69,39 @@ public class ActivityWebView extends AppCompatActivity {
         public void adViewJiaoZiVideoPlayer(final int width, final int height, final int top, final int left, final int index) {
             runOnUiThread(() -> {
                 if (index == 0) {
-                    JzvdStd webVieo = new JzvdStd(ActivityWebView.this);
-                    webVieo.setUp(VideoConstant.videoUrlList[1], "饺子骑大马",
-                            Jzvd.SCREEN_WINDOW_LIST);
+                    JzvdStd jzvdStd = new JzvdStd(ActivityWebView.this);
+                    jzvdStd.setUp(VideoConstant.videoUrlList[1], "饺子骑大马",
+                            Jzvd.SCREEN_WINDOW_NORMAL);
                     Glide.with(ActivityWebView.this)
                             .load(VideoConstant.videoThumbList[1])
-                            .into(webVieo.thumbImageView);
+                            .into(jzvdStd.thumbImageView);
                     ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     AbsoluteLayout.LayoutParams layoutParams = new AbsoluteLayout.LayoutParams(ll);
                     layoutParams.y = JZUtils.dip2px(ActivityWebView.this, top);
                     layoutParams.x = JZUtils.dip2px(ActivityWebView.this, left);
                     layoutParams.height = JZUtils.dip2px(ActivityWebView.this, height);
                     layoutParams.width = JZUtils.dip2px(ActivityWebView.this, width);
-                    mWebView.addView(webVieo, layoutParams);
+
+                    LinearLayout linearLayout = new LinearLayout(ActivityWebView.this);
+                    linearLayout.addView(jzvdStd);
+                    mWebView.addView(linearLayout, layoutParams);
                 } else {
-                    JzvdStd webVieo = new JzvdStd(ActivityWebView.this);
-                    webVieo.setUp(VideoConstant.videoUrlList[2], "饺子失态了",
-                            Jzvd.SCREEN_WINDOW_LIST);
+                    JzvdStd jzvdStd = new JzvdStd(ActivityWebView.this);
+                    jzvdStd.setUp(VideoConstant.videoUrlList[2], "饺子失态了",
+                            Jzvd.SCREEN_WINDOW_NORMAL);
                     Glide.with(ActivityWebView.this)
                             .load(VideoConstant.videoThumbList[2])
-                            .into(webVieo.thumbImageView);
+                            .into(jzvdStd.thumbImageView);
                     ViewGroup.LayoutParams ll = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                     AbsoluteLayout.LayoutParams layoutParams = new AbsoluteLayout.LayoutParams(ll);
                     layoutParams.y = JZUtils.dip2px(ActivityWebView.this, top);
                     layoutParams.x = JZUtils.dip2px(ActivityWebView.this, left);
                     layoutParams.height = JZUtils.dip2px(ActivityWebView.this, height);
                     layoutParams.width = JZUtils.dip2px(ActivityWebView.this, width);
-                    mWebView.addView(webVieo, layoutParams);
+
+                    LinearLayout linearLayout = new LinearLayout(ActivityWebView.this);
+                    linearLayout.addView(jzvdStd);
+                    mWebView.addView(linearLayout, layoutParams);
                 }
 
             });

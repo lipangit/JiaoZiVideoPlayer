@@ -32,8 +32,8 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
      * 进入全屏模式的时候关闭静音模式
      */
     @Override
-    public void startWindowFullscreen() {
-        super.startWindowFullscreen();
+    public void gotoScreenFullscreen() {
+        super.gotoScreenFullscreen();
     }
 
     @Override

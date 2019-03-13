@@ -119,7 +119,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public JZMediaInterface mediaInterface;
 
     public static Jzvd CURRENT_JZVD;
-    public static LinkedList CONTAINER_LIST = new LinkedList();
+    public static LinkedList<ViewGroup> CONTAINER_LIST = new LinkedList<ViewGroup>();
 
     public Jzvd(Context context) {
         super(context);
@@ -141,38 +141,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             CURRENT_JZVD.reset();
             CURRENT_JZVD = null;
         }
-    }
-
-    public void clearDecorView() {
-        ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
-        vg.removeView(CURRENT_JZVD);
-    }
-
-    //只是网上走一层，或者是退出全屏，或者是退出小窗，或者是
-    public void goBack() {
-
-    }
-
-    public static boolean backPress() {
-        Log.i(TAG, "backPress");
-//        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-//            return false; 这些东西遇到了再改，最后过代码的时候删除残留
-        if (CONTAINER_LIST.size() != 0) {
-            CURRENT_JZVD.clearDecorView();
-            //测试一下layoutparam的不同属性有什么区别
-            ((ViewGroup) CONTAINER_LIST.getLast()).addView(CURRENT_JZVD);
-            JZUtils.showStatusBar(CURRENT_JZVD.getContext());
-            JZUtils.setRequestedOrientation(CURRENT_JZVD.getContext(), NORMAL_ORIENTATION);
-            CURRENT_JZVD.setScreenNormal();//这块可以放到jzvd中
-//            CURRENT_JZVD.setSystemUiVisibility(
-//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
-//            showSystemUI((JZUtils.scanForActivity(CURRENT_JZVD.getContext())).getWindow().getDecorView());
-            CONTAINER_LIST.pop();
-            return true;
-        }
-        return false;
     }
 
     public static void clearSavedProgress(Context context, String url) {
@@ -371,7 +339,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             } else {
                 Log.d(TAG, "toFullscreenActivity [" + this.hashCode() + "] ");
                 onEvent(JZUserAction.ON_ENTER_FULLSCREEN);
-                startWindowFullscreen();
+                gotoScreenFullscreen();
             }
         }
     }
@@ -695,7 +663,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         JZUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
         mediaInterface.release();
     }
 
@@ -856,21 +823,52 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
 
-    public void startWindowFullscreen() {
-        ViewGroup vp = (ViewGroup) CURRENT_JZVD.getParent();
-        vp.removeView(CURRENT_JZVD);
-        CONTAINER_LIST.add(vp);
+    //只是网上走一层，或者是退出全屏，或者是退出小窗，或者是
+    public void goBack() {
 
-        ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
-        vg.addView(CURRENT_JZVD, new FrameLayout.LayoutParams(
+    }
+
+    public static boolean backPress() {
+        Log.i(TAG, "backPress");
+//        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+//            return false; 这些东西遇到了再改，最后过代码的时候删除残留
+        if (CONTAINER_LIST.size() != 0) {//判断条件，因为当前所有goBack都是回到普通窗口
+            CURRENT_JZVD.gotoScreenNormal();
+            return true;
+        }
+        return false;
+    }
+
+    public void gotoScreenFullscreen() {
+        ViewGroup vg = (ViewGroup) getParent();
+        vg.removeView(this);
+        CONTAINER_LIST.add(vg);
+        vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
+        vg.addView(this, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        JZUtils.hideStatusBar(getContext());
 
         setScreenFullscreen();
+        JZUtils.hideStatusBar(getContext());
         JZUtils.setRequestedOrientation(getContext(), FULLSCREEN_ORIENTATION);
 //        hideSystemUI((JZUtils.scanForActivity(getContext())).getWindow().getDecorView());
 //            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
 
+    }
+
+    public void gotoScreenNormal() {//goback本质上是goto
+        ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
+        vg.removeView(this);
+        CONTAINER_LIST.getLast().addView(this);
+        CONTAINER_LIST.pop();
+
+        setScreenNormal();//这块可以放到jzvd中
+        JZUtils.showStatusBar(getContext());
+        JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
+//            CURRENT_JZVD.setSystemUiVisibility(
+//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
+//            showSystemUI((JZUtils.scanForActivity(CURRENT_JZVD.getContext())).getWindow().getDecorView());
     }
 
     public void setScreenNormal() {
@@ -885,9 +883,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         currentScreen = SCREEN_WINDOW_TINY;
     }
 
-    //下面还有onStete...  从MediaPlayer回调过来的
-
-
     //    //重力感应的时候调用的函数，、、这里有重力感应的参数，暂时不能删除
     public void autoFullscreen(float x) {
         if (CURRENT_JZVD != null
@@ -900,7 +895,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 JZUtils.setRequestedOrientation(getContext(), ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
             }
             onEvent(JZUserAction.ON_ENTER_FULLSCREEN);
-            startWindowFullscreen();
+            gotoScreenFullscreen();
         }
     }
 
