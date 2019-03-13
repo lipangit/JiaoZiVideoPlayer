@@ -49,6 +49,6 @@ public class ActivityListView extends AppCompatActivity {
     }
 
     public void clickRecyclerView(View view) {
-//        startActivity(new Intent(ActivityListView.this, ActivityListViewRecyclerView.class));
+        startActivity(new Intent(ActivityListView.this, ActivityListViewRecyclerView.class));
     }
 }
