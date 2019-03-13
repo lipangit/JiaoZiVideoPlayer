@@ -1,4 +1,4 @@
-package cn.jzvd.demo.CustomPlayer;
+package cn.jzvd.demo.CustomMedia;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
@@ -43,13 +43,13 @@ import cn.jzvd.demo.R;
 /**
  * Created by MinhDV on 5/3/18.
  */
-public class JZExoPlayer extends JZMediaInterface implements Player.EventListener, VideoListener {
+public class JZMediaExo extends JZMediaInterface implements Player.EventListener, VideoListener {
     private SimpleExoPlayer simpleExoPlayer;
     private Runnable callback;
-    private String TAG = "JZExoPlayer";
+    private String TAG = "JZMediaExo";
     private long previousSeek = 0;
 
-    public JZExoPlayer(Jzvd jzvd) {
+    public JZMediaExo(Jzvd jzvd) {
         super(jzvd);
     }
 

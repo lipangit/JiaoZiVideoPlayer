@@ -1,4 +1,4 @@
-package cn.jzvd.demo.CustomPlayer;
+package cn.jzvd.demo.CustomMedia;
 
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
@@ -19,10 +19,10 @@ import tv.danmaku.ijk.media.player.IjkTimedText;
  * Created by Nathen on 2017/11/18.
  */
 
-public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
+public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPreparedListener, IMediaPlayer.OnVideoSizeChangedListener, IMediaPlayer.OnCompletionListener, IMediaPlayer.OnErrorListener, IMediaPlayer.OnInfoListener, IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnSeekCompleteListener, IMediaPlayer.OnTimedTextListener {
     IjkMediaPlayer ijkMediaPlayer;
 
-    public JZMediaIjkplayer(Jzvd jzvd) {
+    public JZMediaIjk(Jzvd jzvd) {
         super(jzvd);
     }
 
@@ -52,14 +52,14 @@ public class JZMediaIjkplayer extends JZMediaInterface implements IMediaPlayer.O
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 1024 * 1024);
 
-            ijkMediaPlayer.setOnPreparedListener(JZMediaIjkplayer.this);
-            ijkMediaPlayer.setOnVideoSizeChangedListener(JZMediaIjkplayer.this);
-            ijkMediaPlayer.setOnCompletionListener(JZMediaIjkplayer.this);
-            ijkMediaPlayer.setOnErrorListener(JZMediaIjkplayer.this);
-            ijkMediaPlayer.setOnInfoListener(JZMediaIjkplayer.this);
-            ijkMediaPlayer.setOnBufferingUpdateListener(JZMediaIjkplayer.this);
-            ijkMediaPlayer.setOnSeekCompleteListener(JZMediaIjkplayer.this);
-            ijkMediaPlayer.setOnTimedTextListener(JZMediaIjkplayer.this);
+            ijkMediaPlayer.setOnPreparedListener(JZMediaIjk.this);
+            ijkMediaPlayer.setOnVideoSizeChangedListener(JZMediaIjk.this);
+            ijkMediaPlayer.setOnCompletionListener(JZMediaIjk.this);
+            ijkMediaPlayer.setOnErrorListener(JZMediaIjk.this);
+            ijkMediaPlayer.setOnInfoListener(JZMediaIjk.this);
+            ijkMediaPlayer.setOnBufferingUpdateListener(JZMediaIjk.this);
+            ijkMediaPlayer.setOnSeekCompleteListener(JZMediaIjk.this);
+            ijkMediaPlayer.setOnTimedTextListener(JZMediaIjk.this);
 
             try {
                 ijkMediaPlayer.setDataSource(jzvd.jzDataSource.getCurrentUrl().toString());

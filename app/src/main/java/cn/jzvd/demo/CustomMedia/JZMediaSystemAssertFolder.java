@@ -1,4 +1,4 @@
-package cn.jzvd.demo.CustomPlayer;
+package cn.jzvd.demo.CustomMedia;
 
 import android.content.res.AssetFileDescriptor;
 import android.graphics.SurfaceTexture;
@@ -18,11 +18,11 @@ import cn.jzvd.Jzvd;
  * Created by Nathen on 2017/11/8.
  * 实现系统的播放引擎
  */
-public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
+public class JZMediaSystemAssertFolder extends JZMediaInterface implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
 
     public MediaPlayer mediaPlayer;
 
-    public CustomMediaPlayerAssertFolder(Jzvd jzvd) {
+    public JZMediaSystemAssertFolder(Jzvd jzvd) {
         super(jzvd);
     }
 
@@ -39,15 +39,16 @@ public class CustomMediaPlayerAssertFolder extends JZMediaInterface implements M
                 mediaPlayer = new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mediaPlayer.setLooping(jzvd.jzDataSource.looping);
-                mediaPlayer.setOnPreparedListener(CustomMediaPlayerAssertFolder.this);
-                mediaPlayer.setOnCompletionListener(CustomMediaPlayerAssertFolder.this);
-                mediaPlayer.setOnBufferingUpdateListener(CustomMediaPlayerAssertFolder.this);
+                mediaPlayer.setOnPreparedListener(JZMediaSystemAssertFolder.this);
+                mediaPlayer.setOnCompletionListener(JZMediaSystemAssertFolder.this);
+                mediaPlayer.setOnBufferingUpdateListener(JZMediaSystemAssertFolder.this);
                 mediaPlayer.setScreenOnWhilePlaying(true);
-                mediaPlayer.setOnSeekCompleteListener(CustomMediaPlayerAssertFolder.this);
-                mediaPlayer.setOnErrorListener(CustomMediaPlayerAssertFolder.this);
-                mediaPlayer.setOnInfoListener(CustomMediaPlayerAssertFolder.this);
-                mediaPlayer.setOnVideoSizeChangedListener(CustomMediaPlayerAssertFolder.this);
+                mediaPlayer.setOnSeekCompleteListener(JZMediaSystemAssertFolder.this);
+                mediaPlayer.setOnErrorListener(JZMediaSystemAssertFolder.this);
+                mediaPlayer.setOnInfoListener(JZMediaSystemAssertFolder.this);
+                mediaPlayer.setOnVideoSizeChangedListener(JZMediaSystemAssertFolder.this);
 
+                //two lines are different
                 AssetFileDescriptor assetFileDescriptor = (AssetFileDescriptor) jzvd.jzDataSource.getCurrentUrl();
                 mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
 

@@ -146,7 +146,7 @@ public class ActivityApi extends AppCompatActivity {
     }
 
     public void clickCustomMediaPlayer(View view) {
-        startActivity(new Intent(ActivityApi.this, ActivityApiCustomMediaPlayer.class));
+        startActivity(new Intent(ActivityApi.this, ActivityApiCustomMedia.class));
     }
 
 }

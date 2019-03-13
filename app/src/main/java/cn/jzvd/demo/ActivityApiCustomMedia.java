@@ -16,15 +16,15 @@ import cn.jzvd.JZDataSource;
 import cn.jzvd.JZMediaSystem;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
-import cn.jzvd.demo.CustomPlayer.CustomMediaPlayerAssertFolder;
-import cn.jzvd.demo.CustomPlayer.JZExoPlayer;
-import cn.jzvd.demo.CustomPlayer.JZMediaIjkplayer;
+import cn.jzvd.demo.CustomMedia.JZMediaIjk;
+import cn.jzvd.demo.CustomMedia.JZMediaSystemAssertFolder;
+import cn.jzvd.demo.CustomMedia.JZMediaExo;
 
 /**
  * Created by Nathen on 2017/11/23.
  */
 
-public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
+public class ActivityApiCustomMedia extends AppCompatActivity {
     JzvdStd jzvdStd;
     Handler handler = new Handler();//这里其实并不需要handler，为了防止播放中切换播放器引擎导致的崩溃，实际使用时一般不会遇到，可以随时调用JZVideoPlayer.setMediaInterface();
 
@@ -47,11 +47,11 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        jzvdStd.setUp(jzDataSource, JzvdStd.SCREEN_NORMAL, new CustomMediaPlayerAssertFolder(jzvdStd));
+        jzvdStd.setUp(jzDataSource, JzvdStd.SCREEN_NORMAL, new JZMediaSystemAssertFolder(jzvdStd));
 
 
 //        jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
-//                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZMediaIjkplayer(jzvdStd));
+//                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZMediaIjk(jzvdStd));
 
         Glide.with(this)
                 .load("http://jzvd-pic.nathen.cn/jzvd-pic/1bb2ebbe-140d-4e2e-abd2-9e7e564f71ac.png")
@@ -64,7 +64,7 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
         Jzvd.resetAllVideos();
 
         jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
-                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZMediaIjkplayer(jzvdStd));
+                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZMediaIjk(jzvdStd));
         jzvdStd.startVideo();
         Toast.makeText(this, "Change to Ijkplayer", Toast.LENGTH_SHORT).show();
     }
@@ -80,7 +80,7 @@ public class ActivityApiCustomMediaPlayer extends AppCompatActivity {
     public void clickChangeToExo(View view) {
         Jzvd.resetAllVideos();
         jzvdStd.setUp("http://jzvd.nathen.cn/342a5f7ef6124a4a8faf00e738b8bee4/cf6d9db0bd4d41f59d09ea0a81e918fd-5287d2089db37e62345123a1be272f8b.mp4"
-                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZExoPlayer(jzvdStd));
+                , "饺子快长大", JzvdStd.SCREEN_NORMAL, new JZMediaExo(jzvdStd));
         jzvdStd.startVideo();
         Toast.makeText(this, "Change to ExoPlayer", Toast.LENGTH_SHORT).show();
     }
