@@ -36,12 +36,12 @@ public class ActivityTinyWindowRecycleView extends AppCompatActivity {
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
-//                Jzvd.onChildViewAttachedToWindow(view, R.id.videoplayer);
+                Jzvd.onChildViewAttachedToWindow(view, R.id.videoplayer);
             }
 
             @Override
             public void onChildViewDetachedFromWindow(View view) {
-//                Jzvd.onChildViewDetachedFromWindow(view);
+                Jzvd.onChildViewDetachedFromWindow(view, R.id.videoplayer);
             }
         });
 

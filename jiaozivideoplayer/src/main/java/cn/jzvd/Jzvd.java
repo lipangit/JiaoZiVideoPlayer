@@ -226,27 +226,26 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //        }
 //    }
 
-//    public static void onChildViewAttachedToWindow(View view, int jzvdId) {
-//        if (JzvdMgr.getCurrentJzvd() != null && JzvdMgr.getCurrentJzvd().currentScreen == Jzvd.SCREEN_WINDOW_TINY) {
-//            Jzvd jzvd = view.findViewById(jzvdId);
-//            if (jzvd != null && jzvd.jzDataSource.containsTheUrl(JZMediaPlayer.getCurrentUrl())) {
-//                Jzvd.backPress();
-//            }
-//        }
-//    }
-//
-//    public static void onChildViewDetachedFromWindow(View view) {
-//        if (JzvdMgr.getCurrentJzvd() != null && JzvdMgr.getCurrentJzvd().currentScreen != Jzvd.SCREEN_WINDOW_TINY) {
-//            Jzvd jzvd = JzvdMgr.getCurrentJzvd();
-//            if (((ViewGroup) view).indexOfChild(jzvd) != -1) {
-//                if (jzvd.currentState == Jzvd.CURRENT_STATE_PAUSE) {
-//                    Jzvd.resetAllVideos();
-//                } else {
-//                    jzvd.startWindowTiny();
-//                }
-//            }
-//        }
-//    }
+    public static void onChildViewAttachedToWindow(View view, int jzvdId) {
+        if (CURRENT_JZVD != null && CURRENT_JZVD.currentScreen == Jzvd.SCREEN_WINDOW_TINY) {
+            Jzvd jzvd = view.findViewById(jzvdId);
+            if (jzvd != null && jzvd.jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
+                Jzvd.backPress();
+            }
+        }
+    }
+
+    public static void onChildViewDetachedFromWindow(View view, int jzvdId) {
+        if (CURRENT_JZVD != null && CURRENT_JZVD.currentScreen != Jzvd.SCREEN_WINDOW_TINY) {
+            if (view.findViewById(jzvdId) != null) {
+                if (CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_PAUSE) {
+                    Jzvd.resetAllVideos();
+                } else {
+                    CURRENT_JZVD.gotoScreenTiny();
+                }
+            }
+        }
+    }
 
     public static void setTextureViewRotation(int rotation) {
         if (CURRENT_JZVD != null && CURRENT_JZVD.textureView != null) {
@@ -846,6 +845,24 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         return false;
     }
 
+    /**
+     * 这个仅仅是一个如何进入小窗的例子
+     */
+    public void gotoScreenTiny() {
+        Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
+        onEvent(JZUserAction.ON_ENTER_TINYSCREEN);
+        if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR || currentState == CURRENT_STATE_AUTO_COMPLETE)
+            return;
+        ViewGroup vg = (ViewGroup) getParent();
+        vg.removeView(this);
+        CONTAINER_LIST.add(vg);
+        vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
+        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
+        lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
+        vg.addView(this, lp);
+        setScreenTiny();
+    }
+
     public void gotoScreenFullscreen() {
         ViewGroup vg = (ViewGroup) getParent();
         vg.removeView(this);
@@ -865,7 +882,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void gotoScreenNormal() {//goback本质上是goto
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
         vg.removeView(this);
-        CONTAINER_LIST.getLast().addView(this);
+        CONTAINER_LIST.getLast().addView(this, new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         CONTAINER_LIST.pop();
 
         setScreenNormal();//这块可以放到jzvd中
