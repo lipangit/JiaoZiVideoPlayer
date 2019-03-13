@@ -22,6 +22,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Constructor;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -131,7 +132,11 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         init(context);
     }
 
+    /**
+     * @param mediaInterface
+     */
     public void setMediaInterface(JZMediaInterface mediaInterface) {
+        reset();
         this.mediaInterface = mediaInterface;
     }
 
@@ -830,12 +835,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-
-    //只是网上走一层，或者是退出全屏，或者是退出小窗，或者是
-    public void goBack() {
-
-    }
-
     public static boolean backPress() {
         Log.i(TAG, "backPress");
 //        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
@@ -877,6 +876,30 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 //                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
 //            showSystemUI((JZUtils.scanForActivity(CURRENT_JZVD.getContext())).getWindow().getDecorView());
+    }
+
+    public static void startFullscreenDirectly(Context context, Class _class, String url, String title) {
+        startFullscreenDirectly(context, _class, new JZDataSource(url, title));
+    }
+
+    public static void startFullscreenDirectly(Context context, Class _class, JZDataSource jzDataSource) {
+        JZUtils.hideStatusBar(context);
+        JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
+        ViewGroup vp = (ViewGroup) JZUtils.scanForActivity(context).getWindow().getDecorView();
+        try {
+            Constructor<Jzvd> constructor = _class.getConstructor(Context.class);
+            final Jzvd jzvd = constructor.newInstance(context);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            vp.addView(jzvd, lp);
+            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);
+            jzvd.startButton.performClick();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void setScreenNormal() {
