@@ -89,7 +89,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     };
     public static LinkedList<ViewGroup> CONTAINER_LIST = new LinkedList<ViewGroup>();
     public static int ON_PLAY_PAUSE_TMP_STATE = 0;
-    protected static JZUserAction JZ_USER_EVENT;
     public int currentState = -1;
     public int currentScreen = -1;
     public long seekToInAdvance = 0;
@@ -143,10 +142,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public static void clearSavedProgress(Context context, String url) {
         JZUtils.clearSavedProgress(context, url);
-    }
-
-    public static void setJzUserAction(JZUserAction jzUserEvent) {//这个等到过函数，写新类的时候删除event
-        JZ_USER_EVENT = jzUserEvent;
     }
 
     public static void goOnPlayOnResume() {
@@ -367,18 +362,14 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                     return;
                 }
                 startVideo();
-                onEvent(JZUserAction.ON_CLICK_START_ICON);//开始的事件应该在播放之后，此处特殊
             } else if (currentState == CURRENT_STATE_PLAYING) {
-                onEvent(JZUserAction.ON_CLICK_PAUSE);
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 mediaInterface.pause();
                 onStatePause();
             } else if (currentState == CURRENT_STATE_PAUSE) {
-                onEvent(JZUserAction.ON_CLICK_RESUME);
                 mediaInterface.start();
                 onStatePlaying();
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
-                onEvent(JZUserAction.ON_CLICK_START_AUTO_COMPLETE);
                 startVideo();
             }
         } else if (i == R.id.fullscreen) {
@@ -389,7 +380,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 backPress();
             } else {
                 Log.d(TAG, "toFullscreenActivity [" + this.hashCode() + "] ");
-                onEvent(JZUserAction.ON_ENTER_FULLSCREEN);
                 gotoScreenFullscreen();
             }
         }
@@ -498,14 +488,13 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                     dismissVolumeDialog();
                     dismissBrightnessDialog();
                     if (mChangePosition) {
-                        onEvent(JZUserAction.ON_TOUCH_SCREEN_SEEK_POSITION);
                         mediaInterface.seekTo(mSeekTimePosition);
                         long duration = getDuration();
                         int progress = (int) (mSeekTimePosition * 100 / (duration == 0 ? 1 : duration));
                         progressBar.setProgress(progress);
                     }
                     if (mChangeVolume) {
-                        onEvent(JZUserAction.ON_TOUCH_SCREEN_SEEK_VOLUME);
+                        //change volume event
                     }
                     startProgressTimer();
                     break;
@@ -598,9 +587,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         currentState = CURRENT_STATE_PREPARING_CHANGING_URL;
         this.seekToInAdvance = seekToInAdvance;
         this.jzDataSource = jzDataSource;
-//        if (JzvdMgr.getSecondFloor() != null && JzvdMgr.getFirstFloor() != null) {
-//            JzvdMgr.getFirstFloor().jzDataSource = jzDataSource;
-//        }
         mediaInterface.prepare();
     }
 
@@ -681,7 +667,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void onAutoCompletion() {
         Runtime.getRuntime().gc();
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
-        onEvent(JZUserAction.ON_AUTO_COMPLETE);
         cancelProgressTimer();
         dismissBrightnessDialog();
         dismissProgressDialog();
@@ -840,7 +825,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         Log.i(TAG, "bottomProgress onStopTrackingTouch [" + this.hashCode() + "] ");
-        onEvent(JZUserAction.ON_SEEK_POSITION);
         startProgressTimer();
         ViewParent vpup = getParent();
         while (vpup != null) {
@@ -869,7 +853,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
      */
     public void gotoScreenTiny() {
         Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
-        onEvent(JZUserAction.ON_ENTER_TINYSCREEN);
         if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR || currentState == CURRENT_STATE_AUTO_COMPLETE)
             return;
         ViewGroup vg = (ViewGroup) getParent();
@@ -938,7 +921,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             } else {
                 JZUtils.setRequestedOrientation(getContext(), ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
             }
-            onEvent(JZUserAction.ON_ENTER_FULLSCREEN);
             gotoScreenFullscreen();
         }
     }
@@ -950,12 +932,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 && currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             lastAutoFullscreenTime = System.currentTimeMillis();
             backPress();
-        }
-    }
-
-    public void onEvent(int type) {
-        if (JZ_USER_EVENT != null && !jzDataSource.urlsMap.isEmpty()) {
-            JZ_USER_EVENT.onEvent(type, jzDataSource.getCurrentUrl(), currentScreen);
         }
     }
 

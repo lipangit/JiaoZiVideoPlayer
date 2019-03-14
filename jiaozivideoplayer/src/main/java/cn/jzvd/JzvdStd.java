@@ -248,7 +248,6 @@ public class JzvdStd extends Jzvd {
                         bottomProgressBar.setProgress(progress);
                     }
                     if (!mChangePosition && !mChangeVolume) {
-                        onEvent(JZUserActionStd.ON_CLICK_BLANK);
                         onClickUiToggle();
                     }
                     break;
@@ -283,7 +282,6 @@ public class JzvdStd extends Jzvd {
                     return;
                 }
                 startVideo();
-                onEvent(JZUserActionStd.ON_CLICK_START_THUMB);//开始的事件应该在播放之后，此处特殊
             } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
             }
@@ -292,31 +290,25 @@ public class JzvdStd extends Jzvd {
         } else if (i == R.id.back) {
             backPress();
         } else if (i == R.id.back_tiny) {
-//            if (JzvdMgr.getFirstFloor().currentScreen == Jzvd.SCREEN_WINDOW_LIST) {
-//                quitFullscreenOrTinyWindow();
-//            } else {
-//                backPress();
-//            }
+            backPress();
         } else if (i == R.id.clarity) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.jz_layout_clarity, null);
 
-            OnClickListener mQualityListener = new OnClickListener() {
-                public void onClick(View v) {
-                    int index = (int) v.getTag();
-                    changeUrl(index, getCurrentPositionWhenPlaying());
-                    clarity.setText(jzDataSource.getCurrentKey().toString());
-                    for (int j = 0; j < layout.getChildCount(); j++) {//设置点击之后的颜色
-                        if (j == jzDataSource.currentUrlIndex) {
-                            ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#fff85959"));
-                        } else {
-                            ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#ffffff"));
-                        }
+            OnClickListener mQualityListener = v1 -> {
+                int index = (int) v1.getTag();
+                changeUrl(index, getCurrentPositionWhenPlaying());
+                clarity.setText(jzDataSource.getCurrentKey().toString());
+                for (int j = 0; j < layout.getChildCount(); j++) {//设置点击之后的颜色
+                    if (j == jzDataSource.currentUrlIndex) {
+                        ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#fff85959"));
+                    } else {
+                        ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#ffffff"));
                     }
-                    if (clarityPopWindow != null) {
-                        clarityPopWindow.dismiss();
-                    }
+                }
+                if (clarityPopWindow != null) {
+                    clarityPopWindow.dismiss();
                 }
             };
 
@@ -352,7 +344,6 @@ public class JzvdStd extends Jzvd {
             }
             addTextureView();
             onStatePreparing();
-            onEvent(JZUserAction.ON_CLICK_START_ERROR);
         }
     }
 
@@ -363,7 +354,6 @@ public class JzvdStd extends Jzvd {
         builder.setMessage(getResources().getString(R.string.tips_not_wifi));
         builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), (dialog, which) -> {
             dialog.dismiss();
-            onEvent(JZUserActionStd.ON_CLICK_START_WIFIDIALOG);
             startVideo();
             WIFI_TIP_DIALOG_SHOWED = true;
         });

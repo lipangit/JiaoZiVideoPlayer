@@ -2,8 +2,10 @@ package cn.jzvd.demo.CustomJzvd;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.SeekBar;
 
 import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.R;
@@ -32,12 +34,34 @@ public class MyJzvdStd extends JzvdStd {
         super.onClick(v);
         int i = v.getId();
         if (i == cn.jzvd.R.id.fullscreen) {
-            if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-                //click quit fullscreen
-            } else {
-                //click goto fullscreen
+            Log.i(TAG, "onClick: fullscreen button");
+        } else if (i == R.id.start) {
+            Log.i(TAG, "onClick: start button");
+        } else if (i == R.id.start) {
+            Log.i(TAG, "onClick: start button");
+        } else if (i == R.id.start) {
+            Log.i(TAG, "onClick: start button");
+        }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        super.onTouch(v, event);
+        int id = v.getId();
+        if (id == cn.jzvd.R.id.surface_container) {
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_UP:
+                    if (mChangePosition) {
+                        Log.i(TAG, "Touch screen seek position");
+                    }
+                    if (mChangeVolume) {
+                        Log.i(TAG, "Touch screen change volume");
+                    }
+                    break;
             }
         }
+
+        return false;
     }
 
     @Override
@@ -46,13 +70,45 @@ public class MyJzvdStd extends JzvdStd {
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        return super.onTouch(v, event);
+    public void startVideo() {
+        super.startVideo();
+        Log.i(TAG, "startVideo");
     }
 
     @Override
-    public void startVideo() {
-        super.startVideo();
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        super.onStopTrackingTouch(seekBar);
+        Log.i(TAG, "Seek position ");
+    }
+
+    @Override
+    public void gotoScreenTiny() {
+        super.gotoScreenTiny();
+        Log.i(TAG, "goto Tiny");
+    }
+
+    @Override
+    public void gotoScreenFullscreen() {
+        super.gotoScreenFullscreen();
+        Log.i(TAG, "goto Fullscreen");
+    }
+
+    @Override
+    public void gotoScreenNormal() {
+        super.gotoScreenNormal();
+        Log.i(TAG, "quit Fullscreen");
+    }
+
+    @Override
+    public void autoFullscreen(float x) {
+        super.autoFullscreen(x);
+        Log.i(TAG, "auto Fullscreen");
+    }
+
+    @Override
+    public void onClickUiToggle() {
+        super.onClickUiToggle();
+        Log.i(TAG, "click blank");
     }
 
     //onState 代表了播放器引擎的回调，播放视频各个过程的状态的回调
@@ -84,6 +140,7 @@ public class MyJzvdStd extends JzvdStd {
     @Override
     public void onStateAutoComplete() {
         super.onStateAutoComplete();
+        Log.i(TAG, "Auto complete");
     }
 
     //changeUiTo 真能能修改ui的方法
