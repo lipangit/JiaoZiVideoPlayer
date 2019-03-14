@@ -213,24 +213,11 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public static void onChildViewAttachedToWindow(View view, int jzvdId) {
-        if (CURRENT_JZVD != null && CURRENT_JZVD.currentScreen == Jzvd.SCREEN_WINDOW_TINY) {
-            Jzvd jzvd = view.findViewById(jzvdId);
-            if (jzvd != null && jzvd.jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
-                Jzvd.backPress();
-            }
-        }
+
     }
 
     public static void onChildViewDetachedFromWindow(View view, int jzvdId) {
-        if (CURRENT_JZVD != null && CURRENT_JZVD.currentScreen != Jzvd.SCREEN_WINDOW_TINY) {
-            if (view.findViewById(jzvdId) != null) {
-                if (CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_PAUSE) {
-                    Jzvd.resetAllVideos();
-                } else {
-                    CURRENT_JZVD.gotoScreenTiny();
-                }
-            }
-        }
+
     }
 
     public static void setTextureViewRotation(int rotation) {
@@ -255,7 +242,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         Log.i(TAG, "backPress");
 //        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
 //            return false; 这些东西遇到了再改，最后过代码的时候删除残留
-        if (CONTAINER_LIST.size() != 0) {//判断条件，因为当前所有goBack都是回到普通窗口
+        if (CONTAINER_LIST.size() != 0 && CURRENT_JZVD != null) {//判断条件，因为当前所有goBack都是回到普通窗口
             CURRENT_JZVD.gotoScreenNormal();
             return true;
         }

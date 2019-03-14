@@ -37,10 +37,6 @@ public class MyJzvdStd extends JzvdStd {
             Log.i(TAG, "onClick: fullscreen button");
         } else if (i == R.id.start) {
             Log.i(TAG, "onClick: start button");
-        } else if (i == R.id.start) {
-            Log.i(TAG, "onClick: start button");
-        } else if (i == R.id.start) {
-            Log.i(TAG, "onClick: start button");
         }
     }
 
