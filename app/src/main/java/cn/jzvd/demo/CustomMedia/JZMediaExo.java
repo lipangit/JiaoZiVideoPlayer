@@ -127,19 +127,6 @@ public class JZMediaExo extends JZMediaInterface implements Player.EventListener
         Log.e(TAG, "onRenderedFirstFrame");
     }
 
-    private class onBufferingUpdate implements Runnable {
-        @Override
-        public void run() {
-            final int percent = simpleExoPlayer.getBufferedPercentage();
-            handler.post(() -> jzvd.setBufferProgress(percent));
-            if (percent < 100) {
-                handler.postDelayed(callback, 300);
-            } else {
-                handler.removeCallbacks(callback);
-            }
-        }
-    }
-
     @Override
     public void pause() {
         simpleExoPlayer.setPlayWhenReady(false);
@@ -296,5 +283,18 @@ public class JZMediaExo extends JZMediaInterface implements Player.EventListener
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
 
+    }
+
+    private class onBufferingUpdate implements Runnable {
+        @Override
+        public void run() {
+            final int percent = simpleExoPlayer.getBufferedPercentage();
+            handler.post(() -> jzvd.setBufferProgress(percent));
+            if (percent < 100) {
+                handler.postDelayed(callback, 300);
+            } else {
+                handler.removeCallbacks(callback);
+            }
+        }
     }
 }

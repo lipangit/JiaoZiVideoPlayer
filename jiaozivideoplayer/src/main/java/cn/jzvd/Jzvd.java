@@ -60,6 +60,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
     public static int VIDEO_IMAGE_DISPLAY_TYPE = 0;
     public static long lastAutoFullscreenTime = 0;
+    public static Jzvd CURRENT_JZVD;
     public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {//是否新建个class，代码更规矩，并且变量的位置也很尴尬
         @Override
         public void onAudioFocusChange(int focusChange) {
@@ -86,8 +87,9 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             }
         }
     };
+    public static LinkedList<ViewGroup> CONTAINER_LIST = new LinkedList<ViewGroup>();
+    public static int ON_PLAY_PAUSE_TMP_STATE = 0;
     protected static JZUserAction JZ_USER_EVENT;
-    protected Timer UPDATE_PROGRESS_TIMER;
     public int currentState = -1;
     public int currentScreen = -1;
     public long seekToInAdvance = 0;
@@ -102,6 +104,10 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public JZDataSource jzDataSource;
     public int positionInList = -1;//很想干掉它
     public int videoRotation = 0;
+    public JZMediaInterface mediaInterface;
+    public JZTextureView textureView;
+    public int seekToManulPosition = -1;
+    protected Timer UPDATE_PROGRESS_TIMER;
     protected int mScreenWidth;
     protected int mScreenHeight;
     protected AudioManager mAudioManager;
@@ -117,11 +123,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     protected float mGestureDownBrightness;
     protected long mSeekTimePosition;
 
-    public JZMediaInterface mediaInterface;
-
-    public static Jzvd CURRENT_JZVD;
-    public static LinkedList<ViewGroup> CONTAINER_LIST = new LinkedList<ViewGroup>();
-
     public Jzvd(Context context) {
         super(context);
         init(context);
@@ -130,14 +131,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public Jzvd(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
-    }
-
-    /**
-     * @param mediaInterface
-     */
-    public void setMediaInterface(JZMediaInterface mediaInterface) {
-        reset();
-        this.mediaInterface = mediaInterface;
     }
 
     public static void resetAllVideos() {
@@ -167,22 +160,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                     CURRENT_JZVD.mediaInterface.start();
                 }
                 ON_PLAY_PAUSE_TMP_STATE = 0;
-            }
-        }
-    }
-
-    public static int ON_PLAY_PAUSE_TMP_STATE = 0;
-
-    public static void goOnPlayOnPause() {
-        if (CURRENT_JZVD != null) {
-            if (CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_AUTO_COMPLETE ||
-                    CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_NORMAL ||
-                    CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_ERROR) {
-                Jzvd.resetAllVideos();
-            } else {
-                ON_PLAY_PAUSE_TMP_STATE = CURRENT_JZVD.currentState;
-                CURRENT_JZVD.onStatePause();
-                CURRENT_JZVD.mediaInterface.pause();
             }
         }
     }
@@ -226,6 +203,20 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //        }
 //    }
 
+    public static void goOnPlayOnPause() {
+        if (CURRENT_JZVD != null) {
+            if (CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_AUTO_COMPLETE ||
+                    CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_NORMAL ||
+                    CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_ERROR) {
+                Jzvd.resetAllVideos();
+            } else {
+                ON_PLAY_PAUSE_TMP_STATE = CURRENT_JZVD.currentState;
+                CURRENT_JZVD.onStatePause();
+                CURRENT_JZVD.mediaInterface.pause();
+            }
+        }
+    }
+
     public static void onChildViewAttachedToWindow(View view, int jzvdId) {
         if (CURRENT_JZVD != null && CURRENT_JZVD.currentScreen == Jzvd.SCREEN_WINDOW_TINY) {
             Jzvd jzvd = view.findViewById(jzvdId);
@@ -258,6 +249,54 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         if (CURRENT_JZVD != null && CURRENT_JZVD.textureView != null) {
             CURRENT_JZVD.textureView.requestLayout();
         }
+    }
+
+    public static void setCurrentJzvd(Jzvd jzvd) {
+        if (CURRENT_JZVD != null) CURRENT_JZVD.reset();
+        CURRENT_JZVD = jzvd;
+    }
+
+    public static boolean backPress() {
+        Log.i(TAG, "backPress");
+//        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
+//            return false; 这些东西遇到了再改，最后过代码的时候删除残留
+        if (CONTAINER_LIST.size() != 0) {//判断条件，因为当前所有goBack都是回到普通窗口
+            CURRENT_JZVD.gotoScreenNormal();
+            return true;
+        }
+        return false;
+    }
+
+    public static void startFullscreenDirectly(Context context, Class _class, String url, String title) {
+        startFullscreenDirectly(context, _class, new JZDataSource(url, title));
+    }
+
+    public static void startFullscreenDirectly(Context context, Class _class, JZDataSource jzDataSource) {
+        JZUtils.hideStatusBar(context);
+        JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
+        ViewGroup vp = (ViewGroup) JZUtils.scanForActivity(context).getWindow().getDecorView();
+        try {
+            Constructor<Jzvd> constructor = _class.getConstructor(Context.class);
+            final Jzvd jzvd = constructor.newInstance(context);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            vp.addView(jzvd, lp);
+            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);
+            jzvd.startButton.performClick();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * @param mediaInterface
+     */
+    public void setMediaInterface(JZMediaInterface mediaInterface) {
+        reset();
+        this.mediaInterface = mediaInterface;
     }
 
     public abstract int getLayoutId();
@@ -475,11 +514,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         return false;
     }
 
-    public static void setCurrentJzvd(Jzvd jzvd) {
-        if (CURRENT_JZVD != null) CURRENT_JZVD.reset();
-        CURRENT_JZVD = jzvd;
-    }
-
     public void startVideo() {
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
         setCurrentJzvd(this);
@@ -678,8 +712,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         mediaInterface.release();
     }
 
-    public JZTextureView textureView;
-
     public void addTextureView() {
         Log.d(TAG, "addTextureView [" + this.hashCode() + "] ");
         if (textureView != null) textureViewContainer.removeView(textureView);
@@ -823,8 +855,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         Log.i(TAG, "seekTo " + time + " [" + this.hashCode() + "] ");
     }
 
-    public int seekToManulPosition = -1;
-
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
@@ -832,17 +862,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             long duration = getDuration();
             currentTimeTextView.setText(JZUtils.stringForTime(progress * duration / 100));
         }
-    }
-
-    public static boolean backPress() {
-        Log.i(TAG, "backPress");
-//        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-//            return false; 这些东西遇到了再改，最后过代码的时候删除残留
-        if (CONTAINER_LIST.size() != 0) {//判断条件，因为当前所有goBack都是回到普通窗口
-            CURRENT_JZVD.gotoScreenNormal();
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -894,30 +913,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 //                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
 //            showSystemUI((JZUtils.scanForActivity(CURRENT_JZVD.getContext())).getWindow().getDecorView());
-    }
-
-    public static void startFullscreenDirectly(Context context, Class _class, String url, String title) {
-        startFullscreenDirectly(context, _class, new JZDataSource(url, title));
-    }
-
-    public static void startFullscreenDirectly(Context context, Class _class, JZDataSource jzDataSource) {
-        JZUtils.hideStatusBar(context);
-        JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
-        ViewGroup vp = (ViewGroup) JZUtils.scanForActivity(context).getWindow().getDecorView();
-        try {
-            Constructor<Jzvd> constructor = _class.getConstructor(Context.class);
-            final Jzvd jzvd = constructor.newInstance(context);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            vp.addView(jzvd, lp);
-            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);
-            jzvd.startButton.performClick();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     public void setScreenNormal() {
@@ -997,6 +992,17 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     }
 
+    public Context getApplicationContext() {//这个函数必要吗
+        Context context = getContext();
+        if (context != null) {
+            Context applicationContext = context.getApplicationContext();
+            if (applicationContext != null) {
+                return applicationContext;
+            }
+        }
+        return context;
+    }
+
     public static class JZAutoFullscreenListener implements SensorEventListener {
         @Override
         public void onSensorChanged(SensorEvent event) {//可以得到传感器实时测量出来的变化值
@@ -1030,16 +1036,5 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 });
             }
         }
-    }
-
-    public Context getApplicationContext() {//这个函数必要吗
-        Context context = getContext();
-        if (context != null) {
-            Context applicationContext = context.getApplicationContext();
-            if (applicationContext != null) {
-                return applicationContext;
-            }
-        }
-        return context;
     }
 }

@@ -16,9 +16,9 @@ import cn.jzvd.JZDataSource;
 import cn.jzvd.JZMediaSystem;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import cn.jzvd.demo.CustomMedia.JZMediaExo;
 import cn.jzvd.demo.CustomMedia.JZMediaIjk;
 import cn.jzvd.demo.CustomMedia.JZMediaSystemAssertFolder;
-import cn.jzvd.demo.CustomMedia.JZMediaExo;
 
 /**
  * Created by Nathen on 2017/11/23.

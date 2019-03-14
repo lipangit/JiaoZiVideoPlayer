@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
-import cn.jzvd.Jzvd;
-
 /**
  * Created by Nathen on 2017/6/9.
  */

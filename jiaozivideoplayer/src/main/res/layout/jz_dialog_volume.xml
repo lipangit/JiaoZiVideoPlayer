@@ -33,10 +33,10 @@
             android:layout_width="fill_parent"
             android:layout_height="3dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="24dp"
+            android:layout_marginBottom="20dp"
             android:max="100"
             android:progressDrawable="@drawable/jz_dialog_progress" />
     </LinearLayout>

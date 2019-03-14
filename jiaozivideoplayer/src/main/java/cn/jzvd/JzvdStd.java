@@ -35,8 +35,9 @@ import java.util.TimerTask;
  */
 public class JzvdStd extends Jzvd {
 
+    public static long LAST_GET_BATTERYLEVEL_TIME = 0;
+    public static int LAST_GET_BATTERYLEVEL_PERCENT = 70;
     protected static Timer DISMISS_CONTROL_VIEW_TIMER;
-
     public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView titleTextView;
@@ -50,7 +51,6 @@ public class JzvdStd extends Jzvd {
     public PopupWindow clarityPopWindow;
     public TextView mRetryBtn;
     public LinearLayout mRetryLayout;
-
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
     protected Dialog mProgressDialog;
     protected ProgressBar mDialogProgressBar;
@@ -64,9 +64,6 @@ public class JzvdStd extends Jzvd {
     protected Dialog mBrightnessDialog;
     protected ProgressBar mDialogBrightnessProgressBar;
     protected TextView mDialogBrightnessTextView;
-    public static long LAST_GET_BATTERYLEVEL_TIME = 0;
-    public static int LAST_GET_BATTERYLEVEL_PERCENT = 70;
-
     private BroadcastReceiver battertReceiver = new BroadcastReceiver() {
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
