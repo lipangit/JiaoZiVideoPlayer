@@ -1,9 +1,8 @@
-package cn.jzvd.demo.CustomView;
+package cn.jzvd.demo.CustomJzvd;
 
 import android.content.Context;
 import android.util.AttributeSet;
 
-import cn.jzvd.JZMediaManager;
 import cn.jzvd.JzvdStd;
 
 /**
@@ -23,9 +22,9 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
     public void onPrepared() {
         super.onPrepared();
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            JZMediaManager.instance().jzMediaInterface.setVolume(1f, 1f);
+            mediaInterface.setVolume(1f, 1f);
         } else {
-            JZMediaManager.instance().jzMediaInterface.setVolume(0f, 0f);
+            mediaInterface.setVolume(0f, 0f);
         }
     }
 
@@ -33,17 +32,19 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
      * 进入全屏模式的时候关闭静音模式
      */
     @Override
-    public void startWindowFullscreen() {
-        super.startWindowFullscreen();
-        JZMediaManager.instance().jzMediaInterface.setVolume(1f, 1f);
+    public void gotoScreenFullscreen() {
+        super.gotoScreenFullscreen();
     }
 
-    /**
-     * 退出全屏模式的时候开启静音模式
-     */
     @Override
-    public void playOnThisJzvd() {
-        super.playOnThisJzvd();
-        JZMediaManager.instance().jzMediaInterface.setVolume(0f, 0f);
+    public void setScreenFullscreen() {
+        super.setScreenFullscreen();
+        mediaInterface.setVolume(1f, 1f);
+    }
+
+    @Override
+    public void setScreenNormal() {
+        super.setScreenNormal();
+        mediaInterface.setVolume(0f, 0f);
     }
 }

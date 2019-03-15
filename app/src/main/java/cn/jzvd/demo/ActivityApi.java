@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +20,7 @@ import java.io.OutputStream;
 import java.util.LinkedHashMap;
 
 import cn.jzvd.JZDataSource;
+import cn.jzvd.JZUtils;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
@@ -44,9 +44,7 @@ public class ActivityApi extends AppCompatActivity {
 
         mJzvdStd = findViewById(R.id.jz_video);
         LinkedHashMap map = new LinkedHashMap();
-
         String proxyUrl = ApplicationDemo.getProxy(this).getProxyUrl(VideoConstant.videoUrls[0][9]);
-
         map.put("高清", proxyUrl);
         map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrlList[0]);
@@ -55,22 +53,18 @@ public class ActivityApi extends AppCompatActivity {
         jzDataSource.currentUrlIndex = 2;
         jzDataSource.headerMap.put("key", "value");//header
         mJzvdStd.setUp(jzDataSource
-                , JzvdStd.SCREEN_WINDOW_NORMAL);
+                , JzvdStd.SCREEN_NORMAL);
         Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzvdStd.thumbImageView);
-        mJzvdStd.seekToInAdvance = 20000;
+//        mJzvdStd.seekToInAdvance = 20000;
         //JZVideoPlayer.SAVE_PROGRESS = false;
 
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
-//        mJzVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
-//                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
-        /** ImageLoader **/
-//        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],
-//                videoController1.thumbImageView);
+//        mJzvdStd.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
+//                , "饺子不信", Jzvd.SCREEN_NORMAL);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorEventListener = new Jzvd.JZAutoFullscreenListener();
     }
-
 
     @Override
     protected void onResume() {
@@ -109,6 +103,7 @@ public class ActivityApi extends AppCompatActivity {
     }
 
     public void cpAssertVideoToLocalPath() {
+        JZUtils.verifyStoragePermissions(this);
         try {
             InputStream myInput;
             OutputStream myOutput = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4");
@@ -151,6 +146,7 @@ public class ActivityApi extends AppCompatActivity {
     }
 
     public void clickCustomMediaPlayer(View view) {
-        startActivity(new Intent(ActivityApi.this, ActivityApiCustomMediaPlayer.class));
+        startActivity(new Intent(ActivityApi.this, ActivityApiCustomMedia.class));
     }
+
 }

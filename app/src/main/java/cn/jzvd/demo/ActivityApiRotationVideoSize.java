@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 import com.bumptech.glide.Glide;
 
@@ -32,19 +31,19 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity {
 
         myJzvdStd = findViewById(R.id.jz_video);
         myJzvdStd.setUp(VideoConstant.videoUrls[0][7], VideoConstant.videoTitles[0][7]
-                , JzvdStd.SCREEN_WINDOW_NORMAL);
+                , JzvdStd.SCREEN_NORMAL);
         Glide.with(this)
                 .load(VideoConstant.videoThumbs[0][7])
                 .into(myJzvdStd.thumbImageView);
-        // The Point IS
-        myJzvdStd.videoRotation = 180;
+        // The Point IS 或者这样写也可以
+//        myJzvdStd.videoRotation = 180;
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        Jzvd.releaseAllVideos();
+        Jzvd.resetAllVideos();
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER);
     }
 
@@ -66,8 +65,24 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void clickRotationToNinety(View view) {
+    public void clickRotationTo0(View view) {
+        Jzvd.setTextureViewRotation(0);
+    }
+
+    public void clickRotationTo90(View view) {
         Jzvd.setTextureViewRotation(90);
+    }
+
+    public void clickRotationTo180(View view) {
+        Jzvd.setTextureViewRotation(180);
+    }
+
+    public void clickRotationTo270(View view) {
+        Jzvd.setTextureViewRotation(270);
+    }
+
+    public void clickVideoImageDiaplayAdapter(View view) {
+        Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER);
     }
 
     public void clickVideoImageDisplayFillParent(View view) {
