@@ -44,7 +44,19 @@ public class ActivityListViewNormal extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                Jzvd.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                if (Jzvd.CURRENT_JZVD == null) return;
+                int lastVisibleItem = firstVisibleItem + visibleItemCount;
+                int currentPlayPosition = Jzvd.CURRENT_JZVD.positionInList;
+//                Log.e(TAG, "onScrollReleaseAllVideos: " +
+//                        currentPlayPosition + " " + firstVisibleItem + " " + currentPlayPosition + " " + lastVisibleItem);
+                if (currentPlayPosition >= 0) {
+                    if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
+                        if (Jzvd.CURRENT_JZVD.currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
+                            Jzvd.resetAllVideos();//为什么最后一个视频横屏会调用这个，其他地方不会
+                        }
+                    }
+                }
+//                Jzvd.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
 
@@ -71,7 +83,7 @@ public class ActivityListViewNormal extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(sensorEventListener);
-        Jzvd.releaseAllVideos();
+        Jzvd.resetAllVideos();
     }
 
     @Override

@@ -11,18 +11,18 @@ import com.danikula.videocache.HttpProxyCacheServer;
  */
 public class ApplicationDemo extends Application {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-//        LeakCanary.install(this);
-
-    }
-
     private HttpProxyCacheServer proxy;
 
     public static HttpProxyCacheServer getProxy(Context context) {
         ApplicationDemo app = (ApplicationDemo) context.getApplicationContext();
         return app.proxy == null ? (app.proxy = app.newProxy()) : app.proxy;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+//        LeakCanary.install(this);
+
     }
 
     private HttpProxyCacheServer newProxy() {

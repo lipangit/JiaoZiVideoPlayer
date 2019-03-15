@@ -1,12 +1,10 @@
-package cn.jzvd.demo.CustomView;
+package cn.jzvd.demo.CustomJzvd;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
-import cn.jzvd.JZDataSource;
-import cn.jzvd.JZMediaManager;
 import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.R;
 
@@ -29,15 +27,17 @@ public class JzvdStdSpeed extends JzvdStd {
         tvSpeed.setOnClickListener(this);
     }
 
+    public void setScreenNormal() {
+        super.setScreenNormal();
+        tvSpeed.setVisibility(View.GONE);
+    }
+
     @Override
-    public void setUp(JZDataSource jzDataSource, int screen) {
-        super.setUp(jzDataSource, screen);
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN &&
-                android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+    public void setScreenFullscreen() {
+        super.setScreenFullscreen();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M)
             tvSpeed.setVisibility(View.VISIBLE);
-        } else {
-            tvSpeed.setVisibility(View.GONE);
-        }
+
         if (jzDataSource.objects == null) {
             Object[] object = {2};
             jzDataSource.objects = object;
@@ -52,6 +52,7 @@ public class JzvdStdSpeed extends JzvdStd {
         }
     }
 
+
     @Override
     public void onClick(View v) {
         super.onClick(v);
@@ -61,7 +62,7 @@ public class JzvdStdSpeed extends JzvdStd {
             } else {
                 currentSpeedIndex += 1;
             }
-            JZMediaManager.setSpeed(getSpeedFromIndex(currentSpeedIndex));
+            mediaInterface.setSpeed(getSpeedFromIndex(currentSpeedIndex));
             tvSpeed.setText(getSpeedFromIndex(currentSpeedIndex) + "X");
             jzDataSource.objects[0] = currentSpeedIndex;
         }

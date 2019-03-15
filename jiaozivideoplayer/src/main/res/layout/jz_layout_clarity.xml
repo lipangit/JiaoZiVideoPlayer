@@ -5,5 +5,5 @@
     android:layout_height="wrap_content"
     android:background="@drawable/jz_clarity_popwindow_bg"
     android:orientation="vertical"
-    android:paddingBottom="16dp"
-    android:paddingTop="10dp" />
+    android:paddingTop="10dp"
+    android:paddingBottom="16dp" />

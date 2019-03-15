@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import cn.jzvd.Jzvd;
@@ -39,7 +38,7 @@ public class ActivityDirectPlay extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Jzvd.releaseAllVideos();
+        Jzvd.resetAllVideos();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class ActivityDirectPlay extends AppCompatActivity {
     }
 
     public void clickFullScreen(View view) {
-        JzvdStd.startFullscreen(this, JzvdStd.class, VideoConstant.videoUrlList[6], "饺子辛苦了");
+        JzvdStd.startFullscreenDirectly(this, JzvdStd.class, VideoConstant.videoUrlList[6], "饺子辛苦了");
     }
 
     public void clickTinyWindow(View view) {
