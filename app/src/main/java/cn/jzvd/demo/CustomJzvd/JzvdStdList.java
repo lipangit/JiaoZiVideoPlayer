@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 
 import cn.jzvd.JZDataSource;
 import cn.jzvd.JZMediaInterface;
+import cn.jzvd.JZUtils;
+import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
 public class JzvdStdList extends JzvdStd {
@@ -20,6 +22,18 @@ public class JzvdStdList extends JzvdStd {
     public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
         super.setUp(jzDataSource, screen, jzMediaInterface);
 
+        if (jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
+            long position = 0;
+            try {
+                position = Jzvd.CURRENT_JZVD.mediaInterface.getCurrentPosition();
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            if (position != 0) {
+                JZUtils.saveProgress(getContext(), Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl(), position);
+            }
+            Jzvd.resetAllVideos();
+        }
 
     }
 }

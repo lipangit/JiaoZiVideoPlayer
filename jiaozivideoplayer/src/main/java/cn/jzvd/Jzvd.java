@@ -313,10 +313,10 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
-        if (this.jzDataSource != null && jzDataSource.getCurrentUrl() != null &&
-                this.jzDataSource.containsTheUrl(jzDataSource.getCurrentUrl())) {
-            return;
-        }
+//        if (this.jzDataSource != null && jzDataSource.getCurrentUrl() != null &&
+//                this.jzDataSource.containsTheUrl(jzDataSource.getCurrentUrl())) {
+//            return;
+//        }
         this.jzDataSource = jzDataSource;
         this.currentScreen = screen;
         onStateNormal();
@@ -547,6 +547,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         Log.i(TAG, "onStateNormal " + " [" + this.hashCode() + "] ");
         currentState = CURRENT_STATE_NORMAL;
         cancelProgressTimer();
+        if (mediaInterface != null) mediaInterface.release();
     }
 
     public void onStatePreparing() {

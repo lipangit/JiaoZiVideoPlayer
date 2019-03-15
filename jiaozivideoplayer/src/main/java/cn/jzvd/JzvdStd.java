@@ -118,6 +118,20 @@ public class JzvdStd extends Jzvd {
         super.setUp(jzDataSource, screen, jzMediaInterface);
         titleTextView.setText(jzDataSource.title);
         setScreen(screen);
+//        if (Jzvd.CURRENT_JZVD == null) return;
+//        if (jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
+//            long position = 0;
+//            try {
+//                position = Jzvd.CURRENT_JZVD.mediaInterface.getCurrentPosition();
+//            } catch (IllegalStateException e) {
+//                e.printStackTrace();
+//            }
+//            if (position != 0) {
+//                JZUtils.saveProgress(getContext(), Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl(), position);
+//            }
+//            System.out.println("fdsafdsaf   setup");
+//            Jzvd.CURRENT_JZVD.reset();
+//        }
     }
 
     public void changeStartButtonSize(int size) {
