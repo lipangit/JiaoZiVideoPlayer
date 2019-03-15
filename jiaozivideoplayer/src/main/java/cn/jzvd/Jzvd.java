@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -159,7 +160,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-//    public static void onScrollAutoTiny(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+    //    public static void onScrollAutoTiny(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 //        int lastVisibleItem = firstVisibleItem + visibleItemCount;
 //        int currentPlayPosition = JZMediaPlayer.instance().positionInList;
 //        if (currentPlayPosition >= 0) {
@@ -184,19 +185,10 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //        }
 //    }
 //
-//    public static void onScrollReleaseAllVideos(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//        int lastVisibleItem = firstVisibleItem + visibleItemCount;
-//        int currentPlayPosition = JZMediaPlayer.instance().positionInList;
-//        Log.e(TAG, "onScrollReleaseAllVideos: " +
-//                currentPlayPosition + " " + firstVisibleItem + " " + currentPlayPosition + " " + lastVisibleItem);
-//        if (currentPlayPosition >= 0) {
-//            if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
-//                if (JzvdMgr.getCurrentJzvd().currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
-//                    Jzvd.resetAllVideos();//为什么最后一个视频横屏会调用这个，其他地方不会
-//                }
-//            }
-//        }
-//    }
+    public static void onScrollReleaseAllVideos(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        //以后这种功能不要写在jzvd里了，让用户看看详细的也能更了解
+
+    }
 
     public static void goOnPlayOnPause() {
         if (CURRENT_JZVD != null) {
