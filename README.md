@@ -117,6 +117,7 @@ protected void onPause() {
 
 1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
 2. [の伤也快乐](https://github.com/jmhjmh) QQ:466278628
+3. [吴亚男]() QQ:623562486
 
 ## Reward
 
