@@ -79,4 +79,8 @@ public class JZDataSource {
         }
         return false;
     }
+
+    public JZDataSource cloneMe() {
+        return new JZDataSource(urlsMap, title);
+    }
 }

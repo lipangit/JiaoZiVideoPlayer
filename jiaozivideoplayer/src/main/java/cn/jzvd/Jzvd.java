@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -828,6 +829,27 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    public Jzvd cloneMe() {
+        Jzvd jzvd = null;
+        try {
+            Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
+            jzvd = constructor.newInstance(getContext());
+            jzvd.jzDataSource = jzDataSource.cloneMe();//jzvd应该是idle状态
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+//        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+//                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+//        vp.addView(jzvd, lp);
+        return jzvd;
+    }
+
     /**
      * 这个仅仅是一个如何进入小窗的例子
      */
@@ -837,6 +859,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             return;
         ViewGroup vg = (ViewGroup) getParent();
         vg.removeView(this);
+        vg.addView(cloneMe());
         CONTAINER_LIST.add(vg);
         vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
@@ -848,6 +871,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void gotoScreenFullscreen() {
         ViewGroup vg = (ViewGroup) getParent();
         vg.removeView(this);
+        vg.addView(cloneMe());
         CONTAINER_LIST.add(vg);
         vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
         vg.addView(this, new FrameLayout.LayoutParams(
@@ -864,6 +888,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void gotoScreenNormal() {//goback本质上是goto
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
         vg.removeView(this);
+        CONTAINER_LIST.getLast().removeAllViews();
         CONTAINER_LIST.getLast().addView(this, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         CONTAINER_LIST.pop();
