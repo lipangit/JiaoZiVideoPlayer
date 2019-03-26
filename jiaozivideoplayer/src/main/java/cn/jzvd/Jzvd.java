@@ -123,6 +123,10 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     protected int mGestureDownVolume;
     protected float mGestureDownBrightness;
     protected long mSeekTimePosition;
+    /**
+     * liestview中，退出全屏也会导致列表getview->setUp，这个变量要屏蔽这个过程
+     **/
+    protected long gobakFullscreenTime = 0;
 
     public Jzvd(Context context) {
         super(context);
@@ -314,14 +318,11 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
-//        if (this.jzDataSource != null && jzDataSource.getCurrentUrl() != null &&
-//                this.jzDataSource.containsTheUrl(jzDataSource.getCurrentUrl())) {
-//            return;
-//        }
+        if ((System.currentTimeMillis() - gobakFullscreenTime) < 200) return;
+
         this.jzDataSource = jzDataSource;
         this.currentScreen = screen;
         onStateNormal();
-
         mediaInterface = jzMediaInterface;//这个位置可能需要调整
     }
 
@@ -835,7 +836,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
             jzvd = constructor.newInstance(getContext());
             jzvd.jzDataSource = jzDataSource.cloneMe();//jzvd应该是idle状态
-//            jzvd.setId(getId());
+            jzvd.setId(getId());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
@@ -887,6 +888,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public void gotoScreenNormal() {//goback本质上是goto
+        gobakFullscreenTime = System.currentTimeMillis();
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
         vg.removeView(this);
         CONTAINER_LIST.getLast().removeAllViews();
