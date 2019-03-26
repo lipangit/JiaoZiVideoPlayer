@@ -835,6 +835,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
             jzvd = constructor.newInstance(getContext());
             jzvd.jzDataSource = jzDataSource.cloneMe();//jzvd应该是idle状态
+//            jzvd.setId(getId());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
