@@ -1,6 +1,5 @@
 package cn.jzvd.demo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -69,15 +68,6 @@ public class ActivityTinyWindow extends AppCompatActivity {
 
     public void clickTinyWindow(View view) {
         jzvdStdTinyWindow.gotoScreenTiny();
-    }
-
-    public void clickAutoTinyListView(View view) {
-        startActivity(new Intent(this, ActivityTinyWindowListViewNormal.class));
-    }
-
-    public void clickAutoTinyListViewMultiHolder(View view) {
-        Toast.makeText(this, "comming soon", Toast.LENGTH_SHORT).show();
-//        startActivity(new Intent(this, ActivityTinyWindowListViewMultiHolder.class));
     }
 
     public void clickAutoTinyListViewRecyclerView(View view) {

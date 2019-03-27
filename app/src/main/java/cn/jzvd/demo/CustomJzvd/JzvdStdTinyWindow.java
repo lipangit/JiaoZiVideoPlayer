@@ -29,12 +29,34 @@ public class JzvdStdTinyWindow extends JzvdStd {
         //滑动列表的时候
         //如果滑动过快，setUp在scroll之前生效
         //setUp是原来的url  不是原来的url
+        //这个是clone出来的
 
-        //滑出去  快速  慢速
-        if (jzDataSource.getCurrentUrl().equals(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
-            //正在播放滑动过快，如果这个正式当前正在播放的url
+        //滑出去进入小窗，  当前的url和正在播放的url不一样，
+//        if (!jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
+//            //进入小窗
+//            gotoScreenTiny();
+//        }
+        //滑进来，退出小窗
 
 
+        ////
+        if (CURRENT_JZVD != null) {
+            if (this == CURRENT_JZVD && jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
+                //不理解
+            } else if (this == CURRENT_JZVD && !jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
+                gotoScreenTiny();
+            } else if (this != CURRENT_JZVD && jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
+                if (CURRENT_JZVD.currentScreen == SCREEN_WINDOW_TINY) {
+                    //需要退出小窗退到我这里，我这里是第一层级
+                    //clear container, goback
+                    ViewGroup vp = (ViewGroup) getParent();
+                    vp.removeAllViews();
+                    ((ViewGroup) CURRENT_JZVD.getParent()).removeAllViews();
+                    vp.addView(CURRENT_JZVD);
+                    CONTAINER_LIST.pop();
+                }
+            } else if (this != CURRENT_JZVD && !jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
+            }
         }
 
         super.setUp(jzDataSource, screen, jzMediaInterface);

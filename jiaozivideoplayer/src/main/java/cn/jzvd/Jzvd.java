@@ -123,9 +123,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     protected int mGestureDownVolume;
     protected float mGestureDownBrightness;
     protected long mSeekTimePosition;
-    /**
-     * liestview中，退出全屏也会导致列表getview->setUp，这个变量要屏蔽这个过程
-     **/
+    //liestview中，退出全屏也会导致列表getview->setUp，这个变量要屏蔽这个过程
     protected long gobakFullscreenTime = 0;
 
     public Jzvd(Context context) {
