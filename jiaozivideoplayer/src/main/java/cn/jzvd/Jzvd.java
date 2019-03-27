@@ -823,10 +823,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         return jzvd;
     }
 
-    public void gotoScreenTiny() {
-
-    }
-
     public void gotoScreenFullscreen() {
         ViewGroup vg = (ViewGroup) getParent();
         vg.removeView(this);

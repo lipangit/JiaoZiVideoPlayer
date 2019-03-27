@@ -31,7 +31,7 @@ public class ActivityListViewNormal extends AppCompatActivity {
         setContentView(R.layout.activity_listview_normal);
 
         listView = findViewById(R.id.listview);
-        listView.setAdapter(new AdapterVideoList(this,
+        listView.setAdapter(new AdapterListView(this,
                 VideoConstant.videoUrls[0],
                 VideoConstant.videoTitles[0],
                 VideoConstant.videoThumbs[0]));
