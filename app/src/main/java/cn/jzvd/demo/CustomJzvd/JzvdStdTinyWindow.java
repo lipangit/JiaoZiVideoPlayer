@@ -7,6 +7,9 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import cn.jzvd.JZDataSource;
 import cn.jzvd.JZMediaInterface;
 import cn.jzvd.JZUtils;
@@ -88,5 +91,24 @@ public class JzvdStdTinyWindow extends JzvdStd {
         vgg.addView(this, lp);
         System.out.println(jj + " " + this);
         setScreenTiny();
+    }
+
+    public Jzvd cloneMe() {
+        Jzvd jzvd = null;
+        try {
+            Constructor<Jzvd> constructor = (Constructor<Jzvd>) JzvdStdTinyWindow.this.getClass().getConstructor(Context.class);
+            jzvd = constructor.newInstance(getContext());
+            jzvd.jzDataSource = jzDataSource.cloneMe();//jzvd应该是idle状态
+            jzvd.setId(getId());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return jzvd;
     }
 }

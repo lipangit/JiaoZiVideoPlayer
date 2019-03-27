@@ -24,7 +24,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -804,29 +803,9 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    public Jzvd cloneMe() {
-        Jzvd jzvd = null;
-        try {
-            Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
-            jzvd = constructor.newInstance(getContext());
-            jzvd.jzDataSource = jzDataSource.cloneMe();//jzvd应该是idle状态
-            jzvd.setId(getId());
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return jzvd;
-    }
-
     public void gotoScreenFullscreen() {
         ViewGroup vg = (ViewGroup) getParent();
         vg.removeView(this);
-        vg.addView(cloneMe());
         CONTAINER_LIST.add(vg);
         vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
         vg.addView(this, new FrameLayout.LayoutParams(
