@@ -55,12 +55,12 @@ public class ActivityApi extends AppCompatActivity {
         mJzvdStd.setUp(jzDataSource
                 , JzvdStd.SCREEN_NORMAL);
         Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzvdStd.thumbImageView);
-//        mJzvdStd.seekToInAdvance = 20000;
+//        jzvdStdTinyWindow.seekToInAdvance = 20000;
         //JZVideoPlayer.SAVE_PROGRESS = false;
 
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
-//        mJzvdStd.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
+//        jzvdStdTinyWindow.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
 //                , "饺子不信", Jzvd.SCREEN_NORMAL);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorEventListener = new Jzvd.JZAutoFullscreenListener();

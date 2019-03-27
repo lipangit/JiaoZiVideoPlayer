@@ -29,7 +29,7 @@ public class ActivityTinyWindowListViewNormal extends AppCompatActivity {
         setContentView(R.layout.activity_listview_normal_auto_tiny);
 
         listView = findViewById(R.id.listview);
-        listView.setAdapter(new AdapterVideoList(this,
+        listView.setAdapter(new AdapterVideoListTiny(this,
                 VideoConstant.videoUrls[0],
                 VideoConstant.videoTitles[0],
                 VideoConstant.videoThumbs[0]));

@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp">
 
-                <cn.jzvd.JzvdStd
+                <cn.jzvd.demo.CustomJzvd.JzvdStdTinyWindow
                     android:id="@+id/jz_video"
                     android:layout_width="match_parent"
                     android:layout_height="200dp" />

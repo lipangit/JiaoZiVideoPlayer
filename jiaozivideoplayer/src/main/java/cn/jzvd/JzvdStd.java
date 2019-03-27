@@ -118,7 +118,7 @@ public class JzvdStd extends Jzvd {
         super.setUp(jzDataSource, screen, jzMediaInterface);
         titleTextView.setText(jzDataSource.title);
         setScreen(screen);
-//        if (Jzvd.CURRENT_JZVD == null) return;
+        //        if (Jzvd.CURRENT_JZVD == null) return;  这是保存进度
 //        if (jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
 //            long position = 0;
 //            try {

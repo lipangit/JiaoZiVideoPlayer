@@ -825,22 +825,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         return jzvd;
     }
 
-    /**
-     * 这个仅仅是一个如何进入小窗的例子
-     */
     public void gotoScreenTiny() {
-        Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
-        if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR || currentState == CURRENT_STATE_AUTO_COMPLETE)
-            return;
-        ViewGroup vg = (ViewGroup) getParent();
-        vg.removeView(this);
-        vg.addView(cloneMe());
-        CONTAINER_LIST.add(vg);
-        ViewGroup vgg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
-        lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
-        vgg.addView(this, lp);
-        setScreenTiny();
+
     }
 
     public void gotoScreenFullscreen() {
@@ -861,7 +847,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public void gotoScreenNormal() {//goback本质上是goto
-        gobakFullscreenTime = System.currentTimeMillis();
+        gobakFullscreenTime = System.currentTimeMillis();//退出全屏
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
         vg.removeView(this);
         CONTAINER_LIST.getLast().removeAllViews();
