@@ -3,6 +3,7 @@ package cn.jzvd.demo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
@@ -41,7 +42,27 @@ public class ActivityTinyWindowListViewNormal extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                Jzvd.onScrollAutoTiny(view, firstVisibleItem, visibleItemCount, totalItemCount);
+                int lastVisibleItem = firstVisibleItem + visibleItemCount;
+                Jzvd jzvd = Jzvd.CURRENT_JZVD;
+                if (jzvd == null) return;
+                int currentPlayPosition = jzvd.positionInList;
+                if (currentPlayPosition >= 0) {
+                    if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
+                        if (jzvd.currentState == Jzvd.CURRENT_STATE_PAUSE) {
+                            Jzvd.resetAllVideos();
+                        } else {
+                            Log.e("jzvd", "onScroll: out screen");
+                            if (jzvd.currentScreen != Jzvd.SCREEN_WINDOW_TINY) {
+                                jzvd.gotoScreenTiny();
+                            }
+                        }
+                    } else {
+                        if (jzvd.currentScreen == Jzvd.SCREEN_WINDOW_TINY) {
+                            Log.e("jzvd", "onScroll: into screen");
+                            Jzvd.backPress();
+                        }
+                    }
+                }
             }
         });
     }

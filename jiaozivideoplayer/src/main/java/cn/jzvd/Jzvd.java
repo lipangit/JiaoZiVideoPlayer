@@ -165,31 +165,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    //    public static void onScrollAutoTiny(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//        int lastVisibleItem = firstVisibleItem + visibleItemCount;
-//        int currentPlayPosition = JZMediaPlayer.instance().positionInList;
-//        if (currentPlayPosition >= 0) {
-//            if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
-//                if (JzvdMgr.getCurrentJzvd() != null &&
-//                        JzvdMgr.getCurrentJzvd().currentScreen != Jzvd.SCREEN_WINDOW_TINY &&
-//                        JzvdMgr.getCurrentJzvd().currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
-//                    if (JzvdMgr.getCurrentJzvd().currentState == Jzvd.CURRENT_STATE_PAUSE) {
-//                        Jzvd.resetAllVideos();
-//                    } else {
-//                        Log.e(TAG, "onScroll: out screen");
-//                        JzvdMgr.getCurrentJzvd().startWindowTiny();
-//                    }
-//                }
-//            } else {
-//                if (JzvdMgr.getCurrentJzvd() != null &&
-//                        JzvdMgr.getCurrentJzvd().currentScreen == Jzvd.SCREEN_WINDOW_TINY) {
-//                    Log.e(TAG, "onScroll: into screen");
-//                    Jzvd.backPress();
-//                }
-//            }
-//        }
-//    }
-//
+
     public static void onScrollReleaseAllVideos(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         //以后这种功能不要写在jzvd里了，让用户看看详细的也能更了解
 
@@ -846,9 +822,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-//        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-//                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-//        vp.addView(jzvd, lp);
         return jzvd;
     }
 
@@ -863,10 +836,10 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         vg.removeView(this);
         vg.addView(cloneMe());
         CONTAINER_LIST.add(vg);
-        vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
+        ViewGroup vgg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
         lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
-        vg.addView(this, lp);
+        vgg.addView(this, lp);
         setScreenTiny();
     }
 

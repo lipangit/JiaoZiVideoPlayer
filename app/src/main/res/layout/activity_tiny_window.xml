@@ -14,15 +14,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
-
-                <cn.jzvd.JzvdStd
-                    android:id="@+id/jz_video"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp" />
-            </LinearLayout>
 
             <Button
                 android:id="@+id/tiny_window"
@@ -69,6 +60,15 @@
                 android:onClick="clickAutoTinyListViewRecyclerViewMultiHolder"
                 android:text="RecycleView MultiHolder TinyWindow" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <cn.jzvd.JzvdStd
+                    android:id="@+id/jz_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
