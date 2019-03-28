@@ -94,9 +94,9 @@ public class JzvdStdTinyWindow extends JzvdStd {
     }
 
     public Jzvd cloneMe() {
-        Jzvd jzvd = null;
+        JzvdStdTinyWindow jzvd = null;
         try {
-            Constructor<Jzvd> constructor = (Constructor<Jzvd>) JzvdStdTinyWindow.this.getClass().getConstructor(Context.class);
+            Constructor<JzvdStdTinyWindow> constructor = (Constructor<JzvdStdTinyWindow>) JzvdStdTinyWindow.this.getClass().getConstructor(Context.class);
             jzvd = constructor.newInstance(getContext());
             jzvd.jzDataSource = jzDataSource.cloneMe();//jzvd应该是idle状态
             jzvd.setId(getId());
