@@ -14,10 +14,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <cn.jzvd.demo.CustomView.MyJzvdStd
-                android:id="@+id/jz_video"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp">
+
+                <cn.jzvd.demo.CustomJzvd.MyJzvdStd
+                    android:id="@+id/jz_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/api"
@@ -25,6 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:onClick="clickApi"
                 android:text="Api" />
 
             <Button
@@ -33,14 +40,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:onClick="clickListView"
                 android:text="ListView" />
 
             <Button
                 android:id="@+id/tiny_window"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:onClick="clickTinyWindow"
                 android:text="Tiny Window" />
 
             <Button
@@ -49,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:onClick="clickDirectPlay"
                 android:text="Direct Play" />
 
             <Button
@@ -56,8 +67,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:onClick="clickWebView"
                 android:text="WebView" />
         </LinearLayout>
     </ScrollView>

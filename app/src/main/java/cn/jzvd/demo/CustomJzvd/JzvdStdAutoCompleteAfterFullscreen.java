@@ -1,4 +1,4 @@
-package cn.jzvd.demo.CustomView;
+package cn.jzvd.demo.CustomJzvd;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.WindowManager;
 
-import cn.jzvd.JZMediaManager;
+import cn.jzvd.JZMediaInterface;
 import cn.jzvd.JZUtils;
 import cn.jzvd.JzvdStd;
 
@@ -27,14 +27,12 @@ public class JzvdStdAutoCompleteAfterFullscreen extends JzvdStd {
     public void startVideo() {
         if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
             Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
-            initTextureView();
+            JZMediaInterface.SAVED_SURFACE = null;
             addTextureView();
             AudioManager mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
             mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
             JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-            JZMediaManager.setDataSource(jzDataSource);
-            JZMediaManager.instance().positionInList = positionInList;
+//            JZMediaPlayer.instance().positionInList = positionInList;
             onStatePreparing();
         } else {
             super.startVideo();

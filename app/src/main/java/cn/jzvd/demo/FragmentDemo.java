@@ -33,7 +33,7 @@ public class FragmentDemo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInastanceState) {
         listView = (ListView) inflater.inflate(R.layout.layout_list, container, false);
-        listView.setAdapter(new AdapterVideoList(getActivity(),
+        listView.setAdapter(new AdapterListView(getActivity(),
                 VideoConstant.videoUrls[index],
                 VideoConstant.videoTitles[index],
                 VideoConstant.videoThumbs[index]));
@@ -45,7 +45,20 @@ public class FragmentDemo extends Fragment {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                Jzvd.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
+//                Jzvd.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
+
+                if (Jzvd.CURRENT_JZVD == null) return;
+                int lastVisibleItem = firstVisibleItem + visibleItemCount;
+                int currentPlayPosition = Jzvd.CURRENT_JZVD.positionInList;
+//                Log.e(TAG, "onScrollReleaseAllVideos: " +
+//                        currentPlayPosition + " " + firstVisibleItem + " " + currentPlayPosition + " " + lastVisibleItem);
+                if (currentPlayPosition >= 0) {
+                    if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
+                        if (Jzvd.CURRENT_JZVD.currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
+                            Jzvd.resetAllVideos();//为什么最后一个视频横屏会调用这个，其他地方不会
+                        }
+                    }
+                }
             }
         });
         return listView;

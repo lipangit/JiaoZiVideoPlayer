@@ -12,7 +12,6 @@
 
     </FrameLayout>
 
-
     <ImageView
         android:id="@+id/thumb"
         android:layout_width="match_parent"
@@ -127,14 +126,11 @@
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="wrap_content"
+            android:layout_width="257dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="12dp"
             android:layout_marginLeft="12dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_toLeftOf="@+id/battery_time_layout"
             android:layout_toEndOf="@+id/back"
             android:layout_toRightOf="@+id/back"
             android:ellipsize="end"
@@ -171,6 +167,19 @@
                 android:textColor="#ffffffff"
                 android:textSize="12.0sp" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_speed"
+            android:layout_width="42dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="13dp"
+            android:layout_marginRight="13dp"
+            android:layout_toStartOf="@+id/battery_time_layout"
+            android:layout_toLeftOf="@+id/battery_time_layout"
+            android:gravity="center"
+            android:text="倍速"
+            android:textColor="#ffffffff" />
     </RelativeLayout>
 
     <ProgressBar

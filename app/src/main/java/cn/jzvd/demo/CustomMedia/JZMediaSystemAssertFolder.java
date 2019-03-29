@@ -1,5 +1,6 @@
-package cn.jzvd;
+package cn.jzvd.demo.CustomMedia;
 
+import android.content.res.AssetFileDescriptor;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -10,18 +11,18 @@ import android.os.HandlerThread;
 import android.support.annotation.RequiresApi;
 import android.view.Surface;
 
-import java.lang.reflect.Method;
-import java.util.Map;
+import cn.jzvd.JZMediaInterface;
+import cn.jzvd.Jzvd;
 
 /**
  * Created by Nathen on 2017/11/8.
  * 实现系统的播放引擎
  */
-public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
+public class JZMediaSystemAssertFolder extends JZMediaInterface implements MediaPlayer.OnPreparedListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnBufferingUpdateListener, MediaPlayer.OnSeekCompleteListener, MediaPlayer.OnErrorListener, MediaPlayer.OnInfoListener, MediaPlayer.OnVideoSizeChangedListener {
 
     public MediaPlayer mediaPlayer;
 
-    public JZMediaSystem(Jzvd jzvd) {
+    public JZMediaSystemAssertFolder(Jzvd jzvd) {
         super(jzvd);
     }
 
@@ -38,17 +39,19 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
                 mediaPlayer = new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                 mediaPlayer.setLooping(jzvd.jzDataSource.looping);
-                mediaPlayer.setOnPreparedListener(JZMediaSystem.this);
-                mediaPlayer.setOnCompletionListener(JZMediaSystem.this);
-                mediaPlayer.setOnBufferingUpdateListener(JZMediaSystem.this);
+                mediaPlayer.setOnPreparedListener(JZMediaSystemAssertFolder.this);
+                mediaPlayer.setOnCompletionListener(JZMediaSystemAssertFolder.this);
+                mediaPlayer.setOnBufferingUpdateListener(JZMediaSystemAssertFolder.this);
                 mediaPlayer.setScreenOnWhilePlaying(true);
-                mediaPlayer.setOnSeekCompleteListener(JZMediaSystem.this);
-                mediaPlayer.setOnErrorListener(JZMediaSystem.this);
-                mediaPlayer.setOnInfoListener(JZMediaSystem.this);
-                mediaPlayer.setOnVideoSizeChangedListener(JZMediaSystem.this);
-                Class<MediaPlayer> clazz = MediaPlayer.class;
-                Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
-                method.invoke(mediaPlayer, jzvd.jzDataSource.getCurrentUrl().toString(), jzvd.jzDataSource.headerMap);
+                mediaPlayer.setOnSeekCompleteListener(JZMediaSystemAssertFolder.this);
+                mediaPlayer.setOnErrorListener(JZMediaSystemAssertFolder.this);
+                mediaPlayer.setOnInfoListener(JZMediaSystemAssertFolder.this);
+                mediaPlayer.setOnVideoSizeChangedListener(JZMediaSystemAssertFolder.this);
+
+                //two lines are different
+                AssetFileDescriptor assetFileDescriptor = (AssetFileDescriptor) jzvd.jzDataSource.getCurrentUrl();
+                mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(), assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
+
                 mediaPlayer.prepareAsync();
                 mediaPlayer.setSurface(new Surface(jzvd.textureView.getSurfaceTexture()));
             } catch (Exception e) {

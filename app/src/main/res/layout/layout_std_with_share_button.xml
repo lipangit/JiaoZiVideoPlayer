@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:descendantFocusability="blocksDescendants">
+    android:background="@android:color/black">
 
     <FrameLayout
         android:id="@+id/surface_container"
@@ -16,9 +15,12 @@
         android:id="@+id/thumb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:background="#000000"
         android:scaleType="fitCenter" />
 
@@ -50,10 +52,10 @@
             android:max="100"
             android:maxHeight="1dp"
             android:minHeight="1dp"
-            android:paddingBottom="8dp"
             android:paddingLeft="12dp"
-            android:paddingRight="12dp"
             android:paddingTop="8dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="8dp"
             android:progressDrawable="@drawable/jz_bottom_seek_progress"
             android:thumb="@drawable/jz_bottom_seek_thumb" />
 
@@ -100,14 +102,14 @@
         android:layout_marginLeft="6dp"
         android:layout_marginTop="6dp"
         android:background="@drawable/jz_click_back_tiny_selector"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/jz_title_bg"
         android:gravity="center_vertical">
@@ -116,11 +118,11 @@
             android:id="@+id/back"
             android:layout_width="23dp"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:paddingLeft="12dp"
             android:paddingStart="12dp"
+            android:paddingLeft="12dp"
             android:scaleType="centerInside"
             android:src="@drawable/jz_click_back_selector" />
 
@@ -129,17 +131,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
             android:layout_marginStart="12dp"
-            android:layout_toEndOf="@+id/back"
+            android:layout_marginLeft="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
             android:layout_toLeftOf="@+id/battery_time_layout"
+            android:layout_toEndOf="@+id/back"
             android:layout_toRightOf="@+id/back"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="#ffffff"
             android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/share"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
+            android:padding="6dp"
+            android:src="@drawable/share_selector" />
 
         <LinearLayout
             android:id="@+id/battery_time_layout"
@@ -172,6 +185,7 @@
         </LinearLayout>
     </RelativeLayout>
 
+
     <ProgressBar
         android:id="@+id/loading"
         android:layout_width="@dimen/jz_start_button_w_h_normal"
@@ -195,7 +209,6 @@
             android:layout_height="@dimen/jz_start_button_w_h_normal"
             android:src="@drawable/jz_click_play_selector" />
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/replay_text"
@@ -221,7 +234,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/video_loading_faild"
+            android:text="视频加载失败"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
@@ -231,11 +244,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@drawable/retry_bg"
-            android:paddingBottom="4dp"
             android:paddingLeft="9dp"
-            android:paddingRight="9dp"
             android:paddingTop="4dp"
-            android:text="@string/click_to_restart"
+            android:paddingRight="9dp"
+            android:paddingBottom="4dp"
+            android:text="点击重试"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
     </LinearLayout>

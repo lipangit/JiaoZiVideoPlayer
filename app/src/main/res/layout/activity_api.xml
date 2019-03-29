@@ -14,11 +14,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <cn.jzvd.JzvdStd
-                android:id="@+id/jz_video"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="18dp" />
+                android:layout_marginTop="18dp">
+
+                <cn.jzvd.JzvdStd
+                    android:id="@+id/jz_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/small_change"
@@ -26,6 +31,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:onClick="clickSmallChange"
                 android:text="Small change Ui" />
 
             <Button
@@ -33,6 +40,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:onClick="clickBigChange"
                 android:text="Big change Ui" />
 
             <Button
@@ -40,6 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:onClick="clickOrientation"
                 android:text="Orientation" />
 
             <Button
@@ -48,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
+                android:onClick="clickExtendsNormalActivity"
                 android:text="Extends Normal Activity" />
 
             <Button
@@ -56,6 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
+                android:onClick="clickRotationAndVideoSize"
                 android:text="Video And VideoSize" />
 
             <Button
@@ -64,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
+                android:onClick="clickCustomMediaPlayer"
                 android:text="Custom MediaPlayer" />
 
         </LinearLayout>
