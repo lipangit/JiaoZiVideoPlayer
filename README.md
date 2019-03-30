@@ -7,9 +7,9 @@
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
 
-Highly customizable Android video player
-
 Q群: 490442439 2群: 761899104 验证信息:jzvd
+
+为了增加项目质量，促进项目进度，调用社群力量，方便社群管理，近日将推出基于以太坊erc-20的数字通证[JiaoZiToken(JZT)(饺子Token)](https://github.com/lipangit/JZT)，通俗点理解，谁给饺子视频播放器写代码、出主意、解决用户问题、活跃社群关系、关注项目进展，就给谁饺子Token. 将来会让项目更加丰富，更加精致，必定大有可为.
 
 [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)  [EnglishWiki](https://github.com/felipetorres/VideoPlayer-Wiki)  
 [中文ReadMe](https://github.com/lipangit/JiaoZiVideoPlayer/blob/develop/README-ZH.md)  
