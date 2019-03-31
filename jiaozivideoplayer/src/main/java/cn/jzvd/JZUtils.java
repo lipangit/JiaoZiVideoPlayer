@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -165,21 +166,32 @@ public class JZUtils {
     }
 
     @SuppressLint("NewApi")
-    public static void hideSystemUI(View view) {
-        view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+    public static void hideSystemUI(Context context) {
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        ;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            uiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        }
+        SYSTEM_UI = JZUtils.getWindow(context).getDecorView().getSystemUiVisibility();
+        JZUtils.getWindow(context).getDecorView().setSystemUiVisibility(uiOptions);
+
     }
 
+    public static int SYSTEM_UI = 0;
+
     @SuppressLint("NewApi")
-    public static void showSystemUI(View view) {
-        view.setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    public static void showSystemUI(Context context) {
+//        view.setSystemUiVisibility(
+//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
+        int uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
+        Toast.makeText(context, "fjdkslfdska " + SYSTEM_UI, Toast.LENGTH_SHORT).show();
+        JZUtils.getWindow(context).getDecorView().setSystemUiVisibility(SYSTEM_UI);
     }
 
     public static void verifyStoragePermissions(Activity activity) {

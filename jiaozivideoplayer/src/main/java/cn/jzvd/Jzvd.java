@@ -814,8 +814,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         setScreenFullscreen();
         JZUtils.hideStatusBar(getContext());
         JZUtils.setRequestedOrientation(getContext(), FULLSCREEN_ORIENTATION);
-//        hideSystemUI((JZUtils.scanForActivity(getContext())).getWindow().getDecorView());
-//            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
+        JZUtils.hideSystemUI(getContext());//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
 
     }
 
@@ -835,7 +834,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 //                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
 //                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
 //                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
-//            showSystemUI((JZUtils.scanForActivity(CURRENT_JZVD.getContext())).getWindow().getDecorView());
+        JZUtils.showSystemUI(getContext());
     }
 
     public void setScreenNormal() {
