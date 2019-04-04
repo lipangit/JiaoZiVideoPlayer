@@ -53,6 +53,8 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 
 Only five steps to use the player:
 
+The 7.0 version is a preview version. It has not been developed yet. There are still problems. Please use 6.4.1 first.
+
 1.Import library:
 ```gradle
 implementation 'cn.jzvd:jiaozivideoplayer:7.0_preview'

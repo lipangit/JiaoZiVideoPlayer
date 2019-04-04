@@ -47,6 +47,8 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 
 即便是自定义UI，或者对Library有过修改，也是这五步骤来使用播放器。
 
+7.0版本是预览版本，还没开发完，还有问题，请先用6.4.1
+
 1.添加类库
 ```gradle
 compile 'cn.jzvd:jiaozivideoplayer:7.0_preview'
