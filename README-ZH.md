@@ -10,7 +10,8 @@
 高度自定义的安卓视频播放器
 
 Q群: 490442439 2群: 761899104 验证信息:jzvd
-微信公众号搜索: jzvdjzt
+
+微信公众号搜索: jzvdjzt [公众号文章](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0)
 
 ## 主要特点
 
