@@ -184,13 +184,7 @@ public class JZUtils {
 
     @SuppressLint("NewApi")
     public static void showSystemUI(Context context) {
-//        view.setSystemUiVisibility(
-//                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-
         int uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
-        Toast.makeText(context, "fjdkslfdska " + SYSTEM_UI, Toast.LENGTH_SHORT).show();
         JZUtils.getWindow(context).getDecorView().setSystemUiVisibility(SYSTEM_UI);
     }
 
