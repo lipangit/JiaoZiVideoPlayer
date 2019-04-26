@@ -37,6 +37,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static final int THRESHOLD = 80;
 
     public static final int SCREEN_NORMAL = 0;
+    //TODO 干掉这个变量
     public static final int SCREEN_WINDOW_LIST = 1;
     public static final int SCREEN_WINDOW_FULLSCREEN = 2;
     public static final int SCREEN_WINDOW_TINY = 3;

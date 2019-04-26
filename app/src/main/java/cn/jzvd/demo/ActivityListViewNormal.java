@@ -56,7 +56,6 @@ public class ActivityListViewNormal extends AppCompatActivity {
                         }
                     }
                 }
-//                Jzvd.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
             }
         });
 

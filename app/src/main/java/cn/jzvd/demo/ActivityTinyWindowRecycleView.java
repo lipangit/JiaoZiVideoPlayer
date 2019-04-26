@@ -41,8 +41,6 @@ public class ActivityTinyWindowRecycleView extends AppCompatActivity {
             public void onChildViewAttachedToWindow(View view) {//这个的本质是gotoThisJzvd，不管他是不是原来的容器
                 //如果这个容器中jzvd的url是currentJzvd的url，那么直接回到这里，不用管其他的
                 JzvdStdTinyWindow jzvd = view.findViewById(R.id.videoplayer);
-                System.out.println("fsdfsa onChildViewAttachedToWindow " + jzvd.jzDataSource.title);
-
                 JzvdStdTinyWindow currentJzvd = (JzvdStdTinyWindow) Jzvd.CURRENT_JZVD;
                 if (jzvd != null && currentJzvd != null &&
                         jzvd.jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())
@@ -55,17 +53,6 @@ public class ActivityTinyWindowRecycleView extends AppCompatActivity {
                     currentJzvd.setScreenNormal();
                     Jzvd.CONTAINER_LIST.pop();
                 }
-
-//                if (Jzvd.CONTAINER_LIST.size() == 0) return;
-//                int vp = ((ViewGroup) view).indexOfChild(Jzvd.CONTAINER_LIST.getLast());
-//                System.out.println("fdsfdsafds 1");
-//                if (vp != -1 && Jzvd.CURRENT_JZVD != null) {
-//                    if (Jzvd.CURRENT_JZVD.currentScreen == Jzvd.SCREEN_WINDOW_TINY) {
-//                        System.out.println("fdsfdsafds 3");
-//                        Jzvd.backPress();
-//                    }
-//                }
-//                Jzvd.onChildViewAttachedToWindow(view, R.id.videoplayer);
             }
 
             @Override
@@ -81,8 +68,6 @@ public class ActivityTinyWindowRecycleView extends AppCompatActivity {
                     }
                 }
             }
-
-//                Jzvd.onChildViewDetachedFromWindow(view, R.id.videoplayer);
         });
 
     }
