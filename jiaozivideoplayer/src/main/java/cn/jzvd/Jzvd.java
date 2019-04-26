@@ -227,6 +227,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static void startFullscreenDirectly(Context context, Class _class, JZDataSource jzDataSource) {
         JZUtils.hideStatusBar(context);
         JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
+        JZUtils.hideSystemUI(context);
+
         ViewGroup vp = (ViewGroup) JZUtils.scanForActivity(context).getWindow().getDecorView();
         try {
             Constructor<Jzvd> constructor = _class.getConstructor(Context.class);
@@ -241,7 +243,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
