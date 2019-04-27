@@ -2,6 +2,7 @@ package cn.jzvd.demo.CustomMedia;
 
 import android.content.Context;
 import android.graphics.SurfaceTexture;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -148,11 +149,15 @@ public class JZMediaExo extends JZMediaInterface implements Player.EventListener
 
     @Override
     public void release() {
-        if (simpleExoPlayer != null) {
-            simpleExoPlayer.release();
+        if (mMediaHandler != null && mMediaHandlerThread != null && simpleExoPlayer != null) {//不知道有没有妖孽
+            HandlerThread tmpHandlerThread = mMediaHandlerThread;
+            SimpleExoPlayer tmpMediaPlayer = simpleExoPlayer;
+            mMediaHandler.post(() -> {
+                tmpMediaPlayer.release();//release就不能放到主线程里，界面会卡顿
+                tmpHandlerThread.quit();
+            });
+            simpleExoPlayer = null;
         }
-        if (handler != null)
-            handler.removeCallbacks(callback);
     }
 
     @Override
