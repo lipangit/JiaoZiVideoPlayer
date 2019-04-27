@@ -216,6 +216,9 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         if (CONTAINER_LIST.size() != 0 && CURRENT_JZVD != null) {//判断条件，因为当前所有goBack都是回到普通窗口
             CURRENT_JZVD.gotoScreenNormal();
             return true;
+        } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null) {//退出直接进入的全屏
+            CURRENT_JZVD.clearFloatScreen();
+            return true;
         }
         return false;
     }
@@ -237,7 +240,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jzvd, lp);
             jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);
-            jzvd.startButton.performClick();
+            jzvd.startVideo();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -669,20 +672,14 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public void clearFloatScreen() {
-//        JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
-////        showStatusBar(getContext());
-//        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
-//                .findViewById(Window.ID_ANDROID_CONTENT);
-//        Jzvd fullJzvd = vp.findViewById(R.id.jz_fullscreen_id);
-//        Jzvd tinyJzvd = vp.findViewById(R.id.jz_tiny_id);
-//
-//        if (fullJzvd != null) {
-//            vp.removeView(fullJzvd);
-//        }
-//        if (tinyJzvd != null) {
-//            vp.removeView(tinyJzvd);
-//        }
-//        JzvdMgr.setSecondFloor(null);
+        JZUtils.showStatusBar(getContext());
+        JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
+        JZUtils.showSystemUI(getContext());
+
+        ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
+        vg.removeView(this);
+
+        mediaInterface.release();
     }
 
     public void onVideoSizeChanged(int width, int height) {
@@ -832,10 +829,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         setScreenNormal();//这块可以放到jzvd中
         JZUtils.showStatusBar(getContext());
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
-//            CURRENT_JZVD.setSystemUiVisibility(
-//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
         JZUtils.showSystemUI(getContext());
     }
 
