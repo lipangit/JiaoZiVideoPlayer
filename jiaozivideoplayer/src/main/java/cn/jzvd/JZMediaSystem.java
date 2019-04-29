@@ -84,12 +84,13 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     }
 
     @Override
-    public void release() {
+    public void release() {//not perfect change you later
         if (mMediaHandler != null && mMediaHandlerThread != null && mediaPlayer != null) {//不知道有没有妖孽
             HandlerThread tmpHandlerThread = mMediaHandlerThread;
             MediaPlayer tmpMediaPlayer = mediaPlayer;
+            tmpMediaPlayer.setSurface(null);
             mMediaHandler.post(() -> {
-                tmpMediaPlayer.release();//release就不能放到主线程里，界面会卡顿
+                tmpMediaPlayer.release();
                 tmpHandlerThread.quit();
             });
             mediaPlayer = null;

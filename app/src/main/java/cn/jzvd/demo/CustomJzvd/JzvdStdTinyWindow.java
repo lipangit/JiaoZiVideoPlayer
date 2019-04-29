@@ -89,7 +89,6 @@ public class JzvdStdTinyWindow extends JzvdStd {
         lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
         //添加滑动事件等
         vgg.addView(this, lp);
-        System.out.println(jj + " " + this);
         setScreenTiny();
     }
 
