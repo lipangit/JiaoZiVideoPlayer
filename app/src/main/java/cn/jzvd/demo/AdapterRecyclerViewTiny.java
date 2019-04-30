@@ -35,16 +35,8 @@ public class AdapterRecyclerViewTiny extends RecyclerView.Adapter<AdapterRecycle
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.i(TAG, "onBindViewHolder [" + holder.jzvdStd.hashCode() + "] position=" + position);
-        //进入小窗之后，这个jzvd已经被移动走了，判断，如果jzvdstd==currentJzvd==小窗，那么就给jzvdStd重新赋值，赋值成clone出来的jzvd
-
-//        if (Jzvd.CURRENT_JZVD != null && holder.jzvdStd.jzDataSource != null &&
-//                ==Jzvd.CURRENT_JZVD &&
-//                Jzvd.CURRENT_JZVD.currentScreen == Jzvd.SCREEN_WINDOW_TINY){
         if (holder.jzvdStd.getTag() != null)
             holder.jzvdStd = ((View) holder.jzvdStd.getTag()).findViewById(R.id.videoplayer);
-//            System.out.println("fsdfsa onBindViewHolder " + holder.jzvdStd.jzDataSource.title);
-//        }//第二次来的时候需不需要替换
-
         holder.jzvdStd.setUp(
                 VideoConstant.videoUrls[0][position],
                 VideoConstant.videoTitles[0][position], Jzvd.SCREEN_NORMAL);

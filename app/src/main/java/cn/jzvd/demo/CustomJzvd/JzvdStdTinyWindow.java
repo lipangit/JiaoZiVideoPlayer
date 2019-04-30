@@ -7,11 +7,7 @@ import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import cn.jzvd.JZDataSource;
-import cn.jzvd.JZMediaInterface;
 import cn.jzvd.JZUtils;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
@@ -39,8 +35,7 @@ public class JzvdStdTinyWindow extends JzvdStd {
             return;
         ViewGroup vg = (ViewGroup) getParent();
         vg.removeView(this);
-        Jzvd jj = cloneMe();
-        vg.addView(jj);
+        cloneAJzvd(vg);
         CONTAINER_LIST.add(vg);
         ViewGroup vgg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);

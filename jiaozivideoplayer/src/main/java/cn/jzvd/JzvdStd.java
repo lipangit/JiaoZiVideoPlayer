@@ -290,7 +290,7 @@ public class JzvdStd extends Jzvd {
         } else if (i == R.id.back) {
             backPress();
         } else if (i == R.id.back_tiny) {
-            backPress();
+            clearFloatScreen();
         } else if (i == R.id.clarity) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

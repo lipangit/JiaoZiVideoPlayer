@@ -165,12 +165,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-
-    public static void onScrollReleaseAllVideos(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        //以后这种功能不要写在jzvd里了，让用户看看详细的也能更了解
-
-    }
-
     public static void goOnPlayOnPause() {
         if (CURRENT_JZVD != null) {
             if (CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_AUTO_COMPLETE ||
@@ -693,7 +687,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
         vg.removeView(this);
-
+        CURRENT_JZVD = null;
         mediaInterface.release();
     }
 
@@ -817,12 +811,13 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    public Jzvd cloneMe() {
-        Jzvd jzvd = null;
+    public void cloneAJzvd(ViewGroup vg) {
         try {
             Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
-            jzvd = constructor.newInstance(getContext());
+            Jzvd jzvd = constructor.newInstance(getContext());
             jzvd.setId(getId());
+            vg.addView(jzvd);
+            jzvd.setUp(jzDataSource.cloneMe(), SCREEN_NORMAL, mediaInterfaceClass);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InstantiationException e) {
@@ -832,16 +827,12 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-        return jzvd;
     }
 
     public void gotoScreenFullscreen() {
         ViewGroup vg = (ViewGroup) getParent();
         vg.removeView(this);
-        Jzvd tmp = cloneMe();
-        vg.addView(tmp);
-        tmp.setUp(jzDataSource.cloneMe(), SCREEN_NORMAL, mediaInterfaceClass);//这里应该用class参数
-
+        cloneAJzvd(vg);
         CONTAINER_LIST.add(vg);
         vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
         vg.addView(this, new FrameLayout.LayoutParams(
