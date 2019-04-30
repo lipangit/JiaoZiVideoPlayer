@@ -30,49 +30,7 @@ public class JzvdStdTinyWindow extends JzvdStd {
 
     @Override
     public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
-//        //滑动列表的时候
-//        //如果滑动过快，setUp在scroll之前生效
-//        //setUp是原来的url  不是原来的url
-//        //这个是clone出来的
-//
-//        //滑出去进入小窗，  当前的url和正在播放的url不一样，
-////        if (!jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
-////            //进入小窗
-////            gotoScreenTiny();
-////        }
-//        //滑进来，退出小窗
-//
-//
-//        ////
-//        if (CURRENT_JZVD != null) {
-//            if (this == CURRENT_JZVD && jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
-//                //不理解
-//            } else if (this == CURRENT_JZVD && !jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
-//                gotoScreenTiny();
-//            } else if (this != CURRENT_JZVD && jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
-//                if (CURRENT_JZVD.currentScreen == SCREEN_WINDOW_TINY) {
-//                    //需要退出小窗退到我这里，我这里是第一层级
-//                    //clear container, goback
-//                    ViewGroup vp = (ViewGroup) getParent();
-//                    vp.removeAllViews();
-//                    ((ViewGroup) CURRENT_JZVD.getParent()).removeAllViews();
-//                    vp.addView(CURRENT_JZVD);
-//                    CONTAINER_LIST.pop();
-//                }
-//            } else if (this != CURRENT_JZVD && !jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
-//            }
-//        }
-        //如果被复用了，tiny已经出现，然后继续下拉出现，新的item复用正在播放的jzvd
-//        if (jzDataSource.containsTheUrl(CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
-//
-//        }
-
-//        if (this.jzDataSource != null)
-//            System.out.println("fdsfdsaf new " + this.jzDataSource.title + " " + CURRENT_JZVD + " " + this);
-
         super.setUp(jzDataSource, screen, jzMediaInterface);
-
-//        System.out.println("fdsfdsaf " + jzDataSource.title);
     }
 
     public void gotoScreenTiny() {
@@ -92,22 +50,5 @@ public class JzvdStdTinyWindow extends JzvdStd {
         setScreenTiny();
     }
 
-    public Jzvd cloneMe() {
-        JzvdStdTinyWindow jzvd = null;
-        try {
-            Constructor<JzvdStdTinyWindow> constructor = (Constructor<JzvdStdTinyWindow>) JzvdStdTinyWindow.this.getClass().getConstructor(Context.class);
-            jzvd = constructor.newInstance(getContext());
-            jzvd.jzDataSource = jzDataSource.cloneMe();//jzvd应该是idle状态
-            jzvd.setId(getId());
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return jzvd;
-    }
+
 }

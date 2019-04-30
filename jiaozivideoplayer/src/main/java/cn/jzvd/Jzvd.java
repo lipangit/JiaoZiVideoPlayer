@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -216,7 +217,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         if (CONTAINER_LIST.size() != 0 && CURRENT_JZVD != null) {//判断条件，因为当前所有goBack都是回到普通窗口
             CURRENT_JZVD.gotoScreenNormal();
             return true;
-        } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null) {//退出直接进入的全屏
+        } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null && CURRENT_JZVD.currentScreen != SCREEN_NORMAL) {//退出直接进入的全屏
             CURRENT_JZVD.clearFloatScreen();
             return true;
         }
@@ -802,9 +803,31 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
+    public Jzvd cloneMe() {
+        Jzvd jzvd = null;
+        try {
+            Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
+            jzvd = constructor.newInstance(getContext());
+            jzvd.setId(getId());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+        return jzvd;
+    }
+
     public void gotoScreenFullscreen() {
         ViewGroup vg = (ViewGroup) getParent();
         vg.removeView(this);
+        Jzvd tmp = cloneMe();
+        vg.addView(tmp);
+        tmp.setUp(jzDataSource.cloneMe(), SCREEN_NORMAL, new JZMediaSystem(this));//这里应该用class参数
+
         CONTAINER_LIST.add(vg);
         vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
         vg.addView(this, new FrameLayout.LayoutParams(
