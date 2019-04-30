@@ -107,6 +107,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public int positionInList = -1;//很想干掉它
     public int videoRotation = 0;
     public JZMediaInterface mediaInterface;
+    public Class mediaInterfaceClass;
     public JZTextureView textureView;
     public int seekToManulPosition = -1;
     protected Timer UPDATE_PROGRESS_TIMER;
@@ -288,21 +289,21 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         setUp(new JZDataSource(url, title), screen);
     }
 
-    public void setUp(String url, String title, int screen, JZMediaInterface jzMediaInterface) {
-        setUp(new JZDataSource(url, title), screen, jzMediaInterface);
+    public void setUp(String url, String title, int screen, Class mediaInterfaceClass) {
+        setUp(new JZDataSource(url, title), screen, mediaInterfaceClass);
     }
 
     public void setUp(JZDataSource jzDataSource, int screen) {
-        setUp(jzDataSource, screen, new JZMediaSystem(this));
+        setUp(jzDataSource, screen, JZMediaSystem.class);
     }
 
-    public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
+    public void setUp(JZDataSource jzDataSource, int screen, Class mediaInterfaceClass) {
         if ((System.currentTimeMillis() - gobakFullscreenTime) < 200) return;
 
         this.jzDataSource = jzDataSource;
         this.currentScreen = screen;
         onStateNormal();
-        mediaInterface = jzMediaInterface;//这个位置可能需要调整
+        this.mediaInterfaceClass = mediaInterfaceClass;
     }
 
     @Override
@@ -466,6 +467,19 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void startVideo() {
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
         setCurrentJzvd(this);
+        Constructor<JZMediaInterface> constructor = null;
+        try {
+            constructor = mediaInterfaceClass.getConstructor(Jzvd.class);
+            this.mediaInterface = constructor.newInstance(this);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
         addTextureView();
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
@@ -826,7 +840,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         vg.removeView(this);
         Jzvd tmp = cloneMe();
         vg.addView(tmp);
-        tmp.setUp(jzDataSource.cloneMe(), SCREEN_NORMAL, new JZMediaSystem(this));//这里应该用class参数
+        tmp.setUp(jzDataSource.cloneMe(), SCREEN_NORMAL, mediaInterfaceClass);//这里应该用class参数
 
         CONTAINER_LIST.add(vg);
         vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系

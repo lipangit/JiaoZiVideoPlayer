@@ -29,8 +29,8 @@ public class JzvdStdTinyWindow extends JzvdStd {
     }
 
     @Override
-    public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
-        super.setUp(jzDataSource, screen, jzMediaInterface);
+    public void setUp(JZDataSource jzDataSource, int screen, Class mediaInterface) {
+        super.setUp(jzDataSource, screen, mediaInterface);
     }
 
     public void gotoScreenTiny() {

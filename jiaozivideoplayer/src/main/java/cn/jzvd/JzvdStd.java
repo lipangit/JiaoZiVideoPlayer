@@ -114,8 +114,8 @@ public class JzvdStd extends Jzvd {
         mRetryBtn.setOnClickListener(this);
     }
 
-    public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
-        super.setUp(jzDataSource, screen, jzMediaInterface);
+    public void setUp(JZDataSource jzDataSource, int screen, Class mediaInterfaceClass) {
+        super.setUp(jzDataSource, screen, mediaInterfaceClass);
         titleTextView.setText(jzDataSource.title);
         setScreen(screen);
     }

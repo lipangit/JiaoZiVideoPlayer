@@ -50,7 +50,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
                 Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
                 method.invoke(mediaPlayer, jzvd.jzDataSource.getCurrentUrl().toString(), jzvd.jzDataSource.headerMap);
                 mediaPlayer.prepareAsync();
-                mediaPlayer.setSurface(new Surface(jzvd.textureView.getSurfaceTexture()));
+                mediaPlayer.setSurface(new Surface(SAVED_SURFACE));
             } catch (Exception e) {
                 e.printStackTrace();
             }

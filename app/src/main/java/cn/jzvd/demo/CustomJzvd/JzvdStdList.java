@@ -19,8 +19,8 @@ public class JzvdStdList extends JzvdStd {
     }
 
     @Override
-    public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
-        super.setUp(jzDataSource, screen, jzMediaInterface);
+    public void setUp(JZDataSource jzDataSource, int screen, Class mediaInterface) {
+        super.setUp(jzDataSource, screen, mediaInterface);
 
         if (jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
             long position = 0;
