@@ -50,7 +50,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
                 Method method = clazz.getDeclaredMethod("setDataSource", String.class, Map.class);
                 method.invoke(mediaPlayer, jzvd.jzDataSource.getCurrentUrl().toString(), jzvd.jzDataSource.headerMap);
                 mediaPlayer.prepareAsync();
-                mediaPlayer.setSurface(new Surface(jzvd.textureView.getSurfaceTexture()));
+                mediaPlayer.setSurface(new Surface(SAVED_SURFACE));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -84,12 +84,13 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     }
 
     @Override
-    public void release() {
+    public void release() {//not perfect change you later
         if (mMediaHandler != null && mMediaHandlerThread != null && mediaPlayer != null) {//不知道有没有妖孽
             HandlerThread tmpHandlerThread = mMediaHandlerThread;
             MediaPlayer tmpMediaPlayer = mediaPlayer;
             mMediaHandler.post(() -> {
-                tmpMediaPlayer.release();//release就不能放到主线程里，界面会卡顿
+                tmpMediaPlayer.setSurface(null);
+                tmpMediaPlayer.release();
                 tmpHandlerThread.quit();
             });
             mediaPlayer = null;

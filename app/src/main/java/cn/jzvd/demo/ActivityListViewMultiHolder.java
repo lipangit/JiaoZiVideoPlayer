@@ -48,8 +48,6 @@ public class ActivityListViewMultiHolder extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//                Jzvd.onScrollReleaseAllVideos(view, firstVisibleItem, visibleItemCount, totalItemCount);
-
                 if (Jzvd.CURRENT_JZVD == null) return;
                 int lastVisibleItem = firstVisibleItem + visibleItemCount;
                 int currentPlayPosition = Jzvd.CURRENT_JZVD.positionInList;

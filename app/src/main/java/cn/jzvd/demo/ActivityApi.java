@@ -56,7 +56,7 @@ public class ActivityApi extends AppCompatActivity {
                 , JzvdStd.SCREEN_NORMAL);
         Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzvdStd.thumbImageView);
 //        mJzvdStd.seekToInAdvance = 20000;
-        //JZVideoPlayer.SAVE_PROGRESS = false;
+//        Jzvd.SAVE_PROGRESS = false;
 
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();

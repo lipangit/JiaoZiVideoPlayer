@@ -4,71 +4,42 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <cn.jzvd.demo.CustomJzvd.JzvdStdTinyWindow
+            android:id="@+id/jz_video"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/tiny_window"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="none">
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:onClick="clickTinyWindow"
+        android:text="Start Tiny Window" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <Button
+        android:id="@+id/auto_tiny_list_view_recycleview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:onClick="clickAutoTinyListViewRecyclerView"
+        android:text="RecycleView TinyWindow" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
+    <Button
+        android:id="@+id/auto_tiny_list_view_recycleview_multiholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:onClick="clickAutoTinyListViewRecyclerViewMultiHolder"
+        android:text="RecycleView MultiHolder TinyWindow" />
 
-                <cn.jzvd.JzvdStd
-                    android:id="@+id/jz_video"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp" />
-            </LinearLayout>
 
-            <Button
-                android:id="@+id/tiny_window"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:onClick="clickTinyWindow"
-                android:text="Start Tiny Window" />
-
-            <Button
-                android:id="@+id/auto_tiny_list_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:onClick="clickAutoTinyListView"
-                android:text="Normal ListView TinyWindow" />
-
-            <Button
-                android:id="@+id/auto_tiny_list_view_multi_holder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:onClick="clickAutoTinyListViewMultiHolder"
-                android:text="MultiHolder ListView TinyWindow" />
-
-            <Button
-                android:id="@+id/auto_tiny_list_view_recycleview"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:onClick="clickAutoTinyListViewRecyclerView"
-                android:text="RecycleView TinyWindow" />
-
-            <Button
-                android:id="@+id/auto_tiny_list_view_recycleview_multiholder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:onClick="clickAutoTinyListViewRecyclerViewMultiHolder"
-                android:text="RecycleView MultiHolder TinyWindow" />
-
-        </LinearLayout>
-    </ScrollView>
 </LinearLayout>

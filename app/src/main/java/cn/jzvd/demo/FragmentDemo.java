@@ -33,7 +33,7 @@ public class FragmentDemo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInastanceState) {
         listView = (ListView) inflater.inflate(R.layout.layout_list, container, false);
-        listView.setAdapter(new AdapterVideoList(getActivity(),
+        listView.setAdapter(new AdapterListView(getActivity(),
                 VideoConstant.videoUrls[index],
                 VideoConstant.videoTitles[index],
                 VideoConstant.videoThumbs[index]));

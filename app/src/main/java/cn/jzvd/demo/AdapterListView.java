@@ -15,7 +15,7 @@ import cn.jzvd.JzvdStd;
  * Created by Nathen
  * On 2016/02/07 01:20
  */
-public class AdapterVideoList extends BaseAdapter {
+public class AdapterListView extends BaseAdapter {
 
     public static final String TAG = "JZVD";
 
@@ -25,7 +25,7 @@ public class AdapterVideoList extends BaseAdapter {
     String[] videoTitles;
     String[] videoThumbs;
 
-    public AdapterVideoList(Context context, String[] videoUrls, String[] videoTitles, String[] videoThumbs) {
+    public AdapterListView(Context context, String[] videoUrls, String[] videoTitles, String[] videoThumbs) {
         this.context = context;
         this.videoUrls = videoUrls;
         this.videoTitles = videoTitles;

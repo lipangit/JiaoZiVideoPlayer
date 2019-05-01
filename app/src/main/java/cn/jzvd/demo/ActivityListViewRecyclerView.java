@@ -15,7 +15,7 @@ import cn.jzvd.Jzvd;
  */
 public class ActivityListViewRecyclerView extends AppCompatActivity {
     RecyclerView recyclerView;
-    AdapterRecyclerViewVideo adapterVideoList;
+    AdapterRecyclerView adapterVideoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapterVideoList = new AdapterRecyclerViewVideo(this);
+        adapterVideoList = new AdapterRecyclerView(this);
         recyclerView.setAdapter(adapterVideoList);
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override

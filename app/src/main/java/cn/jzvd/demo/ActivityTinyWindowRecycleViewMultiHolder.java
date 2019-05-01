@@ -9,12 +9,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import cn.jzvd.demo.CustomJzvd.JzvdStdTinyWindow;
 
 /**
  * Created by Nathen on 2017/11/1.
@@ -43,12 +45,33 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
-//                Jzvd.onChildViewAttachedToWindow(view, R.id.videoplayer);
+                JzvdStdTinyWindow jzvd = view.findViewById(R.id.videoplayer);
+                JzvdStdTinyWindow currentJzvd = (JzvdStdTinyWindow) Jzvd.CURRENT_JZVD;
+                if (jzvd != null && currentJzvd != null &&
+                        jzvd.jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())
+                        && Jzvd.CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_PLAYING) {
+                    ViewGroup vp = (ViewGroup) jzvd.getParent();
+                    vp.removeAllViews();
+                    ((ViewGroup) currentJzvd.getParent()).removeView(currentJzvd);
+                    FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    vp.addView(currentJzvd, lp);
+                    currentJzvd.setScreenNormal();
+                    Jzvd.CONTAINER_LIST.pop();
+                }
             }
 
             @Override
             public void onChildViewDetachedFromWindow(View view) {
-//                Jzvd.onChildViewDetachedFromWindow(view);
+                JzvdStdTinyWindow jzvd = view.findViewById(R.id.videoplayer);
+                if (jzvd != null && Jzvd.CURRENT_JZVD != null &&
+                        jzvd.jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())
+                        && Jzvd.CURRENT_JZVD.currentScreen != Jzvd.SCREEN_WINDOW_TINY) {
+                    if (Jzvd.CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_PAUSE) {
+                        Jzvd.resetAllVideos();
+                    } else {
+                        ((JzvdStdTinyWindow) Jzvd.CURRENT_JZVD).gotoScreenTiny();
+                    }
+                }
             }
         });
 
@@ -108,7 +131,7 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
                 VideoHolder videoHolder = (VideoHolder) holder;
                 videoHolder.jzvdStd.setUp(
                         VideoConstant.videoUrls[0][position],
-                        VideoConstant.videoTitles[0][position], Jzvd.SCREEN_WINDOW_LIST);
+                        VideoConstant.videoTitles[0][position], Jzvd.SCREEN_NORMAL);
                 videoHolder.jzvdStd.positionInList = position;
                 Glide.with(ActivityTinyWindowRecycleViewMultiHolder.this).load(VideoConstant.videoThumbs[0][position]).into(videoHolder.jzvdStd.thumbImageView);
             }

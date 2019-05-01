@@ -114,24 +114,10 @@ public class JzvdStd extends Jzvd {
         mRetryBtn.setOnClickListener(this);
     }
 
-    public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
-        super.setUp(jzDataSource, screen, jzMediaInterface);
+    public void setUp(JZDataSource jzDataSource, int screen, Class mediaInterfaceClass) {
+        super.setUp(jzDataSource, screen, mediaInterfaceClass);
         titleTextView.setText(jzDataSource.title);
         setScreen(screen);
-//        if (Jzvd.CURRENT_JZVD == null) return;
-//        if (jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
-//            long position = 0;
-//            try {
-//                position = Jzvd.CURRENT_JZVD.mediaInterface.getCurrentPosition();
-//            } catch (IllegalStateException e) {
-//                e.printStackTrace();
-//            }
-//            if (position != 0) {
-//                JZUtils.saveProgress(getContext(), Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl(), position);
-//            }
-//            System.out.println("fdsafdsaf   setup");
-//            Jzvd.CURRENT_JZVD.reset();
-//        }
     }
 
     public void changeStartButtonSize(int size) {
@@ -304,7 +290,7 @@ public class JzvdStd extends Jzvd {
         } else if (i == R.id.back) {
             backPress();
         } else if (i == R.id.back_tiny) {
-            backPress();
+            clearFloatScreen();
         } else if (i == R.id.clarity) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

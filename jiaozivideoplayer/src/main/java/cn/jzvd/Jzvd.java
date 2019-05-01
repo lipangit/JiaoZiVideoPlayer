@@ -24,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,6 +38,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static final int THRESHOLD = 80;
 
     public static final int SCREEN_NORMAL = 0;
+    //TODO 干掉这个变量
     public static final int SCREEN_WINDOW_LIST = 1;
     public static final int SCREEN_WINDOW_FULLSCREEN = 2;
     public static final int SCREEN_WINDOW_TINY = 3;
@@ -105,6 +107,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public int positionInList = -1;//很想干掉它
     public int videoRotation = 0;
     public JZMediaInterface mediaInterface;
+    public Class mediaInterfaceClass;
     public JZTextureView textureView;
     public int seekToManulPosition = -1;
     protected Timer UPDATE_PROGRESS_TIMER;
@@ -122,6 +125,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     protected int mGestureDownVolume;
     protected float mGestureDownBrightness;
     protected long mSeekTimePosition;
+    //liestview中，退出全屏也会导致列表getview->setUp，这个变量要屏蔽这个过程
+    protected long gobakFullscreenTime = 0;
 
     public Jzvd(Context context) {
         super(context);
@@ -158,36 +163,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 ON_PLAY_PAUSE_TMP_STATE = 0;
             }
         }
-    }
-
-    //    public static void onScrollAutoTiny(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-//        int lastVisibleItem = firstVisibleItem + visibleItemCount;
-//        int currentPlayPosition = JZMediaPlayer.instance().positionInList;
-//        if (currentPlayPosition >= 0) {
-//            if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
-//                if (JzvdMgr.getCurrentJzvd() != null &&
-//                        JzvdMgr.getCurrentJzvd().currentScreen != Jzvd.SCREEN_WINDOW_TINY &&
-//                        JzvdMgr.getCurrentJzvd().currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
-//                    if (JzvdMgr.getCurrentJzvd().currentState == Jzvd.CURRENT_STATE_PAUSE) {
-//                        Jzvd.resetAllVideos();
-//                    } else {
-//                        Log.e(TAG, "onScroll: out screen");
-//                        JzvdMgr.getCurrentJzvd().startWindowTiny();
-//                    }
-//                }
-//            } else {
-//                if (JzvdMgr.getCurrentJzvd() != null &&
-//                        JzvdMgr.getCurrentJzvd().currentScreen == Jzvd.SCREEN_WINDOW_TINY) {
-//                    Log.e(TAG, "onScroll: into screen");
-//                    Jzvd.backPress();
-//                }
-//            }
-//        }
-//    }
-//
-    public static void onScrollReleaseAllVideos(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        //以后这种功能不要写在jzvd里了，让用户看看详细的也能更了解
-
     }
 
     public static void goOnPlayOnPause() {
@@ -237,6 +212,9 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         if (CONTAINER_LIST.size() != 0 && CURRENT_JZVD != null) {//判断条件，因为当前所有goBack都是回到普通窗口
             CURRENT_JZVD.gotoScreenNormal();
             return true;
+        } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null && CURRENT_JZVD.currentScreen != SCREEN_NORMAL) {//退出直接进入的全屏
+            CURRENT_JZVD.clearFloatScreen();
+            return true;
         }
         return false;
     }
@@ -248,6 +226,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static void startFullscreenDirectly(Context context, Class _class, JZDataSource jzDataSource) {
         JZUtils.hideStatusBar(context);
         JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
+        JZUtils.hideSystemUI(context);
+
         ViewGroup vp = (ViewGroup) JZUtils.scanForActivity(context).getWindow().getDecorView();
         try {
             Constructor<Jzvd> constructor = _class.getConstructor(Context.class);
@@ -256,13 +236,12 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                     ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             vp.addView(jzvd, lp);
             jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);
-            jzvd.startButton.performClick();
+            jzvd.startVideo();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -304,24 +283,21 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         setUp(new JZDataSource(url, title), screen);
     }
 
-    public void setUp(String url, String title, int screen, JZMediaInterface jzMediaInterface) {
-        setUp(new JZDataSource(url, title), screen, jzMediaInterface);
+    public void setUp(String url, String title, int screen, Class mediaInterfaceClass) {
+        setUp(new JZDataSource(url, title), screen, mediaInterfaceClass);
     }
 
     public void setUp(JZDataSource jzDataSource, int screen) {
-        setUp(jzDataSource, screen, new JZMediaSystem(this));
+        setUp(jzDataSource, screen, JZMediaSystem.class);
     }
 
-    public void setUp(JZDataSource jzDataSource, int screen, JZMediaInterface jzMediaInterface) {
-//        if (this.jzDataSource != null && jzDataSource.getCurrentUrl() != null &&
-//                this.jzDataSource.containsTheUrl(jzDataSource.getCurrentUrl())) {
-//            return;
-//        }
+    public void setUp(JZDataSource jzDataSource, int screen, Class mediaInterfaceClass) {
+        if ((System.currentTimeMillis() - gobakFullscreenTime) < 200) return;
+
         this.jzDataSource = jzDataSource;
         this.currentScreen = screen;
         onStateNormal();
-
-        mediaInterface = jzMediaInterface;//这个位置可能需要调整
+        this.mediaInterfaceClass = mediaInterfaceClass;
     }
 
     @Override
@@ -485,6 +461,19 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void startVideo() {
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
         setCurrentJzvd(this);
+        Constructor<JZMediaInterface> constructor = null;
+        try {
+            constructor = mediaInterfaceClass.getConstructor(Jzvd.class);
+            this.mediaInterface = constructor.newInstance(this);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
         addTextureView();
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
@@ -692,20 +681,14 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
     public void clearFloatScreen() {
-//        JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
-////        showStatusBar(getContext());
-//        ViewGroup vp = (JZUtils.scanForActivity(getContext()))//.getWindow().getDecorView();
-//                .findViewById(Window.ID_ANDROID_CONTENT);
-//        Jzvd fullJzvd = vp.findViewById(R.id.jz_fullscreen_id);
-//        Jzvd tinyJzvd = vp.findViewById(R.id.jz_tiny_id);
-//
-//        if (fullJzvd != null) {
-//            vp.removeView(fullJzvd);
-//        }
-//        if (tinyJzvd != null) {
-//            vp.removeView(tinyJzvd);
-//        }
-//        JzvdMgr.setSecondFloor(null);
+        JZUtils.showStatusBar(getContext());
+        JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
+        JZUtils.showSystemUI(getContext());
+
+        ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
+        vg.removeView(this);
+        CURRENT_JZVD = null;
+        mediaInterface.release();
     }
 
     public void onVideoSizeChanged(int width, int height) {
@@ -828,26 +811,28 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    /**
-     * 这个仅仅是一个如何进入小窗的例子
-     */
-    public void gotoScreenTiny() {
-        Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
-        if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR || currentState == CURRENT_STATE_AUTO_COMPLETE)
-            return;
-        ViewGroup vg = (ViewGroup) getParent();
-        vg.removeView(this);
-        CONTAINER_LIST.add(vg);
-        vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(400, 400);
-        lp.gravity = Gravity.RIGHT | Gravity.BOTTOM;
-        vg.addView(this, lp);
-        setScreenTiny();
+    public void cloneAJzvd(ViewGroup vg) {
+        try {
+            Constructor<Jzvd> constructor = (Constructor<Jzvd>) Jzvd.this.getClass().getConstructor(Context.class);
+            Jzvd jzvd = constructor.newInstance(getContext());
+            jzvd.setId(getId());
+            vg.addView(jzvd);
+            jzvd.setUp(jzDataSource.cloneMe(), SCREEN_NORMAL, mediaInterfaceClass);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
     }
 
     public void gotoScreenFullscreen() {
         ViewGroup vg = (ViewGroup) getParent();
         vg.removeView(this);
+        cloneAJzvd(vg);
         CONTAINER_LIST.add(vg);
         vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();//和他也没有关系
         vg.addView(this, new FrameLayout.LayoutParams(
@@ -856,14 +841,15 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         setScreenFullscreen();
         JZUtils.hideStatusBar(getContext());
         JZUtils.setRequestedOrientation(getContext(), FULLSCREEN_ORIENTATION);
-//        hideSystemUI((JZUtils.scanForActivity(getContext())).getWindow().getDecorView());
-//            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
+        JZUtils.hideSystemUI(getContext());//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
 
     }
 
     public void gotoScreenNormal() {//goback本质上是goto
+        gobakFullscreenTime = System.currentTimeMillis();//退出全屏
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
         vg.removeView(this);
+        CONTAINER_LIST.getLast().removeAllViews();
         CONTAINER_LIST.getLast().addView(this, new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         CONTAINER_LIST.pop();
@@ -871,11 +857,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         setScreenNormal();//这块可以放到jzvd中
         JZUtils.showStatusBar(getContext());
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
-//            CURRENT_JZVD.setSystemUiVisibility(
-//                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
-//            showSystemUI((JZUtils.scanForActivity(CURRENT_JZVD.getContext())).getWindow().getDecorView());
+        JZUtils.showSystemUI(getContext());
     }
 
     public void setScreenNormal() {

@@ -78,12 +78,6 @@ public class MyJzvdStd extends JzvdStd {
     }
 
     @Override
-    public void gotoScreenTiny() {
-        super.gotoScreenTiny();
-        Log.i(TAG, "goto Tiny");
-    }
-
-    @Override
     public void gotoScreenFullscreen() {
         super.gotoScreenFullscreen();
         Log.i(TAG, "goto Fullscreen");

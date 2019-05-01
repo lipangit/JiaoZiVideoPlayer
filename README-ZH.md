@@ -11,6 +11,8 @@
 
 Q群: 490442439 2群: 761899104 验证信息:jzvd
 
+微信公众号搜索: jzvdjzt [公众号文章](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0)
+
 ## 主要特点
 
 1. 可以完全自定义UI和任何功能
@@ -46,6 +48,8 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 ## 使用
 
 即便是自定义UI，或者对Library有过修改，也是这五步骤来使用播放器。
+
+7.0版本是预览版本，还没开发完，还有问题，请先用6.4.3
 
 1.添加类库
 ```gradle
@@ -129,6 +133,7 @@ protected void onPause() {
 
 1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
 2. [の伤也快乐](https://github.com/jmhjmh) QQ:466278628
+3. [吴亚男]() QQ:623562486
 
 * [wiki整理](https://github.com/lipangit/JiaoZiVideoPlayer/wiki#wiki%E6%95%B4%E7%90%86)
 
