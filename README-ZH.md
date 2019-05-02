@@ -32,7 +32,7 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 ## 使用步骤
 
 1. 通读ReadMe
-2. 下载安装demo apk [jiaozivideoplayer-7.0.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v6.4.2/jiaozivideoplayer-7.0.1.apk)，各个页面都进入一次，各个按钮点一次
+2. 下载安装demo apk [jiaozivideoplayer-7.0.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v7.0.1/jiaozivideoplayer-7.0.1.apk)，各个页面都进入一次，各个按钮点一次
 3. 下载调试develop分支，有针对性的通过效果找到实现的源码
 4. 看[自定义相关的WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，实现自己的需求
 
