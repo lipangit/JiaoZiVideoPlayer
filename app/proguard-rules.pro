@@ -16,3 +16,4 @@
 #   public *;
 #}
 
+-keep public class cn.jzvd.JZMediaSystem {*; }
