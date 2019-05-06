@@ -663,7 +663,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         JZUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mediaInterface.release();
+        if (mediaInterface != null) mediaInterface.release();
     }
 
     public void addTextureView() {
