@@ -293,12 +293,14 @@ public class JZMediaExo extends JZMediaInterface implements Player.EventListener
     private class onBufferingUpdate implements Runnable {
         @Override
         public void run() {
-            final int percent = simpleExoPlayer.getBufferedPercentage();
-            handler.post(() -> jzvd.setBufferProgress(percent));
-            if (percent < 100) {
-                handler.postDelayed(callback, 300);
-            } else {
-                handler.removeCallbacks(callback);
+            if (simpleExoPlayer != null) {
+                final int percent = simpleExoPlayer.getBufferedPercentage();
+                handler.post(() -> jzvd.setBufferProgress(percent));
+                if (percent < 100) {
+                    handler.postDelayed(callback, 300);
+                } else {
+                    handler.removeCallbacks(callback);
+                }
             }
         }
     }
