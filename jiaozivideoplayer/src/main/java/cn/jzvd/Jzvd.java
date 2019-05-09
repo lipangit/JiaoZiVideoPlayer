@@ -244,12 +244,9 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    /**
-     * @param mediaInterface
-     */
-    public void setMediaInterface(JZMediaInterface mediaInterface) {
+    public void setMediaInterface(Class mediaInterfaceClass) {
         reset();
-        this.mediaInterface = mediaInterface;
+        this.mediaInterfaceClass = mediaInterfaceClass;
     }
 
     public abstract int getLayoutId();
