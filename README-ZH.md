@@ -2,7 +2,7 @@
 --
 <p align="center">
 <a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-7.0.1-green.svg"></a>
+<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-7.0.2-green.svg"></a>
 <a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
 <a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
 </p>
@@ -32,7 +32,7 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 ## 使用步骤
 
 1. 通读ReadMe
-2. 下载安装demo apk [jiaozivideoplayer-7.0.1.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v7.0.1/jiaozivideoplayer-7.0.1.apk)，各个页面都进入一次，各个按钮点一次
+2. 下载安装demo apk [jiaozivideoplayer-7.0.2.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v7.0.2/jiaozivideoplayer-7.0.2.apk)，各个页面都进入一次，各个按钮点一次
 3. 下载调试develop分支，有针对性的通过效果找到实现的源码
 4. 看[自定义相关的WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，实现自己的需求
 
@@ -49,11 +49,11 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 
 即便是自定义UI，或者对Library有过修改，也是这五步骤来使用播放器。
 
-7.0.1不是非常稳定，感兴趣的可以尝试
+7.0.2不是非常稳定，感兴趣的可以尝试
 
 1.添加类库
 ```gradle
-compile 'cn.jzvd:jiaozivideoplayer:7.0.1'
+compile 'cn.jzvd:jiaozivideoplayer:7.0.2'
 ```
 
 或直接下载 [aar](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.2) (不建议)
