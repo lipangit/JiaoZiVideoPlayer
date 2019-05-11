@@ -9,7 +9,6 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 
 import cn.jzvd.Jzvd;
-import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.CustomJzvd.MyJzvdStd;
 
 /**

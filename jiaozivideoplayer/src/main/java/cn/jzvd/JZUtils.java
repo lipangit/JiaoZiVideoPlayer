@@ -25,6 +25,7 @@ import java.util.Locale;
  */
 public class JZUtils {
     public static final String TAG = "JZVD";
+    public static int SYSTEM_UI = 0;
 
     public static String stringForTime(long timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
@@ -178,8 +179,6 @@ public class JZUtils {
         JZUtils.getWindow(context).getDecorView().setSystemUiVisibility(uiOptions);
 
     }
-
-    public static int SYSTEM_UI = 0;
 
     @SuppressLint("NewApi")
     public static void showSystemUI(Context context) {

@@ -9,7 +9,6 @@ import android.widget.FrameLayout;
 
 import cn.jzvd.JZDataSource;
 import cn.jzvd.JZUtils;
-import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
 /**

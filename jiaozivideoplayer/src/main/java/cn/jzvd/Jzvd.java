@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
-import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -177,14 +176,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 CURRENT_JZVD.mediaInterface.pause();
             }
         }
-    }
-
-    public static void onChildViewAttachedToWindow(View view, int jzvdId) {
-
-    }
-
-    public static void onChildViewDetachedFromWindow(View view, int jzvdId) {
-
     }
 
     public static void setTextureViewRotation(int rotation) {

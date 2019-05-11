@@ -31,7 +31,7 @@ uploadArchives {
 
             repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
                 authentication(userName: getProperty('ossrhUsername'),
-                                  password: getProperty('ossrhPassword'))
+                        password: getProperty('ossrhPassword'))
             }
 
             pom.project {
