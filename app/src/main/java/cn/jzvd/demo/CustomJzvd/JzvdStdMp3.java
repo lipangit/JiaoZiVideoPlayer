@@ -28,8 +28,8 @@ public class JzvdStdMp3 extends JzvdStd {
     @Override
     public void onClick(View v) {
         if (v.getId() == cn.jzvd.R.id.thumb &&
-                (currentState == CURRENT_STATE_PLAYING ||
-                        currentState == CURRENT_STATE_PAUSE)) {
+                (state == STATE_PLAYING ||
+                        state == STATE_PAUSE)) {
             onClickUiToggle();
         } else if (v.getId() == R.id.fullscreen) {
 

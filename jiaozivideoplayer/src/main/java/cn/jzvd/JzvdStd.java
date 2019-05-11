@@ -274,7 +274,7 @@ public class JzvdStd extends Jzvd {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (currentState == CURRENT_STATE_NORMAL) {
+            if (state == STATE_NORMAL) {
                 if (!jzDataSource.getCurrentUrl().toString().startsWith("file") &&
                         !jzDataSource.getCurrentUrl().toString().startsWith("/") &&
                         !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
@@ -282,7 +282,7 @@ public class JzvdStd extends Jzvd {
                     return;
                 }
                 startVideo();
-            } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+            } else if (state == STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
             }
         } else if (i == R.id.surface_container) {
@@ -382,19 +382,19 @@ public class JzvdStd extends Jzvd {
             setSystemTimeAndBattery();
             clarity.setText(jzDataSource.getCurrentKey().toString());
         }
-        if (currentState == CURRENT_STATE_PREPARING) {
+        if (state == STATE_PREPARING) {
             changeUiToPreparing();
             if (bottomContainer.getVisibility() == View.VISIBLE) {
             } else {
                 setSystemTimeAndBattery();
             }
-        } else if (currentState == CURRENT_STATE_PLAYING) {
+        } else if (state == STATE_PLAYING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPlayingClear();
             } else {
                 changeUiToPlayingShow();
             }
-        } else if (currentState == CURRENT_STATE_PAUSE) {
+        } else if (state == STATE_PAUSE) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPauseClear();
             } else {
@@ -436,22 +436,22 @@ public class JzvdStd extends Jzvd {
     }
 
     public void onCLickUiToggleToClear() {
-        if (currentState == CURRENT_STATE_PREPARING) {
+        if (state == STATE_PREPARING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPreparing();
             } else {
             }
-        } else if (currentState == CURRENT_STATE_PLAYING) {
+        } else if (state == STATE_PLAYING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPlayingClear();
             } else {
             }
-        } else if (currentState == CURRENT_STATE_PAUSE) {
+        } else if (state == STATE_PAUSE) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPauseClear();
             } else {
             }
-        } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+        } else if (state == STATE_AUTO_COMPLETE) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToComplete();
             } else {
@@ -480,142 +480,134 @@ public class JzvdStd extends Jzvd {
     }
 
     public void changeUiToNormal() {
-        switch (currentScreen) {
+        switch (screen) {
             case SCREEN_NORMAL:
-            case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
     }
 
     public void changeUiToPreparing() {
-        switch (currentScreen) {
+        switch (screen) {
             case SCREEN_NORMAL:
-            case SCREEN_WINDOW_LIST:
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
     }
 
     public void changeUiToPlayingShow() {
-        switch (currentScreen) {
+        switch (screen) {
             case SCREEN_NORMAL:
-            case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
     }
 
     public void changeUiToPlayingClear() {
-        switch (currentScreen) {
+        switch (screen) {
             case SCREEN_NORMAL:
-            case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
     }
 
     public void changeUiToPauseShow() {
-        switch (currentScreen) {
+        switch (screen) {
             case SCREEN_NORMAL:
-            case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
     }
 
     public void changeUiToPauseClear() {
-        switch (currentScreen) {
+        switch (screen) {
             case SCREEN_NORMAL:
-            case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
     }
 
     public void changeUiToComplete() {
-        switch (currentScreen) {
+        switch (screen) {
             case SCREEN_NORMAL:
-            case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
     }
 
     public void changeUiToError() {
-        switch (currentScreen) {
+        switch (screen) {
             case SCREEN_NORMAL:
-            case SCREEN_WINDOW_LIST:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
@@ -633,14 +625,14 @@ public class JzvdStd extends Jzvd {
     }
 
     public void updateStartImage() {
-        if (currentState == CURRENT_STATE_PLAYING) {
+        if (state == STATE_PLAYING) {
             startButton.setVisibility(VISIBLE);
             startButton.setImageResource(R.drawable.jz_click_pause_selector);
             replayTextView.setVisibility(GONE);
-        } else if (currentState == CURRENT_STATE_ERROR) {
+        } else if (state == STATE_ERROR) {
             startButton.setVisibility(INVISIBLE);
             replayTextView.setVisibility(GONE);
-        } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+        } else if (state == STATE_AUTO_COMPLETE) {
             startButton.setVisibility(VISIBLE);
             startButton.setImageResource(R.drawable.jz_click_replay_selector);
             replayTextView.setVisibility(VISIBLE);
@@ -797,9 +789,9 @@ public class JzvdStd extends Jzvd {
     }
 
     public void dissmissControlView() {
-        if (currentState != CURRENT_STATE_NORMAL
-                && currentState != CURRENT_STATE_ERROR
-                && currentState != CURRENT_STATE_AUTO_COMPLETE) {
+        if (state != STATE_NORMAL
+                && state != STATE_ERROR
+                && state != STATE_AUTO_COMPLETE) {
             post(() -> {
                 bottomContainer.setVisibility(View.INVISIBLE);
                 topContainer.setVisibility(View.INVISIBLE);
@@ -807,7 +799,7 @@ public class JzvdStd extends Jzvd {
                 if (clarityPopWindow != null) {
                     clarityPopWindow.dismiss();
                 }
-                if (currentScreen != SCREEN_WINDOW_TINY) {
+                if (screen != SCREEN_TINY) {
                     bottomProgressBar.setVisibility(View.VISIBLE);
                 }
             });

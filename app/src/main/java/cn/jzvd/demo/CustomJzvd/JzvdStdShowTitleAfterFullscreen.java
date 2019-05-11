@@ -23,7 +23,7 @@ public class JzvdStdShowTitleAfterFullscreen extends JzvdStd {
     @Override
     public void setUp(JZDataSource jzDataSource, int screen) {
         super.setUp(jzDataSource, screen);
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+        if (this.screen == SCREEN_FULLSCREEN) {
             titleTextView.setVisibility(View.VISIBLE);
         } else {
             titleTextView.setVisibility(View.INVISIBLE);

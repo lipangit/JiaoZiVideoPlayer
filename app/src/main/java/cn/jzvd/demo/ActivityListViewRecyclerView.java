@@ -43,7 +43,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
                 Jzvd jzvd = view.findViewById(R.id.videoplayer);
                 if (jzvd != null && Jzvd.CURRENT_JZVD != null &&
                         jzvd.jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
-                    if (Jzvd.CURRENT_JZVD != null && Jzvd.CURRENT_JZVD.currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
+                    if (Jzvd.CURRENT_JZVD != null && Jzvd.CURRENT_JZVD.screen != Jzvd.SCREEN_FULLSCREEN) {
                         Jzvd.resetAllVideos();
                     }
                 }

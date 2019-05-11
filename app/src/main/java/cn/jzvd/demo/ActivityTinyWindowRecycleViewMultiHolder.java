@@ -49,7 +49,7 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
                 JzvdStdTinyWindow currentJzvd = (JzvdStdTinyWindow) Jzvd.CURRENT_JZVD;
                 if (jzvd != null && currentJzvd != null &&
                         jzvd.jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())
-                        && Jzvd.CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_PLAYING) {
+                        && Jzvd.CURRENT_JZVD.state == Jzvd.STATE_PLAYING) {
                     ViewGroup vp = (ViewGroup) jzvd.getParent();
                     vp.removeAllViews();
                     ((ViewGroup) currentJzvd.getParent()).removeView(currentJzvd);
@@ -65,8 +65,8 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
                 JzvdStdTinyWindow jzvd = view.findViewById(R.id.videoplayer);
                 if (jzvd != null && Jzvd.CURRENT_JZVD != null &&
                         jzvd.jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())
-                        && Jzvd.CURRENT_JZVD.currentScreen != Jzvd.SCREEN_WINDOW_TINY) {
-                    if (Jzvd.CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_PAUSE) {
+                        && Jzvd.CURRENT_JZVD.screen != Jzvd.SCREEN_TINY) {
+                    if (Jzvd.CURRENT_JZVD.state == Jzvd.STATE_PAUSE) {
                         Jzvd.resetAllVideos();
                     } else {
                         ((JzvdStdTinyWindow) Jzvd.CURRENT_JZVD).gotoScreenTiny();

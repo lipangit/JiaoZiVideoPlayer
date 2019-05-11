@@ -25,7 +25,7 @@ public class JzvdStdAutoCompleteAfterFullscreen extends JzvdStd {
 
     @Override
     public void startVideo() {
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+        if (screen == SCREEN_FULLSCREEN) {
             Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
             JZMediaInterface.SAVED_SURFACE = null;
             addTextureView();
@@ -41,7 +41,7 @@ public class JzvdStdAutoCompleteAfterFullscreen extends JzvdStd {
 
     @Override
     public void onAutoCompletion() {
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+        if (screen == SCREEN_FULLSCREEN) {
             onStateAutoComplete();
         } else {
             super.onAutoCompletion();

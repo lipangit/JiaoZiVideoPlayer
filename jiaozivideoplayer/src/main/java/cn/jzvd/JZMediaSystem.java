@@ -137,7 +137,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         mediaPlayer.start();
         if (jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
                 jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
-            handler.post(() -> jzvd.onPrepared());
+            handler.post(() -> jzvd.onPrepared());//如果是mp3音频，走这里
         }
     }
 
@@ -166,9 +166,9 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
     public boolean onInfo(MediaPlayer mediaPlayer, final int what, final int extra) {
         handler.post(() -> {
             if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                if (jzvd.currentState == Jzvd.CURRENT_STATE_PREPARING
-                        || jzvd.currentState == Jzvd.CURRENT_STATE_PREPARING_CHANGING_URL) {
-                    jzvd.onPrepared();
+                if (jzvd.state == Jzvd.STATE_PREPARING
+                        || jzvd.state == Jzvd.STATE_PREPARING_CHANGING_URL) {
+                    jzvd.onPrepared();//真正的prepared
                 }
             } else {
                 jzvd.onInfo(what, extra);

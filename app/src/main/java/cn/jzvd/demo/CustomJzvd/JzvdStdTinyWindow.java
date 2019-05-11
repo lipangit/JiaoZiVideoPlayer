@@ -30,7 +30,7 @@ public class JzvdStdTinyWindow extends JzvdStd {
 
     public void gotoScreenTiny() {
         Log.i(TAG, "startWindowTiny " + " [" + this.hashCode() + "] ");
-        if (currentState == CURRENT_STATE_NORMAL || currentState == CURRENT_STATE_ERROR || currentState == CURRENT_STATE_AUTO_COMPLETE)
+        if (state == STATE_NORMAL || state == STATE_ERROR || state == STATE_AUTO_COMPLETE)
             return;
         ViewGroup vg = (ViewGroup) getParent();
         vg.removeView(this);

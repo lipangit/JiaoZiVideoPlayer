@@ -168,8 +168,8 @@ public class JZMediaSystemAssertFolder extends JZMediaInterface implements Media
     public boolean onInfo(MediaPlayer mediaPlayer, final int what, final int extra) {
         handler.post(() -> {
             if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                if (jzvd.currentState == Jzvd.CURRENT_STATE_PREPARING
-                        || jzvd.currentState == Jzvd.CURRENT_STATE_PREPARING_CHANGING_URL) {
+                if (jzvd.state == Jzvd.STATE_PREPARING
+                        || jzvd.state == Jzvd.STATE_PREPARING_CHANGING_URL) {
                     jzvd.onPrepared();
                 }
             } else {

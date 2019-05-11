@@ -1,20 +1,6 @@
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-//task javadocJar(type: Jar) {
-//    classifier = 'javadoc'
-//    from javadoc
-//}
-//
-//task sourcesJar(type: Jar) {
-//    classifier = 'sources'
-//    from sourceSets.main.allSource
-//}
-
-//artifacts {
-//    archives file('../downloads/jiaozi-videoplayer-1.2preview.aar')
-//}
-
 signing {
     required { false }
     sign configurations.archives
@@ -57,7 +43,7 @@ uploadArchives {
                 developers {
                     developer {
                         id 'Nathen'
-                        name '李盼'
+                        name 'Nathen'
                         email '1066666651@qq.com'
                     }
                 }
