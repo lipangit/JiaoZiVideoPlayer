@@ -276,17 +276,22 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         currentState = STATE_IDLE;
     }
 
+    public void setUp(String url, String title) {
+        setUp(new JZDataSource(url, title), SCREEN_NORMAL);
+    }
+
     public void setUp(String url, String title, int screen) {
         setUp(new JZDataSource(url, title), screen);
+    }
+
+    public void setUp(JZDataSource jzDataSource, int screen) {
+        setUp(jzDataSource, screen, JZMediaSystem.class);
     }
 
     public void setUp(String url, String title, int screen, Class mediaInterfaceClass) {
         setUp(new JZDataSource(url, title), screen, mediaInterfaceClass);
     }
 
-    public void setUp(JZDataSource jzDataSource, int screen) {
-        setUp(jzDataSource, screen, JZMediaSystem.class);
-    }
 
     public void setUp(JZDataSource jzDataSource, int screen, Class mediaInterfaceClass) {
         if ((System.currentTimeMillis() - gobakFullscreenTime) < 200) return;
