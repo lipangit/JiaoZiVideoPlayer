@@ -107,22 +107,24 @@
     <RelativeLayout
         android:id="@+id/layout_top"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/jz_title_bg"
-        android:gravity="center_vertical">
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="23dp"
-            android:layout_height="match_parent"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:paddingStart="12dp"
-            android:paddingLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:padding="3dp"
             android:scaleType="centerInside"
             android:src="@drawable/jz_click_back_selector" />
 
@@ -131,8 +133,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
             android:layout_marginEnd="12dp"
             android:layout_marginRight="12dp"
             android:layout_toLeftOf="@+id/battery_time_layout"
@@ -164,7 +164,8 @@
             android:layout_marginEnd="14dp"
             android:layout_marginRight="14dp"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="invisible">
 
             <ImageView
                 android:id="@+id/battery_level"
