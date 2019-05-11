@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 
 import cn.jzvd.JZDataSource;
-import cn.jzvd.JZMediaInterface;
 import cn.jzvd.JZUtils;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;

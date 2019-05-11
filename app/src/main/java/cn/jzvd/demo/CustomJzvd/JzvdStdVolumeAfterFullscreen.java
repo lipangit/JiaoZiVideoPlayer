@@ -21,7 +21,7 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
     @Override
     public void onPrepared() {
         super.onPrepared();
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+        if (screen == SCREEN_FULLSCREEN) {
             mediaInterface.setVolume(1f, 1f);
         } else {
             mediaInterface.setVolume(0f, 0f);
@@ -39,12 +39,14 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
     @Override
     public void setScreenFullscreen() {
         super.setScreenFullscreen();
-        mediaInterface.setVolume(1f, 1f);
+        if (mediaInterface != null)
+            mediaInterface.setVolume(1f, 1f);
     }
 
     @Override
     public void setScreenNormal() {
         super.setScreenNormal();
-        mediaInterface.setVolume(0f, 0f);
+        if (mediaInterface != null)
+            mediaInterface.setVolume(0f, 0f);
     }
 }

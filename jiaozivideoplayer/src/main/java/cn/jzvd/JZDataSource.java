@@ -10,7 +10,7 @@ public class JZDataSource {
     public int currentUrlIndex;
     public LinkedHashMap urlsMap = new LinkedHashMap();
     public String title = "";
-    public HashMap headerMap = new HashMap();
+    public HashMap<String, String> headerMap = new HashMap<>();
     public boolean looping = false;
     public Object[] objects;
 
@@ -81,6 +81,8 @@ public class JZDataSource {
     }
 
     public JZDataSource cloneMe() {
-        return new JZDataSource(urlsMap, title);
+        LinkedHashMap map = new LinkedHashMap();
+        map.putAll(urlsMap);
+        return new JZDataSource(map, title);
     }
 }

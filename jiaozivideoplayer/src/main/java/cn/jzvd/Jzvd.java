@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.WindowManager;
-import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -35,22 +34,21 @@ import java.util.TimerTask;
 public abstract class Jzvd extends FrameLayout implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, View.OnTouchListener {
 
     public static final String TAG = "JZVD";
-    public static final int THRESHOLD = 80;
+    public static Jzvd CURRENT_JZVD;
+    public static LinkedList<ViewGroup> CONTAINER_LIST = new LinkedList<>();
 
     public static final int SCREEN_NORMAL = 0;
-    //TODO 干掉这个变量
-    public static final int SCREEN_WINDOW_LIST = 1;
-    public static final int SCREEN_WINDOW_FULLSCREEN = 2;
-    public static final int SCREEN_WINDOW_TINY = 3;
+    public static final int SCREEN_FULLSCREEN = 1;
+    public static final int SCREEN_TINY = 2;
 
     public static final int STATE_IDLE = -1;
-    public static final int CURRENT_STATE_NORMAL = 0;
-    public static final int CURRENT_STATE_PREPARING = 1;
-    public static final int CURRENT_STATE_PREPARING_CHANGING_URL = 2;
-    public static final int CURRENT_STATE_PLAYING = 3;
-    public static final int CURRENT_STATE_PAUSE = 5;
-    public static final int CURRENT_STATE_AUTO_COMPLETE = 6;
-    public static final int CURRENT_STATE_ERROR = 7;
+    public static final int STATE_NORMAL = 0;
+    public static final int STATE_PREPARING = 1;
+    public static final int STATE_PREPARING_CHANGING_URL = 2;
+    public static final int STATE_PLAYING = 3;
+    public static final int STATE_PAUSE = 5;
+    public static final int STATE_AUTO_COMPLETE = 6;
+    public static final int STATE_ERROR = 7;
 
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER = 0;//DEFAULT
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_FILL_PARENT = 1;
@@ -58,58 +56,37 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static final int VIDEO_IMAGE_DISPLAY_TYPE_ORIGINAL = 3;
     public static boolean TOOL_BAR_EXIST = true;
     public static int FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
-    public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;//过一遍demo
+    public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
     public static boolean SAVE_PROGRESS = true;
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
     public static int VIDEO_IMAGE_DISPLAY_TYPE = 0;
     public static long lastAutoFullscreenTime = 0;
-    public static Jzvd CURRENT_JZVD;
-    public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {//是否新建个class，代码更规矩，并且变量的位置也很尴尬
-        @Override
-        public void onAudioFocusChange(int focusChange) {
-            switch (focusChange) {
-                case AudioManager.AUDIOFOCUS_GAIN:
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS:
-                    resetAllVideos();
-                    Log.d(TAG, "AUDIOFOCUS_LOSS [" + this.hashCode() + "]");
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
-//                    try {
-//                        Jzvd player = JzvdMgr.getCurrentJzvd();
-//                        if (player != null && player.currentState == Jzvd.CURRENT_STATE_PLAYING) {
-//                            player.startButton.performClick();
-//                        }
-//                    } catch (IllegalStateException e) {
-//                        e.printStackTrace();
-//                    }
-                    Log.d(TAG, "AUDIOFOCUS_LOSS_TRANSIENT [" + this.hashCode() + "]");
-                    break;
-                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
-                    break;
-            }
-        }
-    };
-    public static LinkedList<ViewGroup> CONTAINER_LIST = new LinkedList<ViewGroup>();
-    public static int ON_PLAY_PAUSE_TMP_STATE = 0;
-    public int currentState = -1;
-    public int currentScreen = -1;
+    public static final int THRESHOLD = 80;
+    public static int ON_PLAY_PAUSE_TMP_STATE = 0;//这个考虑不放到库里，去自定义
+
+    public int state = -1;
+    public int screen = -1;
+    public JZDataSource jzDataSource;
+    public int widthRatio = 0;
+    public int heightRatio = 0;
+    public Class mediaInterfaceClass;
+    public JZMediaInterface mediaInterface;
+    public int positionInList = -1;//很想干掉它
+    public int videoRotation = 0;
+    protected long gobakFullscreenTime = 0;//这个应该重写一下，刷新列表，新增列表的刷新，不打断播放，应该是个flag
+
+    public int seekToManulPosition = -1;
     public long seekToInAdvance = 0;
+
     public ImageView startButton;
     public SeekBar progressBar;
     public ImageView fullscreenButton;
     public TextView currentTimeTextView, totalTimeTextView;
     public ViewGroup textureViewContainer;
     public ViewGroup topContainer, bottomContainer;
-    public int widthRatio = 0;
-    public int heightRatio = 0;
-    public JZDataSource jzDataSource;
-    public int positionInList = -1;//很想干掉它
-    public int videoRotation = 0;
-    public JZMediaInterface mediaInterface;
-    public Class mediaInterfaceClass;
     public JZTextureView textureView;
-    public int seekToManulPosition = -1;
+
+
     protected Timer UPDATE_PROGRESS_TIMER;
     protected int mScreenWidth;
     protected int mScreenHeight;
@@ -125,8 +102,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     protected int mGestureDownVolume;
     protected float mGestureDownBrightness;
     protected long mSeekTimePosition;
-    //liestview中，退出全屏也会导致列表getview->setUp，这个变量要屏蔽这个过程
-    protected long gobakFullscreenTime = 0;
 
     public Jzvd(Context context) {
         super(context);
@@ -136,120 +111,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public Jzvd(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
-    }
-
-    public static void resetAllVideos() {
-        Log.d(TAG, "resetAllVideos");
-        if (CURRENT_JZVD != null) {
-            CURRENT_JZVD.reset();
-            CURRENT_JZVD = null;
-        }
-    }
-
-    public static void clearSavedProgress(Context context, String url) {
-        JZUtils.clearSavedProgress(context, url);
-    }
-
-    public static void goOnPlayOnResume() {
-        if (CURRENT_JZVD != null) {
-            if (CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_PAUSE) {
-                if (ON_PLAY_PAUSE_TMP_STATE == CURRENT_STATE_PAUSE) {
-                    CURRENT_JZVD.onStatePause();
-                    CURRENT_JZVD.mediaInterface.pause();
-                } else {
-                    CURRENT_JZVD.onStatePlaying();
-                    CURRENT_JZVD.mediaInterface.start();
-                }
-                ON_PLAY_PAUSE_TMP_STATE = 0;
-            }
-        }
-    }
-
-    public static void goOnPlayOnPause() {
-        if (CURRENT_JZVD != null) {
-            if (CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_AUTO_COMPLETE ||
-                    CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_NORMAL ||
-                    CURRENT_JZVD.currentState == Jzvd.CURRENT_STATE_ERROR) {
-                Jzvd.resetAllVideos();
-            } else {
-                ON_PLAY_PAUSE_TMP_STATE = CURRENT_JZVD.currentState;
-                CURRENT_JZVD.onStatePause();
-                CURRENT_JZVD.mediaInterface.pause();
-            }
-        }
-    }
-
-    public static void onChildViewAttachedToWindow(View view, int jzvdId) {
-
-    }
-
-    public static void onChildViewDetachedFromWindow(View view, int jzvdId) {
-
-    }
-
-    public static void setTextureViewRotation(int rotation) {
-        if (CURRENT_JZVD != null && CURRENT_JZVD.textureView != null) {
-            CURRENT_JZVD.textureView.setRotation(rotation);
-        }
-    }
-
-    public static void setVideoImageDisplayType(int type) {
-        Jzvd.VIDEO_IMAGE_DISPLAY_TYPE = type;
-        if (CURRENT_JZVD != null && CURRENT_JZVD.textureView != null) {
-            CURRENT_JZVD.textureView.requestLayout();
-        }
-    }
-
-    public static void setCurrentJzvd(Jzvd jzvd) {
-        if (CURRENT_JZVD != null) CURRENT_JZVD.reset();
-        CURRENT_JZVD = jzvd;
-    }
-
-    public static boolean backPress() {
-        Log.i(TAG, "backPress");
-//        if ((System.currentTimeMillis() - CLICK_QUIT_FULLSCREEN_TIME) < FULL_SCREEN_NORMAL_DELAY)
-//            return false; 这些东西遇到了再改，最后过代码的时候删除残留
-        if (CONTAINER_LIST.size() != 0 && CURRENT_JZVD != null) {//判断条件，因为当前所有goBack都是回到普通窗口
-            CURRENT_JZVD.gotoScreenNormal();
-            return true;
-        } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null && CURRENT_JZVD.currentScreen != SCREEN_NORMAL) {//退出直接进入的全屏
-            CURRENT_JZVD.clearFloatScreen();
-            return true;
-        }
-        return false;
-    }
-
-    public static void startFullscreenDirectly(Context context, Class _class, String url, String title) {
-        startFullscreenDirectly(context, _class, new JZDataSource(url, title));
-    }
-
-    public static void startFullscreenDirectly(Context context, Class _class, JZDataSource jzDataSource) {
-        JZUtils.hideStatusBar(context);
-        JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
-        JZUtils.hideSystemUI(context);
-
-        ViewGroup vp = (ViewGroup) JZUtils.scanForActivity(context).getWindow().getDecorView();
-        try {
-            Constructor<Jzvd> constructor = _class.getConstructor(Context.class);
-            final Jzvd jzvd = constructor.newInstance(context);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            vp.addView(jzvd, lp);
-            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_WINDOW_FULLSCREEN);
-            jzvd.startVideo();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * @param mediaInterface
-     */
-    public void setMediaInterface(JZMediaInterface mediaInterface) {
-        reset();
-        this.mediaInterface = mediaInterface;
     }
 
     public abstract int getLayoutId();
@@ -274,29 +135,37 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
         mScreenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
-        mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
 
-        currentState = STATE_IDLE;
+        state = STATE_IDLE;
+    }
+
+    public void setUp(String url, String title) {
+        setUp(new JZDataSource(url, title), SCREEN_NORMAL);
     }
 
     public void setUp(String url, String title, int screen) {
         setUp(new JZDataSource(url, title), screen);
     }
 
-    public void setUp(String url, String title, int screen, Class mediaInterfaceClass) {
-        setUp(new JZDataSource(url, title), screen, mediaInterfaceClass);
-    }
-
     public void setUp(JZDataSource jzDataSource, int screen) {
         setUp(jzDataSource, screen, JZMediaSystem.class);
+    }
+
+    public void setUp(String url, String title, int screen, Class mediaInterfaceClass) {
+        setUp(new JZDataSource(url, title), screen, mediaInterfaceClass);
     }
 
     public void setUp(JZDataSource jzDataSource, int screen, Class mediaInterfaceClass) {
         if ((System.currentTimeMillis() - gobakFullscreenTime) < 200) return;
 
         this.jzDataSource = jzDataSource;
-        this.currentScreen = screen;
+        this.screen = screen;
         onStateNormal();
+        this.mediaInterfaceClass = mediaInterfaceClass;
+    }
+
+    public void setMediaInterface(Class mediaInterfaceClass) {
+        reset();
         this.mediaInterfaceClass = mediaInterfaceClass;
     }
 
@@ -309,7 +178,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (currentState == CURRENT_STATE_NORMAL) {
+            if (state == STATE_NORMAL) {
                 if (!jzDataSource.getCurrentUrl().toString().startsWith("file") && !
                         jzDataSource.getCurrentUrl().toString().startsWith("/") &&
                         !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {//这个可以放到std中
@@ -317,20 +186,20 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                     return;
                 }
                 startVideo();
-            } else if (currentState == CURRENT_STATE_PLAYING) {
+            } else if (state == STATE_PLAYING) {
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 mediaInterface.pause();
                 onStatePause();
-            } else if (currentState == CURRENT_STATE_PAUSE) {
+            } else if (state == STATE_PAUSE) {
                 mediaInterface.start();
                 onStatePlaying();
-            } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+            } else if (state == STATE_AUTO_COMPLETE) {
                 startVideo();
             }
         } else if (i == R.id.fullscreen) {
             Log.i(TAG, "onClick fullscreen [" + this.hashCode() + "] ");
-            if (currentState == CURRENT_STATE_AUTO_COMPLETE) return;
-            if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+            if (state == STATE_AUTO_COMPLETE) return;
+            if (screen == SCREEN_FULLSCREEN) {
                 //quit fullscreen
                 backPress();
             } else {
@@ -363,14 +232,14 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                     float deltaY = y - mDownY;
                     float absDeltaX = Math.abs(deltaX);
                     float absDeltaY = Math.abs(deltaY);
-                    if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+                    if (screen == SCREEN_FULLSCREEN) {
                         if (!mChangePosition && !mChangeVolume && !mChangeBrightness) {
                             if (absDeltaX > THRESHOLD || absDeltaY > THRESHOLD) {
                                 cancelProgressTimer();
                                 if (absDeltaX >= THRESHOLD) {
                                     // 全屏模式下的CURRENT_STATE_ERROR状态下,不响应进度拖动事件.
                                     // 否则会因为mediaplayer的状态非法导致App Crash
-                                    if (currentState != CURRENT_STATE_ERROR) {
+                                    if (state != STATE_ERROR) {
                                         mChangePosition = true;
                                         mGestureDownPosition = getCurrentPositionWhenPlaying();
                                     }
@@ -458,109 +327,23 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         return false;
     }
 
-    public void startVideo() {
-        Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
-        setCurrentJzvd(this);
-        Constructor<JZMediaInterface> constructor = null;
-        try {
-            constructor = mediaInterfaceClass.getConstructor(Jzvd.class);
-            this.mediaInterface = constructor.newInstance(this);
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        addTextureView();
-        AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
-        JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        onStatePreparing();
-    }
-
-    public void onPrepared() {
-        Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
-        onStatePrepared();
-        onStatePlaying();
-    }
-
-    public void setState(int state) {
-        setState(state, 0, 0);
-    }
-
-    public void setState(int state, int urlMapIndex, int seekToInAdvance) {//后面两个参数干嘛的
-        switch (state) {
-            case CURRENT_STATE_NORMAL:
-                onStateNormal();
-                break;
-            case CURRENT_STATE_PREPARING:
-                onStatePreparing();
-                break;
-            case CURRENT_STATE_PREPARING_CHANGING_URL:
-                changeUrl(urlMapIndex, seekToInAdvance);
-                break;
-            case CURRENT_STATE_PLAYING:
-                onStatePlaying();
-                break;
-            case CURRENT_STATE_PAUSE:
-                onStatePause();
-                break;
-            case CURRENT_STATE_ERROR:
-                onStateError();
-                break;
-            case CURRENT_STATE_AUTO_COMPLETE:
-                onStateAutoComplete();
-                break;
-        }
-    }
-
-    public void setScreen(int screen) {//特殊的个别的进入全屏的按钮在这里设置  只有setup的时候能用上
-        switch (screen) {
-            case SCREEN_NORMAL:
-                setScreenNormal();
-                break;
-            case SCREEN_WINDOW_FULLSCREEN:
-                setScreenFullscreen();
-                break;
-            case SCREEN_WINDOW_TINY:
-                setScreenTiny();
-                break;
-        }
-    }
-
     public void onStateNormal() {
         Log.i(TAG, "onStateNormal " + " [" + this.hashCode() + "] ");
-        currentState = CURRENT_STATE_NORMAL;
+        state = STATE_NORMAL;
         cancelProgressTimer();
         if (mediaInterface != null) mediaInterface.release();
     }
 
     public void onStatePreparing() {
         Log.i(TAG, "onStatePreparing " + " [" + this.hashCode() + "] ");
-        currentState = CURRENT_STATE_PREPARING;
+        state = STATE_PREPARING;
         resetProgressAndTime();
     }
 
-    public void changeUrl(int urlMapIndex, long seekToInAdvance) {
-        currentState = CURRENT_STATE_PREPARING_CHANGING_URL;
-        this.seekToInAdvance = seekToInAdvance;
-        jzDataSource.currentUrlIndex = urlMapIndex;
-        mediaInterface.prepare();
-    }
-
-    public void changeUrl(JZDataSource jzDataSource, long seekToInAdvance) {
-        currentState = CURRENT_STATE_PREPARING_CHANGING_URL;
-        this.seekToInAdvance = seekToInAdvance;
-        this.jzDataSource = jzDataSource;
-        mediaInterface.prepare();
-    }
-
-    public void changeUrl(String url, String title, long seekToInAdvance) {
-        changeUrl(new JZDataSource(url, title), seekToInAdvance);
+    public void onPrepared() {
+        Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
+        onStatePrepared();
+        onStatePlaying();
     }
 
     public void onStatePrepared() {//因为这个紧接着就会进入播放状态，所以不设置state
@@ -577,25 +360,25 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public void onStatePlaying() {
         Log.i(TAG, "onStatePlaying " + " [" + this.hashCode() + "] ");
-        currentState = CURRENT_STATE_PLAYING;
+        state = STATE_PLAYING;
         startProgressTimer();
     }
 
     public void onStatePause() {
         Log.i(TAG, "onStatePause " + " [" + this.hashCode() + "] ");
-        currentState = CURRENT_STATE_PAUSE;
+        state = STATE_PAUSE;
         startProgressTimer();
     }
 
     public void onStateError() {
         Log.i(TAG, "onStateError " + " [" + this.hashCode() + "] ");
-        currentState = CURRENT_STATE_ERROR;
+        state = STATE_ERROR;
         cancelProgressTimer();
     }
 
     public void onStateAutoComplete() {
         Log.i(TAG, "onStateAutoComplete " + " [" + this.hashCode() + "] ");
-        currentState = CURRENT_STATE_AUTO_COMPLETE;
+        state = STATE_AUTO_COMPLETE;
         cancelProgressTimer();
         progressBar.setProgress(100);
         currentTimeTextView.setText(totalTimeTextView.getText());
@@ -613,26 +396,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN || currentScreen == SCREEN_WINDOW_TINY) {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-            return;
-        }
-        if (widthRatio != 0 && heightRatio != 0) {
-            int specWidth = MeasureSpec.getSize(widthMeasureSpec);
-            int specHeight = (int) ((specWidth * (float) heightRatio) / widthRatio);
-            setMeasuredDimension(specWidth, specHeight);
-
-            int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(specWidth, MeasureSpec.EXACTLY);
-            int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(specHeight, MeasureSpec.EXACTLY);
-            getChildAt(0).measure(childWidthMeasureSpec, childHeightMeasureSpec);
-        } else {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        }
-
-    }
-
     public void onAutoCompletion() {
         Runtime.getRuntime().gc();
         Log.i(TAG, "onAutoCompletion " + " [" + this.hashCode() + "] ");
@@ -646,9 +409,12 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         JZUtils.saveProgress(getContext(), jzDataSource.getCurrentUrl(), 0);
     }
 
+    /**
+     * 多数表现为中断当前播放
+     */
     public void reset() {
         Log.i(TAG, "reset " + " [" + this.hashCode() + "] ");
-        if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
+        if (state == STATE_PLAYING || state == STATE_PAUSE) {
             long position = getCurrentPositionWhenPlaying();
             JZUtils.saveProgress(getContext(), jzDataSource.getCurrentUrl(), position);
         }
@@ -664,6 +430,114 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);
         JZUtils.scanForActivity(getContext()).getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if (mediaInterface != null) mediaInterface.release();
+    }
+
+    public void setState(int state) {
+        setState(state, 0, 0);
+    }
+
+    public void setState(int state, int urlMapIndex, int seekToInAdvance) {//后面两个参数干嘛的
+        switch (state) {
+            case STATE_NORMAL:
+                onStateNormal();
+                break;
+            case STATE_PREPARING:
+                onStatePreparing();
+                break;
+            case STATE_PREPARING_CHANGING_URL:
+                changeUrl(urlMapIndex, seekToInAdvance);
+                break;
+            case STATE_PLAYING:
+                onStatePlaying();
+                break;
+            case STATE_PAUSE:
+                onStatePause();
+                break;
+            case STATE_ERROR:
+                onStateError();
+                break;
+            case STATE_AUTO_COMPLETE:
+                onStateAutoComplete();
+                break;
+        }
+    }
+
+    public void setScreen(int screen) {//特殊的个别的进入全屏的按钮在这里设置  只有setup的时候能用上
+        switch (screen) {
+            case SCREEN_NORMAL:
+                setScreenNormal();
+                break;
+            case SCREEN_FULLSCREEN:
+                setScreenFullscreen();
+                break;
+            case SCREEN_TINY:
+                setScreenTiny();
+                break;
+        }
+    }
+
+    public void startVideo() {
+        Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
+        setCurrentJzvd(this);
+        Constructor<JZMediaInterface> constructor = null;
+        try {
+            constructor = mediaInterfaceClass.getConstructor(Jzvd.class);
+            this.mediaInterface = constructor.newInstance(this);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        addTextureView();
+
+        mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT);
+        JZUtils.scanForActivity(getContext()).getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        onStatePreparing();
+    }
+
+
+    public void changeUrl(int urlMapIndex, long seekToInAdvance) {
+        state = STATE_PREPARING_CHANGING_URL;
+        this.seekToInAdvance = seekToInAdvance;
+        jzDataSource.currentUrlIndex = urlMapIndex;
+        mediaInterface.prepare();
+    }
+
+    public void changeUrl(JZDataSource jzDataSource, long seekToInAdvance) {
+        state = STATE_PREPARING_CHANGING_URL;
+        this.seekToInAdvance = seekToInAdvance;
+        this.jzDataSource = jzDataSource;
+        mediaInterface.prepare();
+    }
+
+    public void changeUrl(String url, String title, long seekToInAdvance) {
+        changeUrl(new JZDataSource(url, title), seekToInAdvance);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (screen == SCREEN_FULLSCREEN || screen == SCREEN_TINY) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            return;
+        }
+        if (widthRatio != 0 && heightRatio != 0) {
+            int specWidth = MeasureSpec.getSize(widthMeasureSpec);
+            int specHeight = (int) ((specWidth * (float) heightRatio) / widthRatio);
+            setMeasuredDimension(specWidth, specHeight);
+
+            int childWidthMeasureSpec = MeasureSpec.makeMeasureSpec(specWidth, MeasureSpec.EXACTLY);
+            int childHeightMeasureSpec = MeasureSpec.makeMeasureSpec(specHeight, MeasureSpec.EXACTLY);
+            getChildAt(0).measure(childWidthMeasureSpec, childHeightMeasureSpec);
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+
     }
 
     public void addTextureView() {
@@ -687,8 +561,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
         vg.removeView(this);
-        CURRENT_JZVD = null;
         mediaInterface.release();
+        CURRENT_JZVD = null;
     }
 
     public void onVideoSizeChanged(int width, int height) {
@@ -748,9 +622,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public long getCurrentPositionWhenPlaying() {
         long position = 0;
-        //TODO 这块的判断应该根据MediaPlayer来
-        if (currentState == CURRENT_STATE_PLAYING ||
-                currentState == CURRENT_STATE_PAUSE) {
+        if (state == STATE_PLAYING ||
+                state == STATE_PAUSE) {
             try {
                 position = mediaInterface.getCurrentPosition();
             } catch (IllegalStateException e) {
@@ -763,8 +636,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public long getDuration() {
         long duration = 0;
-        //TODO MediaPlayer 判空的问题
-//        if (JZMediaPlayer.instance().mediaPlayer == null) return duration;
         try {
             duration = mediaInterface.getDuration();
         } catch (IllegalStateException e) {
@@ -794,8 +665,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             vpup.requestDisallowInterceptTouchEvent(false);
             vpup = vpup.getParent();
         }
-        if (currentState != CURRENT_STATE_PLAYING &&
-                currentState != CURRENT_STATE_PAUSE) return;
+        if (state != STATE_PLAYING &&
+                state != STATE_PAUSE) return;
         long time = seekBar.getProgress() * getDuration() / 100;
         seekToManulPosition = seekBar.getProgress();
         mediaInterface.seekTo(time);
@@ -860,24 +731,24 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         JZUtils.showSystemUI(getContext());
     }
 
-    public void setScreenNormal() {
-        currentScreen = SCREEN_NORMAL;
+    public void setScreenNormal() {//TODO 这块不对呀，还需要改进，设置flag之后要设置ui，不设置ui这么写没意义呀
+        screen = SCREEN_NORMAL;
     }
 
     public void setScreenFullscreen() {
-        currentScreen = SCREEN_WINDOW_FULLSCREEN;
+        screen = SCREEN_FULLSCREEN;
     }
 
     public void setScreenTiny() {
-        currentScreen = SCREEN_WINDOW_TINY;
+        screen = SCREEN_TINY;
     }
 
     //    //重力感应的时候调用的函数，、、这里有重力感应的参数，暂时不能删除
-    public void autoFullscreen(float x) {
+    public void autoFullscreen(float x) {//TODO写道demo中
         if (CURRENT_JZVD != null
-                && (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE)
-                && currentScreen != SCREEN_WINDOW_FULLSCREEN
-                && currentScreen != SCREEN_WINDOW_TINY) {
+                && (state == STATE_PLAYING || state == STATE_PAUSE)
+                && screen != SCREEN_FULLSCREEN
+                && screen != SCREEN_TINY) {
             if (x > 0) {
                 JZUtils.setRequestedOrientation(getContext(), ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
             } else {
@@ -890,8 +761,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void autoQuitFullscreen() {
         if ((System.currentTimeMillis() - lastAutoFullscreenTime) > 2000
 //                && CURRENT_JZVD != null
-                && currentState == CURRENT_STATE_PLAYING
-                && currentScreen == SCREEN_WINDOW_FULLSCREEN) {
+                && state == STATE_PLAYING
+                && screen == SCREEN_FULLSCREEN) {
             lastAutoFullscreenTime = System.currentTimeMillis();
             backPress();
         }
@@ -964,7 +835,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public class ProgressTimerTask extends TimerTask {
         @Override
         public void run() {
-            if (currentState == CURRENT_STATE_PLAYING || currentState == CURRENT_STATE_PAUSE) {
+            if (state == STATE_PLAYING || state == STATE_PAUSE) {
 //                Log.v(TAG, "onProgressUpdate " + "[" + this.hashCode() + "] ");
                 post(() -> {
                     long position = getCurrentPositionWhenPlaying();
@@ -975,4 +846,129 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             }
         }
     }
+
+    public static AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {//是否新建个class，代码更规矩，并且变量的位置也很尴尬
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            switch (focusChange) {
+                case AudioManager.AUDIOFOCUS_GAIN:
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS:
+                    resetAllVideos();
+                    Log.d(TAG, "AUDIOFOCUS_LOSS [" + this.hashCode() + "]");
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                    try {
+                        Jzvd player = CURRENT_JZVD;
+                        if (player != null && player.state == Jzvd.STATE_PLAYING) {
+                            player.startButton.performClick();
+                        }
+                    } catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d(TAG, "AUDIOFOCUS_LOSS_TRANSIENT [" + this.hashCode() + "]");
+                    break;
+                case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                    break;
+            }
+        }
+    };
+
+    public static void goOnPlayOnResume() {
+        if (CURRENT_JZVD != null) {
+            if (CURRENT_JZVD.state == Jzvd.STATE_PAUSE) {
+                if (ON_PLAY_PAUSE_TMP_STATE == STATE_PAUSE) {
+                    CURRENT_JZVD.onStatePause();
+                    CURRENT_JZVD.mediaInterface.pause();
+                } else {
+                    CURRENT_JZVD.onStatePlaying();
+                    CURRENT_JZVD.mediaInterface.start();
+                }
+                ON_PLAY_PAUSE_TMP_STATE = 0;
+            }
+        }
+    }
+
+    public static void goOnPlayOnPause() {
+        if (CURRENT_JZVD != null) {
+            if (CURRENT_JZVD.state == Jzvd.STATE_AUTO_COMPLETE ||
+                    CURRENT_JZVD.state == Jzvd.STATE_NORMAL ||
+                    CURRENT_JZVD.state == Jzvd.STATE_ERROR) {
+                Jzvd.resetAllVideos();
+            } else {
+                ON_PLAY_PAUSE_TMP_STATE = CURRENT_JZVD.state;
+                CURRENT_JZVD.onStatePause();
+                CURRENT_JZVD.mediaInterface.pause();
+            }
+        }
+    }
+
+    public static void startFullscreenDirectly(Context context, Class _class, String url, String title) {
+        startFullscreenDirectly(context, _class, new JZDataSource(url, title));
+    }
+
+    public static void startFullscreenDirectly(Context context, Class _class, JZDataSource jzDataSource) {
+        JZUtils.hideStatusBar(context);
+        JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
+        JZUtils.hideSystemUI(context);
+
+        ViewGroup vp = (ViewGroup) JZUtils.scanForActivity(context).getWindow().getDecorView();
+        try {
+            Constructor<Jzvd> constructor = _class.getConstructor(Context.class);
+            final Jzvd jzvd = constructor.newInstance(context);
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            vp.addView(jzvd, lp);
+            jzvd.setUp(jzDataSource, JzvdStd.SCREEN_FULLSCREEN);
+            jzvd.startVideo();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void resetAllVideos() {
+        Log.d(TAG, "resetAllVideos");
+        if (CURRENT_JZVD != null) {
+            CURRENT_JZVD.reset();
+            CURRENT_JZVD = null;
+        }
+    }
+
+    public static boolean backPress() {
+        Log.i(TAG, "backPress");
+        if (CONTAINER_LIST.size() != 0 && CURRENT_JZVD != null) {//判断条件，因为当前所有goBack都是回到普通窗口
+            CURRENT_JZVD.gotoScreenNormal();
+            return true;
+        } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null && CURRENT_JZVD.screen != SCREEN_NORMAL) {//退出直接进入的全屏
+            CURRENT_JZVD.clearFloatScreen();
+            return true;
+        }
+        return false;
+    }
+
+    public static void setCurrentJzvd(Jzvd jzvd) {
+        if (CURRENT_JZVD != null) CURRENT_JZVD.reset();
+        CURRENT_JZVD = jzvd;
+    }
+
+    public static void clearSavedProgress(Context context, String url) {
+        JZUtils.clearSavedProgress(context, url);
+    }
+
+    public static void setTextureViewRotation(int rotation) {
+        if (CURRENT_JZVD != null && CURRENT_JZVD.textureView != null) {
+            CURRENT_JZVD.textureView.setRotation(rotation);
+        }
+    }
+
+    public static void setVideoImageDisplayType(int type) {
+        Jzvd.VIDEO_IMAGE_DISPLAY_TYPE = type;
+        if (CURRENT_JZVD != null && CURRENT_JZVD.textureView != null) {
+            CURRENT_JZVD.textureView.requestLayout();
+        }
+    }
+
 }

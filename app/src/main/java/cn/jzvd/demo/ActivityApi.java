@@ -1,11 +1,13 @@
 package cn.jzvd.demo;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +22,6 @@ import java.io.OutputStream;
 import java.util.LinkedHashMap;
 
 import cn.jzvd.JZDataSource;
-import cn.jzvd.JZUtils;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
@@ -103,7 +104,7 @@ public class ActivityApi extends AppCompatActivity {
     }
 
     public void cpAssertVideoToLocalPath() {
-        JZUtils.verifyStoragePermissions(this);
+        verifyStoragePermissions();
         try {
             InputStream myInput;
             OutputStream myOutput = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4");
@@ -119,6 +120,21 @@ public class ActivityApi extends AppCompatActivity {
             myInput.close();
             myOutput.close();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void verifyStoragePermissions() {
+        try {
+            int permission = ActivityCompat.checkSelfPermission(this,
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{
+                        "android.permission.READ_EXTERNAL_STORAGE",
+                        "android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

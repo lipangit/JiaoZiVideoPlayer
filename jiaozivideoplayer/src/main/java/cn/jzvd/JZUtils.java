@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -26,6 +25,7 @@ import java.util.Locale;
  */
 public class JZUtils {
     public static final String TAG = "JZVD";
+    public static int SYSTEM_UI = 0;
 
     public static String stringForTime(long timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
@@ -180,25 +180,10 @@ public class JZUtils {
 
     }
 
-    public static int SYSTEM_UI = 0;
-
     @SuppressLint("NewApi")
     public static void showSystemUI(Context context) {
         int uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
         JZUtils.getWindow(context).getDecorView().setSystemUiVisibility(SYSTEM_UI);
     }
 
-    public static void verifyStoragePermissions(Activity activity) {
-        try {
-            int permission = ActivityCompat.checkSelfPermission(activity,
-                    "android.permission.WRITE_EXTERNAL_STORAGE");
-            if (permission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(activity, new String[]{
-                        "android.permission.READ_EXTERNAL_STORAGE",
-                        "android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
