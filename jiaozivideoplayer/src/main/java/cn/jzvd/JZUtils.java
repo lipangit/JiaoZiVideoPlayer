@@ -186,17 +186,4 @@ public class JZUtils {
         JZUtils.getWindow(context).getDecorView().setSystemUiVisibility(SYSTEM_UI);
     }
 
-    public static void verifyStoragePermissions(Activity activity) {
-        try {
-            int permission = ActivityCompat.checkSelfPermission(activity,
-                    "android.permission.WRITE_EXTERNAL_STORAGE");
-            if (permission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(activity, new String[]{
-                        "android.permission.READ_EXTERNAL_STORAGE",
-                        "android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

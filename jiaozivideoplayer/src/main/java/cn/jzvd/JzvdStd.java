@@ -38,6 +38,7 @@ public class JzvdStd extends Jzvd {
     public static long LAST_GET_BATTERYLEVEL_TIME = 0;
     public static int LAST_GET_BATTERYLEVEL_PERCENT = 70;
     protected static Timer DISMISS_CONTROL_VIEW_TIMER;
+
     public ImageView backButton;
     public ProgressBar bottomProgressBar, loadingProgressBar;
     public TextView titleTextView;
@@ -64,23 +65,7 @@ public class JzvdStd extends Jzvd {
     protected Dialog mBrightnessDialog;
     protected ProgressBar mDialogBrightnessProgressBar;
     protected TextView mDialogBrightnessTextView;
-    private BroadcastReceiver battertReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
-                int level = intent.getIntExtra("level", 0);
-                int scale = intent.getIntExtra("scale", 100);
-                int percent = level * 100 / scale;
-                LAST_GET_BATTERYLEVEL_PERCENT = percent;
-                setBatteryLevel();
-                try {
-                    getContext().unregisterReceiver(battertReceiver);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    };
+
 
     public JzvdStd(Context context) {
         super(context);
@@ -134,47 +119,6 @@ public class JzvdStd extends Jzvd {
         return R.layout.jz_layout_std;
     }
 
-
-    @Override
-    public void setScreenNormal() {
-        super.setScreenNormal();
-        fullscreenButton.setImageResource(R.drawable.jz_enlarge);
-        backButton.setVisibility(View.GONE);
-        tinyBackImageView.setVisibility(View.INVISIBLE);
-        changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_normal));
-        batteryTimeLayout.setVisibility(View.GONE);
-        clarity.setVisibility(View.GONE);
-    }
-
-
-    @Override
-    public void setScreenFullscreen() {
-        super.setScreenFullscreen();
-        //进入全屏之后要保证原来的播放状态和ui状态不变，改变个别的ui
-        fullscreenButton.setImageResource(R.drawable.jz_shrink);
-        backButton.setVisibility(View.VISIBLE);
-        tinyBackImageView.setVisibility(View.INVISIBLE);
-        batteryTimeLayout.setVisibility(View.VISIBLE);
-        if (jzDataSource.urlsMap.size() == 1) {
-            clarity.setVisibility(GONE);
-        } else {
-            clarity.setText(jzDataSource.getCurrentKey().toString());
-            clarity.setVisibility(View.VISIBLE);
-        }
-        changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_fullscreen));
-        setSystemTimeAndBattery();
-    }
-
-    @Override
-    public void setScreenTiny() {
-        super.setScreenTiny();
-        tinyBackImageView.setVisibility(View.VISIBLE);
-        setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-        batteryTimeLayout.setVisibility(View.GONE);
-        clarity.setVisibility(View.GONE);
-    }
-
     @Override
     public void onStateNormal() {
         super.onStateNormal();
@@ -185,23 +129,6 @@ public class JzvdStd extends Jzvd {
     public void onStatePreparing() {
         super.onStatePreparing();
         changeUiToPreparing();
-    }
-
-    @Override
-    public void changeUrl(int urlMapIndex, long seekToInAdvance) {
-        super.changeUrl(urlMapIndex, seekToInAdvance);
-        startButton.setVisibility(INVISIBLE);
-        replayTextView.setVisibility(View.GONE);
-        mRetryLayout.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void changeUrl(JZDataSource jzDataSource, long seekToInAdvance) {
-        super.changeUrl(jzDataSource, seekToInAdvance);
-        titleTextView.setText(jzDataSource.title);
-        startButton.setVisibility(INVISIBLE);
-        replayTextView.setVisibility(View.GONE);
-        mRetryLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -229,6 +156,23 @@ public class JzvdStd extends Jzvd {
         changeUiToComplete();
         cancelDismissControlViewTimer();
         bottomProgressBar.setProgress(100);
+    }
+
+    @Override
+    public void changeUrl(int urlMapIndex, long seekToInAdvance) {
+        super.changeUrl(urlMapIndex, seekToInAdvance);
+        startButton.setVisibility(INVISIBLE);
+        replayTextView.setVisibility(View.GONE);
+        mRetryLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void changeUrl(JZDataSource jzDataSource, long seekToInAdvance) {
+        super.changeUrl(jzDataSource, seekToInAdvance);
+        titleTextView.setText(jzDataSource.title);
+        startButton.setVisibility(INVISIBLE);
+        replayTextView.setVisibility(View.GONE);
+        mRetryLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -345,6 +289,45 @@ public class JzvdStd extends Jzvd {
             addTextureView();
             onStatePreparing();
         }
+    }
+
+    @Override
+    public void setScreenNormal() {
+        super.setScreenNormal();
+        fullscreenButton.setImageResource(R.drawable.jz_enlarge);
+        backButton.setVisibility(View.GONE);
+        tinyBackImageView.setVisibility(View.INVISIBLE);
+        changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_normal));
+        batteryTimeLayout.setVisibility(View.GONE);
+        clarity.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setScreenFullscreen() {
+        super.setScreenFullscreen();
+        //进入全屏之后要保证原来的播放状态和ui状态不变，改变个别的ui
+        fullscreenButton.setImageResource(R.drawable.jz_shrink);
+        backButton.setVisibility(View.VISIBLE);
+        tinyBackImageView.setVisibility(View.INVISIBLE);
+        batteryTimeLayout.setVisibility(View.VISIBLE);
+        if (jzDataSource.urlsMap.size() == 1) {
+            clarity.setVisibility(GONE);
+        } else {
+            clarity.setText(jzDataSource.getCurrentKey().toString());
+            clarity.setVisibility(View.VISIBLE);
+        }
+        changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_fullscreen));
+        setSystemTimeAndBattery();
+    }
+
+    @Override
+    public void setScreenTiny() {
+        super.setScreenTiny();
+        tinyBackImageView.setVisibility(View.VISIBLE);
+        setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+        batteryTimeLayout.setVisibility(View.GONE);
+        clarity.setVisibility(View.GONE);
     }
 
     @Override
@@ -813,4 +796,22 @@ public class JzvdStd extends Jzvd {
             dissmissControlView();
         }
     }
+
+    private BroadcastReceiver battertReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
+                int level = intent.getIntExtra("level", 0);
+                int scale = intent.getIntExtra("scale", 100);
+                int percent = level * 100 / scale;
+                LAST_GET_BATTERYLEVEL_PERCENT = percent;
+                setBatteryLevel();
+                try {
+                    getContext().unregisterReceiver(battertReceiver);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 }
