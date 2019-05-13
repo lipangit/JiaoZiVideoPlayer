@@ -49,28 +49,28 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 
 即便是自定义UI，或者对Library有过修改，也是这五步骤来使用播放器。
 
-7.0.3不是非常稳定，感兴趣的可以尝试
-
 1.添加类库
 ```gradle
 compile 'cn.jzvd:jiaozivideoplayer:7.0.3'
 ```
 
-或直接下载 [aar](https://github.com/lipangit/JiaoZiVideoPlayer/releases/tag/v6.4.2) (不建议)
-
 2.添加布局
 ```xml
-<cn.jzvd.JzvdStd
-    android:id="@+id/videoplayer"
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="200dp"/>
+    android:layout_height="200dp">
+    <cn.jzvd.demo.CustomJzvd.MyJzvdStd
+        android:id="@+id/jz_video"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+</LinearLayout>
 ```
 
 3.设置视频地址、缩略图地址、标题
 ```java
-JzvdStd jzvdStd = (JzvdStd) findViewById(R.id.videoplayer);
+MyJzvdStd jzvdStd = (MyJzvdStd) findViewById(R.id.jz_video);
 jzvdStd.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
-                            , "饺子闭眼睛", Jzvd.SCREEN_WINDOW_NORMAL);
+                            , "饺子闭眼睛");
 jzvdStd.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311e59ed467f22794e792_1/640");
 ```
 
