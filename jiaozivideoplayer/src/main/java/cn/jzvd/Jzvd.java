@@ -502,10 +502,15 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
 
+    public void changeUrl(String url, String title, long seekToInAdvance) {
+        changeUrl(new JZDataSource(url, title), seekToInAdvance);
+    }
+
     public void changeUrl(int urlMapIndex, long seekToInAdvance) {
         state = STATE_PREPARING_CHANGING_URL;
         this.seekToInAdvance = seekToInAdvance;
         jzDataSource.currentUrlIndex = urlMapIndex;
+        mediaInterface.release();
         mediaInterface.prepare();
     }
 
@@ -513,11 +518,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         state = STATE_PREPARING_CHANGING_URL;
         this.seekToInAdvance = seekToInAdvance;
         this.jzDataSource = jzDataSource;
+        mediaInterface.release();
         mediaInterface.prepare();
-    }
-
-    public void changeUrl(String url, String title, long seekToInAdvance) {
-        changeUrl(new JZDataSource(url, title), seekToInAdvance);
     }
 
     @Override
