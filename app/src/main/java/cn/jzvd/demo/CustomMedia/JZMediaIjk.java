@@ -164,6 +164,11 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
     }
 
     @Override
+    public void setSurface(Surface surface) {
+        ijkMediaPlayer.setSurface(surface);
+    }
+
+    @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         if (SAVED_SURFACE == null) {
             SAVED_SURFACE = surface;

@@ -3,6 +3,7 @@ package cn.jzvd;
 import android.graphics.SurfaceTexture;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.view.Surface;
 import android.view.TextureView;
 
 /**
@@ -42,4 +43,5 @@ public abstract class JZMediaInterface implements TextureView.SurfaceTextureList
 
     public abstract void setSpeed(float speed);
 
+    public abstract void setSurface(Surface surface);
 }

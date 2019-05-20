@@ -182,6 +182,10 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         handler.post(() -> jzvd.onVideoSizeChanged(width, height));
     }
 
+    @Override
+    public void setSurface(Surface surface) {
+        mediaPlayer.setSurface(surface);
+    }
 
     @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
