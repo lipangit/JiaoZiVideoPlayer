@@ -565,7 +565,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
         vg.removeView(this);
-        mediaInterface.release();
+        if (mediaInterface != null) mediaInterface.release();
         CURRENT_JZVD = null;
     }
 
