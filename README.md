@@ -11,9 +11,9 @@
 
 ## 置顶消息：
 
-Q群:490442439, 2群:761899104, 验证信息:jzvd, 微信公众号:jzvdjzt
+Q群:490442439, 2群:761899104, 验证信息:jzvd, 微信公众号:jzvdjzt，微信:lipanhelloworld，QQ:1066666651
 
-为了增加项目质量，促进项目进度，调用社群力量，方便社群管理，近日将推出基于以太坊erc-20的数字通证[JiaoZiToken(JZT)(饺子Token)](https://github.com/lipangit/JZT)，通俗点理解，谁给饺子视频播放器写代码、出主意、解决用户问题、活跃社群关系、关注项目进展，就给谁饺子Token。将来会让项目更加丰富，更加精致，必定大有可为。
+为了增加项目质量，促进项目进度，调用社群力量，方便社群管理，推出基于以太坊erc-20的数字通证[JiaoZiToken(JZT)(饺子Token)](https://github.com/lipangit/JZT)，通俗点理解，谁给饺子视频播放器写代码、出主意、解决用户问题、活跃社群关系、关注项目进展，就给谁饺子Token。将来会让项目更加丰富，更加精致，必定大有可为。
 
 ## 主要特点
 
@@ -45,9 +45,9 @@ Q群:490442439, 2群:761899104, 验证信息:jzvd, 微信公众号:jzvdjzt
 * [EnglishWiki](https://github.com/felipetorres/VideoPlayer-Wiki)
 * [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1)
 
-* [常见问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/常见问题)，已经解决的，常见问题列表
-* [未解决问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/未解决问题)，群主解决不了的，需要大家帮助的问题
-* [公众号文章](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0)
+- [常见问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/常见问题)，已经解决的，常见问题列表
+- [未解决问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/未解决问题)，群主解决不了的，需要大家帮助的问题
+- [公众号文章](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0)
 
 
 6.如果还有疑问
