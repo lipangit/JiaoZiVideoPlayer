@@ -48,10 +48,6 @@ Q群:490442439, 2群:761899104, 验证信息:jzvd, 微信公众号:jzvdjzt，微
 - [未解决问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/未解决问题)，群主解决不了的，需要大家帮助的问题
 - [公众号文章](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0)
 
-## Prerequisite
-* node
-* npm
-
 6.如果还有疑问
 
 * 有问题请到Issue提问，我会第一时间回复，着急的QQ微信通知我一声，随时随地回复。微信:lipanhelloworld QQ:1066666651
