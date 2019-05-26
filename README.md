@@ -41,7 +41,7 @@ Q群:490442439, 2群:761899104, 验证信息:jzvd, 微信公众号:jzvdjzt，微
 
 * [入门文档 1](https://juejin.im/entry/5cb838b5518825186d65430a)
 * [入门文档 2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
-* [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)
+* [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，很久没更新了
 * [EnglishWiki](https://github.com/felipetorres/VideoPlayer-Wiki)
 * [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1)
 
@@ -49,6 +49,9 @@ Q群:490442439, 2群:761899104, 验证信息:jzvd, 微信公众号:jzvdjzt，微
 - [未解决问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/未解决问题)，群主解决不了的，需要大家帮助的问题
 - [公众号文章](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0)
 
+## Prerequisite
+* node
+* npm
 
 6.如果还有疑问
 
