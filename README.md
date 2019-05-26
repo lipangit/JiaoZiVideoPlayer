@@ -11,9 +11,7 @@
 
 ## 置顶消息：
 
-Q群: 490442439 2群: 761899104 验证信息:jzvd
-
-微信公众号搜索: jzvdjzt [公众号文章](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0)
+Q群:490442439, 2群:761899104, 验证信息:jzvd, 微信公众号:jzvdjzt
 
 为了增加项目质量，促进项目进度，调用社群力量，方便社群管理，近日将推出基于以太坊erc-20的数字通证[JiaoZiToken(JZT)(饺子Token)](https://github.com/lipangit/JZT)，通俗点理解，谁给饺子视频播放器写代码、出主意、解决用户问题、活跃社群关系、关注项目进展，就给谁饺子Token。将来会让项目更加丰富，更加精致，必定大有可为。
 
@@ -49,8 +47,10 @@ Q群: 490442439 2群: 761899104 验证信息:jzvd
 
 * [常见问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/常见问题)，已经解决的，常见问题列表
 * [未解决问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/未解决问题)，群主解决不了的，需要大家帮助的问题
+* [公众号文章](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0)
 
-6.提问步骤
+
+6.如果还有疑问
 
 * 有问题请到Issue提问，我会第一时间回复，着急的QQ微信通知我一声，随时随地回复。微信:lipanhelloworld QQ:1066666651
 * 复杂的问题可以到群里讨论，有管理员接应，解决不了找群主
@@ -129,8 +129,6 @@ protected void onPause() {
 ## [加入我们](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/加入我们) 
 
 老臣精力能力有限，希望和志同道合的朋友一起把项目做好，感兴趣的同学随时和我报名
-
-
 
 
 ## License MIT
