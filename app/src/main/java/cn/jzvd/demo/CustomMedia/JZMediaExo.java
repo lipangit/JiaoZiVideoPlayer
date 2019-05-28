@@ -265,6 +265,11 @@ public class JZMediaExo extends JZMediaInterface implements Player.EventListener
     }
 
     @Override
+    public void setSurface(Surface surface) {
+        simpleExoPlayer.setVideoSurface(surface);
+    }
+
+    @Override
     public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
         if (SAVED_SURFACE == null) {
             SAVED_SURFACE = surface;
