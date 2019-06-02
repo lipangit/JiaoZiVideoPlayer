@@ -46,7 +46,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static final int STATE_NORMAL = 0;
     public static final int STATE_PREPARING = 1;
     public static final int STATE_PREPARING_CHANGING_URL = 2;
-    public static final int STATE_PLAYING = 3;
+    public static final int STATE_PREPARED = 3;
+    public static final int STATE_PLAYING = 4;
     public static final int STATE_PAUSE = 5;
     public static final int STATE_AUTO_COMPLETE = 6;
     public static final int STATE_ERROR = 7;
@@ -343,21 +344,25 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public void onMediaPrepared() {
         Log.i(TAG, "onMediaPrepared " + " [" + this.hashCode() + "] ");
-        mediaInterface.start();//这里原来是非县城
+
+//        mediaInterface.start();//这里原来是非县城
         if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
                 jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
             onStatePrepared();
         }
     }
 
-    public void onStatePrepared() {//因为这个紧接着就会进入播放状态，所以不设置state
-        if (seekToInAdvance != 0) {
+    //需要重新屡一下思路，准备完毕-》 播还是等，等完还得播。   onrenderStrat是播放开始了，界面开始变化，进入播放中的状态。
+    //这里只需要三个函数。1.准备完毕，进入准备完毕状态    2.第一次开始播放，放开播放函数。     3.进入播放状态(UI)
+    //下一步，确定，对外的api是怎么样，怎么设置是否缓存是否放开呢。
+    public void onStatePrepared() {//因为这个紧接着就会进入播放状态，所以不设置state，，  这个名字本质上应该是播放，第一次播，还是resuume。 info里是调用onStatePrepared。
+        if (seekToInAdvance != 0) {//这个if本质上就是startFirstTime。
             mediaInterface.seekTo(seekToInAdvance);
             seekToInAdvance = 0;
         } else {
             long position = JZUtils.getSavedProgress(getContext(), jzDataSource.getCurrentUrl());
             if (position != 0) {
-                mediaInterface.seekTo(position);
+                mediaInterface.seekTo(position);//这里为什么区分开呢，第一次的播放和resume播放是不一样的。 这里怎么区分是一个问题。然后
             }
         }
         onStatePlaying();//new here

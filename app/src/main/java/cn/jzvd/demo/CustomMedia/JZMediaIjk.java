@@ -2,7 +2,6 @@ package cn.jzvd.demo.CustomMedia;
 
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.Surface;
@@ -28,7 +27,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
 
     @Override
     public void start() {
-        ijkMediaPlayer.start();
+        if (ijkMediaPlayer != null) ijkMediaPlayer.start();
     }
 
     @Override
@@ -118,11 +117,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
 
     @Override
     public void onPrepared(IMediaPlayer iMediaPlayer) {
-        ijkMediaPlayer.start();
-        if (jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
-                jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
-            handler.post(() -> jzvd.onMediaPrepared());
-        }
+        handler.post(() -> jzvd.onMediaPrepared());
     }
 
     @Override
@@ -138,13 +133,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
 
     @Override
     public boolean onInfo(IMediaPlayer iMediaPlayer, final int what, final int extra) {
-        handler.post(() -> {
-            if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                jzvd.onMediaPrepared();
-            } else {
-                jzvd.onInfo(what, extra);
-            }
-        });
+        handler.post(() -> jzvd.onInfo(what, extra));
         return false;
     }
 

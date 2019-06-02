@@ -220,7 +220,7 @@ public class JZMediaExo extends JZMediaInterface implements Player.EventListener
                 break;
                 case Player.STATE_READY: {
                     if (playWhenReady) {
-                        jzvd.onMediaPrepared();
+                        jzvd.onStatePrepared();
                     } else {
                     }
                 }
