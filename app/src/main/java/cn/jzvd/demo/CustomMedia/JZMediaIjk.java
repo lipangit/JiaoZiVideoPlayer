@@ -121,7 +121,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
         ijkMediaPlayer.start();
         if (jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
                 jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
-            handler.post(() -> jzvd.onPrepared());
+            handler.post(() -> jzvd.onMediaPrepared());
         }
     }
 
@@ -140,7 +140,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
     public boolean onInfo(IMediaPlayer iMediaPlayer, final int what, final int extra) {
         handler.post(() -> {
             if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                jzvd.onPrepared();
+                jzvd.onMediaPrepared();
             } else {
                 jzvd.onInfo(what, extra);
             }

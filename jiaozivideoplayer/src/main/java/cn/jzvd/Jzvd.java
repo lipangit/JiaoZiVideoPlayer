@@ -7,6 +7,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -57,7 +58,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public static boolean TOOL_BAR_EXIST = true;
     public static int FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE;
     public static int NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-    public static boolean SAVE_PROGRESS = true;
+    public static boolean SAVE_PROGRESS = false;
     public static boolean WIFI_TIP_DIALOG_SHOWED = false;
     public static int VIDEO_IMAGE_DISPLAY_TYPE = 0;
     public static long lastAutoFullscreenTime = 0;
@@ -340,10 +341,13 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         resetProgressAndTime();
     }
 
-    public void onPrepared() {
-        Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
-        onStatePrepared();
-        onStatePlaying();
+    public void onMediaPrepared() {
+        Log.i(TAG, "onMediaPrepared " + " [" + this.hashCode() + "] ");
+        mediaInterface.start();//这里原来是非县城
+        if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
+                jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
+            onStatePrepared();
+        }
     }
 
     public void onStatePrepared() {//因为这个紧接着就会进入播放状态，所以不设置state
@@ -356,6 +360,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 mediaInterface.seekTo(position);
             }
         }
+        onStatePlaying();//new here
     }
 
     public void onStatePlaying() {
@@ -386,6 +391,12 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
+        if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
+            if (state == Jzvd.STATE_PREPARING
+                    || state == Jzvd.STATE_PREPARING_CHANGING_URL) {
+                onStatePrepared();//真正的prepared
+            }
+        }
     }
 
     public void onError(int what, int extra) {
@@ -479,9 +490,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void startVideo() {
         Log.d(TAG, "startVideo [" + this.hashCode() + "] ");
         setCurrentJzvd(this);
-        Constructor<JZMediaInterface> constructor = null;
         try {
-            constructor = mediaInterfaceClass.getConstructor(Jzvd.class);
+            Constructor<JZMediaInterface> constructor = mediaInterfaceClass.getConstructor(Jzvd.class);
             this.mediaInterface = constructor.newInstance(this);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -500,7 +510,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
         onStatePreparing();
     }
-
 
     public void changeUrl(String url, String title, long seekToInAdvance) {
         changeUrl(new JZDataSource(url, title), seekToInAdvance);
