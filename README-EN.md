@@ -41,6 +41,10 @@
 
 ## Usage
 
+#### Note:
+1.7.0 version of the bread layer outside the JzvdStd layout
+2.If the import configuration fails, check whether the Java8 configuration is added according to the failed log, or upgrade the environment to the latest stable version.
+
 Only five steps to use the player:
 
 1.Import library:
