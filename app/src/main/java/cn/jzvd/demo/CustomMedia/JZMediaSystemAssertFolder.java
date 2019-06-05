@@ -139,7 +139,7 @@ public class JZMediaSystemAssertFolder extends JZMediaInterface implements Media
         mediaPlayer.start();
         if (jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
                 jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
-            handler.post(() -> jzvd.onPrepared());
+            handler.post(() -> jzvd.onMediaPrepared());
         }
     }
 
@@ -170,7 +170,7 @@ public class JZMediaSystemAssertFolder extends JZMediaInterface implements Media
             if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
                 if (jzvd.state == Jzvd.STATE_PREPARING
                         || jzvd.state == Jzvd.STATE_PREPARING_CHANGING_URL) {
-                    jzvd.onPrepared();
+                    jzvd.onMediaPrepared();
                 }
             } else {
                 jzvd.onInfo(what, extra);
