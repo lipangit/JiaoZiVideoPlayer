@@ -134,7 +134,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
-        handler.post(() -> jzvd.onMediaPrepared());//如果是mp3音频，走这里
+        handler.post(() -> jzvd.onPrepared());//如果是mp3音频，走这里
     }
 
     @Override

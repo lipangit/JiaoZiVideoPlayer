@@ -44,7 +44,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
                 if (jzvd != null && Jzvd.CURRENT_JZVD != null &&
                         jzvd.jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
                     if (Jzvd.CURRENT_JZVD != null && Jzvd.CURRENT_JZVD.screen != Jzvd.SCREEN_FULLSCREEN) {
-                        Jzvd.resetAllVideos();
+                        Jzvd.releaseAllVideos();
                     }
                 }
             }
@@ -62,7 +62,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Jzvd.resetAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override

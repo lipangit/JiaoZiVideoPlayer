@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ActivityVideoCacheTest"
+            android:name=".ActivityPreloading"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -94,7 +94,7 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <!--<activity-->
-            <!--android:name=".ActivityVideoCacheTest"-->
+            <!--android:name=".ActivityPreloading"-->
             <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
             <!--android:screenOrientation="portrait" />-->
 

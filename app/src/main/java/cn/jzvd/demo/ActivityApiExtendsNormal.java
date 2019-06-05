@@ -37,6 +37,6 @@ public class ActivityApiExtendsNormal extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        Jzvd.resetAllVideos();
+        Jzvd.releaseAllVideos();
     }
 }

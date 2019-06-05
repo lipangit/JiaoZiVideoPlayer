@@ -57,7 +57,7 @@ public class ActivityApi extends AppCompatActivity {
                 , JzvdStd.SCREEN_NORMAL);
         Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzvdStd.thumbImageView);
 //        mJzvdStd.seekToInAdvance = 20000;
-//        Jzvd.SAVE_PROGRESS = false;
+//        Jzvd.SAVE_PROGRESS = false;//把这些注释的代码放到按钮上，让它可操作可见。
 
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
@@ -165,4 +165,7 @@ public class ActivityApi extends AppCompatActivity {
         startActivity(new Intent(ActivityApi.this, ActivityApiCustomMedia.class));
     }
 
+    public void clickPreloading(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityPreloading.class));
+    }
 }

@@ -117,7 +117,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
 
     @Override
     public void onPrepared(IMediaPlayer iMediaPlayer) {
-        handler.post(() -> jzvd.onMediaPrepared());
+        handler.post(() -> jzvd.onPrepared());
     }
 
     @Override

@@ -19,8 +19,8 @@ public class JzvdStdVolumeAfterFullscreen extends JzvdStd {
     }
 
     @Override
-    public void onMediaPrepared() {
-        super.onMediaPrepared();
+    public void onPrepared() {
+        super.onPrepared();
         if (screen == SCREEN_FULLSCREEN) {
             mediaInterface.setVolume(1f, 1f);
         } else {

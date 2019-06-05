@@ -342,12 +342,12 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         resetProgressAndTime();
     }
 
-    public void onMediaPrepared() {
-        Log.i(TAG, "onMediaPrepared " + " [" + this.hashCode() + "] ");
+    public void onPrepared() {
+        Log.i(TAG, "onPrepared " + " [" + this.hashCode() + "] ");
         state = STATE_PREPARED;
-        if (cacheVideo) {
+        if (!preloading) {
             mediaInterface.start();//这里原来是非县城
-            cacheVideo = false;
+            preloading = false;
         }
         if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
                 jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
@@ -355,21 +355,21 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         }
     }
 
-    public boolean cacheVideo = false;
+    public boolean preloading = false;
 
-    public void startCacheVideo() {
-        cacheVideo = true;
+    public void startPreloading() {
+        preloading = true;
         startVideo();
     }
 
     /**
-     * 如果是STATE_PREPARED就播放，如果没准备完成就走正常的播放函数startVideo();
+     * 如果STATE_PREPARED就播放，如果没准备完成就走正常的播放函数startVideo();
      */
-    public void startVideoAfterCache() {
+    public void startVideoAfterPreloading() {
         if (state == STATE_PREPARED) {
             mediaInterface.start();
         } else {
-            cacheVideo = false;
+            preloading = false;
             startVideo();
         }
     }
@@ -414,7 +414,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     public void onInfo(int what, int extra) {
         Log.d(TAG, "onInfo what - " + what + " extra - " + extra);
         if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-            if (state == Jzvd.STATE_PREPARING
+            if (state == Jzvd.STATE_PREPARED
                     || state == Jzvd.STATE_PREPARING_CHANGING_URL) {
                 onStatePlaying();//真正的prepared，本质上这是进入playing状态。
             }
@@ -889,7 +889,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 case AudioManager.AUDIOFOCUS_GAIN:
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS:
-                    resetAllVideos();
+                    releaseAllVideos();
                     Log.d(TAG, "AUDIOFOCUS_LOSS [" + this.hashCode() + "]");
                     break;
                 case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
@@ -929,7 +929,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
             if (CURRENT_JZVD.state == Jzvd.STATE_AUTO_COMPLETE ||
                     CURRENT_JZVD.state == Jzvd.STATE_NORMAL ||
                     CURRENT_JZVD.state == Jzvd.STATE_ERROR) {
-                Jzvd.resetAllVideos();
+                Jzvd.releaseAllVideos();
             } else {
                 ON_PLAY_PAUSE_TMP_STATE = CURRENT_JZVD.state;
                 CURRENT_JZVD.onStatePause();
@@ -964,8 +964,8 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
     }
 
 
-    public static void resetAllVideos() {
-        Log.d(TAG, "resetAllVideos");
+    public static void releaseAllVideos() {
+        Log.d(TAG, "releaseAllVideos");
         if (CURRENT_JZVD != null) {
             CURRENT_JZVD.reset();
             CURRENT_JZVD = null;
