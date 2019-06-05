@@ -344,32 +344,49 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     public void onMediaPrepared() {
         Log.i(TAG, "onMediaPrepared " + " [" + this.hashCode() + "] ");
-
-//        mediaInterface.start();//这里原来是非县城
+        state = STATE_PREPARED;
+        if (cacheVideo) {
+            mediaInterface.start();//这里原来是非县城
+            cacheVideo = false;
+        }
         if (jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
                 jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
-            onStatePrepared();
+            onStatePlaying();
         }
     }
 
-    //需要重新屡一下思路，准备完毕-》 播还是等，等完还得播。   onrenderStrat是播放开始了，界面开始变化，进入播放中的状态。
-    //这里只需要三个函数。1.准备完毕，进入准备完毕状态    2.第一次开始播放，放开播放函数。     3.进入播放状态(UI)
-    //下一步，确定，对外的api是怎么样，怎么设置是否缓存是否放开呢。
-    public void onStatePrepared() {//因为这个紧接着就会进入播放状态，所以不设置state，，  这个名字本质上应该是播放，第一次播，还是resuume。 info里是调用onStatePrepared。
-        if (seekToInAdvance != 0) {//这个if本质上就是startFirstTime。
-            mediaInterface.seekTo(seekToInAdvance);
-            seekToInAdvance = 0;
+    public boolean cacheVideo = false;
+
+    public void startCacheVideo() {
+        cacheVideo = true;
+        startVideo();
+    }
+
+    /**
+     * 如果是STATE_PREPARED就播放，如果没准备完成就走正常的播放函数startVideo();
+     */
+    public void startVideoAfterCache() {
+        if (state == STATE_PREPARED) {
+            mediaInterface.start();
         } else {
-            long position = JZUtils.getSavedProgress(getContext(), jzDataSource.getCurrentUrl());
-            if (position != 0) {
-                mediaInterface.seekTo(position);//这里为什么区分开呢，第一次的播放和resume播放是不一样的。 这里怎么区分是一个问题。然后
-            }
+            cacheVideo = false;
+            startVideo();
         }
-        onStatePlaying();//new here
     }
 
     public void onStatePlaying() {
         Log.i(TAG, "onStatePlaying " + " [" + this.hashCode() + "] ");
+        if (state == STATE_PREPARED) {//如果是准备完成视频后第一次播放，先判断是否需要跳转进度。
+            if (seekToInAdvance != 0) {
+                mediaInterface.seekTo(seekToInAdvance);
+                seekToInAdvance = 0;
+            } else {
+                long position = JZUtils.getSavedProgress(getContext(), jzDataSource.getCurrentUrl());
+                if (position != 0) {
+                    mediaInterface.seekTo(position);//这里为什么区分开呢，第一次的播放和resume播放是不一样的。 这里怎么区分是一个问题。然后
+                }
+            }
+        }
         state = STATE_PLAYING;
         startProgressTimer();
     }
@@ -399,7 +416,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
             if (state == Jzvd.STATE_PREPARING
                     || state == Jzvd.STATE_PREPARING_CHANGING_URL) {
-                onStatePrepared();//真正的prepared
+                onStatePlaying();//真正的prepared，本质上这是进入playing状态。
             }
         }
     }
