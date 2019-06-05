@@ -18,13 +18,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:onClick="bt1"
-        android:text="bt1" />
+        android:onClick="clickStartPreloading"
+        android:text="startPreloading" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="bt2"
-        android:text="bt2" />
+        android:onClick="clickStartVideoAfterPreloading"
+        android:text="startVideoAfterPreloading" />
 
 </LinearLayout>
