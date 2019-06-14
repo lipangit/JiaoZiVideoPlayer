@@ -31,27 +31,35 @@ Q群:490442439, 2群:761899104, 验证信息:jzvd, 微信公众号:jzvdjzt，微
 12. demo中添加视频缓存的例子
 13. 倍速播放
 
-## 使用必读
+## 必读
+
+#### 首先
 
 1. 通读ReadMe
 2. 下载安装demo apk [jiaozivideoplayer-7.0.4.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v7.0.4/jiaozivideoplayer-7.0.4.apk)，各个页面都进入一次，各个按钮点一次
 3. 下载调试develop分支，有针对性的通过效果找到实现的源码
 4. 继承JzvdStd，实现自己的需求
-5. 请仔细阅读相关文档和博客，可以把相关链接填在这里。
+
+#### 必读文章
 
 - [入门文档 1](https://juejin.im/entry/5cb838b5518825186d65430a)
 - [入门文档 2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
 - [Wiki](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，很久没更新了
-- [EnglishWiki](https://github.com/felipetorres/VideoPlayer-Wiki)
+- [English Wiki](https://github.com/felipetorres/VideoPlayer-Wiki)
 - [Weibo](http://weibo.com/2342820395/profile?topnav=1&wvr=6&is_all=1)
-- [常见问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/常见问题)，已经解决的，常见问题列表
-- [未解决问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/未解决问题)，群主解决不了的，需要大家帮助的问题
+
 - [公众号文章](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/%E5%85%AC%E4%BC%97%E5%8F%B7%E6%96%87%E7%AB%A0)
 
-6.如果还有疑问
+#### 提问必读
 
-* 有问题请到Issue提问，我会第一时间回复，着急的QQ微信通知我一声，随时随地回复。微信:lipanhelloworld QQ:1066666651
-* 复杂的问题可以到群里讨论，有管理员接应，解决不了找群主
+- [常见问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/常见问题)，查找已经解决的问题
+- 有问题请到Issue提问，我会第一时间回复，然后加我QQ微信(请备注)。
+- 到群里提问，请按照Issue模板，说清楚问题的情况，有管理员接应，解决不了的再找群主。
+
+#### 参与项目必读
+
+- [加入我们](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/加入我们)
+- [未解决问题](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/未解决问题)，群主解决不了的，需要大家帮助的问题
 
 ## 效果
 
@@ -125,12 +133,6 @@ protected void onPause() {
 -dontwarn tv.danmaku.ijk.media.player.*
 -keep interface tv.danmaku.ijk.media.player.** { *; }
 ```
-
-
-
-## [加入我们](https://github.com/lipangit/JiaoZiVideoPlayer/wiki/加入我们) 
-
-老臣精力能力有限，希望和志同道合的朋友一起把项目做好，感兴趣的同学随时和我报名
 
 
 ## License MIT
