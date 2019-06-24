@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ActivityPreloading"
+            android:name=".ActivityMain"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -93,6 +93,7 @@
             android:name=".ActivityApiExtendsNormal"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+
         <!--<activity-->
             <!--android:name=".ActivityPreloading"-->
             <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
