@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.ListView;
 
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -10,11 +10,14 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 
 import cn.jzvd.Jzvd;
+import cn.jzvd.demo.AdapterListView;
+import cn.jzvd.demo.R;
+import cn.jzvd.demo.VideoConstant;
 
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityListViewNormal extends AppCompatActivity {
+public class NormalListViewActivity extends AppCompatActivity {
     ListView listView;
 
     SensorManager sensorManager;

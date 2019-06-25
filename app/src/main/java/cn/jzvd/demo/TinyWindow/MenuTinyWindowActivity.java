@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.TinyWindow;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,12 +12,13 @@ import com.bumptech.glide.Glide;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.CustomJzvd.JzvdStdTinyWindow;
+import cn.jzvd.demo.R;
 
 /**
  * Created by Nathen on 2017/10/31.
  */
 
-public class ActivityTinyWindow extends AppCompatActivity {
+public class MenuTinyWindowActivity extends AppCompatActivity {
 
     JzvdStdTinyWindow jzvdStdTinyWindow;
 
@@ -72,11 +73,11 @@ public class ActivityTinyWindow extends AppCompatActivity {
 
     public void clickAutoTinyListViewRecyclerView(View view) {
         Toast.makeText(this, "comming soon", Toast.LENGTH_SHORT).show();
-//        startActivity(new Intent(this, ActivityTinyWindowRecycleView.class));
+//        startActivity(new Intent(this, RecycleViewTinyWindowActivity.class));
     }
 
     public void clickAutoTinyListViewRecyclerViewMultiHolder(View view) {
         Toast.makeText(this, "comming soon", Toast.LENGTH_SHORT).show();
-//        startActivity(new Intent(this, ActivityTinyWindowRecycleViewMultiHolder.class));
+//        startActivity(new Intent(this, RecycleViewMultiHolderTinyWindowActivity.class));
     }
 }

@@ -9,7 +9,10 @@ import android.view.View;
 import com.bumptech.glide.Glide;
 
 import cn.jzvd.Jzvd;
+import cn.jzvd.demo.Api.MenuApiActivity;
 import cn.jzvd.demo.CustomJzvd.MyJzvdStd;
+import cn.jzvd.demo.ListView.MenuListViewActivity;
+import cn.jzvd.demo.TinyWindow.MenuTinyWindowActivity;
 
 /**
  * Created by Nathen on 16/7/22.
@@ -45,15 +48,15 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     public void clickApi(View view) {
-        startActivity(new Intent(ActivityMain.this, ActivityApi.class));
+        startActivity(new Intent(ActivityMain.this, MenuApiActivity.class));
     }
 
     public void clickListView(View view) {
-        startActivity(new Intent(ActivityMain.this, ActivityListView.class));
+        startActivity(new Intent(ActivityMain.this, MenuListViewActivity.class));
     }
 
     public void clickTinyWindow(View view) {
-        startActivity(new Intent(ActivityMain.this, ActivityTinyWindow.class));
+        startActivity(new Intent(ActivityMain.this, MenuTinyWindowActivity.class));
     }
 
     public void clickDirectPlay(View view) {

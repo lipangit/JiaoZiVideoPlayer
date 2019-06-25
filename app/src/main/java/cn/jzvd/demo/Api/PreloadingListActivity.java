@@ -1,12 +1,13 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.Api;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import cn.jzvd.Jzvd;
+import cn.jzvd.demo.R;
 
-public class ActivityPreloadingList extends AppCompatActivity {
+public class PreloadingListActivity extends AppCompatActivity {
 
 
     @Override
@@ -16,8 +17,9 @@ public class ActivityPreloadingList extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("Preloading");
-        setContentView(R.layout.activity_api);
+        getSupportActionBar().setTitle("PreloadingList");
+        setContentView(R.layout.activity_preloading_list);
+
 
     }
 

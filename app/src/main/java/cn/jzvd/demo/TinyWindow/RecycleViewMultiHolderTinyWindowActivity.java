@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.TinyWindow;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,12 +17,14 @@ import com.bumptech.glide.Glide;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.CustomJzvd.JzvdStdTinyWindow;
+import cn.jzvd.demo.R;
+import cn.jzvd.demo.VideoConstant;
 
 /**
  * Created by Nathen on 2017/11/1.
  */
 
-public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity {
+public class RecycleViewMultiHolderTinyWindowActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     AdapterRecyclerView videoAdapter;
@@ -133,7 +135,7 @@ public class ActivityTinyWindowRecycleViewMultiHolder extends AppCompatActivity 
                         VideoConstant.videoUrls[0][position],
                         VideoConstant.videoTitles[0][position], Jzvd.SCREEN_NORMAL);
                 videoHolder.jzvdStd.positionInList = position;
-                Glide.with(ActivityTinyWindowRecycleViewMultiHolder.this).load(VideoConstant.videoThumbs[0][position]).into(videoHolder.jzvdStd.thumbImageView);
+                Glide.with(RecycleViewMultiHolderTinyWindowActivity.this).load(VideoConstant.videoThumbs[0][position]).into(videoHolder.jzvdStd.thumbImageView);
             }
         }
 

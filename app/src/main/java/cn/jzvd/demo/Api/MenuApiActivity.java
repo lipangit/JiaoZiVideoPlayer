@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.Api;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,11 +24,14 @@ import java.util.LinkedHashMap;
 import cn.jzvd.JZDataSource;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import cn.jzvd.demo.ApplicationDemo;
+import cn.jzvd.demo.R;
+import cn.jzvd.demo.VideoConstant;
 
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityApi extends AppCompatActivity {
+public class MenuApiActivity extends AppCompatActivity {
     JzvdStd mJzvdStd;
     Jzvd.JZAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
@@ -140,32 +143,32 @@ public class ActivityApi extends AppCompatActivity {
     }
 
     public void clickSmallChange(View view) {
-        startActivity(new Intent(ActivityApi.this, ActivityApiUISmallChange.class));
+        startActivity(new Intent(MenuApiActivity.this, UISmallChangeActivity.class));
     }
 
     public void clickBigChange(View view) {
-        Toast.makeText(ActivityApi.this, "Comming Soon", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(ActivityApi.this, ActivityApiUIBigChange.class));
+        Toast.makeText(MenuApiActivity.this, "Comming Soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(MenuApiActivity.this, UIBigChangeActivity.class));
     }
 
     public void clickOrientation(View view) {
-        startActivity(new Intent(ActivityApi.this, ActivityApiOrientation.class));
+        startActivity(new Intent(MenuApiActivity.this, OrientationActivity.class));
 
     }
 
     public void clickExtendsNormalActivity(View view) {
-        startActivity(new Intent(ActivityApi.this, ActivityApiExtendsNormal.class));
+        startActivity(new Intent(MenuApiActivity.this, ExtendsNormalActivity.class));
     }
 
     public void clickRotationAndVideoSize(View view) {
-        startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
+        startActivity(new Intent(MenuApiActivity.this, RotationVideoSizeActivity.class));
     }
 
     public void clickCustomMediaPlayer(View view) {
-        startActivity(new Intent(ActivityApi.this, ActivityApiCustomMedia.class));
+        startActivity(new Intent(MenuApiActivity.this, CustomMediaActivity.class));
     }
 
     public void clickPreloading(View view) {
-        startActivity(new Intent(ActivityApi.this, ActivityPreloading.class));
+        startActivity(new Intent(MenuApiActivity.this, PreloadingActivity.class));
     }
 }

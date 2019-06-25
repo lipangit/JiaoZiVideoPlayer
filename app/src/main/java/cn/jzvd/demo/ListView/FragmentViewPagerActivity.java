@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.ListView;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,12 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.jzvd.Jzvd;
+import cn.jzvd.demo.FragmentDemo;
+import cn.jzvd.demo.R;
 
 /**
  * Created by Nathen
  * On 2016/02/07 01:01
  */
-public class ActivityListViewFragmentViewPager extends AppCompatActivity implements ViewPager.OnPageChangeListener {
+public class FragmentViewPagerActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
     List<FragmentDemo> fragmentList = new ArrayList<>();
 
     @Override
@@ -28,7 +30,7 @@ public class ActivityListViewFragmentViewPager extends AppCompatActivity impleme
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        getSupportActionBar().setTitle("ActivityListViewFragmentViewPager");
+        getSupportActionBar().setTitle("FragmentViewPagerActivity");
 
         fragmentList.add(new FragmentDemo().setIndex(0));
         fragmentList.add(new FragmentDemo().setIndex(1));

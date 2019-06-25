@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.ListView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,12 +16,14 @@ import com.bumptech.glide.Glide;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import cn.jzvd.demo.R;
+import cn.jzvd.demo.VideoConstant;
 
 /**
  * Created by Nathen
  * On 2016/05/23 21:34
  */
-public class ActivityListViewMultiHolder extends AppCompatActivity {
+public class MultiHolderActivity extends AppCompatActivity {
     ListView listView;
     VideoListAdapter mAdapter;
 
@@ -132,7 +134,7 @@ public class ActivityListViewMultiHolder extends AppCompatActivity {
                         VideoConstant.videoUrls[0][position],
                         VideoConstant.videoTitles[0][position], Jzvd.SCREEN_NORMAL);
                 viewHolder.jzvdStd.positionInList = position;
-                Glide.with(ActivityListViewMultiHolder.this)
+                Glide.with(MultiHolderActivity.this)
                         .load(VideoConstant.videoThumbs[0][position])
                         .into(viewHolder.jzvdStd.thumbImageView);
             } else {

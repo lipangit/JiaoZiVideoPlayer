@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.Api;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -7,12 +7,14 @@ import com.bumptech.glide.Glide;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import cn.jzvd.demo.R;
+import cn.jzvd.demo.VideoConstant;
 
 /**
  * 适配了普通的Activity，如果不适配并且不继承AppCompatActivity的话会出现Context空指针的情况
  * Created by Nathen on 2017/9/19.
  */
-public class ActivityApiExtendsNormal extends Activity {
+public class ExtendsNormalActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

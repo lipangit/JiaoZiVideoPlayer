@@ -14,8 +14,9 @@
         android:networkSecurityConfig="@xml/jz_network_security_config"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity
-            android:name=".ActivityMain"
+            android:name=".Api.PreloadingListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -30,55 +31,55 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityListView"
+            android:name=".ListView.MenuListViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityListViewNormal"
+            android:name=".ListView.NormalListViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityListViewFragmentViewPager"
+            android:name=".ListView.FragmentViewPagerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityListViewMultiHolder"
+            android:name=".ListView.MultiHolderActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityTinyWindowRecycleView"
+            android:name=".TinyWindow.RecycleViewTinyWindowActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityTinyWindow"
+            android:name=".TinyWindow.MenuTinyWindowActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityTinyWindowRecycleViewMultiHolder"
+            android:name=".TinyWindow.RecycleViewMultiHolderTinyWindowActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityApi"
+            android:name=".Api.MenuApiActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityApiUISmallChange"
+            android:name=".Api.UISmallChangeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityApiUIBigChange"
+            android:name=".Api.UIBigChangeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityApiRotationVideoSize"
+            android:name=".Api.RotationVideoSizeActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityApiCustomMedia"
+            android:name=".Api.CustomMediaActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityListViewRecyclerView"
+            android:name=".ListView.RecyclerViewActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
@@ -86,19 +87,22 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityApiOrientation"
+            android:name=".Api.OrientationActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ActivityApiExtendsNormal"
+            android:name=".Api.ExtendsNormalActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".Api.PreloadingActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
         <!--<activity-->
-            <!--android:name=".ActivityPreloading"-->
+            <!--android:name=".PreloadingListActivity"-->
             <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
             <!--android:screenOrientation="portrait" />-->
-
 
     </application>
 

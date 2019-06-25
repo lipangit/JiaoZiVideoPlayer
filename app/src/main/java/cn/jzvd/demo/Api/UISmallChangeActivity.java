@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.Api;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,11 +16,13 @@ import cn.jzvd.demo.CustomJzvd.JzvdStdShowTextureViewAfterAutoComplete;
 import cn.jzvd.demo.CustomJzvd.JzvdStdShowTitleAfterFullscreen;
 import cn.jzvd.demo.CustomJzvd.JzvdStdSpeed;
 import cn.jzvd.demo.CustomJzvd.JzvdStdVolumeAfterFullscreen;
+import cn.jzvd.demo.R;
+import cn.jzvd.demo.VideoConstant;
 
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityApiUISmallChange extends AppCompatActivity {
+public class UISmallChangeActivity extends AppCompatActivity {
     JzvdStdShowShareButtonAfterFullscreen jzvdStdWithShareButton;
     JzvdStdShowTitleAfterFullscreen jzvdStdShowTitleAfterFullscreen;
     JzvdStdShowTextureViewAfterAutoComplete jzvdStdShowTextureViewAfterAutoComplete;

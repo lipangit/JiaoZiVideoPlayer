@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.TinyWindow;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,13 +11,15 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import cn.jzvd.Jzvd;
+import cn.jzvd.demo.AdapterRecyclerViewTiny;
 import cn.jzvd.demo.CustomJzvd.JzvdStdTinyWindow;
+import cn.jzvd.demo.R;
 
 /**
  * Created by Nathen on 2017/11/1.
  */
 
-public class ActivityTinyWindowRecycleView extends AppCompatActivity {
+public class RecycleViewTinyWindowActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     AdapterRecyclerViewTiny adapterVideoList;
 

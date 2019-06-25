@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.Api;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,12 +19,13 @@ import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.CustomMedia.JZMediaExo;
 import cn.jzvd.demo.CustomMedia.JZMediaIjk;
 import cn.jzvd.demo.CustomMedia.JZMediaSystemAssertFolder;
+import cn.jzvd.demo.R;
 
 /**
  * Created by Nathen on 2017/11/23.
  */
 
-public class ActivityApiCustomMedia extends AppCompatActivity {
+public class CustomMediaActivity extends AppCompatActivity {
     JzvdStd jzvdStd;
     Handler handler = new Handler();//这里其实并不需要handler，为了防止播放中切换播放器引擎导致的崩溃，实际使用时一般不会遇到，可以随时调用JZVideoPlayer.setMediaInterface();
 

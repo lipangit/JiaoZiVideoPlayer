@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.ListView;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,11 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import cn.jzvd.Jzvd;
+import cn.jzvd.demo.AdapterRecyclerView;
+import cn.jzvd.demo.R;
 
 /**
  * Created by yujunkui on 16/8/29.
  */
-public class ActivityListViewRecyclerView extends AppCompatActivity {
+public class RecyclerViewActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     AdapterRecyclerView adapterVideoList;
 

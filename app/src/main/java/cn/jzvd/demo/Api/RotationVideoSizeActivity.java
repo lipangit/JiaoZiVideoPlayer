@@ -1,4 +1,4 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.Api;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,12 +10,14 @@ import com.bumptech.glide.Glide;
 
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
+import cn.jzvd.demo.R;
+import cn.jzvd.demo.VideoConstant;
 
 /**
  * Created by Nathen on 2017/11/2.
  */
 
-public class ActivityApiRotationVideoSize extends AppCompatActivity {
+public class RotationVideoSizeActivity extends AppCompatActivity {
 
     JzvdStd myJzvdStd;
 

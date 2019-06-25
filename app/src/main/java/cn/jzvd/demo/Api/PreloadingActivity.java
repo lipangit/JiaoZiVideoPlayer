@@ -1,5 +1,6 @@
-package cn.jzvd.demo;
+package cn.jzvd.demo.Api;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +11,9 @@ import com.bumptech.glide.Glide;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 import cn.jzvd.demo.CustomMedia.JZMediaIjk;
+import cn.jzvd.demo.R;
 
-public class ActivityPreloading extends AppCompatActivity {
+public class PreloadingActivity extends AppCompatActivity {
 
     JzvdStd jzvdStd;
 
@@ -41,6 +43,11 @@ public class ActivityPreloading extends AppCompatActivity {
 
     public void clickStartVideoAfterPreloading(View view) {
         jzvdStd.startVideoAfterPreloading();
+    }
+
+
+    public void clickPreloadingList(View view) {
+        startActivity(new Intent(this, PreloadingListActivity.class));
     }
 
     @Override
