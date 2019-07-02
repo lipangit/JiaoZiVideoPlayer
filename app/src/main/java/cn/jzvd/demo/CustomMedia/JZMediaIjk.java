@@ -15,6 +15,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
 
 /**
+ *
  * Created by Nathen on 2017/11/18.
  */
 
@@ -50,6 +51,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-detect-range-support", 0);
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 1024 * 1024);
+            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1);
 
             ijkMediaPlayer.setOnPreparedListener(JZMediaIjk.this);
             ijkMediaPlayer.setOnVideoSizeChangedListener(JZMediaIjk.this);
