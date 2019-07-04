@@ -5,12 +5,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -185,5 +185,38 @@ public class JZUtils {
         int uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
         JZUtils.getWindow(context).getDecorView().setSystemUiVisibility(SYSTEM_UI);
     }
+
+
+
+    public static int getScreenWidth(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.widthPixels;
+    }
+
+    public static int getScreenHeight(Context context) {
+        DisplayMetrics dm = context.getResources().getDisplayMetrics();
+        return dm.heightPixels;
+    }
+
+    /**
+     * 判断view在屏幕中是否可见
+     *
+     * @param view
+     * @return
+     */
+    public static boolean isVisible(int screenWidth, int screenHeight ,View view) {
+        if (view == null) {
+            return false;
+        }
+        Rect rect = new Rect(0, 0, screenWidth, screenHeight);
+        int[] location = new int[2];
+        view.getLocationInWindow(location);
+        if (view.getLocalVisibleRect(rect)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }
