@@ -21,7 +21,7 @@ import cn.jzvd.JzvdStd;
 import static cn.jzvd.Jzvd.backPress;
 
 /**
- * Created by yujunkui on 16/8/29.
+ * Created by pengan.li on 19/7/4.
  */
 public class ActivityRecyclerViewSeamlessPlay extends AppCompatActivity implements AdapterRecyclerViewSeamlessPlay.OnListListener {
 

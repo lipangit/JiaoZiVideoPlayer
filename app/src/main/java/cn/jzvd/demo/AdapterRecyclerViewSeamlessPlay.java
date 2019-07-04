@@ -14,6 +14,9 @@ import com.bumptech.glide.Glide;
 import cn.jzvd.Jzvd;
 import cn.jzvd.JzvdStd;
 
+/**
+ * Created by pengan.li on 19/7/4.
+ */
 public class AdapterRecyclerViewSeamlessPlay extends RecyclerView.Adapter<AdapterRecyclerViewSeamlessPlay.MyViewHolder> {
 
     public static final String TAG = "AdapterRecyclerView";

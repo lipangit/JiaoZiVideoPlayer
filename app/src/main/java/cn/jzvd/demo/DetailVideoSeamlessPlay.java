@@ -17,7 +17,7 @@ import static cn.jzvd.Jzvd.STATE_AUTO_COMPLETE;
 import static cn.jzvd.Jzvd.backPress;
 
 /**
- * Created by yujunkui on 16/8/29.
+ * Created by pengan.li on 19/7/4.
  */
 public class DetailVideoSeamlessPlay extends AppCompatActivity {
     private boolean isKeepPlaying;
