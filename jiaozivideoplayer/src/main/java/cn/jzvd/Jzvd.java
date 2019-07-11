@@ -928,6 +928,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         if (CURRENT_JZVD != null) {
             if (CURRENT_JZVD.state == Jzvd.STATE_AUTO_COMPLETE ||
                     CURRENT_JZVD.state == Jzvd.STATE_NORMAL ||
+                    CURRENT_JZVD.state == Jzvd.STATE_PREPARING ||
                     CURRENT_JZVD.state == Jzvd.STATE_ERROR) {
                 Jzvd.releaseAllVideos();
             } else {
