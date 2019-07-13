@@ -457,7 +457,6 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         dismissVolumeDialog();
         onStateNormal();
         textureViewContainer.removeAllViews();
-        JZMediaInterface.SAVED_SURFACE = null;
 
         AudioManager mAudioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mAudioManager.abandonAudioFocus(onAudioFocusChangeListener);

@@ -88,6 +88,8 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         if (mMediaHandler != null && mMediaHandlerThread != null && mediaPlayer != null) {//不知道有没有妖孽
             HandlerThread tmpHandlerThread = mMediaHandlerThread;
             MediaPlayer tmpMediaPlayer = mediaPlayer;
+            JZMediaInterface.SAVED_SURFACE = null;
+
             mMediaHandler.post(() -> {
                 tmpMediaPlayer.setSurface(null);
                 tmpMediaPlayer.release();
