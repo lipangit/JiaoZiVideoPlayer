@@ -38,7 +38,7 @@ public class ActivityDirectPlay extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Jzvd.resetAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override

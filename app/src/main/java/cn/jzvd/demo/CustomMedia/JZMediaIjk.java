@@ -2,7 +2,6 @@ package cn.jzvd.demo.CustomMedia;
 
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.Surface;
@@ -16,6 +15,7 @@ import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkTimedText;
 
 /**
+ *
  * Created by Nathen on 2017/11/18.
  */
 
@@ -28,7 +28,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
 
     @Override
     public void start() {
-        ijkMediaPlayer.start();
+        if (ijkMediaPlayer != null) ijkMediaPlayer.start();
     }
 
     @Override
@@ -51,6 +51,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-detect-range-support", 0);
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 48);
             ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 1024 * 1024);
+            ijkMediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1);
 
             ijkMediaPlayer.setOnPreparedListener(JZMediaIjk.this);
             ijkMediaPlayer.setOnVideoSizeChangedListener(JZMediaIjk.this);
@@ -118,11 +119,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
 
     @Override
     public void onPrepared(IMediaPlayer iMediaPlayer) {
-        ijkMediaPlayer.start();
-        if (jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
-                jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
-            handler.post(() -> jzvd.onPrepared());
-        }
+        handler.post(() -> jzvd.onPrepared());
     }
 
     @Override
@@ -138,13 +135,7 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
 
     @Override
     public boolean onInfo(IMediaPlayer iMediaPlayer, final int what, final int extra) {
-        handler.post(() -> {
-            if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                jzvd.onPrepared();
-            } else {
-                jzvd.onInfo(what, extra);
-            }
-        });
+        handler.post(() -> jzvd.onInfo(what, extra));
         return false;
     }
 
