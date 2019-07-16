@@ -2,6 +2,7 @@ package cn.jzvd.demo.CustomMedia;
 
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.Surface;
@@ -93,8 +94,18 @@ public class JZMediaIjk extends JZMediaInterface implements IMediaPlayer.OnPrepa
 
     @Override
     public void release() {
-        if (ijkMediaPlayer != null)
-            ijkMediaPlayer.release();
+        if (mMediaHandler != null && mMediaHandlerThread != null && ijkMediaPlayer != null) {//不知道有没有妖孽
+            HandlerThread tmpHandlerThread = mMediaHandlerThread;
+            IjkMediaPlayer tmpMediaPlayer = ijkMediaPlayer;
+            JZMediaInterface.SAVED_SURFACE = null;
+
+            mMediaHandler.post(() -> {
+                tmpMediaPlayer.setSurface(null);
+                tmpMediaPlayer.release();
+                tmpHandlerThread.quit();
+            });
+            ijkMediaPlayer = null;
+        }
     }
 
     @Override

@@ -91,6 +91,8 @@ public class JZMediaSystemAssertFolder extends JZMediaInterface implements Media
         if (mMediaHandler != null && mMediaHandlerThread != null && mediaPlayer != null) {//不知道有没有妖孽
             HandlerThread tmpHandlerThread = mMediaHandlerThread;
             MediaPlayer tmpMediaPlayer = mediaPlayer;
+            JZMediaInterface.SAVED_SURFACE = null;
+
             mMediaHandler.post(() -> {
                 tmpMediaPlayer.release();//release就不能放到主线程里，界面会卡顿
                 tmpHandlerThread.quit();
