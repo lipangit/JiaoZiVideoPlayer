@@ -88,6 +88,8 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
         if (mMediaHandler != null && mMediaHandlerThread != null && mediaPlayer != null) {//不知道有没有妖孽
             HandlerThread tmpHandlerThread = mMediaHandlerThread;
             MediaPlayer tmpMediaPlayer = mediaPlayer;
+            JZMediaInterface.SAVED_SURFACE = null;
+
             mMediaHandler.post(() -> {
                 tmpMediaPlayer.setSurface(null);
                 tmpMediaPlayer.release();
@@ -134,11 +136,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public void onPrepared(MediaPlayer mediaPlayer) {
-        mediaPlayer.start();
-        if (jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("mp3") ||
-                jzvd.jzDataSource.getCurrentUrl().toString().toLowerCase().contains("wav")) {
-            handler.post(() -> jzvd.onPrepared());//如果是mp3音频，走这里
-        }
+        handler.post(() -> jzvd.onPrepared());//如果是mp3音频，走这里
     }
 
     @Override
@@ -164,16 +162,7 @@ public class JZMediaSystem extends JZMediaInterface implements MediaPlayer.OnPre
 
     @Override
     public boolean onInfo(MediaPlayer mediaPlayer, final int what, final int extra) {
-        handler.post(() -> {
-            if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                if (jzvd.state == Jzvd.STATE_PREPARING
-                        || jzvd.state == Jzvd.STATE_PREPARING_CHANGING_URL) {
-                    jzvd.onPrepared();//真正的prepared
-                }
-            } else {
-                jzvd.onInfo(what, extra);
-            }
-        });
+        handler.post(() -> jzvd.onInfo(what, extra));
         return false;
     }
 

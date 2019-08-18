@@ -94,6 +94,12 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
+        <!--<activity-->
+            <!--android:name=".ActivityPreloading"-->
+            <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
+            <!--android:screenOrientation="portrait" />-->
+
+
     </application>
 
 </manifest>

@@ -43,7 +43,7 @@ public class ActivityApiRotationVideoSize extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Jzvd.resetAllVideos();
+        Jzvd.releaseAllVideos();
         Jzvd.setVideoImageDisplayType(Jzvd.VIDEO_IMAGE_DISPLAY_TYPE_ADAPTER);
     }
 

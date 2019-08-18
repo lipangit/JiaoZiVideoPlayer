@@ -52,7 +52,7 @@ public class ActivityListViewNormal extends AppCompatActivity {
                 if (currentPlayPosition >= 0) {
                     if ((currentPlayPosition < firstVisibleItem || currentPlayPosition > (lastVisibleItem - 1))) {
                         if (Jzvd.CURRENT_JZVD.screen != Jzvd.SCREEN_FULLSCREEN) {
-                            Jzvd.resetAllVideos();//为什么最后一个视频横屏会调用这个，其他地方不会
+                            Jzvd.releaseAllVideos();//为什么最后一个视频横屏会调用这个，其他地方不会
                         }
                     }
                 }
@@ -82,7 +82,7 @@ public class ActivityListViewNormal extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         sensorManager.unregisterListener(sensorEventListener);
-        Jzvd.resetAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override

@@ -31,7 +31,7 @@ public class JzvdStdList extends JzvdStd {
             if (position != 0) {
                 JZUtils.saveProgress(getContext(), Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl(), position);
             }
-            Jzvd.resetAllVideos();
+            Jzvd.releaseAllVideos();
         }
 
     }

@@ -62,7 +62,7 @@ public class ActivityTinyWindowRecycleView extends AppCompatActivity {
                         jzvd.jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())
                         && Jzvd.CURRENT_JZVD.screen != Jzvd.SCREEN_TINY) {
                     if (Jzvd.CURRENT_JZVD.state == Jzvd.STATE_PAUSE) {
-                        Jzvd.resetAllVideos();
+                        Jzvd.releaseAllVideos();
                     } else {
                         ((JzvdStdTinyWindow) Jzvd.CURRENT_JZVD).gotoScreenTiny();
                     }
@@ -83,7 +83,7 @@ public class ActivityTinyWindowRecycleView extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        Jzvd.resetAllVideos();
+        Jzvd.releaseAllVideos();
     }
 
     @Override

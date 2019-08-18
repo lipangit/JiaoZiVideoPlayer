@@ -151,6 +151,8 @@ public class JZMediaExo extends JZMediaInterface implements Player.EventListener
         if (mMediaHandler != null && mMediaHandlerThread != null && simpleExoPlayer != null) {//不知道有没有妖孽
             HandlerThread tmpHandlerThread = mMediaHandlerThread;
             SimpleExoPlayer tmpMediaPlayer = simpleExoPlayer;
+            JZMediaInterface.SAVED_SURFACE = null;
+
             mMediaHandler.post(() -> {
                 tmpMediaPlayer.release();//release就不能放到主线程里，界面会卡顿
                 tmpHandlerThread.quit();
@@ -220,7 +222,7 @@ public class JZMediaExo extends JZMediaInterface implements Player.EventListener
                 break;
                 case Player.STATE_READY: {
                     if (playWhenReady) {
-                        jzvd.onPrepared();
+                        jzvd.onStatePlaying();
                     } else {
                     }
                 }
