@@ -1,15 +1,20 @@
 package cn.jzvd;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
 import java.util.Formatter;
 import java.util.Locale;
@@ -20,6 +25,7 @@ import java.util.Locale;
  */
 public class JZUtils {
     public static final String TAG = "JZVD";
+    public static int SYSTEM_UI = 0;
 
     public static String stringForTime(long timeMs) {
         if (timeMs <= 0 || timeMs >= 24 * 60 * 60 * 1000) {
@@ -144,35 +150,40 @@ public class JZUtils {
         }
     }
 
-//    public static Object getCurrentFromDataSource(Object[] dataSourceObjects, int index) {
-//        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
-//        if (map != null && map.size() > 0) {
-//            return getValueFromLinkedMap(map, index);
-//        }
-//        return null;
-//    }
-//
-//    public static Object getValueFromLinkedMap(LinkedHashMap<String, Object> map, int index) {
-//        int currentIndex = 0;
-//        for (String key : map.keySet()) {
-//            if (currentIndex == index) {
-//                return map.get(key);
-//            }
-//            currentIndex++;
-//        }
-//        return null;
-//    }
-//
-//    public static String getKeyFromDataSource(Object[] dataSourceObjects, int index) {
-//        LinkedHashMap<String, Object> map = (LinkedHashMap) dataSourceObjects[0];
-//        int currentIndex = 0;
-//        for (String key : map.keySet()) {
-//            if (currentIndex == index) {
-//                return key;
-//            }
-//            currentIndex++;
-//        }
-//        return null;
-//    }
+    @SuppressLint("RestrictedApi")
+    public static void showStatusBar(Context context) {
+        if (Jzvd.TOOL_BAR_EXIST) {
+            JZUtils.getWindow(context).clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
+
+    //如果是沉浸式的，全屏前就没有状态栏
+    @SuppressLint("RestrictedApi")
+    public static void hideStatusBar(Context context) {
+        if (Jzvd.TOOL_BAR_EXIST) {
+            JZUtils.getWindow(context).setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+    }
+
+    @SuppressLint("NewApi")
+    public static void hideSystemUI(Context context) {
+        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+        ;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            uiOptions |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        }
+        SYSTEM_UI = JZUtils.getWindow(context).getDecorView().getSystemUiVisibility();
+        JZUtils.getWindow(context).getDecorView().setSystemUiVisibility(uiOptions);
+
+    }
+
+    @SuppressLint("NewApi")
+    public static void showSystemUI(Context context) {
+        int uiOptions = View.SYSTEM_UI_FLAG_VISIBLE;
+        JZUtils.getWindow(context).getDecorView().setSystemUiVisibility(SYSTEM_UI);
+    }
 
 }

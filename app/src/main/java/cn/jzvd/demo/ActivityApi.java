@@ -1,15 +1,16 @@
 package cn.jzvd.demo;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -27,8 +28,7 @@ import cn.jzvd.JzvdStd;
 /**
  * Created by Nathen on 16/7/31.
  */
-public class ActivityApi extends AppCompatActivity implements View.OnClickListener {
-    Button mSmallChange, mBigChange, mOrientation, mExtendsNormalActivity, mRationAndVideoSize, mCustomMediaPlayer;
+public class ActivityApi extends AppCompatActivity {
     JzvdStd mJzvdStd;
     Jzvd.JZAutoFullscreenListener mSensorEventListener;
     SensorManager mSensorManager;
@@ -43,26 +43,9 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         getSupportActionBar().setTitle("Api");
         setContentView(R.layout.activity_api);
 
-        mSmallChange = findViewById(R.id.small_change);
-        mBigChange = findViewById(R.id.big_change);
-        mOrientation = findViewById(R.id.orientation);
-        mExtendsNormalActivity = findViewById(R.id.extends_normal_activity);
-        mRationAndVideoSize = findViewById(R.id.rotation_and_videosize);
-        mCustomMediaPlayer = findViewById(R.id.custom_mediaplayer);
-
-        mSmallChange.setOnClickListener(this);
-        mBigChange.setOnClickListener(this);
-        mOrientation.setOnClickListener(this);
-        mExtendsNormalActivity.setOnClickListener(this);
-        mRationAndVideoSize.setOnClickListener(this);
-        mCustomMediaPlayer.setOnClickListener(this);
-
-
         mJzvdStd = findViewById(R.id.jz_video);
         LinkedHashMap map = new LinkedHashMap();
-
         String proxyUrl = ApplicationDemo.getProxy(this).getProxyUrl(VideoConstant.videoUrls[0][9]);
-
         map.put("高清", proxyUrl);
         map.put("标清", VideoConstant.videoUrls[0][6]);
         map.put("普清", VideoConstant.videoUrlList[0]);
@@ -71,46 +54,17 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         jzDataSource.currentUrlIndex = 2;
         jzDataSource.headerMap.put("key", "value");//header
         mJzvdStd.setUp(jzDataSource
-                , JzvdStd.SCREEN_WINDOW_NORMAL);
+                , JzvdStd.SCREEN_NORMAL);
         Glide.with(this).load(VideoConstant.videoThumbList[0]).into(mJzvdStd.thumbImageView);
-        mJzvdStd.seekToInAdvance = 20000;
-        //JZVideoPlayer.SAVE_PROGRESS = false;
+//        mJzvdStd.seekToInAdvance = 20000;
+//        Jzvd.SAVE_PROGRESS = false;//把这些注释的代码放到按钮上，让它可操作可见。
 
         /** Play video in local path, eg:record by system camera **/
 //        cpAssertVideoToLocalPath();
-//        mJzVideoPlayerStandard.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
-//                , JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "饺子不信");
-        /** ImageLoader **/
-//        ImageLoader.getInstance().displayImage(VideoConstant.videoThumbs[0][1],
-//                videoController1.thumbImageView);
-        /** volley Fresco omit **/
+//        mJzvdStd.setUp(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4"
+//                , "饺子不信", Jzvd.SCREEN_NORMAL);
         mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorEventListener = new Jzvd.JZAutoFullscreenListener();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.small_change:
-                startActivity(new Intent(ActivityApi.this, ActivityApiUISmallChange.class));
-                break;
-            case R.id.big_change:
-                Toast.makeText(ActivityApi.this, "Comming Soon", Toast.LENGTH_SHORT).show();
-//                startActivity(new Intent(ActivityApi.this, ActivityApiUIBigChange.class));
-                break;
-            case R.id.orientation:
-                startActivity(new Intent(ActivityApi.this, ActivityApiOrientation.class));
-                break;
-            case R.id.extends_normal_activity:
-                startActivity(new Intent(ActivityApi.this, ActivityApiExtendsNormal.class));
-                break;
-            case R.id.rotation_and_videosize:
-                startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
-                break;
-            case R.id.custom_mediaplayer:
-                startActivity(new Intent(ActivityApi.this, ActivityApiCustomMediaPlayer.class));
-                break;
-        }
     }
 
     @Override
@@ -150,6 +104,7 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
     }
 
     public void cpAssertVideoToLocalPath() {
+        verifyStoragePermissions();
         try {
             InputStream myInput;
             OutputStream myOutput = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/DCIM/Camera/local_video.mp4");
@@ -167,5 +122,50 @@ public class ActivityApi extends AppCompatActivity implements View.OnClickListen
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public void verifyStoragePermissions() {
+        try {
+            int permission = ActivityCompat.checkSelfPermission(this,
+                    "android.permission.WRITE_EXTERNAL_STORAGE");
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{
+                        "android.permission.READ_EXTERNAL_STORAGE",
+                        "android.permission.WRITE_EXTERNAL_STORAGE"}, 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clickSmallChange(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityApiUISmallChange.class));
+    }
+
+    public void clickBigChange(View view) {
+        Toast.makeText(ActivityApi.this, "Comming Soon", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(ActivityApi.this, ActivityApiUIBigChange.class));
+    }
+
+    public void clickOrientation(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityApiOrientation.class));
+
+    }
+
+    public void clickExtendsNormalActivity(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityApiExtendsNormal.class));
+    }
+
+    public void clickRotationAndVideoSize(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityApiRotationVideoSize.class));
+    }
+
+    public void clickCustomMediaPlayer(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityApiCustomMedia.class));
+    }
+
+    public void clickPreloading(View view) {
+        startActivity(new Intent(ActivityApi.this, ActivityPreloading.class));
     }
 }

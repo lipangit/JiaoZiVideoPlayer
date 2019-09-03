@@ -35,6 +35,8 @@ import java.util.TimerTask;
  */
 public class JzvdStd extends Jzvd {
 
+    public static long LAST_GET_BATTERYLEVEL_TIME = 0;
+    public static int LAST_GET_BATTERYLEVEL_PERCENT = 70;
     protected static Timer DISMISS_CONTROL_VIEW_TIMER;
 
     public ImageView backButton;
@@ -50,7 +52,6 @@ public class JzvdStd extends Jzvd {
     public PopupWindow clarityPopWindow;
     public TextView mRetryBtn;
     public LinearLayout mRetryLayout;
-
     protected DismissControlViewTimerTask mDismissControlViewTimerTask;
     protected Dialog mProgressDialog;
     protected ProgressBar mDialogProgressBar;
@@ -64,22 +65,7 @@ public class JzvdStd extends Jzvd {
     protected Dialog mBrightnessDialog;
     protected ProgressBar mDialogBrightnessProgressBar;
     protected TextView mDialogBrightnessTextView;
-    public static long LAST_GET_BATTERYLEVEL_TIME = 0;
-    public static int LAST_GET_BATTERYLEVEL_PERCENT = 70;
 
-    private BroadcastReceiver battertReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
-                int level = intent.getIntExtra("level", 0);
-                int scale = intent.getIntExtra("scale", 100);
-                int percent = level * 100 / scale;
-                LAST_GET_BATTERYLEVEL_PERCENT = percent;
-                setBatteryLevel();
-                getContext().unregisterReceiver(battertReceiver);
-            }
-        }
-    };
 
     public JzvdStd(Context context) {
         super(context);
@@ -113,44 +99,10 @@ public class JzvdStd extends Jzvd {
         mRetryBtn.setOnClickListener(this);
     }
 
-    public void setUp(JZDataSource jzDataSource, int screen) {
-        super.setUp(jzDataSource, screen);
+    public void setUp(JZDataSource jzDataSource, int screen, Class mediaInterfaceClass) {
+        super.setUp(jzDataSource, screen, mediaInterfaceClass);
         titleTextView.setText(jzDataSource.title);
-        if (currentScreen == SCREEN_WINDOW_FULLSCREEN) {
-            fullscreenButton.setImageResource(R.drawable.jz_shrink);
-            backButton.setVisibility(View.VISIBLE);
-            tinyBackImageView.setVisibility(View.INVISIBLE);
-            batteryTimeLayout.setVisibility(View.VISIBLE);
-            if (jzDataSource.urlsMap.size() == 1) {
-                clarity.setVisibility(GONE);
-            } else {
-                clarity.setText(jzDataSource.getCurrentKey().toString());
-                clarity.setVisibility(View.VISIBLE);
-            }
-            changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_fullscreen));
-        } else if (currentScreen == SCREEN_WINDOW_NORMAL
-                || currentScreen == SCREEN_WINDOW_LIST) {
-            fullscreenButton.setImageResource(R.drawable.jz_enlarge);
-            backButton.setVisibility(View.GONE);
-            tinyBackImageView.setVisibility(View.INVISIBLE);
-            changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_normal));
-            batteryTimeLayout.setVisibility(View.GONE);
-            clarity.setVisibility(View.GONE);
-        } else if (currentScreen == SCREEN_WINDOW_TINY) {
-            tinyBackImageView.setVisibility(View.VISIBLE);
-            setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                    View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
-            batteryTimeLayout.setVisibility(View.GONE);
-            clarity.setVisibility(View.GONE);
-        }
-        setSystemTimeAndBattery();
-
-
-        if (tmp_test_back) {
-            tmp_test_back = false;
-            JzvdMgr.setFirstFloor(this);
-            backPress();
-        }
+        setScreen(screen);
     }
 
     public void changeStartButtonSize(int size) {
@@ -164,7 +116,7 @@ public class JzvdStd extends Jzvd {
 
     @Override
     public int getLayoutId() {
-        return R.layout.jz_layout_standard;
+        return R.layout.jz_layout_std;
     }
 
     @Override
@@ -177,21 +129,6 @@ public class JzvdStd extends Jzvd {
     public void onStatePreparing() {
         super.onStatePreparing();
         changeUiToPreparing();
-    }
-
-    @Override
-    public void changeUrl(int urlMapIndex, long seekToInAdvance) {
-        super.changeUrl(urlMapIndex, seekToInAdvance);
-        loadingProgressBar.setVisibility(VISIBLE);
-        startButton.setVisibility(INVISIBLE);
-    }
-
-    @Override
-    public void changeUrl(JZDataSource jzDataSource, long seekToInAdvance) {
-        super.changeUrl(jzDataSource, seekToInAdvance);
-        titleTextView.setText(jzDataSource.title);
-        loadingProgressBar.setVisibility(VISIBLE);
-        startButton.setVisibility(INVISIBLE);
     }
 
     @Override
@@ -222,6 +159,23 @@ public class JzvdStd extends Jzvd {
     }
 
     @Override
+    public void changeUrl(int urlMapIndex, long seekToInAdvance) {
+        super.changeUrl(urlMapIndex, seekToInAdvance);
+        startButton.setVisibility(INVISIBLE);
+        replayTextView.setVisibility(View.GONE);
+        mRetryLayout.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void changeUrl(JZDataSource jzDataSource, long seekToInAdvance) {
+        super.changeUrl(jzDataSource, seekToInAdvance);
+        titleTextView.setText(jzDataSource.title);
+        startButton.setVisibility(INVISIBLE);
+        replayTextView.setVisibility(View.GONE);
+        mRetryLayout.setVisibility(View.GONE);
+    }
+
+    @Override
     public boolean onTouch(View v, MotionEvent event) {
         int id = v.getId();
         if (id == R.id.surface_container) {
@@ -238,7 +192,6 @@ public class JzvdStd extends Jzvd {
                         bottomProgressBar.setProgress(progress);
                     }
                     if (!mChangePosition && !mChangeVolume) {
-                        onEvent(JZUserActionStd.ON_CLICK_BLANK);
                         onClickUiToggle();
                     }
                     break;
@@ -261,11 +214,11 @@ public class JzvdStd extends Jzvd {
         super.onClick(v);
         int i = v.getId();
         if (i == R.id.thumb) {
-            if (jzDataSource.urlsMap.isEmpty() || jzDataSource.getCurrentUrl() == null) {
+            if (jzDataSource == null || jzDataSource.urlsMap.isEmpty() || jzDataSource.getCurrentUrl() == null) {
                 Toast.makeText(getContext(), getResources().getString(R.string.no_url), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (currentState == CURRENT_STATE_NORMAL) {
+            if (state == STATE_NORMAL) {
                 if (!jzDataSource.getCurrentUrl().toString().startsWith("file") &&
                         !jzDataSource.getCurrentUrl().toString().startsWith("/") &&
                         !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {
@@ -273,8 +226,7 @@ public class JzvdStd extends Jzvd {
                     return;
                 }
                 startVideo();
-                onEvent(JZUserActionStd.ON_CLICK_START_THUMB);//开始的事件应该在播放之后，此处特殊
-            } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+            } else if (state == STATE_AUTO_COMPLETE) {
                 onClickUiToggle();
             }
         } else if (i == R.id.surface_container) {
@@ -282,31 +234,25 @@ public class JzvdStd extends Jzvd {
         } else if (i == R.id.back) {
             backPress();
         } else if (i == R.id.back_tiny) {
-            if (JzvdMgr.getFirstFloor().currentScreen == Jzvd.SCREEN_WINDOW_LIST) {
-                quitFullscreenOrTinyWindow();
-            } else {
-                backPress();
-            }
+            clearFloatScreen();
         } else if (i == R.id.clarity) {
             LayoutInflater inflater = (LayoutInflater) getContext()
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final LinearLayout layout = (LinearLayout) inflater.inflate(R.layout.jz_layout_clarity, null);
 
-            OnClickListener mQualityListener = new OnClickListener() {
-                public void onClick(View v) {
-                    int index = (int) v.getTag();
-                    changeUrl(index, getCurrentPositionWhenPlaying());
-                    clarity.setText(jzDataSource.getCurrentKey().toString());
-                    for (int j = 0; j < layout.getChildCount(); j++) {//设置点击之后的颜色
-                        if (j == jzDataSource.currentUrlIndex) {
-                            ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#fff85959"));
-                        } else {
-                            ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#ffffff"));
-                        }
+            OnClickListener mQualityListener = v1 -> {
+                int index = (int) v1.getTag();
+                changeUrl(index, getCurrentPositionWhenPlaying());
+                clarity.setText(jzDataSource.getCurrentKey().toString());
+                for (int j = 0; j < layout.getChildCount(); j++) {//设置点击之后的颜色
+                    if (j == jzDataSource.currentUrlIndex) {
+                        ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#fff85959"));
+                    } else {
+                        ((TextView) layout.getChildAt(j)).setTextColor(Color.parseColor("#ffffff"));
                     }
-                    if (clarityPopWindow != null) {
-                        clarityPopWindow.dismiss();
-                    }
+                }
+                if (clarityPopWindow != null) {
+                    clarityPopWindow.dismiss();
                 }
             };
 
@@ -340,12 +286,48 @@ public class JzvdStd extends Jzvd {
                 showWifiDialog();
                 return;
             }
-            initTextureView();//和开始播放的代码重复
             addTextureView();
-            JZMediaManager.setDataSource(jzDataSource);
             onStatePreparing();
-            onEvent(JZUserAction.ON_CLICK_START_ERROR);
         }
+    }
+
+    @Override
+    public void setScreenNormal() {
+        super.setScreenNormal();
+        fullscreenButton.setImageResource(R.drawable.jz_enlarge);
+        backButton.setVisibility(View.GONE);
+        tinyBackImageView.setVisibility(View.INVISIBLE);
+        changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_normal));
+        batteryTimeLayout.setVisibility(View.GONE);
+        clarity.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setScreenFullscreen() {
+        super.setScreenFullscreen();
+        //进入全屏之后要保证原来的播放状态和ui状态不变，改变个别的ui
+        fullscreenButton.setImageResource(R.drawable.jz_shrink);
+        backButton.setVisibility(View.VISIBLE);
+        tinyBackImageView.setVisibility(View.INVISIBLE);
+        batteryTimeLayout.setVisibility(View.VISIBLE);
+        if (jzDataSource.urlsMap.size() == 1) {
+            clarity.setVisibility(GONE);
+        } else {
+            clarity.setText(jzDataSource.getCurrentKey().toString());
+            clarity.setVisibility(View.VISIBLE);
+        }
+        changeStartButtonSize((int) getResources().getDimension(R.dimen.jz_start_button_w_h_fullscreen));
+        setSystemTimeAndBattery();
+    }
+
+    @Override
+    public void setScreenTiny() {
+        super.setScreenTiny();
+        tinyBackImageView.setVisibility(View.VISIBLE);
+        setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
+                View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
+        batteryTimeLayout.setVisibility(View.GONE);
+        clarity.setVisibility(View.GONE);
     }
 
     @Override
@@ -353,28 +335,16 @@ public class JzvdStd extends Jzvd {
         super.showWifiDialog();
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setMessage(getResources().getString(R.string.tips_not_wifi));
-        builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                onEvent(JZUserActionStd.ON_CLICK_START_WIFIDIALOG);
-                startVideo();
-                WIFI_TIP_DIALOG_SHOWED = true;
-            }
+        builder.setPositiveButton(getResources().getString(R.string.tips_not_wifi_confirm), (dialog, which) -> {
+            dialog.dismiss();
+            startVideo();
+            WIFI_TIP_DIALOG_SHOWED = true;
         });
-        builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                clearFloatScreen();
-            }
+        builder.setNegativeButton(getResources().getString(R.string.tips_not_wifi_cancel), (dialog, which) -> {
+            dialog.dismiss();
+            clearFloatScreen();
         });
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                dialog.dismiss();
-            }
-        });
+        builder.setOnCancelListener(DialogInterface::dismiss);
         builder.create().show();
     }
 
@@ -390,24 +360,24 @@ public class JzvdStd extends Jzvd {
         startDismissControlViewTimer();
     }
 
-    public void onClickUiToggle() {
+    public void onClickUiToggle() {//这是事件
         if (bottomContainer.getVisibility() != View.VISIBLE) {
             setSystemTimeAndBattery();
             clarity.setText(jzDataSource.getCurrentKey().toString());
         }
-        if (currentState == CURRENT_STATE_PREPARING) {
+        if (state == STATE_PREPARING) {
             changeUiToPreparing();
             if (bottomContainer.getVisibility() == View.VISIBLE) {
             } else {
                 setSystemTimeAndBattery();
             }
-        } else if (currentState == CURRENT_STATE_PLAYING) {
+        } else if (state == STATE_PLAYING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPlayingClear();
             } else {
                 changeUiToPlayingShow();
             }
-        } else if (currentState == CURRENT_STATE_PAUSE) {
+        } else if (state == STATE_PAUSE) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPauseClear();
             } else {
@@ -449,28 +419,29 @@ public class JzvdStd extends Jzvd {
     }
 
     public void onCLickUiToggleToClear() {
-        if (currentState == CURRENT_STATE_PREPARING) {
+        if (state == STATE_PREPARING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPreparing();
             } else {
             }
-        } else if (currentState == CURRENT_STATE_PLAYING) {
+        } else if (state == STATE_PLAYING) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPlayingClear();
             } else {
             }
-        } else if (currentState == CURRENT_STATE_PAUSE) {
+        } else if (state == STATE_PAUSE) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToPauseClear();
             } else {
             }
-        } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+        } else if (state == STATE_AUTO_COMPLETE) {
             if (bottomContainer.getVisibility() == View.VISIBLE) {
                 changeUiToComplete();
             } else {
             }
         }
     }
+
 
     @Override
     public void onProgress(int progress, long position, long duration) {
@@ -492,146 +463,134 @@ public class JzvdStd extends Jzvd {
     }
 
     public void changeUiToNormal() {
-        switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
-            case SCREEN_WINDOW_LIST:
+        switch (screen) {
+            case SCREEN_NORMAL:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
     }
 
     public void changeUiToPreparing() {
-        switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
-            case SCREEN_WINDOW_LIST:
+        switch (screen) {
+            case SCREEN_NORMAL:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.VISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
-                setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
-                        View.VISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
-                updateStartImage();
-                break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
     }
 
     public void changeUiToPlayingShow() {
-        switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
-            case SCREEN_WINDOW_LIST:
+        switch (screen) {
+            case SCREEN_NORMAL:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
     }
 
     public void changeUiToPlayingClear() {
-        switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
-            case SCREEN_WINDOW_LIST:
+        switch (screen) {
+            case SCREEN_NORMAL:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
     }
 
     public void changeUiToPauseShow() {
-        switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
-            case SCREEN_WINDOW_LIST:
+        switch (screen) {
+            case SCREEN_NORMAL:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.VISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
     }
 
     public void changeUiToPauseClear() {
-        switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
-            case SCREEN_WINDOW_LIST:
+        switch (screen) {
+            case SCREEN_NORMAL:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.INVISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.VISIBLE, View.INVISIBLE);
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
     }
 
     public void changeUiToComplete() {
-        switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
-            case SCREEN_WINDOW_LIST:
+        switch (screen) {
+            case SCREEN_NORMAL:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.VISIBLE, View.INVISIBLE, View.INVISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
     }
 
     public void changeUiToError() {
-        switch (currentScreen) {
-            case SCREEN_WINDOW_NORMAL:
-            case SCREEN_WINDOW_LIST:
+        switch (screen) {
+            case SCREEN_NORMAL:
                 setAllControlsVisiblity(View.INVISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_FULLSCREEN:
+            case SCREEN_FULLSCREEN:
                 setAllControlsVisiblity(View.VISIBLE, View.INVISIBLE, View.VISIBLE,
                         View.INVISIBLE, View.INVISIBLE, View.INVISIBLE, View.VISIBLE);
                 updateStartImage();
                 break;
-            case SCREEN_WINDOW_TINY:
+            case SCREEN_TINY:
                 break;
         }
 
@@ -649,20 +608,20 @@ public class JzvdStd extends Jzvd {
     }
 
     public void updateStartImage() {
-        if (currentState == CURRENT_STATE_PLAYING) {
+        if (state == STATE_PLAYING) {
             startButton.setVisibility(VISIBLE);
             startButton.setImageResource(R.drawable.jz_click_pause_selector);
-            replayTextView.setVisibility(INVISIBLE);
-        } else if (currentState == CURRENT_STATE_ERROR) {
+            replayTextView.setVisibility(GONE);
+        } else if (state == STATE_ERROR) {
             startButton.setVisibility(INVISIBLE);
-            replayTextView.setVisibility(INVISIBLE);
-        } else if (currentState == CURRENT_STATE_AUTO_COMPLETE) {
+            replayTextView.setVisibility(GONE);
+        } else if (state == STATE_AUTO_COMPLETE) {
             startButton.setVisibility(VISIBLE);
             startButton.setImageResource(R.drawable.jz_click_replay_selector);
             replayTextView.setVisibility(VISIBLE);
         } else {
             startButton.setImageResource(R.drawable.jz_click_play_selector);
-            replayTextView.setVisibility(INVISIBLE);
+            replayTextView.setVisibility(GONE);
         }
     }
 
@@ -804,8 +763,8 @@ public class JzvdStd extends Jzvd {
     }
 
     @Override
-    public void onCompletion() {
-        super.onCompletion();
+    public void reset() {
+        super.reset();
         cancelDismissControlViewTimer();
         if (clarityPopWindow != null) {
             clarityPopWindow.dismiss();
@@ -813,21 +772,18 @@ public class JzvdStd extends Jzvd {
     }
 
     public void dissmissControlView() {
-        if (currentState != CURRENT_STATE_NORMAL
-                && currentState != CURRENT_STATE_ERROR
-                && currentState != CURRENT_STATE_AUTO_COMPLETE) {
-            post(new Runnable() {
-                @Override
-                public void run() {
-                    bottomContainer.setVisibility(View.INVISIBLE);
-                    topContainer.setVisibility(View.INVISIBLE);
-                    startButton.setVisibility(View.INVISIBLE);
-                    if (clarityPopWindow != null) {
-                        clarityPopWindow.dismiss();
-                    }
-                    if (currentScreen != SCREEN_WINDOW_TINY) {
-                        bottomProgressBar.setVisibility(View.VISIBLE);
-                    }
+        if (state != STATE_NORMAL
+                && state != STATE_ERROR
+                && state != STATE_AUTO_COMPLETE) {
+            post(() -> {
+                bottomContainer.setVisibility(View.INVISIBLE);
+                topContainer.setVisibility(View.INVISIBLE);
+                startButton.setVisibility(View.INVISIBLE);
+                if (clarityPopWindow != null) {
+                    clarityPopWindow.dismiss();
+                }
+                if (screen != SCREEN_TINY) {
+                    bottomProgressBar.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -840,4 +796,22 @@ public class JzvdStd extends Jzvd {
             dissmissControlView();
         }
     }
+
+    private BroadcastReceiver battertReceiver = new BroadcastReceiver() {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (Intent.ACTION_BATTERY_CHANGED.equals(action)) {
+                int level = intent.getIntExtra("level", 0);
+                int scale = intent.getIntExtra("scale", 100);
+                int percent = level * 100 / scale;
+                LAST_GET_BATTERYLEVEL_PERCENT = percent;
+                setBatteryLevel();
+                try {
+                    getContext().unregisterReceiver(battertReceiver);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    };
 }
