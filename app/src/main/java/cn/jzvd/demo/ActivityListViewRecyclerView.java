@@ -8,16 +8,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 
-import cn.jzvd.JZMediaManager;
 import cn.jzvd.Jzvd;
-import cn.jzvd.JzvdMgr;
 
 /**
  * Created by yujunkui on 16/8/29.
  */
 public class ActivityListViewRecyclerView extends AppCompatActivity {
     RecyclerView recyclerView;
-    AdapterRecyclerViewVideo adapterVideoList;
+    AdapterRecyclerView adapterVideoList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +30,7 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapterVideoList = new AdapterRecyclerViewVideo(this);
+        adapterVideoList = new AdapterRecyclerView(this);
         recyclerView.setAdapter(adapterVideoList);
         recyclerView.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
@@ -43,9 +41,9 @@ public class ActivityListViewRecyclerView extends AppCompatActivity {
             @Override
             public void onChildViewDetachedFromWindow(View view) {
                 Jzvd jzvd = view.findViewById(R.id.videoplayer);
-                if (jzvd != null && jzvd.jzDataSource.containsTheUrl(JZMediaManager.getCurrentUrl())) {
-                    Jzvd currentJzvd = JzvdMgr.getCurrentJzvd();
-                    if (currentJzvd != null && currentJzvd.currentScreen != Jzvd.SCREEN_WINDOW_FULLSCREEN) {
+                if (jzvd != null && Jzvd.CURRENT_JZVD != null &&
+                        jzvd.jzDataSource.containsTheUrl(Jzvd.CURRENT_JZVD.jzDataSource.getCurrentUrl())) {
+                    if (Jzvd.CURRENT_JZVD != null && Jzvd.CURRENT_JZVD.screen != Jzvd.SCREEN_FULLSCREEN) {
                         Jzvd.releaseAllVideos();
                     }
                 }

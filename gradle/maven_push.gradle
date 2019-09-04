@@ -1,20 +1,6 @@
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-//task javadocJar(type: Jar) {
-//    classifier = 'javadoc'
-//    from javadoc
-//}
-//
-//task sourcesJar(type: Jar) {
-//    classifier = 'sources'
-//    from sourceSets.main.allSource
-//}
-
-//artifacts {
-//    archives file('../downloads/jiaozi-videoplayer-1.2preview.aar')
-//}
-
 signing {
     required { false }
     sign configurations.archives
@@ -22,7 +8,7 @@ signing {
 
 group = "cn.jzvd"
 archivesBaseName = "jiaozivideoplayer"
-version = "6.3.1"
+version = "7.0.5"
 
 uploadArchives {
     repositories {
@@ -31,7 +17,7 @@ uploadArchives {
 
 //            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
 //                authentication(userName: getProperty('ossrhUsername'),
-//                                  password: getProperty('ossrhPassword'))
+//                        password: getProperty('ossrhPassword'))
 //            }
 
             pom.project {
@@ -58,7 +44,7 @@ uploadArchives {
                     developer {
                         id 'Nathen'
                         name 'Nathen'
-                        email '821537155@qq.com'
+                        email '1066666651@qq.com'
                     }
                 }
             }
