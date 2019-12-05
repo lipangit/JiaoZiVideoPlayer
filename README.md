@@ -3,6 +3,6 @@
 
 ### Deprecated 
 
-move to [Jzvd/JiaoZiVideoPlayer]https://github.com/Jzvd/JiaoZiVideoPlayer
+Move to [Jzvd/JiaoZiVideoPlayer](https://github.com/Jzvd/JiaoZiVideoPlayer)
 
 Highly customizable Android video framework
