@@ -753,6 +753,22 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
     }
 
+    public void gotoScreenFullscreenForResumePlay(Context context) {
+        ViewGroup vg = (ViewGroup) getParent();
+        vg.removeView(this);
+        cloneAJzvd(vg);
+        CONTAINER_LIST.add(vg);
+        ViewGroup decorView = (ViewGroup) (JZUtils.scanForActivity(context)).getWindow().getDecorView();//和他也没有关系
+        decorView.addView(this, new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+
+        setScreenFullscreen();
+        JZUtils.hideStatusBar(context);
+        JZUtils.setRequestedOrientation(context, FULLSCREEN_ORIENTATION);
+        JZUtils.hideSystemUI(context);//华为手机和有虚拟键的手机全屏时可隐藏虚拟键 issue:1326
+    }
+
+
     public void gotoScreenNormal() {//goback本质上是goto
         gobakFullscreenTime = System.currentTimeMillis();//退出全屏
         ViewGroup vg = (ViewGroup) (JZUtils.scanForActivity(getContext())).getWindow().getDecorView();
@@ -766,6 +782,26 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         JZUtils.showStatusBar(getContext());
         JZUtils.setRequestedOrientation(getContext(), NORMAL_ORIENTATION);
         JZUtils.showSystemUI(getContext());
+    }
+
+
+    public void gotoScreenNormalForResumePlay(Context context) {//goback本质上是goto
+        gobakFullscreenTime = System.currentTimeMillis();//退出全屏
+        ViewGroup decorView = (ViewGroup) (JZUtils.scanForActivity(context)).getWindow().getDecorView();
+        decorView.removeView(this);
+        ViewGroup vg = (ViewGroup) getParent();
+        if (vg != null) {
+            vg.removeView(this);
+        }
+        CONTAINER_LIST.getLast().removeAllViews();
+        CONTAINER_LIST.getLast().addView(this, new FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        CONTAINER_LIST.pop();
+
+        setScreenNormal();//这块可以放到jzvd中
+        JZUtils.showStatusBar(context);
+        JZUtils.setRequestedOrientation(context, NORMAL_ORIENTATION);
+        JZUtils.showSystemUI(context);
     }
 
     public void setScreenNormal() {//TODO 这块不对呀，还需要改进，设置flag之后要设置ui，不设置ui这么写没意义呀
@@ -987,6 +1023,20 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         return false;
     }
 
+    //要使用无缝播放的详情页用
+    public static boolean backPress(Context context) {
+        Log.i(TAG, "backPress");
+        if (CONTAINER_LIST.size() != 0 && CURRENT_JZVD != null) {//判断条件，因为当前所有goBack都是回到普通窗口
+            CURRENT_JZVD.gotoScreenNormalForResumePlay(context);
+            return true;
+        } else if (CONTAINER_LIST.size() == 0 && CURRENT_JZVD != null && CURRENT_JZVD.screen != SCREEN_NORMAL) {//退出直接进入的全屏
+            CURRENT_JZVD.clearFloatScreen();
+            return true;
+        }
+        return false;
+    }
+
+
     public static void setCurrentJzvd(Jzvd jzvd) {
         if (CURRENT_JZVD != null) CURRENT_JZVD.reset();
         CURRENT_JZVD = jzvd;
@@ -1006,6 +1056,22 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
         Jzvd.VIDEO_IMAGE_DISPLAY_TYPE = type;
         if (CURRENT_JZVD != null && CURRENT_JZVD.textureView != null) {
             CURRENT_JZVD.textureView.requestLayout();
+        }
+    }
+
+
+    public void attachToContainer(Jzvd player,ViewGroup container) {
+        detachSuperContainer(player);
+        if (container != null) {
+            container.addView(player, new FrameLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        }
+    }
+
+    public void detachSuperContainer(Jzvd player) {
+        ViewParent parent = player.getParent();
+        if (parent != null && parent instanceof ViewGroup) {
+            ((ViewGroup) parent).removeView(player);
         }
     }
 
