@@ -137,7 +137,7 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
 
         mScreenWidth = getContext().getResources().getDisplayMetrics().widthPixels;
         mScreenHeight = getContext().getResources().getDisplayMetrics().heightPixels;
-
+        jzDataSource = new JZDataSource("");
         state = STATE_IDLE;
     }
 
@@ -181,14 +181,13 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 return;
             }
             if (state == STATE_NORMAL) {
-                if (!jzDataSource.getCurrentUrl().toString().startsWith("file") && !
-                        jzDataSource.getCurrentUrl().toString().startsWith("/") &&
-                        !JZUtils.isWifiConnected(getContext()) && !WIFI_TIP_DIALOG_SHOWED) {//这个可以放到std中
+                if (!JZUtils.isWifiConnected(getContext()) && !isCached() && !WIFI_TIP_DIALOG_SHOWED) {
                     showWifiDialog();
                     return;
                 }
                 startVideo();
-            } else if (state == STATE_PLAYING) {
+                //开始的事件应该在播放之后，此处特殊
+            } else if (state == STATE_PLAYING || state == STATE_PREPARING) {
                 Log.d(TAG, "pauseVideo [" + this.hashCode() + "] ");
                 mediaInterface.pause();
                 onStatePause();
@@ -209,6 +208,10 @@ public abstract class Jzvd extends FrameLayout implements View.OnClickListener, 
                 gotoScreenFullscreen();
             }
         }
+    }
+
+    public boolean isCached() {
+        return jzDataSource.getCurrentUrl().toString().startsWith("file") || jzDataSource.getCurrentUrl().toString().startsWith("/");
     }
 
     @Override
