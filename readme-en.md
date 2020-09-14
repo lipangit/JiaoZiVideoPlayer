@@ -1,13 +1,6 @@
-<a href="https://github.com/lipangit/JiaoZiVideoPlayer" target="_blank"><p align="center"><img src="https://user-images.githubusercontent.com/2038071/42033014-0bf1c0b0-7b0e-11e8-811d-7639bcd294eb.png" alt="JiaoZiVideoPlayer" height="150px"></p></a>
---
-<p align="center">
-<a href="http://developer.android.com/index.html"><img src="https://img.shields.io/badge/platform-android-green.svg"></a>
-<a href="http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar"><img src="https://img.shields.io/badge/Maven%20Central-7.0.5-green.svg"></a>
-<a href="http://choosealicense.com/licenses/mit/"><img src="https://img.shields.io/badge/license-MIT-green.svg"></a>
-<a href="https://android-arsenal.com/details/1/3269"><img src="https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true"></a>
-</p>
+# README-EN
 
-
+ [![](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![](https://img.shields.io/badge/Maven%20Central-7.0.5-green.svg)](http://search.maven.org/#artifactdetails%7Ccn.jzvd%7Cjiaozivideoplayer%7C5.8.2%7Caar) [![](https://img.shields.io/badge/license-MIT-green.svg)](http://choosealicense.com/licenses/mit/) [![](https://img.shields.io/badge/Android%20Arsenal-jiaozivideoplayer-green.svg?style=true)](https://android-arsenal.com/details/1/3269)
 
 ## Features
 
@@ -31,30 +24,30 @@
 2. Download and install the demo apk[jiaozivideoplayer-7.0.5.apk](https://github.com/lipangit/JiaoZiVideoPlayer/releases/download/v7.0.5/jiaozivideoplayer-7.0.5.apk), each page enters once, each button clicks once
 3. Download and debug the develop branch, and find the source code through the effect
 4. See [custom-related WIKI](https://github.com/lipangit/JiaoZiVideoPlayer/wiki)，Realize your own needs
+5. [Getting Started Document 1](https://www.jianshu.com/p/4c187a09b838)
+6. [Getting Started Document 2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
 
-* [Getting Started Document 1](https://www.jianshu.com/p/4c187a09b838)
-* [Getting Started Document 2](https://shimo.im/docs/xj5F85W1gqEEBXRJ)
+## Screenshot
 
-## Screenshot 
-
-![Demo screenshot][1]
+![](https://user-images.githubusercontent.com/2038071/31045150-a077cc8a-a5a2-11e7-8dc2-7a0e3a9f3e62.jpg)
 
 ## Usage
 
-#### Note:
-1.7.0 version of the bread layer outside the JzvdStd layout
-2.If the import configuration fails, check whether the Java8 configuration is added according to the failed log, or upgrade the environment to the latest stable version.
+### Note:
+
+1.7.0 version of the bread layer outside the JzvdStd layout 2.If the import configuration fails, check whether the Java8 configuration is added according to the failed log, or upgrade the environment to the latest stable version.
 
 Only five steps to use the player:
 
 1.Import library:
-```gradle
+
+```text
 implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
 ```
 
-
 2.Add `JZVideoPlayer` in your layout:
-```xml
+
+```markup
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="200dp">
@@ -66,6 +59,7 @@ implementation 'cn.jzvd:jiaozivideoplayer:7.0.5'
 ```
 
 3.Set the video uri, video thumb url and video title:
+
 ```java
 MyJzvdStd jzvdStd = (MyJzvdStd) findViewById(R.id.jz_video);
 jzvdStd.setUp("http://jzvd.nathen.cn/c6e3dc12a1154626b3476d9bf3bd7266/6b56c5f0dc31428083757a45764763b0-5287d2089db37e62345123a1be272f8b.mp4"
@@ -74,6 +68,7 @@ jzvdStd.thumbImageView.setImage("http://p.qpic.cn/videoyun/0/2449_43b6f696980311
 ```
 
 4.In `Activity`:
+
 ```java
 @Override
 public void onBackPressed() {
@@ -90,7 +85,8 @@ protected void onPause() {
 ```
 
 5.In `AndroidManifest.xml`:
-```xml
+
+```markup
 <activity
     android:name=".MainActivity"
     android:configChanges="orientation|screenSize|keyboardHidden"
@@ -104,32 +100,30 @@ protected void onPause() {
 
 ## Community
 
-#### Group management
+### Group management
 
 1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
 2. [Lionet](https://github.com/Lionet6?tab=repositories) QQ:2950527715
 3. [montauk](https://github.com/hanmeimei888) QQ:958489121
-4. [张展硕]() QQ:229431468
+4. [张展硕](readme-en.md) QQ:229431468
 
-#### Questions and Answers
+### Questions and Answers
 
 1. [熊晓清](http://blog.csdn.net/yaya_xiong) QQ:137048616
 2. [の伤也快乐](https://github.com/jmhjmh) QQ:466278628
-3. [吴亚男]() QQ:623562486
+3. [吴亚男](readme-en.md) QQ:623562486
 
 ## Reward
 
-![Reward][2]
+![](https://user-images.githubusercontent.com/2038071/29978804-45c321ba-8f75-11e7-9040-776d3b6dca1f.jpg)
 
 ## License MIT
 
-Copyright (c) 2015-2018 李盼 Nathen
+Copyright \(c\) 2015-2018 李盼 Nathen
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files \(the "Software"\), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[1]: https://user-images.githubusercontent.com/2038071/31045150-a077cc8a-a5a2-11e7-8dc2-7a0e3a9f3e62.jpg
-[2]: https://user-images.githubusercontent.com/2038071/29978804-45c321ba-8f75-11e7-9040-776d3b6dca1f.jpg
